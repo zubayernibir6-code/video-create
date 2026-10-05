@@ -523,7 +523,7 @@ E:\Video Create\
 │   │   └── renders\anim-test.mp4
 │   ├── audio-test\               ← SFX + audio-in-MP4 proof (§4d)
 │   │   └── renders\audio-test.mp4
-│   └── hishab-khata-promo\       ← ⭐ the first real video: 45 s Bengali promo, BUILT, NOT RENDERED (§4g)
+│   └── hishab-khata-promo\       ← ⭐ the first real video: 45 s Bengali promo, RENDERED 2026-10-06 (§4g)
 │       ├── BRIEF.md  STORYBOARD.md  frame.md
 │       └── compositions\frames\  ← 7 frames, all animated
 ├── assets\
