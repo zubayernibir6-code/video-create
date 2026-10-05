@@ -297,6 +297,27 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   but the top of dark curly hair against a dark background went semi-transparent, and a moving hand was mostly
   lost. **Advice for good results: even, bright light against a plain wall, or a green cloth + FFmpeg
   `chromakey`** (verified in the audit).
+- 🔶 **Music tooling ready; tracks still needed from the user (plan step 13, 2026-10-06).**
+  `node tools/music-pick.mjs list` scans `assets/music/<mood>/` (duration, LUFS, whether a Pixabay licence PDF sits
+  next to each track) and writes `index.json`. `pick <mood> --project=<dir> [--narration] [--insert] [--track=…]`
+  reads the root `data-duration` and chooses the shortest track that is long enough (otherwise the longest, with
+  a warning). It writes `<project>/assets/music/bgm.mp3`: trimmed, 0.5 s fade-in, fade-out of min(2.5 s, len/4),
+  two-pass −16 LUFS, 48 kHz, 192k mp3. The `<audio id="bgm" … data-track-index="9">` tag uses volume 0.13 under
+  narration, else 0.8. It refuses a second bgm and unknown moods. **Verified with synthetic tracks:** the full
+  finish.mjs render had music alone at −38.5 dB, voice + music at −17.5 dB (music ~21 dB under the voice), a
+  −46 dB faded tail, a −14.0 LUFS master, and the narration transcribed cleanly. `assets/music/README.md` (Bengali)
+  now tells the user to file tracks by mood folder and keep the licence PDF. **No real music exists yet.**
+- 🔶 **Stock photo/b-roll tooling ready (plan step 14, 2026-10-06).** `node tools/stock-fetch.mjs "<query>"
+  [--type=photo|video] [--count=3] [--provider=auto|openverse|pexels|pixabay] [--orientation=…] [--out=…]`.
+  Default output is `assets/images` or `assets/footage`. Each file gets a sidecar `.json` plus a `CREDITS.md` line.
+  **Openverse works with no key** (photos only, CC0/PDM, `category=photograph`, ≥1000 px, relevance order).
+  Size-first was rejected because the biggest CC0 files are old museum scans. Flickr results come at 1024 px, so
+  the tool flags "smaller than 1080p". **Verified:** classroom, school children, teacher and money coins all
+  downloaded with licence trails. Bytes are sniffed for the real type (rawpixel serves WebP named .jpg).
+  Failures throw instead of calling process.exit, which had tripped a libuv assertion on Windows. **Pexels and
+  Pixabay (photos + video) are written to their documented APIs but UNTESTED until the user adds free keys**
+  to `.env.local`; the template is `.env.local.example`, which is versioned while `.env.local` stays ignored.
+  ⚠ Free photos have no model release: avoid recognisable people in ads.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -327,8 +348,8 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
 | 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ✅ done 2026-10-06 |
 | 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ✅ done 2026-10-06 |
-| 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | ⬜ |
-| 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | ⬜ |
+| 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | 🔶 tool ✅ 2026-10-06; tracks = USER |
+| 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | 🔶 tool ✅ (Openverse works keyless); keys = USER |
 | 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ✅ done 2026-10-06 |
 | 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ✅ done 2026-10-06 |
 | 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ✅ done 2026-10-06 |

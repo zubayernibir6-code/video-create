@@ -1,4 +1,4 @@
-# মিউজিক ফোল্ডার — এখনো খালি
+# মিউজিক ফোল্ডার — এখনো খালি (গান আপনাকে নিজে নামাতে হবে, নিচের নিয়মে)
 
 এখানে ব্যাকগ্রাউন্ড মিউজিকের ফাইল রাখতে হবে (`.mp3`)।
 
@@ -25,11 +25,23 @@
    - `uplifting` — আশাব্যঞ্জক, উজ্জ্বল
    - `ambient` / `calm` — শান্ত, লেখার নিচে বাজার জন্য
    - `technology` / `inspiring corporate` — সফটওয়্যারের প্রোমোর জন্য
-4. **Download** চাপুন, MP3 নামান।
-5. ফাইলটা এই ফোল্ডারে রাখুন:
-   `E:\Video Create\assets\music\`
-6. নাম দিন সহজ করে — যেমন `corporate-calm.mp3`, `cinematic-build.mp3`
-7. AI-কে বলুন **"মিউজিক রেখেছি"** — সে যাচাই করে তালিকায় যোগ করে দেবে।
+4. **Download** চাপুন, MP3 নামান। পাশের মেনু থেকে **লাইসেন্স সার্টিফিকেট (PDF)**-ও নামান।
+   YouTube কখনো কপিরাইট দাবি তুললে এটা দেখিয়ে মিটিয়ে ফেলা যায়।
+5. ফাইল দুটো **মেজাজ অনুযায়ী ফোল্ডারে** রাখুন (ফোল্ডার না থাকলে বানিয়ে নিন):
+   - `E:\Video Create\assets\music\calm\` ← শান্ত, কথার নিচে বাজানোর জন্য
+   - `E:\Video Create\assets\music\upbeat\` ← উৎসাহী, দ্রুত
+   - `E:\Video Create\assets\music\corporate\` ← প্রোডাক্ট বা সফটওয়্যারের ভিডিও
+   - `E:\Video Create\assets\music\cinematic\` ← গম্ভীর, বড় ঘোষণা
+   - `E:\Video Create\assets\music\kids\` ← স্কুল বা বাচ্চাদের অনুষ্ঠান
+6. সার্টিফিকেটের নাম গানের নাম দিয়ে শুরু হলেই চলবে (যেমন `soft-piano.mp3` আর `soft-piano-license.pdf`)।
+7. তালিকা দেখতে এটা চালান। প্রতিটা গানের দৈর্ঘ্য, জোর আর সার্টিফিকেট আছে কিনা দেখাবে:
+
+   ```bash
+   node "E:/Video Create/tools/music-pick.mjs" list
+   ```
+
+   ভিডিও বানানোর সময় AI নিজেই `music-pick.mjs pick <মেজাজ>` চালাবে। সেটা মানানসই গান বেছে,
+   মাপমতো কেটে, শেষে ধীরে মিলিয়ে দিয়ে প্রজেক্টে বসিয়ে দেবে।
 
 **পরামর্শ:** শুরুতে ৪-৬টা গান নামান — একটা শান্ত, একটা উৎসাহী, একটা গম্ভীর,
 একটা দ্রুত। বেশিরভাগ ভিডিওতে এতেই কাজ চলে যায়।
@@ -57,6 +69,13 @@ Pixabay Content License (মূল পাতা যাচাই করা হয
 ## 🔧 মিউজিক ভিডিওতে কীভাবে বসে (কারিগরি — AI-এর জন্য)
 
 `index.html`-এ, দৃশ্যগুলোর পাশে (root-এর সরাসরি সন্তান হিসেবে):
+
+**Easiest path (2026-10-06):** `node tools/music-pick.mjs pick <mood> --project=<dir> [--narration] --insert`
+picks a track and writes `<project>/assets/music/bgm.mp3`: `atrim`, 0.5 s fade-in, 2.5 s fade-out, −16 LUFS. It then
+inserts `<audio id="bgm" … data-track-index="9" data-volume="0.13|0.8">`. Verified: under narration the music sat about
+21 dB below the voice, the finished mix measured −14 LUFS, and the narration transcribed cleanly.
+
+By hand:
 
 ```html
 <audio id="bgm-bed" src="assets/music/corporate-calm.mp3"
