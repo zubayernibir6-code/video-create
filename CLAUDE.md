@@ -155,6 +155,19 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   plus faststart. `--color-space=bt709` alone left transfer/primaries "unknown". **Verified:** the fade is
   back (t=4.9 s RGB 3,5,9; the old PNG-path file stayed at 25,31,56). qc.mjs PASS with all tags bt709. Both
   call forms work, in 19 s warm (65 s cold). The old no-fade file is in `.quarantine/2026-10-05/remotion-starter/`.
+- ✅ **Cleanup by quarantine (plan step 20, 2026-10-06). Nothing was deleted.** Everything moved to
+  `E:/Video Create/.quarantine/2026-10-05/` (git-ignored; its README.md is in Bengali; ~236 MB; the user may
+  delete it later): the empty nested remotion-starter `.git`, 199 MB of old `out/frames` PNGs, the two duplicate
+  SFX, the 34 MB `kokoro-v1.0.onnx.tmp`, and **the 2026-10-04 audit's media-use test records**. For the last,
+  folder mtimes 14:07–14:32 matched the manifest entries (fixtures such as "mu-resolve-test", a fake HeyGen bgm, a
+  fake `preferences.json` with zh / x-feed sightings). `C:\Users\zubay\.media\manifest.jsonl` keeps its 4 REAL
+  records (the July star-chime bgm and the three September LUTs); the full original is saved in quarantine.
+  The stale headless shells (131 / 152.0.7928.2) were left alone: they sit in the shared E: cache, which the
+  older `E:\remotion and hyperframe,` workspace may use.
+  ⚠ **Found while checking:** the 2026-10-05 media-use skill's `scripts/resolve.mjs` is now a thin shim that
+  needs `npx hyperframes media-use resolve`, a command the 0.8.33 CLI does not have. It exits 1 silently (it
+  falls through to `bun`). This is the skills/CLI version mismatch from the silent skills update, and it is
+  why plan step 22 (CLI upgrade) was done next.
 - ✅ **`tools/finish.mjs` + `tools/qc.mjs`: one-command delivery (plan step 5, 2026-10-05).** Plain node and FFmpeg.
   `node "E:/Video Create/tools/finish.mjs" <project-folder | video-file> [--quality=high|standard|draft]
   [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop] [--lufs=-14] [--out=<dir>] [--keep]`.
@@ -391,7 +404,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ✅ done 2026-10-06 |
 | 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ✅ done 2026-10-06 |
 | 19 | git versioning of sources (move the empty nested `.git` in remotion-starter first) | none | ⬜ |
-| 20 | Cleanup: stale headless shells, `.media` test pollution, `out/frames` | none | ⬜ explicit OK per item |
+| 20 | Cleanup: `.media` test pollution, `out/frames`, Kokoro .tmp → **moved to `.quarantine/`, nothing deleted** | none | ✅ done 2026-10-06 |
 | 21 | Optional: Azure bn-BD neural TTS (account + card) | — | ⬜ user decision |
 | 22 | Optional: HyperFrames 0.8.33 → latest | ~34 MB | ⬜ user decision |
 
