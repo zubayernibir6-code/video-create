@@ -279,6 +279,13 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   ভবিষ্যৎ, রোল নম্বর ১২ (ASCII digits become Bengali digits). The one miss: reph + ya-phola + e-kar
   (দৈর্ঘ্যের → দৈর্ঘ্যরে), so proofread. The call is `ConvertToUnicode("bijoy", text)`; the first argument is
   the encoding (also "somewherein" and "boisakhi").
+- ✅ **music-to-video beat analysis works (plan step 15, 2026-10-06).** librosa 0.11.0 (+ numba 0.68, scipy 1.17,
+  scikit-learn 1.9) is in pyenv, which is now 716 MB; it took 160 s to install. **The skill's commands say `python3`,
+  which is the Microsoft Store stub here. Run them with the pyenv python instead:**
+  `"E:/Video Create/tools/pyenv/Scripts/python.exe" C:/Users/zubay/.claude/skills/music-to-video/scripts/analyze-beatgrid.py <audio> -o grid.json --print`
+  (set `PYTHONIOENCODING=utf-8`). Verified on a synthetic 32 s 120 BPM track: 117.5 BPM, 62 beats / 15 bars,
+  127 classified events, 64 s. PATH was deliberately NOT changed to shadow `python3`, since that would affect other
+  apps. `hyperframes beats` (no Python) remains the quick option for a plain beat grid.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -311,7 +318,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ✅ done 2026-10-06 |
 | 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | ⬜ |
 | 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | ⬜ |
-| 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ⬜ |
+| 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ✅ done 2026-10-06 |
 | 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ✅ done 2026-10-06 |
 | 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ✅ done 2026-10-06 |
 | 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ⬜ |
