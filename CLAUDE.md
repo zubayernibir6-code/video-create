@@ -196,6 +196,10 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   The resolve test wrote a record into the shared `~/.media`; it was moved to quarantine.
   **Project pins:** each project's package.json still runs `npx hyperframes@0.8.33` for `npm run …`. They were left
   as they are (they work), while `tools/*.mjs` use the global 0.8.134. Rollback: `npm install -g hyperframes@0.8.33`.
+  0.8.134 no longer bundles onnxruntime-node: the first `remove-background` run prints "installing onnxruntime-node
+  for background removal, once". That was done on 2026-10-06, after which the run took 1.13 s/frame at 720p
+  (0.8.33: 1.6 s) with a valid alpha. `hyperframes doctor` is all green except MusicGen (deliberately absent,
+  non-commercial weights) and Docker (not needed).
 - ✅ **`tools/finish.mjs` + `tools/qc.mjs`: one-command delivery (plan step 5, 2026-10-05).** Plain node and FFmpeg.
   `node "E:/Video Create/tools/finish.mjs" <project-folder | video-file> [--quality=high|standard|draft]
   [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop] [--lufs=-14] [--out=<dir>] [--keep]`.
