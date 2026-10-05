@@ -168,6 +168,34 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   needs `npx hyperframes media-use resolve`, a command the 0.8.33 CLI does not have. It exits 1 silently (it
   falls through to `bun`). This is the skills/CLI version mismatch from the silent skills update, and it is
   why plan step 22 (CLI upgrade) was done next.
+- ✅ **Version history (plan step 19, done FIRST on 2026-10-05 as the safety net for the overnight run).**
+  `E:\Video Create` is now a git repo (branch master). Identity is repo-local: Talha Zubayer
+  <nibir@lamppost.org.bd>. Settings: `core.autocrlf=false`, `core.longpaths=true`, and `.gitattributes`
+  `* -text` (no line-ending rewriting). `.gitignore` excludes node_modules, renders, project renders/out/build/
+  snapshots, .cache, .quarantine, tools/pyenv, tools/whisper.cpp, tools/deep-filter, assets/models, the Piper .onnx,
+  all video/wav/gif and `.env*` (except `.env.local.example`). The first commit "Workspace snapshot before the
+  overnight install steps" holds 466 files; there is one commit per plan step after it.
+  Undo a step: `git log --oneline`, then `git checkout <commit> -- <path>`. Nothing is pushed anywhere (no remote).
+  Renders and big models are NOT in git; back up `renders/` separately (an external drive or cloud folder).
+- ✅ **HyperFrames CLI 0.8.33 → 0.8.134 (plan step 22, 2026-10-06).** Why it was needed: the silent 2026-10-05
+  skills update made media-use's `resolve` call `npx hyperframes media-use …`, which 0.8.33 lacks. Installed with
+  `HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_AUTO_INSTALL=1 npm install -g hyperframes@0.8.134` in 27 s. The package
+  has no install scripts. npm warned that esbuild's postinstall was not in `allowScripts`; it was NOT approved
+  (§6 rule) and everything still works. The skills were untouched. The pinned Chrome is the same (152.0.7977.30),
+  so nothing new was downloaded. The dist is now code-split (278 files), so grep the whole `dist/` folder, not
+  cli.js. Every env var the tools rely on is still present (PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS,
+  --frames-cache-dir, HYPERFRAMES_SKIP_SKILLS / NO_AUTO_INSTALL / PYTHON / WHISPER_PATH). New commands: `media-use`,
+  `timeline`, `history`, `clean`.
+  **Re-verified on 0.8.134 in a fresh-shell environment** (HYPERFRAMES_BROWSER_PATH unset, the user env vars set):
+  - media-use doctor ✓ (ffmpeg/ffprobe/node; HeyGen is deliberately absent) and `media-use resolve --type sfx` ✓
+  - tts ✓; transcribe 65/65 ✓; remove-background model cached ✓
+  - `beats`: 65 beats at exactly 0.500 s, 120 BPM — better than librosa's 117.5
+  - finish.mjs on audio-test: 46 s, all PASS
+  - the 250 s render streamed in 4 m 18.8 s (0.8.33: 4 m 56 s), all PASS
+  - the full 45 s promo with 28 SFX: render 1 m 57.7 s, total 146 s (0.8.33: 157 s), all PASS
+  The resolve test wrote a record into the shared `~/.media`; it was moved to quarantine.
+  **Project pins:** each project's package.json still runs `npx hyperframes@0.8.33` for `npm run …`. They were left
+  as they are (they work), while `tools/*.mjs` use the global 0.8.134. Rollback: `npm install -g hyperframes@0.8.33`.
 - ✅ **`tools/finish.mjs` + `tools/qc.mjs`: one-command delivery (plan step 5, 2026-10-05).** Plain node and FFmpeg.
   `node "E:/Video Create/tools/finish.mjs" <project-folder | video-file> [--quality=high|standard|draft]
   [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop] [--lufs=-14] [--out=<dir>] [--keep]`.
@@ -403,15 +431,50 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ✅ done 2026-10-06 |
 | 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ✅ done 2026-10-06 |
 | 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ✅ done 2026-10-06 |
-| 19 | git versioning of sources (move the empty nested `.git` in remotion-starter first) | none | ⬜ |
+| 19 | git versioning of sources (move the empty nested `.git` in remotion-starter first) | none | ✅ done 2026-10-05 (FIRST, as the overnight safety net; one commit per step) |
 | 20 | Cleanup: `.media` test pollution, `out/frames`, Kokoro .tmp → **moved to `.quarantine/`, nothing deleted** | none | ✅ done 2026-10-06 |
-| 21 | Optional: Azure bn-BD neural TTS (account + card) | — | ⬜ user decision |
-| 22 | Optional: HyperFrames 0.8.33 → latest | ~34 MB | ⬜ user decision |
+| 21 | Optional: Azure bn-BD neural TTS (account + card) | — | ⏭ skipped — needs the user to open an account (card check). Piper + own voice cover Bengali |
+| 22 | HyperFrames 0.8.33 → **0.8.134** (needed: the self-updated skills require it) | ~34 MB | ✅ done 2026-10-06 |
 
 **Impossible here regardless:** admin-only installs; local AI image/video/music generation at a usable
 speed (no GPU, ~4 GB free RAM); the Apple-Silicon MLX tools media-use defaults to (mflux,
 parakeet-mlx, ltx-2-mlx); NVENC/AMF; 4K in practice. A fully unattended render-to-delivery run is
 not a machine limit: the render is user-gated by design.
+
+---
+
+## 0c. Editing cookbook: verified FFmpeg recipes for the user's own footage (2026-10-04/06)
+
+Every line below was run on this laptop (system FFmpeg 8.1.1) during the capability audit. Times are for 1080p.
+Do the cutting, reframing, grading and loudness in FFmpeg; use HyperFrames for graphics and titles, rendered on
+top. For long footage, render the overlay transparent (`hyperframes render --format webm`) and composite it
+with FFmpeg (the "hybrid path"): 8 s took 33 + 10 s that way vs 48.6 s through a full HyperFrames render.
+
+| Job | Command (key part) | Notes |
+| --- | --- | --- |
+| Inspect | `ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,color_transfer:format=duration -of compact in.mp4` | `color_transfer` arib-std-b67 / smpte2084 = HDR |
+| Exact trim | `ffmpeg -ss 12.5 -to 20 -i in.mp4 -c:v libx264 -crf 18 -c:a aac out.mp4` | `-c copy` snaps to keyframes (asked 2.0 s, got 2.10 s) |
+| Join clips | concat filter after normalising each input (`scale=1920:1080,fps=30`, `aresample=48000`) | verified with a VFR .mov in the mix |
+| Speed | `setpts=0.5*PTS` + `atempo=2.0` (2×); slow-mo `minterpolate=fps=30:mi_mode=blend` + `atempo=0.5` | |
+| 16:9 → 9:16 | `crop=ih*9/16:ih,scale=1080:1920` or the blurred-fill version in `tools/finish.mjs` | no automatic subject tracking |
+| Stabilise | `vidstabdetect=shakiness=8:accuracy=15:result=t.trf` then `vidstabtransform=input=t.trf:smoothing=30:zoom=5,unsharp=5:5:0.8:3:3:0.4` | `tripod=1` for locked-off shots; bare file names (colon issue). Shake 9.32 → 5.34 (3.82 tripod) |
+| Scene cuts | `ffmpeg -i in.mp4 -vf "select='gt(scene,0.3)',showinfo" -f null -` | found cuts at exactly 2.0 / 4.0 s |
+| Video denoise | `hqdn3d=6:4:9:6` | PSNR 36.3 → 41.1 dB; `nlmeans` too slow (90 s per second of video) |
+| LUT / grade | `cd assets/luts && ffmpeg -i in.mp4 -vf "lut3d=file='film-fade.cube'" …` | or an escaped absolute path `lut3d=file='C\:/…/x.cube'`; partial strength in §4e |
+| Green screen | `chromakey=color=0x00B140:similarity=0.12:blend=0.05,despill=type=green` then overlay on a background | despill shifts yellow/cyan; drop it if the subject has those colours |
+| No green screen | `hyperframes remove-background clip.mp4 -o fg.webm` (step 18) | 1.6 s/frame at 720p; needs good light |
+| HDR phone clip → SDR | `zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p` | HyperFrames' own `--sdr` does NOT tonemap at extraction |
+| VFR → CFR | `-vf "fps=30,format=yuv420p" -c:v libx264 -crf 18 -g 30` | HyperFrames handles VFR itself; this is for long files |
+| Cut silences | `silencedetect=noise=-35dB:d=0.5`, then keep the ranges (media-use `transcript-cut.mjs --keep "…"`) | no speech recognition needed |
+| Cut by words | `tools/transcribe.mjs` → words.json → `transcript-cut.mjs` | Bengali: the step-7 model |
+| Audio out | `-vn -ac 1 -ar 16000 -c:a pcm_s16le` (for ASR) | |
+| Voice cleanup | `node tools/voice.mjs clean <file>` (AI denoise, −16 LUFS) | voice only, never music |
+| Fast drafts | `-c:v h264_qsv -global_quality 22` (Intel Quick Sync) | 2.6 s vs 8.3 s for libx264 medium; use x264 for finals |
+| Finish + deliver | `node tools/finish.mjs <video.mp4>` | −14 LUFS, QC, 9:16/1:1/4:5, thumbnail, GIF |
+| Subtitles | `node tools/burn-subs.mjs <video> <subs.srt>` | never `subtitles=` for Bengali |
+
+Long footage through HyperFrames: ~0.13–0.20 s per frame (5 min ≈ 25–40 min). Always pass
+`--frames-cache-dir "E:/Video Create/.cache/frames"`; finish.mjs does this. The extract cache otherwise fills C:.
 
 ---
 
@@ -421,7 +484,7 @@ not a machine limit: the render is user-gated by design.
 
 | Framework | What it is | Status |
 | --- | --- | --- |
-| **HyperFrames** 0.8.33 | Renders video from **HTML**. DOM declares timing via `data-*` attributes. | ✅ installed globally, renders verified |
+| **HyperFrames** 0.8.134 (was 0.8.33 until 2026-10-06) | Renders video from **HTML**. DOM declares timing via `data-*` attributes. | ✅ installed globally, renders verified |
 | **Remotion** 4.0.523 | Renders video from **React**. TypeScript compositions. | ✅ installed per-project, renders verified |
 
 Both are installed and **both have produced real 1080p MP4 files on this machine**.
@@ -1481,6 +1544,29 @@ blocker for selling videos.
   ⚠️ Side effect: a scratch `hyperframes init` reinstalled all 21 HyperFrames skills from GitHub (see §0b).
 - ✅ **Plan step 2 done (2026-10-05):** `tools/pyenv` venv (offline, 28 MB) + user env `HYPERFRAMES_PYTHON`.
   Verified that HyperFrames resolves it. Nothing was installed into the Hermes venv.
+
+### 🌙 2026-10-05/06 overnight session ("do all the steps, don't ask, I'm going to sleep")
+
+The user authorized the whole remaining plan in one message. Ground rules kept for the night: git snapshot
+FIRST (step 19), one commit per step, nothing deleted (quarantine only), no accounts, sign-ins or money
+(steps 13/14 left as user tasks, step 21 skipped). Downloads were limited to the planned, licence-checked ones:
+- the Bengali ASR model (775 MB)
+- the whisper.cpp small.en model (488 MB, fetched by the CLI)
+- Piper + its voice (~111 MB)
+- DeepFilterNet (27 MB)
+- librosa and its stack (~100 MB)
+- Lucide icons, 7 OFL fonts, 14 CC0 SFX and 14 Noto Lottie emoji
+- the bijoy converter (73 KB)
+- the u2net matting model (176 MB)
+- the HyperFrames 0.8.134 CLI
+Order run: 19 → 7 → 8 → 11 → 12 → 16 → 17 → 15 → 18 → 13/14 tooling → 9 → 10 → 20 → 22. Results are in §0b.
+Notable finds:
+- The Bengali fine-tune must decode `without_timestamps`.
+- Whisper writes phantom text into silent tails (now filtered out).
+- 0.8.33's compiler ignored the linked fonts.css and pulled Google Fonts.
+- HyperFrames' SRT import breaks on CRLF.
+- The silently-updated skills broke media-use resolve on the old CLI, which is why the CLI was upgraded.
+The user's morning report is START-HERE.md §১৭.
 
 ### ⬜ Tier 3 — local AI media (not started, heavy)
 
