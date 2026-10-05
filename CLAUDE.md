@@ -199,6 +199,21 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   unless `-d <project>` is given. It also patches `const TRANSCRIPT = [...]` / `const script = [...]` in
   the project's HTML (verified: 25 words patched in). A scratch word-by-word caption composition built on
   that rendered correctly: frames at 1.2 / 2.1 / 4.5 s lit exactly the words whose start had passed.
+- ✅ **Speech to text, Bengali and English (plan step 7, 2026-10-05).** \`node tools/transcribe.mjs <audio|video>
+  [--lang=bn|en] [--model=bengali|turbo|small|medium|<dir>] [--out=<path>]\` runs \`tools/transcribe.py\` with
+  pyenv's python and writes \`<name>.words.json\` (HyperFrames import format), \`.srt\` (for burn-subs) and \`.txt\`.
+  faster-whisper 1.2.1 + ctranslate2 4.8.2 are in pyenv, which is now 327 MB. The Bengali model is
+  \`SayedShaun/bengali-whisper-medium-ct2\` rev 32da13b97a: Apache-2.0, tugstugi's 1st-place Bengali.AI weights,
+  int8, model.bin 774,731,149 B. It lives at \`assets/models/asr/bengali-whisper-medium-ct2\` (git-ignored;
+  9.5 min to download). turbo/small/medium resolve from the HF cache on E: (HF_HOME).
+  **Measured on the user's real Bengali recording (Downloads/video2/clip_0_30.mp3, a talk about AI agents):**
+  the fine-tune is nearly perfect; its only errors are English loanwords (জিবিটি = GPT, জেমিনায় = Gemini, এলএলবি = LLM,
+  ল্যাবেজ = language). Stock turbo misspelled about half the words (কদা, সেডা, হাশোলে, ভাভে…). The fine-tune
+  writes no punctuation. **Speed:** fine-tune 304 s for 30 s (10.1x real time; ~10 min per minute of audio);
+  turbo 112 s (3.7x). Rejected: beam_size=1 (−15 % time only) and cpu_threads=8 (−16 %, but it dropped the
+  whole first sentence), so it stays at beam 5 and 4 threads. **English** (small): WER 1.5 % on the Kokoro
+  script (the only miss was the name "Khada"), 0.7x real time, 0.7 GB peak. The output imports into HyperFrames
+  (48 words) and burns with burn-subs (verified). Use \`--model=turbo\` only for a quick rough draft of Bengali.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -223,7 +238,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 4 | Bengali narration from the user's own mic + clean-up chain (`tools/voice.mjs`) | none | ✅ done 2026-10-05 |
 | 5 | `tools/finish.mjs` + `tools/qc.mjs`: check → render (long-render env) → −14 LUFS → QC → 16:9/9:16/1:1/4:5 + thumbnail → `renders/<project>/` | none | ✅ done 2026-10-05 |
 | 6 | Bengali subtitle tools (`burn-subs.mjs` via `ass=`, `srt-to-words.mjs`) | none | ✅ done 2026-10-05 |
-| 7 | Accurate Bengali ASR: faster-whisper in pyenv + `SayedShaun/bengali-whisper-medium-ct2` (Apache-2.0) + `tools/bn-transcribe.py` | ~845 MB | ⬜ |
+| 7 | Accurate Bengali ASR: faster-whisper in pyenv + `SayedShaun/bengali-whisper-medium-ct2` (Apache-2.0) + `tools/transcribe.mjs`/`.py` | ~845 MB | ✅ done 2026-10-05 |
 | 8 | Register whisper.cpp for English (copy from `E:\remotion and hyperframe,`) + `HYPERFRAMES_WHISPER_PATH` | none (local copy) | ⬜ |
 | 9 | Workflow-trap fixers: `hf-postassemble.mjs`, `fix-frame.mjs`, `inline-fonts.mjs`, `sfx-offsets.mjs` | none | ⬜ |
 | 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
