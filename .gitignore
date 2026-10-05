@@ -22,3 +22,4 @@ assets/models/
 *.wav
 .env*
 *.log
+assets/voices/piper/*.onnx

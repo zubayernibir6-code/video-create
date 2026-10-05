@@ -39,6 +39,19 @@ MODELS = {
 }
 SENTENCE_END = ("।", "?", "!", ".", "؟")
 
+# The Bengali fine-tune writes a word-initial vowel as its dependent sign: "আমাদের" comes out as "ামাদের"
+# at the start of the audio, whatever the leading silence (tested with 0 / 0.5 / 1 / 2 s and with VAD off;
+# stock turbo heard the same audio as "আমাদের", so the audio is fine). No Bengali word can begin with a
+# dependent sign, so it is mapped back to the independent vowel.
+VOWEL_SIGN_TO_LETTER = {"া": "আ", "ি": "ই", "ী": "ঈ", "ু": "উ", "ূ": "ঊ", "ৃ": "ঋ", "ে": "এ", "ৈ": "ঐ", "ো": "ও", "ৌ": "ঔ"}
+
+
+def fix_word(text):
+    text = unicodedata.normalize("NFC", text)
+    if text and text[0] in VOWEL_SIGN_TO_LETTER:
+        text = VOWEL_SIGN_TO_LETTER[text[0]] + text[1:]
+    return text
+
 
 def peak_memory_gb():
     """Peak working set of this process (Windows), for the summary line."""
@@ -59,6 +72,36 @@ def peak_memory_gb():
         return pmc.PeakWorkingSetSize / 2**30
     except Exception:
         return None
+
+
+def decode_audio(path, sampling_rate):
+    from faster_whisper.audio import decode_audio as fw_decode
+    return fw_decode(path, sampling_rate=sampling_rate)
+
+
+def rms_db(x):
+    import numpy as np
+    return 10 * np.log10(float(np.mean(np.square(x))) + 1e-12) if len(x) else -120.0
+
+
+def speech_level_db(audio, sr=16000):
+    """Loud-frame level (90th percentile of 50 ms frame RMS): what "speech" sounds like in this file."""
+    import numpy as np
+    n = sr // 20
+    frames = [rms_db(audio[i:i + n]) for i in range(0, max(len(audio) - n, 1), n)]
+    return float(np.percentile(frames, 90)) if frames else -120.0
+
+
+def is_phantom(seg, audio, speech_db, sr=16000):
+    """Whisper invents text in near-silence (a 0.46 s silent tail came back as six words). A segment is
+    dropped when its audio is 25 dB below the file's speech level, or when it packs more than 6 words a
+    second into under 1.5 s — real Bengali speech runs at about 2-3 words a second."""
+    chunk = audio[int(seg.start * sr):int(seg.end * sr)]
+    if rms_db(chunk) < speech_db - 25:
+        return True
+    dur = max(seg.end - seg.start, 0.01)
+    n = len(seg.words or [])
+    return dur < 1.5 and n / dur > 6
 
 
 def srt_time(t):
@@ -115,16 +158,26 @@ def main():
         # Not in the local cache yet: allow the one-time download.
         model = WhisperModel(model_ref, device="cpu", compute_type="int8", cpu_threads=4)
     print(f"Listening to {media.name} (language {a.lang}) …", flush=True)
+    # The Bengali fine-tune was trained without Whisper's timestamp tokens: decoding WITH them drops the
+    # first syllable ("হিসাব" → "াব"); without them the first word is right and word timings still come from
+    # cross-attention alignment (verified 2026-10-06 on Piper narration). Stock models keep timestamps.
     segments, info = model.transcribe(
         str(media), language=a.lang, beam_size=5, vad_filter=True, word_timestamps=True,
-        condition_on_previous_text=False,
+        condition_on_previous_text=False, without_timestamps=(model_key == "bengali"),
     )
+    audio = decode_audio(str(media), sampling_rate=16000)
+    speech_db = speech_level_db(audio)
 
     words = []
+    dropped = 0
     for seg in segments:
-        print(f"  [{seg.start:7.1f} s] {unicodedata.normalize('NFC', seg.text.strip())}", flush=True)
-        for w in seg.words or []:
-            text = unicodedata.normalize("NFC", w.word.strip())
+        if is_phantom(seg, audio, speech_db):
+            dropped += 1
+            print(f"  [{seg.start:7.1f} s] (skipped: no real speech here — {seg.text.strip()[:30]}…)", flush=True)
+            continue
+        seg_words = [fix_word(w.word.strip()) for w in seg.words or []]
+        print(f"  [{seg.start:7.1f} s] {' '.join(t for t in seg_words if t)}", flush=True)
+        for w, text in zip(seg.words or [], seg_words):
             if text:
                 words.append({"id": f"w{len(words)}", "text": text, "start": round(w.start, 3), "end": round(max(w.end, w.start), 3)})
     if not words:
@@ -140,7 +193,8 @@ def main():
     took = time.time() - t0
     mem = peak_memory_gb()
     print(f"\n✓ {len(words)} words, {len(cues)} subtitle lines, {info.duration:.1f} s of audio in {took:.0f} s"
-          f" ({took / max(info.duration, 0.1):.1f}x real time){f', peak memory {mem:.1f} GB' if mem else ''}")
+          f" ({took / max(info.duration, 0.1):.1f}x real time){f', peak memory {mem:.1f} GB' if mem else ''}"
+          f"{f', {dropped} phantom segment(s) skipped' if dropped else ''}")
     for ext in ("words.json", "srt", "txt"):
         print(f"  {out}.{ext}")
 

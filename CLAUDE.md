@@ -223,6 +223,26 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   (small.en) gave 65 words. media-use's `scripts/transcribe.mjs --input <f> --out <json>` now works too
   (65 words, 43 s; it needs `--input`, not a positional argument). For BENGALI keep using
   `tools/transcribe.mjs`: whisper.cpp only has the stock models, which garble Bengali.
+- ✅ **Offline Bengali voice-over (plan step 11, 2026-10-06).** `node tools/bn-tts.mjs "<text>" | script.txt
+  [-o out.wav] [--voice=male|female|0-15] [--speed=1.0] [--list]`. piper-tts 1.8.0 (GPL tool) is in pyenv. The voice
+  `assets/voices/piper/bn_BD-google-medium.onnx` (76,782,515 B, git-ignored) has 16 speakers, a mix of bn-BD and bn-IN
+  that OpenSLR does not label. `CREDITS.md` there holds the credit line that must go in any video using it
+  (OpenSLR-37 is CC BY-SA 4.0). The output is a 48 kHz mono WAV, two-pass −16 LUFS / −1.5 dBTP, with 0.25 s of
+  silence before and 0.4 s after. Speed: an 11 s paragraph is made in ~7 s.
+  **Speakers were measured, not guessed** (`speakers.json`). All 16 read the same sentence; the result was read back
+  with the Bengali ASR and scored by grapheme error rate. Gender comes from the measured median pitch.
+  6 speakers scored 0 %. Presets: male = speaker 5 (158 Hz), female = speaker 3 (174 Hz); speaker 15 is a slower,
+  250 Hz female voice. Numbers are spoken correctly ("২,৫০০" → "দুই হাজার পাঁচশ").
+  **Three transcriber fixes came out of this round-trip** (all in `transcribe.py`, re-verified on the real clip):
+  (1) the Bengali fine-tune must decode with `without_timestamps=True`, because with timestamp tokens it drops
+  the first syllable ("হিসাব" → "াব"; the real clip's first word "আজকে" came back as "ের"). Word timings
+  still work. (2) Any word starting with a dependent vowel sign is mapped to the independent vowel (a safety
+  net). (3) "Phantom" segments are dropped: Whisper wrote six invented words into a 0.46 s silent tail. Rule:
+  drop when the segment's RMS is 25 dB under the file's speech level (90th percentile of 50 ms frames), or when
+  it packs more than 6 words/s into less than 1.5 s. Result: the narration and the real clip are word-perfect at
+  the start, 3 phantom segments were dropped, and nothing real was lost (real clip: 47 words). Cost: peak RAM
+  2.4–2.5 GB. Short files run slower (13–18x) because Whisper's temperature fallback re-decodes the phantom
+  tail; the 30 s real clip ran at 9.4x.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -251,7 +271,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 8 | Register whisper.cpp for English (copy from `E:\remotion and hyperframe,`) + `HYPERFRAMES_WHISPER_PATH` | 488 MB (small.en) | ✅ done 2026-10-06 |
 | 9 | Workflow-trap fixers: `hf-postassemble.mjs`, `fix-frame.mjs`, `inline-fonts.mjs`, `sfx-offsets.mjs` | none | ⬜ |
 | 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
-| 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ⬜ |
+| 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ✅ done 2026-10-06 |
 | 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ⬜ |
 | 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | ⬜ |
 | 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | ⬜ |
