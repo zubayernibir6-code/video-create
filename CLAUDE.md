@@ -199,12 +199,12 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   unless `-d <project>` is given. It also patches `const TRANSCRIPT = [...]` / `const script = [...]` in
   the project's HTML (verified: 25 words patched in). A scratch word-by-word caption composition built on
   that rendered correctly: frames at 1.2 / 2.1 / 4.5 s lit exactly the words whose start had passed.
-- ✅ **Speech to text, Bengali and English (plan step 7, 2026-10-05).** \`node tools/transcribe.mjs <audio|video>
-  [--lang=bn|en] [--model=bengali|turbo|small|medium|<dir>] [--out=<path>]\` runs \`tools/transcribe.py\` with
-  pyenv's python and writes \`<name>.words.json\` (HyperFrames import format), \`.srt\` (for burn-subs) and \`.txt\`.
+- ✅ **Speech to text, Bengali and English (plan step 7, 2026-10-05).** `node tools/transcribe.mjs <audio|video>
+  [--lang=bn|en] [--model=bengali|turbo|small|medium|<dir>] [--out=<path>]` runs `tools/transcribe.py` with
+  pyenv's python and writes `<name>.words.json` (HyperFrames import format), `.srt` (for burn-subs) and `.txt`.
   faster-whisper 1.2.1 + ctranslate2 4.8.2 are in pyenv, which is now 327 MB. The Bengali model is
-  \`SayedShaun/bengali-whisper-medium-ct2\` rev 32da13b97a: Apache-2.0, tugstugi's 1st-place Bengali.AI weights,
-  int8, model.bin 774,731,149 B. It lives at \`assets/models/asr/bengali-whisper-medium-ct2\` (git-ignored;
+  `SayedShaun/bengali-whisper-medium-ct2` rev 32da13b97a: Apache-2.0, tugstugi's 1st-place Bengali.AI weights,
+  int8, model.bin 774,731,149 B. It lives at `assets/models/asr/bengali-whisper-medium-ct2` (git-ignored;
   9.5 min to download). turbo/small/medium resolve from the HF cache on E: (HF_HOME).
   **Measured on the user's real Bengali recording (Downloads/video2/clip_0_30.mp3, a talk about AI agents):**
   the fine-tune is nearly perfect; its only errors are English loanwords (জিবিটি = GPT, জেমিনায় = Gemini, এলএলবি = LLM,
@@ -213,7 +213,7 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   turbo 112 s (3.7x). Rejected: beam_size=1 (−15 % time only) and cpu_threads=8 (−16 %, but it dropped the
   whole first sentence), so it stays at beam 5 and 4 threads. **English** (small): WER 1.5 % on the Kokoro
   script (the only miss was the name "Khada"), 0.7x real time, 0.7 GB peak. The output imports into HyperFrames
-  (48 words) and burns with burn-subs (verified). Use \`--model=turbo\` only for a quick rough draft of Bengali.
+  (48 words) and burns with burn-subs (verified). Use `--model=turbo` only for a quick rough draft of Bengali.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -1348,7 +1348,7 @@ it may be far cheaper than building whisper.cpp.
 
 ## 9. Available Claude skills for this work
 
-Already installed under `C:\Users\zubay\.claude\skills\`:
+Already installed under `C:\Users\zubay\.claude\skills`:
 
 `hyperframes` (entry point — **read first for any video request**), `hyperframes-core`,
 `hyperframes-cli`, `hyperframes-animation`, `hyperframes-audio`, `hyperframes-creative`,
