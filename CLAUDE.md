@@ -286,6 +286,17 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   (set `PYTHONIOENCODING=utf-8`). Verified on a synthetic 32 s 120 BPM track: 117.5 BPM, 62 beats / 15 bars,
   127 classified events, 64 s. PATH was deliberately NOT changed to shadow `python3`, since that would affect other
   apps. `hyperframes beats` (no Python) remains the quick option for a plain beat grid.
+- ✅ **Background removal without a green screen (plan step 18, 2026-10-06).**
+  `hyperframes remove-background <clip> -o fg.webm [--quality fast|balanced|best] [-b bg-plate.webm]` downloaded
+  `u2net_human_seg.onnx` (175,997,641 B, Apache-2.0) on first use into `~/.cache/hyperframes/background-removal/
+  models/` (a junction onto E:). It runs CPU-only at **1.6 s per 720p frame**: a 3 s, 15 fps clip took 72 s, so
+  10 s at 30 fps ≈ 8 min. The output is VP9 with `ALPHA_MODE=1`, and it must be decoded with `-c:v libvpx-vp9`
+  before `-i` to get yuva420p. Overlay it with `[1:v]format=rgba[f];[0:v][f]overlay` and seek on the OUTPUT side;
+  an input-side `-ss` gave a frame with no subject. Tested on the user's own webcam clip
+  (Downloads/video2/WIN_20260906_08_52_27_Pro.mp4, dim room): face, shoulders and the blanket were cut cleanly,
+  but the top of dark curly hair against a dark background went semi-transparent, and a moving hand was mostly
+  lost. **Advice for good results: even, bright light against a plain wall, or a green cloth + FFmpeg
+  `chromakey`** (verified in the audit).
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -321,7 +332,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ✅ done 2026-10-06 |
 | 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ✅ done 2026-10-06 |
 | 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ✅ done 2026-10-06 |
-| 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ⬜ |
+| 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ✅ done 2026-10-06 |
 | 19 | git versioning of sources (move the empty nested `.git` in remotion-starter first) | none | ⬜ |
 | 20 | Cleanup: stale headless shells, `.media` test pollution, `out/frames` | none | ⬜ explicit OK per item |
 | 21 | Optional: Azure bn-BD neural TTS (account + card) | — | ⬜ user decision |
