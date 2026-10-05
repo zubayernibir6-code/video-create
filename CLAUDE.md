@@ -252,6 +252,25 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   (a slightly better reading of "জেমিনাই ক্লড"). `-D` compensates its delay (aligned lag 0.00 ms). Caveat: on
   SYNTHETIC (TTS) speech plus noise it altered the voice more than the classic chain (aligned SDR 6.7 vs
   22.8 dB). It is built for real voices; use `--denoise=classic` if a cleaned TTS track ever sounds processed.
+- ✅ **Asset library expanded (plan step 16, 2026-10-06).** Everything below is commercial-safe, and credits are in
+  each folder.
+  **Icons:** `assets/icons/lucide/icons/*.svg`, 1,866 Lucide 1.52.0 SVGs, ISC licence (LICENSE alongside). They
+  include graduation-cap, banknote, calculator and similar.
+  **Fonts:** 7 more OFL families in `assets/fonts/bengali` (OFL texts in `LICENSES/`, all TTFs magic-checked):
+  Galada, Atma 300–700, Mina 400/700, Anek Bangla (variable wdth/wght), Noto Serif Bengali (variable), Tiro Bangla
+  Italic, Alkatra (variable). `fonts.css` now has 25 `@font-face` rules and new stacks `--font-bn-serif2`,
+  `--font-bn-cond`, `--font-bn-display`, `--font-bn-round`, `--font-bn-tech`, `--font-bn-brush`. Its header no longer
+  recommends `../../`. A snapshot sheet showed correct conjuncts in all of them **except Alkatra, which renders
+  উজ্জ্বল as উজজবল**. Use it for short titles only, and check a snapshot.
+  **SFX:** 14 CC0 sounds (Freesound via the anonymous Openverse API; sources in `CREDITS.md` and `manifest.json`):
+  applause, coin-drop, cash-register, camera-shutter, school-bell, heartbeat, page-turn, boom, crowd-cheer,
+  success, room-tone (18.7 s), classroom-ambience (37.4 s), plus new `click-soft` and `whoosh-short`. The old
+  versions of those two were byte copies of click/whoosh and are in `.quarantine/2026-10-05/sfx-duplicates/`.
+  31 unique sounds, 0 duplicate hashes.
+  **Lottie:** `assets/lottie/noto-emoji/`, 14 Google Noto animated emoji (CC BY 4.0, **attribution required**;
+  the line is in its CREDITS.md). 💰 has no animated version. Party and check rendered and animated in a
+  HyperFrames snapshot through `window.__hfLottie`.
+  Also: `assets/js/LICENSES/gsap-standard-license.txt` lost its 76 repeated headers (body unchanged, 78 lines).
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -285,7 +304,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | ⬜ |
 | 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | ⬜ |
 | 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ⬜ |
-| 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ⬜ |
+| 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ✅ done 2026-10-06 |
 | 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ⬜ |
 | 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ⬜ |
 | 19 | git versioning of sources (move the empty nested `.git` in remotion-starter first) | none | ⬜ |
@@ -350,6 +369,10 @@ E:\Video Create\
 │   ├── sfx\                      ← ✅ 19 SFX, Pixabay License, + CREDITS (§4d)
 │   ├── music\                    ← ⏳ empty; README.md tells the user how to add Pixabay tracks (§4d)
 │   ├── luts\                     ← ✅ 3 .cube looks, generated locally + README (§4e)
+│   ├── icons\lucide\             ← ✅ 1,866 SVG icons, ISC (§0b step 16)
+│   ├── lottie\noto-emoji\        ← ✅ 14 animated emoji, CC BY 4.0 — credit required (§0b step 16)
+│   ├── voices\piper\             ← ✅ offline Bengali TTS voice + speakers.json + CREDITS (§0b step 11)
+│   ├── models\asr\               ← ✅ Bengali speech-recognition model, 775 MB, git-ignored (§0b step 7)
 │   └── footage\   images\                              ← still empty
 └── renders\                                                     ← empty, final deliverables go here
 ```

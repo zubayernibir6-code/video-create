@@ -6,8 +6,10 @@
   },
   "click-soft": {
     "file": "click-soft.mp3",
-    "duration": 0.37,
-    "description": "Quiet short click — low-key UI tap / soft selection. Short accent, sync exactly to the on-screen action."
+    "duration": 0.24,
+    "description": "Quiet soft click — gentle UI tap. (Replaces the old file, which was a byte-for-byte copy of click.mp3.)",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/528561/"
   },
   "click": {
     "file": "click.mp3",
@@ -86,12 +88,98 @@
   },
   "whoosh-short": {
     "file": "whoosh-short.mp3",
-    "duration": 0.57,
-    "description": "Short whoosh — quick swipe/slide accent, fast element move, snappy transition. Sync to the motion."
+    "duration": 0.49,
+    "description": "Short airy whoosh (~0.5 s) — quick slide/swipe. (Replaces the old file, which was a copy of whoosh.mp3.)",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/60026/"
   },
   "whoosh": {
     "file": "whoosh.mp3",
     "duration": 0.57,
     "description": "Punchy whoosh/impact — fast reveal or hard transition accent. Sync to the motion."
+  },
+  "applause": {
+    "file": "applause.mp3",
+    "duration": 5.45,
+    "description": "Audience applause — end of a talk, a win, a big announcement. Fade it out under the next line.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/333387/"
+  },
+  "coin-drop": {
+    "file": "coin-drop.mp3",
+    "duration": 1.53,
+    "description": "Single coin dropping — money, savings, fees, a price reveal.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/324760/"
+  },
+  "cash-register": {
+    "file": "cash-register.mp3",
+    "duration": 1.45,
+    "description": "Cash register 'ka-ching' — payment received, sale made, fee collected.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/728224/"
+  },
+  "camera-shutter": {
+    "file": "camera-shutter.mp3",
+    "duration": 0.74,
+    "description": "Camera shutter click — photo moment, screenshot, freeze-frame.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/213180/"
+  },
+  "school-bell": {
+    "file": "school-bell.mp3",
+    "duration": 4.17,
+    "description": "Electronic school bell — class starts/ends, school-themed openers.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/592560/"
+  },
+  "heartbeat": {
+    "file": "heartbeat.mp3",
+    "duration": 3.61,
+    "description": "Four heartbeats — tension, suspense, a countdown, health topics.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/22416/"
+  },
+  "page-turn": {
+    "file": "page-turn.mp3",
+    "duration": 0.7,
+    "description": "Book page turn — next chapter, ledger/notebook, slide change.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/397549/"
+  },
+  "boom": {
+    "file": "boom.mp3",
+    "duration": 2,
+    "description": "Deep cinematic boom — title slam, big reveal. Heavier than impact-bass.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/535592/"
+  },
+  "crowd-cheer": {
+    "file": "crowd-cheer.mp3",
+    "duration": 3.56,
+    "description": "Crowd cheering — celebration, results, prize-giving.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/651643/"
+  },
+  "success": {
+    "file": "success.mp3",
+    "duration": 4.18,
+    "description": "Bright 'correct answer' blips — success, task done, right choice.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/531510/"
+  },
+  "room-tone": {
+    "file": "room-tone.mp3",
+    "duration": 18.68,
+    "description": "18 s of quiet room tone — bed under voice-over so silences don't sound dead. Loop or trim.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/329046/"
+  },
+  "classroom-ambience": {
+    "file": "classroom-ambience.mp3",
+    "duration": 37.43,
+    "description": "37 s of classroom chatter — school B-roll bed. Keep it low (0.10-0.20) under narration.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/417041/"
   }
 }
