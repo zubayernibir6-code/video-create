@@ -1265,11 +1265,24 @@ measured so the numbers are known when real narration or footage arrives.
 
 ---
 
-## 4g. First real video — `projects/hishab-khata-promo` (2026-09-11, BUILT BUT NOT RENDERED)
+## 4g. First real video — `projects/hishab-khata-promo` (built 2026-09-11, RENDERED 2026-10-06)
 
-The first end-to-end run of the `/product-launch-video` workflow. **The user explicitly declined
-the render** ("render korte hobe na") — everything up to the render gate is done and passing.
-Resume by approving the render; nothing needs rebuilding.
+> ✅ **Rendered 2026-10-06 at the user's request** ("হিসাব খাতার প্রোমোটা রেন্ডার করে দেখাও"):
+> `node tools/finish.mjs projects/hishab-khata-promo --quality=high` → `renders/hishab-khata-promo/2026-10-06_0301/`
+> (master + 9:16/1:1/4:5 + thumbnail + GIF). 253 s total, render 2 m 20.7 s (screenshot capture, forced by a
+> `filter:blur`), 7.4 MB. Audio −12 → −14 LUFS, TP −4.6. QC all PASS. No Google Fonts fetched (hf-postassemble:
+> "nothing to fix", 28 cues guarded; `.hf-audio-cues.json` committed). 20 frames inspected: Bengali correct, all
+> scenes animate, the blanks at ~8.4–10.3 s and in frame 7 are the storyboard's deliberate breathers.
+> **Cosmetic flaws seen in frame 06-numbers (not fixed, offered to the user):** the stat board sits ~20 px left of
+> the beige card and the third column's rule runs past the right frame rule; rule 001 sits ~9 px above 002/003;
+> the eyebrows ("সংখ্যায়", "প্রমাণ") have letter-spacing that pulls the Bengali clusters apart.
+> ⚠ This shell had inherited the OLD env (HYPERFRAMES_BROWSER_PATH set, the newer vars missing) because the app
+> started before the 2026-10-05 changes; the render was run with BROWSER_PATH unset and the user vars exported.
+>
+> *Original 2026-09-11 note:* the user explicitly declined the render ("render korte hobe na") — everything up to
+> the render gate was done and passing.
+
+The first end-to-end run of the `/product-launch-video` workflow.
 
 > ✅ **Updated 2026-10-04 (supersedes the note below):** SAC is off, so the plain command renders it
 > **with all 28 SFX**: `cd "E:/Video Create/projects/hishab-khata-promo" && hyperframes render --quality high --workers 1 --output renders/video.mp4`
