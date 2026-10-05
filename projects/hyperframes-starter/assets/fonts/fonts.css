@@ -1,0 +1,98 @@
+/* ============================================================
+   Video Create — font pack
+   সব ফন্ট SIL Open Font License 1.1 — বাণিজ্যিক কাজে ব্যবহার করা যাবে।
+   লাইসেন্সের মূল ফাইল: assets/fonts/LICENSES/
+
+   ব্যবহার: আগে পুরো assets/fonts ফোল্ডারটা প্রজেক্টের ভিতরে কপি করুন, তারপর index.html-এর <head>-এ:
+     <link rel="stylesheet" href="assets/fonts/fonts.css" />
+   (../../ দিয়ে বাইরের ফোল্ডার দেখালে HyperFrames lint ভুল ধরে — CLAUDE.md §4b)
+   ============================================================ */
+
+/* ---------- বাংলা ---------- */
+
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 300;
+  src: url("bengali/HindSiliguri-Light.ttf")    format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+  src: url("bengali/HindSiliguri-Regular.ttf")  format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+  src: url("bengali/HindSiliguri-Medium.ttf")   format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+  src: url("bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+  src: url("bengali/HindSiliguri-Bold.ttf")     format("truetype"); font-display: block; }
+
+@font-face { font-family: "Noto Sans Bengali"; font-style: normal; font-weight: 100 900;
+  src: url("bengali/NotoSansBengali-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+  src: url("bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Tiro Bangla"; font-style: normal; font-weight: 400;
+  src: url("bengali/TiroBangla-Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Tiro Bangla"; font-style: italic; font-weight: 400;
+  src: url("bengali/TiroBangla-Italic.ttf") format("truetype"); font-display: block; }
+
+/* Added 2026-10-06 — all SIL OFL 1.1, from github.com/google/fonts (ofl/) */
+@font-face { font-family: "Noto Serif Bengali"; font-style: normal; font-weight: 100 900; font-stretch: 62.5% 100%;
+  src: url("bengali/NotoSerifBengali-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Anek Bangla"; font-style: normal; font-weight: 100 800; font-stretch: 75% 125%;
+  src: url("bengali/AnekBangla-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Galada"; font-style: normal; font-weight: 400;
+  src: url("bengali/Galada-Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Atma"; font-style: normal; font-weight: 300;
+  src: url("bengali/Atma-Light.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Atma"; font-style: normal; font-weight: 400;
+  src: url("bengali/Atma-Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Atma"; font-style: normal; font-weight: 500;
+  src: url("bengali/Atma-Medium.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Atma"; font-style: normal; font-weight: 600;
+  src: url("bengali/Atma-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Atma"; font-style: normal; font-weight: 700;
+  src: url("bengali/Atma-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Mina"; font-style: normal; font-weight: 400;
+  src: url("bengali/Mina-Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Mina"; font-style: normal; font-weight: 700;
+  src: url("bengali/Mina-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Alkatra"; font-style: normal; font-weight: 400 700;
+  src: url("bengali/Alkatra-Variable.ttf") format("truetype"); font-display: block; }
+
+/* ---------- ইংরেজি / Latin ---------- */
+
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 100 900;
+  src: url("latin/Inter-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Anton"; font-style: normal; font-weight: 400;
+  src: url("latin/Anton-Regular.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Bebas Neue"; font-style: normal; font-weight: 400;
+  src: url("latin/BebasNeue-Regular.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 400 900;
+  src: url("latin/PlayfairDisplay-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+  src: url("latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+/* ---------- রেডিমেড স্ট্যাক ----------
+   বাংলা নামগুলো আগে রাখা হয়েছে যাতে বাংলা-ইংরেজি মেশানো লেখাও ঠিকভাবে দেখায়। */
+:root {
+  --font-bn-body:    "Hind Siliguri", "Noto Sans Bengali", sans-serif;
+  --font-bn-title:   "Baloo Da 2", "Hind Siliguri", sans-serif;
+  --font-bn-serif:   "Tiro Bangla", serif;
+  --font-bn-serif2:  "Noto Serif Bengali", "Tiro Bangla", serif;   /* variable 100-900, modern serif */
+  --font-bn-cond:    "Anek Bangla", "Hind Siliguri", sans-serif;   /* variable width — condensed titles */
+  --font-bn-display: "Galada", "Baloo Da 2", sans-serif;           /* calligraphic display */
+  --font-bn-round:   "Atma", "Hind Siliguri", sans-serif;          /* friendly, rounded (kids, schools) */
+  --font-bn-tech:    "Mina", "Hind Siliguri", sans-serif;          /* geometric, techy */
+  --font-bn-brush:   "Alkatra", "Baloo Da 2", sans-serif;          /* brush-like, playful — ⚠ breaks 3-consonant conjuncts: উজ্জ্বল renders as উজজবল (seen 2026-10-06). Short titles only, check a snapshot */
+
+  --font-en-body:    "Inter", "Hind Siliguri", sans-serif;
+  --font-en-title:   "Anton", "Hind Siliguri", sans-serif;
+  --font-en-cond:    "Bebas Neue", "Hind Siliguri", sans-serif;
+  --font-en-serif:   "Playfair Display", "Tiro Bangla", serif;
+  --font-mono:       "JetBrains Mono", monospace;
+
+  /* বাংলা + ইংরেজি একসাথে */
+  --font-mixed-body:  "Inter", "Hind Siliguri", sans-serif;
+  --font-mixed-title: "Anton", "Baloo Da 2", sans-serif;
+}

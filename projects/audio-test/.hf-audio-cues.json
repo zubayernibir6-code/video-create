@@ -1,0 +1,9 @@
+{
+  "bgm-bed": "<audio id=\"bgm-bed\" src=\"assets/music/testbed.mp3\"\n             data-start=\"0\"   data-duration=\"8\"    data-track-index=\"9\"  data-volume=\"0.30\"></audio>",
+  "sfx-whoosh": "<audio id=\"sfx-whoosh\" src=\"assets/sfx/whoosh.mp3\"\n             data-start=\"0\"   data-duration=\"0.57\" data-track-index=\"10\" data-volume=\"0.8\"></audio>",
+  "sfx-pop": "<audio id=\"sfx-pop\" src=\"assets/sfx/pop.mp3\"\n             data-start=\"1.2\" data-duration=\"0.72\" data-track-index=\"10\" data-volume=\"0.9\"></audio>",
+  "sfx-ping": "<audio id=\"sfx-ping\" src=\"assets/sfx/ping.mp3\"\n             data-start=\"2.0\" data-duration=\"1.32\" data-track-index=\"11\" data-volume=\"0.8\"></audio>",
+  "sfx-typing": "<audio id=\"sfx-typing\" src=\"assets/sfx/typing.mp3\"\n             data-start=\"3.0\" data-duration=\"1.50\" data-track-index=\"10\" data-volume=\"0.7\"></audio>",
+  "sfx-impact": "<audio id=\"sfx-impact\" src=\"assets/sfx/impact-bass-1.mp3\"\n             data-start=\"5.0\" data-duration=\"2.12\" data-track-index=\"11\" data-volume=\"0.9\"></audio>",
+  "sfx-chime": "<audio id=\"sfx-chime\" src=\"assets/sfx/chime.mp3\"\n             data-start=\"6.5\" data-duration=\"1.50\" data-track-index=\"10\" data-volume=\"0.8\"></audio>"
+}

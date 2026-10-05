@@ -318,6 +318,34 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   Pixabay (photos + video) are written to their documented APIs but UNTESTED until the user adds free keys**
   to `.env.local`; the template is `.env.local.example`, which is versioned while `.env.local` stays ignored.
   ⚠ Free photos have no model release: avoid recognisable people in ads.
+- ✅ **Workflow-trap fixers (plan step 9, 2026-10-06).** The updated skills (2026-10-05) still have the traps:
+  CDN GSAP in all 4 `assemble-index.mjs` (faceless-explainer, product-launch-video, pr-to-video, music-to-video);
+  `bBody = nonMono[0]` in 3 `build-frame.mjs` (now documented upstream as intentional, but wrong for Bengali, where
+  display and body faces differ). SFX offsets are now supported upstream (`offset_s` in audio_meta.json), so
+  `sfx-offsets.mjs` was not needed. The skills are not patched (an update would overwrite them). Instead:
+  **STANDING RULE: after every `assemble-index.mjs` or `hyperframes add`, run `node tools/hf-postassemble.mjs
+  <project>`. After `build-frame.mjs`, run `node tools/fix-frame.mjs <project> --apply`.**
+  `hf-postassemble` does four things. (1) It swaps CDN GSAP tags (jsdelivr/unpkg/cdnjs, any plugin) for
+  `assets/js/gsap/*`. (2) It copies assets/js and fonts in if missing. (3) It expands `@import …fonts.css`, removes
+  Google Fonts links whose families are all local, inlines `@font-face` for every pack family used in each HTML
+  file (CSS, quoted names, inline `style=""`, GSAP `fontFamily`), and WARNS about families outside the pack.
+  (4) It records `<audio id>` cues in `.hf-audio-cues.json` and re-inserts any that vanish.
+  **Verified on a copy of hishab-khata-promo:** the skill's own assemble-index dropped all 28 SFX, the fonts link,
+  and re-added CDN GSAP (lint still 0 errors). hf-postassemble restored all 28 and made GSAP local. finish.mjs then
+  rendered the full 45 s promo WITH SFX: check passed, draft render, −12 → −14 LUFS, all QC PASS, 157 s total,
+  frames inspected. Also verified on a registry block (`lower-third-bild`: CDN GSAP fixed, "Barlow Condensed"
+  flagged as non-local) and on a planted page (CDN SplitText via unpkg, a Google Fonts link, @import, quoted
+  and inline-style families all handled).
+  **Discovery:** 0.8.33's compiler IGNORES a linked fonts.css and downloads Google's copies of the families
+  instead ("Fetched 5 font face(s) for "Baloo Da 2" from Google Fonts" …). Earlier renders therefore used Google's
+  font files, not the pack's, and needed the internet. hf-postassemble was applied to anim-test, audio-test,
+  font-test and hyperframes-starter (check passes on all 4). The re-render of an audio-test copy fetched nothing.
+  `fix-frame` checks frame.md: ink and ink-soft reach 4.5:1 on paper (ink-soft is mixed toward ink until it
+  does); paper-2 stays a surface (≤ 1.25:1, else paper + 6 % ink); reading-ramp keys don't use the display face;
+  and every fontFamily is in the local pack (mono → JetBrains Mono, serif → Tiro Bangla, display → Baloo Da 2,
+  else Hind Siliguri). Verified: the real hand-corrected frame.md came back clean. A copy with the original six
+  mistakes planted (red paper-2, amber ink-soft at 2.05:1, display face on body/micro, DM Mono, Newsreader) was
+  fully repaired with `--apply` (ink-soft #387655 at 4.95:1), keeping `.orig`.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -344,7 +372,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 6 | Bengali subtitle tools (`burn-subs.mjs` via `ass=`, `srt-to-words.mjs`) | none | ✅ done 2026-10-05 |
 | 7 | Accurate Bengali ASR: faster-whisper in pyenv + `SayedShaun/bengali-whisper-medium-ct2` (Apache-2.0) + `tools/transcribe.mjs`/`.py` | ~845 MB | ✅ done 2026-10-05 |
 | 8 | Register whisper.cpp for English (copy from `E:\remotion and hyperframe,`) + `HYPERFRAMES_WHISPER_PATH` | 488 MB (small.en) | ✅ done 2026-10-06 |
-| 9 | Workflow-trap fixers: `hf-postassemble.mjs`, `fix-frame.mjs`, `inline-fonts.mjs`, `sfx-offsets.mjs` | none | ⬜ |
+| 9 | Workflow-trap fixers: `hf-postassemble.mjs` (CDN GSAP, fonts incl. @import, dropped audio) + `fix-frame.mjs` | none | ✅ done 2026-10-06 |
 | 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
 | 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ✅ done 2026-10-06 |
 | 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ✅ done 2026-10-06 |
