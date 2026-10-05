@@ -1,0 +1,24 @@
+# Video Create — version history for sources, tools and docs only.
+# Never versioned: big, generated, machine-local or secret files.
+node_modules/
+renders/
+projects/*/renders/
+projects/*/out/
+projects/*/build/
+projects/*/snapshots/
+projects/*/.hyperframes/
+projects/*/.media/
+.cache/
+.quarantine/
+tools/pyenv/
+tools/whisper.cpp/
+tools/deep-filter/
+assets/models/
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.gif
+*.wav
+.env*
+*.log

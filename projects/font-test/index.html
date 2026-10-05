@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="bn" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px; overflow: hidden;
+        background: #0d0f14;
+      }
+      .clip { position: absolute; inset: 0; }
+
+      .sheet { padding: 54px 70px; color: #e8ecf2; }
+      .head { font-family: "Anton", sans-serif; font-size: 44px; letter-spacing: 1px; color: #fff; }
+      .sub  { font-family: "Inter", sans-serif; font-size: 20px; font-weight: 400; color: #7d8899; margin-top: 6px; }
+      .rule { height: 2px; background: linear-gradient(90deg,#4f8cff,#9b5cff 55%,transparent); margin: 22px 0 26px; }
+
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 46px; }
+      .row  { border-left: 3px solid #2a3040; padding-left: 18px; }
+      .name { font-family: "Inter", sans-serif; font-size: 15px; font-weight: 600;
+              letter-spacing: 1.6px; text-transform: uppercase; color: #5c9dff; margin-bottom: 6px; }
+      .samp { font-size: 34px; line-height: 1.45; color: #f2f5fa; }
+
+      .f1 { font-family: "Hind Siliguri", sans-serif; font-weight: 400; }
+      .f2 { font-family: "Hind Siliguri", sans-serif; font-weight: 700; }
+      .f3 { font-family: "Noto Sans Bengali", sans-serif; font-weight: 500; }
+      .f4 { font-family: "Baloo Da 2", sans-serif; font-weight: 700; }
+      .f5 { font-family: "Tiro Bangla", serif; }
+      .f6 { font-family: "Inter", sans-serif; font-weight: 500; }
+      .f7 { font-family: "Anton", sans-serif; }
+      .f8 { font-family: "Bebas Neue", sans-serif; }
+      .f9 { font-family: "Playfair Display", serif; font-weight: 600; }
+      .f10{ font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 28px; }
+
+      .foot { position: absolute; left: 70px; bottom: 40px;
+              font-family: "Inter", sans-serif; font-size: 18px; color: #97a2b4; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main"
+         data-start="0" data-duration="5" data-width="1920" data-height="1080">
+
+      <div id="sheet" class="clip sheet" data-start="0" data-duration="5" data-track-index="1">
+        <div class="head">FONT PACK — যাচাই শিট</div>
+        <div class="sub">Video Create workspace · assets/fonts · SIL OFL 1.1</div>
+        <div class="rule"></div>
+
+        <div class="grid">
+          <div class="row"><div class="name">Hind Siliguri 400 · বাংলা</div>
+            <div class="samp f1">ক্ষুদ্র স্বপ্ন থেকে বিশ্বজয় — ০১২৩৪৫৬৭৮৯</div></div>
+
+          <div class="row"><div class="name">Inter 500 · Latin</div>
+            <div class="samp f6">The quick brown fox — 0123456789</div></div>
+
+          <div class="row"><div class="name">Hind Siliguri 700 · বাংলা</div>
+            <div class="samp f2">সংখ্যা, দৃষ্টি, শ্রদ্ধা, উজ্জ্বল</div></div>
+
+          <div class="row"><div class="name">Anton · Latin</div>
+            <div class="samp f7">HEADLINE THAT SHOUTS</div></div>
+
+          <div class="row"><div class="name">Noto Sans Bengali 500 · বাংলা</div>
+            <div class="samp f3">অঙ্ক, বিদ্যুৎ, স্ত্রী, ঞ্জ ক্ষ ঙ্ক</div></div>
+
+          <div class="row"><div class="name">Bebas Neue · Latin</div>
+            <div class="samp f8">CONDENSED TITLE CARD</div></div>
+
+          <div class="row"><div class="name">Baloo Da 2 700 · বাংলা</div>
+            <div class="samp f4">মোটা শিরোনাম — ভিডিও ক্রিয়েট</div></div>
+
+          <div class="row"><div class="name">Playfair Display 600 · Latin</div>
+            <div class="samp f9">Elegant Serif Heading</div></div>
+
+          <div class="row"><div class="name">Tiro Bangla · বাংলা</div>
+            <div class="samp f5">পড়ার জন্য শান্ত সেরিফ অক্ষর</div></div>
+
+          <div class="row"><div class="name">JetBrains Mono 500 · Mono</div>
+            <div class="samp f10">render --quality high  1920×1080</div></div>
+        </div>
+
+        <div class="foot">যুক্তাক্ষর ঠিকভাবে বসলে বাংলা ফন্ট কাজ করছে · Talha Zubayer</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#sheet", { opacity: 0, duration: 0.6 }, 0)
+        .from(".row", { opacity: 0, y: 26, duration: 0.5, stagger: 0.08 }, 0.25);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

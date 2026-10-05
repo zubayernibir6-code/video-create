@@ -1,0 +1,382 @@
+<template>
+  <style>
+    /* Fonts declared inline, not @import: lint cannot see through @import, and the
+       render-time CSS scoping is safer with real @font-face rules. Files are the
+       workspace pack (SIL OFL 1.1) copied into this project. */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+      src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+    /* ── 06-numbers — Cobalt Grid data frame ────────────────────────────
+       Ground + grid live on the full-duration .clip layer (never on #root).
+       #root is the container-query ground: all display type is authored in
+       cqw against a definite 1920x1080 box (frame.md container law).      */
+
+    #root {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      color: #16603A;
+      font-kerning: normal;
+    }
+
+    /* ── ground: paper + permanent graph-paper grid (2cqw cells) ──────── */
+    #root .n06-bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      background-color: #F7F5EF;
+      background-image:
+        linear-gradient(to right, rgba(22, 96, 58, 0.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(22, 96, 58, 0.10) 1px, transparent 1px);
+      background-size: 2cqw 2cqw;
+      background-position: 0 0;
+    }
+
+    /* a single quiet paper-2 field behind the triptych — depth layer 1 */
+    #root .n06-shelf {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      top: 470px;
+      height: 424px;
+      background: #EBE4D4;
+      opacity: 0.55;
+    }
+
+    /* ── frame furniture: the two persistent hairlines + page chrome ──── */
+    #root .n06-hair {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      height: 2px;
+      background: #16603A;
+    }
+    #root .n06-hair-top { top: 58px; }
+    #root .n06-hair-bot { bottom: 58px; }
+
+    #root .n06-chrome {
+      position: absolute;
+      bottom: 22px;
+      color: #4A6355;
+    }
+    #root .n06-chrome-l {
+      left: 80px;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+    }
+    #root .n06-chrome-r {
+      right: 80px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── the content plane (depth layer 2 — the camera pushes this) ───── */
+    #root .n06-stage {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      top: 110px;
+      bottom: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform-origin: 50% 50%;
+    }
+
+    #root .n06-eyebrow {
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 1.45cqw;
+      letter-spacing: 0.18em;
+      line-height: 1.2;
+      color: #4A6355;
+      margin-bottom: 50px;
+    }
+
+    #root .n06-stats {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+
+    /* column head: mono catalogue ordinal over the self-drawing rule */
+    #root .n06-head { position: relative; }
+    #root .n06-ord {
+      display: block;
+      text-align: right;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      color: #4A6355;  /* ink-soft: the 45% ink wash measured 2.12:1, below the 4.5:1 gate */
+      margin-bottom: 10px;
+    }
+    #root .n06-rule {
+      display: block;
+      width: 100%;
+      height: 3px;
+      overflow: visible;
+    }
+    #root .n06-rule-line {
+      fill: none;
+      stroke: #16603A;
+      stroke-width: 3;
+      stroke-linecap: butt;
+    }
+
+    #root .n06-body { margin-top: 26px; }
+
+    /* stat one — the struck "before" value */
+    #root .n06-wasrow {
+      display: block;
+      margin-bottom: 12px;
+    }
+    #root .n06-was {
+      position: relative;
+      display: inline-block;
+      font-family: "Baloo Da 2", sans-serif;
+      font-weight: 500;
+      font-size: 2.34cqw;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: #C0392B;
+    }
+    #root .n06-strike {
+      position: absolute;
+      left: -8px;
+      right: -8px;
+      top: 47%;
+      height: 4px;
+      background: #C0392B;
+      transform-origin: left center;
+    }
+
+    /* the numerals — the hero */
+    #root .n06-fig {
+      display: block;
+      font-family: "Baloo Da 2", sans-serif;
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -0.012em;
+      color: #16603A;
+      white-space: nowrap;
+    }
+    #root .n06-num {
+      display: inline-block;
+      font-variant-numeric: tabular-nums;
+      transform-origin: 0% 50%;
+    }
+    #root .n06-unit {
+      display: inline-block;
+      margin-left: 0.2em;
+    }
+    #root .n06-s1 .n06-fig { font-size: 6.67cqw; }
+    #root .n06-s2 .n06-fig,
+    #root .n06-s3 .n06-fig { font-size: 9.9cqw; }
+    #root .n06-s3 .n06-fig { color: #AC7914; }  /* amber TEXT: 3.6:1 on cream */
+    #root .n06-s3 .n06-num { transform-origin: 50% 50%; }
+
+    #root .n06-cap {
+      display: block;
+      margin-top: 22px;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 500;
+      font-size: 1.72cqw;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      color: #4A6355;
+    }
+  </style>
+
+  <div data-hf-id="hf-zaye" id="root" data-composition-id="06-numbers" data-width="1920" data-height="1080" data-duration="8.5">
+
+    <div data-hf-id="hf-kxq8" class="clip n06-bg" data-start="0" data-duration="8.5" data-track-index="0"></div>
+
+    <div data-hf-id="hf-t9kr" class="n06-shelf"></div>
+
+    <div data-hf-id="hf-77ey" class="n06-hair n06-hair-top"></div>
+    <div data-hf-id="hf-jc3w" class="n06-hair n06-hair-bot"></div>
+
+    <div data-hf-id="hf-tan6" class="n06-stage">
+      <div data-hf-id="hf-7was" class="n06-eyebrow">সংখ্যায়</div>
+
+      <div data-hf-id="hf-rhep" class="n06-stats">
+
+        <div data-hf-id="hf-xkzq" class="n06-stat n06-s1">
+          <div data-hf-id="hf-9073" class="n06-head">
+            <span data-hf-id="hf-xhtk" class="n06-ord">001</span>
+            <svg data-hf-id="hf-vaf9" class="n06-rule" viewBox="0 0 1000 3" preserveAspectRatio="none">
+              <line data-hf-id="hf-ua9m" class="n06-rule-line" x1="0" y1="1.5" x2="1000" y2="1.5" />
+            </svg>
+          </div>
+          <div data-hf-id="hf-zj79" class="n06-body">
+            <span data-hf-id="hf-8xhj" class="n06-wasrow"><span data-hf-id="hf-2wfb" class="n06-was"><span data-hf-id="hf-zftv" class="n06-was-t">৪ ঘণ্টা</span><span data-hf-id="hf-58ti" class="n06-strike"></span></span></span>
+            <b data-hf-id="hf-atgd" class="n06-fig"><span data-hf-id="hf-qnhk" class="n06-num">২৪০</span><span data-hf-id="hf-2xjd" class="n06-unit">মিনিট</span></b>
+            <span data-hf-id="hf-i2gk" class="n06-cap">মাস শেষের হিসাব</span>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-tmvp" class="n06-stat n06-s2">
+          <div data-hf-id="hf-9t1b" class="n06-head">
+            <span data-hf-id="hf-wawh" class="n06-ord">002</span>
+            <svg data-hf-id="hf-o7vd" class="n06-rule" viewBox="0 0 1000 3" preserveAspectRatio="none">
+              <line data-hf-id="hf-qece" class="n06-rule-line" x1="0" y1="1.5" x2="1000" y2="1.5" />
+            </svg>
+          </div>
+          <div data-hf-id="hf-x0kp" class="n06-body">
+            <b data-hf-id="hf-scqu" class="n06-fig"><span data-hf-id="hf-cgcq" class="n06-num">০</span></b>
+            <span data-hf-id="hf-byg8" class="n06-cap">শিক্ষার্থী, এক জায়গায়</span>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-sv7w" class="n06-stat n06-s3">
+          <div data-hf-id="hf-9eqa" class="n06-head">
+            <span data-hf-id="hf-wp7i" class="n06-ord">003</span>
+            <svg data-hf-id="hf-pesg" class="n06-rule" viewBox="0 0 1000 3" preserveAspectRatio="none">
+              <line data-hf-id="hf-qsnf" class="n06-rule-line" x1="0" y1="1.5" x2="1000" y2="1.5" />
+            </svg>
+          </div>
+          <div data-hf-id="hf-y7hs" class="n06-body">
+            <b data-hf-id="hf-oc6x" class="n06-fig"><span data-hf-id="hf-mydq" class="n06-num">০</span></b>
+            <span data-hf-id="hf-bdrc" class="n06-cap">অঙ্কের ভুল</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div data-hf-id="hf-blpb" class="n06-chrome n06-chrome-l">প্রমাণ</div>
+    <div data-hf-id="hf-ek17" class="n06-chrome n06-chrome-r">06 / 07</div>
+  </div>
+
+  <script>
+    (function () {
+      var FRAME = "06-numbers";
+      var root = document.querySelector('[data-composition-id="' + FRAME + '"]');
+      var q = function (s) { return root.querySelector(s); };
+      var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+      /* Bengali numerals — deterministic digit mapping for every count value */
+      var BN = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      function toBn(n) {
+        var s = String(n), out = "", i, d;
+        for (i = 0; i < s.length; i++) {
+          d = s.charCodeAt(i) - 48;
+          out += (d >= 0 && d <= 9) ? BN[d] : s.charAt(i);
+        }
+        return out;
+      }
+
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines[FRAME] = tl;
+
+      var bg      = q(".n06-bg");
+      var shelf   = q(".n06-shelf");
+      var stage   = q(".n06-stage");
+      var eyebrow = q(".n06-eyebrow");
+      var chrome  = qa(".n06-chrome");
+      var ords    = qa(".n06-ord");
+      var rules   = qa(".n06-rule-line");
+
+      var num1  = q(".n06-s1 .n06-num");
+      var unit1 = q(".n06-s1 .n06-unit");
+      var cap1  = q(".n06-s1 .n06-cap");
+      var was   = q(".n06-was");
+      var strike = q(".n06-strike");
+
+      var num2 = q(".n06-s2 .n06-num");
+      var cap2 = q(".n06-s2 .n06-cap");
+
+      var num3 = q(".n06-s3 .n06-num");
+      var cap3 = q(".n06-s3 .n06-cap");
+
+      /* svg-path-draw setup — measured geometry, never a magic number */
+      var lens = rules.map(function (p) {
+        var len = p.getTotalLength();
+        p.style.strokeDasharray = String(len);
+        p.style.strokeDashoffset = String(len);
+        return len;
+      });
+
+      /* ── macro camera: a very slow push on the content plane only.
+            sine.out so it comes fully to rest at 6.4s — the frame ends still. */
+      tl.fromTo(stage, { scale: 1 }, { scale: 1.035, duration: 6.4, ease: "sine.out" }, 0);
+
+      /* ── Scene 1 (0.0–1.0) — eyebrow up, the three column rules self-draw ── */
+      tl.fromTo(shelf, { opacity: 0 }, { opacity: 0.55, duration: 0.7, ease: "power2.out" }, 0.05);
+      tl.fromTo(eyebrow, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.05);
+      tl.fromTo(chrome, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.15);
+
+      var RULE_AT  = [0.20, 0.41, 0.62];
+      var RULE_DUR = [0.50, 0.50, 0.40];
+      rules.forEach(function (p, i) {
+        tl.fromTo(p,
+          { strokeDashoffset: lens[i] },
+          { strokeDashoffset: 0, duration: RULE_DUR[i], ease: "power2.out" },
+          RULE_AT[i]);
+      });
+      ords.forEach(function (el, i) {
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.34, ease: "power2.out" }, RULE_AT[i] + 0.18);
+      });
+
+      /* ── Scene 2 (1.0–2.8) — "৪ ঘণ্টা" struck, then 240 counts DOWN to 12 ── */
+      tl.fromTo(was, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.40, ease: "power3.out" }, 1.05);
+      tl.fromTo(strike, { scaleX: 0 }, { scaleX: 1, duration: 0.38, ease: "power2.out" }, 1.48);
+      tl.to(was, { opacity: 0.6, duration: 0.45, ease: "power2.out" }, 1.92);
+
+      var c1 = { v: 240 };
+      tl.fromTo(c1, { v: 240 }, {
+        v: 12, duration: 1.05, ease: "power3.out",
+        onUpdate: function () { num1.textContent = toBn(Math.round(c1.v)); }
+      }, 1.75);
+      tl.fromTo(num1, { scale: 0.52 }, { scale: 1, duration: 1.05, ease: "power3.out" }, 1.75);
+      tl.fromTo(num1, { opacity: 0 }, { opacity: 1, duration: 0.30, ease: "power2.out" }, 1.75);
+      tl.fromTo(cap1, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.50, ease: "power3.out" }, 2.12);
+      /* the unit gets its own beat, after the count lands */
+      tl.fromTo(unit1, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.34, ease: "power3.out" }, 2.80);
+
+      /* ── Scene 3 (2.8–4.8) — "১২০০" counts up, numeral grows as it climbs ── */
+      var c2 = { v: 0 };
+      tl.fromTo(c2, { v: 0 }, {
+        v: 1200, duration: 1.35, ease: "power3.out",
+        onUpdate: function () { num2.textContent = toBn(Math.round(c2.v)); }
+      }, 3.00);
+      tl.fromTo(num2, { scale: 0.50 }, { scale: 1, duration: 1.35, ease: "power3.out" }, 3.00);
+      tl.fromTo(num2, { opacity: 0 }, { opacity: 1, duration: 0.28, ease: "power2.out" }, 3.00);
+      tl.fromTo(cap2, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.50, ease: "power3.out" }, 3.58);
+
+      /* ── Scene 4 (4.8–6.6) — "০" spring-pops in on a smooth long-tail settle ── */
+      tl.fromTo(num3,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.62, ease: "power3.out" },
+        4.90);
+      tl.fromTo(cap3, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.70, ease: "power3.out" }, 5.70);
+
+      /* ── Scene 5 (6.6–8.0) — held read. Nothing tweens past 6.4s. ── */
+      tl.set(bg, { opacity: 1 }, 8);
+    })();
+  </script>
+</template>

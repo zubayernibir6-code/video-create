@@ -1,0 +1,292 @@
+<template>
+  <style>
+    /* Fonts declared inline, not @import: lint cannot see through @import, and the
+       render-time CSS scoping is safer with real @font-face rules. Files are the
+       workspace pack (SIL OFL 1.1) copied into this project. */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+      src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+    /* fonts ship with the project (SIL OFL 1.1) — no network at render time */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+    /* ---- root: no background here (the ground is a clip layer) ---- */
+    #root {
+      position: absolute; inset: 0;
+      color: #16603A; overflow: hidden;
+    }
+
+    /* ---- clip layers ---- */
+    #root .f03-bg,
+    #root .f03-fg { position: absolute; inset: 0; }
+
+    /* ---- the frame ground: cream paper + permanent graph-paper grid ---- */
+    #root .f03-bg { background: #F7F5EF; container-type: size; }
+    #root .grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(22,96,58,0.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(22,96,58,0.10) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    /* ---- pixel-glitch column (left, low opacity — declarative frame signature) ---- */
+    #root .f03-glitch {
+      position: absolute; left: 80px; top: 92px; width: 200px; height: 914px;
+      opacity: 0.32; display: flex; flex-direction: column;
+    }
+    #root .f03-gb {
+      background-image: repeating-linear-gradient(90deg, #16603A 0 2px, transparent 2px 8px);
+      background-color: #F7F5EF;
+    }
+    #root .f03-gb:nth-child(1) { height: 170px; width: 200px; margin-left: 0; }
+    #root .f03-gb:nth-child(2) { height: 120px; width: 148px; margin-left: 52px; }
+    #root .f03-gb:nth-child(3) { height: 210px; width: 184px; margin-left: 16px; }
+    #root .f03-gb:nth-child(4) { height:  96px; width: 122px; margin-left: 78px; }
+    #root .f03-gb:nth-child(5) { height: 188px; width: 200px; margin-left: 0; }
+    #root .f03-gb:nth-child(6) { height: 130px; width: 160px; margin-left: 40px; }
+
+    /* ---- QR-block patch (top-right corner punctuation) ---- */
+    #root .f03-qr {
+      position: absolute; right: 80px; top: 92px; width: 96px; height: 96px;
+      display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr);
+      background: #F7F5EF;
+      box-shadow: 0 0 0 3px #F7F5EF; /* anti-shadow for readability, not elevation */
+    }
+    #root .f03-qr i { display: block; background: rgba(22,96,58,0.10); }
+    #root .f03-qr i.on { background: #16603A; }
+
+    /* ---- persistent hairlines ---- */
+    #root .hair { position: absolute; left: 80px; right: 80px; height: 2px; background: #16603A; }
+    #root .hair-top { top: 58px; }
+    #root .hair-bot { bottom: 58px; }
+
+    /* ---- page chrome (above the bottom hairline) ---- */
+    #root .chrome { position: absolute; bottom: 22px; color: #4A6355; }
+    #root .chrome-l {
+      left: 80px;
+      /* Bengali chrome must use a Bengali face — JetBrains Mono ships no Bengali glyphs */
+      font-family: "Hind Siliguri", sans-serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.16em;
+    }
+    #root .chrome-r {
+      right: 80px;
+      font-family: "JetBrains Mono", monospace; font-size: 13px; letter-spacing: 0.06em;
+    }
+
+    /* ---- the lockup stage ---- */
+    #root .stage {
+      position: absolute; inset: 110px 80px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+
+    /* resting ledger ruling above the wordmark (the approved rest state) */
+    #root .mark-rules {
+      width: 760px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px;
+    }
+    #root .mark-rules i {
+      display: block; height: 3px; background: #16603A; transform-origin: 50% 50%;
+    }
+
+    /* the wordmark's own box — the assemble rules share its exact centre */
+    #root .f03-lockup { position: relative; }
+    #root .f03-asm { position: absolute; inset: 0; z-index: 1; }
+    #root .f03-rule { position: absolute; left: 50%; top: 50%; background: #16603A; }
+    #root .f03-r-back  { width: 720px; height: 3px; }
+    #root .f03-r-front { width: 864px; height: 6px; }
+
+    /* the wordmark is SET TYPE, not an image logo */
+    #root .wordmark {
+      position: relative; z-index: 2;
+      font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 600;
+      font-size: 200px; line-height: 1; color: #16603A; letter-spacing: -0.008em;
+      white-space: nowrap;
+    }
+
+    #root .tagline {
+      margin-top: 34px; white-space: nowrap;
+      font-family: "Hind Siliguri", sans-serif; font-weight: 500;
+      font-size: 40px; color: #4A6355;
+    }
+    #root .f03-w { display: inline-block; }
+
+    /* amber emphasis rule — drawn, not filled */
+    #root .amber { margin-top: 40px; width: 220px; height: 6px; display: block; overflow: visible; }
+    #root .f03-amber-line { fill: none; stroke: #E4A11B; stroke-width: 6; stroke-linecap: butt; }
+  </style>
+
+  <div data-hf-id="hf-lfsr" id="root" data-composition-id="03-product-intro" data-width="1920" data-height="1080" data-duration="6.5">
+
+    <!-- track 0 — full-bleed ground + decorative patches -->
+    <div data-hf-id="hf-b6p7" class="clip f03-bg" data-start="0" data-duration="6.5" data-track-index="0">
+      <div data-hf-id="hf-kxq8" class="grid"></div>
+      <div data-hf-id="hf-n0ux" class="f03-glitch">
+        <div data-hf-id="hf-rgld" class="f03-gb"></div><div data-hf-id="hf-2xn9" class="f03-gb"></div><div data-hf-id="hf-44kc" class="f03-gb"></div>
+        <div data-hf-id="hf-3q9b" class="f03-gb"></div><div data-hf-id="hf-4x6e" class="f03-gb"></div><div data-hf-id="hf-4ivd" class="f03-gb"></div>
+      </div>
+      <div data-hf-id="hf-lnqf" class="f03-qr">
+        <i data-hf-id="hf-l5u7" class="on"></i><i data-hf-id="hf-j2zz" class="on"></i><i data-hf-id="hf-iooy" class="on"></i><i data-hf-id="hf-ylp6"></i><i data-hf-id="hf-iadx" class="on"></i><i data-hf-id="hf-0l8b"></i><i data-hf-id="hf-l2j4" class="on"></i><i data-hf-id="hf-ko83" class="on"></i>
+        <i data-hf-id="hf-k9x2" class="on"></i><i data-hf-id="hf-0zjc"></i><i data-hf-id="hf-jvm1" class="on"></i><i data-hf-id="hf-zsm9"></i><i data-hf-id="hf-06xa"></i><i data-hf-id="hf-gaus" class="on"></i><i data-hf-id="hf-26gf"></i><i data-hf-id="hf-fwjr" class="on"></i>
+        <i data-hf-id="hf-mi31" class="on"></i><i data-hf-id="hf-mwe2" class="on"></i><i data-hf-id="hf-nap3" class="on"></i><i data-hf-id="hf-2krg"></i><i data-hf-id="hf-np04" class="on"></i><i data-hf-id="hf-o3b5" class="on"></i><i data-hf-id="hf-ohm6" class="on"></i><i data-hf-id="hf-oz7w"></i>
+        <i data-hf-id="hf-okwv"></i><i data-hf-id="hf-o6lu"></i><i data-hf-id="hf-jqbp"></i><i data-hf-id="hf-ovx7" class="on"></i><i data-hf-id="hf-qkg0"></i><i data-hf-id="hf-q64z"></i><i data-hf-id="hf-prty"></i><i data-hf-id="hf-pa88" class="on"></i>
+        <i data-hf-id="hf-poj9" class="on"></i><i data-hf-id="hf-pdix"></i><i data-hf-id="hf-q2ua" class="on"></i><i data-hf-id="hf-h2d2" class="on"></i><i data-hf-id="hf-go21" class="on"></i><i data-hf-id="hf-hqsk"></i><i data-hf-id="hf-lwy8" class="on"></i><i data-hf-id="hf-lin7" class="on"></i>
+        <i data-hf-id="hf-fh4y" class="on"></i><i data-hf-id="hf-f2tx" class="on"></i><i data-hf-id="hf-hchj"></i><i data-hf-id="hf-8d0n"></i><i data-hf-id="hf-g9r0" class="on"></i><i data-hf-id="hf-fvfz" class="on"></i><i data-hf-id="hf-8rbo"></i><i data-hf-id="hf-7kel"></i>
+        <i data-hf-id="hf-7ypm"></i><i data-hf-id="hf-dvwu" class="on"></i><i data-hf-id="hf-dhlt" class="on"></i><i data-hf-id="hf-9y8r"></i><i data-hf-id="hf-hu0v" class="on"></i><i data-hf-id="hf-acjs"></i><i data-hf-id="hf-i8bw" class="on"></i><i data-hf-id="hf-h1et" class="on"></i>
+        <i data-hf-id="hf-hfpu" class="on"></i><i data-hf-id="hf-95mp"></i><i data-hf-id="hf-jf8z" class="on"></i><i data-hf-id="hf-jtk0" class="on"></i><i data-hf-id="hf-9jxq"></i><i data-hf-id="hf-immx" class="on"></i><i data-hf-id="hf-j0xy" class="on"></i><i data-hf-id="hf-bjgv"></i>
+      </div>
+    </div>
+
+    <!-- track 1 — frame furniture + the lockup -->
+    <div data-hf-id="hf-2ioe" class="clip f03-fg" data-start="0" data-duration="6.5" data-track-index="1">
+      <div data-hf-id="hf-77ey" class="hair hair-top"></div>
+      <div data-hf-id="hf-jc3w" class="hair hair-bot"></div>
+
+      <div data-hf-id="hf-tan6" class="stage">
+        <div data-hf-id="hf-s9k9" class="mark-rules"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i></div>
+
+        <div data-hf-id="hf-z4gs" class="f03-lockup">
+          <!-- the three page rules that converge and hand off to the wordmark -->
+          <div data-hf-id="hf-1vlb" class="f03-asm">
+            <div data-hf-id="hf-4ymc" class="f03-rule f03-r-back" data-ty="-28"></div>
+            <div data-hf-id="hf-el3l" class="f03-rule f03-r-front" data-ty="0"></div>
+            <div data-hf-id="hf-xssn" class="f03-rule f03-r-back" data-ty="28"></div>
+          </div>
+          <div data-hf-id="hf-o0ez" class="wordmark">হিসাব খাতা</div>
+        </div>
+
+        <div data-hf-id="hf-mcew" class="tagline"><span data-hf-id="hf-e5tw" class="f03-w">স্কুলের</span> <span data-hf-id="hf-1714" class="f03-w">ফি</span> <span data-hf-id="hf-y2cv" class="f03-w">ও</span> <span data-hf-id="hf-faxc" class="f03-w">হিসাব</span> <span data-hf-id="hf-ymnq" class="f03-w">—</span> <span data-hf-id="hf-hzcq" class="f03-w">এক</span> <span data-hf-id="hf-0wa1" class="f03-w">সফটওয়্যারে</span></div>
+
+        <svg data-hf-id="hf-97el" class="amber" viewBox="0 0 220 6" xmlns="http://www.w3.org/2000/svg">
+          <line data-hf-id="hf-40g5" class="f03-amber-line" x1="0" y1="3" x2="220" y2="3" />
+        </svg>
+      </div>
+
+      <div data-hf-id="hf-ptjn" class="chrome chrome-l">প্রোডাক্ট</div>
+      <div data-hf-id="hf-a89a" class="chrome chrome-r">03 / 07</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="03-product-intro"]');
+      var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+      var tl = gsap.timeline({ paused: true });
+
+      /* ---------------------------------------------------------------
+         Scene 1 (0.0-1.2s) — three ledger rules slide in from the left
+         edge at staggered speeds and stack centred on the wordmark's own
+         centre.  center-outward-expansion run INWARD: xPercent/yPercent
+         -50 bakes the centring, x tweens from an off-frame offset to 0,
+         y holds each rule's stack offset.  Two depth layers: the thin
+         faint pair behind, the thick full-strength rule in front.
+      --------------------------------------------------------------- */
+      var RULE_FROM_X = [-1460, -1560, -1400];
+      var RULE_DUR    = [0.90, 0.95, 0.85];
+      var RULE_AT     = [0.10, 0.20, 0.30];
+      var RULE_OP     = [0.55, 1.00, 0.55];
+
+      var rules = qa(".f03-rule");
+      rules.forEach(function (el, i) {
+        var ty = Number(el.dataset.ty);
+        tl.fromTo(el,
+          { xPercent: -50, yPercent: -50, x: RULE_FROM_X[i], y: ty, opacity: 0 },
+          { x: 0, y: ty, opacity: RULE_OP[i], duration: RULE_DUR[i], ease: "power3.out" },
+          RULE_AT[i]);
+      });
+
+      /* ---------------------------------------------------------------
+         Scene 2 (1.2-2.6s) — THE SIGNATURE ASSEMBLE (scale-swap-transition).
+         Outgoing: the three rules compress toward one another (y -> 0) while
+         the group shrinks to EXIT_SCALE and fades, power2.in.
+         Incoming: the wordmark scales up from that same EXIT_SCALE at the
+         exact same centre, starting OVERLAP before the exit finishes, and
+         sits above the outgoing on z.  Both share transform-origin 50% 50%.
+         Long-tail power3 settle instead of back.out — this frame's motion
+         doctrine forbids overshoot.
+      --------------------------------------------------------------- */
+      var TRIGGER = 1.20, EXIT_DUR = 0.42, ENTER_DUR = 0.62, OVERLAP = 0.16, EXIT_SCALE = 0.72;
+
+      rules.forEach(function (el) {
+        tl.to(el, { y: 0, duration: EXIT_DUR, ease: "power2.in" }, TRIGGER);
+      });
+      tl.to(".f03-asm", { scale: EXIT_SCALE, opacity: 0, duration: EXIT_DUR, ease: "power2.in" }, TRIGGER);
+
+      tl.fromTo(".wordmark",
+        { scale: EXIT_SCALE, opacity: 0 },
+        { scale: 1, opacity: 1, duration: ENTER_DUR, ease: "power3.out" },
+        TRIGGER + EXIT_DUR - OVERLAP);
+
+      /* the page's resting ledger ruling re-establishes above the landed
+         mark — center-outward-expansion run OUTWARD as a centre-out scaleX */
+      qa(".mark-rules i").forEach(function (el, i) {
+        tl.fromTo(el,
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 0.45, duration: 0.50, ease: "power3.out" },
+          2.14 + i * 0.07);
+      });
+
+      /* ---------------------------------------------------------------
+         Scene 3 (2.6-4.2s) — the tagline reveals word by word beneath the
+         wordmark, on the same staggered settle the rules used.  Each word
+         starts pulled toward the line centre and expands outward into place
+         (center-outward-expansion, partially-spread start).  Split by WORD,
+         never by character — a Bengali cluster must not be broken.
+      --------------------------------------------------------------- */
+      var PULL = 0.34, WORD_AT = 2.70, WORD_STAGGER = 0.10, WORD_DUR = 0.62;
+      var tagline = root.querySelector(".tagline");
+      var words = qa(".tagline .f03-w");
+      var tRect = tagline.getBoundingClientRect();
+      var cx = tRect.left + tRect.width / 2;
+
+      words.forEach(function (el, i) {
+        var r = el.getBoundingClientRect();
+        var dx = (cx - (r.left + r.width / 2)) * PULL;
+        if (!isFinite(dx) || tRect.width === 0) { dx = (3 - i) * 26; }
+        tl.fromTo(el,
+          { x: dx, y: 16, scale: 0.90, opacity: 0 },
+          { x: 0, y: 0, scale: 1, opacity: 1, duration: WORD_DUR, ease: "power3.out" },
+          WORD_AT + i * WORD_STAGGER);
+      });
+
+      /* ---------------------------------------------------------------
+         Scene 4 (4.2-6.0s) — the amber rule self-draws under the lockup
+         (svg-path-draw: measured getTotalLength, dashoffset len -> 0),
+         then the frame settles and holds completely still.
+      --------------------------------------------------------------- */
+      var amber = root.querySelector(".f03-amber-line");
+      var len = amber.getTotalLength();
+      if (!isFinite(len) || len <= 0) { len = 220; }
+      amber.style.strokeDasharray = String(len);
+
+      tl.fromTo(amber,
+        { strokeDashoffset: len },
+        { strokeDashoffset: 0, duration: 0.70, ease: "power2.out" },
+        4.25);
+
+      /* hold the settled frame still through the full 6s */
+      tl.to({ hold: 0 }, { hold: 1, duration: 0.001 }, 5.999);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["03-product-intro"] = tl;
+    })();
+  </script>
+</template>

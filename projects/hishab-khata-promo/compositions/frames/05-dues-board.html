@@ -1,0 +1,402 @@
+<template>
+  <style>
+    /* Fonts declared inline, not @import: lint cannot see through @import, and the
+       render-time CSS scoping is safer with real @font-face rules. Files are the
+       workspace pack (SIL OFL 1.1) copied into this project. */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+      src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+    /* ── frame root ─────────────────────────────────────────────────────────
+       No background here: the full-bleed ground rides on a .clip layer below. */
+    #root {
+      position: absolute;
+      inset: 0;
+      color: #16603A;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ── ground: paper + permanent graph-paper grid (full-duration clip) ──── */
+    #root .ground {
+      position: absolute;
+      inset: 0;
+      background-color: #F7F5EF;
+      container-type: size;
+    }
+    #root .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(22,96,58,0.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(22,96,58,0.10) 1px, transparent 1px);
+      background-size: 2cqw 2cqw;
+    }
+
+    /* ── permanent furniture: top + bottom ink hairlines, page chrome ─────── */
+    #root .hair {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      height: 2px;
+      background: #16603A;
+    }
+    #root .hair-top { top: 58px; }
+    #root .hair-bot { bottom: 58px; }
+
+    #root .chrome {
+      position: absolute;
+      bottom: 22px;
+      font-size: 13px;
+      color: #4A6355;
+    }
+    /* Bengali chrome cannot be mono — JetBrains Mono ships no Bengali glyphs. */
+    #root .chrome-l {
+      left: 80px;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+    }
+    #root .chrome-r {
+      right: 80px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── stage ────────────────────────────────────────────────────────────── */
+    #root .stage {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      top: 110px;
+      bottom: 110px;
+      transform-origin: 50% 40%;
+    }
+
+    /* ── head row: 70/30 — headline left, counter well in the right third ─── */
+    #root .headrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 34px;
+    }
+    #root .head {
+      flex: 0 1 auto;
+      max-width: 1150px;
+      font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 68px;
+      line-height: 1.06;
+      letter-spacing: -0.008em;
+      color: #16603A;
+    }
+    /* word-level split only — never per character (Bengali conjuncts) */
+    #root .head .w { display: inline-block; }
+
+    #root .counter {
+      flex: 0 0 auto;
+      min-width: 340px;
+      text-align: right;
+    }
+    #root .counter b {
+      display: block;
+      font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 76px;
+      line-height: 1;
+      letter-spacing: -0.015em;
+      color: #C0392B;
+      font-variant-numeric: tabular-nums;
+      transform-origin: 100% 50%;
+    }
+    #root .counter span {
+      display: block;
+      margin-top: 6px;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 500;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      color: #4A6355;
+    }
+
+    /* ── class chips ──────────────────────────────────────────────────────── */
+    #root .chips {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+    #root .chip {
+      position: relative;
+      border: 2px solid #16603A;
+      padding: 10px 26px;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 26px;
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      color: #16603A;
+    }
+    #root .chip .fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: #16603A;
+      transform-origin: 0% 50%;
+      z-index: 0;
+    }
+    #root .chip .lbl {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── the board: topbar rule + ledger rows ─────────────────────────────── */
+    #root .board {
+      position: relative;
+      padding-top: 2px;
+    }
+    #root .boardrule {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 2px;
+      background: #16603A;
+      transform-origin: 0% 50%;
+    }
+    #root .row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 90px 1fr 150px 200px;
+      align-items: baseline;
+      padding: 17px 0 18px;
+    }
+    #root .rowline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: rgba(22,96,58,0.20);
+      transform-origin: 0% 50%;
+    }
+    #root .row .n {
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: #4A6355;
+    }
+    #root .row .nm {
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 500;
+      font-size: 31px;
+      line-height: 1.15;
+      color: #16603A;
+    }
+    #root .row .cl {
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 400;
+      font-size: 26px;
+      color: #4A6355;
+    }
+    /* the ONLY red on the board — one contained, countable column */
+    #root .row .due {
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 31px;
+      letter-spacing: 0.02em;
+      color: #C0392B;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── closing line ─────────────────────────────────────────────────────── */
+    #root .foot {
+      position: relative;
+      display: inline-block;
+      margin-top: 30px;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 38px;
+      line-height: 1.35;
+      color: #16603A;
+      transform-origin: 0% 50%;
+    }
+    #root .footrule {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -12px;
+      height: 3px;
+      background: #16603A;
+      transform-origin: 0% 50%;
+    }
+  </style>
+
+  <div data-hf-id="hf-64gx" id="root" data-composition-id="05-dues-board" data-width="1920" data-height="1080" data-duration="6.4">
+    <!-- full-bleed ground on its own clip layer (never on #root) -->
+    <div data-hf-id="hf-yo4v" class="ground clip" data-start="0" data-duration="6.4" data-track-index="0">
+      <div data-hf-id="hf-kxq8" class="grid"></div>
+    </div>
+
+    <div data-hf-id="hf-77ey" class="hair hair-top"></div>
+    <div data-hf-id="hf-jc3w" class="hair hair-bot"></div>
+
+    <div data-hf-id="hf-tan6" class="stage">
+      <div data-hf-id="hf-v1tm" class="headrow">
+        <div data-hf-id="hf-z992" class="head"><span data-hf-id="hf-4iht" class="w">বকেয়ার</span> <span data-hf-id="hf-om2u" class="w">তালিকা</span> <span data-hf-id="hf-p0w4" class="w">সব</span> <span data-hf-id="hf-n5zt" class="w">সময়</span> <span data-hf-id="hf-1qqx" class="w">তৈরি</span></div>
+        <div data-hf-id="hf-el44" class="counter"><b data-hf-id="hf-oc6x">০</b><span data-hf-id="hf-83t0">জন বকেয়া</span></div>
+      </div>
+
+      <div data-hf-id="hf-exrd" class="chips">
+        <div data-hf-id="hf-wq1t" class="chip" data-dx="180"><span data-hf-id="hf-f6j5" class="lbl">৬ষ্ঠ</span></div>
+        <div data-hf-id="hf-l3ib" class="chip" data-dx="90"><span data-hf-id="hf-srma" class="lbl">৭ম</span></div>
+        <div data-hf-id="hf-j4jv" class="chip on" data-dx="0"><i data-hf-id="hf-ups7" class="fill"></i><span data-hf-id="hf-kcot" class="lbl">৮ম</span></div>
+        <div data-hf-id="hf-anc2" class="chip" data-dx="-90"><span data-hf-id="hf-uneo" class="lbl">৯ম</span></div>
+        <div data-hf-id="hf-4uva" class="chip" data-dx="-180"><span data-hf-id="hf-4ore" class="lbl">১০ম</span></div>
+      </div>
+
+      <div data-hf-id="hf-vhiw" class="board">
+        <i data-hf-id="hf-96au" class="boardrule"></i>
+        <div data-hf-id="hf-thy4" class="row"><i data-hf-id="hf-7xq6" class="rowline"></i><span data-hf-id="hf-goki" class="n">০১২</span><span data-hf-id="hf-zxr8" class="nm">তানভীর হাসান</span><span data-hf-id="hf-qb58" class="cl">৮ম</span><span data-hf-id="hf-xf4y" class="due">১,২০০</span></div>
+        <div data-hf-id="hf-lt04" class="row"><i data-hf-id="hf-fioy" class="rowline"></i><span data-hf-id="hf-io3n" class="n">০১৯</span><span data-hf-id="hf-lrqg" class="nm">নুসরাত জাহান</span><span data-hf-id="hf-2rno" class="cl">৮ম</span><span data-hf-id="hf-5gjp" class="due">২,৪০০</span></div>
+        <div data-hf-id="hf-km31" class="row"><i data-hf-id="hf-fwzz" class="rowline"></i><span data-hf-id="hf-0ipi" class="n">০২৭</span><span data-hf-id="hf-pcny" class="nm">আরিফুল ইসলাম</span><span data-hf-id="hf-1kql" class="cl">৮ম</span><span data-hf-id="hf-8n9i" class="due">১,২০০</span></div>
+        <div data-hf-id="hf-l0e2" class="row"><i data-hf-id="hf-gbb0" class="rowline"></i><span data-hf-id="hf-7933" class="n">০৩৩</span><span data-hf-id="hf-1x68" class="nm">সুমাইয়া খাতুন</span><span data-hf-id="hf-1z1m" class="cl">৮ম</span><span data-hf-id="hf-8eoc" class="due">৩,৬০০</span></div>
+      </div>
+
+      <div data-hf-id="hf-t87b" class="foot">খুঁজতে হয় না।<i data-hf-id="hf-4p3m" class="footrule"></i></div>
+    </div>
+
+    <div data-hf-id="hf-zmhw" class="chrome chrome-l">ধাপ ২ · বকেয়া</div>
+    <div data-hf-id="hf-6h50" class="chrome chrome-r">05 / 07</div>
+  </div>
+
+  <script>
+    (function () {
+      var ID = "05-dues-board";
+      var root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var q = function (s) { return root.querySelector(s); };
+      var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+      var tl = gsap.timeline({ paused: true });
+
+      /* ── time grid (seconds) — one place, no scattered magic offsets ────── */
+      var T_HEAD = 0.06, HEAD_STAG = 0.075, HEAD_DUR = 0.62;
+      var PUSH_DUR = 4.00;
+      var T_CHIP = 0.92, CHIP_STAG = 0.10, CHIP_DUR = 0.55;
+      var T_FILL = 1.86, FILL_DUR = 0.30;
+      var T_RULE = 1.98, RULE_DUR = 0.46;
+      var ROWS = [2.08, 2.36, 2.64, 2.92];
+      var ROW_DUR = 0.46, LINE_DUR = 0.55, DUE_LAG = 0.16, DUE_DUR = 0.32;
+      var T_CNT_IN = 3.22, CNT_IN_DUR = 0.26;
+      var T_COUNT = 3.42, COUNT_DUR = 1.18, COUNT_EASE = "power3.out";
+      var T_CLAB = 3.62, CLAB_DUR = 0.48;
+      var T_SLAM = 4.62, SLAM_DUR = 0.52;
+      var T_FRULE = 4.98, FRULE_DUR = 0.44;
+
+      /* ── macro camera: one long-tail settle underneath the whole shot,
+            fully at rest by 4.0s so the frame ends dead still ────────────── */
+      tl.fromTo(q(".stage"),
+        { scale: 1.012 },
+        { scale: 1, duration: PUSH_DUR, ease: "power3.out" }, 0);
+
+      /* ── Scene 1 (0.0–1.0) — headline, per WORD (never per character) ───── */
+      tl.fromTo(qa(".head .w"),
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: HEAD_DUR, ease: "power3.out", stagger: HEAD_STAG }, T_HEAD);
+
+      /* ── Scene 2 (1.0–2.0) — chips: cluster → outward expansion,
+            each carrying its own start offset from the row centre ────────── */
+      qa(".chip").forEach(function (el, i) {
+        tl.fromTo(el,
+          { x: Number(el.dataset.dx), scale: 0.72, opacity: 0 },
+          { x: 0, scale: 1, opacity: 1, duration: CHIP_DUR, ease: "power3.out" },
+          T_CHIP + i * CHIP_STAG);
+      });
+      /* ৮ম fills solid LAST and stays selected */
+      tl.fromTo(q(".chip.on .fill"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: FILL_DUR, ease: "power3.out" }, T_FILL);
+      tl.fromTo(q(".chip.on .lbl"),
+        { color: "#16603A" },
+        { color: "#F7F5EF", duration: 0.18, ease: "none" }, T_FILL + 0.10);
+
+      /* ── Scene 3 (2.0–3.4) — the signature assemble: the board builds
+            itself top-to-bottom; the due amount lands a half-beat later ──── */
+      tl.fromTo(q(".boardrule"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: RULE_DUR, ease: "power3.out" }, T_RULE);
+
+      qa(".row").forEach(function (row, i) {
+        var at = ROWS[i];
+        tl.fromTo(row.querySelector(".rowline"),
+          { scaleX: 0 },
+          { scaleX: 1, duration: LINE_DUR, ease: "power3.out" }, at);
+        tl.fromTo(Array.prototype.slice.call(row.querySelectorAll(".n, .nm, .cl")),
+          { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: ROW_DUR, ease: "power3.out", stagger: 0.03 }, at);
+        tl.fromTo(row.querySelector(".due"),
+          { x: 16, opacity: 0 },
+          { x: 0, opacity: 1, duration: DUE_DUR, ease: "power3.out" }, at + DUE_LAG);
+      });
+
+      /* ── Scene 4 (3.4–4.6) — counter ০ → ১৮, value-scaled ───────────────── */
+      var BN = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      function toBn(n) {
+        var s = String(n), out = "";
+        for (var k = 0; k < s.length; k++) out += BN[s.charCodeAt(k) - 48];
+        return out;
+      }
+      var numEl = q(".counter b");
+      var state = { v: 0 };
+      var lastV = 0;
+
+      tl.fromTo(q(".counter"),
+        { opacity: 0 },
+        { opacity: 1, duration: CNT_IN_DUR, ease: "power2.out" }, T_CNT_IN);
+
+      tl.to(state, {
+        v: 18,
+        duration: COUNT_DUR,
+        ease: COUNT_EASE,
+        onUpdate: function () {
+          var r = Math.round(state.v);
+          if (r !== lastV) { lastV = r; numEl.textContent = toBn(r); }
+        }
+      }, T_COUNT);
+
+      tl.fromTo(numEl,
+        { scale: 0.55 },
+        { scale: 1, duration: COUNT_DUR, ease: COUNT_EASE }, T_COUNT);
+
+      tl.fromTo(q(".counter span"),
+        { y: 12, opacity: 0 },
+        { y: 0, opacity: 1, duration: CLAB_DUR, ease: "power2.out" }, T_CLAB);
+
+      /* ── Scene 5 (4.6–6.0) — one kinetic beat-slam, then dead still ─────── */
+      tl.fromTo(q(".foot"),
+        { scale: 1.30, filter: "blur(12px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: SLAM_DUR, ease: "power4.out" }, T_SLAM);
+
+      tl.fromTo(q(".footrule"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: FRULE_DUR, ease: "power3.out" }, T_FRULE);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,1345 @@
+# CLAUDE.md — Video Create workspace
+
+> Read this file first. It is the handoff record for this workspace. Everything below was
+> **verified by running it on this machine**, not assumed. Dates are absolute.
+
+---
+
+## 0. How to work with this user (overrides defaults)
+
+- The user is **Talha Zubayer** — a **non-coder**, accountant at Shaheen School, Mirzapur, Bangladesh.
+  He builds sellable software products with AI.
+- **Always reply in simple Bengali.** Translate any technical term the first time it appears. No jargon.
+- **One step at a time.** After each step: stop, explain in plain Bengali what was built, give exact
+  test steps, wait for his OK. Never batch modules together.
+- **Verify before showing.** Run/build/test with real data yourself, then hand him a clean test recipe.
+- Report only what you actually verified. If something failed or is untested, say so plainly.
+- **Destructive actions** (deleting files, dropping data) or **anything that costs money**: warn clearly
+  in Bengali first, get an explicit OK.
+- Secrets (API keys): never ask for them in chat, never print them. Tell him which file to paste into
+  (usually `.env.local`) and where to get the value.
+- Never deploy or publish without his OK.
+
+---
+
+## 0b. ⭐ STATUS 2026-10-05 — Smart App Control is OFF. Read this before §2b, §2c and §3.
+
+On 2026-10-04 the user turned Windows Smart App Control off (verified: `SmartAppControlState=Off`,
+`CI\Policy VerifiedAndReputablePolicyState=0`; still **no admin**). SAC cannot be turned back on
+without reinstalling Windows. Everything it blocked now runs: ffprobe, python, HyperFrames' headless
+shells, Remotion's bundled ffmpeg/ffprobe/remotion.exe, onnxruntime-node, sharp, esbuild.
+**§2b, §2c and §3 describe workarounds that are no longer needed.** They stay in this file only as
+the fallback if SAC ever comes back after a reinstall.
+
+### What changed — all verified by running it (2026-10-04/05)
+
+| Before | Now |
+| --- | --- |
+| `hyperframes render` deleted its own MP4 (§2c) | **Plain `hyperframes render` keeps the MP4, with AAC audio.** audio-test copy: 8.0 s, h264 + AAC 48 kHz stereo, −9.0 LUFS, corr 1.0000 vs the 2026-09-10 reference; 29 s at `--quality high --workers 1` (re-verified 2026-10-05 after the env change below). |
+| `tools/hf-render.mjs` was the render command | **Obsolete.** 2.3× slower (70.5 s vs 30.2 s) and silent. Archived fallback only. |
+| `tools/hf-audio.mjs` was planned | **Do not write it.** The plain render mixes every `<audio>` cue itself. |
+| `HYPERFRAMES_BROWSER_PATH` → system Chrome (§2b) | **Removed from the user env on 2026-10-05.** HyperFrames now uses its pinned headless shell 152.0.7977.30: pixel-identical output (PSNR inf), ~7–10 % faster. |
+| Remotion `render.mjs` PNG path (§3) | Bundled binaries run. Plain `npx remotion render MyComp out/video.mp4 --color-space=bt709 --concurrency=1` works (51 s). **`render.mjs` has a real bug:** RGBA PNG → yuv420p drops the root-layer fade (`out/video.mp4` at t=4.9 s is RGB 25,31,56; it should be ~1,2,5). Changing `package.json` is pending the user's OK (plan step 10). |
+| python blocked | Runs — **but read the Python trap below.** |
+
+`HYPERFRAMES_NO_AUTO_INSTALL=1` was set at user level on 2026-10-05. The 0.8.33 CLI had been
+launching `npm install -g hyperframes@<latest>` on its own (it failed with `spawn npm ENOENT`; see
+`~/.hyperframes/auto-update.log`). Upgrade deliberately or not at all (latest was 0.8.127 on 2026-10-05).
+
+### New traps found in the 2026-10-04 capability audit
+
+- **`python` on PATH is another app's venv.** It resolves to
+  `C:\Users\zubay\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe` (Hermes Agent).
+  `pip install --user` is refused there, and a plain `pip install` would modify that app.
+  `python3` is the Microsoft Store stub (exit 49); `py` does not exist. **Never `pip install` into it.**
+  ✅ **The workspace venv exists (plan step 2, 2026-10-05): `E:/Video Create/tools/pyenv`**, 28 MB,
+  Python 3.11.15, pip 24.0 + setuptools only. It was built offline with
+  `"C:/Users/zubay/AppData/Roaming/uv/python/cpython-3.11.15-windows-x86_64-none/python.exe" -m venv "E:/Video Create/tools/pyenv"`
+  (ensurepip's bundled pip, no download). User env `HYPERFRAMES_PYTHON=E:\Video Create\tools\pyenv\Scripts\python.exe`.
+  HyperFrames' `findPython()` (dist/cli.js ~158597) checks that override first. Verified: `hyperframes tts`
+  now gets past "Python 3 is required" and stops at "kokoro-onnx package is not installed".
+  **Install packages only with** `"E:/Video Create/tools/pyenv/Scripts/python.exe" -m pip install <pkg>`
+  (PIP_CACHE_DIR is already on E:). Run any skill script that calls `python3` with this python instead.
+  Its base interpreter lives in uv's store (uv 0.11.25 belongs to Hermes, at
+  `C:\Users\zubay\AppData\Local\hermes\bin\uv.exe`). If someone runs `uv python uninstall`, the venv
+  breaks; rebuild it with the same command and re-install its packages.
+- **Disk: C: has only ~6.9 GB free; E: has 69 GB.** The old "71 GB free" was E:.
+  `~/.cache/{huggingface,hyperframes,codex-runtimes}` are junctions to
+  `E:\remotion and hyperframe,\.codex-local-cache`, and HF_HOME / PIP_CACHE_DIR / UV_CACHE_DIR /
+  npm_config_cache point there too. But `%TEMP%` (render work dirs, extract cache) is on C:.
+- **Renders longer than 240 s are refused by default** ("Disk capture may need ~62208 MB ... only
+  7378 MB is free"); streaming encode is capped at 240 s. Fix, verified on a 250 s comp:
+  `PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS=3600 hyperframes render --workers 1 ...`.
+  Add `--frames-cache-dir "E:/Video Create/.cache/frames"` for footage. Multi-worker renders are
+  refused for the same disk reason, so keep `--workers 1`.
+- **Bengali burned-in subtitles: never use FFmpeg `subtitles=`.** In this 8.1.1 build it breaks
+  conjuncts (visible hasanta). `ass=file.ass:fontsdir=fonts` shapes them correctly. Keep the fonts in
+  their own subfolder, because `fontsdir=.` makes libass try every file. SRT→ASS conversion
+  defaults to PlayRes 384x288 + Arial, so rewrite the style.
+- **Renders are not fully offline.** 0.8.33's compiler fetches Google Fonts CSS for any family
+  whose `@font-face` is not inline in the HTML (a linked fonts.css is ignored), which costs up to ~25 s.
+  Inline the `@font-face` rules.
+- **Footage speed.** ~0.13–0.20 s/frame at 1080p with drawElement capture. `data-color-grading`/WebGL
+  or HDR sources force screenshot capture (0.84–1.2 s/frame), and grading needs `--browser-timeout 150`.
+  HDR phone clips auto-switch the output to HLG HEVC 10-bit; pre-tonemap them with
+  `zscale` + `tonemap=hable`. H.264, HEVC 8-bit, 60 fps, VFR and rotated clips need no pre-conversion.
+- **Loudness: −14 LUFS *is* reachable** (§4f was wrong). Set loudnorm's `LRA` at or above the measured
+  LRA: LRA=21 on audio-test gave −14.9 LUFS, TP −7.1.
+- **Transcription.** Stock Whisper small/medium give garbage for Bengali. large-v3-turbo gives
+  draft-quality Bengali: a third to half of the words are misspelled, ~6–7× real time, ~2 GB RAM. Already on E:
+  but outside the workspace: complete faster-whisper models base/small/medium/large-v3-turbo
+  (large-v3 is incomplete) in the HF cache, and whisper.cpp 1.9.1 at
+  `E:\remotion and hyperframe,\whisper.cpp\Release\whisper-cli.exe` (not registered). HyperFrames
+  passes `--dtw <model with - → .>`, so a quantized model name (`large-v3-turbo-q5_0`) fails with
+  "unknown DTW preset".
+- **Licensing.** HeyGen ToS (Last Updated July 23, 2026): Free Plan output may not be sold or used
+  commercially, so media-use's HeyGen "free-usage path" is off-limits for sold work. Kokoro has no
+  Bengali. MMS-TTS, XTTS and MusicGen are non-commercial.
+- **media-use scripts send PostHog telemetry** unless `DO_NOT_TRACK=1`. Its test suites ignore their
+  HOME override on Windows and wrote fake records into the real `C:\Users\zubay\.media` during the
+  2026-10-04 audit (`recipes/{explainer,promo,weekly-launch}`, `mu-v1-*` folders, manifest/misses/
+  preferences). Cleanup is pending the user's OK. Treat those "remembered" recipes as fake.
+- **Workflow traps still live.** Re-running `assemble-index.mjs` silently drops hand-placed `<audio>`
+  cues and the fonts.css link, and restores CDN GSAP, while lint still reports 0 errors.
+  `build-frame.mjs:336` has `bBody = nonMono[0]` (should be `[1]`). `@import` of fonts fails lint.
+  Bundled SFX cues always get `offset_s: 0`. `projects/hyperframes-starter/index.html` and
+  `projects/font-test/index.html` still load GSAP 3.14 from jsdelivr.
+- **The SFX pack is 17 unique sounds, not 19:** click.mp3 == click-soft.mp3 and whoosh.mp3 ==
+  whoosh-short.mp3 (byte-identical).
+- **The Lottie adapter is now render-verified** (self-authored JSON, frame-accurate seek). Lint still
+  wants a `window.__timelines` registration on a Lottie-only page.
+- ⚠️ **`hyperframes init` silently reinstalls the HyperFrames skills from GitHub.** It clones
+  github.com/heygen-com/hyperframes and copies 21 skills over `~/.claude/skills/*` and `~/.agents/skills/*`.
+  In 0.8.33 the `--skip-skills` flag is "[temporarily ignored]". **`HYPERFRAMES_SKIP_SKILLS=1` opts out.**
+  This happened on 2026-10-05 08:51, when an `init` in a scratch folder during plan step 3 overwrote all 21 skills.
+  It added `hyperframes-studio`. The user's own skills in `~/.agents/skills` (shaheen-*, bangla-typography-*,
+  video-qa-*, etc., dated 2026-07-16) were not touched. **The skills are now newer than the 0.8.33 CLI.** They
+  mention commands (`timeline`, `history`, `clean`, `upgrade --project`) that 0.8.33's `--help` does not list.
+  The new `hyperframes` skill tells agents to run `npx hyperframes@latest upgrade --project .` on pinned
+  projects "rather than relaying it to the user". **This workspace overrides that: never upgrade a project or
+  the CLI without the user's OK** (plan step 22). File/line references to skill scripts in this document
+  (e.g. `build-frame.mjs:336`) were taken from the pre-update copies and may have moved.
+- ✅ **Kokoro English TTS works (plan step 3, 2026-10-05).** `kokoro-onnx 0.6.1` + `soundfile 0.14.0` are in
+  `tools/pyenv` (onnxruntime 1.30.0, numpy 2.4.6, phonemizer 3.4.0, espeakng-loader 0.2.4). The venv is now 162 MB.
+  Only ~15 MB came from the network; the rest was already in the pip cache on E:. The model files were already in
+  `~/.cache/hyperframes/tts`, and HyperFrames only downloads when the file is missing.
+  `hyperframes tts "<text>" --voice af_heart -o out.wav` gives a 24 kHz mono WAV at about −20 to −24 LUFS, so
+  normalise it. A 5 s line takes ~16 s, including ~10 s of model load; a 22.5 s paragraph takes 39 s.
+  Verified: three voices (af_heart, am_michael, bf_emma) transcribe back word-perfect with faster-whisper
+  small. A 6 s composition with the WAV as `<audio id="narration">` rendered in 14 s with AAC 48 kHz stereo,
+  and the narration transcribed back correctly. Voices: `hyperframes tts --list`.
+  Languages: en-us, en-gb, es, fr-fr, hi, it, pt-br, ja, zh. **No Bengali.**
+- ✅ **`tools/voice.mjs`: own-voice narration (plan step 4, 2026-10-05).** Plain node and FFmpeg, nothing installed.
+  `devices` lists microphones: "Microphone Array (Realtek(R) Audio)" is the default; "Headset (HDY-G36)" also exists.
+  `record <name> [--seconds=120] [--device=...]` writes `<name>-raw.wav` plus a cleaned `<name>.wav` in the cwd.
+  `clean <input> [out.wav]` takes any FFmpeg-readable input (mp3, m4a, WhatsApp ogg/opus, mp4 verified).
+  The chain is high-pass 80 Hz → **afftdn with a noise profile** → 3:1 compressor → trim silence at both ends →
+  two-pass loudnorm to −16 LUFS / −1.5 dBTP (adaptive LRA) → 48 kHz mono s16 WAV. The profile comes from the
+  quietest 0.8 s window: that segment is prepended, sampled with `asendcmd afftdn sn start/stop`, then trimmed
+  off. With no real pause (quiet window within 12 dB of speech) it falls back to adaptive `tn=1`.
+  Measured on speech + pink noise + 50/150 Hz hum: the speech-to-noise gap went from 23.9 to 48.1 dB (adaptive
+  afftdn alone managed 29.7 dB), the hum went from −55 dB to −91 dB, and ASR was unchanged. Speech distortion
+  stayed flat as nr rose 20→40 (aligned SDR ≈ 22.7–22.8 dB). On the user's real laptop recording
+  (Downloads/video2/clip_0_30.mp3) the gap went from 28.0 to 40.6 dB; spectrogram inspection showed no
+  musical-noise artefacts. **afftdn delays its output by 25 ms**; the script trims it (aligned lag 0.00 ms).
+  The mic needs ~1 s to open, so "RECORDING — speak" prints only once ffmpeg reports progress.
+  Under Git Bash, ffmpeg never sees a "q" keypress (mintty has no console), so the script stops ffmpeg
+  on **Enter** through a stdin pipe; stdin EOF does not stop it (verified). It refuses silent input, refuses
+  input that is pure room noise ("No voice found"), and warns when the voice is below −40 LUFS or within 12 dB
+  of the room. Mic tests on 2026-10-05 recorded 1–2 s of room sound only; those files were deleted at once.
+- ✅ **`tools/finish.mjs` + `tools/qc.mjs`: one-command delivery (plan step 5, 2026-10-05).** Plain node and FFmpeg.
+  `node "E:/Video Create/tools/finish.mjs" <project-folder | video-file> [--quality=high|standard|draft]
+  [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop] [--lufs=-14] [--out=<dir>] [--keep]`.
+  For a project it runs `hyperframes check` (and stops before rendering on any error), then
+  `hyperframes render --workers 1 --frames-cache-dir E:/Video Create/.cache/frames` with
+  `PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS=3600`. For a video file it re-encodes to h264/yuv420p
+  only if needed. Then: loudness → QC → other aspect ratios → thumbnail + 8 s GIF → `qc.json`.
+  Output goes to `renders/<name>/<YYYY-MM-DD_HHMM>/`, a new folder every run, so earlier deliveries are never
+  overwritten. On failure before any deliverable exists, it removes its own empty folder.
+  Exit code 1 if QC FAILs (the files are kept).
+  **Loudness:** two-pass loudnorm with adaptive LRA, then **measured with ebur128** (the same meter as qc.mjs),
+  and the residual is trimmed with a volume step. On audio-test, loudnorm reported −13.99 while ebur128 read
+  −14.9 on the same file, so the trim adds +0.9 dB and lands on −14.0. Fallback: gain + alimiter.
+  loudnorm leaves a ~0.1 s audio tail, so the audio is `atrim`-ed to the video length (6.0 s stays 6.0 s;
+  A/V lag 0.00 ms by cross-correlation).
+  **Colour:** in this FFmpeg build, `-color_primaries/-color_trc` alone leave transfer/primaries "unknown"
+  in a libx264 encode. `-x264-params colorprim=bt709:transfer=bt709:colormatrix=bt709` is required (verified).
+  **Reframe:** the default "fit" places the whole frame over a blurred, darkened copy (gblur sigma 24 at
+  quarter size). At sigma 10 the background text was still legible, so it was raised. `--reframe=crop` is a
+  centre crop, for footage with a centred subject. Exports copy the master's AAC, so loudness is identical.
+  **qc.mjs levels:** FAIL = codec/pix_fmt, size, fps, duration ±0.15 s, faststart, loudness ±1 LU,
+  TP > −1 dBTP. WARN = no or silent audio, black in the middle, frozen ≥5 s, colour tags missing.
+  INFO = edge black (fades), still moments, silences ≥2 s.
+  `freezedetect n=0.001`: at 0.003 a slow move (0.4 px/frame) produced 32 false "frozen" warnings over 250 s,
+  while 0.001 still catches a truly frozen picture.
+  **Verified runs:** audio-test copy, 49 s total (check 12 s, render 24 s, exports 10 s), −9.0 → −14.0 LUFS,
+  4 formats checked visually. font-test copy (no audio), 37 s, PASS with WARN "no audio". Portrait HEVC
+  60 fps .mov file, 48 s, −30 → −14 LUFS, 16:9/1:1/4:5 exports at 8–10 s each for 6 s of 60 fps. Project
+  with an id-less `<audio>`: stopped at check, nothing rendered, no leftover folder. **250 s project:**
+  render 4 m 56 s via streaming encode (refused without the env var), 6 m 15 s total at draft with
+  `--formats=16x9`, −19.3 → −14.2 LUFS, TP −1.5, all PASS.
+- ✅ **Bengali subtitle tools (plan step 6, 2026-10-05).** Plain node and FFmpeg.
+  `burn-subs.mjs <video> <subs.srt|.vtt|.ass> [out.mp4] [--style=outline|box] [--font=...] [--size=px]`
+  converts SRT/VTT to ASS itself and burns it with `ass=subs.ass:fontsdir=fonts`, never `subtitles=`.
+  It runs inside a temp folder that holds only the workspace TTFs, so there is no drive colon in filter args
+  and libass doesn't trip over non-font files. The temp folder is always removed. PlayRes equals the video
+  size; the font size is 5.5 % of the short side (59 px at 1080p), with safe-area margins of 7 % vertical
+  and 6 % horizontal. Fonts: Hind Siliguri (default, Bold), Noto Sans Bengali, Baloo Da 2, Tiro Bangla.
+  **Box style uses libass BorderStyle 4** (one box per subtitle, BackColour &H5A000000, OutlineColour
+  invisible). BorderStyle 3 draws a box per line, and the boxes overlap into a dark band on two-line subs
+  (compared side by side). Verified by eye on 1080p (outline) and 1080x1920 (box): ক্ষুদ্র উজ্জ্বল
+  শ্রদ্ধা স্ত্রী বিদ্যুৎ, ১২,৩৪,৫৬৭, ০১২৩, a two-line cue and mixed English all shape correctly.
+  `srt-to-words.mjs <subs> [words.json]` shares each cue's time among its words by GRAPHEME count + 1
+  (Intl.Segmenter). It outputs the plain `[{id,text,start,end}]` array, monotonic, within cue bounds, NFC.
+  These timings are estimated, not measured. `srt.mjs` reads UTF-8 ± BOM, UTF-16 LE/BE and CRLF.
+  ⚠️ **HyperFrames 0.8.33's own SRT import is broken for Windows files.** It splits on "\n\n", so a CRLF
+  SRT imported as ONE 217-char "word" with "\r" and the timestamps inside it (verified). Always convert with
+  srt-to-words first.
+  ⚠️ **`hyperframes transcribe <file>` writes transcript.json beside the INPUT file**, not in the cwd,
+  unless `-d <project>` is given. It also patches `const TRANSCRIPT = [...]` / `const script = [...]` in
+  the project's HTML (verified: 25 words patched in). A scratch word-by-word caption composition built on
+  that rendered correctly: frames at 1.2 / 2.1 / 4.5 s lit exactly the words whose start had passed.
+  Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
+  (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
+  But never bundle these packages inside a product the user sells.
+
+### Capability audit (2026-10-04): what is ready, and the install plan
+
+**Ready today (verified):** Bengali typography and motion-graphics videos with SFX and sound. Footage
+editing: H.264/HEVC/60 fps/VFR/rotated clips placed with their own audio, plus FFmpeg
+trim/concat/speed/reframe/vidstab/scene-cut/hqdn3d/LUT/chromakey and silence cuts. Audio mixing,
+ducking and loudness. Bengali text in HyperFrames. WebM-alpha/ProRes/GIF/thumbnail exports. QC
+detectors (black/freeze/silence/crop, VMAF). Intel QSV encode. The mic, webcam and screen-capture
+devices are visible to FFmpeg.
+
+**The install/build plan.** The user asked for everything to be set up. Do one step at a time: build, verify,
+then stop for his OK. Every download needs his OK first (name, source, size).
+
+| # | Step | Download | Status |
+| --- | --- | --- | --- |
+| 1 | Plain render as default; env cleanup; docs | none | ✅ done 2026-10-05 |
+| 2 | Workspace Python venv `tools/pyenv` + `HYPERFRAMES_PYTHON` | none | ✅ done 2026-10-05 |
+| 3 | Kokoro English TTS (model already cached; only the package is missing) | ~45 MB | ✅ done 2026-10-05 |
+| 4 | Bengali narration from the user's own mic + clean-up chain (`tools/voice.mjs`) | none | ✅ done 2026-10-05 |
+| 5 | `tools/finish.mjs` + `tools/qc.mjs`: check → render (long-render env) → −14 LUFS → QC → 16:9/9:16/1:1/4:5 + thumbnail → `renders/<project>/` | none | ✅ done 2026-10-05 |
+| 6 | Bengali subtitle tools (`burn-subs.mjs` via `ass=`, `srt-to-words.mjs`) | none | ✅ done 2026-10-05 |
+| 7 | Accurate Bengali ASR: faster-whisper in pyenv + `SayedShaun/bengali-whisper-medium-ct2` (Apache-2.0) + `tools/bn-transcribe.py` | ~845 MB | ⬜ |
+| 8 | Register whisper.cpp for English (copy from `E:\remotion and hyperframe,`) + `HYPERFRAMES_WHISPER_PATH` | none (local copy) | ⬜ |
+| 9 | Workflow-trap fixers: `hf-postassemble.mjs`, `fix-frame.mjs`, `inline-fonts.mjs`, `sfx-offsets.mjs` | none | ⬜ |
+| 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
+| 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ⬜ |
+| 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ⬜ |
+| 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | ⬜ |
+| 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | ⬜ |
+| 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ⬜ |
+| 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ⬜ |
+| 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ⬜ |
+| 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ⬜ |
+| 19 | git versioning of sources (move the empty nested `.git` in remotion-starter first) | none | ⬜ |
+| 20 | Cleanup: stale headless shells, `.media` test pollution, `out/frames` | none | ⬜ explicit OK per item |
+| 21 | Optional: Azure bn-BD neural TTS (account + card) | — | ⬜ user decision |
+| 22 | Optional: HyperFrames 0.8.33 → latest | ~34 MB | ⬜ user decision |
+
+**Impossible here regardless:** admin-only installs; local AI image/video/music generation at a usable
+speed (no GPU, ~4 GB free RAM); the Apple-Silicon MLX tools media-use defaults to (mflux,
+parakeet-mlx, ltx-2-mlx); NVENC/AMF; 4K in practice. A fully unattended render-to-delivery run is
+not a machine limit: the render is user-gated by design.
+
+---
+
+## 1. What this workspace is
+
+`E:\Video Create` — a local professional video production workspace built on two frameworks:
+
+| Framework | What it is | Status |
+| --- | --- | --- |
+| **HyperFrames** 0.8.33 | Renders video from **HTML**. DOM declares timing via `data-*` attributes. | ✅ installed globally, renders verified |
+| **Remotion** 4.0.523 | Renders video from **React**. TypeScript compositions. | ✅ installed per-project, renders verified |
+
+Both are installed and **both have produced real 1080p MP4 files on this machine**.
+
+### Folder layout
+
+```
+E:\Video Create\
+├── CLAUDE.md                     ← this file
+├── tools\
+│   ├── hf-render.mjs             ← archived fallback since 2026-10-04 — use plain `hyperframes render` (§0b)
+│   ├── voice.mjs                 ← record from a mic + clean any voice recording → -16 LUFS WAV (§0b)
+│   ├── finish.mjs                ← ONE COMMAND: project or video file → checked, -14 LUFS, all formats (§0b)
+│   ├── qc.mjs                    ← delivery quality gate (FAIL/WARN/INFO), used by finish.mjs (§0b)
+│   ├── burn-subs.mjs             ← burn SRT/VTT/ASS into a video with correct Bengali conjuncts (§0b)
+│   ├── srt-to-words.mjs          ← SRT/VTT → word timings JSON for word-by-word captions (§0b)
+│   ├── srt.mjs                   ← shared SRT/VTT reader (BOM, UTF-16, CRLF, NFC)
+│   └── pyenv\                    ← workspace Python venv (Kokoro TTS); HYPERFRAMES_PYTHON points here
+├── projects\
+│   ├── remotion-starter\         ← Remotion 4 + React 19 + Tailwind v4
+│   │   ├── render.mjs            ← old PNG-path render; drops root fades — see §0b / §3
+│   │   ├── src\Composition.tsx   ← the "Video Create" title card demo
+│   │   ├── src\Root.tsx
+│   │   └── out\video.mp4         ← verified output
+│   ├── hyperframes-starter\      ← HyperFrames project (has its own CLAUDE.md + AGENTS.md)
+│   │   ├── index.html
+│   │   ├── hyperframes.json
+│   │   └── renders\verify.mp4
+│   ├── font-test\                ← font sample sheet, proves the font pack renders (§4b)
+│   │   └── renders\font-test.mp4
+│   ├── anim-test\                ← animation-runtime proof: GSAP + Anime.js + CSS (§4c)
+│   │   └── renders\anim-test.mp4
+│   ├── audio-test\               ← SFX + audio-in-MP4 proof (§4d)
+│   │   └── renders\audio-test.mp4
+│   └── hishab-khata-promo\       ← ⭐ the first real video: 45 s Bengali promo, BUILT, NOT RENDERED (§4g)
+│       ├── BRIEF.md  STORYBOARD.md  frame.md
+│       └── compositions\frames\  ← 7 frames, all animated
+├── assets\
+│   ├── fonts\                    ← ✅ 9 families, OFL 1.1, + fonts.css + LICENSES (§4b)
+│   ├── js\                       ← ✅ GSAP + Anime.js + Lottie, vendored + LICENSES (§4c)
+│   ├── sfx\                      ← ✅ 19 SFX, Pixabay License, + CREDITS (§4d)
+│   ├── music\                    ← ⏳ empty; README.md tells the user how to add Pixabay tracks (§4d)
+│   ├── luts\                     ← ✅ 3 .cube looks, generated locally + README (§4e)
+│   └── footage\   images\                              ← still empty
+└── renders\                                                     ← empty, final deliverables go here
+```
+
+Total on disk: **1.03 GB** (almost all of it `remotion-starter/node_modules`).
+
+---
+
+## 2. Verified machine facts (2026-09-10)
+
+Do **not** re-probe these unless something breaks.
+
+| Thing | Value |
+| --- | --- |
+| OS | Windows 11 Pro 10.0.26200, x64 |
+| Shell | Git Bash (POSIX sh). **Not** PowerShell, **not** cmd. Use unix syntax. |
+| CPU | Intel Core i5-8265U — 4 cores / 8 threads, 15W laptop chip (2018) |
+| GPU | Intel UHD 620 integrated only. **No discrete GPU.** |
+| RAM | 15.8 GB total, but only **~3–5.7 GB free** (measured 3.7–5.7 on 2026-10-04) — user keeps ~40 Chrome tabs open |
+| Disk | **E: 69 GB free, C: only ~6.9 GB free** (2026-10-05; the old "71 GB" was E:). Both local NTFS. Keep venvs, models and frame caches on E:. |
+| Node.js | v24.18.0 |
+| npm | 11.16.0 |
+| Python | 3.11.15 on PATH as `python` — ⚠️ that is the **Hermes Agent app venv**, never pip-install into it (§0b). `python3` = Store stub, `py` absent |
+| git | 2.54.0.windows.1 |
+| FFmpeg / FFprobe | **8.1.1-full_build (gyan.dev)** on PATH — full build |
+| Chrome | `C:\Program Files\Google\Chrome\Application\chrome.exe` |
+| Admin rights | ❌ **NOT available.** `IsInRole(Administrator)` = False. No Defender exclusions, no system-wide installs needing elevation. |
+| Docker | ❌ not installed |
+
+The system FFmpeg is excellent and is the backbone of this setup. It includes:
+`libx264, libx265, libsvtav1, libaom, libvpx, libplacebo, libzimg, libass, libfreetype, libharfbuzz,
+libfribidi, librubberband, libsoxr, libvmaf, libvidstab, frei0r, ladspa, nvenc, qsv/libvpl, amf,
+vaapi, d3d11va, vulkan, opencl, whisper`.
+
+---
+
+## 2b. ⚠️ SUPERSEDED 2026-10-05 (SAC off — see §0b). Fallback only: Windows Application Control blocked HyperFrames' own Chrome (2026-09-11)
+
+**Symptom.** Every `hyperframes check`, `snapshot`, `preview` poster and **render** dies with:
+
+```
+Runtime
+  ✗ check_runtime_failure: spawn UNKNOWN
+```
+
+It is not a code problem and not a memory problem. Running the binary by hand shows the real error:
+
+```
+C:\Users\zubay\.cache\hyperframes\chrome\chrome-headless-shell\win64-152.0.7977.30\chrome-headless-shell-win64\chrome-headless-shell.exe
+-> "Program 'chrome-headless-shell.exe' failed to run: An Application Control policy has blocked this file"
+```
+
+Windows Defender Application Control / Smart App Control started blocking the **unsigned
+headless-shell Chrome** that HyperFrames downloads into `~/.cache/hyperframes/chrome/`. This
+appeared between 2026-09-10 (renders worked) and 2026-09-11 (nothing ran). `hyperframes doctor`
+still reports Chrome as ✓ — it only checks that the file exists, not that it can execute.
+Git Bash reports the same thing as a misleading `Permission denied`.
+
+**The user has no admin rights, so the policy cannot be changed.**
+
+### The fix, already applied
+
+The **system Google Chrome is signed and therefore allowed**. HyperFrames honours an override:
+
+```
+HYPERFRAMES_BROWSER_PATH="C:\Program Files\Google\Chrome\Application\chrome.exe"
+```
+
+It is now set as a **user-level environment variable** (no admin needed), so every new shell
+gets it automatically:
+
+```powershell
+[Environment]::SetEnvironmentVariable('HYPERFRAMES_BROWSER_PATH', 'C:\Program Files\Google\Chrome\Application\chrome.exe', 'User')
+```
+
+To undo: set the same variable to `$null`. To check it took: `npx hyperframes browser path`
+should print the Program Files path, not the `.cache` one.
+
+**A shell that was already open will not see it** — export it inline for that session:
+
+```bash
+export HYPERFRAMES_BROWSER_PATH="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+```
+
+### Verified (2026-09-11)
+
+`projects/font-test` re-rendered end to end with the system Chrome: **5.0 s, 1920×1080, h264,
+944 585 bytes** vs the 2026-09-10 headless-shell render's 946 589 bytes — the same video.
+Render time **54.2 s vs 41.9 s**, so the full Chrome is roughly **30 % slower** than the
+headless shell. Budget for that: 1 minute of 1080p is now closer to **5 min** than 4.
+
+Sibling env vars the CLI honours, same shape: `HYPERFRAMES_FFMPEG_PATH`,
+`HYPERFRAMES_FFPROBE_PATH`, `HYPERFRAMES_WHISPER_PATH`.
+
+---
+
+## 2c. ⚠️ SUPERSEDED 2026-10-04 (SAC off — see §0b). Fallback only: Smart App Control blocked `ffprobe.exe` (2026-09-25) — `tools/hf-render.mjs`
+
+> If this fallback is ever revived: png-sequence renders DO carry audio — HyperFrames writes an
+> `audio.m4a` sidecar into the sequence folder, which hf-render.mjs currently deletes. Mux that
+> sidecar instead of writing hf-audio.mjs.
+
+**The 2026-09-11 fix in §2b is still needed and still correct. This is a second, separate block.**
+
+**Symptom.** `hyperframes render` captures every frame, encodes the MP4, prints a duration-probe
+failure, and then **the finished video is gone**. It looks like the render failed. It did not —
+the video was made and then deleted.
+
+**Cause.** HyperFrames wraps the render in an *artifact transaction*: it writes to a staging file,
+calls **ffprobe** to verify the artifact's duration, and only then commits. Windows **Smart App
+Control** now blocks `ffprobe.exe`, the probe dies with `spawn UNKNOWN`, the transaction rolls
+back, and the rollback deletes the MP4.
+
+Verified machine state:
+
+| Check | Value |
+| --- | --- |
+| `Get-MpComputerStatus \| SmartAppControlState` | **On** |
+| `CodeIntegrityPolicyEnforcementStatus` | **2 (Enforced)** |
+| `ffprobe.exe` | ❌ blocked |
+| `ffmpeg.exe`, **same folder, same build** | ✅ runs fine |
+| `python` on PATH | ❌ **also blocked** (exit 126) — do analysis in node |
+
+**The block is per-file reputation, not a signature or path rule.** Copying, renaming or moving
+`ffprobe.exe` does not help — it was tested. Smart App Control **can only ever be turned off, never
+back on** (it needs a Windows reinstall to re-enable), and **the user has no admin rights**, so the
+policy cannot be changed. Work around it; do not try to fix it.
+
+Git Bash hides the real error as `Permission denied` (exit 126). Use `cmd //c` to see the truth:
+`"blocked by your organization's Device Guard policy"`.
+
+### The fix, already built and verified: `E:\Video Create\tools\hf-render.mjs`
+
+```bash
+node "E:/Video Create/tools/hf-render.mjs" "E:/Video Create/projects/<project>"
+```
+
+Options: `--output=` `--bg=#RRGGBB` `--fps=` `--quality=draft|standard|high` `--crf=`
+`--composition=` `--workers=` `--keep-frames`.
+
+**Why it works.** The duration probe only runs when the artifact `kind === "file"` (verified in the
+installed 0.8.33 dist). **`--format png-sequence` writes a *directory* artifact, so the probe is
+skipped entirely.** The render log proves it:
+`assemble ... "skipped for png-sequence"` → `pipeline ... "artifact validated"` → `Render complete`.
+
+So the script: renders a PNG sequence (no ffprobe, no rollback) → flattens it onto the
+composition's background colour → encodes with the system FFmpeg 8.1.1 (not blocked) → deletes the
+PNGs. **Same shape and same class of reason as `projects/remotion-starter/render.mjs`
+(§3). Do not "simplify" either of them back to the plain command.**
+
+### Four traps inside it — every one cost a wasted render
+
+1. **png-sequence renders RGBA and the page background becomes transparent.** A straight yuv420p
+   encode comes out pure black. The script regex-reads `body`/`html` `background:` out of the
+   composition and composites over it; `--bg=` overrides, and a failed detection warns loudly and
+   falls back to black rather than pretending.
+2. **Double range conversion — the subtle one.** Copying HyperFrames' own
+   `scale=in_range=pc:out_range=tv` naively made the picture *worse*: `#0d0f14` decoded as
+   `rgb(25,26,29)` (washed out) instead of `rgb(13,14,19)`, and PSNR fell from 36.07 to 27.44 dB.
+   `color=` defaults to **yuv420p**, so `overlay` composited in YUV and the scale then
+   range-compressed an already-limited signal a second time. **Force RGB compositing:**
+   `color=...,format=rgb24[bg];[0:v]format=rgba[fg];[bg][fg]overlay=shortest=1:format=rgb,scale=in_range=pc:out_range=tv`
+3. **Use HyperFrames' own encoder profile, not a guess.** From the dist (`cli.js` ~72461):
+   `draft` = ultrafast/CRF 28 · `standard` = medium/CRF 18 · **`high` = slow/CRF 15**. A guessed
+   `medium`/CRF 17 produced 278 KB where the real profile produces ~500 KB. Also copy the colour
+   tags (`-colorspace/-color_primaries/-color_trc bt709`, `-color_range tv`), `-bf 0`,
+   `-x264-params aq-mode=3:aq-strength=0.8:deblock=1,1:colorprim=bt709:transfer=bt709:colormatrix=bt709`
+   and `-video_track_timescale 90000`, or the stream reads bare `yuv420p(progressive)`.
+4. **Node `spawn(..., {shell:true})` on Windows concatenates args without escaping** (DEP0190).
+   The workspace path has a space, so an absolute path splits at it → `Not a directory: E:\Video`.
+   Fixed three ways: quote any arg containing whitespace, set `cwd: projectDir`, and pass
+   **relative** paths (`renders/.hf-seq-tmp`).
+
+Frame dimensions are read straight out of the **PNG IHDR chunk** (magic `0x89504e47`, width at
+byte 16, height at byte 20) — ffprobe is the blocked binary this whole script exists to avoid, and
+hardcoding 1920×1080 would break any portrait or square project.
+
+### Verified 2026-09-25 on `projects/font-test` (5 s, 1080p)
+
+| Measure | Result |
+| --- | --- |
+| Time | **31–38 s** over two runs (capture 15.7 s / 19.7 s, encode ~1.7 s) — *faster* than the 54.2 s normal path (§5), because there is no probe/commit stage |
+| Stream | `yuv420p(tv, bt709, progressive)`, 1920×1080, 799 kb/s, 30 fps, 90k tbn ✅ |
+| Background | decodes `rgb(13,14,19)` vs the CSS `#0d0f14` = `rgb(13,15,20)` — correct within 4:2:0 rounding |
+| PSNR vs the known-good reference | **39.02 dB** whole-frame (**40.32 dB** once the reference's own 3-level offset is neutralised with `lut=y=val+3` — the 2026-09-10 file is itself ~3 levels dark) |
+| Frame at t=2.5 s | inspected: all nine families, Bengali conjuncts ক্ষুদ্র উজ্জ্বল দৃষ্টি শ্রদ্ধা স্ত্রী বিদ্যুৎ ঙ্ক and digits ০-৯ all correct |
+| Re-run reproducibility | two runs are **not** byte-identical (499,773 vs 500,946 B) — Chrome's text rasterisation is slightly nondeterministic — but **PSNR 59.4 dB between them** (min 58.4), i.e. visually the same video. Do not expect matching checksums. |
+
+### Why the file is ~half the size — measured, and it is an improvement
+
+`tool-test.mp4` is 501 KB against the reference's 946 KB. **It is not lower quality.** Background
+regions in both are perfectly flat (per-channel min/max spans exactly the declared colour, zero
+noise), so the difference is entirely in the text. Measured `|R−B|` divergence over a 600×60 text
+band:
+
+| Render | mean \|R−B\| | pixels fringed >12 |
+| --- | --- | --- |
+| reference (opaque page) | 14.10 | **15.4 %** |
+| hf-render.mjs (transparent page) | 10.37 | **6.1 %** |
+
+Chrome uses **subpixel (LCD/ClearType) antialiasing** when the page background is opaque, and falls
+back to **grayscale antialiasing** when it is transparent. Subpixel AA bakes colour fringes into
+the glyph edges — that chroma detail is what inflates the reference's bitrate. **Grayscale AA is
+the correct choice for video:** those fringes are tuned for one specific RGB-stripe panel, are
+wrong on any other display, and get mangled by 4:2:0 chroma subsampling anyway. This also explains
+why PSNR sits at 39 dB rather than higher, and why the text-band-only crop measured 36.92 dB.
+
+### ⚠️ The open gap: this path has NO AUDIO
+
+png-sequence carries no audio track (`hasAudio:false` in the render trace). A composition with
+`<audio>` cues renders **silent** through `hf-render.mjs`. This matters: `hishab-khata-promo`
+(§4g) has **28 SFX cues**. Closing it means parsing the `<audio>` tags' `data-start` /
+`data-duration` / `data-volume` / `data-track-index` into an ffmpeg `adelay`/`volume`/`amix`
+graph and muxing it in — a `tools/hf-audio.mjs`. **That file is referenced in hf-render.mjs's
+header but does not exist yet.**
+
+---
+
+## 3. ⚠️ SUPERSEDED 2026-10-04 (SAC off — see §0b): the Remotion bundled-FFmpeg bug was Smart App Control
+
+> The bundled ffmpeg/ffprobe/remotion.exe all start now, so `0xC0000142` was SAC. `render.mjs` below
+> also silently drops root-layer opacity fades (RGBA PNG → yuv420p). Prefer
+> `npx remotion render MyComp out/video.mp4 --color-space=bt709 --concurrency=1` (verified, 51 s).
+
+**Do not "fix" `render.mjs` by switching it back to plain `remotion render`. It will fail.**
+
+### The bug
+
+Remotion ships its own binaries in
+`node_modules/@remotion/compositor-win32-x64-msvc/`.
+On this machine **all three fail to start**:
+
+- `ffmpeg.exe` → exit `-1058471934`
+- `ffprobe.exe` → exit `-1058471934`
+- `remotion.exe` → exit `-1058471934`
+
+`-1058471934` = `0xC0000142` = `STATUS_DLL_INIT_FAILED`.
+
+Symptom the user sees: all frames render fine (`Rendered 150/150`), then
+`Error: FFmpeg quit with code 3236495362`.
+
+### What was ruled out (already tested — don't repeat)
+
+| Hypothesis | Result |
+| --- | --- |
+| Corrupt/partial download | ❌ clean `npm install` reproduced it |
+| `E:` drive is special | ❌ `E:` is local NTFS; copying binaries to `C:` still failed |
+| Bundled `msvcr100.dll` conflict | ❌ removing it didn't change anything |
+| Windows Exploit Protection / ASLR | ❌ `Get-ProcessMitigation -System` — all `NOTSET` |
+| Defender quarantine | ❌ RTP is on but `Get-MpThreat` is empty |
+| Zombie process holding files | ❌ no node/esbuild processes running |
+
+Root cause still unknown. Likely a MinGW-runtime DLL init failure specific to this box.
+**Not worth more time** — the workaround is strictly better anyway.
+
+### The workaround (in place and working)
+
+`projects/remotion-starter/render.mjs` does two steps:
+
+1. `npx remotion render <comp> out/frames --sequence --image-format=png --concurrency=2`
+   → Remotion writes PNG frames. This path **does not touch the broken binaries**.
+2. System FFmpeg 8.1.1 encodes them:
+   `-c:v libx264 -preset medium -crf 17 -pix_fmt yuv420p -movflags +faststart`
+
+It auto-detects the frame filename pattern and cleans `out/frames` first so a previous
+longer render can't leak extra frames. Exposed as `npm run render`.
+
+**HyperFrames is unaffected** — it uses the system FFmpeg by design.
+
+---
+
+## 4. Commands that are known to work
+
+```bash
+# Remotion — render. ⚠️ `npm run render` still runs the old render.mjs, which drops root fades (§0b).
+# Verified-correct plain render (51 s for 5 s of 1080p):
+cd "E:/Video Create/projects/remotion-starter" && npx remotion render MyComp out/video.mp4 --color-space=bt709 --concurrency=1
+
+# Remotion — pick composition and output
+cd "E:/Video Create/projects/remotion-starter" && npm run render -- MyComp out/promo.mp4 30
+
+# Remotion — visual editor in the browser
+cd "E:/Video Create/projects/remotion-starter" && npm run studio
+
+# HyperFrames — render (default again since 2026-10-04 — SAC off, §0b). Video AND audio.
+cd "E:/Video Create/projects/<project>" && hyperframes render --quality high --workers 1 --output renders/video.mp4
+
+# HyperFrames — anything longer than 240 s (refused by default on this disk, §0b)
+cd "E:/Video Create/projects/<project>" && PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS=3600 hyperframes render --quality high --workers 1 --frames-cache-dir "E:/Video Create/.cache/frames" --output renders/video.mp4
+
+# Fallback ONLY if Smart App Control ever returns (silent, 2.3x slower, §2c):
+#    node "E:/Video Create/tools/hf-render.mjs" "E:/Video Create/projects/<project>"
+
+# HyperFrames — quality gate (run before every render)
+cd "E:/Video Create/projects/hyperframes-starter" && hyperframes check
+
+# HyperFrames — Studio preview
+cd "E:/Video Create/projects/hyperframes-starter" && hyperframes preview
+
+# HyperFrames — new project
+cd "E:/Video Create/projects" && hyperframes init <name> --non-interactive --example blank --resolution landscape
+
+# Environment health
+hyperframes doctor --json
+```
+
+`hyperframes` is on PATH globally at `C:\Users\zubay\AppData\Roaming\npm\hyperframes`.
+
+---
+
+## 4b. Font pack — installed and render-verified (2026-09-10)
+
+Master pack: `E:/Video Create/assets/fonts/` — **4.1 MB**, 13 TTF files, 9 families.
+Every family is **SIL Open Font License 1.1** → free for commercial use, embedding and
+bundling in a sold product. Licence texts are kept in `assets/fonts/LICENSES/`.
+Source: `github.com/google/fonts` (`ofl/`), downloaded as unmodified TTF.
+
+| Family | Script | File(s) | Use for |
+| --- | --- | --- | --- |
+| Hind Siliguri | বাংলা | 300/400/500/600/700 static | default Bengali body + UI |
+| Noto Sans Bengali | বাংলা | variable 100–900 | widest Bengali glyph coverage, fallback |
+| Baloo Da 2 | বাংলা | variable 400–800 | heavy Bengali display / titles |
+| Tiro Bangla | বাংলা | 400 | Bengali serif, long reading text |
+| Inter | Latin | variable 100–900 | default Latin body + UI |
+| Anton | Latin | 400 | heavy headline |
+| Bebas Neue | Latin | 400 | condensed title card |
+| Playfair Display | Latin | variable 400–900 | elegant serif heading |
+| JetBrains Mono | Latin | variable 100–800 | code, numbers, timecode |
+
+`assets/fonts/fonts.css` declares every `@font-face` plus ready-made stacks as CSS variables
+(`--font-bn-body`, `--font-bn-title`, `--font-bn-serif`, `--font-en-body`, `--font-en-title`,
+`--font-en-cond`, `--font-en-serif`, `--font-mono`, `--font-mixed-body`, `--font-mixed-title`).
+Bengali-first ordering in the mixed stacks so Bengali+English in one line both shape correctly.
+
+### ⚠️ Fonts must be COPIED INTO each project — `../../` does not work
+
+HyperFrames `lint` rejects asset paths that traverse above the project root
+(`invalid_parent_traversal_in_asset_path`): compositions are served with the **project root**
+as base URL. So for every new project:
+
+```bash
+cp -r "E:/Video Create/assets/fonts" "E:/Video Create/projects/<project>/assets/fonts"
+```
+
+then in `index.html` `<head>`:
+
+```html
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+```
+
+Costs 4.1 MB per project. Trim unused families from the copy if size matters.
+
+### Known-harmless message
+
+`npm run check` may print `[StaticGuard] Invalid HyperFrame contract: Font families used
+without @font-face declaration: ...` **while `Lint` still reports 0 errors**. StaticGuard runs
+a static pass that does not follow the linked stylesheet. Verified false positive — the
+2026-09-10 render used all nine families correctly. Judge by the `Lint` line, not StaticGuard.
+
+### Verification artifact
+
+`projects/font-test/` — a 5 s 1080p sample sheet showing all nine families, including hard
+Bengali conjuncts (ক্ষ স্ব দৃ শ্র উজ্জ্বল ঙ্ক স্ত্রী ঞ) and Bengali digits ০-৯.
+`npm run check` passes clean (0 lint, 0 runtime, 0 layout, 0 motion, 97/97 contrast WCAG AA).
+Rendered `renders/font-test.mp4` in **41.9 s** (924 KB, h264, yuv420p, 1920×1080, 30 fps).
+Frame inspected visually — all shaping correct, no tofu boxes.
+
+---
+
+## 4c. Animation runtimes — vendored locally and render-verified (2026-09-10)
+
+Master pack: `E:/Video Create/assets/js/` — **640 KB**, all files vendored so **renders need no
+internet**. Licence texts in `assets/js/LICENSES/`.
+
+| Library | Version | Where | Licence |
+| --- | --- | --- | --- |
+| GSAP core + 12 plugins | 3.15.0 | `assets/js/gsap/` (186 KB) | GSAP Standard "no charge" — see the warning below |
+| Anime.js (UMD) | 4.5.0 | `assets/js/anime.umd.min.js` (118 KB) | MIT |
+| lottie-web | 5.13.0 | `assets/js/lottie.min.js` (306 KB) | MIT |
+
+GSAP plugins vendored (all free since GSAP 3.13): `SplitText`, `CustomEase`, `CustomWiggle`,
+`CustomBounce`, `TextPlugin`, `ScrambleTextPlugin`, `DrawSVGPlugin`, `MorphSVGPlugin`,
+`MotionPathPlugin`, `Flip`, `EasePack`, `Physics2DPlugin`.
+Deliberately **not** vendored: `ScrollTrigger`, `ScrollSmoother`, `ScrollToPlugin`, `Observer`,
+`Draggable`, `InertiaPlugin`, `GSDevTools`, `MotionPathHelper`, `PixiPlugin`, `EaselPlugin`,
+`CSSRulePlugin` — all scroll/pointer driven, useless in a headless seek render.
+
+### ⚠️ GSAP licence — the one commercial catch
+
+Read `assets/js/LICENSES/gsap-standard-license.txt` (saved from gsap.com/standard-license on
+2026-09-10; the npm package ships no LICENSE file). Summary of what actually matters here:
+
+- Rendering **video** with GSAP and selling the MP4 → fine. GSAP is not inside the deliverable.
+- A **client paying a one-time fee** for a site/product → fine, explicitly covered.
+- Shipping GSAP inside a product where **end users are charged** a usage/access/licence fee →
+  needs a paid "Business" Club GSAP membership.
+- **Prohibited use:** a no-code *visual animation builder* that competes with Webflow's visual
+  animation capabilities. If the user ever builds a drag-and-drop animation/video editor to sell,
+  GSAP is the wrong dependency — **use Anime.js (MIT), which has none of these restrictions.**
+
+Anime.js and lottie-web are MIT: no restriction of any kind.
+
+### Which runtimes HyperFrames can seek
+
+Verified present in the installed hyperframes 0.8.33 runtime
+(`dist/hyperframe-runtime.js` — grepped for each global):
+
+| Runtime | Registration | Status |
+| --- | --- | --- |
+| GSAP | `window.__timelines["<comp-id>"]` | ✅ default, verified |
+| Anime.js v4 | `window.__hfAnime.push(instance)` | ✅ verified — read the gotchas below |
+| CSS keyframes | automatic (computed `animation-name`) | ✅ verified |
+| Lottie | `window.__hfLottie.push(anim)` | adapter present, **not yet tested** (no .json asset) |
+| Three.js | `hf-seek` event + `window.__hfThreeTime` | adapter present, not installed (weak iGPU) |
+| TypeGPU / WebGPU | `window.__hfTypegpuTime` | adapter present, not installed (weak iGPU) |
+| WAAPI | `element.animate()` + `currentTime` | adapter present, not tested |
+
+**Motion / framer-motion has NO HyperFrames adapter.** Do not install it and do not suggest it;
+it cannot be seeked and will render as a frozen frame.
+
+### ⚠️ Anime.js v4 gotchas — both found the hard way, both cost a wasted render
+
+1. **`delay` is invisible to `seek()`.** `anime.animate(".x", { duration: 700, delay: 4800 })`
+   reports `.duration === 700` and `seek(4800)` clamps to the tween's end. Measured: seek(0)→0.0,
+   seek(175)→0.25, seek(350)→0.5, seek(700)→1.0, seek(4800)→1.0. The delay is simply dropped.
+   `anime.stagger(90, { start: 4800 })` behaves the same way — `start` does not offset the delay.
+   **Fix: use `anime.createTimeline({ autoplay: false })` and pass an absolute position to
+   `.add(targets, params, position)`.** Measured with `.add(..., 4800)`: `.duration === 5680`,
+   seek(4700)→not started, seek(4800)→0.0, seek(5150)→0.5, seek(5500)→1.0. Stagger delays inside
+   `.add()` *are* counted in the timeline duration.
+2. **Anime.js does not pre-apply a segment's start state.** Before a timeline segment begins,
+   its targets have no transform at all — an element that should be hidden renders fully visible.
+   **Fix: put the hidden start state in CSS** (`transform: scaleY(0); opacity: 0`) and animate to
+   the visible state. Unlike GSAP `.from()`, the runtime will not hide it for you.
+
+### ✅ GSAP SplitText handles Bengali correctly
+
+`SplitText.create(el, { type: "chars" })` on Bengali text **preserves conjuncts** — verified
+visually on `যুক্তাক্ষর: ক্ষুদ্র উজ্জ্বল` rendered per-character. No broken clusters, no
+orphaned vowel signs. So per-character kinetic typography works for Bengali, not just words.
+(`type: "words"` is still the safer choice for long Bengali lines — fewer elements, same look.)
+
+### Same per-project copy rule as the fonts
+
+```bash
+cp -r "E:/Video Create/assets/js" "E:/Video Create/projects/<project>/assets/js"
+```
+
+then load from the project root, never `../../`:
+
+```html
+<script src="assets/js/gsap/gsap.min.js"></script>
+<script src="assets/js/gsap/SplitText.min.js"></script>
+<script src="assets/js/anime.umd.min.js"></script>
+```
+
+`hyperframes init` templates ship a jsdelivr CDN `<script>` for GSAP. **Replace it with the local
+path** — otherwise every render depends on the network.
+
+### Verification artifact
+
+`projects/anim-test/` — 8 s 1080p, four panels, zero external URLs. `npm run check` passes clean
+(0 lint / 0 runtime / 0 layout / 0 motion, 117/117 contrast WCAG AA). Rendered
+`renders/anim-test.mp4` in **19.7 s** (504 KB).
+
+Motion proven by measuring frame brightness in each panel's region with
+`ffmpeg -vf crop=...,signalstats` rather than by eyeballing:
+
+- GSAP SplitText panel: 32.0 (t=1.1s) → 41.6 (t=1.5s) → 46.7 (t=2.2s)
+- Anime.js bars: 32.0 (t=4.7s) → 36.4 (t=4.95s) → 57.4 (t=5.2s) → 75.6 (t=5.5s) → 73.5 (settled)
+- CSS shimmer: left window 42→150 (t=0.6s) while right stays 42; then right 42→68 (t=1.0s) —
+  i.e. the sweep really moves under seek
+
+`data-layout-allow-overflow` on the shimmer element silences 10 expected `container_overflow`
+info findings (the sweep intentionally travels outside its clipping track).
+
+---
+
+## 4d. Audio — SFX installed, BGM pipeline verified, music source chosen (2026-09-10)
+
+### SFX: done
+
+`E:/Video Create/assets/sfx/` — **1.3 MB**, 19 MP3s + `manifest.json` + `CREDITS.md`.
+Source: the `media-use` skill's bundled library (`<skill>/audio/assets/sfx/`), originally Pixabay.
+
+**Licence: Pixabay Content License.** Commercial and non-commercial use, modification, and
+**redistribution as part of a derivative work (a rendered video) — with no attribution required.**
+Clean for a sold product. Text: `assets/sfx/CREDITS.md`.
+
+Files (duration from `manifest.json`, all confirmed decodable with ffprobe):
+`chime` 2.5s · `click` / `click-soft` 0.37s · `error` 1.62s · `glitch-1/2/3` 2.6-3.5s ·
+`impact-bass-1` 2.12s · `impact-bass-2` 2.59s · `key-press` 0.4s · `notification` 2.46s ·
+`ping` 1.32s · `pop` 0.72s · `riser` 10.03s · `sparkle` 1.8s · `typing` 1.5s ·
+`whoosh` / `whoosh-short` 0.57s · `whoosh-cinematic` 5.54s.
+`manifest.json` carries a one-line "what to use it for and where to sync it" per file — read it
+before picking. Mixed sample rates (24/44.1/48 kHz) and mono/stereo; the mixer handles it.
+
+### The audio contract — what actually matters
+
+```html
+<audio id="sfx-pop" src="assets/sfx/pop.mp3"
+       data-start="1.2" data-duration="0.72"
+       data-track-index="10" data-volume="0.9"></audio>
+```
+
+- **`id` is mandatory.** `lint` errors `media_missing_id`, and an id-less `<audio>` is silently
+  skipped by the mixer — the render comes out with no sound and no error.
+- Audio lives at the **host root** (`index.html`), a sibling of the scene clips, so it survives
+  scene cuts. Put it on a **high `data-track-index`** (10, 11, …) to keep it clear of the
+  linter's visual overlap rules. Several audio tracks mix together fine.
+- `data-duration` trims the clip; `data-volume` scales it.
+
+### Verified: audio really does reach the MP4 on this machine
+
+`projects/audio-test/` — 8 s 1080p with six SFX cued to six animation beats.
+`npm run check` passes (0 errors; 1 info from a deliberate scale tween). Rendered in **37.7 s**
+(544 KB). The output MP4 carries a real **AAC 48 kHz stereo** stream, 8.0 s, **true peak
+-1.4 dBFS** (no clipping), **integrated loudness -9.0 LUFS**.
+
+Placement was verified by **envelope cross-correlation of each source MP3 against the rendered
+audio**, not by ear:
+
+| Effect | Cued at | Found at | Correlation |
+| --- | --- | --- | --- |
+| whoosh | 0.0 s | 0.00 s | 1.00 |
+| pop | 1.2 s | 1.20 s | 1.00 |
+| ping | 2.0 s | 2.00 s | 1.00 |
+| typing | 3.0 s | 3.00 s | 1.00 |
+| impact-bass-1 | 5.0 s | 5.00 s | 1.00 |
+| chime | 6.5 s | 6.50 s | 1.00 (after a 1.8 kHz high-pass) |
+
+The chime needed the high-pass because `impact-bass-1` sustains for its full 2.12 s and masks it
+in a broadband envelope. **Two lessons for real edits:** `impact-bass-1` is a long sustained
+tone, not a short hit — trim it with `data-duration` if a later cue must be heard; and
+`chime.mp3` has ~0.4 s of quiet lead-in, so cue it ~0.4 s *before* the visual beat.
+
+-9.0 LUFS is far above the -14 LUFS web target — expected for an all-SFX test with no dialogue
+bed. Loudness normalisation (`loudnorm`) is still an open Tier 2 item.
+
+### BGM pipeline: verified (with a synthesized bed, not a library track)
+
+A 30 s music bed was synthesized with FFmpeg (`sine` x4 -> `amix` -> `tremolo` -> `aecho` ->
+`lowpass` -> `afade` -> `loudnorm`) purely to test the path, and placed in `projects/audio-test`
+as `assets/music/testbed.mp3` on track 9 at `data-volume="0.30"`, under the SFX on tracks 10-11.
+It is a test tone, not a library asset - do not ship it.
+
+Measured on the re-render (32.0 s, 578 KB):
+
+| Window | SFX-only render | With the bed | Bed contributes |
+| --- | --- | --- | --- |
+| 0.6-1.1 s (silent gap) | -99.0 dBFS | -41.2 dBFS | +57.8 dB |
+| 4.4-4.9 s (silent gap) | -69.1 dBFS | -36.3 dBFS | +32.8 dB |
+| 7.3-7.9 s (impact tail) | -34.1 dBFS | -32.7 dBFS | +1.4 dB |
+
+Confirmed by this: **a track longer than the composition is trimmed by `data-duration`**
+(30 s file, 8 s comp, output still exactly 8.0 s); a bed mixes under SFX without shifting them
+(all five re-correlated at their exact cue times, corr 0.90-1.00); and adding a track did not
+clip (true peak -1.2 dBFS). Integrated loudness stayed -9.0 LUFS.
+
+Volume guidance that follows from `media-use`'s own defaults: **0.10-0.15 under narration,
+0.30-0.60 for a silent film.** Keep BGM on a *lower* track index than the SFX.
+
+### Music sources: Pixabay chosen (user's decision, 2026-09-10) — manual download only
+
+| Route | Cost / setup | Commercial licence | Verdict |
+| --- | --- | --- | --- |
+| **Pixabay music** | free account, **manual download from the website** | **Pixabay Content License** — verified on the live licence page 2026-09-10: it covers "images, video, **audio** and other media"; free, **no attribution**, modification allowed; the only relevant prohibition is selling Content **standalone** ("no creative effort applied ... substantially the same form"). Music inside a rendered video is creative effort applied, so selling that video is permitted. | ✅ **chosen** |
+| HeyGen catalog (10k+ tracks, the `media-use` default) | install `heygen` CLI + OAuth sign-in | **RESOLVED NEGATIVELY 2026-10-04:** HeyGen ToS (Last Updated July 23, 2026) says Free Plan output may not be sold or used commercially; paid plans (from $29/mo) still state no catalogue licence. Original note: **UNRESOLVED.** heygen.com/terms grants commercial rights over *User Output* but says nothing about their stock music library. Zero occurrences of "music" or "stock" on that page (checked 2026-09-10). | ⚠️ do not use commercially until HeyGen confirms in writing |
+| Google Lyria (AI generation) | `$GEMINI_API_KEY` | Google's generative-content terms | may cost money — needs explicit OK |
+| MusicGen locally | multi-GB torch install | ❌ **`facebook/musicgen-small` weights are `cc-by-nc-4.0` — NON-COMMERCIAL** (confirmed via the HuggingFace model API, 2026-09-10) | ❌ **rules it out for this user.** Also multi-GB with ~3 GB free RAM and no GPU. |
+
+### ⚠️ The Pixabay API cannot fetch music — do not send the user for an API key
+
+`pixabay.com/api/docs/` exposes exactly two endpoints: `https://pixabay.com/api/` (images) and
+`https://pixabay.com/api/videos/`. The docs' own contents list only "Search images" and "Search
+videos"; the word "audio" does not appear on the page at all, and "music" appears only in the
+site nav (checked 2026-09-10). **An API key buys nothing for music.** The user downloads tracks
+by hand from `pixabay.com/music/` (a free login is required for the download button) into
+`assets/music/`. Instructions for him are in `assets/music/README.md`.
+
+Also checked: **Openverse's anonymous API** does return CC0 audio (240 results for "ambient"),
+but the CC0 pool is almost entirely **Freesound field recordings and atmospheres** — room tone,
+wind, city, rain — not composed music. Useful as ambience beds, not as a BGM library.
+`category=music` returns 0 CC0 results.
+
+**Do not install MusicGen for this user.** Do not point him at the HeyGen catalog for anything
+he sells until its music licence is confirmed.
+
+---
+
+## 4e. Colour grading (LUTs) — installed and measured (2026-09-11)
+
+`E:/Video Create/assets/luts/` — **3 `.cube` files**, 33×33×33, 948 KB each, plus a Bengali
+`README.md` for the user.
+
+| File | Look |
+| --- | --- |
+| `teal-orange-blockbuster.cube` | teal shadows, warm highlights — the cinematic split-tone |
+| `bleach-bypass.cube` | high contrast, heavily desaturated, hard blacks |
+| `film-fade.cube` | lifted blacks, warm highlights, soft faded wash |
+
+### Licence: clean, because nothing was downloaded
+
+The `media-use` skill's `luts/index.json` ships **3 looks** (that is the whole library — there
+is no larger set). Each entry has a CDN `url` **and** a deterministic `params` block. These
+three were built from the `params` with `--local-only`, so **no third-party `.cube` file was
+fetched** — the output is a numeric computation done on this machine:
+
+```bash
+node <MEDIA_DIR>/scripts/resolve.mjs --type lut --intent "<id>" \
+  --project <dir> --local-only --params '<the params object from index.json>'
+```
+
+They land in `<project>/.media/luts/lut_00N.cube` and were copied out under readable names.
+No account, no network, no licence question. Safe to sell work made with them.
+
+### Verified — measured, not eyeballed
+
+Applied to a real 1920×1080 frame and measured with `signalstats`:
+
+| Variant | YAVG | UAVG | VAVG | Reads as |
+| --- | --- | --- | --- | --- |
+| original | 221.5 | 124.4 | 129.8 | — |
+| teal-orange-blockbuster | 231.1 | 123.7 | 129.2 | brighter, slightly cool |
+| bleach-bypass | 231.2 | 127.8 | 128.3 | U and V both pulled toward 128 = desaturated ✅ |
+| film-fade | 194.8 | 121.7 | 133.2 | darker, V up = warmer ✅ |
+
+All three behave as their names promise.
+
+### ⚠️ Windows gotcha — `lut3d` and absolute paths
+
+FFmpeg's filter syntax uses `:` as a separator, so a Windows path (`E:\...`) inside `lut3d=file=`
+breaks. **`cd` into `assets/luts` and use the bare filename:**
+
+```bash
+cd "E:/Video Create/assets/luts"
+ffmpeg -i in.mp4 -vf "lut3d=file='film-fade.cube'" -c:a copy out.mp4
+```
+
+Partial strength (usually better than 100 %):
+
+```bash
+ffmpeg -i in.mp4 -filter_complex "[0:v]lut3d=file='film-fade.cube'[g];[0:v][g]blend=all_mode=normal:all_opacity=0.6" -c:a copy out.mp4
+```
+
+**Not yet useful in practice** — every project so far is typography and colour fields, with no
+photographic footage. LUTs start to matter the moment real images or clips enter `assets/footage`
+or `assets/images`.
+
+---
+
+## 4f. Audio processing chain — measured on this machine (2026-09-11)
+
+All three Tier-2 audio filters were run against real material and measured. Summary first:
+**loudnorm works, ducking works once you know the units, and `afftdn` is far weaker than
+`arnndn` — but `arnndn`'s model has no declared licence.**
+
+### `loudnorm` — two-pass to the web target
+
+Pass 1 measures, pass 2 applies the measured numbers. On `projects/audio-test/renders/audio-test.mp4`:
+
+```bash
+# pass 1
+ffmpeg -i in.mp4 -af "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json" -f null -
+# pass 2 — paste the measured_* values from pass 1
+ffmpeg -i in.mp4 -af "loudnorm=I=-14:TP=-1.5:LRA=11:measured_I=-8.14:measured_TP=-1.25:measured_LRA=19.20:measured_thresh=-21.61:offset=1.76" -c:v copy -c:a aac -b:a 192k out.mp4
+```
+
+Result: **−9.0 → −12.0 LUFS**, true peak **−4.9 dBFS**, video stream copied untouched.
+
+> ⚠️ **Corrected 2026-10-04:** −14 IS reachable — set `LRA` at or above the measured LRA (LRA=21 → −14.9 LUFS, TP −7.1). The paragraph below describes the LRA=11 run only.
+
+**It did not reach −14, and that is correct behaviour.** The source LRA is 19–22 LU, far above
+the `LRA=11` target, so loudnorm cannot pull the integrated level down without destroying the
+dynamics. `linear=true` and the default dynamic mode both landed on −12.0. A real video with
+narration plus a music bed has a much narrower LRA and will land close to −14.
+
+### `sidechaincompress` (ducking music under a voice)
+
+⚠️ **`threshold` is a LINEAR amplitude, not dB.** This is what makes the filter look broken.
+A −31.7 dBFS trigger is ≈ 0.026 linear, so the commonly-copied `threshold=0.06` never opens
+the compressor at all. Measured on a steady bed with a 1 s speech-band trigger at 3–4 s:
+
+| threshold | bed while quiet | bed under voice | duck depth |
+| --- | --- | --- | --- |
+| 0.06 | −26.7 dB | −27.1 dB | **−0.3 dB (does nothing)** |
+| 0.03 | −26.7 dB | −30.4 dB | −3.7 dB (subtle) |
+| 0.01 | −26.7 dB | −39.5 dB | **−12.8 dB (natural voiceover duck)** |
+| 0.003 | −26.7 dB | −49.4 dB | −22.7 dB (very aggressive) |
+
+```bash
+ffmpeg -i bed.wav -i voice.wav -filter_complex \
+  "[0:a][1:a]sidechaincompress=threshold=0.01:ratio=20:attack=15:release=300[out]" -map "[out]" out.wav
+```
+
+Start at `threshold=0.01, ratio=20, attack=15, release=300` and raise the threshold if the duck
+is too deep. Match the threshold to the voice's actual level — measure it with `volumedetect`
+first. **`volumedetect` prints at INFO level, so `-v error` hides its output** — use `-v info`.
+
+### Denoise — `afftdn` is weak here, `arnndn` is strong but unlicensed
+
+| Filter | Pure white-noise bed | Notes |
+| --- | --- | --- |
+| `afftdn=nr=12…80` | −29.2 → **−30.5 dB** | only ~1.3 dB, and `nr` made no difference at all |
+| `anlmdn` (defaults) | −27.6 → −27.7 dB | no measurable effect |
+| `arnndn` (RNNoise) | −29.2 → **−56.2 dB** | **27 dB of reduction** |
+
+Two honest caveats:
+
+1. **White noise is the worst case for `afftdn`.** Spectral subtraction needs structure to keep;
+   real-world hum, hiss and air-conditioner rumble reduce far better than this test suggests.
+   Do not conclude `afftdn` is useless from that one number.
+2. **`arnndn` is speech-trained.** On a 440 Hz sine + noise it removed 20 dB — it gutted the tone
+   along with the noise, because a sine is not speech. Use it on **voiceover only**; it will
+   destroy music and effects.
+
+⚠️ **`arnndn` model licence is UNRESOLVED — do not use it commercially yet.** A model file
+`som.rnnn` (297 KB) existed at `C:/Users/zubay/AppData/Local/Temp/ffxtest/som.rnnn` (**gone as of 2026-10-04**; licence-clean alternative: DeepFilterNet, plan step 12) — a **temp
+folder Windows can clear at any time**, so treat it as not installed. It matches
+`somnolent-hogwash-2018-09-01` from `github.com/GregorR/rnnoise-models`, and the GitHub API
+reports that repo's licence as **`None`** (checked 2026-09-11). Same category as the HeyGen
+music catalog: capable, but not clearable for a product the user sells. Resolve the licence
+before copying it into `assets/`.
+
+**None of this is needed yet** — there is no recorded audio in the workspace. It is set up and
+measured so the numbers are known when real narration or footage arrives.
+
+---
+
+## 4g. First real video — `projects/hishab-khata-promo` (2026-09-11, BUILT BUT NOT RENDERED)
+
+The first end-to-end run of the `/product-launch-video` workflow. **The user explicitly declined
+the render** ("render korte hobe na") — everything up to the render gate is done and passing.
+Resume by approving the render; nothing needs rebuilding.
+
+> ✅ **Updated 2026-10-04 (supersedes the note below):** SAC is off, so the plain command renders it
+> **with all 28 SFX**: `cd "E:/Video Create/projects/hishab-khata-promo" && hyperframes render --quality high --workers 1 --output renders/video.mp4`
+> (~8 min estimated). A scratch copy passed lint (0 errors) and check (52/52 contrast) on 2026-10-04, and
+> a 4 s cut rendered with SFX onsets exact to cue + lead-in. Still needs the user's OK to render.
+> BRIEF.md/STORYBOARD.md still say "no TTS, render via hf-render" — out of date. One layout warning:
+> `content_overlap` at t=31.13–31.25 s in 06-numbers.
+>
+> ⚠️ **Updated 2026-09-25:** rendering it now means `node "E:/Video Create/tools/hf-render.mjs"
+> "E:/Video Create/projects/hishab-khata-promo"` — plain `hyperframes render` deletes its own
+> output on this machine (§2c). **That path produces no audio, and this promo has 28 SFX cues**,
+> so a faithful render needs `tools/hf-audio.mjs` written first. Budget ~6–8 min for the video.
+
+**Subject** is a *sample* product invented for the run: **হিসাব খাতা**, school fee and accounts
+software for Bangladeshi schools. Chosen because the user is himself a school accountant, so he
+can judge whether it rings true — and it is realistic enough to become a product he ships.
+
+| Field | Value |
+| --- | --- |
+| Workflow / flow / storyboard | `product-launch-video` / `automation` / `yes` (collaborative gates) |
+| Length · format · language | 45 s · 1920×1080 · Bengali |
+| Arc | BAB: Before → After tease → Bridge → Step 1 → Step 2 → Wow → CTA |
+| Frames | 7, all `animated` |
+| Preset | `cobalt-grid`, brand-remixed then hand-corrected (see below) |
+| Narration / BGM | none — no TTS engine, no licensed music. On-screen Bengali text carries the message |
+| SFX | 28 cues hand-placed at the host root from `assets/sfx/` |
+| Gate status | `lint` 0 errors · `check` 0 errors everywhere · contrast **52/52 WCAG AA** · 19 snapshots inspected |
+
+`BRIEF.md`, `STORYBOARD.md` (with the `## Video direction` block and a time-coded shot sequence
+per frame) and `frame.md` are all on disk and are the resume surface.
+
+### What `build-frame.mjs` got wrong — always inspect its output
+
+The preset remixer maps brand colours onto preset roles **positionally**, and it got two roles
+badly wrong from a 5-colour `tokens.json`:
+
+- `paper-2` (a secondary *surface*) was assigned the **alert red** — a red page.
+- `ink-soft` (secondary *text*) was assigned the **amber** — unreadable.
+- Both display **and** body fonts were set to `fonts[0]`, so body text got the heavy display face.
+- The preset kept `DM Mono`, a font not in the local pack — a network dependency at render time.
+
+All four were hand-corrected in `frame.md`. **Read the frontmatter after running the script;
+do not assume the mapping is sane.**
+
+### Lint findings worth remembering
+
+- **`@import url("fonts.css")` inside a sub-composition fails lint** (`font_family_without_font_face`,
+  one error per frame). The linter does not follow `@import`. **Inline the `@font-face` rules in
+  each frame's `<style>`** — also safer under render-time CSS scoping. The host `<link>` alone
+  does not satisfy the per-file check.
+- **`assemble-index.mjs` writes a jsdelivr CDN `<script>` for GSAP.** Replace it with
+  `assets/js/gsap/gsap.min.js` every time, or the render needs the network (§4c).
+- **Animating `letterSpacing` is a lint error** (`gsap_non_transform_motion`) — layout properties
+  snap to integer device pixels and stutter under seek-by-frame capture. Use `scaleX` + `x`.
+- **Amber `#E4A11B` as TEXT on cream fails contrast** — measured **1.76:1** against a 3:1 gate.
+  `frame.md` now carries a second token, `highlight-ink: #AC7914` (~3.6:1), for amber *text*;
+  `#E4A11B` stays for rules, carets and dividers, which are graphics.
+- **`asset_candidates:` must be empty for typography-only frames.** Writing a prose explanation
+  there makes `stage-assets.mjs` parse the words as filenames and warn about missing assets.
+- Remaining warnings are cosmetic: `studio_missing_editable_id` (Studio editing convenience) and
+  two same-position `fromTo` pairs. Scene-boundary `content_overlap` infos are the two frames
+  crossfading — expected.
+
+### Sub-agent dispatch — the packet size cap is real
+
+`frame-packets.mjs` refuses a packet over **48 000 bytes**, and the packet inlines the blueprint
+plus every rule recipe cited in that frame's shot sequence. Sizes that matter:
+
+| Blueprint | Size | | Rule | Size |
+| --- | --- | --- | --- | --- |
+| `kinetic-type-beats` | 28.5 KB | | `dynamic-content-sequencing` | 8.4 KB |
+| `logo-assemble-lockup` | 26.0 KB | | `spring-pop-entrance` | 6.4 KB |
+| `grid-card-assemble` | 15.2 KB | | `kinetic-beat-slam` | 6.3 KB |
+| `dataviz-countup` | 14.3 KB | | `sine-wave-loop` | 6.0 KB |
+| `panel-edit-live-sync` | 13.1 KB | | `css-marker-patterns` | 5.6 KB |
+| `titlecard-reveal` | **7.3 KB** | | `svg-path-draw` | 5.5 KB |
+
+Budget **blueprint + cited rules ≤ ~44 KB** (the storyboard block eats the rest). With a 28 KB
+blueprint you get **two** rules, not five. Swapping frames 2 and 7 from `kinetic-type-beats` to
+`titlecard-reveal` fixed the overflow *and* was the better shape match — check the small
+blueprints before trimming the motion.
+
+### ⚠️ Seven parallel sub-agents hit the session rate limit
+
+All 7 frame workers were dispatched at once and **all 7 died** with
+`rate_limit / HTTP 429 — "You've hit your session limit"`. Six had already written their file;
+one (`04-fee-entry`) had not, and was written inline by the orchestrator instead. Verify the
+artifacts on disk rather than trusting the completion status — the dispatch contract says
+exactly this. **On this account, dispatch frame workers in waves of 2–3, not 7 at once.**
+
+---
+
+## 5. Measured render performance (real numbers from this machine)
+
+| Job | Time |
+| --- | --- |
+| HyperFrames — 300 frames (10s @ 30fps) 1080p, quality high | **39.1 s** |
+| Remotion — 150 PNG frames (5s @ 30fps) 1080p | 43 s |
+| System FFmpeg — encode 150 frames → H.264 CRF 17 | 6.3 s |
+| Remotion — full `npm run render` end to end | **40 s** |
+| HyperFrames — 5 s 1080p via the bundled headless shell (2026-09-10) | 41.9 s |
+| HyperFrames — the **same 5 s job via the system Chrome** (2026-09-11, after the Application Control block) | **54.2 s** |
+| HyperFrames — the **same 5 s job via `tools/hf-render.mjs`** (2026-09-25, png-sequence + system FFmpeg) | **31–38 s** |
+| HyperFrames — **plain `hyperframes render`**, 5 s 1080p, headless shell, SAC off (2026-10-04) | **12.6 s** (hf-render.mjs: 25.2 s) |
+| HyperFrames — plain render, audio-test 8 s 1080p with sound, `--quality high --workers 1` (2026-10-05) | **29 s** |
+| Estimates at 1 worker (2026-10-04): light typography 1 min ≈ 2.5 min, 5 min ≈ 13 min; heavy motion 1 min ≈ 11 min; footage ≈ 0.13–0.20 s/frame | — |
+
+**HyperFrames is roughly 2× faster per frame than Remotion here.** Prefer it when speed matters.
+
+⚠️ Since 2026-09-11 every render goes through the full system Chrome instead of the headless
+shell (§2b), which costs about **30% more time**. The 45 s promo in `hishab-khata-promo` should
+therefore be budgeted at roughly **6–8 minutes**, not 3–4.
+
+Extrapolated (estimates, not measured): 1 minute of 1080p ≈ **5 min** in HyperFrames on the
+system Chrome (it was ≈ 4 min on the headless shell), ≈ **8 min** in Remotion.
+
+**Work at 1080p.** 4K on a UHD 620 iGPU with 3 GB free RAM is impractical.
+Keep `--concurrency=2` — this machine thrashes above that.
+
+---
+
+## 6. Windows / this-machine gotchas
+
+- **The path contains a space** (`E:\Video Create`). Quote it in every command, always.
+- **"Device or resource busy"** when moving or deleting a freshly-`npm install`ed folder is common
+  here (antivirus scanning). **Wait ~5 s and retry** — it succeeds. `cmd //c "move /Y src dst"`
+  works when Git Bash `mv` refuses.
+- A partially-failed `rm -rf` on a busy folder can **empty the folder but leave the directory**.
+  If a package suddenly "doesn't exist", check for an empty dir and re-run `npm install`.
+- npm prints `allow-scripts` warnings for `esbuild`, `onnxruntime-node`, `protobufjs`, `@google/genai`.
+  Harmless so far; do not run `npm approve-scripts` without asking the user.
+- No admin rights → cannot add Defender exclusions, cannot install system-wide runtimes.
+- Chrome eats the RAM. If a render OOMs, ask him to close tabs first.
+
+---
+
+## 7. ✅ Remotion licence — RESOLVED 2026-09-11
+
+Read from the `LICENSE.md` actually shipped inside the installed package
+(`projects/remotion-starter/node_modules/remotion/LICENSE.md`, v4.0.523), not from memory.
+npm records the licence as `SEE LICENSE IN LICENSE.md`.
+
+Remotion is two-tier: a **Free License** and a paid **Company License**.
+
+### The user qualifies for the Free License
+
+Eligibility is by entity type, and the list includes **"an individual"** and
+**"a for-profit organization with up to 3 employees"**. Talha is an individual, so he is
+eligible today. The Company License (remotion.pro/license) only kicks in for a for-profit
+organisation above that size.
+
+### What the Free License allows
+
+> "use the software non-commercially **or commercially for the purpose of creating videos and
+> images** and to modify the software to their own liking, for the purpose of fulfilling their
+> custom use case"
+
+**So: building videos with Remotion and selling those videos is explicitly permitted.** The
+earlier worry in this file was unfounded for his situation.
+
+### The one real restriction
+
+> "It is not allowed to copy or modify Remotion code for the purpose of selling, renting,
+> licensing, relicensing, or sublicensing your own derivate of Remotion."
+
+**He may not build and sell a video-making product that is a derivative of Remotion.** This is
+the same shape as the GSAP catch in §4c: *making videos* is fine, *selling a video tool built
+on it* is not. If he ever wants to sell a video-editor product, neither Remotion nor GSAP is a
+safe dependency — that is an Anime.js (MIT) + HyperFrames decision.
+
+### Watch this
+
+The file's own header says: **"In Remotion 5.0, the license will slightly change"**
+(remotion-dev/remotion PR #3750). Re-read `LICENSE.md` after any major-version upgrade.
+
+### Bottom line
+
+| Use | Verdict |
+| --- | --- |
+| Make videos with Remotion, sell the videos | ✅ allowed (individual / ≤3 employees) |
+| Client pays him to make a video | ✅ allowed |
+| His company grows past 3 employees | ⚠️ Company License required |
+| Sell a product that *is* a Remotion derivative | ❌ never, at any tier |
+
+HyperFrames remains the simpler choice — it has no tier at all — but Remotion is no longer a
+blocker for selling videos.
+
+---
+
+## 8. Progress log
+
+### ✅ Tier 1 — done 2026-09-10
+
+- Folder structure created.
+- HyperFrames 0.8.33 installed globally, render verified (1080p, 10s).
+- Remotion 4.0.523 + React 19.2.3 + Tailwind v4 installed, render verified (1080p, 5s).
+- Remotion bundled-FFmpeg bug diagnosed and worked around via `render.mjs`.
+- `src/Composition.tsx` replaced the blank stub with a real animated title card
+  (spring entrance, gradient wipe rule, slow push-in, tail fade) — usable as a template.
+- Leftover research-probe folders deleted (128 MB reclaimed).
+
+### 🔶 Tier 2 — craft layer (in progress)
+
+- ✅ **Fonts — done 2026-09-10.** 9 families, all OFL 1.1, in `assets/fonts/`, render-verified
+  via `projects/font-test`. Full detail in §4b above. Per-project copy required.
+- ✅ **Animation runtimes — done 2026-09-10.** GSAP 3.15.0 + 12 plugins, Anime.js 4.5.0,
+  lottie-web 5.13.0 vendored locally in `assets/js/`, render-verified via `projects/anim-test`.
+  Full detail in §4c above, including the GSAP commercial-licence catch and two Anime.js
+  seek gotchas. Motion / framer-motion has no adapter — never install it.
+- ✅ **LUTs / colour grading — done 2026-09-11.** 3 `.cube` looks generated locally (no download,
+  no licence question) in `assets/luts/`, colour shift measured on a real frame. §4e.
+- ✅ **Sound effects — done 2026-09-10.** 19 Pixabay-licensed SFX in `assets/sfx/`, audio
+  pipeline render-verified via `projects/audio-test` (cross-correlated placement). §4d.
+- ✅ **Audio chain — measured 2026-09-11.** `loudnorm` two-pass (-9.0 → -12.0 LUFS on the SFX
+  test; -14 unreachable at LRA 19-22, which is correct), `sidechaincompress` ducking (the
+  `threshold` is LINEAR, not dB — that is why it looks broken), `afftdn` vs `arnndn` compared.
+  ⚠️ `arnndn`'s model has **no declared licence** — not clearable for a sold product. §4f.
+- 🔁 **Music — source chosen (Pixabay), pipeline verified, tracks not yet downloaded.**
+  The Pixabay API has no music endpoint, so the user downloads MP3s by hand into
+  `assets/music/` (see its README). BGM mixing, trimming and levels are already proven
+  with a synthesized bed. MusicGen is ruled out (non-commercial weights). §4d.
+
+### 🛠️ 2026-09-11 session
+
+- ⚠️ **Windows Application Control started blocking HyperFrames' bundled Chrome** — every check,
+  snapshot and render failed with `spawn UNKNOWN`. Fixed with a user-level
+  `HYPERFRAMES_BROWSER_PATH` pointing at the signed system Chrome; re-render of `font-test`
+  verified byte-comparable output. **§2b — read it before debugging any render failure.**
+- ⭐ **First real video built end to end** via `/product-launch-video`:
+  `projects/hishab-khata-promo`, 45 s Bengali promo, 7 frames, all gates green.
+  **The user declined the render**; it is the resume point. §4g.
+- Tier 2's last two technical items (LUTs, audio chain) closed — §4e, §4f.
+- ✅ **Remotion licence resolved** from the shipped `LICENSE.md`: he qualifies for the Free
+  License as an individual, and selling videos made with it is explicitly allowed. Selling a
+  Remotion *derivative* is not. §7.
+
+### 🛠️ 2026-09-25 session
+
+- ⚠️ **Smart App Control started blocking `ffprobe.exe`** — a *second*, separate block from the
+  2026-09-11 Chrome one. Every `hyperframes render` built the MP4 and then **deleted it** when the
+  post-render duration probe died and the artifact transaction rolled back. `ffmpeg.exe` from the
+  same folder still runs, so the block is per-file reputation; `python` on PATH is blocked too.
+  No admin rights, and SAC cannot be re-enabled once off — so it is worked around, not fixed.
+- ✅ **Built and verified `tools/hf-render.mjs`** — renders via `--format png-sequence` (a
+  *directory* artifact, which skips the probe), flattens the transparent background back to the
+  composition's colour, and encodes with the system FFmpeg using HyperFrames' own encoder profile.
+  **37.7 s for 5 s of 1080p — faster than the 54.2 s normal path.** PSNR 39.02 dB against the
+  known-good reference; stream correctly tagged `yuv420p(tv, bt709, progressive)`; frame inspected.
+  **§2c — read it before debugging any render failure.**
+- 📏 Explained the 501 KB vs 946 KB size drop by measurement, not guesswork: a transparent page
+  makes Chrome switch from subpixel to **grayscale text antialiasing** (fringed pixels 15.4 % →
+  6.1 %). Less chroma detail, smaller file, and the better choice for video. §2c.
+- ⬜ **Audio is the open gap.** png-sequence has no audio track, so `hf-render.mjs` renders silent.
+  `tools/hf-audio.mjs` is designed and referenced but **not written yet**. Blocks a faithful
+  render of `hishab-khata-promo`, which has 28 SFX cues.
+
+### 🛠️ 2026-10-04 / 10-05 session
+
+- ⭐ **The user turned Smart App Control OFF.** Every earlier block is gone; §2b/§2c/§3 are fallbacks now. §0b has the details.
+- 🔍 **Full capability audit** ("can it make any video from any input, professionally, automatically?"):
+  7 dimension auditors probed the machine for real, then an adversarial cross-check. The result and the
+  22-step install/build plan are in §0b.
+- ✅ **Plan step 1 done:** user env `HYPERFRAMES_NO_AUTO_INSTALL=1` set and `HYPERFRAMES_BROWSER_PATH`
+  removed. Re-verified with a fresh-shell-equivalent render of an audio-test copy: headless shell
+  152.0.7977.30, 29 s, h264 + AAC 48 kHz stereo, −9.0 LUFS, cue peaks −1.2 to −6.8 dB vs gap −33.8 dB.
+- ⚠️ Side effect to clean up (needs OK): the media-use test suites wrote fake records into `C:\Users\zubay\.media`.
+- ✅ **Plan step 6 done (2026-10-05):** `burn-subs.mjs`, `srt-to-words.mjs`, `srt.mjs`. Found and documented that
+  HyperFrames' own SRT import breaks on CRLF files.
+- ✅ **Plan step 5 done (2026-10-05):** `tools/finish.mjs` + `tools/qc.mjs`. Verified on a project with sound, a silent
+  project, a portrait HEVC file, a broken project and a 250 s project. Test outputs live only in the session scratchpad.
+  One leftover test folder that a failed run created in `renders/broken/` was removed; `renders/` is empty again.
+- ✅ **Plan step 4 done (2026-10-05):** `tools/voice.mjs` (record + clean). Verified on synthetic noisy speech, the
+  user's real Bengali clip, opus/mp4 inputs, the silent/no-voice/far-from-mic cases and a live 2 s mic capture.
+  `HYPERFRAMES_SKIP_SKILLS=1` was set at user level at the user's request.
+- ✅ **Plan step 3 done (2026-10-05):** Kokoro English TTS in `tools/pyenv`. Verified voice → render → ASR round trip.
+  ⚠️ Side effect: a scratch `hyperframes init` reinstalled all 21 HyperFrames skills from GitHub (see §0b).
+- ✅ **Plan step 2 done (2026-10-05):** `tools/pyenv` venv (offline, 28 MB) + user env `HYPERFRAMES_PYTHON`.
+  Verified that HyperFrames resolves it. Nothing was installed into the Hermes venv.
+
+### ⬜ Tier 3 — local AI media (not started, heavy)
+
+> **Updated 2026-10-04:** superseded by the §0b plan (steps 3, 7, 11). Kokoro's model is already
+> cached (only the pip package is missing, and Kokoro has no Bengali). The whisper.cpp prebuilt and
+> the faster-whisper models already exist on E:. MusicGen stays ruled out.
+
+`hyperframes doctor` reports these as missing and optional:
+
+| Tool | Purpose | doctor's hint |
+| --- | --- | --- |
+| whisper-cpp | transcription → auto subtitles | build with cmake |
+| Kokoro TTS | text → voiceover | `pip install kokoro-onnx soundfile` |
+| MusicGen | AI background music | `pip install transformers torch soundfile numpy` |
+
+⚠️ Torch on Windows CPU is multi-GB. With ~3 GB free RAM and no GPU, **warn the user about
+disk and speed before installing**, and get an explicit OK. Note the system FFmpeg was built
+`--enable-whisper`, so an FFmpeg-native transcription path may exist — investigate that first,
+it may be far cheaper than building whisper.cpp.
+
+---
+
+## 9. Available Claude skills for this work
+
+Already installed under `C:\Users\zubay\.claude\skills\`:
+
+`hyperframes` (entry point — **read first for any video request**), `hyperframes-core`,
+`hyperframes-cli`, `hyperframes-animation`, `hyperframes-audio`, `hyperframes-creative`,
+`hyperframes-keyframes`, `hyperframes-registry`, `media-use`, `motion-graphics`, `slideshow`,
+`general-video`, `faceless-explainer`, `product-launch-video`, `music-to-video`,
+`embedded-captions`, `talking-head-recut`, `pr-to-video`, `remotion-to-hyperframes`, `figma`,
+`smart-start`.
+
+Start any new video request by invoking the `hyperframes` skill — it routes to the right workflow.

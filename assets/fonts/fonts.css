@@ -1,0 +1,65 @@
+/* ============================================================
+   Video Create — font pack
+   সব ফন্ট SIL Open Font License 1.1 — বাণিজ্যিক কাজে ব্যবহার করা যাবে।
+   লাইসেন্সের মূল ফাইল: assets/fonts/LICENSES/
+
+   ব্যবহার (HyperFrames প্রজেক্টের index.html-এ <head> এর ভিতরে):
+     <link rel="stylesheet" href="../../assets/fonts/fonts.css" />
+   ============================================================ */
+
+/* ---------- বাংলা ---------- */
+
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 300;
+  src: url("bengali/HindSiliguri-Light.ttf")    format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+  src: url("bengali/HindSiliguri-Regular.ttf")  format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+  src: url("bengali/HindSiliguri-Medium.ttf")   format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+  src: url("bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+  src: url("bengali/HindSiliguri-Bold.ttf")     format("truetype"); font-display: block; }
+
+@font-face { font-family: "Noto Sans Bengali"; font-style: normal; font-weight: 100 900;
+  src: url("bengali/NotoSansBengali-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+  src: url("bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Tiro Bangla"; font-style: normal; font-weight: 400;
+  src: url("bengali/TiroBangla-Regular.ttf") format("truetype"); font-display: block; }
+
+/* ---------- ইংরেজি / Latin ---------- */
+
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 100 900;
+  src: url("latin/Inter-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Anton"; font-style: normal; font-weight: 400;
+  src: url("latin/Anton-Regular.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Bebas Neue"; font-style: normal; font-weight: 400;
+  src: url("latin/BebasNeue-Regular.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 400 900;
+  src: url("latin/PlayfairDisplay-Variable.ttf") format("truetype"); font-display: block; }
+
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+  src: url("latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+/* ---------- রেডিমেড স্ট্যাক ----------
+   বাংলা নামগুলো আগে রাখা হয়েছে যাতে বাংলা-ইংরেজি মেশানো লেখাও ঠিকভাবে দেখায়। */
+:root {
+  --font-bn-body:    "Hind Siliguri", "Noto Sans Bengali", sans-serif;
+  --font-bn-title:   "Baloo Da 2", "Hind Siliguri", sans-serif;
+  --font-bn-serif:   "Tiro Bangla", serif;
+
+  --font-en-body:    "Inter", "Hind Siliguri", sans-serif;
+  --font-en-title:   "Anton", "Hind Siliguri", sans-serif;
+  --font-en-cond:    "Bebas Neue", "Hind Siliguri", sans-serif;
+  --font-en-serif:   "Playfair Display", "Tiro Bangla", serif;
+  --font-mono:       "JetBrains Mono", monospace;
+
+  /* বাংলা + ইংরেজি একসাথে */
+  --font-mixed-body:  "Inter", "Hind Siliguri", sans-serif;
+  --font-mixed-title: "Anton", "Baloo Da 2", sans-serif;
+}

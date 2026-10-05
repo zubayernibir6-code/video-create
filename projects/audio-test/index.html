@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="bn" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <script src="assets/js/gsap/SplitText.min.js"></script>
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0a0c11; }
+      .clip { position: absolute; inset: 0; }
+
+      .stage { color: #e9edf4; }
+
+      .title { position: absolute; left: 140px; top: 300px;
+               font-family: "Baloo Da 2", sans-serif; font-weight: 700;
+               font-size: 96px; color: #fff; }
+
+      .badge { position: absolute; left: 146px; top: 452px;
+               font-family: "Inter", sans-serif; font-size: 24px; font-weight: 600;
+               letter-spacing: 1px; color: #0a0c11; background: #6ee7a8;
+               padding: 10px 22px; border-radius: 999px; }
+
+      .stat { position: absolute; right: 160px; top: 300px; text-align: right; }
+      /* Anton-এ বাংলা অঙ্ক নেই — বাংলা সংখ্যার জন্য Baloo Da 2 */
+      .stat .num { font-family: "Baloo Da 2", sans-serif; font-weight: 800;
+                   font-size: 140px; color: #7ab4ff; line-height: 1.25; }
+      .stat .cap { font-family: "Hind Siliguri", sans-serif; font-weight: 500;
+                   font-size: 28px; color: #93a0b5; margin-top: 34px; }
+
+      .term { position: absolute; left: 140px; top: 600px; width: 900px;
+              font-family: "JetBrains Mono", monospace; font-size: 30px; color: #9be3b8; }
+
+      .logo { position: absolute; left: 50%; top: 800px; transform: translateX(-50%);
+              font-family: "Anton", sans-serif; font-size: 72px; color: #fff;
+              letter-spacing: 4px; }
+
+      .tick { position: absolute; left: 50%; top: 930px; transform: translateX(-50%);
+              font-family: "Hind Siliguri", sans-serif; font-weight: 600;
+              font-size: 34px; color: #6ee7a8; }
+
+      .cue { position: absolute; left: 140px; bottom: 44px;
+             font-family: "JetBrains Mono", monospace; font-size: 19px; color: #8590a3; }
+    </style>
+  </head>
+
+  <body>
+    <div id="root" data-composition-id="main"
+         data-start="0" data-duration="8" data-width="1920" data-height="1080">
+
+      <div id="stage" class="clip stage" data-start="0" data-duration="8" data-track-index="1">
+        <div class="title" id="title">শব্দ পরীক্ষা</div>
+        <div class="badge" id="badge">SFX · Pixabay License</div>
+
+        <div class="stat" id="stat">
+          <div class="num" id="num">১৯</div>
+          <div class="cap">টা সাউন্ড ইফেক্ট</div>
+        </div>
+
+        <div class="term" id="term">$ render --with-audio</div>
+        <div class="logo" id="logo">VIDEO CREATE</div>
+        <div class="tick" id="tick">✓ শব্দ ঠিকভাবে বসেছে</div>
+
+        <div class="cue" id="cue">bgm bed 0-8s · whoosh 0.0s · pop 1.2s · ping 2.0s · typing 3.0s · impact 5.0s · chime 6.5s</div>
+      </div>
+
+      <!-- অডিও ট্র্যাক — প্রতিটার id বাধ্যতামূলক, না দিলে রেন্ডার নিঃশব্দ হয় -->
+      <!-- BGM bed: 30 s file trimmed to the 8 s composition, sitting low under the SFX -->
+      <audio id="bgm-bed" src="assets/music/testbed.mp3"
+             data-start="0"   data-duration="8"    data-track-index="9"  data-volume="0.30"></audio>
+
+      <audio id="sfx-whoosh" src="assets/sfx/whoosh.mp3"
+             data-start="0"   data-duration="0.57" data-track-index="10" data-volume="0.8"></audio>
+      <audio id="sfx-pop" src="assets/sfx/pop.mp3"
+             data-start="1.2" data-duration="0.72" data-track-index="10" data-volume="0.9"></audio>
+      <audio id="sfx-ping" src="assets/sfx/ping.mp3"
+             data-start="2.0" data-duration="1.32" data-track-index="11" data-volume="0.8"></audio>
+      <audio id="sfx-typing" src="assets/sfx/typing.mp3"
+             data-start="3.0" data-duration="1.50" data-track-index="10" data-volume="0.7"></audio>
+      <audio id="sfx-impact" src="assets/sfx/impact-bass-1.mp3"
+             data-start="5.0" data-duration="2.12" data-track-index="11" data-volume="0.9"></audio>
+      <audio id="sfx-chime" src="assets/sfx/chime.mp3"
+             data-start="6.5" data-duration="1.50" data-track-index="10" data-volume="0.8"></audio>
+    </div>
+
+    <script>
+      gsap.registerPlugin(SplitText);
+      const termSplit = SplitText.create("#term", { type: "chars" });
+
+      const tl = gsap.timeline({ paused: true });
+
+      // 0.0s — whoosh: শিরোনাম ঢুকে পড়ে
+      tl.from("#title", { opacity: 0, x: -120, duration: 0.55, ease: "power3.out" }, 0)
+
+        // 1.2s — pop: ব্যাজ লাফিয়ে ওঠে
+        .from("#badge", { opacity: 0, scale: 0.4, transformOrigin: "0% 50%",
+                          duration: 0.45, ease: "back.out(3)" }, 1.2)
+
+        // 2.0s — ping: সংখ্যা ঝলকে ওঠে
+        .from("#stat", { opacity: 0, y: 24, duration: 0.4, ease: "power2.out" }, 2.0)
+        .from("#num",  { scale: 1.35, transformOrigin: "50% 50%",
+                         duration: 0.5, ease: "power3.out" }, 2.0)
+
+        // 3.0s — typing: অক্ষরগুলো টাইপ হয়
+        .from(termSplit.chars, { opacity: 0, duration: 0.01,
+                                 stagger: 1.4 / termSplit.chars.length }, 3.0)
+
+        // 5.0s — impact: লোগো ধাক্কা মেরে বসে
+        .from("#logo", { opacity: 0, scale: 1.6, transformOrigin: "50% 50%",
+                         duration: 0.35, ease: "power4.out" }, 5.0)
+
+        // 6.5s — chime: টিক চিহ্ন
+        .from("#tick", { opacity: 0, y: 18, duration: 0.4, ease: "power2.out" }, 6.5)
+
+        .from("#cue", { opacity: 0, duration: 0.5 }, 7.0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

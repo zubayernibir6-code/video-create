@@ -1,0 +1,362 @@
+<template>
+  <style>
+    /* Fonts declared inline, not @import: lint cannot see through @import, and the
+       render-time CSS scoping is safer with real @font-face rules. Files are the
+       workspace pack (SIL OFL 1.1) copied into this project. */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+      src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+    /* ── 07-cta — the close. Cobalt Grid frame tokens, verbatim from frame.md.
+       paper #F7F5EF · paper-2 #EBE4D4 · ink #16603A · ink-soft #4A6355
+       grid rgba(22,96,58,0.10) · ink-faint rgba(22,96,58,0.20) · highlight #E4A11B ── */
+
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      color: #16603A;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── ground: warm cream paper + the permanent graph-paper grid (never disabled) ── */
+    #root .f07-cta-ground {
+      position: absolute;
+      inset: 0;
+      background-color: #F7F5EF;
+      background-image:
+        linear-gradient(to right, rgba(22, 96, 58, 0.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(22, 96, 58, 0.10) 1px, transparent 1px);
+      background-size: 38px 38px;
+      background-position: 0 0;
+    }
+
+    /* ── frame furniture: the two ink hairlines + the only persistent page chrome ── */
+    #root .f07-cta-furn {
+      position: absolute;
+      inset: 0;
+    }
+    #root .f07-cta-hair {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      height: 2px;
+      background: #16603A;
+    }
+    #root .f07-cta-hair-top { top: 58px; }
+    #root .f07-cta-hair-bot { bottom: 58px; }
+
+    #root .f07-cta-chrome {
+      position: absolute;
+      bottom: 22px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: #4A6355;
+      line-height: 1.2;
+    }
+    /* mono chrome is Latin/digit only; the Bengali nav hint falls to the embedded
+       Hind Siliguri so no glyph can miss at render. */
+    #root .f07-cta-chrome-l {
+      left: 80px;
+      font-family: "JetBrains Mono", "Hind Siliguri", sans-serif;
+      letter-spacing: 0.05em;
+    }
+    #root .f07-cta-chrome-r {
+      right: 80px;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* ── the close ── */
+    #root .f07-cta-layer {
+      position: absolute;
+      inset: 0;
+    }
+    #root .f07-cta-stage {
+      position: absolute;
+      inset: 110px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #root .f07-cta-closing {
+      font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 120px;
+      line-height: 1.06;
+      letter-spacing: -0.005em;
+      color: #16603A;
+      text-align: center;
+    }
+    /* two block lines instead of the sketch's <br> so each can carry its own beat.
+       Bengali is animated whole-line — never per character. */
+    #root .f07-cta-cl {
+      display: block;
+    }
+
+    /* amber divider — self-drawn stroke, square ends (0 radius everywhere) */
+    #root .f07-cta-divider {
+      display: block;
+      margin: 54px 0 46px;
+      width: 160px;
+      height: 4px;
+      overflow: visible;
+    }
+    #root .f07-cta-divider path {
+      fill: none;
+      stroke: #E4A11B;
+      stroke-width: 4;
+      stroke-linecap: butt;
+    }
+
+    /* wordmark slot — both swap states share one fixed footprint and one origin */
+    #root .f07-cta-wm-wrap {
+      position: relative;
+      width: 100%;
+      /* 116px type needs more than a 116px box: Bengali ascenders and the
+         matra spill past the em and collided with the tagline below. */
+      height: 168px;
+      margin-bottom: 12px;
+    }
+    #root .f07-cta-wm {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 116px;
+      line-height: 1;
+      letter-spacing: -0.008em;
+      transform-origin: 50% 50%;
+      white-space: nowrap;
+    }
+    #root .f07-cta-wm-ghost {
+      color: rgba(22, 96, 58, 0.20);
+      z-index: 1;
+    }
+    #root .f07-cta-wm-live {
+      color: #16603A;
+      z-index: 2;
+    }
+
+    #root .f07-cta-tagline {
+      margin-top: 24px;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 500;
+      font-size: 34px;
+      line-height: 1.4;
+      color: #4A6355;
+      text-align: center;
+      min-height: 48px;
+    }
+    #root .f07-cta-w {
+      display: inline-block;
+    }
+  </style>
+
+  <div data-hf-id="hf-s4o5" id="root" data-composition-id="07-cta" data-width="1920" data-height="1080">
+
+    <div class="clip f07-cta-ground" data-hf-id="hf-kxq8" data-start="0" data-duration="6" data-track-index="0"></div>
+
+    <div data-hf-id="hf-hkqf" class="clip f07-cta-furn" data-start="0" data-duration="6" data-track-index="1">
+      <div class="f07-cta-hair f07-cta-hair-top" data-hf-id="hf-77ey"></div>
+      <div class="f07-cta-hair f07-cta-hair-bot" data-hf-id="hf-jc3w"></div>
+      <div class="f07-cta-chrome f07-cta-chrome-l" data-hf-id="hf-zygh">শেষ কথা</div>
+      <div class="f07-cta-chrome f07-cta-chrome-r" data-hf-id="hf-e2iq">07 / 07</div>
+    </div>
+
+    <div data-hf-id="hf-wiwu" class="clip f07-cta-layer" data-start="0" data-duration="6" data-track-index="2">
+      <div class="f07-cta-stage" data-hf-id="hf-tan6">
+
+        <div class="f07-cta-closing" data-hf-id="hf-xvng">
+          <span data-hf-id="hf-f3vu" class="f07-cta-cl" id="f07-cta-line-1">খাতার হিসাব</span>
+          <span data-hf-id="hf-syoe" class="f07-cta-cl" id="f07-cta-line-2">ছেড়ে দিন।</span>
+        </div>
+
+        <svg class="f07-cta-divider" data-hf-id="hf-jk23" viewBox="0 0 160 4" width="160" height="4" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path data-hf-id="hf-gt0p" id="f07-cta-rule" d="M 0 2 L 160 2" />
+        </svg>
+
+        <div data-hf-id="hf-de16" class="f07-cta-wm-wrap">
+          <div data-hf-id="hf-vdkd" class="f07-cta-wm f07-cta-wm-ghost" id="f07-cta-ghost" aria-hidden="true">হিসাব খাতা</div>
+          <div class="f07-cta-wm f07-cta-wm-live" id="f07-cta-mark" data-hf-id="hf-o0ez">হিসাব খাতা</div>
+        </div>
+
+        <div class="f07-cta-tagline" data-hf-id="hf-mcew"><span data-hf-id="hf-1phf" class="f07-cta-w">স্কুলের</span> <span data-hf-id="hf-j96t" class="f07-cta-w">ফি</span> <span data-hf-id="hf-qj74" class="f07-cta-w">ও</span> <span data-hf-id="hf-nu8j" class="f07-cta-w">হিসাব</span> <span data-hf-id="hf-jc51" class="f07-cta-w">—</span> <span data-hf-id="hf-hc2r" class="f07-cta-w">এক</span> <span data-hf-id="hf-uuru" class="f07-cta-w">সফটওয়্যারে</span></div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines["07-cta"] = tl;
+
+      var root = document.querySelector('[data-composition-id="07-cta"]');
+      if (!root) return;
+      var q = function (sel) { return root.querySelector(sel); };
+
+      var DURATION = 6;
+
+      /* ── ONE tempo grid drives every onset in this frame (kinetic-beat-slam).
+         PULSE 0.6s, origin 0.2s — beat(n) lands exactly on each Scene boundary:
+         beat(2)=1.40 · beat(3)=2.00 · beat(4)=2.60 · beat(6)=3.80          ── */
+      var PULSE = 0.6;
+      var ORIGIN = 0.2;
+      var beat = function (n) { return ORIGIN + PULSE * n; };
+
+      var BEATS = [beat(2), beat(3)];   /* the two closing slams */
+      var SC3 = beat(4);                /* divider draw + wordmark seat */
+      var SC4 = beat(6);                /* tagline */
+
+      /* ─────────────────────────────────────────────────────────────────
+         Scene 1 (0.0–1.4s) — the empty cream page.
+         Ground, grid, hairlines and page chrome are the only things alive;
+         every content entrance below is a fromTo, so at t=0 the page reads
+         exactly as the page Frame 1 opened on. Nothing is authored here.
+         ───────────────────────────────────────────────────────────────── */
+
+      /* ─────────────────────────────────────────────────────────────────
+         Scene 2 (1.4–2.6s) — two kinetic beat slams on the shared grid.
+         Distinct entrance axis per line; whole Bengali lines, never split
+         per character. Long-tail settles, no overshoot.
+         ───────────────────────────────────────────────────────────────── */
+      var line1 = q("#f07-cta-line-1");
+      var line2 = q("#f07-cta-line-2");
+
+      /* slam 1 — scale + blur collapse (power4.out hit) */
+      tl.fromTo(
+        line1,
+        { scale: 1.28, filter: "blur(12px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: PULSE * 0.92, ease: "power4.out" },
+        BEATS[0]
+      );
+
+      /* slam 2 — a different axis: heavy rise with momentum (circ.out) */
+      tl.fromTo(
+        line2,
+        { y: 68, opacity: 0 },
+        { y: 0, opacity: 1, duration: PULSE * 0.83, ease: "circ.out" },
+        BEATS[1]
+      );
+
+      /* ─────────────────────────────────────────────────────────────────
+         Scene 3 (2.6–3.8s) — the amber rule self-draws, then the wordmark
+         is seated by a scale-swap at the same centre.
+         ───────────────────────────────────────────────────────────────── */
+
+      /* svg-path-draw — dasharray/dashoffset from the MEASURED length */
+      var rule = q("#f07-cta-rule");
+      var ruleLen = 160;
+      if (rule && typeof rule.getTotalLength === "function") {
+        ruleLen = rule.getTotalLength() || 160;
+      }
+      if (rule) {
+        rule.style.strokeDasharray = String(ruleLen);
+        rule.style.strokeDashoffset = String(ruleLen);
+        tl.fromTo(
+          rule,
+          { strokeDashoffset: ruleLen },
+          { strokeDashoffset: 0, duration: PULSE * 0.65, ease: "power2.out" },
+          SC3
+        );
+      }
+
+      /* scale-swap-transition — a faint draft of the mark lands, then the
+         outgoing shrinks away as the finished mark grows into the same
+         centre through an OVERLAP window. Incoming sits above on z-index. */
+      var ghost = q("#f07-cta-ghost");
+      var mark = q("#f07-cta-mark");
+
+      var TRIGGER = SC3 + PULSE * 0.9;            /* 3.14 */
+      var EXIT_DUR = PULSE * 0.50;                /* 0.30 */
+      var ENTER_DUR = PULSE * 0.87;               /* 0.522 */
+      var OVERLAP = PULSE * 0.23;                 /* 0.138 */
+      var EXIT_SCALE = 0.74;
+
+      /* the draft arrives and dwells briefly before it can transform */
+      tl.fromTo(
+        ghost,
+        { opacity: 0, scale: 1 },
+        { opacity: 1, scale: 1, duration: PULSE * 0.3, ease: "power2.out" },
+        SC3 + PULSE * 0.6
+      );
+
+      /* outgoing: shrink + fade fast, power2.in (rushing away) */
+      tl.fromTo(
+        ghost,
+        { opacity: 1, scale: 1 },
+        {
+          opacity: 0,
+          scale: EXIT_SCALE,
+          duration: EXIT_DUR,
+          ease: "power2.in",
+          immediateRender: false
+        },
+        TRIGGER
+      );
+
+      /* incoming: grows into place, starting OVERLAP before the exit ends.
+         The rule's back.out is replaced by a long-tail power3 settle —
+         this frame's motion doctrine bans bounce/overshoot. */
+      tl.fromTo(
+        mark,
+        { opacity: 0, scale: EXIT_SCALE },
+        { opacity: 1, scale: 1, duration: ENTER_DUR, ease: "power3.out" },
+        TRIGGER + EXIT_DUR - OVERLAP
+      );
+
+      /* ─────────────────────────────────────────────────────────────────
+         Scene 4 (3.8–6.0s) — the tagline reveals per word, then everything
+         holds absolutely still to the final rendered frame.
+         dynamic-content-sequencing: each word's slot is BASE + chars ×
+         SEC_PER_CHAR, reduced ONCE at build into absolute onsets — no
+         hardcoded per-word offsets, nothing recomputed per frame.
+         Split on whitespace only: Bengali conjuncts stay intact.
+         ───────────────────────────────────────────────────────────────── */
+      var words = Array.prototype.slice.call(root.querySelectorAll(".f07-cta-w"));
+
+      var WORD_BASE = PULSE * 0.07;   /* 0.042s floor per word */
+      var SEC_PER_CHAR = 0.008;       /* longer words earn a longer slot */
+      var WORD_DUR = PULSE * 0.70;    /* 0.42s reveal */
+
+      var cursor = 0;
+      var ONSETS = [];
+      for (var i = 0; i < words.length; i++) {
+        ONSETS.push(SC4 + cursor);
+        cursor += WORD_BASE + words[i].textContent.length * SEC_PER_CHAR;
+      }
+
+      for (var w = 0; w < words.length; w++) {
+        tl.fromTo(
+          words[w],
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: WORD_DUR, ease: "power3.out" },
+          ONSETS[w]
+        );
+      }
+
+      /* Final frame of the video: the last reveal settles at ~4.6s and the
+         composition then holds dead still to 6.0s — no breath, no drift, no
+         fade-out. This inert tween only pins the timeline to the full
+         duration; it touches nothing on screen. */
+      tl.to({ hold: 0 }, { hold: 1, duration: DURATION, ease: "none" }, 0);
+    })();
+  </script>
+</template>

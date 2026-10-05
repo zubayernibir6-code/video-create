@@ -1,0 +1,371 @@
+<template>
+  <style>
+    /* Fonts declared inline, not @import: lint cannot see through @import, and the
+       render-time CSS scoping is safer with real @font-face rules. Files are the
+       workspace pack (SIL OFL 1.1) copied into this project. */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+      src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+    /* ── 04-fee-entry — panel-edit-live-sync (Reproduce).
+       Cobalt Grid tokens verbatim from frame.md:
+       paper #F7F5EF · paper-2 #EBE4D4 · ink #16603A · ink-soft #4A6355
+       grid rgba(22,96,58,0.10) · ink-faint rgba(22,96,58,0.20) · highlight #E4A11B
+       The signature is the SYNC: the typed amount and the posted row are one
+       movement, same amber, matched velocity. ───────────────────────────── */
+
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      color: #16603A;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ground: paper + the permanent graph-paper grid, on its own clip layer */
+    #root .f04-ground {
+      position: absolute;
+      inset: 0;
+      background-color: #F7F5EF;
+      background-image:
+        linear-gradient(to right, rgba(22, 96, 58, 0.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(22, 96, 58, 0.10) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    /* frame furniture */
+    #root .f04-hair {
+      position: absolute; left: 80px; right: 80px; height: 2px; background: #16603A;
+    }
+    #root .f04-hair-top { top: 58px; }
+    #root .f04-hair-bot { bottom: 58px; }
+    #root .f04-chrome {
+      position: absolute; bottom: 22px; font-size: 13px;
+      letter-spacing: 0.06em; color: #4A6355;
+    }
+    #root .f04-chrome-l { left: 80px; font-family: "JetBrains Mono", "Hind Siliguri", sans-serif; }
+    #root .f04-chrome-r { right: 80px; font-family: "JetBrains Mono", monospace; }
+
+    /* stage */
+    #root .f04-stage {
+      position: absolute; left: 80px; right: 80px; top: 110px; bottom: 110px;
+      transform-origin: 50% 50%;
+    }
+    #root .f04-head {
+      font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+      font-weight: 600; font-size: 68px; line-height: 1.15;
+      color: #16603A; margin-bottom: 44px;
+    }
+    #root .f04-w { display: inline-block; }
+
+    #root .f04-cols { display: grid; grid-template-columns: 620px 1fr; gap: 70px; }
+
+    /* ── left: the entry panel ── */
+    #root .f04-card-title,
+    #root .f04-out-label {
+      font-family: "Hind Siliguri", sans-serif; font-size: 17px; font-weight: 600;
+      letter-spacing: 0.16em; color: #4A6355; margin-bottom: 24px;
+    }
+    #root .f04-card { position: relative; width: 620px; height: 380px; }
+    #root .f04-cardfill { position: absolute; inset: 0; background: #EBE4D4; }
+    #root .f04-cardframe { position: absolute; inset: 0; overflow: visible; }
+    #root .f04-cardframe rect {
+      fill: none; stroke: #16603A; stroke-width: 2;
+    }
+    #root .f04-cardinner { position: absolute; inset: 0; padding: 26px 34px; }
+
+    #root .f04-field {
+      position: relative;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 14px 0;
+      font-family: "Hind Siliguri", sans-serif; font-size: 28px; color: #4A6355;
+    }
+    #root .f04-field .f04-fline {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+      background: rgba(22, 96, 58, 0.20); transform-origin: 0% 50%;
+    }
+    #root .f04-field b {
+      font-family: "JetBrains Mono", monospace; font-weight: 500;
+      font-size: 30px; color: #16603A;
+    }
+    #root .f04-field .f04-bnval {
+      font-family: "Hind Siliguri", sans-serif; font-weight: 600;
+      font-size: 29px; color: #16603A;
+    }
+    /* the focal field — the one the viewer types into */
+    #root .f04-focal .f04-fline { height: 3px; background: #E4A11B; }
+    #root .f04-focal b { color: #AC7914; }  /* amber TEXT: 3.6:1 on cream (E4A11B was 1.76:1) */
+    #root .f04-caret {
+      display: inline-block; width: 3px; height: 30px; margin-left: 3px;
+      background: #E4A11B; vertical-align: -4px;
+    }
+
+    /* ── right: what happens by itself ── */
+    #root .f04-ledger { position: relative; }
+    #root .f04-ledgerrule {
+      position: absolute; left: 0; right: 0; top: 0; height: 2px;
+      background: #16603A; transform-origin: 0% 50%;
+    }
+    #root .f04-row {
+      position: relative;
+      display: grid; grid-template-columns: 90px 1fr 190px;
+      align-items: baseline; padding: 18px 0;
+    }
+    #root .f04-rowline {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+      background: rgba(22, 96, 58, 0.20); transform-origin: 0% 50%;
+    }
+    #root .f04-row .f04-n {
+      font-family: "JetBrains Mono", monospace; font-size: 22px; color: #4A6355;
+    }
+    #root .f04-row .f04-nm {
+      font-family: "Hind Siliguri", sans-serif; font-size: 30px; color: #16603A;
+    }
+    #root .f04-row .f04-amt {
+      font-family: "JetBrains Mono", monospace; font-size: 30px; color: #16603A; text-align: right;
+    }
+    #root .f04-new .f04-nm, #root .f04-new .f04-amt { color: #AC7914; }  /* amber TEXT, readable */
+
+    #root .f04-total {
+      position: relative; margin-top: 40px; padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    #root .f04-totalrule {
+      position: absolute; left: 0; right: 0; top: 0; height: 3px;
+      background: #16603A; transform-origin: 0% 50%;
+    }
+    #root .f04-total span {
+      font-family: "Hind Siliguri", sans-serif; font-size: 34px; color: #4A6355;
+    }
+    #root .f04-total b {
+      font-family: "JetBrains Mono", monospace; font-weight: 500;
+      font-size: 56px; color: #16603A; font-variant-numeric: tabular-nums;
+      transform-origin: 100% 50%;
+    }
+  </style>
+
+  <div data-hf-id="hf-nh82" id="root" data-composition-id="04-fee-entry" data-width="1920" data-height="1080" data-duration="6.5">
+
+    <div data-hf-id="hf-rcd5" class="clip f04-ground" data-start="0" data-duration="6.5" data-track-index="0"></div>
+
+    <div data-hf-id="hf-uffc" class="f04-hair f04-hair-top"></div>
+    <div data-hf-id="hf-r0n2" class="f04-hair f04-hair-bot"></div>
+
+    <div data-hf-id="hf-51oz" class="f04-stage">
+      <div data-hf-id="hf-mq1p" class="f04-head"><span data-hf-id="hf-iosz" class="f04-w">ফি</span> <span data-hf-id="hf-dgsw" class="f04-w">নিলেই</span> <span data-hf-id="hf-w8kl" class="f04-w">হিসাব</span> <span data-hf-id="hf-6691" class="f04-w">নিজে</span> <span data-hf-id="hf-bsb5" class="f04-w">থেকে</span> <span data-hf-id="hf-7q7z" class="f04-w">ওঠে</span></div>
+
+      <div data-hf-id="hf-pr7i" class="f04-cols">
+        <div data-hf-id="hf-yeow">
+          <div data-hf-id="hf-51wt" class="f04-card-title">ফি এন্ট্রি</div>
+          <div data-hf-id="hf-icix" class="f04-card">
+            <div data-hf-id="hf-66e6" class="f04-cardfill"></div>
+            <svg data-hf-id="hf-845g" class="f04-cardframe" viewBox="0 0 620 380" width="620" height="380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect data-hf-id="hf-oxfv" x="1" y="1" width="618" height="378" />
+            </svg>
+            <div data-hf-id="hf-twyn" class="f04-cardinner">
+              <div data-hf-id="hf-ym35" class="f04-field"><span data-hf-id="hf-9d0b">শিক্ষার্থী</span><span data-hf-id="hf-n8gg" class="f04-bnval">রুমানা আক্তার</span><i data-hf-id="hf-k2sh" class="f04-fline"></i></div>
+              <div data-hf-id="hf-41xh" class="f04-field"><span data-hf-id="hf-w933">শ্রেণি</span><span data-hf-id="hf-pz0v" class="f04-bnval">৮ম</span><i data-hf-id="hf-lik5" class="f04-fline"></i></div>
+              <div data-hf-id="hf-58uk" class="f04-field"><span data-hf-id="hf-o4j7">মাস</span><span data-hf-id="hf-q3n8" class="f04-bnval">সেপ্টেম্বর</span><i data-hf-id="hf-mph8" class="f04-fline"></i></div>
+              <div data-hf-id="hf-y6vr" class="f04-field f04-focal"><span data-hf-id="hf-0lsv">টাকা</span><b data-hf-id="hf-xujp"><span data-hf-id="hf-anwi" class="f04-typed"></span><i data-hf-id="hf-gjkg" class="f04-caret"></i></b><i data-hf-id="hf-mb67" class="f04-fline"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-y7yw">
+          <div data-hf-id="hf-p19l" class="f04-out-label">নিজে থেকে যা হয়</div>
+          <div data-hf-id="hf-3bog" class="f04-ledger">
+            <i data-hf-id="hf-46ti" class="f04-ledgerrule"></i>
+            <div data-hf-id="hf-pdxx" class="f04-row"><span data-hf-id="hf-snu5" class="f04-n">০৪১</span><span data-hf-id="hf-od3o" class="f04-nm">সাদিয়া ইসলাম</span><span data-hf-id="hf-uz31" class="f04-amt">১,২০০</span><i data-hf-id="hf-yoab" class="f04-rowline"></i></div>
+            <div data-hf-id="hf-4mbt" class="f04-row"><span data-hf-id="hf-ymfk" class="f04-n">০৪২</span><span data-hf-id="hf-cx1e" class="f04-nm">মিনহাজ উদ্দিন</span><span data-hf-id="hf-4ze9" class="f04-amt">১,২০০</span><i data-hf-id="hf-tg43" class="f04-rowline"></i></div>
+            <div data-hf-id="hf-vbt6" class="f04-row f04-new"><span data-hf-id="hf-y84j" class="f04-n">০৪৩</span><span data-hf-id="hf-8oz2" class="f04-nm">রুমানা আক্তার</span><span data-hf-id="hf-66bc" class="f04-amt">১,২০০</span><i data-hf-id="hf-t1t2" class="f04-rowline"></i></div>
+          </div>
+          <div data-hf-id="hf-ajs3" class="f04-total"><i data-hf-id="hf-h28x" class="f04-totalrule"></i><span data-hf-id="hf-itq8">সেপ্টেম্বরের আদায়</span><b data-hf-id="hf-twhs">৳ ০</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-lcuz" class="f04-chrome f04-chrome-l">ধাপ ১ · ফি এন্ট্রি</div>
+    <div data-hf-id="hf-jj4v" class="f04-chrome f04-chrome-r">04 / 07</div>
+  </div>
+
+  <script>
+    (function () {
+      var ID = "04-fee-entry";
+      var root = document.querySelector('[data-composition-id="' + ID + '"]');
+      if (!root) return;
+      var q = function (s) { return root.querySelector(s); };
+      var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+      var tl = gsap.timeline({ paused: true });
+
+      /* ── Bengali numeral helpers (deterministic; no Date.now, no Math.random) ── */
+      var BN = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      function toBn(str) {
+        var out = "";
+        for (var i = 0; i < str.length; i++) {
+          var c = str.charCodeAt(i);
+          out += (c >= 48 && c <= 57) ? BN[c - 48] : str[i];
+        }
+        return out;
+      }
+      function grouped(n) {
+        var s = String(n), out = "", c = 0;
+        for (var i = s.length - 1; i >= 0; i--) {
+          out = s[i] + out;
+          if (++c % 3 === 0 && i > 0) out = "," + out;
+        }
+        return toBn(out);
+      }
+
+      /* ── one time grid, seconds ─────────────────────────────────────────── */
+      var T_HEAD = 0.06, HEAD_STAG = 0.07, HEAD_DUR = 0.60;
+      var PUSH_DUR = 4.20;
+
+      var T_CARDTITLE = 1.10, T_CARDDRAW = 1.14, CARDDRAW_DUR = 0.72;
+      var T_CARDFILL = 1.30, CARDFILL_DUR = 0.44;
+      var FIELDS = [1.46, 1.66, 1.86], FIELD_DUR = 0.44, FLINE_DUR = 0.40;
+      var T_OUTLABEL = 1.52, T_LEDGERRULE = 1.66, LEDGERRULE_DUR = 0.50;
+      var CTX_ROWS = [1.82, 2.00], CTX_DUR = 0.44, CTX_DIM = 0.42;
+
+      var T_FOCALLINE = 2.30, FOCALLINE_DUR = 0.34;
+      var T_CARET = 2.34;
+      var DIGITS = "১,২০০".split("");
+      var T_TYPE = 2.44, TYPE_STEP = 0.13;
+      var T_TYPEDONE = T_TYPE + DIGITS.length * TYPE_STEP;   /* 3.09 */
+      var T_UNDERLINE = 3.06, UNDERLINE_DUR = 0.30;
+
+      /* the sync: the posted row leaves as the typed value arrives — same
+         direction, same speed, so the two read as ONE movement */
+      var T_SYNC = 3.40, SYNC_DUR = 0.52, SYNC_LINE_DUR = 0.56;
+
+      var T_TOTALRULE = 4.62, TOTALRULE_DUR = 0.46;
+      var T_TOTALLAB = 4.68, TOTALLAB_DUR = 0.42;
+      var T_COUNT = 4.78, COUNT_DUR = 1.06;
+
+      /* every rowline rests at scaleX:0 before its own tween runs — without this
+         baseline the LAST authored fromTo would set the pre-tween state for all of
+         them (lint: gsap_repeated_fromto_without_baseline) */
+      tl.set(qa(".f04-rowline"), { scaleX: 0 }, 0);
+
+      /* ── macro settle: one long-tail move, fully at rest by 4.2s so the
+            back half of the frame carries no camera motion at all ────────── */
+      tl.fromTo(q(".f04-stage"),
+        { scale: 1.010 },
+        { scale: 1, duration: PUSH_DUR, ease: "power3.out" }, 0);
+
+      /* ── Scene 1 (0.0–1.1) — the headline only. Bengali by WORD. ───────── */
+      tl.fromTo(qa(".f04-head .f04-w"),
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: HEAD_DUR, ease: "power3.out", stagger: HEAD_STAG }, T_HEAD);
+
+      /* ── Scene 2 (1.1–2.3) — the panel self-draws and fills with context ── */
+      tl.fromTo(q(".f04-card-title"),
+        { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.40, ease: "power2.out" }, T_CARDTITLE);
+
+      var rect = q(".f04-cardframe rect");
+      var per = 2 * (618 + 378);
+      gsap.set(rect, { strokeDasharray: per });
+      tl.fromTo(rect,
+        { strokeDashoffset: per },
+        { strokeDashoffset: 0, duration: CARDDRAW_DUR, ease: "power2.inOut" }, T_CARDDRAW);
+
+      tl.fromTo(q(".f04-cardfill"),
+        { opacity: 0 }, { opacity: 1, duration: CARDFILL_DUR, ease: "power2.out" }, T_CARDFILL);
+
+      qa(".f04-field").slice(0, 3).forEach(function (f, i) {
+        tl.fromTo(f.querySelector(".f04-fline"),
+          { scaleX: 0 }, { scaleX: 1, duration: FLINE_DUR, ease: "power3.out" }, FIELDS[i]);
+        tl.fromTo(Array.prototype.slice.call(f.querySelectorAll("span")),
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: FIELD_DUR, ease: "power3.out", stagger: 0.04 }, FIELDS[i]);
+      });
+
+      tl.fromTo(q(".f04-out-label"),
+        { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.40, ease: "power2.out" }, T_OUTLABEL);
+      tl.fromTo(q(".f04-ledgerrule"),
+        { scaleX: 0 }, { scaleX: 1, duration: LEDGERRULE_DUR, ease: "power3.out" }, T_LEDGERRULE);
+
+      /* the two existing rows are CONTEXT — they arrive dim and stay dim */
+      qa(".f04-row").slice(0, 2).forEach(function (row, i) {
+        tl.fromTo(row.querySelector(".f04-rowline"),
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.48, ease: "power3.out", immediateRender: false }, CTX_ROWS[i]);
+        tl.fromTo(row,
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: CTX_DIM, duration: CTX_DUR, ease: "power3.out" }, CTX_ROWS[i]);
+      });
+
+      /* ── Scene 3 (2.3–3.4) — the টাকা value types in, digit by digit ───── */
+      tl.fromTo(q(".f04-focal .f04-fline"),
+        { scaleX: 0 }, { scaleX: 1, duration: FOCALLINE_DUR, ease: "power3.out" }, T_FOCALLINE);
+      tl.fromTo(Array.prototype.slice.call(q(".f04-focal").querySelectorAll("span:first-child")),
+        { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "power3.out" }, T_FOCALLINE);
+
+      var caret = q(".f04-caret");
+      var typed = q(".f04-typed");
+      tl.fromTo(caret, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "none" }, T_CARET);
+
+      DIGITS.forEach(function (d, i) {
+        tl.call(function () {
+          typed.textContent = DIGITS.slice(0, i + 1).join("");
+        }, null, T_TYPE + i * TYPE_STEP);
+      });
+      /* seeking backwards must un-type, so restate the empty state at the head */
+      tl.call(function () { typed.textContent = ""; }, null, 0);
+
+      tl.fromTo(q(".f04-focal .f04-fline"),
+        { scaleY: 1 }, { scaleY: 3, duration: UNDERLINE_DUR, ease: "power3.out" }, T_UNDERLINE);
+      tl.to(caret, { opacity: 0, duration: 0.18, ease: "none" }, T_TYPEDONE + 0.12);
+
+      /* ── Scene 4 (3.4–4.6) — THE SIGNATURE SYNC.
+            Row ০৪৩ posts itself in the same amber, entering from the left on
+            the same direction and speed the typed value settled with, so the
+            eye carries the cause straight into the effect. ───────────────── */
+      var newRow = q(".f04-new");
+      tl.fromTo(newRow.querySelector(".f04-rowline"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: SYNC_LINE_DUR, ease: "power3.out", immediateRender: false }, T_SYNC);
+      tl.fromTo(newRow,
+        { x: -34, opacity: 0 },
+        { x: 0, opacity: 1, duration: SYNC_DUR, ease: "power3.out" }, T_SYNC);
+      /* the amber pulse that ties the two sides together */
+      tl.fromTo(q(".f04-focal b"),
+        { scale: 1.06 }, { scale: 1, duration: SYNC_DUR, ease: "power3.out" }, T_SYNC);
+
+      /* ── Scene 5 (4.6–6.0) — the month total counts up, then dead still ── */
+      tl.fromTo(q(".f04-totalrule"),
+        { scaleX: 0 }, { scaleX: 1, duration: TOTALRULE_DUR, ease: "power3.out" }, T_TOTALRULE);
+      tl.fromTo(q(".f04-total span"),
+        { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: TOTALLAB_DUR, ease: "power2.out" }, T_TOTALLAB);
+
+      var totalEl = q(".f04-total b");
+      var st = { v: 0 };
+      var last = -1;
+      tl.fromTo(totalEl, { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "power2.out" }, T_COUNT);
+      tl.to(st, {
+        v: 51600,
+        duration: COUNT_DUR,
+        ease: "power3.out",
+        onUpdate: function () {
+          var r = Math.round(st.v / 100) * 100;
+          if (r !== last) { last = r; totalEl.textContent = "৳ " + grouped(r); }
+        }
+      }, T_COUNT);
+      tl.fromTo(totalEl, { scale: 0.82 }, { scale: 1, duration: COUNT_DUR, ease: "power3.out" }, T_COUNT);
+
+      /* nothing moves after 5.84s — the frame ends completely still */
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+    })();
+  </script>
+</template>

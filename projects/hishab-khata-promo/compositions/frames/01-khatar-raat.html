@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8">
+    <!-- Frame 01 — খাতার রাত. Dressed from the confirmed wireframe: placement, hierarchy and
+         copy are unchanged; treatment (frame.md) + kinetic-beat-slam motion added. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* Fonts declared inline, not @import: lint cannot see through @import, and the
+       render-time CSS scoping is safer with real @font-face rules. Files are the
+       workspace pack (SIL OFL 1.1) copied into this project. */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+      src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          color: #16603A;
+          overflow: hidden;
+        }
+        #root, #root * { box-sizing: border-box; }
+
+        /* ---------- full-bleed ground: paper + permanent graph-grid (clip layer, never #root) ---------- */
+        #root .bg {
+          position: absolute; inset: 0;
+          background-color: #F7F5EF;
+          background-image:
+            linear-gradient(to right, rgba(22,96,58,0.10) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(22,96,58,0.10) 1px, transparent 1px);
+          background-size: 38.4px 38.4px;
+        }
+        #root .page { position: absolute; inset: 0; }
+
+        /* ---------- frame furniture ---------- */
+        #root .hair {
+          position: absolute; left: 80px; right: 80px; height: 2px; background: #16603A;
+        }
+        #root .hair-top { top: 58px; }
+        #root .hair-bot { bottom: 58px; }
+
+        #root .chrome {
+          position: absolute; bottom: 22px; color: #4A6355;
+        }
+        #root .chrome-l {
+          left: 80px;
+          font-family: "Hind Siliguri", sans-serif; font-size: 15px; font-weight: 600;
+          letter-spacing: 0.16em;
+        }
+        #root .chrome-r {
+          right: 80px;
+          font-family: "JetBrains Mono", monospace; font-size: 13px; letter-spacing: 0.06em;
+        }
+
+        #root .stage { position: absolute; left: 80px; right: 80px; top: 110px; bottom: 110px; }
+
+        /* ---------- type ---------- */
+        #root .eyebrow {
+          font-family: "Hind Siliguri", sans-serif; font-size: 16px; font-weight: 600;
+          letter-spacing: 0.18em; color: #4A6355; margin-bottom: 44px;
+        }
+        #root .lines { display: flex; flex-direction: column; gap: 22px; max-width: 1120px; }
+        #root .line {
+          font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 600;
+          font-size: 78px; line-height: 1.12; letter-spacing: -0.005em; color: #C0392B;
+        }
+        #root .chunk { display: block; }
+
+        /* ---------- pixel-glitch column (frame.md signature, gutter between type and page) ---------- */
+        #root .glitch { position: absolute; left: 1156px; top: 0; width: 56px; height: 860px; }
+        #root .glitch b {
+          display: block;
+          background-image: repeating-linear-gradient(90deg, #16603A 0 2px, transparent 2px 8px);
+        }
+        #root .glitch b:nth-child(1) { height: 215px; width: 56px; margin-left: 0; }
+        #root .glitch b:nth-child(2) { height: 215px; width: 38px; margin-left: 18px; }
+        #root .glitch b:nth-child(3) { height: 215px; width: 56px; margin-left: 0; }
+        #root .glitch b:nth-child(4) { height: 215px; width: 30px; margin-left: 10px; }
+
+        /* ---------- QR-block: corner punctuation ---------- */
+        #root .qr {
+          position: absolute; left: 0; bottom: 0; width: 88px;
+          box-shadow: 0 0 0 3px #F7F5EF;
+        }
+        #root .qrr { display: flex; }
+        #root .qrr i { width: 11px; height: 11px; background: rgba(22,96,58,0.10); }
+        #root .qrr i.on { background: #16603A; }
+
+        /* ---------- the ledger page being complained about (dimmed background layer) ---------- */
+        #root .ledger {
+          position: absolute; right: 0; top: 60px; width: 520px; height: 560px;
+          background: #EBE4D4; border: 1px solid rgba(22,96,58,0.20);
+          padding: 18px 20px;
+        }
+        #root .ledger-head {
+          display: flex; align-items: baseline; justify-content: space-between;
+          border-bottom: 2px solid #16603A; padding-bottom: 10px;
+        }
+        #root .ledger-head .lab {
+          font-family: "Hind Siliguri", sans-serif; font-size: 14px; font-weight: 600;
+          letter-spacing: 0.16em; color: #16603A;
+        }
+        #root .ledger-head .fig {
+          font-family: "JetBrains Mono", monospace; font-size: 12px;
+          letter-spacing: 0.06em; color: #4A6355;
+        }
+        #root .lrow {
+          display: flex; align-items: center; height: 48px;
+          border-bottom: 1px solid rgba(22,96,58,0.20);
+        }
+        #root .lrow .num {
+          font-family: "JetBrains Mono", monospace; font-size: 12px;
+          letter-spacing: 0.06em; color: #4A6355; width: 24px; flex: none;
+        }
+        #root .lrow .bn { height: 7px; background: rgba(22,96,58,0.30); margin-left: 12px; flex: none; }
+        #root .lrow .ba { height: 7px; background: rgba(22,96,58,0.30); margin-left: auto; flex: none; }
+
+        /* ---------- red-ink marks that crowd the page ---------- */
+        #root .marks {
+          position: absolute; right: 0; top: 60px; width: 520px; height: 560px;
+          overflow: hidden;
+        }
+        #root .mk { position: absolute; background: #C0392B; }
+        #root .mk.box { background: transparent; border: 3px solid #C0392B; }
+
+        /* ---------- clock (mono role; Hind Siliguri carries the Bengali digits) ---------- */
+        #root .clock {
+          position: absolute; right: 0; top: 660px; width: 520px; text-align: center;
+          font-family: "Hind Siliguri", sans-serif; font-weight: 500; font-size: 60px;
+          letter-spacing: 0.06em; color: #C0392B;
+        }
+      </style>
+
+      <div data-hf-id="hf-fylx" id="root" data-composition-id="01-khatar-raat" data-width="1920" data-height="1080" data-duration="8.4">
+
+        <div class="clip bg" data-hf-id="hf-kxq8" data-start="0" data-duration="8.4" data-track-index="0"></div>
+
+        <div data-hf-id="hf-8d3i" class="clip page" data-start="0" data-duration="8.4" data-track-index="1">
+
+          <div data-hf-id="hf-77ey" id="f01kr-hairtop" class="hair hair-top"></div>
+          <div data-hf-id="hf-jc3w" id="f01kr-hairbot" class="hair hair-bot"></div>
+
+          <div data-hf-id="hf-tan6" class="stage">
+
+            <div data-hf-id="hf-ds9q" id="f01kr-glitch" class="glitch" aria-hidden="true"><b data-hf-id="hf-xujp"></b><b data-hf-id="hf-ey49"></b><b data-hf-id="hf-g51c"></b><b data-hf-id="hf-fqqb"></b></div>
+
+            <div data-hf-id="hf-j1l2" id="f01kr-eyebrow" class="eyebrow">মাস শেষ · হিসাব মেলানো</div>
+
+            <div data-hf-id="hf-qvs1" class="lines">
+              <div data-hf-id="hf-j0qp" id="f01kr-l1" class="line">রাত ১১টা।</div>
+              <div data-hf-id="hf-e9rr" id="f01kr-l2" class="line">খাতা এখনো মেলেনি।</div>
+              <div data-hf-id="hf-fc93" id="f01kr-l3" class="line">কে কত বকেয়া রেখেছে?</div>
+              <div data-hf-id="hf-b45g" class="line"><span data-hf-id="hf-llfn" id="f01kr-l4a" class="chunk">একটা অঙ্ক ভুল —</span><span data-hf-id="hf-l3c8" id="f01kr-l4b" class="chunk">আবার গোড়া থেকে।</span></div>
+            </div>
+
+            <div data-hf-id="hf-vzam" id="f01kr-ledger" class="ledger">
+              <div data-hf-id="hf-rgjm" class="ledger-head"><span data-hf-id="hf-ksw9" class="lab">বকেয়া</span><span data-hf-id="hf-ub9r" class="fig">—</span></div>
+              <div data-hf-id="hf-0nbc" class="lrow"><span data-hf-id="hf-cshg" class="num">01</span><span data-hf-id="hf-zim6" class="bn" style="width:210px"></span><span data-hf-id="hf-le6u" class="ba" style="width:64px"></span></div>
+              <div data-hf-id="hf-bwcg" class="lrow"><span data-hf-id="hf-blkd" class="num">02</span><span data-hf-id="hf-o27c" class="bn" style="width:168px"></span><span data-hf-id="hf-4end" class="ba" style="width:92px"></span></div>
+              <div data-hf-id="hf-apfd" class="lrow"><span data-hf-id="hf-bzve" class="num">03</span><span data-hf-id="hf-w1iu" class="bn" style="width:236px"></span><span data-hf-id="hf-x9e5" class="ba" style="width:52px"></span></div>
+              <div data-hf-id="hf-b3qe" class="lrow"><span data-hf-id="hf-dzej" class="num">04</span><span data-hf-id="hf-yoqz" class="bn" style="width:152px"></span><span data-hf-id="hf-ltfw" class="ba" style="width:84px"></span></div>
+              <div data-hf-id="hf-9wtb" class="lrow"><span data-hf-id="hf-edpk" class="num">05</span><span data-hf-id="hf-3dbp" class="bn" style="width:198px"></span><span data-hf-id="hf-03h1" class="ba" style="width:70px"></span></div>
+              <div data-hf-id="hf-ab4c" class="lrow"><span data-hf-id="hf-d6sh" class="num">06</span><span data-hf-id="hf-k6bj" class="bn" style="width:224px"></span><span data-hf-id="hf-n0uf" class="ba" style="width:58px"></span></div>
+              <div data-hf-id="hf-9479" class="lrow"><span data-hf-id="hf-dl3i" class="num">07</span><span data-hf-id="hf-t1h1" class="bn" style="width:176px"></span><span data-hf-id="hf-64rx" class="ba" style="width:96px"></span></div>
+              <div data-hf-id="hf-9iia" class="lrow"><span data-hf-id="hf-fkmn" class="num">08</span><span data-hf-id="hf-zfjb" class="bn" style="width:206px"></span><span data-hf-id="hf-om4s" class="ba" style="width:66px"></span></div>
+              <div data-hf-id="hf-8bl7" class="lrow"><span data-hf-id="hf-fyxo" class="num">09</span><span data-hf-id="hf-dv5c" class="bn" style="width:160px"></span><span data-hf-id="hf-ei14" class="ba" style="width:80px"></span></div>
+              <div data-hf-id="hf-8pw8" class="lrow"><span data-hf-id="hf-ujpa" class="num">10</span><span data-hf-id="hf-qnt9" class="bn" style="width:190px"></span><span data-hf-id="hf-zd4i" class="ba" style="width:60px"></span></div>
+            </div>
+
+            <div data-hf-id="hf-3cvh" class="marks" aria-hidden="true">
+              <i data-hf-id="hf-uy8j" class="mk" data-beat="13" data-sub="0" data-rot="-2" style="left:20px;  top:96px;  width:300px; height:5px"></i>
+              <i data-hf-id="hf-90h8" class="mk" data-beat="13" data-sub="1" data-rot="-2" style="left:20px;  top:114px; width:240px; height:5px"></i>
+              <i data-hf-id="hf-v270" class="mk" data-beat="14" data-sub="0" data-rot="-18" style="left:40px;  top:210px; width:330px; height:5px"></i>
+              <i data-hf-id="hf-ej9g" class="mk" data-beat="14" data-sub="1" data-rot="0" style="left:372px; top:168px; width:106px; height:5px"></i>
+              <i data-hf-id="hf-b5lo" class="mk" data-beat="15" data-sub="0" data-rot="34" style="left:150px; top:318px; width:160px; height:5px"></i>
+              <i data-hf-id="hf-s31s" class="mk" data-beat="15" data-sub="1" data-rot="-34" style="left:150px; top:318px; width:160px; height:5px"></i>
+              <i data-hf-id="hf-1ly5" class="mk" data-beat="17" data-sub="0" data-rot="0" style="left:368px; top:262px; width:110px; height:5px"></i>
+              <i data-hf-id="hf-wu26" class="mk" data-beat="17" data-sub="1" data-rot="0" style="left:368px; top:312px; width:110px; height:5px"></i>
+              <i data-hf-id="hf-r41m" class="mk" data-beat="18" data-sub="0" data-rot="-24" style="left:30px;  top:468px; width:440px; height:6px"></i>
+              <i data-hf-id="hf-ecvy" class="mk" data-beat="18" data-sub="1" data-rot="3" style="left:26px;  top:386px; width:280px; height:5px"></i>
+              <i data-hf-id="hf-o8hf" class="mk box" data-beat="19" data-sub="0" data-rot="0" style="left:296px; top:392px; width:186px; height:78px"></i>
+              <i data-hf-id="hf-7ihp" class="mk" data-beat="19" data-sub="1" data-rot="-6" style="left:26px;  top:508px; width:200px; height:5px"></i>
+            </div>
+
+            <div data-hf-id="hf-ob5a" id="f01kr-clock" class="clock">১১:০৪</div>
+
+            <div data-hf-id="hf-s6u2" id="f01kr-qr" class="qr" aria-hidden="true">
+              <div data-hf-id="hf-nr41" class="qrr"><i data-hf-id="hf-l5u7" class="on"></i><i data-hf-id="hf-j2zz" class="on"></i><i data-hf-id="hf-iooy" class="on"></i><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-iadx" class="on"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-l2j4" class="on"></i><i data-hf-id="hf-ko83" class="on"></i></div>
+              <div data-hf-id="hf-xmvp" class="qrr"><i data-hf-id="hf-k9x2" class="on"></i><i data-hf-id="hf-y7e5"></i><i data-hf-id="hf-ylp6"></i><i data-hf-id="hf-0l8b"></i><i data-hf-id="hf-jvm1" class="on"></i><i data-hf-id="hf-gaus" class="on"></i><i data-hf-id="hf-0zjc"></i><i data-hf-id="hf-fwjr" class="on"></i></div>
+              <div data-hf-id="hf-ytss" class="qrr"><i data-hf-id="hf-mi31" class="on"></i><i data-hf-id="hf-zsm9"></i><i data-hf-id="hf-mwe2" class="on"></i><i data-hf-id="hf-06xa"></i><i data-hf-id="hf-nap3" class="on"></i><i data-hf-id="hf-26gf"></i><i data-hf-id="hf-2krg"></i><i data-hf-id="hf-np04" class="on"></i></div>
+              <div data-hf-id="hf-yfhr" class="qrr"><i data-hf-id="hf-o3b5" class="on"></i><i data-hf-id="hf-ohm6" class="on"></i><i data-hf-id="hf-ovx7" class="on"></i><i data-hf-id="hf-oz7w"></i><i data-hf-id="hf-okwv"></i><i data-hf-id="hf-pa88" class="on"></i><i data-hf-id="hf-poj9" class="on"></i><i data-hf-id="hf-o6lu"></i></div>
+              <div data-hf-id="hf-zmeu" class="qrr"><i data-hf-id="hf-jqbp"></i><i data-hf-id="hf-qkg0"></i><i data-hf-id="hf-q64z"></i><i data-hf-id="hf-q2ua" class="on"></i><i data-hf-id="hf-h2d2" class="on"></i><i data-hf-id="hf-go21" class="on"></i><i data-hf-id="hf-prty"></i><i data-hf-id="hf-lwy8" class="on"></i></div>
+              <div data-hf-id="hf-z83t" class="qrr"><i data-hf-id="hf-pdix"></i><i data-hf-id="hf-lin7" class="on"></i><i data-hf-id="hf-fh4y" class="on"></i><i data-hf-id="hf-hqsk"></i><i data-hf-id="hf-f2tx" class="on"></i><i data-hf-id="hf-hchj"></i><i data-hf-id="hf-g9r0" class="on"></i><i data-hf-id="hf-fvfz" class="on"></i></div>
+              <div data-hf-id="hf-0f0w" class="qrr"><i data-hf-id="hf-dvwu" class="on"></i><i data-hf-id="hf-8d0n"></i><i data-hf-id="hf-8rbo"></i><i data-hf-id="hf-dhlt" class="on"></i><i data-hf-id="hf-7kel"></i><i data-hf-id="hf-hu0v" class="on"></i><i data-hf-id="hf-i8bw" class="on"></i><i data-hf-id="hf-7ypm"></i></div>
+              <div data-hf-id="hf-00pv" class="qrr"><i data-hf-id="hf-h1et" class="on"></i><i data-hf-id="hf-hfpu" class="on"></i><i data-hf-id="hf-9y8r"></i><i data-hf-id="hf-jf8z" class="on"></i><i data-hf-id="hf-jtk0" class="on"></i><i data-hf-id="hf-acjs"></i><i data-hf-id="hf-95mp"></i><i data-hf-id="hf-immx" class="on"></i></div>
+            </div>
+
+          </div>
+
+          <div data-hf-id="hf-pe59" id="f01kr-chrome-l" class="chrome chrome-l">খাতার রাত</div>
+          <div data-hf-id="hf-fzow" id="f01kr-chrome-r" class="chrome chrome-r">01 / 07</div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        (function () {
+          // ONE tempo grid drives every onset (kinetic-beat-slam constraint #1).
+          // P = one sub-beat; the storyboard's scene seams land on multiples of 4.
+          var DUR = 8;
+          var P = 0.325;
+          function B(n) { return P * n; }
+
+          var tl = gsap.timeline({ paused: true });
+
+          // pin the timeline to the frame's full length — scene 6 (6.6-8.0s) is a dead-still hold.
+          tl.to({ hold: 0 }, { hold: 1, duration: DUR, ease: "none" }, 0);
+
+          /* ---- Scene 1 (0.0-1.3s): the page is simply there; hairlines rule themselves in ---- */
+          tl.fromTo("#f01kr-hairtop",
+            { scaleX: 0, transformOrigin: "left center" },
+            { scaleX: 1, transformOrigin: "left center", duration: 0.55, ease: "power3.out" }, 0);
+          tl.fromTo("#f01kr-hairbot",
+            { scaleX: 0, transformOrigin: "right center" },
+            { scaleX: 1, transformOrigin: "right center", duration: 0.55, ease: "power3.out" }, 0);
+          tl.fromTo(["#f01kr-chrome-l", "#f01kr-chrome-r"],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.5, ease: "power2.out" }, B(1));
+          tl.fromTo("#f01kr-eyebrow",
+            { y: -18, opacity: 0, filter: "blur(6px)" },
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, B(1));
+
+          /* ---- Scene 2 (1.3-2.6s): line 1 slams; the clock lands two sub-beats behind ---- */
+          tl.fromTo("#f01kr-l1",
+            { scale: 1.32, opacity: 0, filter: "blur(14px)", transformOrigin: "left center" },
+            { scale: 1, opacity: 1, filter: "blur(0px)", transformOrigin: "left center", duration: 0.5, ease: "power4.out" }, B(4));
+          tl.fromTo("#f01kr-clock",
+            { y: -44, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, B(6));
+
+          /* ---- Scene 3 (2.6-3.9s): line 2 side-snaps; the ledger page fades up behind ---- */
+          tl.fromTo("#f01kr-l2",
+            { x: -280, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.45, ease: "expo.out" }, B(8));
+          tl.fromTo("#f01kr-ledger",
+            { y: 28, opacity: 0 },
+            { y: 0, opacity: 0.45, duration: 0.7, ease: "power3.out" }, B(10));
+          tl.fromTo("#f01kr-glitch",
+            { scaleY: 0.72, opacity: 0, transformOrigin: "center top" },
+            { scaleY: 1, opacity: 0.28, transformOrigin: "center top", duration: 0.7, ease: "power3.out" }, B(11));
+
+          /* ---- Scene 4 (3.9-5.2s): line 3 rises; red marks start crowding the page ---- */
+          tl.fromTo("#f01kr-l3",
+            { y: 84, rotation: 3, opacity: 0, transformOrigin: "left center" },
+            { y: 0, rotation: 0, opacity: 1, transformOrigin: "left center", duration: 0.55, ease: "circ.out" }, B(12));
+          tl.fromTo("#f01kr-qr",
+            { scale: 0.72, opacity: 0, transformOrigin: "left bottom" },
+            { scale: 1, opacity: 1, transformOrigin: "left bottom", duration: 0.45, ease: "power3.out" }, B(15));
+
+          /* ---- Scenes 4+5: every mark reads its onset off the same beat array ---- */
+          gsap.utils.toArray("#root .marks .mk").forEach(function (el) {
+            var beat = Number(el.getAttribute("data-beat"));
+            var sub = Number(el.getAttribute("data-sub"));
+            var rot = Number(el.getAttribute("data-rot"));
+            tl.fromTo(el,
+              { opacity: 0, scaleX: 0.18, rotation: rot, transformOrigin: "left center" },
+              { opacity: 1, scaleX: 1, rotation: rot, transformOrigin: "left center", duration: 0.3, ease: "power4.out" },
+              B(beat) + sub * 0.07);
+          });
+
+          /* ---- Scene 5 (5.2-6.6s): the last line lands as two chunks on the same array ---- */
+          /* letterSpacing snaps to device pixels under the seek-by-frame capture engine
+             (lint: gsap_non_transform_motion) — the same spread reads cleanly as a
+             transform: scaleX out to in, which is sub-pixel smooth. */
+          tl.fromTo("#f01kr-l4a",
+            { scaleX: 1.16, x: -26, opacity: 0, filter: "blur(10px)", transformOrigin: "left center" },
+            { scaleX: 1, x: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, B(16));
+          tl.fromTo("#f01kr-l4b",
+            { x: 220, opacity: 0, filter: "blur(12px)" },
+            { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, B(18));
+
+          /* ---- Scene 6 (6.6-8.0s): nothing. The frozen page is the night not passing. ---- */
+
+          window.__timelines["01-khatar-raat"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

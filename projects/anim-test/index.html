@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="bn" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+
+    <!-- সব লাইব্রেরি লোকাল ফাইল থেকে — ইন্টারনেট লাগে না -->
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <script src="assets/js/gsap/SplitText.min.js"></script>
+    <script src="assets/js/gsap/CustomEase.min.js"></script>
+    <script src="assets/js/anime.umd.min.js"></script>
+
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b0d12; }
+      .clip { position: absolute; inset: 0; }
+
+      .stage { padding: 52px 70px; color: #e9edf4; }
+
+      .title { font-family: "Baloo Da 2", sans-serif; font-weight: 700;
+               font-size: 52px; color: #ffffff; }
+      .sub   { font-family: "Inter", sans-serif; font-size: 19px; color: #8b96a8; margin-top: 4px; }
+      .rule  { height: 3px; margin: 20px 0 30px;
+               background: linear-gradient(90deg, #4f8cff, #9b5cff 50%, transparent); }
+
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 48px; }
+
+      .panel { border: 1px solid #232a38; border-radius: 14px; padding: 24px 26px;
+               background: #11141c; min-height: 190px; }
+      .tag   { font-family: "Inter", sans-serif; font-size: 14px; font-weight: 600;
+               letter-spacing: 1.6px; text-transform: uppercase;
+               color: #5c9dff; margin-bottom: 14px; }
+      .en    { font-family: "Anton", sans-serif; font-size: 46px; color: #fff; }
+      .bn    { font-family: "Hind Siliguri", sans-serif; font-weight: 600;
+               font-size: 40px; color: #fff; }
+
+      /* anime.js প্যানেলের বার */
+      .bars { display: flex; align-items: flex-end; gap: 14px; height: 96px; }
+      .bar  { width: 46px; background: linear-gradient(180deg, #6ea8ff, #9b5cff);
+              border-radius: 6px; transform-origin: 50% 100%;
+              /* anime.js timeline-এর আগে লুকানো থাকবে — শুরুর অবস্থা CSS-এ দিতে হয় */
+              transform: scaleY(0); opacity: 0; }
+      .b1 { height: 44px; } .b2 { height: 68px; } .b3 { height: 96px; }
+      .b4 { height: 58px; } .b5 { height: 82px; } .b6 { height: 36px; }
+
+      /* CSS keyframes — শিমার */
+      .shimmer-wrap { position: absolute; left: 70px; right: 70px; bottom: 96px;
+                      height: 8px; border-radius: 4px; background: #1a2030; overflow: hidden; }
+      .shimmer { width: 34%; height: 100%; border-radius: 4px;
+                 background: linear-gradient(90deg, transparent, #7ab4ff, #b98cff, transparent);
+                 animation-name: sweep;
+                 animation-duration: 2400ms;
+                 animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                 animation-iteration-count: 3;
+                 animation-fill-mode: both; }
+      @keyframes sweep {
+        from { transform: translateX(-120%); }
+        to   { transform: translateX(320%); }
+      }
+
+      .foot { position: absolute; left: 70px; bottom: 44px;
+              font-family: "JetBrains Mono", monospace; font-size: 17px; color: #9aa5b8; }
+    </style>
+  </head>
+
+  <body>
+    <div data-hf-id="hf-gxr6" id="root" data-composition-id="main" data-start="0" data-duration="8" data-width="1920" data-height="1080">
+
+      <div data-hf-id="hf-xhu3" id="stage" class="clip stage" data-start="0" data-duration="8" data-track-index="1">
+
+        <div data-hf-id="hf-3eu1" id="title" class="title">অ্যানিমেশন লাইব্রেরি — যাচাই</div>
+        <div data-hf-id="hf-btys" id="sub" class="sub">GSAP 3.15.0 · SplitText · CustomEase · Anime.js 4.5.0 · CSS keyframes</div>
+        <div data-hf-id="hf-u4he" id="rule" class="rule"></div>
+
+        <div data-hf-id="hf-kxq8" class="grid">
+          <div data-hf-id="hf-3z5l" class="panel" id="p1">
+            <div data-hf-id="hf-0k4l" class="tag">GSAP SplitText — English, chars</div>
+            <div data-hf-id="hf-jm2m" class="en" id="en-line">MOTION ONLINE</div>
+          </div>
+
+          <div data-hf-id="hf-a4ve" class="panel" id="p2">
+            <div data-hf-id="hf-7emd" class="tag">GSAP SplitText — বাংলা, words</div>
+            <div data-hf-id="hf-i3v5" class="bn" id="bn-words">বাংলা শব্দ ধরে ভাঙা</div>
+          </div>
+
+          <div data-hf-id="hf-e2zf" class="panel" id="p3">
+            <div data-hf-id="hf-zemp" class="tag">GSAP SplitText — বাংলা, chars</div>
+            <div data-hf-id="hf-0k9v" class="bn" id="bn-chars">যুক্তাক্ষর: ক্ষুদ্র উজ্জ্বল</div>
+          </div>
+
+          <div data-hf-id="hf-qlhw" class="panel" id="p4">
+            <div data-hf-id="hf-2pt6" class="tag">Anime.js 4.5.0 — __hfAnime</div>
+            <div data-hf-id="hf-umx2" class="bars">
+              <div data-hf-id="hf-1iyu" class="bar b1"></div><div data-hf-id="hf-xkut" class="bar b2"></div><div data-hf-id="hf-ull8" class="bar b3"></div>
+              <div data-hf-id="hf-i32r" class="bar b4"></div><div data-hf-id="hf-e4yq" class="bar b5"></div><div data-hf-id="hf-a6up" class="bar b6"></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-lj76" class="shimmer-wrap"><div data-hf-id="hf-cykk" class="shimmer" data-layout-allow-overflow=""></div></div>
+        <div data-hf-id="hf-t3gg" class="foot" id="foot">local files only — no internet at render time</div>
+      </div>
+    </div>
+
+    <script>
+      gsap.registerPlugin(SplitText, CustomEase);
+
+      // CustomEase — প্লাগিন আসলে লোড হয়েছে কি না তার প্রমাণ
+      CustomEase.create("hfSoft", "M0,0 C0.18,0.9 0.28,1 1,1");
+
+      const splitEn      = SplitText.create("#en-line",  { type: "chars" });
+      const splitBnWords = SplitText.create("#bn-words", { type: "words" });
+      const splitBnChars = SplitText.create("#bn-chars", { type: "chars" });
+
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from("#title", { opacity: 0, y: -30, duration: 0.7, ease: "hfSoft" }, 0)
+        .from("#sub",   { opacity: 0, y: -14, duration: 0.5 }, 0.2)
+        .from("#rule",  { scaleX: 0, transformOrigin: "0% 50%", duration: 0.7, ease: "power3.out" }, 0.3)
+        .from(".panel", { opacity: 0, y: 34, duration: 0.6, stagger: 0.12, ease: "hfSoft" }, 0.5)
+
+        .from(splitEn.chars,      { opacity: 0, y: 40, rotation: 8, duration: 0.5,
+                                    stagger: 0.035, ease: "back.out(2)" }, 1.2)
+        .from(splitBnWords.words, { opacity: 0, y: 34, duration: 0.55,
+                                    stagger: 0.14, ease: "hfSoft" }, 2.4)
+        .from(splitBnChars.chars, { opacity: 0, y: 26, duration: 0.4,
+                                    stagger: 0.03, ease: "power2.out" }, 3.6)
+
+        .from("#foot", { opacity: 0, duration: 0.6 }, 6.4);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+
+      // ---- Anime.js v4: নিজের ক্লক বন্ধ, HyperFrames সময় দেবে ----
+      // গুরুত্বপূর্ণ: anime.animate({delay}) দিয়ে seek কাজ করে না — delay সময়ের
+      // হিসাবে ধরা হয় না। createTimeline + position offset ব্যবহার করতে হয়।
+      const animeTl = anime.createTimeline({ autoplay: false });
+      animeTl.add(
+        ".bar",
+        { scaleY: [0, 1], opacity: [0, 1], duration: 700,
+          delay: anime.stagger(90), ease: "outBack" },
+        4800
+      );
+
+      window.__hfAnime = window.__hfAnime || [];
+      window.__hfAnime.push(animeTl);
+    </script>
+  </body>
+</html>

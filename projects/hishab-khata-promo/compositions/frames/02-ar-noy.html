@@ -1,0 +1,417 @@
+<template>
+  <style>
+    /* Fonts declared inline, not @import: lint cannot see through @import, and the
+       render-time CSS scoping is safer with real @font-face rules. Files are the
+       workspace pack (SIL OFL 1.1) copied into this project. */
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+      src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400;
+      src: url("assets/fonts/bengali/HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+      src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600;
+      src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+      src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800;
+      src: url("assets/fonts/latin/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+
+    /* ============================================================
+       02-ar-noy — "আর নয়"
+       Cobalt Grid frame treatment. Relief beat.
+       Scene 1 clearing sweep · Scene 2 empty · Scene 3 words · Scene 4 landing
+       ============================================================ */
+
+    #root {
+      position: absolute;
+      inset: 0;
+      color: #16603A;
+      overflow: hidden;
+    }
+
+    /* ---------- ground: paper + permanent graph-paper grid ---------- */
+    #root .f02-ground {
+      position: absolute;
+      inset: 0;
+      display: block;
+      background-color: #F7F5EF;
+      z-index: 0;
+    }
+    #root .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(22,96,58,0.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(22,96,58,0.10) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    /* pixel-glitch column — frame.md signature, right edge, stair-stepped */
+    #root .f02-glitch {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+    #root .f02-glitch-blk {
+      position: absolute;
+      background-image: repeating-linear-gradient(90deg, #16603A 0 2px, transparent 2px 8px);
+    }
+
+    /* ---------- ghost marks carried over from Frame 1 (Scene 1 material) ---------- */
+    #root .f02-ghost {
+      position: absolute;
+      inset: 0;
+      display: block;
+      z-index: 1;
+    }
+    #root .f02-ghost-mask {
+      position: absolute;
+      inset: 0;
+      clip-path: inset(0% 0% 0% 0%);
+    }
+    #root .f02-ghost-layer {
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+    }
+    #root .f02-mark {
+      position: absolute;
+      background: #C0392B;
+    }
+    #root .f02-mark-faint {
+      position: absolute;
+      background: rgba(192, 57, 43, 0.30);
+    }
+    #root .f02-cross {
+      position: absolute;
+      height: 4px;
+      background: #C0392B;
+    }
+    #root .f02-cross-a { transform: rotate(-11deg); }
+    #root .f02-cross-b { transform: rotate(11deg); }
+    #root .f02-ledger {
+      position: absolute;
+      border: 2px dashed #C0392B;
+      background: rgba(192, 57, 43, 0.045);
+    }
+    #root .f02-clockbox {
+      position: absolute;
+      border: 2px solid #C0392B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 56px;
+      letter-spacing: 0.04em;
+      color: #C0392B;
+    }
+
+    /* ---------- the clearing sweep (css-marker-patterns · highlight mode) ---------- */
+    #root .f02-sweep {
+      position: absolute;
+      inset: 0;
+      display: block;
+      z-index: 2;
+    }
+    #root .f02-sweep-band {
+      position: absolute;
+      inset: 0;
+      background: #E4A11B;
+      opacity: 0.20;
+      transform-origin: left center;
+      clip-path: inset(0% 0% 0% 0%);
+    }
+    #root .f02-sweep-edge {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -10px;
+      width: 8px;
+      background: #E4A11B;
+    }
+
+    /* ---------- permanent furniture: hairlines + page chrome ---------- */
+    #root .hair {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      height: 2px;
+      background: #16603A;
+      z-index: 4;
+    }
+    #root .hair-top { top: 58px; }
+    #root .hair-bot { bottom: 58px; }
+
+    #root .chrome {
+      position: absolute;
+      bottom: 22px;
+      /* Latin from JetBrains Mono, Bengali falls through to Hind Siliguri */
+      font-family: "JetBrains Mono", "Hind Siliguri", monospace;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: #4A6355;
+      opacity: 0;
+      z-index: 4;
+    }
+    #root .chrome-l { left: 80px; }
+    #root .chrome-r { right: 80px; }
+
+    /* ---------- the statement ---------- */
+    #root .stage {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      top: 110px;
+      bottom: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 80px;
+      z-index: 5;
+    }
+    #root .eyebrow {
+      font-family: "Hind Siliguri", sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: #4A6355;
+      margin-bottom: 40px;
+      opacity: 0;
+    }
+    #root .promise {
+      font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+      font-weight: 600;
+      font-size: 118px;
+      line-height: 1.1;
+      letter-spacing: -0.005em;
+      color: #16603A;
+    }
+    #root .promise-line { white-space: nowrap; }
+    #root .f02-word {
+      display: inline-block;
+      opacity: 0;
+    }
+    #root #f02-line2 { opacity: 0; }
+    #root .rule-under { margin-top: 46px; }
+    #root .rule-under path {
+      fill: none;
+      stroke: #E4A11B;
+      stroke-width: 6;
+      stroke-linecap: butt;
+    }
+  </style>
+
+  <div data-hf-id="hf-ocdo" id="root" data-composition-id="02-ar-noy" data-width="1920" data-height="1080" data-duration="5.5">
+
+    <!-- ground: paper + grid + pixel-glitch column -->
+    <div data-hf-id="hf-bj8r" class="clip f02-ground" data-start="0" data-duration="5.5" data-track-index="0">
+      <div data-hf-id="hf-kxq8" class="grid"></div>
+      <div data-hf-id="hf-gjvm" class="f02-glitch" id="f02-glitch">
+        <div data-hf-id="hf-79k2" class="f02-glitch-blk" style="right: 0;    top: 162px; width: 214px; height: 132px;"></div>
+        <div data-hf-id="hf-03z6" class="f02-glitch-blk" style="right: 96px; top: 302px; width: 168px; height: 96px;"></div>
+        <div data-hf-id="hf-at8g" class="f02-glitch-blk" style="right: 0;    top: 406px; width: 262px; height: 156px;"></div>
+        <div data-hf-id="hf-zsf7" class="f02-glitch-blk" style="right: 138px;top: 570px; width: 124px; height: 88px;"></div>
+        <div data-hf-id="hf-cpnm" class="f02-glitch-blk" style="right: 0;    top: 666px; width: 190px; height: 118px;"></div>
+        <div data-hf-id="hf-u0bg" class="f02-glitch-blk" style="right: 62px; top: 792px; width: 128px; height: 74px;"></div>
+      </div>
+    </div>
+
+    <!-- Scene 1 material: Frame 1's red marks, ghosted — they exist only to be swept away -->
+    <div data-hf-id="hf-zrye" class="clip f02-ghost" data-start="0" data-duration="0.9" data-track-index="1">
+      <div data-hf-id="hf-0qz6" class="f02-ghost-mask" id="f02-ghost-mask">
+        <div data-hf-id="hf-vuga" class="f02-ghost-layer" id="f02-ghost-layer">
+
+          <!-- left: the crossed-out ledger lines -->
+          <div data-hf-id="hf-ci4k" class="f02-mark" style="left: 80px; top: 236px; width: 560px; height: 12px;"></div>
+          <div data-hf-id="hf-k2sx" class="f02-mark-faint" style="left: 80px; top: 272px; width: 880px; height: 2px;"></div>
+
+          <div data-hf-id="hf-a2gx" class="f02-mark" style="left: 80px; top: 330px; width: 726px; height: 12px;"></div>
+          <div data-hf-id="hf-rapn" class="f02-mark-faint" style="left: 80px; top: 366px; width: 880px; height: 2px;"></div>
+          <div data-hf-id="hf-ni3g" class="f02-cross f02-cross-a" style="left: 80px; top: 334px; width: 726px;"></div>
+          <div data-hf-id="hf-zd6f" class="f02-cross f02-cross-b" style="left: 80px; top: 334px; width: 726px;"></div>
+
+          <div data-hf-id="hf-xho1" class="f02-mark" style="left: 80px; top: 424px; width: 872px; height: 12px;"></div>
+          <div data-hf-id="hf-sueq" class="f02-mark-faint" style="left: 80px; top: 460px; width: 880px; height: 2px;"></div>
+
+          <div data-hf-id="hf-69o9" class="f02-mark" style="left: 80px; top: 518px; width: 634px; height: 12px;"></div>
+          <div data-hf-id="hf-4x4e" class="f02-mark-faint" style="left: 80px; top: 554px; width: 880px; height: 2px;"></div>
+          <div data-hf-id="hf-pe3l" class="f02-cross f02-cross-a" style="left: 80px; top: 522px; width: 634px;"></div>
+          <div data-hf-id="hf-xd6u" class="f02-cross f02-cross-b" style="left: 80px; top: 522px; width: 634px;"></div>
+
+          <div data-hf-id="hf-ers7" class="f02-mark" style="left: 80px; top: 612px; width: 790px; height: 12px;"></div>
+          <div data-hf-id="hf-i8ue" class="f02-mark-faint" style="left: 80px; top: 648px; width: 880px; height: 2px;"></div>
+
+          <!-- right: the overflowing dues ledger -->
+          <div data-hf-id="hf-duxz" class="f02-ledger" style="left: 1240px; top: 190px; width: 600px; height: 500px;"></div>
+          <div data-hf-id="hf-57kp" class="f02-mark-faint" style="left: 1272px; top: 254px; width: 536px; height: 2px;"></div>
+          <div data-hf-id="hf-40g0" class="f02-mark-faint" style="left: 1272px; top: 318px; width: 536px; height: 2px;"></div>
+          <div data-hf-id="hf-g85t" class="f02-mark-faint" style="left: 1272px; top: 382px; width: 536px; height: 2px;"></div>
+          <div data-hf-id="hf-j2me" class="f02-mark-faint" style="left: 1272px; top: 446px; width: 536px; height: 2px;"></div>
+          <div data-hf-id="hf-s2ha" class="f02-mark-faint" style="left: 1272px; top: 510px; width: 536px; height: 2px;"></div>
+          <div data-hf-id="hf-jnec" class="f02-mark-faint" style="left: 1272px; top: 574px; width: 536px; height: 2px;"></div>
+          <div data-hf-id="hf-k4ur" class="f02-mark-faint" style="left: 1272px; top: 638px; width: 536px; height: 2px;"></div>
+
+          <div data-hf-id="hf-t66n" class="f02-mark" style="left: 1272px; top: 226px; width: 214px; height: 10px;"></div>
+          <div data-hf-id="hf-ryjm" class="f02-mark" style="left: 1690px; top: 226px; width: 118px; height: 10px;"></div>
+          <div data-hf-id="hf-x4md" class="f02-mark" style="left: 1272px; top: 290px; width: 268px; height: 10px;"></div>
+          <div data-hf-id="hf-bwgz" class="f02-mark" style="left: 1714px; top: 290px; width: 94px;  height: 10px;"></div>
+          <div data-hf-id="hf-ttrz" class="f02-mark" style="left: 1272px; top: 354px; width: 182px; height: 10px;"></div>
+          <div data-hf-id="hf-okwe" class="f02-mark" style="left: 1666px; top: 354px; width: 142px; height: 10px;"></div>
+          <div data-hf-id="hf-3ztl" class="f02-mark" style="left: 1272px; top: 418px; width: 244px; height: 10px;"></div>
+          <div data-hf-id="hf-4mfe" class="f02-mark" style="left: 1702px; top: 418px; width: 106px; height: 10px;"></div>
+          <div data-hf-id="hf-pdoe" class="f02-mark" style="left: 1272px; top: 482px; width: 200px; height: 10px;"></div>
+          <div data-hf-id="hf-ibaq" class="f02-mark" style="left: 1678px; top: 482px; width: 130px; height: 10px;"></div>
+          <div data-hf-id="hf-jypf" class="f02-mark" style="left: 1272px; top: 546px; width: 286px; height: 10px;"></div>
+          <div data-hf-id="hf-jq4l" class="f02-mark" style="left: 1722px; top: 546px; width: 86px;  height: 10px;"></div>
+          <div data-hf-id="hf-wwgg" class="f02-mark" style="left: 1272px; top: 610px; width: 168px; height: 10px;"></div>
+          <div data-hf-id="hf-clc3" class="f02-mark" style="left: 1690px; top: 610px; width: 118px; height: 10px;"></div>
+
+          <!-- the late hour -->
+          <div data-hf-id="hf-ql8f" class="f02-clockbox" style="left: 1240px; top: 736px; width: 600px; height: 124px;">১১:০৪</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- the sweep itself: a full-width highlight strip that travels left → right -->
+    <div data-hf-id="hf-y0tg" class="clip f02-sweep" data-start="0" data-duration="0.9" data-track-index="2">
+      <div data-hf-id="hf-mit2" class="f02-sweep-band" id="f02-sweep-band"></div>
+      <div data-hf-id="hf-sj24" class="f02-sweep-edge" id="f02-sweep-edge-a"></div>
+      <div data-hf-id="hf-3ejr" class="f02-sweep-edge" id="f02-sweep-edge-b"></div>
+    </div>
+
+    <!-- permanent furniture -->
+    <div data-hf-id="hf-77ey" class="hair hair-top"></div>
+    <div data-hf-id="hf-jc3w" class="hair hair-bot"></div>
+
+    <!-- the statement -->
+    <div data-hf-id="hf-tan6" class="clip stage" data-start="0" data-duration="5.5" data-track-index="3">
+      <div data-hf-id="hf-x2zw" class="eyebrow" id="f02-eyebrow">আর নয়</div>
+
+      <div data-hf-id="hf-sdjp" class="promise">
+        <div data-hf-id="hf-8gy8" class="promise-line" id="f02-line1"><span data-hf-id="hf-uqom" class="f02-word">ফি,</span> <span data-hf-id="hf-eozt" class="f02-word">বকেয়া,</span> <span data-hf-id="hf-izmm" class="f02-word">রিপোর্ট</span> <span data-hf-id="hf-1tx4" class="f02-word">—</span></div>
+        <div data-hf-id="hf-qcpe" class="promise-line" id="f02-line2">এক জায়গায়।</div>
+      </div>
+
+      <svg data-hf-id="hf-v27f" class="rule-under" width="340" height="8" viewBox="0 0 340 8" xmlns="http://www.w3.org/2000/svg">
+        <path data-hf-id="hf-5ayb" id="f02-rule-path" d="M 0 4 L 340 4" />
+      </svg>
+    </div>
+
+    <div data-hf-id="hf-qcwa" class="chrome chrome-l">আর নয়</div>
+    <div data-hf-id="hf-8cef" class="chrome chrome-r">02 / 07</div>
+  </div>
+
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines["02-ar-noy"] = tl;
+
+      var $ = function (s) { return document.querySelector(s); };
+      var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+      var band   = $("#f02-sweep-band");
+      var edgeA  = $("#f02-sweep-edge-a");
+      var edgeB  = $("#f02-sweep-edge-b");
+      var gMask  = $("#f02-ghost-mask");
+      var gLayer = $("#f02-ghost-layer");
+      var line2  = $("#f02-line2");
+      var rule   = $("#f02-rule-path");
+
+      /* ---------------------------------------------------------
+         SCENE 1 (0.0–0.8s) — the clearing sweep.
+         css-marker-patterns · highlight mode: a full-width marker
+         strip scales out from left origin, then its trailing edge
+         chases across and takes Frame 1's red with it.
+         The red rides a rightward cut-the-curve (power4.in ramp +
+         early linear fade) matching the incoming zoom-through.
+         --------------------------------------------------------- */
+
+      /* marker strip grows left → right */
+      tl.fromTo(band, { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.out" }, 0.0);
+      /* leading pen tip */
+      tl.fromTo(edgeA, { x: -10 }, { x: 1930, duration: 0.42, ease: "power3.out" }, 0.0);
+
+      /* the red is carried rightward and dims out well before the seam */
+      tl.fromTo(gLayer, { x: 0 }, { x: 170, duration: 0.50, ease: "power4.in" }, 0.24);
+      tl.fromTo(gLayer, { opacity: 0.75 }, { opacity: 0, duration: 0.34, ease: "none" }, 0.34);
+
+      /* trailing edge chases across; everything behind it is clean paper */
+      tl.fromTo(
+        band,
+        { clipPath: "inset(0% 0% 0% 0%)" },
+        { clipPath: "inset(0% 0% 0% 100%)", duration: 0.38, ease: "power3.inOut", immediateRender: false },
+        0.42
+      );
+      tl.fromTo(edgeB, { x: -10 }, { x: 1930, duration: 0.38, ease: "power3.inOut" }, 0.42);
+      tl.fromTo(
+        gMask,
+        { clipPath: "inset(0% 0% 0% 0%)" },
+        { clipPath: "inset(0% 0% 0% 100%)", duration: 0.36, ease: "power3.inOut" },
+        0.42
+      );
+      tl.set(gLayer, { opacity: 0 }, 0.80);
+
+      /* ---------------------------------------------------------
+         SCENE 2 (0.8–2.2s) — deliberately EMPTY.
+         Grid and hairlines only. This silence is the beat.
+         Nothing is scheduled in this window on purpose.
+         --------------------------------------------------------- */
+
+      /* ---------------------------------------------------------
+         SCENE 3 (2.2–3.6s) — the promise begins, per-word.
+         dynamic-content-sequencing: each word's slot is derived
+         from its own length at build time, never hardcoded.
+         --------------------------------------------------------- */
+      var S3 = 2.20;
+      var BASE_SLOT = 0.10;      /* minimum slot per word */
+      var SEC_PER_CHAR = 0.022;  /* longer words earn more room */
+      var WORD_IN = 0.55;
+
+      tl.fromTo($("#f02-eyebrow"), { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.50, ease: "power3.out" }, S3);
+      tl.fromTo($$(".chrome"), { opacity: 0 },
+        { opacity: 1, duration: 0.70, ease: "power2.out" }, S3);
+
+      var cursor = 0;
+      var SEQ = $$("#f02-line1 .f02-word").map(function (el) {
+        var slot = { el: el, start: cursor };
+        cursor += BASE_SLOT + el.textContent.trim().length * SEC_PER_CHAR;
+        return slot;
+      });
+      SEQ.forEach(function (slot) {
+        tl.fromTo(slot.el, { opacity: 0, y: 38 },
+          { opacity: 1, y: 0, duration: WORD_IN, ease: "power3.out" }, S3 + slot.start);
+      });
+
+      /* ---------------------------------------------------------
+         SCENE 4 (3.6–5.0s) — the finale line lands, the amber rule
+         self-draws beneath it (svg-path-draw), the frame settles
+         and holds completely still.
+         --------------------------------------------------------- */
+      tl.fromTo(line2, { opacity: 0, y: 46 },
+        { opacity: 1, y: 0, duration: 0.58, ease: "power3.out" }, 3.62);
+
+      var len = 340;
+      if (rule && typeof rule.getTotalLength === "function") {
+        var measured = rule.getTotalLength();
+        if (measured > 0) { len = measured; }
+      }
+      if (rule) {
+        rule.style.strokeDasharray = String(len);
+        tl.fromTo(rule, { strokeDashoffset: len },
+          { strokeDashoffset: 0, duration: 0.70, ease: "power2.out" }, 4.05);
+      }
+
+      /* the frame's pixel-glitch signature settles in last, as paper texture */
+      tl.fromTo($("#f02-glitch"), { opacity: 0 },
+        { opacity: 0.13, duration: 0.60, ease: "power1.out" }, 4.18);
+
+      /* hold the full 5s — still, no drift */
+      var pad = { v: 0 };
+      tl.to(pad, { v: 1, duration: 0.20, ease: "none" }, 4.80);
+    })();
+  </script>
+</template>
