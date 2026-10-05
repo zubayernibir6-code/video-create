@@ -2,15 +2,21 @@
 // voice.mjs — voice-over for videos: record from a microphone and/or clean any voice recording.
 //
 //   node "E:/Video Create/tools/voice.mjs" devices
-//   node "E:/Video Create/tools/voice.mjs" record <name> [--seconds=120] [--device="<mic name>"]
-//   node "E:/Video Create/tools/voice.mjs" clean <input> [<output.wav>]
+//   node "E:/Video Create/tools/voice.mjs" record <name> [--seconds=120] [--device="<mic name>"] [--denoise=ai|classic|off]
+//   node "E:/Video Create/tools/voice.mjs" clean <input> [<output.wav>] [--denoise=ai|classic|off]
 //
 // record  writes <name>-raw.wav (untouched) and <name>.wav (cleaned) into the current folder.
-//         Press q in the terminal to stop early. Default mic = the first one `devices` lists.
+//         Press Enter in the terminal to stop early. Default mic = the first one `devices` lists.
 //         Stay silent for the first second: that second becomes the room-noise profile.
 // clean   accepts anything FFmpeg reads (wav, mp3, m4a, WhatsApp .ogg/.opus, or a video).
 //
-// Clean chain (plain FFmpeg, voice only — never run it on music):
+// --denoise=ai (default when tools/deep-filter/deep-filter.exe exists): DeepFilterNet 0.5.6 (MIT/Apache-2.0),
+//   attenuation limited to 40 dB so the voice keeps a natural room tail. On the user's real laptop recording it
+//   lifted the speech-to-noise gap from 28 dB to ~60 dB (unlimited: 76 dB) vs 41 dB for the classic chain, and
+//   the transcript stayed intact (2026-10-06). -D compensates its delay (measured lag 0.00 ms).
+// --denoise=classic: the FFmpeg chain below. --denoise=off: only high-pass, compressor, trim and loudness.
+//
+// Classic clean chain (plain FFmpeg, voice only — never run it on music):
 //   high-pass 80 Hz → afftdn with a noise PROFILE taken from the quietest 0.8 s of the
 //   recording (prepended, sampled, then cut off again) → gentle 3:1 compressor → trim silence
 //   at both ends → two-pass loudnorm to -16 LUFS, true peak -1.5 dBTP → 48 kHz mono 16-bit WAV.
@@ -22,9 +28,12 @@
 // The loudnorm LRA target is raised to the measured LRA so it stays in linear mode (CLAUDE.md §0b).
 
 import { spawn, spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, mkdtempSync, rmSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 
+const DEEP_FILTER = path.join(import.meta.dirname, "deep-filter", "deep-filter.exe");
+const DF_ATTEN_DB = 40;
 const TARGET_I = -16;
 const TARGET_TP = -1.5;
 const NR_DB = 24;
@@ -117,18 +126,35 @@ const measureFile = (f) =>
 const duration = (f) =>
   Number(spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f], { encoding: "utf8" }).stdout.trim()).toFixed(1);
 
-function clean(input, output) {
+// DeepFilterNet on a 48 kHz mono copy (the rate it works at). Returns the denoised WAV path.
+function deepFilter(input, work) {
+  const in48 = path.join(work, "in48.wav");
+  ffmpeg(["-y", "-i", input, "-vn", "-ac", "1", "-ar", "48000", "-c:a", "pcm_s16le", in48]);
+  const outDir = path.join(work, "df");
+  const r = spawnSync(DEEP_FILTER, ["-D", "-a", String(DF_ATTEN_DB), "-o", outDir, in48], { encoding: "utf8" });
+  const out = path.join(outDir, "in48.wav");
+  if (r.status !== 0 || !existsSync(out)) fail(`DeepFilterNet failed:\n${(r.stderr || "").split("\n").slice(-6).join("\n")}`);
+  return out;
+}
+
+function clean(input, output, mode) {
   if (!existsSync(input)) fail(`File not found: ${input}`);
   output ??= path.join(path.dirname(input), `${path.parse(input).name}-clean.wav`);
+  mode ??= existsSync(DEEP_FILTER) ? "ai" : "classic";
+  if (!["ai", "classic", "off"].includes(mode)) fail(`Unknown --denoise=${mode}. Use ai, classic or off.`);
+  if (mode === "ai" && !existsSync(DEEP_FILTER)) fail(`--denoise=ai needs ${DEEP_FILTER}`);
 
   const before = measureFile(input);
   if (!Number.isFinite(Number(before.input_i)) || Number(before.input_i) < -70) {
     fail(`The recording is silent (${before.input_i} LUFS). Check that the right microphone is selected and not muted.`);
   }
   const q = findQuietWindow(input);
-  const pre = preGraph(q);
+  const work = mkdtempSync(path.join(os.tmpdir(), "voice-"));
+  process.on("exit", () => rmSync(work, { recursive: true, force: true }));
+  const src = mode === "ai" ? deepFilter(input, work) : input;
+  const pre = mode === "classic" ? preGraph(q) : `[0:a]highpass=f=80,${AFTER_DENOISE}[pre]`;
   const m = loudnormJson(
-    ffmpeg(["-i", input, "-filter_complex", `${pre};[pre]loudnorm=I=${TARGET_I}:TP=${TARGET_TP}:LRA=11:print_format=json[o]`, "-map", "[o]", "-f", "null", "-"]),
+    ffmpeg(["-i", src, "-filter_complex", `${pre};[pre]loudnorm=I=${TARGET_I}:TP=${TARGET_TP}:LRA=11:print_format=json[o]`, "-map", "[o]", "-f", "null", "-"]),
   );
   if (!Number.isFinite(Number(m.input_i)) || Number(m.input_i) < -70) {
     fail("No voice found — after removing the room noise nothing was left. Did you speak? Sit closer to the microphone and record again.");
@@ -138,7 +164,7 @@ function clean(input, output) {
     `loudnorm=I=${TARGET_I}:TP=${TARGET_TP}:LRA=${lra}:linear=true` +
     `:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}` +
     `:measured_thresh=${m.input_thresh}:offset=${m.target_offset}`;
-  ffmpeg(["-y", "-i", input, "-filter_complex", `${pre};[pre]${norm},aresample=48000[o]`, "-map", "[o]", "-ac", "1", "-c:a", "pcm_s16le", output]);
+  ffmpeg(["-y", "-i", src, "-filter_complex", `${pre};[pre]${norm},aresample=48000[o]`, "-map", "[o]", "-ac", "1", "-c:a", "pcm_s16le", output]);
 
   const after = measureFile(output);
   console.log(`\n✓ Clean voice saved: ${output}`);
@@ -146,11 +172,14 @@ function clean(input, output) {
     console.log("  ⚠ The voice is very quiet or barely louder than the room. Was anyone speaking?");
     console.log("    Sit closer to the microphone (a headset mic is best) and record again.");
   }
-  console.log(
-    q?.usable
-      ? `  noise profile: ${q.start.toFixed(2)}–${q.end.toFixed(2)} s (room noise ${(q.speech - q.quiet).toFixed(0)} dB below the voice)`
-      : "  noise profile: no clear pause found — used gentler automatic noise reduction",
-  );
+  if (mode === "ai") console.log(`  noise removal: AI (DeepFilterNet, up to ${DF_ATTEN_DB} dB)`);
+  else if (mode === "off") console.log("  noise removal: off");
+  else
+    console.log(
+      q?.usable
+        ? `  noise removal: classic, profile ${q.start.toFixed(2)}–${q.end.toFixed(2)} s (room noise ${(q.speech - q.quiet).toFixed(0)} dB below the voice)`
+        : "  noise removal: classic — no clear pause found, used gentler automatic noise reduction",
+    );
   console.log(`  before: ${before.input_i} LUFS, peak ${before.input_tp} dBTP, ${duration(input)} s`);
   console.log(`  after : ${after.input_i} LUFS, peak ${after.input_tp} dBTP, ${duration(output)} s  (target ${TARGET_I} LUFS, peak ≤ ${TARGET_TP})`);
 }
@@ -190,7 +219,7 @@ function record(name, flags) {
     process.stdin.destroy();
     if (!existsSync(raw)) fail(`Recording failed (FFmpeg exit ${code}).`);
     console.log(`\n✓ Raw recording saved: ${raw}`);
-    clean(raw, out);
+    clean(raw, out, flags.denoise);
   });
 }
 
@@ -203,10 +232,10 @@ if (cmd === "devices") {
   record(rest[0], flags);
 } else if (cmd === "clean") {
   if (!rest[0]) fail("Usage: node voice.mjs clean <input> [<output.wav>]");
-  clean(path.resolve(rest[0]), rest[1] && path.resolve(rest[1]));
+  clean(path.resolve(rest[0]), rest[1] && path.resolve(rest[1]), flags.denoise);
 } else {
   console.log(`Usage:
   node voice.mjs devices
-  node voice.mjs record <name> [--seconds=120] [--device="<mic name>"]
-  node voice.mjs clean <input> [<output.wav>]`);
+  node voice.mjs record <name> [--seconds=120] [--device="<mic name>"] [--denoise=ai|classic|off]
+  node voice.mjs clean <input> [<output.wav>] [--denoise=ai|classic|off]`);
 }

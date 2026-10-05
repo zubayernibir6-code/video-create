@@ -243,6 +243,15 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   the start, 3 phantom segments were dropped, and nothing real was lost (real clip: 47 words). Cost: peak RAM
   2.4–2.5 GB. Short files run slower (13–18x) because Whisper's temperature fallback re-decodes the phantom
   tail; the 30 s real clip ran at 9.4x.
+- ✅ **AI voice denoise (plan step 12, 2026-10-06).** `tools/deep-filter/deep-filter.exe` is DeepFilterNet 0.5.6
+  (26,912,256 B, MIT/Apache-2.0; licence files sit beside it; git-ignored). It is now the DEFAULT in `tools/voice.mjs`
+  (`--denoise=ai|classic|off`): a 48 kHz mono copy is run through `deep-filter -D -a 40 -o <dir>`, then high-pass,
+  compressor, silence trim and two-pass −16 LUFS. **Measured on the user's real laptop recording:**
+  speech-to-noise gap 28 dB → ai 57 dB / classic 41 dB / off 18 dB. Unlimited DeepFilterNet reached 76 dB;
+  40 dB was chosen to keep a natural room tail. The transcript of the cleaned audio is as good as the original's
+  (a slightly better reading of "জেমিনাই ক্লড"). `-D` compensates its delay (aligned lag 0.00 ms). Caveat: on
+  SYNTHETIC (TTS) speech plus noise it altered the voice more than the classic chain (aligned SDR 6.7 vs
+  22.8 dB). It is built for real voices; use `--denoise=classic` if a cleaned TTS track ever sounds processed.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -272,7 +281,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 9 | Workflow-trap fixers: `hf-postassemble.mjs`, `fix-frame.mjs`, `inline-fonts.mjs`, `sfx-offsets.mjs` | none | ⬜ |
 | 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
 | 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ✅ done 2026-10-06 |
-| 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ⬜ |
+| 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ✅ done 2026-10-06 |
 | 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | ⬜ |
 | 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | ⬜ |
 | 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ⬜ |
