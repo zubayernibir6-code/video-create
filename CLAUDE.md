@@ -214,6 +214,15 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   whole first sentence), so it stays at beam 5 and 4 threads. **English** (small): WER 1.5 % on the Kokoro
   script (the only miss was the name "Khada"), 0.7x real time, 0.7 GB peak. The output imports into HyperFrames
   (48 words) and burns with burn-subs (verified). Use `--model=turbo` only for a quick rough draft of Bengali.
+- ✅ **HyperFrames' own `hyperframes transcribe` works (plan step 8, 2026-10-06).** whisper.cpp 1.9.1 (the
+  `Release` build from `E:\remotion and hyperframe,\whisper.cpp`, 20 MB) was copied to `tools/whisper.cpp/`
+  (git-ignored). User env `HYPERFRAMES_WHISPER_PATH=E:\Video Create\tools\whisper.cpp\whisper-cli.exe`.
+  Models live in `~/.cache/hyperframes/whisper/models/` (a junction onto E:): `ggml-small.bin` was copied
+  from the old folder, and `ggml-small.en.bin` (487,614,201 B) was downloaded by the CLI on first default use.
+  Verified on the 22.5 s Kokoro narration: `--model small --language en` gave 65 words in 33 s; the default
+  (small.en) gave 65 words. media-use's `scripts/transcribe.mjs --input <f> --out <json>` now works too
+  (65 words, 43 s; it needs `--input`, not a positional argument). For BENGALI keep using
+  `tools/transcribe.mjs`: whisper.cpp only has the stock models, which garble Bengali.
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -239,7 +248,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 5 | `tools/finish.mjs` + `tools/qc.mjs`: check → render (long-render env) → −14 LUFS → QC → 16:9/9:16/1:1/4:5 + thumbnail → `renders/<project>/` | none | ✅ done 2026-10-05 |
 | 6 | Bengali subtitle tools (`burn-subs.mjs` via `ass=`, `srt-to-words.mjs`) | none | ✅ done 2026-10-05 |
 | 7 | Accurate Bengali ASR: faster-whisper in pyenv + `SayedShaun/bengali-whisper-medium-ct2` (Apache-2.0) + `tools/transcribe.mjs`/`.py` | ~845 MB | ✅ done 2026-10-05 |
-| 8 | Register whisper.cpp for English (copy from `E:\remotion and hyperframe,`) + `HYPERFRAMES_WHISPER_PATH` | none (local copy) | ⬜ |
+| 8 | Register whisper.cpp for English (copy from `E:\remotion and hyperframe,`) + `HYPERFRAMES_WHISPER_PATH` | 488 MB (small.en) | ✅ done 2026-10-06 |
 | 9 | Workflow-trap fixers: `hf-postassemble.mjs`, `fix-frame.mjs`, `inline-fonts.mjs`, `sfx-offsets.mjs` | none | ⬜ |
 | 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
 | 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ⬜ |
