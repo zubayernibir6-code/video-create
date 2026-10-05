@@ -271,6 +271,14 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   the line is in its CREDITS.md). 💰 has no animated version. Party and check rendered and animated in a
   HyperFrames snapshot through `window.__hfLottie`.
   Also: `assets/js/LICENSES/gsap-standard-license.txt` lost its 76 repeated headers (body unchanged, 78 lines).
+- ✅ **Bijoy/SutonnyMJ → Unicode (plan step 17, 2026-10-06).** `node tools/bijoy2unicode.mjs <file.txt> | "<text>"`
+  writes `<file>-unicode.txt` or prints. It reads Notepad ANSI (Windows-1252), UTF-8 ± BOM and UTF-16 (all three
+  verified). The engine is `tools/bijoy/` = npm bijoy-unicode-converter 0.1.2 (MIT, Naim Howlader). Its source was
+  read first: pure string maps, no network, fs or process access. **Tested on 21 known strings, 20 exact**,
+  including আমি বাংলায় গান গাই, প্রধান শিক্ষক, ছাত্রদের, ভর্তি চলছে, বার্ষিক হিসাব, শাহীন স্কুল মির্জাপুর, উজ্জ্বল
+  ভবিষ্যৎ, রোল নম্বর ১২ (ASCII digits become Bengali digits). The one miss: reph + ya-phola + e-kar
+  (দৈর্ঘ্যের → দৈর্ঘ্যরে), so proofread. The call is `ConvertToUnicode("bijoy", text)`; the first argument is
+  the encoding (also "somewherein" and "boisakhi").
   Licences: kokoro-onnx MIT, Kokoro-82M weights Apache-2.0, onnxruntime MIT. **phonemizer and espeak-ng
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
@@ -305,7 +313,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 14 | Stock photos/b-roll: the user's free Pexels/Pixabay keys in `.env.local` → `stock-fetch.mjs` | user | ⬜ |
 | 15 | librosa 0.11.0 in pyenv for music-to-video (1.0 needs Python ≥ 3.12) | ~100 MB | ⬜ |
 | 16 | Assets: Lucide icons, 7 more OFL Bengali fonts, CC0 SFX, Lottie | ~10 MB | ✅ done 2026-10-06 |
-| 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ⬜ |
+| 17 | Bijoy (SutonnyMJ) → Unicode converter | 73 KB | ✅ done 2026-10-06 |
 | 18 | Background-removal model `u2net_human_seg` (Apache-2.0) | 176 MB | ⬜ |
 | 19 | git versioning of sources (move the empty nested `.git` in remotion-starter first) | none | ⬜ |
 | 20 | Cleanup: stale headless shells, `.media` test pollution, `out/frames` | none | ⬜ explicit OK per item |
