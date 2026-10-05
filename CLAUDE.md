@@ -39,7 +39,7 @@ the fallback if SAC ever comes back after a reinstall.
 | `tools/hf-render.mjs` was the render command | **Obsolete.** 2.3× slower (70.5 s vs 30.2 s) and silent. Archived fallback only. |
 | `tools/hf-audio.mjs` was planned | **Do not write it.** The plain render mixes every `<audio>` cue itself. |
 | `HYPERFRAMES_BROWSER_PATH` → system Chrome (§2b) | **Removed from the user env on 2026-10-05.** HyperFrames now uses its pinned headless shell 152.0.7977.30: pixel-identical output (PSNR inf), ~7–10 % faster. |
-| Remotion `render.mjs` PNG path (§3) | Bundled binaries run. Plain `npx remotion render MyComp out/video.mp4 --color-space=bt709 --concurrency=1` works (51 s). **`render.mjs` has a real bug:** RGBA PNG → yuv420p drops the root-layer fade (`out/video.mp4` at t=4.9 s is RGB 25,31,56; it should be ~1,2,5). Changing `package.json` is pending the user's OK (plan step 10). |
+| Remotion `render.mjs` PNG path (§3) | Bundled binaries run. Plain `npx remotion render MyComp out/video.mp4 --color-space=bt709 --concurrency=1` works (51 s). ~~`render.mjs` dropped the root-layer fade~~ **FIXED 2026-10-06 (plan step 10):** `render.mjs` now runs the plain bundled render and tags BT.709 — fade verified (t=4.9 s RGB 3,5,9 vs the old 25,31,56). |
 | python blocked | Runs — **but read the Python trap below.** |
 
 `HYPERFRAMES_NO_AUTO_INSTALL=1` was set at user level on 2026-10-05. The 0.8.33 CLI had been
@@ -147,6 +147,14 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   on **Enter** through a stdin pipe; stdin EOF does not stop it (verified). It refuses silent input, refuses
   input that is pure room noise ("No voice found"), and warns when the voice is below −40 LUFS or within 12 dB
   of the room. Mic tests on 2026-10-05 recorded 1–2 s of room sound only; those files were deleted at once.
+- ✅ **Remotion render fixed (plan step 10, 2026-10-06).** `projects/remotion-starter/render.mjs` (still `npm run render`
+  / `npm run render -- <Comp> <out.mp4>`) runs the local CLI directly
+  (`node node_modules/@remotion/cli/remotion-cli.js render … --color-space=bt709 --concurrency=1`, no `shell:true`, so
+  no DEP0190 warning). It then losslessly writes the full BT.709 VUI with the system FFmpeg
+  (`-c copy -bsf:v h264_metadata=colour_primaries=1:transfer_characteristics=1:matrix_coefficients=1:video_full_range_flag=0`)
+  plus faststart. `--color-space=bt709` alone left transfer/primaries "unknown". **Verified:** the fade is
+  back (t=4.9 s RGB 3,5,9; the old PNG-path file stayed at 25,31,56). qc.mjs PASS with all tags bt709. Both
+  call forms work, in 19 s warm (65 s cold). The old no-fade file is in `.quarantine/2026-10-05/remotion-starter/`.
 - ✅ **`tools/finish.mjs` + `tools/qc.mjs`: one-command delivery (plan step 5, 2026-10-05).** Plain node and FFmpeg.
   `node "E:/Video Create/tools/finish.mjs" <project-folder | video-file> [--quality=high|standard|draft]
   [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop] [--lufs=-14] [--out=<dir>] [--keep]`.
@@ -373,7 +381,7 @@ then stop for his OK. Every download needs his OK first (name, source, size).
 | 7 | Accurate Bengali ASR: faster-whisper in pyenv + `SayedShaun/bengali-whisper-medium-ct2` (Apache-2.0) + `tools/transcribe.mjs`/`.py` | ~845 MB | ✅ done 2026-10-05 |
 | 8 | Register whisper.cpp for English (copy from `E:\remotion and hyperframe,`) + `HYPERFRAMES_WHISPER_PATH` | 488 MB (small.en) | ✅ done 2026-10-06 |
 | 9 | Workflow-trap fixers: `hf-postassemble.mjs` (CDN GSAP, fonts incl. @import, dropped audio) + `fix-frame.mjs` | none | ✅ done 2026-10-06 |
-| 10 | Remotion `package.json` render → plain bundled render | none | ⬜ |
+| 10 | Remotion `render.mjs` → plain bundled render (fade fixed, BT.709 tags) | none | ✅ done 2026-10-06 |
 | 11 | Piper `bn_BD-google-medium` offline Bengali TTS (CC BY-SA training data → attribution) | ~111 MB | ✅ done 2026-10-06 |
 | 12 | DeepFilterNet voice-denoise exe (MIT/Apache-2.0) | 27 MB | ✅ done 2026-10-06 |
 | 13 | Music: the user downloads Pixabay tracks by hand → `music-pick.mjs` | user | 🔶 tool ✅ 2026-10-06; tracks = USER |
@@ -722,9 +730,9 @@ longer render can't leak extra frames. Exposed as `npm run render`.
 ## 4. Commands that are known to work
 
 ```bash
-# Remotion — render. ⚠️ `npm run render` still runs the old render.mjs, which drops root fades (§0b).
-# Verified-correct plain render (51 s for 5 s of 1080p):
-cd "E:/Video Create/projects/remotion-starter" && npx remotion render MyComp out/video.mp4 --color-space=bt709 --concurrency=1
+# Remotion — render (fixed 2026-10-06: plain bundled render + lossless BT.709 tagging; keeps fades; 19–65 s for 5 s)
+cd "E:/Video Create/projects/remotion-starter" && npm run render
+# any composition / output:  npm run render -- MyComp out/promo.mp4
 
 # Remotion — pick composition and output
 cd "E:/Video Create/projects/remotion-starter" && npm run render -- MyComp out/promo.mp4 30
