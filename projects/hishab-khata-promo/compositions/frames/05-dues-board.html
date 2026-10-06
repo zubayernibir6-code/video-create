@@ -65,7 +65,7 @@
       left: 80px;
       font-family: "Hind Siliguri", sans-serif;
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0;
     }
     #root .chrome-r {
       right: 80px;
@@ -126,7 +126,7 @@
       font-family: "Hind Siliguri", sans-serif;
       font-weight: 500;
       font-size: 24px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0;
       color: #4A6355;
     }
 
@@ -144,7 +144,7 @@
       font-weight: 600;
       font-size: 26px;
       line-height: 1.25;
-      letter-spacing: 0.02em;
+      letter-spacing: 0;
       color: #16603A;
     }
     #root .chip .fill {
@@ -310,7 +310,7 @@
       /* ── macro camera: one long-tail settle underneath the whole shot,
             fully at rest by 4.0s so the frame ends dead still ────────────── */
       tl.fromTo(q(".stage"),
-        { scale: 1.012 },
+        { scale: 0.988 },  /* settles IN to 1: never past the hairlines */
         { scale: 1, duration: PUSH_DUR, ease: "power3.out" }, 0);
 
       /* ── Scene 1 (0.0–1.0) — headline, per WORD (never per character) ───── */

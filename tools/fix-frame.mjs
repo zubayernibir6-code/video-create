@@ -13,7 +13,8 @@
 // paper-2 must stay a surface (≤1.25:1 against paper, else it becomes paper with 6 % ink); reading-ramp
 // fonts (body, body-lede, micro…, caption, label) must not be the display face; every fontFamily must exist in
 // assets/fonts (others are mapped: mono → JetBrains Mono, serif → Tiro Bangla, display roles → Baloo Da 2,
-// everything else → Hind Siliguri). --apply writes the fixes, keeping the original once as frame.md.orig.
+// everything else → Hind Siliguri); and roles set in a Bengali font must have no positive tracking (the preset's
+// tracked "micro" labels break the matra line). --apply writes the fixes, keeping the original once as frame.md.orig.
 
 import { copyFileSync, existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -82,6 +83,17 @@ md = md.replace(typoLine, (all, ind, key, mid, fam, end) => {
   return `${ind}${key}${mid}${to}${end}`;
 });
 if (!entries.length) notes.push("⚠ no typography entries with fontFamily found — font checks skipped");
+
+// ── Bengali takes no tracking ─────────────────────────────────────────────────────────────────
+// Presets come from Latin design, where small tracked caps ("micro", 0.16em) read as labels. On Bengali
+// the same spacing breaks the matra (headline) into pieces: "সং খ্যা য়". Negative display tracking is fine.
+const fontsCss = readFileSync(path.join(WORKSPACE, "assets", "fonts", "fonts.css"), "utf8");
+const bengaliFams = new Set([...fontsCss.matchAll(/@font-face\s*\{[^}]*?font-family:\s*"([^"]+)"[^}]*?url\(["']?[^)"']*bengali\//g)].map((m) => m[1]));
+md = md.replace(/^(\s+)([a-z][a-z0-9-]*)(:\s*\{[^}\n]*fontFamily:\s*")([^"]+)("[^}\n]*tracking:\s*")([^"]+)(")/gm, (all, ind, key, a, fam, b, tr, c) => {
+  if (!bengaliFams.has(fam) || !(parseFloat(tr) > 0)) return all;
+  notes.push(`fix typography.${key}: tracking ${tr} → 0 (Bengali takes no letter-spacing: it breaks the matra line)`);
+  return `${ind}${key}${a}${fam}${b}0${c}`;
+});
 
 // ── report / apply ────────────────────────────────────────────────────────────────────────────
 const fixes = notes.filter((n) => n.startsWith("fix"));

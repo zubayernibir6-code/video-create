@@ -3,9 +3,10 @@
 //
 //   node "E:/Video Create/tools/finish.mjs" <project-folder | video-file>
 //        [--quality=high|standard|draft] [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop]
-//        [--lufs=-14] [--out=<folder>] [--keep]
+//        [--lufs=-14] [--out=<folder>] [--keep] [--skip-design]
 //
-// Project folder: hyperframes check → hyperframes render (1 worker, long-render safe) → master.
+// Project folder: hyperframes check + tools/design-lint.mjs (both stop the run on errors; --skip-design
+//                 skips the second) → hyperframes render (1 worker, long-render safe) → master.
 // Video file:     skips check/render; re-encodes to h264/yuv420p only when it isn't already.
 // Then for both:  two-pass loudness to -14 LUFS / -1.5 dBTP → QC gate (tools/qc.mjs) →
 //                 other aspect ratios → thumbnail + 8 s preview GIF → qc.json.
@@ -165,9 +166,14 @@ if (isProject) {
   const env = { ...process.env, PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS: "3600", HYPERFRAMES_NO_AUTO_INSTALL: "1", HYPERFRAMES_SKIP_SKILLS: "1" };
   expect = compositionSpec(input);
 
-  step("1/6  Quality gate before rendering (hyperframes check)");
+  step("1/6  Quality gate before rendering (hyperframes check + design-lint)");
   const chk = spawnSync(process.execPath, [hf, "check"], { cwd: input, env, stdio: "inherit" });
   if (chk.status !== 0) fail("hyperframes check found errors — fix them before rendering (nothing was rendered).");
+  if (!flags["skip-design"]) {
+    console.log("");
+    const dl = spawnSync(process.execPath, [path.join(import.meta.dirname, "design-lint.mjs"), input], { env, stdio: "inherit" });
+    if (dl.status !== 0) fail("design-lint found design errors — fix them before rendering (nothing was rendered). Bengali letter-spacing can be fixed automatically: node tools/design-lint.mjs <project> --fix");
+  }
 
   step(`2/6  Rendering (${quality} quality, 1 worker${expect.dur ? `, ${expect.dur} s of video` : ""})`);
   source = path.join(work, `${name}.render.mp4`);

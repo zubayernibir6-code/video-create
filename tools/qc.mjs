@@ -6,7 +6,8 @@
 // FAIL = must fix before delivery: wrong codec/pixel format, wrong size/fps/duration, no faststart
 //        (slow start on the web), loudness more than 1 LU off target, true peak above -1 dBTP.
 // WARN = look at it: no audio track, a silent audio track, black in the middle (≥0.5 s),
-//        a frozen picture ≥5 s, missing BT.709 colour tags.
+//        a frozen picture ≥5 s, missing BT.709 colour tags, "dead air" (a still picture and
+//        silence together for ≥1.5 s: the moment a viewer scrolls away).
 // freezedetect n=0.001, not 0.003: at 0.003 a slow move (0.4 px/frame) read as 32 "freezes" in a
 // 250 s test, while 0.001 still catches a truly frozen picture (verified 2026-10-05).
 // INFO = normal for motion graphics, listed so nothing is hidden: black at the very start/end
@@ -125,6 +126,13 @@ export function qc(file, expect = {}) {
   if (longFreeze.length) add("WARN", "frozen picture", list(longFreeze), "nothing moves for 5 s or more");
   if (freezes.length > longFreeze.length) add("INFO", "still moments", list(freezes.filter(([s, e]) => e - s < 5)), "normal holds");
   if (silences.length) add("INFO", "silences", list(silences), "gaps of 2 s or more in the sound");
+  // Dead air: a still picture AND silence at the same moment — where a viewer scrolls away.
+  const dead = [];
+  for (const [fs, fe] of freezes) for (const [ss, se] of silences) {
+    const s = Math.max(fs, ss), e = Math.min(fe, se);
+    if (e - s >= 1.5) dead.push([s, e]);
+  }
+  if (dead.length && hasA) add("WARN", "dead air", list(dead), "nothing moves and nothing is heard — add motion, a sound or music");
 
   const ok = !checks.some((c) => c.level === "FAIL");
   return { file, ok, spec, loudness: hasA ? { I, TP } : null, checks };

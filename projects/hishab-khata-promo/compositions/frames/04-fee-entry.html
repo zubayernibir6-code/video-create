@@ -50,10 +50,10 @@
     #root .f04-hair-bot { bottom: 58px; }
     #root .f04-chrome {
       position: absolute; bottom: 22px; font-size: 13px;
-      letter-spacing: 0.06em; color: #4A6355;
+      letter-spacing: 0; color: #4A6355;
     }
     #root .f04-chrome-l { left: 80px; font-family: "JetBrains Mono", "Hind Siliguri", sans-serif; }
-    #root .f04-chrome-r { right: 80px; font-family: "JetBrains Mono", monospace; }
+    #root .f04-chrome-r { right: 80px; font-family: "JetBrains Mono", "Hind Siliguri", monospace; }
 
     /* stage */
     #root .f04-stage {
@@ -72,8 +72,8 @@
     /* ── left: the entry panel ── */
     #root .f04-card-title,
     #root .f04-out-label {
-      font-family: "Hind Siliguri", sans-serif; font-size: 17px; font-weight: 600;
-      letter-spacing: 0.16em; color: #4A6355; margin-bottom: 24px;
+      font-family: "Hind Siliguri", sans-serif; font-size: 23px; font-weight: 600;
+      letter-spacing: 0; color: #4A6355; margin-bottom: 20px;
     }
     #root .f04-card { position: relative; width: 620px; height: 380px; }
     #root .f04-cardfill { position: absolute; inset: 0; background: #EBE4D4; }
@@ -94,7 +94,7 @@
       background: rgba(22, 96, 58, 0.20); transform-origin: 0% 50%;
     }
     #root .f04-field b {
-      font-family: "JetBrains Mono", monospace; font-weight: 500;
+      font-family: "JetBrains Mono", "Hind Siliguri", monospace; font-weight: 500;
       font-size: 30px; color: #16603A;
     }
     #root .f04-field .f04-bnval {
@@ -125,13 +125,13 @@
       background: rgba(22, 96, 58, 0.20); transform-origin: 0% 50%;
     }
     #root .f04-row .f04-n {
-      font-family: "JetBrains Mono", monospace; font-size: 22px; color: #4A6355;
+      font-family: "JetBrains Mono", "Hind Siliguri", monospace; font-size: 22px; color: #4A6355;
     }
     #root .f04-row .f04-nm {
       font-family: "Hind Siliguri", sans-serif; font-size: 30px; color: #16603A;
     }
     #root .f04-row .f04-amt {
-      font-family: "JetBrains Mono", monospace; font-size: 30px; color: #16603A; text-align: right;
+      font-family: "JetBrains Mono", "Hind Siliguri", monospace; font-size: 30px; color: #16603A; text-align: right;
     }
     #root .f04-new .f04-nm, #root .f04-new .f04-amt { color: #AC7914; }  /* amber TEXT, readable */
 
@@ -147,7 +147,7 @@
       font-family: "Hind Siliguri", sans-serif; font-size: 34px; color: #4A6355;
     }
     #root .f04-total b {
-      font-family: "JetBrains Mono", monospace; font-weight: 500;
+      font-family: "JetBrains Mono", "Hind Siliguri", monospace; font-weight: 500;
       font-size: 56px; color: #16603A; font-variant-numeric: tabular-nums;
       transform-origin: 100% 50%;
     }
@@ -259,7 +259,7 @@
       /* ── macro settle: one long-tail move, fully at rest by 4.2s so the
             back half of the frame carries no camera motion at all ────────── */
       tl.fromTo(q(".f04-stage"),
-        { scale: 1.010 },
+        { scale: 0.990 },  /* settles IN to 1: never past the hairlines */
         { scale: 1, duration: PUSH_DUR, ease: "power3.out" }, 0);
 
       /* ── Scene 1 (0.0–1.1) — the headline only. Bengali by WORD. ───────── */

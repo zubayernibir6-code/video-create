@@ -33,8 +33,8 @@ typography:
   # — reading ramp —
   body:        { fontFamily: "Hind Siliguri", cqw: 0.83, weight: 400, lineHeight: 1.5 }
   body-lede:   { fontFamily: "Hind Siliguri", cqw: 0.95, weight: 400, lineHeight: 1.5 }
-  micro:       { fontFamily: "Hind Siliguri", px: 13, weight: 600, tracking: "0.16em", upper: true }
-  micro-strong:{ fontFamily: "Hind Siliguri", px: 16, weight: 600, tracking: "0.18em", upper: true }
+  micro:       { fontFamily: "Hind Siliguri", px: 13, weight: 600, tracking: "0", upper: true }
+  micro-strong:{ fontFamily: "Hind Siliguri", px: 25, weight: 600, tracking: "0", upper: true }  # eyebrows / kickers: 16 px Bengali was unreadable on a phone (2026-10-06 polish pass)
   mono-tag:    { fontFamily: "JetBrains Mono", cqw: 0.78, weight: 400, tracking: "0.05em" }
   mono-chrome: { fontFamily: "JetBrains Mono", px: 13, weight: 400, tracking: "0.06em" }
   # — display / hero ramp (Baloo Da 2 400, negative tracking) —

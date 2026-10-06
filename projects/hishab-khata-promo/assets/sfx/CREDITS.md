@@ -33,3 +33,12 @@ All files are distributed under the [Pixabay Content License](https://pixabay.co
 - Redistribution as part of derivative works (such as videos rendered with HyperFrames)
 
 without any attribution requirement.
+
+## Added 2026-10-06 — CC0 1.0 (public domain), Freesound via the Openverse API
+
+Copied from the workspace pack (`E:/Video Create/assets/sfx`) for the polish pass. No attribution required.
+
+- `cash-register.mp3` — "cash register chching" by disman, https://freesound.org/s/728224/ — CC0 1.0
+- `whoosh-swish.mp3` — the workspace's new `whoosh-short.mp3`: "Swosh swoosh whoosh air sound" by qubodup,
+  https://freesound.org/s/60026/ — CC0 1.0. Renamed here because this project's own `whoosh-short.mp3` is the
+  older Pixabay file (a copy of `whoosh.mp3`) that the existing cues use.

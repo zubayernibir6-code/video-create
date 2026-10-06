@@ -48,13 +48,13 @@
       background-position: 0 0;
     }
 
-    /* a single quiet paper-2 field behind the triptych — depth layer 1 */
+    /* a single quiet paper-2 field behind the triptych — depth layer 1.
+       It lives INSIDE .n06-stats and fills its padding box, so it always wraps the
+       numbers exactly (it used to be a separate box at fixed pixels, and the
+       numbers slid off it during the push). */
     #root .n06-shelf {
       position: absolute;
-      left: 80px;
-      right: 80px;
-      top: 470px;
-      height: 424px;
+      inset: 0;
       background: #EBE4D4;
       opacity: 0.55;
     }
@@ -80,7 +80,7 @@
       font-family: "Hind Siliguri", sans-serif;
       font-weight: 600;
       font-size: 15px;
-      letter-spacing: 0.18em;
+      letter-spacing: 0;
     }
     #root .n06-chrome-r {
       right: 80px;
@@ -107,18 +107,34 @@
       font-family: "Hind Siliguri", sans-serif;
       font-weight: 600;
       font-size: 1.45cqw;
-      letter-spacing: 0.18em;
+      letter-spacing: 0;
       line-height: 1.2;
       color: #4A6355;
-      margin-bottom: 50px;
+      margin-bottom: 28px;
     }
 
+    /* One grid for all three stats: every piece is a direct grid item (the stat and
+       body wrappers are display: contents), so the heads share row 1, the struck
+       "before" value row 2, the numerals row 3 (on ONE baseline) and the captions
+       row 4. Columns can no longer drift apart, whatever the numbers say. */
     #root .n06-stats {
+      position: relative;
       display: grid;
       grid-template-columns: 1.35fr 1fr 1fr;
-      gap: 60px;
-      align-items: end;
+      column-gap: 64px;
+      padding: 40px 56px 50px;
     }
+    #root .n06-stat,
+    #root .n06-body { display: contents; }
+    #root .n06-s1 .n06-head, #root .n06-s1 .n06-body > * { grid-column: 1; }
+    #root .n06-s2 .n06-head, #root .n06-s2 .n06-body > * { grid-column: 2; }
+    #root .n06-s3 .n06-head, #root .n06-s3 .n06-body > * { grid-column: 3; }
+    #root .n06-head   { grid-row: 1; margin-bottom: 26px; }
+    #root .n06-wasrow { grid-row: 2; }
+    #root .n06-fig    { grid-row: 3; align-self: baseline; }
+    #root .n06-cap    { grid-row: 4; }
+    /* positioned, so they paint above the earlier, absolutely positioned shelf */
+    #root .n06-head, #root .n06-wasrow, #root .n06-fig, #root .n06-cap { position: relative; }
 
     /* column head: mono catalogue ordinal over the self-drawing rule */
     #root .n06-head { position: relative; }
@@ -146,8 +162,6 @@
       stroke-linecap: butt;
     }
 
-    #root .n06-body { margin-top: 26px; }
-
     /* stat one — the struck "before" value */
     #root .n06-wasrow {
       display: block;
@@ -160,7 +174,7 @@
       font-weight: 500;
       font-size: 2.34cqw;
       line-height: 1.25;
-      letter-spacing: 0.01em;
+      letter-spacing: 0;
       color: #C0392B;
     }
     #root .n06-strike {
@@ -205,7 +219,7 @@
       font-weight: 500;
       font-size: 1.72cqw;
       line-height: 1.35;
-      letter-spacing: 0.02em;
+      letter-spacing: 0;
       color: #4A6355;
     }
   </style>
@@ -214,8 +228,6 @@
 
     <div data-hf-id="hf-kxq8" class="clip n06-bg" data-start="0" data-duration="8.5" data-track-index="0"></div>
 
-    <div data-hf-id="hf-t9kr" class="n06-shelf"></div>
-
     <div data-hf-id="hf-77ey" class="n06-hair n06-hair-top"></div>
     <div data-hf-id="hf-jc3w" class="n06-hair n06-hair-bot"></div>
 
@@ -223,6 +235,7 @@
       <div data-hf-id="hf-7was" class="n06-eyebrow">সংখ্যায়</div>
 
       <div data-hf-id="hf-rhep" class="n06-stats">
+        <div data-hf-id="hf-t9kr" class="n06-shelf"></div>
 
         <div data-hf-id="hf-xkzq" class="n06-stat n06-s1">
           <div data-hf-id="hf-9073" class="n06-head">
@@ -322,8 +335,11 @@
       });
 
       /* ── macro camera: a very slow push on the content plane only.
-            sine.out so it comes fully to rest at 6.4s — the frame ends still. */
-      tl.fromTo(stage, { scale: 1 }, { scale: 1.035, duration: 6.4, ease: "sine.out" }, 0);
+            sine.out so it comes fully to rest at 6.4s — the frame ends still.
+            It ENDS at scale 1, so the held frame is the authored layout: the
+            numbers rest exactly inside the hairlines. (It used to run 1 → 1.035,
+            which carried the content 31 px past the frame lines.) */
+      tl.fromTo(stage, { scale: 0.965 }, { scale: 1, duration: 6.4, ease: "sine.out" }, 0);
 
       /* ── Scene 1 (0.0–1.0) — eyebrow up, the three column rules self-draw ── */
       tl.fromTo(shelf, { opacity: 0 }, { opacity: 0.55, duration: 0.7, ease: "power2.out" }, 0.05);
