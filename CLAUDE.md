@@ -403,6 +403,30 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
 
+- ✅ **`tools/design-lint.mjs`: the measured design review (2026-10-06, after the first real render).** The user saw
+  three flaws in the rendered promo that `hyperframes check` had passed (numbers off their card, column rules at two
+  heights, "সং খ্যা য়" letter-spaced) and asked that such mistakes be caught automatically. `node tools/design-lint.mjs
+  <project> [--step=0.25] [--fix] [--strict] [--json]` opens the project in the SAME bundle + headless Chrome as check/
+  render (`tools/hf-page.mjs` borrows the CLI's own helpers from the 0.8.134 dist; chunk names are resolved at run time
+  from `checkBrowser-*.js`'s imports), seeks every 0.25 s and measures the DOM. ERROR: `bn_tracking` (letter-spacing
+  ≥0.03em on Bengali letters; digits exempt — `--fix` rewrites the CSS rule, found through `document.styleSheets`),
+  `frame_breach` (content between a composition's top/bottom hairlines sticking out past their ends), `card_straddle`
+  (text partly off a painted panel; measured on INK bounds via canvas `actualBoundingBox*`, because Baloo's line box is far
+  taller than its glyphs), `font_fallback` (Chrome's own answer via CDP `CSS.getPlatformFontsForNode`, once per scene:
+  a system font drew Bengali). WARN: `peer_misaligned` (same-class elements side by side or stacked, 1.5–24 px apart on
+  every edge, top/bottom/centre/baseline), `orphan_word`, slight Bengali tracking. INFO: `small_text` (<20 px at 1080p).
+  Layout findings count only when HELD (2+ consecutive samples, element still) and the message names a scaled ancestor
+  ("camera push") when that is the cause. Escape hatches: `data-design-ignore`, `data-design-allow-breach|straddle|
+  misalign` (+ `data-layout-ignore`). Exit 1 on ERROR. **finish.mjs now runs it after `hyperframes check` and stops on
+  errors** (`--skip-design` to bypass). 14–23 s for 45 s. **Verified on the promo's first render:** it found all three
+  reported flaws plus 57 more — tracking on Bengali in all 7 frames, 4–5 px breaches during the 04/05 settles, the
+  frame-01 red box overlap false positive (fixed: rotated strokes are not cards), and Bengali digits in frame 04 drawn by
+  **Nirmala UI** (JetBrains Mono has no Bengali digits). After the fixes: 0 errors, 0 warnings.
+  Also: `qc.mjs` WARNs **dead air** (a still picture AND silence together ≥1.5 s; the first render had 16.8–19.0 s);
+  `fix-frame.mjs` sets Bengali roles' tracking to 0 in frame.md; `tools/sfx-leads.mjs [dir]` writes each sound's silent
+  lead-in as `lead_s` into manifest.json (ping 0.32 s, typing 0.44, chime 0.42, pop 0.12, cash-register 0.14…).
+  **Read §0d before building any new video.**
+
 ### Capability audit (2026-10-04): what is ready, and the install plan
 
 **Ready today (verified):** Bengali typography and motion-graphics videos with SFX and sound. Footage
@@ -482,6 +506,38 @@ Long footage through HyperFrames: ~0.13–0.20 s per frame (5 min ≈ 25–40 mi
 
 ---
 
+## 0d. ⭐ Video craft rules — STANDING, for every composition (2026-10-06)
+
+Learned from the user's review of the first real render (hishab-khata-promo). `tools/design-lint.mjs` enforces the
+measurable ones and `finish.mjs` runs it; follow the rest by hand. Skill workers do not know these rules: put them in
+every frame packet / brief you write, and run design-lint after every build change.
+
+1. **Camera moves END at scale 1.** A push/settle on a content plane starts BELOW 1 and lands on 1
+   (`fromTo(stage, {scale: 0.965}, {scale: 1})`), so the held frame is the authored layout. Scaling content past 1
+   carries it over the frame hairlines and off its panels while the furniture stays put (frame 06 went 31 px past).
+2. **Panels are sized by their content.** Put the panel INSIDE the content's container (`position:absolute; inset:0`,
+   content items `position:relative` so they paint above it) instead of a separately placed box at fixed pixels.
+3. **Rows of stats/columns share ONE grid.** Wrappers get `display: contents`; every piece is placed by
+   `grid-column`/`grid-row`; heads share a row; numerals use `align-self: baseline`. Never `align-items: end` across
+   columns of different content (it put the 001 rule 9 px above 002/003).
+4. **Bengali takes no letter-spacing** (tracking breaks the matra line). Slight negative tracking on display is fine.
+   Presets' tracked "micro" labels come from Latin design: `fix-frame.mjs` zeroes them in frame.md.
+5. **Sizes at 1080p:** anything the viewer must read ≥ 28 px; kickers/eyebrows ≥ 24 px (16 px was unreadable on a phone);
+   ≤ 15 px only for page furniture (page numbers, chrome).
+6. **Every font stack that can receive Bengali has a pack Bengali font in it** — mono stacks are
+   `"JetBrains Mono", "Hind Siliguri", monospace`. Otherwise Chrome borrows a system font (Nirmala UI here).
+   Hind Siliguri's "১" is a small hook-shaped design (not an error); Baloo Da 2 and Noto Sans Bengali draw the classic
+   "১". Keep one face per role (data/body = Hind Siliguri, display numerals = Baloo Da 2).
+7. **Sound on the beat:** `data-start = visual hit − lead_s` (`assets/sfx/manifest.json`, `tools/sfx-leads.mjs`).
+   Every scene transition gets a sound; UI events get quiet ticks (click.mp3 at 0.28–0.35); count-ups can ride
+   typing.mp3 at ~0.22. Overlapping cues must sit on different `data-track-index` lanes (pack onto 20, 21, 22…).
+8. **No dead air:** never a still picture AND silence together for ≥ 1.5 s (qc.mjs WARN). Real music under the SFX is
+   the biggest remaining upgrade for any promo (the user's Pixabay task → `music-pick.mjs`).
+9. **Look at it:** after the render, extract frames every 0.5 s (`ffmpeg -vf "fps=2,scale=480:270"` + `tile=4x3`) and
+   review every one, plus the held end of each scene at full size. Lint and design-lint do not judge taste.
+
+---
+
 ## 1. What this workspace is
 
 `E:\Video Create` — a local professional video production workspace built on two frameworks:
@@ -502,7 +558,10 @@ E:\Video Create\
 │   ├── hf-render.mjs             ← archived fallback since 2026-10-04 — use plain `hyperframes render` (§0b)
 │   ├── voice.mjs                 ← record from a mic + clean any voice recording → -16 LUFS WAV (§0b)
 │   ├── finish.mjs                ← ONE COMMAND: project or video file → checked, -14 LUFS, all formats (§0b)
-│   ├── qc.mjs                    ← delivery quality gate (FAIL/WARN/INFO), used by finish.mjs (§0b)
+│   ├── qc.mjs                    ← delivery quality gate (FAIL/WARN/INFO, incl. dead air), used by finish.mjs (§0b)
+│   ├── design-lint.mjs           ← measured design review of a project (alignment, frame, Bengali, fonts) (§0b, §0d)
+│   ├── hf-page.mjs               ← opens a project in HyperFrames' own page/browser for measuring (used by design-lint)
+│   ├── sfx-leads.mjs             ← writes each SFX file's silent lead-in (lead_s) into manifest.json (§0d rule 7)
 │   ├── burn-subs.mjs             ← burn SRT/VTT/ASS into a video with correct Bengali conjuncts (§0b)
 │   ├── srt-to-words.mjs          ← SRT/VTT → word timings JSON for word-by-word captions (§0b)
 │   ├── srt.mjs                   ← shared SRT/VTT reader (BOM, UTF-16, CRLF, NFC)
@@ -1584,6 +1643,21 @@ Notable finds:
 - HyperFrames' SRT import breaks on CRLF.
 - The silently-updated skills broke media-use resolve on the old CLI, which is why the CLI was upgraded.
 The user's morning report is START-HERE.md §১৭.
+
+### 🎬 2026-10-06 — first real render, the user's review, and the polish pass
+
+- The user approved the render of hishab-khata-promo ("রেন্ডার করে দেখাও"); finish.mjs delivered it (QC all PASS).
+- He spotted three flaws in frame 06 and asked for them fixed AND for such mistakes to be prevented, the system to be
+  "more dynamic", and every video reviewed to be made better, with no fixed limit. Done in one pass:
+  `design-lint.mjs` + `hf-page.mjs` + `sfx-leads.mjs`, design-lint inside finish.mjs, qc dead-air, fix-frame tracking,
+  and the §0d craft rules. Promo fixes: frame 06 rebuilt on one grid (content-sized shelf, push 0.965 → 1, shared
+  baselines); 04/05 settles start below 1; letter-spacing removed from Bengali in all 7 frames (design-lint --fix);
+  kickers 16 → 25 px; frame-04 digits now drawn by Hind Siliguri instead of the system's Nirmala UI; SFX re-timed for
+  their lead-ins and the silent stretches filled (28 → 46 cues: transition whoosh at 19 s, UI ticks, cash register on
+  the fee total, a strike swish, count-up ticks, sparkle on the brand underline).
+- Not changed on purpose (the user approved the storyboard): the 2 s empty "breather" pages (frames 2 and 7) and the
+  1.3 s first line. The vertical/square exports are still blurred-background "fit" versions: a native 9:16 layout is the
+  next big upgrade (offered to the user).
 
 ### ⬜ Tier 3 — local AI media (not started, heavy)
 
