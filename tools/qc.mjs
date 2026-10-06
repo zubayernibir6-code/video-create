@@ -4,7 +4,8 @@
 //   node "E:/Video Create/tools/qc.mjs" <video.mp4> [--w=1920 --h=1080 --fps=30 --dur=45 --lufs=-14 --json=qc.json]
 //
 // FAIL = must fix before delivery: wrong codec/pixel format, wrong size/fps/duration, no faststart
-//        (slow start on the web), loudness more than 1 LU off target, true peak above -1 dBTP.
+//        (slow start on the web), loudness more than 1 LU off target, true peak above -1 dBTP,
+//        a thin black strip along an edge (render defect).
 // WARN = look at it: no audio track, a silent audio track, black in the middle (≥0.5 s),
 //        a frozen picture ≥5 s, missing BT.709 colour tags, "dead air" (a still picture and
 //        silence together for ≥1.5 s: the moment a viewer scrolls away).
@@ -67,6 +68,25 @@ export function probe(file) {
   };
 }
 
+// Edges: an 8 px band along an edge that is pure black in every sampled frame while the picture right next to it
+// is not. HyperFrames' 1080-wide renders lost their right 8 px exactly like this (FFmpeg 8.1.1's gbrp→YUV bug,
+// 2026-10-06). Letterbox bars are wider than 8 px, so the band next to them is black too and they don't trigger.
+function edgeStrips(file, spec) {
+  const W = spec.width, H = spec.height, B = 8, bands = { left: [], right: [], top: [], bottom: [] };
+  if (!W || !H || !spec.duration) return [];
+  for (let i = 1; i <= 6; i++) {
+    const r = spawnSync("ffmpeg", ["-v", "error", "-ss", String((spec.duration * i) / 7), "-i", file, "-frames:v", "1", "-vf", "format=gray", "-f", "rawvideo", "-"], { maxBuffer: 256 * 1024 * 1024 });
+    const px = r.stdout;
+    if (!px || px.length < W * H) continue;
+    const mean = (x0, y0, w, h) => { let s = 0; for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) s += px[y * W + x]; return s / (w * h); };
+    bands.right.push([mean(W - B, 0, B, H), mean(W - 2 * B, 0, B, H)]);
+    bands.left.push([mean(0, 0, B, H), mean(B, 0, B, H)]);
+    bands.bottom.push([mean(0, H - B, W, B), mean(0, H - 2 * B, W, B)]);
+    bands.top.push([mean(0, 0, W, B), mean(0, B, W, B)]);
+  }
+  return Object.entries(bands).filter(([, s]) => s.length && s.every(([o]) => o <= 2) && s.some(([, inner]) => inner > 12)).map(([k]) => k);
+}
+
 export function qc(file, expect = {}) {
   const spec = probe(file);
   const lufs = expect.lufs ?? -14;
@@ -110,6 +130,9 @@ export function qc(file, expect = {}) {
   else add("PASS", "duration", `${spec.duration} s`);
   add(spec.faststart ? "PASS" : "FAIL", "faststart", spec.faststart, "starts playing before it fully downloads");
   add((spec.color ?? "").split("bt709").length - 1 >= 3 ? "PASS" : "WARN", "colour tags", spec.color, "matrix/transfer/primaries all bt709");
+  const strips = edgeStrips(file, spec);
+  add(strips.length ? "FAIL" : "PASS", "edges", strips.length ? `black strip: ${strips.join(", ")}` : "clean",
+    strips.length ? "a thin pure-black band at the frame edge in every sample — a render defect (CLAUDE.md: FFmpeg gbrp edge bug)" : "no black strip at any edge");
 
   if (!hasA) add("WARN", "audio", "none", "no audio track — fine only for a silent video");
   else if (!Number.isFinite(I) || I < -70) add("WARN", "audio", `${I} LUFS`, "the audio track is silent");

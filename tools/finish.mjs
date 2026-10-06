@@ -22,9 +22,12 @@
 //   the target (audio-test: LRA 11 → -12.0 LUFS; LRA 21 → -14.9 LUFS).
 // - Reframe defaults to "fit" (whole frame over a blurred copy): a plain centre crop cuts the
 //   text off a designed 16:9 layout. Use --reframe=crop for footage with a centred subject.
+// - FFmpeg 8.1.1's gbrp→YUV conversion leaves the right 8 px black at widths 1080/1096. HyperFrames' MP4 encode
+//   uses it, so a 1080-wide project is rendered on a 1088-wide page (root pinned at 1080) and cropped back.
+//   A one-frame self-test decides, so a fixed FFmpeg skips the detour automatically (gbrpEdgeOk).
 
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { printQc, probe, qc } from "./qc.mjs";
 
@@ -71,6 +74,41 @@ function compositionSpec(dir) {
   const root = html.match(/<[a-z]+\b[^>]*\bdata-composition-id="[^"]*"[^>]*>/is)?.[0] ?? "";
   const attr = (n) => Number(root.match(new RegExp(`\\b${n}="([\\d.]+)"`))?.[1]) || undefined;
   return { w: attr("data-width"), h: attr("data-height"), dur: attr("data-duration") };
+}
+
+// FFmpeg 8.1.1 (this machine) has a swscale bug: converting planar RGB (gbrp) to YUV leaves the right-most 8 px
+// pure black when the width is 1080 or 1096 (1072, 1088 and 720 are fine; measured 2026-10-06). HyperFrames' MP4
+// encode converts through gbrp, so every 1080-wide render (9:16, 1:1, 4:5) lost its right edge (khata-cartoon).
+// Self-test the conversion at the real size; while it fails, render on a slightly bigger page and crop back.
+function gbrpEdgeOk(w, h) {
+  const px = (crop) => {
+    const r = spawnSync("ffmpeg", ["-v", "error", "-f", "lavfi", "-i", `color=c=white:s=${w}x${h}`, "-frames:v", "1",
+      "-vf", `format=gbrp,scale=out_color_matrix=bt709:out_range=tv,format=yuv420p,format=gray,crop=${crop}`, "-f", "rawvideo", "-"]);
+    return r.stdout?.length ? r.stdout[0] : 255;   // cannot test: assume fine
+  };
+  return px("1:1:iw-1:ih/2") > 100 && px("1:1:iw/2:ih-1") > 100;
+}
+function safeRenderSize(w, h) {
+  let W = w, H = h;
+  while (!gbrpEdgeOk(W, h) && W < w + 64) W += 8;
+  while (!gbrpEdgeOk(W, H) && H < h + 64) H += 8;
+  return gbrpEdgeOk(W, H) ? [W, H] : null;
+}
+// A copy of the project whose PAGE is W×H while the composition root stays w×h (pinned with !important:
+// the runtime otherwise stretches the root to data-width, which moves centred and right-aligned content).
+function paddedCopy(dir, w, h, W, H) {
+  const dst = path.join(WORKSPACE, ".cache", "padded", path.basename(dir));
+  rmSync(dst, { recursive: true, force: true });
+  cpSync(dir, dst, { recursive: true, filter: (src) => !["renders", "node_modules", ".git"].includes(path.relative(dir, src).split(path.sep)[0]) });
+  const f = path.join(dst, "index.html");
+  let html = readFileSync(f, "utf8");
+  const tag = html.match(/<[a-z]+\b[^>]*\bdata-composition-id="([^"]*)"[^>]*>/is);
+  html = html.replace(tag[0], tag[0].replace(/\bdata-width="[\d.]+"/, `data-width="${W}"`).replace(/\bdata-height="[\d.]+"/, `data-height="${H}"`));
+  html = html.replace(/<\/head>/i,
+    `<style>/* finish.mjs: page enlarged for the FFmpeg gbrp edge bug; the render is cropped back to ${w}x${h} */\n` +
+    `html, body { width: ${W}px !important; height: ${H}px !important; }\n[data-composition-id="${tag[1]}"] { width: ${w}px !important; height: ${h}px !important; }</style>\n</head>`);
+  writeFileSync(f, html);
+  return dst;
 }
 
 function loudnormJson(stderr) {
@@ -179,12 +217,29 @@ if (isProject) {
   source = path.join(work, `${name}.render.mp4`);
   const cache = path.join(WORKSPACE, ".cache", "frames");
   mkdirSync(cache, { recursive: true });
+  // the FFmpeg gbrp edge bug (see gbrpEdgeOk): render on a bigger page, crop back afterwards
+  let renderDir = input, pad = null;
+  if (expect.w && expect.h && !gbrpEdgeOk(expect.w, expect.h)) {
+    pad = safeRenderSize(expect.w, expect.h);
+    if (!pad) fail(`FFmpeg would leave a black strip at the edge of a ${expect.w}x${expect.h} render, and no nearby size avoids it.`);
+    renderDir = paddedCopy(input, expect.w, expect.h, pad[0], pad[1]);
+    console.log(`  ${expect.w}x${expect.h} hits the FFmpeg edge bug (a black strip on the right) — rendering a ${pad[0]}x${pad[1]} page and cropping back`);
+  }
   const rnd = spawnSync(
     process.execPath,
     [hf, "render", "--quality", quality, "--workers", "1", "--frames-cache-dir", cache, "--output", source],
-    { cwd: input, env, stdio: "inherit" },
+    { cwd: renderDir, env, stdio: "inherit" },
   );
+  if (pad) rmSync(renderDir, { recursive: true, force: true });
   if (rnd.status !== 0 || !existsSync(source)) fail("Rendering failed — see the messages above.");
+  if (pad) {
+    const cropped = path.join(work, `${name}.render-crop.mp4`);
+    const crf = { high: "15", standard: "18", draft: "23" }[quality] ?? "18";
+    console.log(`  cropping ${pad[0]}x${pad[1]} → ${expect.w}x${expect.h} (x264 CRF ${crf})`);
+    ffmpeg(["-i", source, "-map", "0:v:0", "-map", "0:a:0?", "-vf", `crop=${expect.w}:${expect.h}:0:0`, "-c:v", "libx264", "-preset", "medium",
+      "-crf", crf, "-pix_fmt", "yuv420p", ...COLOUR, "-c:a", "copy", cropped]);
+    source = cropped;
+  }
 } else {
   step("1-2/6  Video file given — no check or render needed");
 }
