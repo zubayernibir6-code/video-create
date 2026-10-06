@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="bn" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <script src="assets/cast/cast.js"></script>
+    <style>
+      @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800;
+        src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+      @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500;
+        src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+      @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700;
+        src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #F3E6CF; }
+      #root {
+        position: relative; width: 1080px; height: 1920px; overflow: hidden;
+        background: linear-gradient(#FFF8EC, #F1E2C6);
+        font-family: "Hind Siliguri", sans-serif; color: #2A1E17;
+      }
+      .sheet-title { position: absolute; left: 0; right: 0; top: 70px; text-align: center;
+        font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 62px; color: #8E2A20; }
+      .sheet-sub { position: absolute; left: 0; right: 0; top: 152px; text-align: center; font-size: 30px; font-weight: 500; color: #6B5442; }
+      .cell { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+      .cell svg { display: block; overflow: visible; }
+      .label { margin-top: 14px; font-weight: 700; font-size: 32px; text-align: center; line-height: 1.25; }
+      .label small { display: block; font-weight: 500; font-size: 25px; color: #6B5442; }
+      .floor { position: absolute; left: 60px; right: 60px; height: 3px; background: rgba(42, 30, 23, 0.12); border-radius: 2px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="4" data-width="1080" data-height="1920">
+      <div class="sheet-title">চরিত্রের নমুনা</div>
+      <div class="sheet-sub">খাতা নিজেই কথা বলে · খসড়া ১</div>
+
+      <div class="cell" id="k1" style="left: 20px; top: 240px; width: 340px; height: 560px"></div>
+      <div class="cell" id="k2" style="left: 370px; top: 240px; width: 340px; height: 560px"></div>
+      <div class="cell" id="k3" style="left: 720px; top: 240px; width: 340px; height: 560px"></div>
+      <div class="floor" style="top: 735px"></div>
+
+      <div class="cell" id="c-karim" style="left: 20px; top: 830px; width: 340px; height: 720px"></div>
+      <div class="cell" id="c-app" style="left: 370px; top: 830px; width: 340px; height: 720px"></div>
+      <div class="cell" id="c-head" style="left: 720px; top: 830px; width: 340px; height: 720px"></div>
+      <div class="floor" style="top: 1478px"></div>
+
+      <div class="cell" id="c-calc" style="left: 390px; top: 1560px; width: 300px; height: 330px"></div>
+    </div>
+
+    <script>
+      (function () {
+        function cell(id, name, width, expr, label, sub) {
+          var el = document.getElementById(id);
+          var svg = HKCast.mount(el, name, { expr: expr });
+          svg.setAttribute("width", width);
+          el.insertAdjacentHTML("beforeend", '<div class="label">' + label + (sub ? "<small>" + sub + "</small>" : "") + "</div>");
+          return svg;
+        }
+        var k1 = cell("k1", "khata", 290, "tired", "লাল খাতা", "ক্লান্ত");
+        var k2 = cell("k2", "khata", 290, "shocked", "লাল খাতা", "চমকে গেছে");
+        var k3 = cell("k3", "khata", 290, "happy", "লাল খাতা", "খুশি");
+        var karim = cell("c-karim", "karim", 290, "neutral", "করিম স্যার", "হিসাবরক্ষক");
+        var app = cell("c-app", "app", 290, "happy", "হিসাব খাতা", "নতুন সফটওয়্যার");
+        var head = cell("c-head", "head", 290, "neutral", "হেডস্যার", "প্রধান শিক্ষক");
+        var calc = cell("c-calc", "calc", 170, "happy", "ক্যালকুলেটর", "শুধু বিপ-বিপ করে");
+
+        // poses for the sheet
+        var q = function (svg, s) { return svg.querySelectorAll(s); };
+        gsap.set(q(k1, ".c-root"), { rotation: -3 });
+        gsap.set(q(k1, ".c-arm-l"), { rotation: 18 });
+        gsap.set(q(k1, ".c-arm-r"), { rotation: -14 });
+        gsap.set(q(k2, ".c-arm-l"), { rotation: 132 });
+        gsap.set(q(k2, ".c-arm-r"), { rotation: -132 });
+        gsap.set(q(k2, ".c-mouth-open"), { scaleY: 1, scaleX: 0.62 });
+        gsap.set(q(k3, ".c-arm-r"), { rotation: -150 });
+        gsap.set(q(k3, ".c-mouth-open"), { scaleY: 0.55 });
+        gsap.set(q(karim, ".c-arm-r"), { rotation: -36 });
+        gsap.set(q(karim, ".c-fore-r"), { rotation: -100 });
+        gsap.set(q(karim, ".c-mouth-open"), { scaleY: 0.5 });
+        gsap.set(q(app, ".c-arm-r"), { rotation: -140 });
+        gsap.set(q(app, ".c-mouth-open"), { scaleY: 0.7 });
+        gsap.set(q(head, ".c-brow-l"), { rotation: 12, y: 6 });
+        gsap.set(q(head, ".c-brow-r"), { rotation: -12, y: 6 });
+        gsap.set(q(calc, ".c-display"), { textContent: "হাই!" });
+
+        window.__timelines = window.__timelines || {};
+        var tl = gsap.timeline({ paused: true });
+        tl.to({}, { duration: 4 }, 0);
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>
