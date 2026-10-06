@@ -1,0 +1,279 @@
+{
+  "chime": {
+    "file": "chime.mp3",
+    "duration": 2.5,
+    "description": "Soft melodic chime — gentle positive beat: success/confirmation or a lighthearted transition. Sync to the visual moment.",
+    "lead_s": 0.416
+  },
+  "click-soft": {
+    "file": "click-soft.mp3",
+    "duration": 0.24,
+    "description": "Quiet soft click — gentle UI tap. (Replaces the old file, which was a byte-for-byte copy of click.mp3.)",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/528561/",
+    "lead_s": 0
+  },
+  "click": {
+    "file": "click.mp3",
+    "duration": 0.37,
+    "description": "Crisp UI click — button press, toggle, selection. Short accent, sync exactly to the on-screen action.",
+    "lead_s": 0.048
+  },
+  "error": {
+    "file": "error.mp3",
+    "duration": 1.62,
+    "description": "Negative / error tone — failure state, a 'wrong' beat, or a glitchy interruption.",
+    "lead_s": 0.604
+  },
+  "glitch-1": {
+    "file": "glitch-1.mp3",
+    "duration": 2.64,
+    "description": "Punchy digital glitch — hard-cut accent or sudden reveal. Trigger on the hit; let the decay bleed into the next shot (J-cut).",
+    "lead_s": 0.114
+  },
+  "glitch-2": {
+    "file": "glitch-2.mp3",
+    "duration": 3.5,
+    "description": "Harsh, longer glitch — chaotic / jarring transition or a distorted reveal.",
+    "lead_s": 0.023
+  },
+  "glitch-3": {
+    "file": "glitch-3.mp3",
+    "duration": 3.1,
+    "description": "Low-key glitch texture — subtle digital shift, minimal transition that sits under other audio.",
+    "lead_s": 0.243
+  },
+  "impact-bass-1": {
+    "file": "impact-bass-1.mp3",
+    "duration": 2.12,
+    "description": "Bass impact hit — logo/hero snap, headline slam. Trigger on the visual landing; decay carries into the next shot (J-cut).",
+    "lead_s": 0.05
+  },
+  "impact-bass-2": {
+    "file": "impact-bass-2.mp3",
+    "duration": 2.59,
+    "description": "Bass impact with a short swell — brief anticipation then a deep hit. Place so the peak lands on the reveal.",
+    "lead_s": 0.023
+  },
+  "key-press": {
+    "file": "key-press.mp3",
+    "duration": 0.4,
+    "description": "Single key press — one keystroke / terminal-input beat. Short accent, sync to the typed character.",
+    "lead_s": 0.073
+  },
+  "notification": {
+    "file": "notification.mp3",
+    "duration": 2.46,
+    "description": "Notification chime — alert, message-in, toast/badge appears. Sync to the element entering.",
+    "lead_s": 0.086
+  },
+  "ping": {
+    "file": "ping.mp3",
+    "duration": 1.32,
+    "description": "Sharp electronic ping — punchy accent on a key reveal or data point. Sync to the beat.",
+    "lead_s": 0.322
+  },
+  "pop": {
+    "file": "pop.mp3",
+    "duration": 0.72,
+    "description": "Quick pop — element appear/spawn, chip/tag/badge in. Small precise accent, sync to the pop-in.",
+    "lead_s": 0.116
+  },
+  "riser": {
+    "file": "riser.mp3",
+    "duration": 10.03,
+    "description": "Long cinematic riser (~10s build, peak at the end). Trigger at (climax_time − 10.03s) so it crests exactly on the reveal.",
+    "lead_s": 1.488
+  },
+  "sparkle": {
+    "file": "sparkle.mp3",
+    "duration": 1.8,
+    "description": "Bright sparkle / shimmer — magical reveal or 'shine' highlight on a hero element. Sync to the highlight.",
+    "lead_s": 0.025
+  },
+  "typing": {
+    "file": "typing.mp3",
+    "duration": 1.5,
+    "description": "Typing burst (~1.5s of keys) — keyboard / code typing reveal, text-being-typed beat. Start as the text begins typing.",
+    "lead_s": 0.437
+  },
+  "whoosh-cinematic": {
+    "file": "whoosh-cinematic.mp3",
+    "duration": 5.54,
+    "description": "Cinematic whoosh build (~5.5s) — sweeping scene transition. Align so the swell peaks on the cut.",
+    "lead_s": 1.291
+  },
+  "whoosh-short": {
+    "file": "whoosh-short.mp3",
+    "duration": 0.49,
+    "description": "Short airy whoosh (~0.5 s) — quick slide/swipe. (Replaces the old file, which was a copy of whoosh.mp3.)",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/60026/",
+    "lead_s": 0.011
+  },
+  "whoosh": {
+    "file": "whoosh.mp3",
+    "duration": 0.57,
+    "description": "Punchy whoosh/impact — fast reveal or hard transition accent. Sync to the motion.",
+    "lead_s": 0.076
+  },
+  "applause": {
+    "file": "applause.mp3",
+    "duration": 5.45,
+    "description": "Audience applause — end of a talk, a win, a big announcement. Fade it out under the next line.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/333387/",
+    "lead_s": 0.053
+  },
+  "coin-drop": {
+    "file": "coin-drop.mp3",
+    "duration": 1.53,
+    "description": "Single coin dropping — money, savings, fees, a price reveal.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/324760/",
+    "lead_s": 0.012
+  },
+  "cash-register": {
+    "file": "cash-register.mp3",
+    "duration": 1.45,
+    "description": "Cash register 'ka-ching' — payment received, sale made, fee collected.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/728224/",
+    "lead_s": 0.141
+  },
+  "camera-shutter": {
+    "file": "camera-shutter.mp3",
+    "duration": 0.74,
+    "description": "Camera shutter click — photo moment, screenshot, freeze-frame.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/213180/",
+    "lead_s": 0.232
+  },
+  "school-bell": {
+    "file": "school-bell.mp3",
+    "duration": 4.17,
+    "description": "Electronic school bell — class starts/ends, school-themed openers.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/592560/",
+    "lead_s": 0.111
+  },
+  "heartbeat": {
+    "file": "heartbeat.mp3",
+    "duration": 3.61,
+    "description": "Four heartbeats — tension, suspense, a countdown, health topics.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/22416/",
+    "lead_s": 0.008
+  },
+  "page-turn": {
+    "file": "page-turn.mp3",
+    "duration": 0.7,
+    "description": "Book page turn — next chapter, ledger/notebook, slide change.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/397549/",
+    "lead_s": 0.012
+  },
+  "boom": {
+    "file": "boom.mp3",
+    "duration": 2,
+    "description": "Deep cinematic boom — title slam, big reveal. Heavier than impact-bass.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/535592/",
+    "lead_s": 0.003
+  },
+  "crowd-cheer": {
+    "file": "crowd-cheer.mp3",
+    "duration": 3.56,
+    "description": "Crowd cheering — celebration, results, prize-giving.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/651643/",
+    "lead_s": 0.001
+  },
+  "success": {
+    "file": "success.mp3",
+    "duration": 4.18,
+    "description": "Bright 'correct answer' blips — success, task done, right choice.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/531510/",
+    "lead_s": 0
+  },
+  "room-tone": {
+    "file": "room-tone.mp3",
+    "duration": 18.68,
+    "description": "18 s of quiet room tone — bed under voice-over so silences don't sound dead. Loop or trim.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/329046/",
+    "lead_s": 0.045
+  },
+  "classroom-ambience": {
+    "file": "classroom-ambience.mp3",
+    "duration": 37.43,
+    "description": "37 s of classroom chatter — school B-roll bed. Keep it low (0.10-0.20) under narration.",
+    "licence": "CC0 1.0",
+    "source": "https://freesound.org/s/417041/",
+    "lead_s": 0.261
+  },
+  "tick": {
+    "file": "tick.wav",
+    "duration": 0.07,
+    "description": "Clock tick. Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.005
+  },
+  "tock": {
+    "file": "tock.wav",
+    "duration": 0.08,
+    "description": "Clock tock (lower). Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.005
+  },
+  "beep2": {
+    "file": "beep2.wav",
+    "duration": 0.24,
+    "description": "Calculator double beep. Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.005
+  },
+  "boing": {
+    "file": "boing.wav",
+    "duration": 0.85,
+    "description": "Cartoon boing (jump, bounce). Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.005
+  },
+  "slide-up": {
+    "file": "slide-up.wav",
+    "duration": 0.6,
+    "description": "Slide whistle up (rise, pop-out). Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.006
+  },
+  "slide-down": {
+    "file": "slide-down.wav",
+    "duration": 0.6,
+    "description": "Slide whistle down (fall, droop). Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.006
+  },
+  "doink": {
+    "file": "doink.wav",
+    "duration": 0.9,
+    "description": "Low falling doink (jaw drop). Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.005
+  },
+  "snore": {
+    "file": "snore.wav",
+    "duration": 1.6,
+    "description": "One snore (rattly in-breath). Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.126
+  },
+  "rub": {
+    "file": "rub.wav",
+    "duration": 1.2,
+    "description": "Eraser rubbing, three strokes. Synthesised with FFmpeg for this project (no licence).",
+    "licence": "none (synthesised)",
+    "lead_s": 0.005
+  }
+}

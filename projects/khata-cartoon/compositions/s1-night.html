@@ -1,0 +1,97 @@
+<template>
+  <style>
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #1B2440; }
+    #root .bg { position: absolute; inset: 0; }
+    #root .cam { position: absolute; inset: 0; transform-origin: 600px 900px; }
+    #root .actor { position: absolute; transform-origin: 50% 100%; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
+  </style>
+
+  <div id="root" data-composition-id="s1-night" data-width="1080" data-height="1920" data-duration="16">
+    <div id="s1-bg" class="clip bg" data-start="0" data-duration="16" data-track-index="0">
+      <div class="cam"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var ID = "s1-night", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s1"), A = HKAct, q = HKCast.q;
+      var cam = root.querySelector(".cam");
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      // ── set: the office at night ─────────────────────────────────────────────────────────────
+      var office = HKSet.put(cam, HKSet.office({ h: 11, m: 4 }), { x: 0, y: 0, w: 1080 });
+      var o = office.querySelector("svg");
+      gsap.set(o.querySelector(".sky-day"), { opacity: 0 });
+      gsap.set(o.querySelector(".sky-night"), { opacity: 1 });
+      gsap.set(o.querySelector(".set-night"), { opacity: 0.5 });
+      var lamp = HKSet.put(cam, HKProp.lamp(), { x: 20, y: 680, w: 360 });
+      var pile = HKSet.put(cam, HKProp.pile(), { x: 420, y: 878, w: 380 });
+
+      // ── cast: the old red ledger asleep on top of the pile ───────────────────────────────────
+      var kEl = document.createElement("div");
+      kEl.className = "actor";
+      kEl.style.cssText = "left:432px;top:430px;width:360px;";
+      cam.appendChild(kEl);
+      var k = HKCast.mount(kEl, "khata", { expr: "sleep" });
+
+      // ── ambient life for the whole shot ──────────────────────────────────────────────────────
+      tl.fromTo(o.querySelector(".set-fan-blades"), { scaleX: 1 }, { scaleX: -1, duration: 0.18, ease: "sine.inOut", repeat: 87, yoyo: true }, 0);
+      tl.fromTo(o.querySelector(".set-clock-m"), { rotation: 24 }, { rotation: 30, duration: 16, ease: "none" }, 0);
+      q(o, ".sky-star").forEach(function (s, i) {
+        tl.fromTo(s, { scale: 1 }, { scale: 0.55, duration: 0.9 + i * 0.17, ease: "sine.inOut", repeat: 13, yoyo: true }, i * 0.2);
+      });
+      tl.fromTo(lamp.querySelector(".lamp-light"), { opacity: 0.32 }, { opacity: 0.24, duration: 1.7, ease: "sine.inOut", repeat: 8, yoyo: true }, 0);
+      // a slow push in toward the ledger, then the camera rests
+      tl.fromTo(cam, { scale: 1 }, { scale: 1.07, duration: 8, ease: "sine.inOut" }, 0);
+
+      // ── acting ──────────────────────────────────────────────────────────────────────────────
+      A.idle(k, tl, 0, 16, 0.012);
+      A.expr(k, tl, 0, "sleep");
+      // wakes: eyes open heavy, glances left and right
+      A.expr(k, tl, P.beat("open"), "tired");
+      tl.fromTo(q(k, ".c-lid"), { scaleY: 1 }, { scaleY: 0.45, duration: 0.5, ease: "power2.out" }, P.beat("open"));
+      A.look(k, tl, P.beat("open") + 0.4, -9, 2, 0.25);
+      A.look(k, tl, P.beat("open") + 0.8, 9, 2, 0.3);
+      A.look(k, tl, P.beat("open") + 1.2, 0, 0, 0.25);
+      // a big yawn with a stretch
+      var yawn = P.beat("yawn");
+      tl.to(q(k, ".c-mouth-open"), { scaleY: 1.05, scaleX: 0.8, duration: 0.45, ease: "power2.out" }, yawn);
+      tl.to(q(k, ".c-lid"), { scaleY: 0.85, duration: 0.4 }, yawn);
+      A.armsUp(k, tl, yawn, 0.7);
+      tl.to(kEl, { scaleY: 1.06, duration: 0.45, ease: "power2.out" }, yawn);
+      tl.to(kEl, { scaleY: 1, duration: 0.4, ease: "power2.inOut" }, yawn + 0.9);
+      tl.to(q(k, ".c-mouth-open"), { scaleY: 0, scaleX: 1, duration: 0.35, ease: "power2.in" }, yawn + 0.9);
+      tl.to(q(k, ".c-lid"), { scaleY: 0.45, duration: 0.3 }, yawn + 1.0);
+      // the complaint
+      A.say(k, tl, P.line("s1-01"), "s1-01", { arm: "l" });
+      tl.to(q(k, ".c-brow-l"), { rotation: -16, duration: 0.3 }, P.line("s1-01") + 0.3);
+      tl.to(q(k, ".c-brow-r"), { rotation: 16, duration: 0.3 }, P.line("s1-01") + 0.3);
+      // slumps: droops forward, arms hang
+      var slump = P.beat("slump");
+      A.expr(k, tl, slump, "sad");
+      tl.to(q(k, ".c-root"), { rotation: -5, duration: 0.6, ease: "power2.out" }, slump);
+      A.arms(k, tl, slump, 34, -34, 0.5, "power2.out");
+      // the title drops in; the ledger looks up at it, then back to us
+      var title = HKSet.put(root.querySelector(".bg"), HKSet.title("খাতা নিজেই কথা বলে", "একটি কার্টুন গল্প"), { x: 40, y: 150, w: 1000 });
+      gsap.set(title, { opacity: 0 });
+      var tt = P.beat("title");
+      tl.set(title, { opacity: 1 }, tt);
+      tl.fromTo(title, { y: -620, rotation: -4 }, { y: 0, rotation: 0, duration: 0.7, ease: "back.out(1.5)", immediateRender: false }, tt);
+      tl.to(title, { rotation: 1.2, duration: 1.4, ease: "sine.inOut", repeat: 2, yoyo: true }, tt + 0.8);
+      A.look(k, tl, tt + 0.2, 0, -14, 0.3);
+      A.expr(k, tl, tt + 0.2, "shocked");
+      tl.to(q(k, ".c-root"), { rotation: 0, duration: 0.4 }, tt + 0.2);
+      A.look(k, tl, tt + 2.2, 0, 0, 0.3);
+      A.expr(k, tl, tt + 2.4, "tired");
+      tl.to(title, { y: -620, duration: 0.5, ease: "power2.in" }, P.beat("titleOut"));
+      A.blinks(k, tl, 9.4, 16, 3);
+      tl.to({}, { duration: 16 }, 0);
+    })();
+  </script>
+</template>

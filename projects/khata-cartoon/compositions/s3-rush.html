@@ -1,0 +1,18 @@
+<template>
+  <style>
+    @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
+    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+  </style>
+  <div id="root" data-composition-id="s3-rush" data-width="1080" data-height="1920" data-duration="42">
+    <div class="clip ph" data-start="0" data-duration="42" data-track-index="0">দৃশ্য 3 (খালি)</div>
+  </div>
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      tl.to({}, { duration: 42 }, 0);
+      window.__timelines["s3-rush"] = tl;
+    })();
+  </script>
+</template>

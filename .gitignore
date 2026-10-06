@@ -24,3 +24,6 @@ assets/models/
 *.log
 assets/voices/piper/*.onnx
 !.env.local.example
+
+# the cartoon project's build scripts are source code, not build output
+!projects/khata-cartoon/build/

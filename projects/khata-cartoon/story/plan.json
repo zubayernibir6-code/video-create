@@ -1,0 +1,81 @@
+{
+  "_doc": "The one timing sheet. Times are seconds from the scene's start. 'lines': when each voice line starts. 'beats': named moments the scene code animates on. 'sfx': [time | beat | beat+offset, file, volume, (optional) duration] — the time is the moment the sound must be HEARD; build/assemble.mjs subtracts the file's lead_s. 'every': [file, volume, from, to, step] repeats a sound. 'amb': [[file, volume, from, to]] ambience beds.",
+  "scenes": [
+    {
+      "id": "s1", "file": "compositions/s1-night.html", "dur": 16,
+      "lines": { "s1-01": 5.4 },
+      "beats": { "open": 3.0, "yawn": 4.0, "slump": 8.2, "title": 8.7, "titleOut": 14.4 },
+      "sfx": [["open", "pop.mp3", 0.3], ["title-0.3", "whoosh.mp3", 0.5], ["title", "impact-bass-1.mp3", 0.45, 1.6]],
+      "every": [["tick.wav", 0.32, 0.5, 15.5, 2.0], ["tock.wav", 0.28, 1.5, 15.5, 2.0]],
+      "amb": [["room-tone.mp3", 0.22, 0, 16]]
+    },
+    {
+      "id": "s2", "file": "compositions/s2-intro.html", "dur": 40,
+      "lines": { "s2-01": 1.8, "s2-02": 6.4, "s2-03": 11.5, "s2-04": 16.8, "s2-05": 25.8, "s2-06": 33.6 },
+      "beats": { "jump": 0.4, "land": 1.3, "coins": 7.0, "tag1": 11.9, "tag2": 13.1, "tag3": 14.3, "page": 16.6, "scribble": 21.9, "pageOut": 24.2, "calcIn": 24.6, "calcLand": 25.2, "joke": 29.6, "facepalm": 31.0, "heart": 34.2, "heartEnd": 37.8 },
+      "sfx": [["jump", "slide-up.wav", 0.35], ["land", "boing.wav", 0.45], ["coins", "coin-drop.mp3", 0.4], ["tag1", "pop.mp3", 0.45], ["tag2", "pop.mp3", 0.45], ["tag3", "pop.mp3", 0.45], ["page", "page-turn.mp3", 0.7], ["scribble", "rub.wav", 0.25, 0.8], ["calcIn", "slide-up.wav", 0.3], ["calcLand", "pop.mp3", 0.5], ["calcLand+0.4", "beep2.wav", 0.5], ["joke", "beep2.wav", 0.5], ["joke+0.5", "error.mp3", 0.35], ["facepalm", "slide-down.wav", 0.35], ["heart", "heartbeat.mp3", 0.65, 3.6]],
+      "amb": [["room-tone.mp3", 0.18, 0, 40]]
+    },
+    {
+      "id": "s3", "file": "compositions/s3-rush.html", "dur": 42,
+      "lines": { "s3-01": 2.6, "s3-02": 8.4, "s3-03": 13.3, "s3-04": 18.0, "s3-05": 22.4 },
+      "beats": { "bell": 0.2, "write": 1.0, "papers": 4.2, "mistake": 11.4, "notice": 12.0, "erase": 12.4, "blot": 19.1, "tear": 20.7, "rbook": 22.8, "gust": 27.8, "chase": 28.6, "hop1": 30.2, "hop2": 31.6, "jump": 33.6, "trip": 35.0, "crash": 35.5, "dizzy": 35.9, "dizzyEnd": 40.4 },
+      "sfx": [["bell", "school-bell.mp3", 0.3, 2.0], ["write", "typing.mp3", 0.28], ["8.0", "typing.mp3", 0.28], ["papers", "whoosh-short.mp3", 0.4], ["mistake", "error.mp3", 0.35], ["notice", "pop.mp3", 0.35], ["erase", "rub.wav", 0.7], ["blot", "doink.wav", 0.4], ["tear", "page-turn.mp3", 0.75], ["rbook", "pop.mp3", 0.35], ["gust", "whoosh.mp3", 0.55], ["hop1", "boing.wav", 0.4], ["hop2", "boing.wav", 0.4], ["jump", "slide-up.wav", 0.4], ["trip", "slide-down.wav", 0.4], ["crash", "boom.mp3", 0.55, 1.4], ["dizzy", "sparkle.mp3", 0.4]],
+      "every": [["tock.wav", 0.32, 28.6, 33.5, 0.19]],
+      "amb": [["classroom-ambience.mp3", 0.14, 0, 42]]
+    },
+    {
+      "id": "s4", "file": "compositions/s4-head.html", "dur": 50,
+      "lines": { "s4-01": 2.4, "s4-02": 9.2, "s4-03": 13.4, "s4-04": 25.4, "s4-05": 30.4, "s4-06": 40.0 },
+      "beats": { "enter": 0.3, "stop": 2.1, "flip": 12.2, "flipEnd": 19.0, "spin": 15.0, "spinEnd": 18.4, "timelapse": 19.5, "evening": 20.6, "night": 22.4, "headOut": 19.6, "lamp": 23.0, "sleepK": 23.6, "yawnK": 33.0, "lie": 34.0, "dreamIn": 35.6, "helper": 37.8, "dreamGlow": 44.6, "dreamOut": 48.6 },
+      "sfx": [["spin", "whoosh.mp3", 0.4], ["night", "slide-down.wav", 0.3], ["lamp", "click.mp3", 0.6], ["24.2", "snore.wav", 0.35], ["33.4", "snore.wav", 0.3], ["dreamIn", "chime.mp3", 0.45], ["helper", "sparkle.mp3", 0.45], ["dreamGlow", "sparkle.mp3", 0.35]],
+      "every": [["tock.wav", 0.3, 0.3, 2.1, 0.45], ["page-turn.mp3", 0.42, 12.3, 18.9, 0.32], ["tick.wav", 0.26, 19.5, 23.4, 0.1], ["tock.wav", 0.26, 19.6, 21.5, 0.45]],
+      "amb": [["classroom-ambience.mp3", 0.12, 0, 19.5], ["room-tone.mp3", 0.2, 19.5, 50]]
+    },
+    {
+      "id": "s5", "file": "compositions/s5-guest.html", "dur": 30,
+      "lines": { "s5-01": 6.4, "s5-02": 14.2, "s5-03": 19.6 },
+      "beats": { "shake": 2.0, "shakeEnd": 4.4, "lid": 4.6, "rise": 4.8, "sparkle": 5.6, "wave": 6.8, "peek": 13.6, "reassure": 19.6, "hand": 26.4, "smile": 27.2 },
+      "sfx": [["lid", "boing.wav", 0.5], ["rise", "slide-up.wav", 0.45], ["sparkle", "sparkle.mp3", 0.55], ["peek", "doink.wav", 0.3], ["hand", "pop.mp3", 0.45], ["smile", "chime.mp3", 0.4]],
+      "every": [["tock.wav", 0.45, 2.0, 4.4, 0.13]],
+      "amb": [["classroom-ambience.mp3", 0.1, 0, 30]]
+    },
+    {
+      "id": "s6", "file": "compositions/s6-demo.html", "dur": 48,
+      "lines": { "s6-01": 3.4, "s6-02": 8.6, "s6-03": 12.8, "s6-04": 18.2, "s6-05": 23.2, "s6-06": 29.6, "s6-07": 34.4, "s6-08": 40.2 },
+      "beats": { "parentIn": 0.1, "money": 1.6, "tap1": 2.6, "tap2": 3.2, "tap3": 3.8, "submit": 5.2, "ting": 6.0, "total": 9.4, "totalEnd": 11.2, "wow": 12.8, "parentOut": 14.6, "headIn": 16.2, "tap8": 22.6, "list": 22.9, "jaw": 28.4, "glasses": 28.5, "jawBack": 29.4, "report": 37.4, "reportEnd": 39.6, "amaze": 40.2, "blush": 44.4 },
+      "sfx": [["money", "coin-drop.mp3", 0.4], ["tap1", "key-press.mp3", 0.45], ["tap2", "key-press.mp3", 0.45], ["tap3", "key-press.mp3", 0.45], ["submit", "pop.mp3", 0.45], ["ting", "notification.mp3", 0.6], ["total", "typing.mp3", 0.22], ["totalEnd", "cash-register.mp3", 0.4], ["tap8", "click.mp3", 0.55], ["list", "slide-up.wav", 0.3], ["jaw", "doink.wav", 0.5], ["glasses", "boing.wav", 0.4], ["33.4", "sparkle.mp3", 0.35], ["report", "typing.mp3", 0.3], ["reportEnd", "pop.mp3", 0.45], ["amaze", "sparkle.mp3", 0.45], ["blush", "slide-up.wav", 0.25]],
+      "every": [["tock.wav", 0.28, 0.1, 1.4, 0.45], ["tock.wav", 0.28, 14.6, 15.9, 0.45], ["tock.wav", 0.3, 16.2, 17.9, 0.45]],
+      "amb": [["classroom-ambience.mp3", 0.12, 0, 48]]
+    },
+    {
+      "id": "s7", "file": "compositions/s7-twelve.html", "dur": 34,
+      "lines": { "s7-01": 1.8, "s7-02": 6.4, "s7-03": 19.4, "s7-04": 26.2 },
+      "beats": { "flip": 0.2, "card1": 1.6, "strike": 4.8, "card2": 6.6, "card2End": 8.2, "zero": 10.0, "montage": 12.6, "ph1": 12.8, "ph2": 14.0, "ph3": 15.2, "done": 16.2, "walkOut": 17.0, "walkEnd": 21.6, "cut": 23.0, "girlRun": 24.3, "girlStop": 26.0, "hug": 28.3, "hearts": 28.6 },
+      "sfx": [["flip", "page-turn.mp3", 0.6], ["card1", "whoosh.mp3", 0.45], ["strike", "whoosh-short.mp3", 0.55], ["card2", "typing.mp3", 0.25], ["card2End", "ping.mp3", 0.5], ["zero", "pop.mp3", 0.5], ["zero+0.2", "sparkle.mp3", 0.4], ["ph1", "notification.mp3", 0.45], ["ph2", "notification.mp3", 0.45], ["ph3", "notification.mp3", 0.45], ["done", "whoosh-short.mp3", 0.4], ["cut-0.4", "whoosh.mp3", 0.35], ["hug", "pop.mp3", 0.45], ["hearts", "chime.mp3", 0.4]],
+      "every": [["tock.wav", 0.3, 17.0, 21.6, 0.45], ["tick.wav", 0.3, 24.3, 26.0, 0.17]],
+      "amb": [["classroom-ambience.mp3", 0.1, 0, 23], ["room-tone.mp3", 0.16, 23, 34]]
+    },
+    {
+      "id": "s8", "file": "compositions/s8-holiday.html", "dur": 26,
+      "lines": { "s8-01": 1.6, "s8-02": 5.8, "s8-03": 11.4, "s8-04": 19.0 },
+      "beats": { "sad": 0.3, "appIn": 4.8, "pat": 12.4, "shades": 15.6, "umbrella": 16.3, "chair": 17.0, "tea": 17.7, "sigh": 21.4, "dance": 22.2 },
+      "sfx": [["sad", "slide-down.wav", 0.3], ["appIn", "slide-up.wav", 0.4], ["pat", "pop.mp3", 0.3], ["shades", "whoosh-short.mp3", 0.5], ["umbrella", "pop.mp3", 0.5], ["chair", "pop.mp3", 0.45], ["tea", "pop.mp3", 0.4], ["sigh", "chime.mp3", 0.45], ["dance", "boing.wav", 0.35], ["dance+1", "boing.wav", 0.35], ["dance+2", "boing.wav", 0.35]],
+      "amb": [["room-tone.mp3", 0.15, 0, 26]]
+    },
+    {
+      "id": "s9", "file": "compositions/s9-end.html", "dur": 14,
+      "lines": { "s9-01": 1.8 },
+      "beats": { "slogan": 0.3, "logo": 1.5, "tagline": 2.6, "wink": 8.6, "wave": 9.0, "fade": 13.2 },
+      "sfx": [["slogan", "whoosh.mp3", 0.45], ["logo", "impact-bass-1.mp3", 0.45, 1.6], ["tagline", "sparkle.mp3", 0.45], ["wink", "pop.mp3", 0.45], ["wave+0.3", "chime.mp3", 0.5]],
+      "amb": []
+    }
+  ],
+  "speakers": {
+    "khata": { "name": "লাল খাতা", "color": "#C0392B" },
+    "karim": { "name": "করিম স্যার", "color": "#2E5AA8" },
+    "head": { "name": "হেডস্যার", "color": "#6C5B9E" },
+    "app": { "name": "হিসাব খাতা", "color": "#16603A" },
+    "child": { "name": "মেয়ে", "color": "#D9468F" }
+  }
+}
