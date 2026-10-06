@@ -1,18 +1,164 @@
 <template>
   <style>
     @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500; src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600; src: url("assets/fonts/bengali/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
     #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
-    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+    #root .bg, #root .cam { position: absolute; inset: 0; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
   </style>
+
   <div id="root" data-composition-id="s6-demo" data-width="1080" data-height="1920" data-duration="48">
-    <div class="clip ph" data-start="0" data-duration="48" data-track-index="0">দৃশ্য 6 (খালি)</div>
+    <div id="s6-bg" class="clip bg" data-start="0" data-duration="48" data-track-index="0">
+      <div class="cam"></div>
+    </div>
   </div>
+
   <script>
     (function () {
-      window.__timelines = window.__timelines || {};
+      var ID = "s6-demo", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s6"), A = HKAct, q = HKCast.q, DUR = 48, B = P.beat;
+      var cam = root.querySelector(".cam");
       var tl = gsap.timeline({ paused: true });
-      tl.to({}, { duration: 48 }, 0);
-      window.__timelines["s6-demo"] = tl;
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      HKSet.officeScene(cam, tl, DUR, { mode: "day", h: 10, m: 15 });
+      // people behind the desk (their legs disappear behind its front)
+      var PA = A.stand(cam, "parent", 280, 1500, 300, { hair: "woman", top: "#D9468F", scarf: "#E4A11B", skin: "#B57B52", expr: "neutral" }), pa = PA.svg;
+      var H = A.stand(cam, "head", 270, 1500, 360, { expr: "neutral" }), hd = H.svg, hEl = H.el;
+      hd.querySelector(".c-arm-l .c-hold").innerHTML = HKProp.file();
+      var KR = A.stand(cam, "karim", 905, 1427, 390, { expr: "happy" }), kr = KR.svg;
+      HKSet.put(cam, HKSet.deskFront(), { x: 0, y: 0, w: 1080 });
+      // on the desk: the printed report (hidden behind the app), the app, the ledger
+      var rep = HKSet.put(cam, HKProp.report(), { x: 585, y: 800, w: 210, z: 5 });
+      var AP = A.stand(cam, "app", 690, 1170, 260, { expr: "happy", z: 6 }), ap = AP.svg;
+      var K = A.stand(cam, "khata", 470, 1180, 210, { expr: "neutral", z: 6 }), k = K.svg, kEl = K.el;
+      // the readable close-up: the app's screens, projected on a floating panel
+      var panel = HKSet.put(cam, HKCast.panel(), { x: 40, y: 130, w: 440, z: 7, origin: "100% 100%" });
+      var pv = function (c) { return panel.querySelector(c); };
+      gsap.set(panel, { opacity: 0 });
+      gsap.set([pv(".ui-v1"), pv(".ui-v2"), pv(".ui-v3")], { opacity: 0 });
+      var phone = HKSet.put(cam, HKProp.phone(), { x: 20, y: 750, w: 175, z: 8, origin: "50% 100%" });
+      gsap.set(phone, { opacity: 0 });
+
+      A.idle(k, tl, 0, DUR, 0.014); A.idle(ap, tl, 0, DUR, 0.03); A.idle(kr, tl, 0, DUR, 0.008);
+      A.idle(pa, tl, 0, DUR, 0.01); A.idle(hd, tl, 0, DUR, 0.008);
+      A.look(k, tl, 0.3, 10, -4, 0.3);
+
+      // ── 6a: a fee, entered once — the receipt reaches the parent's phone, the total updates itself ──
+      gsap.set(PA.el, { x: -420 });
+      gsap.set(hEl, { x: -480 });
+      A.walk(PA.el, pa, tl, B("parentIn"), 1.4, -420, 0, { step: 0.45, bounce: 8, swing: 14 });
+      var note = HKSet.put(cam, HKProp.note("১০০০"), { x: 360, y: 980, w: 140, z: 8 });
+      gsap.set(note, { opacity: 0, rotation: -10 });
+      tl.set(note, { opacity: 1 }, B("money"));
+      A.point(pa, tl, B("money") - 0.1, "r", -60, 0.8);
+      tl.to(note, { x: 440, y: -60, rotation: 10, scale: 0.7, duration: 0.6, ease: "power2.inOut" }, B("money") + 0.1);
+      tl.to(note, { opacity: 0, duration: 0.2 }, B("money") + 0.7);
+      // Karim taps the app; each tap fills one field on the panel
+      var armL = kr.querySelector(".c-arm-l"), foreL = kr.querySelector(".c-fore-l");
+      function tapping(t0, t1) {
+        tl.to(armL, { rotation: 92, duration: 0.3, ease: "power2.out" }, t0);
+        tl.to(foreL, { rotation: -15, duration: 0.3, ease: "power2.out" }, t0);
+        tl.to(armL, { rotation: 14, duration: 0.35, ease: "power2.inOut" }, t1);
+        tl.to(foreL, { rotation: 0, duration: 0.35, ease: "power2.inOut" }, t1);
+      }
+      function tap(t) { tl.to(foreL, { rotation: -30, duration: 0.08, ease: "power2.in", repeat: 1, yoyo: true }, t - 0.08); }
+      tapping(B("tap1") - 0.5, B("submit") + 0.3);
+      A.look(kr, tl, B("tap1") - 0.5, -12, 8, 0.3);
+      tl.set(panel, { opacity: 1 }, B("tap1") - 0.3);
+      tl.fromTo(panel, { scale: 0.2 }, { scale: 1, duration: 0.45, ease: "back.out(1.6)", immediateRender: false }, B("tap1") - 0.3);
+      tl.set(pv(".ui-form"), { opacity: 1 }, B("tap1") - 0.3);
+      ["tap1", "tap2", "tap3"].forEach(function (b, i) {
+        tap(B(b));
+        tl.fromTo(pv(".ui-v" + (i + 1)), { opacity: 0, x: 10 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out", immediateRender: false }, B(b));
+      });
+      tap(B("submit"));
+      tl.to(pv(".ui-btn"), { scale: 1.15, duration: 0.15, ease: "power2.out", repeat: 1, yoyo: true }, B("submit"));
+      // "ফি নিলেই রশিদ সোজা অভিভাবকের ফোনে।"
+      A.say(ap, tl, P.line("s6-01"), "s6-01", { arm: "r" });
+      var ting = B("ting");
+      tl.set(phone, { opacity: 1 }, ting - 0.3);
+      tl.fromTo(phone, { scale: 0, rotation: -12 }, { scale: 1, rotation: -6, duration: 0.45, ease: "back.out(1.8)", immediateRender: false }, ting - 0.3);
+      tl.fromTo(phone.querySelector(".ph-note"), { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)", immediateRender: false }, ting);
+      tl.to(phone, { rotation: 6, duration: 0.07, repeat: 5, yoyo: true }, ting);
+      A.expr(pa, tl, ting + 0.2, "happy");
+      A.look(pa, tl, ting, 10, -6, 0.3);
+      // "আর মোট হিসাব নিজে থেকেই ঠিক হয়ে যায়।" — the total counts itself up
+      A.say(ap, tl, P.line("s6-02"), "s6-02", { arm: "l" });
+      A.count(pv(".ui-total"), tl, B("total"), 50400, 51600, B("totalEnd") - B("total"), "৳ ");
+      gsap.set(pv(".ui-total"), { svgOrigin: "292 378" });   // pivot set at build time, never inside a tween
+      tl.to(pv(".ui-total"), { scale: 1.15, duration: 0.2, repeat: 1, yoyo: true }, B("totalEnd"));
+      // "বাহ! এত সহজ!"
+      A.say(kr, tl, P.line("s6-03"), "s6-03", { arm: "r" });
+      A.look(kr, tl, P.line("s6-03"), 0, 0, 0.3);
+      tl.to(kr.querySelector(".c-head"), { rotation: 6, duration: 0.25, ease: "sine.inOut", repeat: 3, yoyo: true }, P.line("s6-03") + 0.5);
+      // the parent leaves, phone in hand
+      tl.to(phone, { opacity: 0, scale: 0.6, duration: 0.3 }, B("parentOut"));
+      A.walk(PA.el, pa, tl, B("parentOut"), 15.9, 0, -460, { step: 0.45, bounce: 8, swing: 14 });
+      tl.to(pv(".ui-form"), { opacity: 0, duration: 0.3 }, 16.0);
+      tl.to(panel, { scale: 0.2, opacity: 0, duration: 0.35, ease: "back.in(1.6)" }, 16.0);
+      tl.to(panel, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, B("list") - 0.2);
+
+      // ── 6b: "how many owe fees in class eight?" — answered in one tap ─────────────────────────
+      A.walk(hEl, hd, tl, B("headIn"), 17.9, -480, 0, { step: 0.45, bounce: 8, swing: 14, armsBusy: true });
+      A.expr(hd, tl, B("headIn"), "neutral");
+      A.say(hd, tl, P.line("s6-04"), "s6-04", { arm: "r" });
+      A.look(kr, tl, P.line("s6-04"), -12, 0, 0.3);
+      tapping(B("tap8") - 0.4, B("tap8") + 0.5);
+      tap(B("tap8"));
+      tl.set(pv(".ui-list"), { opacity: 1 }, B("list"));
+      tl.fromTo(pv(".ui-count"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)", immediateRender: false }, B("list"));
+      tl.fromTo(pv(".ui-rows"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, B("list") + 0.25);
+      // "আঠারো জন, স্যার! নামসহ তালিকা এই যে।"
+      A.say(kr, tl, P.line("s6-05"), "s6-05", { arm: "r" });
+      tl.to(armL, { rotation: 140, duration: 0.3, ease: "back.out(1.6)" }, P.line("s6-05") + 1.8);
+      tl.to(armL, { rotation: 14, duration: 0.35 }, P.line("s6-05") + 4.2);
+      // the headmaster's jaw drops, his glasses jump
+      var jaw = B("jaw");
+      A.expr(hd, tl, jaw, "shocked");
+      tl.to(hd.querySelector(".c-mouth-open"), { scaleY: 1.3, duration: 0.15, ease: "power2.out" }, jaw);
+      tl.to(hd.querySelector(".c-mouth-open"), { scaleY: 0, duration: 0.3 }, B("jawBack"));
+      tl.to(hd.querySelector(".c-glasses"), { y: -34, duration: 0.15, ease: "power2.out" }, B("glasses"));
+      tl.to(hd.querySelector(".c-glasses"), { y: 0, duration: 0.5, ease: "bounce.out" }, B("glasses") + 0.15);
+      // "বাহ, করিম সাহেব! দারুণ!" — and a little clap
+      A.expr(hd, tl, P.line("s6-06"), "happy");
+      A.say(hd, tl, P.line("s6-06"), "s6-06", { arm: "none" });
+      var hArmR = hd.querySelector(".c-arm-r"), hForeR = hd.querySelector(".c-fore-r");
+      tl.to(hArmR, { rotation: -40, duration: 0.25 }, 32.9);
+      tl.fromTo(hForeR, { rotation: -70 }, { rotation: -100, duration: 0.12, ease: "power2.inOut", repeat: 7, yoyo: true, immediateRender: false }, 33.1);
+      tl.to([hArmR, hForeR], { rotation: function (i) { return i ? 0 : -12; }, duration: 0.3 }, 34.2);
+      A.expr(kr, tl, P.line("s6-06") + 0.6, "happy");
+      tl.to(pv(".ui-list"), { opacity: 0, duration: 0.3 }, 34.0);
+
+      // ── 6c: the month's report in one press ──────────────────────────────────────────────────
+      A.say(ap, tl, P.line("s6-07"), "s6-07", { arm: "r" });
+      tl.to(panel, { scale: 0.2, opacity: 0, duration: 0.35, ease: "back.in(1.6)" }, 34.0);
+      tl.set(pv(".ui-report"), { opacity: 1 }, B("report") - 0.5);
+      tl.to(panel, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, B("report") - 0.5);
+      q(panel, ".ui-bar").forEach(function (b, i) {
+        tl.fromTo(b, { scaleY: 0 }, { scaleY: 1, duration: 0.45, ease: "back.out(1.6)", immediateRender: false }, B("report") + i * 0.18);
+      });
+      gsap.set(q(panel, ".ui-bar"), { scaleY: 0 });
+      // the printed sheet slides up out of the app and flies to the ledger
+      tl.to(rep, { y: -330, duration: 1.1, ease: "power2.out" }, B("report"));
+      tl.to(rep, { x: -170, y: -113, rotation: -8, scale: 0.7, duration: 0.7, ease: "power2.inOut" }, B("reportEnd") - 0.4);
+      tl.set(rep, { zIndex: 9 }, B("reportEnd") - 0.4);
+      A.look(k, tl, B("report"), 12, -10, 0.3);
+      A.armsUp(k, tl, B("reportEnd"), 0.6);
+      // "বাহ! একটাও কাটাকুটি নেই!"
+      A.expr(k, tl, B("amaze"), "shocked");
+      A.say(k, tl, P.line("s6-08"), "s6-08", { arm: "none" });
+      A.expr(k, tl, B("amaze") + 1.6, "happy");
+      tl.to(q(k, ".c-blush"), { opacity: 1, duration: 0.3 }, B("blush"));
+      A.hop(kEl, tl, B("blush"), 70, 0.5);
+      A.hop(kEl, tl, B("blush") + 1.2, 50, 0.45);
+
+      A.blinks(k, tl, 1, DUR, 13); A.blinks(ap, tl, 2, DUR, 14); A.blinks(kr, tl, 0, DUR, 15);
+      A.blinks(pa, tl, 0, 16, 16); A.blinks(hd, tl, 16, DUR, 17);
+      tl.to({}, { duration: DUR }, 0);
     })();
   </script>
 </template>

@@ -11,8 +11,8 @@
   var INK = "#2A1E17";
   var W = 1080, H = 1920;
   function svg(vb, inner, cls) { return '<svg class="' + (cls || "") + '" viewBox="' + vb + '" xmlns="http://www.w3.org/2000/svg" overflow="visible">' + inner + "</svg>"; }
-  function t(x, y, s, w, fill, txt, anchor, extra) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "middle") + '" font-family="Hind Siliguri, sans-serif" font-weight="' + w + '" font-size="' + s + '" fill="' + fill + '"' + (extra || "") + ">" + txt + "</text>"; }
-  function bt(x, y, s, fill, txt, anchor, extra) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "middle") + '" font-family="Baloo Da 2, Hind Siliguri, sans-serif" font-weight="700" font-size="' + s + '" fill="' + fill + '"' + (extra || "") + ">" + txt + "</text>"; }
+  function t(x, y, s, w, fill, txt, anchor, extra) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "middle") + '" font-family="&#39;Hind Siliguri&#39;, sans-serif" font-weight="' + w + '" font-size="' + s + '" fill="' + fill + '"' + (extra || "") + ">" + txt + "</text>"; }
+  function bt(x, y, s, fill, txt, anchor, extra) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "middle") + '" font-family="&#39;Baloo Da 2&#39;, &#39;Hind Siliguri&#39;, sans-serif" font-weight="700" font-size="' + s + '" fill="' + fill + '"' + (extra || "") + ">" + txt + "</text>"; }
   function star(x, y, r, fill, cls) { return '<path class="' + (cls || "") + '" data-o="' + x + " " + y + '" d="M' + x + " " + (y - r) + " Q" + x + " " + y + " " + (x + r) + " " + y + " Q" + x + " " + y + " " + x + " " + (y + r) + " Q" + x + " " + y + " " + (x - r) + " " + y + " Q" + x + " " + y + " " + x + " " + (y - r) + 'Z" fill="' + fill + '"/>'; }
 
   // ── the window: three skies stacked; scenes switch with opacity ──────────────────────────────
@@ -69,7 +69,7 @@
       s += '<rect x="' + dx + '" y="' + (y + 110) + '" width="280" height="150" rx="10" fill="#8A5A2F" stroke="' + INK + '" stroke-width="5"/><rect x="' + (dx + 110) + '" y="' + (y + 172) + '" width="60" height="16" rx="8" fill="#D4A535" stroke="' + INK + '" stroke-width="4"/>';
     }
     for (var k = 0; k < 9; k++) s += '<path d="M-20 ' + (y + 330 + k * 48) + ' Q300 ' + (y + 312 + k * 48) + ' 560 ' + (y + 334 + k * 48) + ' T1100 ' + (y + 326 + k * 48) + '" fill="none" stroke="#6A3F1D" stroke-width="4" opacity="0.55"/>';
-    s += '<rect x="360" y="' + (y + 300) + '" width="360" height="74" rx="10" fill="#D4A535" stroke="' + INK + '" stroke-width="5"/>' + t(540, y + 350, 40, 700, "#5A3A10", "হিসাব শাখা");
+    s += '<rect x="360" y="' + (y + 450) + '" width="360" height="74" rx="10" fill="#D4A535" stroke="' + INK + '" stroke-width="5"/>' + t(540, y + 500, 40, 700, "#5A3A10", "হিসাব শাখা");
     return s + "</g>";
   }
   function wall(fill, base) {
@@ -96,6 +96,8 @@
       var el = svg("0 0 " + W + " " + H, s, "set set-office");
       return el;
     },
+    // the desk alone, as a layer drawn OVER people standing behind it (their legs disappear behind the front)
+    deskFront: function () { return svg("0 0 " + W + " " + H, desk(this.DESK), "set set-desk-front"); },
     // the fee counter: a sign over the desk; parents queue in front (scenes mount the people)
     counter: function () {
       var s = '<g class="set-counter-sign"><rect x="300" y="150" width="480" height="110" rx="14" fill="#16603A" stroke="' + INK + '" stroke-width="7"/>' + bt(540, 225, 62, "#FFFFFF", "ফি জমা") +
@@ -104,7 +106,8 @@
     },
     home: function () {
       var s = wall("#FBE3D4", "#F2C9B0");
-      s += '<g class="set-door"><rect x="640" y="380" width="330" height="820" rx="12" fill="#9C6B3F" stroke="' + INK + '" stroke-width="7"/><rect x="680" y="430" width="250" height="300" rx="8" fill="#B27E4F" stroke="' + INK + '" stroke-width="5"/><rect x="680" y="790" width="250" height="330" rx="8" fill="#B27E4F" stroke="' + INK + '" stroke-width="5"/><circle cx="700" cy="800" r="16" fill="#D4A535" stroke="' + INK + '" stroke-width="4"/></g>';
+      s += '<rect class="set-doorway" x="640" y="380" width="330" height="820" fill="#3A2A20" stroke="' + INK + '" stroke-width="7"/><rect x="640" y="1140" width="330" height="60" fill="#5A4030"/>';
+      s += '<g class="set-door" data-o="970 790"><rect x="640" y="380" width="330" height="820" rx="12" fill="#9C6B3F" stroke="' + INK + '" stroke-width="7"/><rect x="680" y="430" width="250" height="300" rx="8" fill="#B27E4F" stroke="' + INK + '" stroke-width="5"/><rect x="680" y="790" width="250" height="330" rx="8" fill="#B27E4F" stroke="' + INK + '" stroke-width="5"/><circle cx="700" cy="800" r="16" fill="#D4A535" stroke="' + INK + '" stroke-width="4"/></g>';
       s += '<g class="set-frame"><rect x="120" y="360" width="300" height="230" rx="8" fill="#FFFDF5" stroke="#8B5A2B" stroke-width="16"/><path d="M140 560 L230 450 L300 520 L340 480 L400 560 Z" fill="#7FBF6A" stroke="' + INK + '" stroke-width="4"/><circle cx="350" cy="420" r="26" fill="#FFD25A" stroke="' + INK + '" stroke-width="4"/></g>';
       s += '<g class="set-plant"><path d="M150 1110 L130 980 M190 1110 L200 950 M230 1110 L260 990" stroke="#3E7D3A" stroke-width="10" stroke-linecap="round"/><ellipse cx="128" cy="975" rx="34" ry="16" fill="#5FA052" stroke="' + INK + '" stroke-width="4" transform="rotate(-30 128 975)"/><ellipse cx="202" cy="944" rx="34" ry="16" fill="#5FA052" stroke="' + INK + '" stroke-width="4" transform="rotate(10 202 944)"/><ellipse cx="262" cy="986" rx="34" ry="16" fill="#5FA052" stroke="' + INK + '" stroke-width="4" transform="rotate(40 262 986)"/><path d="M120 1100 L260 1100 L240 1200 L140 1200 Z" fill="#C0392B" stroke="' + INK + '" stroke-width="6"/></g>';
       s += '<rect x="0" y="1200" width="' + W + '" height="' + (H - 1200) + '" fill="#C8956A" stroke="' + INK + '" stroke-width="7"/>';
@@ -146,12 +149,48 @@
       o = o || {};
       var d = document.createElement("div");
       d.className = "prop " + (o.cls || "");
+      if (o.decor !== false && /class="set /.test(svgString)) d.setAttribute("data-layout-ignore", "");   // background art: its text is scenery, not reading text
       d.style.cssText = "position:absolute;left:" + (o.x || 0) + "px;top:" + (o.y || 0) + "px;width:" + (o.w || W) + "px;" + (o.z ? "z-index:" + o.z + ";" : "") + (o.origin ? "transform-origin:" + o.origin + ";" : "");
       d.innerHTML = svgString;
       parent.appendChild(d);
       this.pivots(d);
       if (o.opacity !== undefined) gsap.set(d, { opacity: o.opacity });
       return d;
+    },
+    // the office as a living set for [0, dur]: fan turning, clock creeping, stars twinkling, lamp glowing.
+    // mode: "day" | "evening" | "night"; o.h/o.m = clock time; o.lamp / o.pile add the desk props;
+    // o.creep: false when the scene drives the clock hands itself (a time-lapse).
+    officeScene: function (parent, tl, dur, o) {
+      o = o || {};
+      var mode = o.mode || "day";
+      var box = this.put(parent, this.office({ h: o.h, m: o.m }), { x: 0, y: 0, w: W });
+      var s = box.querySelector("svg"), Q = function (c) { return s.querySelector(c); };
+      this.sky(s, mode);
+      var spins = Math.max(1, Math.round(dur / 0.18));
+      tl.fromTo(Q(".set-fan-blades"), { scaleX: 1 }, { scaleX: -1, duration: 0.18, ease: "sine.inOut", repeat: spins - 1, yoyo: true }, 0);
+      var m0 = Number(Q(".set-clock-m").getAttribute("data-a"));
+      if (o.creep !== false) tl.fromTo(Q(".set-clock-m"), { rotation: m0 }, { rotation: m0 + dur * 0.4, duration: dur, ease: "none" }, 0);
+      Array.prototype.forEach.call(s.querySelectorAll(".sky-star"), function (st, i) {
+        var d = 0.9 + i * 0.17;
+        tl.fromTo(st, { scale: 1 }, { scale: 0.55, duration: d, ease: "sine.inOut", repeat: Math.max(1, Math.floor(dur / d)) - 1, yoyo: true }, i * 0.2);
+      });
+      var out = { box: box, svg: s };
+      if (o.lamp) {
+        out.lamp = this.put(parent, HKProp.lamp(), { x: 20, y: 680, w: 360 });
+        gsap.set(out.lamp.querySelector(".lamp-light"), { opacity: mode === "night" ? 0.32 : 0 });
+        if (mode === "night") tl.fromTo(out.lamp.querySelector(".lamp-light"), { opacity: 0.32 }, { opacity: 0.24, duration: 1.7, ease: "sine.inOut", repeat: Math.max(1, Math.floor(dur / 1.7)) - 1, yoyo: true }, 0);
+      }
+      if (o.pile) out.pile = this.put(parent, HKProp.pile(), { x: o.pileX === undefined ? 420 : o.pileX, y: 878, w: 380 });
+      return out;
+    },
+    // switch the window and room light to a time of day (instantly, or tweened at tl/t over d seconds)
+    sky: function (s, mode, tl, t, d) {
+      var to = { day: [1, 0, 0, 0, 0], evening: [0, 1, 0, 0, 0.18], night: [0, 0, 1, 0.5, 0] }[mode];
+      var els = [s.querySelector(".sky-day"), s.querySelector(".sky-evening"), s.querySelector(".sky-night"), s.querySelector(".set-night"), s.querySelector(".set-evening")];
+      els.forEach(function (e, i) {
+        if (tl) tl.to(e, { opacity: to[i], duration: d || 0.8, ease: "sine.inOut" }, t);
+        else gsap.set(e, { opacity: to[i] });
+      });
     },
     pivots: function (el) {
       Array.prototype.forEach.call(el.querySelectorAll("[data-o]"), function (n) {
@@ -173,10 +212,10 @@
       return svg("0 0 380 310", s, "prop-pile");
     },
     paper: function (rot) {
-      return svg("0 0 140 180", '<g transform="rotate(' + (rot || 0) + ' 70 90)"><path d="M10 10 L110 10 L130 30 L130 170 L10 170 Z" fill="#FFFDF5" stroke="' + INK + '" stroke-width="5" stroke-linejoin="round"/><path d="M110 10 L110 30 L130 30" fill="#E8E0CC" stroke="' + INK + '" stroke-width="4"/><line x1="28" y1="60" x2="110" y2="60" stroke="#9AA" stroke-width="5"/><line x1="28" y1="90" x2="100" y2="90" stroke="#9AA" stroke-width="5"/><line x1="28" y1="120" x2="108" y2="120" stroke="#9AA" stroke-width="5"/><text x="70" y="44" text-anchor="middle" font-family="Hind Siliguri, sans-serif" font-weight="700" font-size="22" fill="#C0392B">রশিদ</text></g>', "prop-paper");
+      return svg("0 0 140 180", '<g transform="rotate(' + (rot || 0) + ' 70 90)"><path d="M10 10 L110 10 L130 30 L130 170 L10 170 Z" fill="#FFFDF5" stroke="' + INK + '" stroke-width="5" stroke-linejoin="round"/><path d="M110 10 L110 30 L130 30" fill="#E8E0CC" stroke="' + INK + '" stroke-width="4"/><line x1="28" y1="60" x2="110" y2="60" stroke="#9AA" stroke-width="5"/><line x1="28" y1="90" x2="100" y2="90" stroke="#9AA" stroke-width="5"/><line x1="28" y1="120" x2="108" y2="120" stroke="#9AA" stroke-width="5"/><text x="70" y="44" text-anchor="middle" font-family="&#39;Hind Siliguri&#39;, sans-serif" font-weight="700" font-size="22" fill="#C0392B">রশিদ</text></g>', "prop-paper");
     },
     receiptBook: function () {
-      return svg("0 0 220 160", '<rect x="10" y="20" width="200" height="130" rx="10" fill="#E9C46A" stroke="' + INK + '" stroke-width="6"/><rect x="10" y="20" width="200" height="34" rx="10" fill="#C08A2E" stroke="' + INK + '" stroke-width="6"/><text x="110" y="112" text-anchor="middle" font-family="Baloo Da 2, sans-serif" font-weight="700" font-size="44" fill="#6B3E12">রশিদ বই</text>', "prop-rbook");
+      return svg("0 0 220 160", '<rect x="10" y="20" width="200" height="130" rx="10" fill="#E9C46A" stroke="' + INK + '" stroke-width="6"/><rect x="10" y="20" width="200" height="34" rx="10" fill="#C08A2E" stroke="' + INK + '" stroke-width="6"/><text x="110" y="112" text-anchor="middle" font-family="&#39;Baloo Da 2&#39;, sans-serif" font-weight="700" font-size="44" fill="#6B3E12">রশিদ বই</text>', "prop-rbook");
     },
     eraser: function () {
       return svg("0 0 150 90", '<g class="eraser"><rect x="10" y="20" width="130" height="58" rx="12" fill="#F4A6B8" stroke="' + INK + '" stroke-width="6"/><rect x="10" y="20" width="56" height="58" rx="12" fill="#6FA8DC" stroke="' + INK + '" stroke-width="6"/></g>', "prop-eraser");
@@ -197,20 +236,20 @@
       return svg("0 0 580 450", s, "prop-page");
     },
     box: function () {
-      return svg("0 0 360 330", '<g class="box-body"><path d="M20 110 L340 110 L320 320 L40 320 Z" fill="#C9965B" stroke="' + INK + '" stroke-width="7" stroke-linejoin="round"/><rect x="160" y="110" width="40" height="210" fill="#E8D19A" opacity="0.9"/><text x="180" y="250" text-anchor="middle" font-family="Baloo Da 2, sans-serif" font-weight="700" font-size="40" fill="#6B3E12" transform="rotate(-4 180 250)">নতুন!</text></g>' +
+      return svg("0 0 360 330", '<g class="box-body"><path d="M20 110 L340 110 L320 320 L40 320 Z" fill="#C9965B" stroke="' + INK + '" stroke-width="7" stroke-linejoin="round"/><rect x="160" y="110" width="40" height="210" fill="#E8D19A" opacity="0.9"/><text x="180" y="250" text-anchor="middle" font-family="&#39;Baloo Da 2&#39;, sans-serif" font-weight="700" font-size="40" fill="#6B3E12" transform="rotate(-4 180 250)">নতুন!</text></g>' +
         '<g class="box-lid" data-o="20 110"><path d="M8 80 L352 80 L352 116 L8 116 Z" fill="#B88447" stroke="' + INK + '" stroke-width="7" stroke-linejoin="round"/><rect x="160" y="80" width="40" height="36" fill="#E8D19A"/></g>', "prop-box");
     },
-    phone: function () {   // the parent's phone; .ph-note slides in as the receipt notification
+    phone: function (amt, who, what) {   // the parent's phone; .ph-note slides in as the receipt notification
       return svg("0 0 300 520", '<rect x="20" y="10" width="260" height="500" rx="40" fill="#2B2F36" stroke="' + INK + '" stroke-width="7"/><rect x="40" y="56" width="220" height="404" rx="12" fill="#DDEBF7"/><rect x="120" y="28" width="60" height="10" rx="5" fill="#555"/>' +
-        '<g class="ph-note"><rect x="50" y="90" width="200" height="190" rx="18" fill="#FFFFFF" stroke="#16603A" stroke-width="5"/><circle cx="84" cy="128" r="20" fill="#16603A"/><path d="M74 128 L82 136 L96 120" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-        t(170, 136, 24, 700, "#16603A", "রশিদ ✓") + t(150, 190, 34, 700, "#24324A", "৳ ১,২০০") + t(150, 232, 20, 500, "#4A6355", "রুমানা · ৮ম") + t(150, 262, 18, 500, "#4A6355", "সেপ্টেম্বরের ফি") + "</g>", "prop-phone");
+        '<g class="ph-note"><rect x="50" y="86" width="200" height="214" rx="18" fill="#FFFFFF" stroke="#16603A" stroke-width="5"/><circle cx="84" cy="128" r="20" fill="#16603A"/><path d="M74 128 L82 136 L96 120" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+        t(170, 132, 24, 700, "#16603A", "রশিদ") + t(150, 184, 32, 700, "#24324A", "৳ " + (amt || "১,২০০")) + t(150, 238, 20, 500, "#4A6355", who || "রুমানা · ৮ম") + t(150, 276, 18, 500, "#4A6355", what || "সেপ্টেম্বরের ফি") + "</g>", "prop-phone");
     },
     note: function (amt) {   // a taka note
       return svg("0 0 240 120", '<rect x="6" y="6" width="228" height="108" rx="10" fill="#8FC79A" stroke="' + INK + '" stroke-width="5"/><circle cx="120" cy="60" r="36" fill="#C7E6C7" stroke="#2E6B3A" stroke-width="4"/>' + t(120, 74, 38, 700, "#1E4D2B", "৳") + t(40, 40, 22, 700, "#1E4D2B", amt || "৫০০") + t(200, 102, 22, 700, "#1E4D2B", amt || "৫০০"), "prop-note");
     },
-    zzz: function () { return svg("0 0 200 220", '<text class="z1" x="20" y="200" font-family="Baloo Da 2, sans-serif" font-weight="800" font-size="70" fill="#E9E4FF" stroke="' + INK + '" stroke-width="4">z</text><text class="z2" x="80" y="130" font-family="Baloo Da 2, sans-serif" font-weight="800" font-size="56" fill="#E9E4FF" stroke="' + INK + '" stroke-width="4">z</text><text class="z3" x="130" y="70" font-family="Baloo Da 2, sans-serif" font-weight="800" font-size="44" fill="#E9E4FF" stroke="' + INK + '" stroke-width="4">z</text>', "prop-zzz"); },
+    zzz: function () { return svg("0 0 200 220", '<text class="z1" x="20" y="200" font-family="&#39;Baloo Da 2&#39;, sans-serif" font-weight="800" font-size="70" fill="#E9E4FF" stroke="' + INK + '" stroke-width="4">z</text><text class="z2" x="80" y="130" font-family="&#39;Baloo Da 2&#39;, sans-serif" font-weight="800" font-size="56" fill="#E9E4FF" stroke="' + INK + '" stroke-width="4">z</text><text class="z3" x="130" y="70" font-family="&#39;Baloo Da 2&#39;, sans-serif" font-weight="800" font-size="44" fill="#E9E4FF" stroke="' + INK + '" stroke-width="4">z</text>', "prop-zzz"); },
     heart: function (c) { return svg("0 0 100 92", '<path d="M50 88 Q6 56 8 28 Q12 4 34 6 Q48 8 50 26 Q52 8 66 6 Q88 4 92 28 Q94 56 50 88 Z" fill="' + (c || "#E85D75") + '" stroke="' + INK + '" stroke-width="5"/>', "prop-heart"); },
-    mark: function (ch, c) { return svg("0 0 120 160", '<text x="60" y="140" text-anchor="middle" font-family="Baloo Da 2, sans-serif" font-weight="800" font-size="150" fill="' + (c || "#E4A11B") + '" stroke="' + INK + '" stroke-width="6" paint-order="stroke">' + ch + "</text>", "prop-mark"); },
+    mark: function (ch, c) { return svg("0 0 120 160", '<text x="60" y="140" text-anchor="middle" font-family="&#39;Baloo Da 2&#39;, sans-serif" font-weight="800" font-size="150" fill="' + (c || "#E4A11B") + '" stroke="' + INK + '" stroke-width="6" paint-order="stroke">' + ch + "</text>", "prop-mark"); },
     burst: function (c) {
       var s = "";
       for (var i = 0; i < 10; i++) { var a = i / 10 * Math.PI * 2; s += '<line x1="' + (100 + Math.cos(a) * 46) + '" y1="' + (100 + Math.sin(a) * 46) + '" x2="' + (100 + Math.cos(a) * 92) + '" y2="' + (100 + Math.sin(a) * 92) + '" stroke="' + (c || "#E4A11B") + '" stroke-width="12" stroke-linecap="round"/>'; }
@@ -230,15 +269,55 @@
     report: function () {   // the printed report sheet sliding out of the app
       return svg("0 0 300 380", '<rect x="10" y="10" width="280" height="360" rx="10" fill="#FFFFFF" stroke="' + INK + '" stroke-width="6"/><rect x="10" y="10" width="280" height="56" rx="10" fill="#16603A"/>' + t(150, 48, 26, 700, "#FFFFFF", "মাসের রিপোর্ট") +
         '<rect x="44" y="190" width="30" height="70" fill="#16603A"/><rect x="90" y="160" width="30" height="100" fill="#16603A"/><rect x="136" y="176" width="30" height="84" fill="#16603A"/><rect x="182" y="140" width="30" height="120" fill="#16603A"/><rect x="228" y="120" width="30" height="140" fill="#E4A11B"/><line x1="30" y1="262" x2="270" y2="262" stroke="' + INK + '" stroke-width="4"/>' +
-        t(40, 306, 22, 600, "#4A6355", "আদায়", "start") + t(262, 306, 24, 700, "#16603A", "৳ ৫১,৬০০", "end") + t(40, 346, 22, 600, "#4A6355", "ভুল", "start") + t(262, 346, 24, 700, "#16603A", "০ ✓", "end"), "prop-report");
+        t(40, 306, 22, 600, "#4A6355", "আদায়", "start") + t(262, 306, 24, 700, "#16603A", "৳ ৫১,৬০০", "end") + t(40, 356, 22, 600, "#4A6355", "ভুল", "start") + t(236, 356, 24, 700, "#16603A", "০", "end") + '<path d="M244 347 L251 354 L264 339" stroke="#16603A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>', "prop-report");
     },
     numberCard: function (big, small, color) {
-      return svg("0 0 860 360", '<rect x="10" y="10" width="840" height="340" rx="40" fill="#FFF8EC" stroke="' + INK + '" stroke-width="9"/>' + '<text class="nc-big" x="430" y="210" text-anchor="middle" font-family="Baloo Da 2, sans-serif" font-weight="800" font-size="150" fill="' + (color || "#16603A") + '">' + big + "</text>" + t(430, 300, 48, 700, "#6B5442", small || ""), "prop-ncard");
+      return svg("0 0 860 360", '<rect x="10" y="10" width="840" height="340" rx="40" fill="#FFF8EC" stroke="' + INK + '" stroke-width="9"/>' + '<text class="nc-big" x="430" y="175" text-anchor="middle" font-family="&#39;Baloo Da 2&#39;, sans-serif" font-weight="800" font-size="140" fill="' + (color || "#16603A") + '">' + big + "</text>" + t(430, 312, 48, 700, "#6B5442", small || ""), "prop-ncard");
     },
     dizzyStars: function () {
       var s = '<ellipse cx="150" cy="60" rx="140" ry="40" fill="none" stroke="#E4A11B" stroke-width="5" stroke-dasharray="14 12"/>';
       s += star(30, 60, 22, "#E4A11B") + star(150, 22, 20, "#E4A11B") + star(270, 60, 22, "#E4A11B") + star(150, 98, 18, "#E4A11B");
       return svg("0 0 300 120", s, "prop-dstars");
+    },
+    cloud: function () {   // a dream cloud with its trail of thought-bubbles (.cl-b1/.cl-b2 at the bottom left)
+      return svg("0 0 960 760", '<g class="cl-body"><path d="M90 470 Q40 300 210 270 Q240 110 440 140 Q560 30 700 140 Q900 140 890 320 Q960 470 820 540 L170 540 Q70 530 90 470 Z" fill="#EEE9FF" stroke="' + INK + '" stroke-width="8" stroke-linejoin="round"/></g>' +
+        '<circle class="cl-b1" cx="230" cy="620" r="40" fill="#EEE9FF" stroke="' + INK + '" stroke-width="7"/><circle class="cl-b2" cx="170" cy="710" r="24" fill="#EEE9FF" stroke="' + INK + '" stroke-width="6"/>', "prop-cloud");
+    },
+    file: function () {   // the headmaster's brown file, drawn around a hand at 0,0 (cast units)
+      return '<g transform="rotate(-8)"><rect x="-58" y="-20" width="116" height="150" rx="8" fill="#B07A45" stroke="' + INK + '" stroke-width="5"/><rect x="-46" y="-4" width="92" height="22" rx="4" fill="#F2E3B3" stroke="' + INK + '" stroke-width="3"/></g>';
+    },
+    calendar: function (front, back, month, note) {   // .cal-front flips up off the rings and shows the page behind
+      var ring = function (x) { return '<rect x="' + x + '" y="34" width="16" height="50" rx="8" fill="#9AA3AD" stroke="' + INK + '" stroke-width="4"/>'; };
+      var page = function (cls, num, sub, o) {
+        return '<g class="' + cls + '"' + (o || "") + '><rect x="20" y="64" width="320" height="350" rx="14" fill="#FFFDF5" stroke="' + INK + '" stroke-width="7"/><rect x="20" y="64" width="320" height="76" rx="14" fill="#C0392B" stroke="' + INK + '" stroke-width="7"/>' +
+          t(180, 120, 40, 700, "#FFFFFF", month || "সেপ্টেম্বর") + bt(180, 274, 120, "#24324A", num) + (sub ? t(180, 382, 32, 700, "#C0392B", sub) : "") + "</g>";
+      };
+      return svg("0 0 360 430", page("cal-back", back, note) + page("cal-front", front, "", ' data-o="180 64"') + ring(100) + ring(244), "prop-cal");
+    },
+    stamp: function (top, big, c) {
+      c = c || "#16603A";
+      return svg("0 0 300 300", '<g transform="rotate(-12 150 150)"><circle cx="150" cy="150" r="132" fill="rgba(255,253,245,0.92)" stroke="' + c + '" stroke-width="12"/><circle cx="150" cy="150" r="108" fill="none" stroke="' + c + '" stroke-width="5"/>' +
+        t(150, 118, 50, 700, c, top) + bt(150, 238, 120, c, big) + "</g>", "prop-stamp");
+    },
+    handBag: function () {   // a bag hanging from a hand at 0,0 (cast units, like file())
+      return '<path d="M-34 14 Q-34 -22 0 -22 Q34 -22 34 14" fill="none" stroke="' + INK + '" stroke-width="9"/><rect x="-92" y="10" width="184" height="124" rx="16" fill="#6E4523" stroke="' + INK + '" stroke-width="7"/><rect x="-12" y="42" width="24" height="18" rx="4" fill="#D4A535" stroke="' + INK + '" stroke-width="4"/>';
+    },
+    handTea: function (hx, hy) {   // a cup of tea gripped by a cartoon glove at (hx, hy), in the character's own units
+      return '<g transform="translate(' + (hx - 6) + ' ' + (hy - 92) + ')"><path class="tea-steam" d="M40 26 Q30 10 42 -4 M68 26 Q58 10 70 -4" stroke="#B9BEC5" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M10 36 L100 36 L90 108 Q54 120 20 108 Z" fill="#FFFFFF" stroke="' + INK + '" stroke-width="6" stroke-linejoin="round"/><rect x="16" y="42" width="78" height="14" fill="#A0522D"/></g>';
+    },
+    medal: function (cx, cy) {   // a long-service medal (২০ years), drawn into the khata at its chest
+      return '<g class="medal"><path d="M' + (cx - 30) + ' ' + (cy - 90) + ' L' + (cx - 6) + ' ' + (cy - 20) + ' L' + (cx + 6) + ' ' + (cy - 20) + ' L' + (cx + 30) + ' ' + (cy - 90) + '" fill="#2E5AA8" stroke="' + INK + '" stroke-width="4" stroke-linejoin="round"/>' +
+        '<circle cx="' + cx + '" cy="' + cy + '" r="40" fill="#E4B33A" stroke="' + INK + '" stroke-width="5"/><circle cx="' + cx + '" cy="' + cy + '" r="30" fill="none" stroke="#B8860B" stroke-width="3"/>' + bt(cx, cy + 16, 40, "#6B3E12", "২০") + "</g>";
+    },
+    rainCloud: function () {
+      var d = "";
+      for (var i = 0; i < 5; i++) d += '<path class="drop" d="M' + (70 + i * 40) + ' 190 l-6 22" stroke="#5B8BD6" stroke-width="7" stroke-linecap="round"/>';
+      return svg("0 0 320 260", d + '<path d="M50 170 Q14 170 18 134 Q22 100 62 102 Q70 52 124 58 Q156 20 202 46 Q252 40 262 92 Q306 98 300 136 Q296 172 256 170 Z" fill="#8A93A0" stroke="' + INK + '" stroke-width="7" stroke-linejoin="round"/>', "prop-rain");
+    },
+    rays: function (c) {   // a cartoon sunburst for celebrations (rotate the div)
+      var s = "";
+      for (var i = 0; i < 18; i++) { var a = (i / 18) * Math.PI * 2, b = a + Math.PI / 18; s += '<path d="M600 600 L' + (600 + Math.cos(a) * 900) + " " + (600 + Math.sin(a) * 900) + " L" + (600 + Math.cos(b) * 900) + " " + (600 + Math.sin(b) * 900) + ' Z" fill="' + (c || "#FFD25A") + '"/>'; }
+      return svg("0 0 1200 1200", s, "prop-rays");
     },
     lamp: function () {
       return svg("0 0 360 520", '<path class="lamp-light" d="M120 150 L-40 520 L360 520 L230 150 Z" fill="#FFE8A3" opacity="0.32"/><path d="M60 510 L230 510" stroke="' + INK + '" stroke-width="12" stroke-linecap="round"/><path d="M150 506 L150 300 L90 170" fill="none" stroke="#3B4A5A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 170 L180 110 L220 180 L90 230 Z" fill="#16603A" stroke="' + INK + '" stroke-width="7" stroke-linejoin="round"/>', "prop-lamp");

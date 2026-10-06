@@ -123,7 +123,7 @@
     b += '<path d="M292 48 L336 48 L336 92 Z" fill="#D4A535" stroke="' + INK + '" stroke-width="5" stroke-linejoin="round"/>';
     b += '<path d="M336 432 L336 476 L292 476 Z" fill="#D4A535" stroke="' + INK + '" stroke-width="5" stroke-linejoin="round"/>';
     b += '<rect x="148" y="88" width="136" height="60" rx="10" fill="#F2E3B3" stroke="' + INK + '" stroke-width="5"/>';
-    b += '<text x="216" y="130" text-anchor="middle" font-family="Baloo Da 2, Hind Siliguri, sans-serif" font-weight="700" font-size="38" fill="' + DARK + '">খাতা</text>';
+    b += '<text x="216" y="130" text-anchor="middle" font-family="&#39;Baloo Da 2&#39;, &#39;Hind Siliguri&#39;, sans-serif" font-weight="700" font-size="38" fill="' + DARK + '">খাতা</text>';
     b += '</g>';
     b += '<g class="c-face">';
     b += '<path d="M144 320 Q166 330 188 320" fill="none" stroke="' + DARK + '" stroke-width="5" stroke-linecap="round"/>';
@@ -263,11 +263,47 @@
     return wrap("parent", "0 0 300 660", b, 150, 640);
   }
 
+  // ── the app's demo screens, drawn in screen units (x 74–306, y 76–398); used on the tablet AND, scaled up, on the
+  // floating panel the scenes show for reading. Each screen is hidden until a scene shows it. ──────────────────────
+  function ui() {
+    var G = "#16603A", AMBER = "#AC7914", RED = "#C0392B";
+    var t = function (x, y, s, w, fill, txt, anchor, cls) { return '<text' + (cls ? ' class="' + cls + '"' : "") + ' x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "start") + '" font-family="&#39;Hind Siliguri&#39;, sans-serif" font-weight="' + w + '" font-size="' + s + '" fill="' + fill + '">' + txt + '</text>'; };
+    var header = function (txt) { return '<path d="M74 98 Q74 76 96 76 L284 76 Q306 76 306 98 L306 120 L74 120 Z" fill="' + G + '"/>' + t(190, 107, 22, 700, "#FFFFFF", txt, "middle"); };
+    var field = function (y, label, value, cls, color) {
+      return '<rect x="88" y="' + y + '" width="204" height="44" rx="9" fill="#FFFFFF" stroke="#B9D8C4" stroke-width="2.5"/>' +
+        t(100, y + 29, 17, 500, "#4A6355", label) + t(280, y + 30, 19, 700, color || G, value, "end", cls);
+    };
+    var b = '<g class="c-ui">';
+    b += '<g class="ui-form" opacity="0">' + header("ফি এন্ট্রি") +
+      field(134, "নাম", "রুমানা আক্তার", "ui-v1") + field(186, "শ্রেণি", "৮ম", "ui-v2") + field(238, "টাকা", "১,২০০", "ui-v3", AMBER) +
+      '<g class="ui-btn" data-o="190 314"><rect x="128" y="296" width="124" height="38" rx="19" fill="' + G + '"/>' + t(178, 321, 19, 700, "#FFFFFF", "জমা", "middle") + '<path d="M207 313 L213 319 L225 306" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' + '</g>' +
+      '<line x1="88" y1="352" x2="292" y2="352" stroke="#B9D8C4" stroke-width="2"/>' +
+      t(90, 382, 16, 500, "#4A6355", "মোট আদায়") + t(292, 384, 21, 700, G, "৳ ৫০,৪০০", "end", "ui-total") + '</g>';
+    var row = function (y, n, nm, amt) { return t(92, y, 15, 500, "#4A6355", n) + t(122, y, 18, 600, G, nm) + t(292, y, 18, 700, RED, amt, "end") + '<line x1="88" y1="' + (y + 11) + '" x2="292" y2="' + (y + 11) + '" stroke="#D5E8DC" stroke-width="1.5"/>'; };
+    b += '<g class="ui-list" opacity="0">' + header("৮ম শ্রেণি · বকেয়া") +
+      t(190, 170, 40, 700, RED, "১৮ জন", "middle", "ui-count") +
+      '<g class="ui-rows">' + row(208, "০১২", "তানভীর হাসান", "১,২০০") + row(242, "০১৯", "নুসরাত জাহান", "২,৪০০") + row(276, "০২৭", "আরিফুল ইসলাম", "১,২০০") + row(310, "০৩৩", "সুমাইয়া খাতুন", "৩,৬০০") + '</g>' +
+      t(190, 352, 16, 500, "#4A6355", "+ আরও ১৪ জন", "middle") + '</g>';
+    var bar = function (x, h, i) { return '<rect class="ui-bar ui-bar-' + i + '" data-o="' + (x + 11) + ' 262" x="' + x + '" y="' + (262 - h) + '" width="22" height="' + h + '" rx="4" fill="' + (i === 4 ? "#E4A11B" : G) + '"/>'; };
+    b += '<g class="ui-report" opacity="0">' + header("সেপ্টেম্বর রিপোর্ট") +
+      bar(104, 70, 0) + bar(140, 92, 1) + bar(176, 80, 2) + bar(212, 104, 3) + bar(248, 122, 4) +
+      '<line x1="92" y1="263" x2="288" y2="263" stroke="' + G + '" stroke-width="2.5"/>' +
+      t(92, 300, 17, 500, "#4A6355", "আদায়") + t(290, 300, 19, 700, G, "৳ ৫১,৬০০", "end") +
+      t(92, 330, 17, 500, "#4A6355", "বকেয়া") + t(290, 330, 19, 700, RED, "১৮ জন", "end") +
+      t(92, 360, 17, 500, "#4A6355", "ভুল") + t(268, 361, 19, 700, G, "০", "end") + '<path d="M274 353 L280 359 L291 346" stroke="' + G + '" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' + '</g>';
+    return b + '</g>';
+  }
+  // the floating demo panel: the same screens on a card, for a readable close-up
+  function panel() {
+    return '<svg class="hk-panel" viewBox="60 62 260 350" xmlns="http://www.w3.org/2000/svg" overflow="visible">' +
+      '<rect x="64" y="66" width="252" height="342" rx="26" fill="#EAF6EE" stroke="#16603A" stroke-width="6"/>' + ui() + '</svg>';
+  }
+
   // ── হিসাব খাতা: the friendly tablet, with its demo screens ───────────────────────────────────────
   function app() {
     var G = "#16603A", GD = "#0E3F26", SCREEN = "#EAF6EE", AMBER = "#AC7914", RED = "#C0392B";
     var glow = id("glow");
-    var t = function (x, y, s, w, fill, txt, anchor, cls) { return '<text' + (cls ? ' class="' + cls + '"' : "") + ' x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "start") + '" font-family="Hind Siliguri, sans-serif" font-weight="' + w + '" font-size="' + s + '" fill="' + fill + '">' + txt + '</text>'; };
+    var t = function (x, y, s, w, fill, txt, anchor, cls) { return '<text' + (cls ? ' class="' + cls + '"' : "") + ' x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "start") + '" font-family="&#39;Hind Siliguri&#39;, sans-serif" font-weight="' + w + '" font-size="' + s + '" fill="' + fill + '">' + txt + '</text>'; };
     var b = '<defs><radialGradient id="' + glow + '"><stop offset="0" stop-color="#9FE3B8" stop-opacity="0.75"/><stop offset="1" stop-color="#9FE3B8" stop-opacity="0"/></radialGradient></defs>';
     b += '<circle class="c-glow" cx="190" cy="240" r="215" fill="url(#' + glow + ')"/>';
     b += shadow(190, 520, 92);
@@ -284,31 +320,7 @@
     b += mouth(190, 262, 38, { dark: GD, tongue: "#F08A80", line: G, sw: 7, h: 40 });
     b += t(190, 368, 30, 700, G, "হিসাব খাতা", "middle");
     b += '</g>';
-    // demo screens (each hidden until a scene shows it)
-    var header = function (txt) { return '<path d="M74 98 Q74 76 96 76 L284 76 Q306 76 306 98 L306 120 L74 120 Z" fill="' + G + '"/>' + t(190, 107, 22, 700, "#FFFFFF", txt, "middle"); };
-    var field = function (y, label, value, cls, color) {
-      return '<rect x="88" y="' + y + '" width="204" height="44" rx="9" fill="#FFFFFF" stroke="#B9D8C4" stroke-width="2.5"/>' +
-        t(100, y + 29, 17, 500, "#4A6355", label) + t(280, y + 30, 19, 700, color || G, value, "end", cls);
-    };
-    b += '<g class="c-ui">';
-    b += '<g class="ui-form" opacity="0">' + header("ফি এন্ট্রি") +
-      field(134, "নাম", "রুমানা আক্তার", "ui-v1") + field(186, "শ্রেণি", "৮ম", "ui-v2") + field(238, "টাকা", "১,২০০", "ui-v3", AMBER) +
-      '<g class="ui-btn" data-o="190 314"><rect x="128" y="296" width="124" height="38" rx="19" fill="' + G + '"/>' + t(190, 321, 19, 700, "#FFFFFF", "জমা ✓", "middle") + '</g>' +
-      '<line x1="88" y1="352" x2="292" y2="352" stroke="#B9D8C4" stroke-width="2"/>' +
-      t(90, 382, 16, 500, "#4A6355", "মোট আদায়") + t(292, 384, 21, 700, G, "৳ ৫০,৪০০", "end", "ui-total") + '</g>';
-    var row = function (y, n, nm, amt) { return t(92, y, 15, 500, "#4A6355", n) + t(122, y, 18, 600, G, nm) + t(292, y, 18, 700, RED, amt, "end") + '<line x1="88" y1="' + (y + 11) + '" x2="292" y2="' + (y + 11) + '" stroke="#D5E8DC" stroke-width="1.5"/>'; };
-    b += '<g class="ui-list" opacity="0">' + header("৮ম শ্রেণি · বকেয়া") +
-      t(190, 170, 40, 700, RED, "১৮ জন", "middle", "ui-count") +
-      '<g class="ui-rows">' + row(208, "০১২", "তানভীর হাসান", "১,২০০") + row(242, "০১৯", "নুসরাত জাহান", "২,৪০০") + row(276, "০২৭", "আরিফুল ইসলাম", "১,২০০") + row(310, "০৩৩", "সুমাইয়া খাতুন", "৩,৬০০") + '</g>' +
-      t(190, 352, 16, 500, "#4A6355", "+ আরও ১৪ জন", "middle") + '</g>';
-    var bar = function (x, h, i) { return '<rect class="ui-bar ui-bar-' + i + '" data-o="' + (x + 11) + ' 262" x="' + x + '" y="' + (262 - h) + '" width="22" height="' + h + '" rx="4" fill="' + (i === 4 ? "#E4A11B" : G) + '"/>'; };
-    b += '<g class="ui-report" opacity="0">' + header("সেপ্টেম্বর রিপোর্ট") +
-      bar(104, 70, 0) + bar(140, 92, 1) + bar(176, 80, 2) + bar(212, 104, 3) + bar(248, 122, 4) +
-      '<line x1="92" y1="263" x2="288" y2="263" stroke="' + G + '" stroke-width="2.5"/>' +
-      t(92, 300, 17, 500, "#4A6355", "আদায়") + t(290, 300, 19, 700, G, "৳ ৫১,৬০০", "end") +
-      t(92, 330, 17, 500, "#4A6355", "বকেয়া") + t(290, 330, 19, 700, RED, "১৮ জন", "end") +
-      t(92, 360, 17, 500, "#4A6355", "ভুল") + t(290, 361, 19, 700, G, "০ ✓", "end") + '</g>';
-    b += '</g>';
+    b += ui();
     b += star(30, 60, 22, "s1") + star(352, 30, 16, "s2") + star(360, 460, 20, "s3") + star(18, 470, 14, "s4");
     return wrap("app", "0 0 380 540", b, 190, 520);
   }
@@ -322,7 +334,7 @@
     b += hoseArm("c-arm-r", 216, 170, 238, 232, INK);
     b += '<g class="c-body"><rect x="20" y="20" width="200" height="282" rx="26" fill="#5B6770" stroke="' + INK + '" stroke-width="6"/>';
     b += '<rect x="40" y="40" width="160" height="66" rx="10" fill="#C9E4C1" stroke="' + INK + '" stroke-width="4"/>';
-    b += '<text class="c-display" x="188" y="88" text-anchor="end" font-family="Hind Siliguri, sans-serif" font-weight="700" font-size="36" fill="#24402A">০</text>';
+    b += '<text class="c-display" x="188" y="88" text-anchor="end" font-family="&#39;Hind Siliguri&#39;, sans-serif" font-weight="700" font-size="36" fill="#24402A">০</text>';
     for (var r = 0; r < 3; r++) for (var c = 0; c < 4; c++) {
       var amber = r === 2 && c === 3;
       b += '<rect class="c-key c-key-' + (r * 4 + c) + '" x="' + (42 + c * 41) + '" y="' + (196 + r * 32) + '" width="34" height="24" rx="6" fill="' + (amber ? "#E4A11B" : "#ECE6D8") + '" stroke="' + INK + '" stroke-width="3"/>';
@@ -381,5 +393,6 @@
     lidOf: function (name) { return (EXPR[name] || EXPR.neutral).lid; },
     q: q,
     mouthLine: mouthLine,
+    panel: panel,
   };
 })();

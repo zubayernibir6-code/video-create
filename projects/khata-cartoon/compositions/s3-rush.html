@@ -1,18 +1,212 @@
 <template>
   <style>
     @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
     #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
-    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+    #root .bg, #root .cam { position: absolute; inset: 0; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
+    #root .pill { padding: 12px 30px 6px; border: 5px solid #2A1E17; border-radius: 40px; background: #E4A11B; color: #2A1E17; font-family: "Baloo Da 2", sans-serif; font-weight: 800; font-size: 54px; white-space: nowrap; }
+    #root .scrawl { font-family: "Hind Siliguri", sans-serif; font-weight: 700; font-size: 70px; color: #1F3F8F; }
+    #root .wind { width: 520px; height: 0; border-top: 8px solid rgba(255, 255, 255, 0.85); border-radius: 50%; }
   </style>
+
   <div id="root" data-composition-id="s3-rush" data-width="1080" data-height="1920" data-duration="42">
-    <div class="clip ph" data-start="0" data-duration="42" data-track-index="0">দৃশ্য 3 (খালি)</div>
+    <div id="s3-bg" class="clip bg" data-start="0" data-duration="42" data-track-index="0">
+      <div class="cam"></div>
+    </div>
   </div>
+
   <script>
     (function () {
-      window.__timelines = window.__timelines || {};
+      var ID = "s3-rush", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s3"), A = HKAct, q = HKCast.q, DUR = 42, B = P.beat;
+      var cam = root.querySelector(".cam");
       var tl = gsap.timeline({ paused: true });
-      tl.to({}, { duration: 42 }, 0);
-      window.__timelines["s3-rush"] = tl;
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      // ── day office, the fee counter sign, people behind the desk ─────────────────────────────
+      var set = HKSet.officeScene(cam, tl, DUR, { mode: "day", h: 10, m: 30 });
+      var sign = HKSet.put(cam, HKSet.counter(), { x: 0, y: 0, w: 1080 });
+      tl.fromTo(sign, { rotation: -1.2 }, { rotation: 1.2, duration: 1.6, ease: "sine.inOut", repeat: 25, yoyo: true, transformOrigin: "540px 40px" }, 0);
+      var parents = [
+        [-30, 1360, 240, { hair: "hijab", top: "#6C5B9E", scarf: "#3B4A5A", skin: "#C68A5E" }],
+        [70, 1420, 280, { hair: "man", top: "#4F8A6E", mustache: true, skin: "#9E6B45" }],
+        [180, 1500, 320, { hair: "woman", top: "#D9468F", scarf: "#E4A11B", skin: "#B57B52" }],
+      ].map(function (p) { return A.stand(cam, "parent", p[0] + p[2] / 2, p[1], p[2], p[3]); });
+      var KR = A.stand(cam, "karim", 870, 1427, 420, { expr: "neutral" }), kr = KR.svg;
+      var desk = HKSet.put(cam, HKSet.deskFront(), { x: 0, y: 0, w: 1080 });
+      var K = A.stand(cam, "khata", 610, 1180, 350, { expr: "tired" }), k = K.svg, kEl = K.el;
+      var C = A.stand(cam, "calc", 90, 1180, 150, { expr: "happy" }), c = C.svg, cEl = C.el;
+      var rb = HKSet.put(cam, HKProp.receiptBook(), { x: 850, y: 1046, w: 190, z: 3 });
+
+      // Karim's pen and eraser live in his screen-left hand
+      var hold = kr.querySelector(".c-arm-l .c-hold");
+      hold.innerHTML = '<g class="h-pen" transform="rotate(40)"><rect x="-7" y="-74" width="14" height="96" rx="6" fill="#2E5AA8" stroke="#2A1E17" stroke-width="4"/><path d="M-7 22 L0 46 L7 22 Z" fill="#E8D9B0" stroke="#2A1E17" stroke-width="3"/></g>' +
+        '<g class="h-eraser" opacity="0" transform="rotate(20)"><rect x="-34" y="-20" width="68" height="40" rx="9" fill="#F4A6B8" stroke="#2A1E17" stroke-width="4"/><rect x="-34" y="-20" width="28" height="40" rx="9" fill="#6FA8DC" stroke="#2A1E17" stroke-width="4"/></g>';
+      var armL = kr.querySelector(".c-arm-l"), foreL = kr.querySelector(".c-fore-l");
+
+      // everyone breathes and blinks
+      A.idle(k, tl, 0, DUR, 0.012); A.idle(kr, tl, 0, DUR, 0.008); A.idle(c, tl, 0, DUR, 0.02);
+      parents.forEach(function (p, i) { A.idle(p.svg, tl, i * 0.4, DUR, 0.01); A.blinks(p.svg, tl, 0, DUR, i + 2); });
+
+      // ── writing, fast ───────────────────────────────────────────────────────────────────────
+      function writing(t0, t1) {
+        tl.to(armL, { rotation: 58, duration: 0.3, ease: "power2.out" }, t0);
+        tl.to(foreL, { rotation: -26, duration: 0.3, ease: "power2.out" }, t0);
+        var n = Math.floor((t1 - t0 - 0.3) / 0.14);
+        tl.fromTo(foreL, { rotation: -32 }, { rotation: -20, duration: 0.14, ease: "sine.inOut", repeat: n - 1, yoyo: true, immediateRender: false }, t0 + 0.3);
+        tl.to(armL, { rotation: 14, duration: 0.3, ease: "power2.inOut" }, t1);
+        tl.to(foreL, { rotation: 0, duration: 0.3, ease: "power2.inOut" }, t1);
+      }
+      A.look(kr, tl, 0.5, -8, 6, 0.3);
+      writing(B("write"), 7.6);
+      // papers fly up from the counter
+      for (var i = 0; i < 4; i++) {
+        var pp = HKSet.put(cam, HKProp.paper(i * 23 - 30), { x: 560 + i * 60, y: 1050, w: 120, z: 8 });
+        gsap.set(pp, { opacity: 0 });
+        var tp = B("papers") + i * 0.25;
+        tl.set(pp, { opacity: 1 }, tp);
+        tl.to(pp, { x: [-380, 260, -120, 340][i], y: -[620, 740, 560, 680][i], rotation: [200, -260, 160, -220][i], duration: 1.3, ease: "power2.out" }, tp);
+        tl.to(pp, { y: 1000, rotation: "+=120", duration: 1.6, ease: "power1.in" }, tp + 1.3);
+      }
+      // "মাসের শেষ সপ্তাহ। একদিনে তিনশো জনের ফি!"
+      A.say(k, tl, P.line("s3-01"), "s3-01", { arm: "none" });
+      A.armsUp(k, tl, P.line("s3-01") + 2.9, 0.9);
+      var pill = A.label(cam, "আজ ৩০০ জন!", 70, 520, "z-index:9;");
+      pill.className += " pill";
+      gsap.set(pill, { opacity: 0, transformOrigin: "50% 50%" });
+      A.pop(pill, tl, P.line("s3-01") + 2.9);
+      tl.to(pill, { rotation: 4, duration: 0.25, ease: "sine.inOut", repeat: 5, yoyo: true }, P.line("s3-01") + 3.4);
+      tl.to(pill, { scale: 0, opacity: 0, duration: 0.3, ease: "back.in(2)" }, 8.1);
+
+      // "নাম বলুন… কোন ক্লাস… কত টাকা?" — Karim to the front parent, who hands over the money
+      A.look(kr, tl, P.line("s3-02") - 0.2, -12, 0, 0.25);
+      A.say(kr, tl, P.line("s3-02"), "s3-02", { arm: "r" });
+      var front = parents[2];
+      tl.to(front.svg.querySelector(".c-head"), { rotation: 8, duration: 0.2, ease: "sine.inOut", repeat: 3, yoyo: true }, P.line("s3-02") + 1.2);
+      var note = HKSet.put(cam, HKProp.note("১০০০"), { x: 330, y: 980, w: 160, z: 4 });
+      gsap.set(note, { opacity: 0, rotation: -12 });
+      tl.set(note, { opacity: 1 }, P.line("s3-02") + 1.4);
+      A.point(front.svg, tl, P.line("s3-02") + 1.2, "r", -62, 1.2);
+      tl.to(note, { x: 420, y: 40, rotation: 8, duration: 0.6, ease: "power2.inOut" }, P.line("s3-02") + 1.6);
+      tl.to(note, { opacity: 0, duration: 0.3 }, P.line("s3-02") + 2.8);
+      writing(P.line("s3-02") + 0.6, B("mistake") + 0.4);
+
+      // the mistake: "১২০" instead of "১২০০", noticed, rubbed out — the ledger winces
+      var wrong = A.label(cam, "১২০", 520, 880, "z-index:6;transform:rotate(-8deg);");
+      wrong.className += " scrawl";
+      gsap.set(wrong, { opacity: 0 });
+      tl.to(wrong, { opacity: 1, duration: 0.25 }, B("mistake"));
+      var qm = HKSet.put(cam, HKProp.mark("?", "#C0392B"), { x: 800, y: 470, w: 110, z: 9 });
+      gsap.set(qm, { opacity: 0 });
+      A.pop(qm, tl, B("notice"), 0.35);
+      tl.to(qm, { opacity: 0, duration: 0.2 }, B("notice") + 1.0);
+      A.expr(kr, tl, B("notice"), "shocked");
+      var er = B("erase");
+      tl.set(kr.querySelector(".h-pen"), { opacity: 0 }, er - 0.05);
+      tl.set(kr.querySelector(".h-eraser"), { opacity: 1 }, er - 0.05);
+      tl.to(armL, { rotation: 52, duration: 0.2 }, er - 0.1);
+      tl.fromTo(foreL, { rotation: -40 }, { rotation: -6, duration: 0.2, ease: "sine.inOut", repeat: 5, yoyo: true, immediateRender: false }, er);
+      tl.to(armL, { rotation: 14, duration: 0.3 }, er + 1.3);
+      tl.to(foreL, { rotation: 0, duration: 0.3 }, er + 1.3);
+      tl.set(kr.querySelector(".h-eraser"), { opacity: 0 }, er + 1.6);
+      tl.set(kr.querySelector(".h-pen"), { opacity: 1 }, er + 1.6);
+      tl.to(wrong, { opacity: 0, duration: 1.0, ease: "power1.in" }, er + 0.2);
+      A.shake(kEl, tl, er, 1.2, 7);
+      A.expr(k, tl, er, "pain");
+      A.expr(kr, tl, er + 1.4, "neutral");
+      // "আউ! আস্তে স্যার, ব্যথা লাগে!"
+      A.say(k, tl, P.line("s3-03"), "s3-03", { arm: "none" });
+      A.arms(k, tl, P.line("s3-03") + 0.2, 100, -100, 0.2);
+      tl.to(q(k, ".c-arm-l"), { rotation: 70, duration: 0.18, ease: "sine.inOut", repeat: 5, yoyo: true }, P.line("s3-03") + 0.45);
+      tl.to(q(k, ".c-arm-r"), { rotation: -70, duration: 0.18, ease: "sine.inOut", repeat: 5, yoyo: true }, P.line("s3-03") + 0.45);
+      A.rest(k, tl, P.line("s3-03") + 1.6);
+      A.look(kr, tl, P.line("s3-03") + 0.3, -14, 4, 0.2);
+      A.expr(kr, tl, P.line("s3-03") + 0.3, "sad");
+      A.expr(kr, tl, P.line("s3-03") + 3.6, "neutral");
+      A.expr(k, tl, P.line("s3-03") + 3.5, "tired");
+
+      // "একটা ভুল মানেই পুরো পাতা আবার মেলাও।" — an ink blot, a torn corner
+      A.say(k, tl, P.line("s3-04"), "s3-04", { arm: "l" });
+      writing(P.line("s3-04") - 0.2, B("blot") + 0.3);
+      var ink = HKSet.put(cam, HKProp.ink(), { x: 500, y: 900, w: 140, z: 6 });
+      gsap.set(ink, { opacity: 0, transformOrigin: "50% 50%" });
+      tl.set(ink, { opacity: 1 }, B("blot"));
+      tl.fromTo(ink, { scale: 0.1, y: -160 }, { scale: 1, y: 0, duration: 0.3, ease: "back.out(2)", immediateRender: false }, B("blot"));
+      tl.to(ink, { opacity: 0, duration: 0.8 }, 23.4);
+      A.expr(k, tl, B("blot") + 0.1, "shocked");
+      var scrap = HKSet.put(cam, HKProp.paper(10), { x: 700, y: 690, w: 90, z: 6 });
+      gsap.set(scrap, { opacity: 0 });
+      tl.set(scrap, { opacity: 1 }, B("tear"));
+      tl.to(scrap, { x: 260, y: -500, rotation: 420, duration: 1.3, ease: "power2.out" }, B("tear"));
+      tl.to(scrap, { opacity: 0, duration: 0.3 }, B("tear") + 1.1);
+      A.expr(k, tl, B("tear") + 0.2, "sad");
+
+      // "আর রশিদ বই? সেটা আবার আরেক জায়গায়!"
+      A.say(k, tl, P.line("s3-05"), "s3-05", { arm: "none" });
+      A.look(k, tl, B("rbook") - 0.3, 14, 6, 0.3);
+      A.point(k, tl, B("rbook"), "r", -80, 2.6);
+      tl.to(rb, { scale: 1.15, duration: 0.3, ease: "sine.inOut", repeat: 3, yoyo: true, transformOrigin: "50% 100%" }, B("rbook"));
+
+      // the gust: the fan blows the receipt book away along the desk — the ledger runs after it
+      var g0 = B("gust");
+      [380, 520, 640].forEach(function (y, i) {
+        var w = A.label(cam, "", 1100, y, "z-index:9;");
+        w.className += " wind";
+        tl.fromTo(w, { x: 0 }, { x: -1700, duration: 1.1, ease: "power1.in", immediateRender: false }, g0 + i * 0.15);
+      });
+      tl.to(rb, { x: -300, rotation: -12, duration: 0.9, ease: "power2.out" }, g0);
+      A.look(k, tl, g0 + 0.1, 14, 0, 0.15);
+      A.expr(k, tl, g0 + 0.1, "shocked");
+      parents.forEach(function (p) { A.look(p.svg, tl, g0 + 0.3, 8, 6, 0.3); });
+      A.look(kr, tl, g0 + 0.2, -10, 10, 0.3);
+      // the book skids LEFT past the ledger, hopping
+      tl.to(rb, { x: -520, duration: 1.4, ease: "none" }, B("hop1") - 1.4);
+      [B("hop1"), B("hop2")].forEach(function (t, i) {
+        tl.to(rb, { y: -110, rotation: i ? 18 : -22, duration: 0.3, ease: "power2.out" }, t);
+        tl.to(rb, { y: 0, duration: 0.3, ease: "power2.in" }, t + 0.3);
+      });
+      tl.to(rb, { x: -760, duration: 2.6, ease: "none" }, B("hop1"));
+      A.walk(kEl, k, tl, B("chase"), 31.0, 0, -220, { step: 0.19, bounce: 18, swing: 32 });
+      A.look(k, tl, B("chase"), -14, 0, 0.15);
+      A.expr(k, tl, B("chase"), "angry");
+      A.look(k, tl, 31.2, 0, -10, 0.2);
+      A.look(k, tl, 31.7, -14, 0, 0.2);
+      A.walk(kEl, k, tl, 32.4, B("jump"), -220, -320, { step: 0.19, bounce: 18, swing: 32 });
+      // the leap … the landing … and a slip backwards beside the calculator
+      tl.to(kEl, { x: -440, duration: 1.2, ease: "power1.out" }, B("jump"));
+      tl.to(kEl, { y: -170, duration: 0.6, ease: "power2.out" }, B("jump"));
+      tl.to(kEl, { y: 0, duration: 0.5, ease: "power2.in" }, B("jump") + 0.6);
+      A.armsUp(k, tl, B("jump"), 1.0);
+      tl.to(rb, { x: -1060, y: 520, rotation: -140, duration: 0.9, ease: "power2.in" }, B("trip") - 0.6);
+      tl.to(cEl, { rotation: -14, duration: 0.15, ease: "power2.out", repeat: 1, yoyo: true }, B("trip"));
+      tl.set(c.querySelector(".c-display"), { textContent: "!!" }, B("trip"));
+      A.expr(c, tl, B("trip"), "shocked");
+      tl.to(kEl, { rotation: 82, duration: 0.5, ease: "power2.in" }, B("trip"));
+      A.expr(k, tl, B("trip"), "shocked");
+      var cr = B("crash");
+      A.shake(cam, tl, cr, 0.4, 10);
+      var stars = HKSet.put(cam, HKProp.dizzyStars(), { x: 400, y: 960, w: 260, z: 9 });
+      gsap.set(stars, { opacity: 0, transformOrigin: "50% 50%" });
+      tl.set(stars, { opacity: 1 }, B("dizzy"));
+      tl.fromTo(stars, { scaleX: 1 }, { scaleX: -1, duration: 0.35, ease: "sine.inOut", repeat: Math.round((B("dizzyEnd") - B("dizzy")) / 0.35) - 1, yoyo: true }, B("dizzy"));
+      A.dizzy(k, tl, B("dizzy"), B("dizzyEnd"));
+      A.expr(k, tl, B("dizzy"), "neutral");
+      A.arms(k, tl, B("trip") + 0.2, 160, -160, 0.3);
+      // everyone reacts: Karim gasps, the parents laugh
+      A.expr(kr, tl, cr, "shocked");
+      tl.to(kr.querySelector(".c-mouth-open"), { scaleY: 0.8, duration: 0.2 }, cr);
+      tl.to(kr.querySelector(".c-mouth-open"), { scaleY: 0, duration: 0.3 }, cr + 1.6);
+      parents.forEach(function (p, i) {
+        A.expr(p.svg, tl, cr + 0.4 + i * 0.15, "happy");
+        tl.to(p.svg.querySelector(".c-mouth-open"), { scaleY: 0.6, duration: 0.15, ease: "sine.inOut", repeat: 9, yoyo: true }, cr + 0.5 + i * 0.15);
+        tl.to(p.svg.querySelector(".c-head"), { rotation: 5, duration: 0.15, ease: "sine.inOut", repeat: 9, yoyo: true }, cr + 0.5 + i * 0.15);
+      });
+      tl.set(c.querySelector(".c-display"), { textContent: "০" }, B("dizzyEnd"));
+
+      A.blinks(k, tl, 1, 33, 2); A.blinks(kr, tl, 0, DUR, 5); A.blinks(c, tl, 0, DUR, 6);
+      tl.to({}, { duration: DUR }, 0);
     })();
   </script>
 </template>

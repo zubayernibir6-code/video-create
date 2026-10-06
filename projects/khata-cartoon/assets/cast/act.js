@@ -1,6 +1,8 @@
 /* act.js — acting helpers for the cast (cast.js). Everything writes into a paused GSAP timeline at explicit
  * times, so any frame can be seeked and rendered the same way every time.
  *
+ * fromTo moves here use immediateRender:false: a fromTo otherwise applies its FROM pose the moment it is built, so a
+ * scene's second walk or shake would show its start pose from t = 0.
  * Layers, so moves never fight over one property:
  *   actor wrapper (HTML div): position, walking, jumps, squash (transform-origin: bottom centre)
  *   .c-root:   breathing (scaleY) · whole-body tilt while talking (rotation; khata/app/calc)
@@ -26,6 +28,29 @@
   }
 
   window.HKAct = {
+    // put a character in a scene with its FEET at (footX, footY), drawn w px wide; returns { el, svg }
+    stand: function (parent, name, footX, footY, w, o) {
+      o = o || {};
+      var el = document.createElement("div");
+      el.className = "actor " + (o.cls || "");
+      parent.appendChild(el);
+      var svg = HKCast.mount(el, name, o);
+      var vb = svg.getAttribute("viewBox").split(" ").map(Number);
+      var feet = svg.querySelector(".c-root").getAttribute("data-o").split(" ").map(Number);
+      var k = w / vb[2];
+      el.style.cssText = "position:absolute;left:" + (footX - feet[0] * k) + "px;top:" + (footY - feet[1] * k) + "px;width:" + w + "px;" +
+        "transform-origin:" + (feet[0] * k) + "px " + (feet[1] * k) + "px;" + (o.z !== undefined ? "z-index:" + o.z + ";" : "");
+      return { el: el, svg: svg };
+    },
+    // an HTML label (pill, card, big number) at x,y; css adds to the base style
+    label: function (parent, html, x, y, css) {
+      var d = document.createElement("div");
+      d.className = "lbl";
+      d.style.cssText = "position:absolute;left:" + x + "px;top:" + y + "px;font-family:'Hind Siliguri',sans-serif;font-weight:700;" + (css || "");
+      d.innerHTML = html;
+      parent.appendChild(d);
+      return d;
+    },
     expr: function (svg, tl, t, name) {
       HKCast.expr(svg, name, tl, t);
       sched(svg).push([t, HKCast.lidOf(name)]);
@@ -95,17 +120,17 @@
       var step = o.step || 0.36, n = Math.max(1, Math.round((t1 - t0) / step));
       var swing = o.swing || 20, ll = one(svg, ".c-leg-l"), lr = one(svg, ".c-leg-r");
       var al = one(svg, ".c-arm-l"), ar = one(svg, ".c-arm-r");
-      tl.fromTo(el, { x: x0 }, { x: x1, duration: t1 - t0, ease: "none" }, t0);
-      tl.fromTo(el, { y: 0 }, { y: -(o.bounce || 12), duration: step / 2, ease: "sine.out", repeat: n * 2 - 1, yoyo: true }, t0);
+      tl.fromTo(el, { x: x0 }, { x: x1, duration: t1 - t0, ease: "none", immediateRender: false }, t0);
+      tl.fromTo(el, { y: 0 }, { y: -(o.bounce || 12), duration: step / 2, ease: "sine.out", repeat: n * 2 - 1, yoyo: true, immediateRender: false }, t0);
       if (ll && lr) {
-        tl.fromTo(ll, { rotation: -swing }, { rotation: swing, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true }, t0);
-        tl.fromTo(lr, { rotation: swing }, { rotation: -swing, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true }, t0);
+        tl.fromTo(ll, { rotation: -swing }, { rotation: swing, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true, immediateRender: false }, t0);
+        tl.fromTo(lr, { rotation: swing }, { rotation: -swing, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true, immediateRender: false }, t0);
         tl.to([ll, lr], { rotation: 0, duration: 0.2 }, t1);
       }
       if (al && ar && !o.armsBusy) {
         var ra = Number(al.getAttribute("data-rest") || 0), rb = Number(ar.getAttribute("data-rest") || 0);
-        tl.fromTo(al, { rotation: ra + swing * 0.8 }, { rotation: ra - swing * 0.8, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true }, t0);
-        tl.fromTo(ar, { rotation: rb - swing * 0.8 }, { rotation: rb + swing * 0.8, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true }, t0);
+        tl.fromTo(al, { rotation: ra + swing * 0.8 }, { rotation: ra - swing * 0.8, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true, immediateRender: false }, t0);
+        tl.fromTo(ar, { rotation: rb - swing * 0.8 }, { rotation: rb + swing * 0.8, duration: step, ease: "sine.inOut", repeat: n - 1, yoyo: true, immediateRender: false }, t0);
         tl.to(al, { rotation: ra, duration: 0.25 }, t1);
         tl.to(ar, { rotation: rb, duration: 0.25 }, t1);
       }
@@ -160,7 +185,7 @@
     },
     shake: function (el, tl, t, dur, amp) {
       var n = Math.max(2, Math.round(dur / 0.06));
-      tl.fromTo(el, { x: -(amp || 6) }, { x: amp || 6, duration: 0.06, repeat: n - 1, yoyo: true, ease: "none" }, t);
+      tl.fromTo(el, { x: -(amp || 6) }, { x: amp || 6, duration: 0.06, repeat: n - 1, yoyo: true, ease: "none", immediateRender: false }, t);
       tl.to(el, { x: 0, duration: 0.05 }, t + n * 0.06);
     },
     pop: function (el, tl, t, dur) {

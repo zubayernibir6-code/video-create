@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // assemble.mjs — build index.html (and assets/story/plan.js) from story/plan.json, story/voice.json, story/lines.json:
 //   node build/assemble.mjs                 → index.html (the whole film)
-//   node build/assemble.mjs --only=s3       → preview-s3.html: that scene alone from 0 s, with its voice, sfx and
-//                                             captions (render it with: hyperframes render -c preview-s3.html …)
+//   node build/assemble.mjs --only=s3       → previews/preview-s3.html: that scene alone from 0 s, with its voice, sfx and
+//                                             captions (render it with: hyperframes render -c previews/preview-s3.html …)
 // - scenes as sub-compositions, back to back, with a cartoon "dot wipe" between them (transform only, capture-safe)
 // - one <audio> per voice line at scene start + its line time; SFX at their HEARD time minus the file's lead_s
 //   (assets/sfx/manifest.json); "every" rows repeat a sound; ambience beds pre-looped to length with fades
@@ -63,7 +63,7 @@ for (const s of scenes) {
     let a = speechA;
     chunks.forEach((c, k) => {
       const b = k === chunks.length - 1 ? speechB + 0.25 : a + ((speechB - speechA) * c.length) / total;
-      caps.push({ at: a - 0.05, dur: b - a + 0.05, text: c, who: who[id] });
+      caps.push({ at: a - 0.05, dur: b - a + 0.05, text: c, who: who[id], bottom: (s.capBottom || {})[id] });
       a = b;
     });
   });
@@ -98,6 +98,9 @@ function pack(cues, base) {
   }
   return ends.length;
 }
+// every dot wipe gets a sound (CLAUDE.md §0d rule 7): a short whoosh centred on each cut, and one as the closing dot grows
+for (const sc of scenes.slice(1)) sfxCues.push({ src: "assets/sfx/whoosh-short.mp3", at: sc.start - 0.3 - (lead["whoosh-short.mp3"] ?? 0), dur: fdur["whoosh-short.mp3"] ?? 0.5, vol: 0.32 });
+sfxCues.push({ src: "assets/sfx/whoosh.mp3", at: TOTAL - 0.62 - (lead["whoosh.mp3"] ?? 0), dur: fdur["whoosh.mp3"] ?? 0.6, vol: 0.3 });
 const nv = pack(voiceCues, 30), ns = pack(sfxCues, 10), na = pack(ambCues, 5);
 sfxCues.forEach((c, i) => (c.id = `fx-${String(i + 1).padStart(3, "0")}`));
 ambCues.forEach((c, i) => (c.id = `amb-${i + 1}`));
@@ -113,7 +116,7 @@ writeFileSync(path.join(ROOT, "assets", "story", "plan.js"),
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const audio = (c) => `<audio id="${c.id}" src="${c.src}" data-start="${r3(c.at)}" data-duration="${r3(c.dur)}" data-track-index="${c.track}" data-volume="${c.vol}"></audio>`;
 const sp = plan.speakers;
-const capHtml = caps.map((c, i) => `<div id="cap-${i + 1}" class="clip cap" data-start="${r3(c.at)}" data-duration="${r3(c.dur)}" data-track-index="${40 + (i % 2)}"><span class="who" style="background:${sp[c.who].color}">${sp[c.who].name}</span><span class="txt">${esc(c.text)}</span></div>`);
+const capHtml = caps.map((c, i) => `<div id="cap-${i + 1}" class="clip cap" data-start="${r3(c.at)}" data-duration="${r3(c.dur)}" data-track-index="${40 + (i % 2)}"${c.bottom ? ` style="bottom:${c.bottom}px"` : ""}><span class="who" style="background:${sp[c.who].color}">${sp[c.who].name}</span><span class="txt">${esc(c.text)}</span></div>`);
 const cuts = scenes.slice(1).map((s) => r3(s.start));
 
 const html = `<!doctype html>
@@ -140,7 +143,7 @@ const html = `<!doctype html>
       /* captions: above the platform buttons/description zone (bottom ~420 px, right ~110 px) */
       .cap { position: absolute; left: 110px; right: 110px; bottom: 420px; display: flex; flex-direction: column; align-items: center; z-index: 50; }
       .cap .who { font-family: "Hind Siliguri", sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2; color: #FFFFFF; padding: 5px 20px 3px; border-radius: 22px; margin-bottom: 10px; }
-      .cap .txt { font-family: "Hind Siliguri", sans-serif; font-weight: 700; font-size: 50px; line-height: 1.32; color: #FFFFFF; background: rgba(20, 14, 10, 0.84); padding: 14px 30px 10px; border-radius: 24px; text-align: center; max-width: 860px; }
+      .cap .txt { font-family: "Hind Siliguri", sans-serif; font-weight: 700; font-size: 50px; line-height: 1.32; color: #FFFFFF; background: rgba(20, 14, 10, 0.84); padding: 14px 30px 10px; border-radius: 24px; text-align: center; max-width: 860px; text-wrap: balance; }
       .wipe { position: absolute; left: -660px; top: -240px; width: 2400px; height: 2400px; border-radius: 50%; background: #1B1410; z-index: 60; transform: scale(0); }
     </style>
   </head>
@@ -179,7 +182,8 @@ ${ambCues.map((c) => "      " + audio(c)).join("\n")}
   </body>
 </html>
 `;
-const outFile = ONLY ? `preview-${ONLY}.html` : "index.html";
+const outFile = ONLY ? `previews/preview-${ONLY}.html` : "index.html";
+if (ONLY) mkdirSync(path.join(ROOT, "previews"), { recursive: true });
 writeFileSync(path.join(ROOT, outFile), html);
 if (!ONLY) rmSync(path.join(ROOT, ".hf-audio-cues.json"), { force: true });   // generated file; no stale cue restores
 console.log(`assemble → ${outFile}: ${scenes.length} scenes, ${TOTAL} s · ${voiceCues.length} voice lines (${nv} lanes) · ${sfxCues.length} sfx (${ns} lanes) · ${ambCues.length} beds · ${caps.length} captions`);

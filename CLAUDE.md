@@ -403,6 +403,23 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   (inside espeakng-loader) are GPL-3.0.** That does not affect the audio they generate, so selling videos is fine.
   But never bundle these packages inside a product the user sells.
 
+- ⚠️ **FFmpeg 8.1.1 edge bug: 1080-wide HyperFrames renders lost their right 8 px (found 2026-10-06, fixed in tools).**
+  The first khata-cartoon master (1080×1920) had a pure-black 8 px strip down the right edge. Traced step by step:
+  - The captured frames are full width. The strip appears in HyperFrames' MP4 encode, which converts through
+    `format=gbrp,scale=out_color_matrix=bt709…`.
+  - Plain FFmpeg reproduces it: gbrp→YUV leaves the right 8 px black at widths **1080 and 1096**.
+  - 1072, 1084, 1088, 720 and 1920 are fine, so the promo and every 16:9 render were never affected.
+  - finish.mjs's own 9:16/1:1/4:5 exports don't use gbrp and are clean.
+  - Not the capture mode: `--experimental-fast-capture=false` and `PRODUCER_ENABLE_STREAMING_ENCODE=false` both
+    still showed it; png-sequence did not.
+
+  **Fix:**
+  - `finish.mjs` self-tests the conversion at the project's size (`gbrpEdgeOk`, one lavfi frame). On failure it
+    renders a copy in `.cache/padded/` whose page is 1088 wide, with the root pinned at 1080 by `!important` CSS.
+    Without the pin, the runtime stretches the root to data-width and centred captions move 4 px.
+  - It then crops back with x264 (CRF 15 at high quality) and removes the copy.
+  - `qc.mjs` now FAILs any video with a thin pure-black band along an edge (`edges`).
+  - Plain `hyperframes render` of a 1080-wide project still has the bug, so always deliver through finish.mjs.
 - ✅ **`tools/design-lint.mjs`: the measured design review (2026-10-06, after the first real render).** The user saw
   three flaws in the rendered promo that `hyperframes check` had passed (numbers off their card, column rules at two
   heights, "সং খ্যা য়" letter-spaced) and asked that such mistakes be caught automatically. `node tools/design-lint.mjs
@@ -535,6 +552,14 @@ every frame packet / brief you write, and run design-lint after every build chan
    the biggest remaining upgrade for any promo (the user's Pixabay task → `music-pick.mjs`).
 9. **Look at it:** after the render, extract frames every 0.5 s (`ffmpeg -vf "fps=2,scale=480:270"` + `tile=4x3`) and
    review every one, plus the held end of each scene at full size. Lint and design-lint do not judge taste.
+10. **Quote every font family name** in CSS and in SVG `font-family="…"` attributes. A name with a digit (`Baloo Da 2`)
+    is not a valid unquoted CSS identifier, so Chrome throws away the WHOLE list and draws the text in Times New Roman
+    + Nirmala UI. No error appears anywhere. In the khata-cartoon every Baloo label was a system font until design-lint's
+    `font_fallback` caught it (2026-10-06). In a JS-built SVG string, write `font-family="&#39;Baloo Da 2&#39;, sans-serif"`.
+11. **Symbols like ✓ are not in the pack fonts** (Segoe UI Symbol drew them). Draw ticks and arrows as SVG paths.
+12. **Baloo's line box is huge** (ascent 1.095 em, descent 0.589 em; Hind 1.116 / 0.501). `hyperframes check`'s
+    `content_overlap` measures those boxes, so stacked SVG texts need baseline gaps computed from these numbers.
+13. **Captions** get `text-wrap: balance` (otherwise one short word sits alone on the last line; design-lint `orphan_word`).
 
 ---
 
@@ -1431,6 +1456,55 @@ All 7 frame workers were dispatched at once and **all 7 died** with
 one (`04-fee-entry`) had not, and was written inline by the orchestrator instead. Verify the
 artifacts on disk rather than trusting the completion status — the dispatch contract says
 exactly this. **On this account, dispatch frame workers in waves of 2–3, not 7 at once.**
+
+---
+
+## 4h. Second real video — `projects/khata-cartoon` (5-minute vertical Bengali cartoon, 2026-10-06)
+
+The user asked for a cartoon whose story reads from the pictures alone and whose voices are understandable,
+with sound effects and visible movement (mouths, hands and legs). Story: "খাতা নিজেই কথা বলে". The old red ledger narrates,
+the হিসাব খাতা app arrives, and Karim Sir goes home early to his daughter. 1080×1920, 300 s, 9 scenes, 38 voice lines
+(Piper, `tools/bn-tts.mjs` speakers 5/1/9/15/12), no music (none licensed yet), about 260 SFX cues and ambience beds.
+
+**How it is built (all hand-written, no skill workflow):**
+- `story/lines.json` holds the script lines and voices. `build/voice.mjs` makes each WAV (cached by `.sig`), and writes `story/voice.json`
+  (durations) and `assets/voice/lipsync.js` (per-frame mouth openness, 30 fps, digits 0–9).
+- `story/plan.json` is **the single timing source**: per scene `dur`, line start times, named `beats`, `sfx`
+  (`[beat±offset, file, volume]`, auto-shifted by `lead_s`), `every` (footsteps), `amb` (beds), and `capBottom`
+  (moves one caption up).
+- `build/assemble.mjs` generates `index.html` (scenes back to back, voice/SFX/ambience `<audio>` packed onto lanes,
+  speaker-chip captions, a dot wipe at each cut) and `assets/story/plan.js` (`HKPlan.scene(id).line()/.beat()`).
+  `--only=sN` writes `previews/preview-sN.html` (previews MUST live in `previews/`: a second root composition in the
+  project root fails check with `multiple_root_compositions`). Never hand-edit index.html, and do not run
+  hf-postassemble on this project.
+- `assets/cast/cast.js` is the SVG rig: 7 characters with pivots in `data-o`, expressions, and a mouth that is lip-synced through
+  `.c-mouth-open` scaleY. `act.js` (HKAct) holds acting helpers: stand-by-the-feet, say (lip-sync + nods + talking arm),
+  walk, hop, wave, point, count. `sets.js` holds sets and props.
+- `build/sfx-synth.mjs` synthesises the cartoon sounds (boing, tick/tock, slide, snore…) with FFmpeg `aevalsrc`.
+
+**GSAP traps found here (each cost a re-snapshot):**
+- `fromTo` renders its FROM state at build time. Chained moves on one element (walk after walk, shake) need
+  `immediateRender: false`, or the element jumps to the last chain's start position from t=0.
+- Never pass `svgOrigin`/`transformOrigin` inside tween vars for SVG parts of a scene that is hidden at build time. The bbox is
+  measured wrong (a cloud flew 2,400 px off-screen). Set pivots once with `gsap.set(el, {svgOrigin})` at build time.
+- People behind a counter: draw `HKSet.deskFront()` after them, so their legs disappear behind it. Characters standing
+  ON the desk get a higher z-index.
+
+Credit line required in the description (Piper voice, CC BY-SA training data): see `assets/voices/piper/CREDITS.md`.
+It is also shown on the end card. Upload text for the user: `projects/khata-cartoon/UPLOAD.md`.
+
+**Delivered 2026-10-06:** `renders/khata-cartoon/2026-10-06_1201/` (master only, `--formats=9x16`). Run time 1,352 s:
+- check + design-lint ~2 min
+- render of the 1088 page ~18 min (drawelement capture)
+- crop re-encode ~3 min
+
+QC: all PASS, including `edges`; −14.1 LUFS, TP −1.4. **Verified by:**
+- `voice-sync` (cross-correlating each voice WAV against the master): 38/38 lines at 0 ms lag, correlation ≥ 0.97
+- a whoosh audible at every cut (−8 to −14 dB peaks)
+- all 600 half-second frames reviewed
+- PSNR 52–53 dB against the previous render in the unaffected area (nothing moved)
+
+The two earlier renders (with the edge strip) are in `.quarantine/2026-10-06/`.
 
 ---
 

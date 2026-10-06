@@ -1,18 +1,238 @@
 <template>
   <style>
     @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500; src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
     #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
-    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+    #root .bg, #root .cam, #root .layer { position: absolute; inset: 0; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
   </style>
+
   <div id="root" data-composition-id="s7-twelve" data-width="1080" data-height="1920" data-duration="34">
-    <div class="clip ph" data-start="0" data-duration="34" data-track-index="0">দৃশ্য 7 (খালি)</div>
+    <div id="s7-bg" class="clip bg" data-start="0" data-duration="34" data-track-index="0">
+      <div class="cam"><div class="layer office"></div><div class="layer home"></div></div>
+    </div>
   </div>
+
   <script>
     (function () {
-      window.__timelines = window.__timelines || {};
+      var ID = "s7-twelve", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s7"), A = HKAct, q = HKCast.q, DUR = 34, B = P.beat, CUT = B("cut");
+      var off = root.querySelector(".office"), home = root.querySelector(".home");
       var tl = gsap.timeline({ paused: true });
-      tl.to({}, { duration: 34 }, 0);
-      window.__timelines["s7-twelve"] = tl;
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      // ═══ 7a · the office at month end ════════════════════════════════════════════════════════
+      HKSet.officeScene(off, tl, CUT, { mode: "day", h: 4, m: 0 });
+      var KR = A.stand(off, "karim", 905, 1427, 390, { expr: "happy" }), kr = KR.svg;
+      HKSet.put(off, HKSet.deskFront(), { x: 0, y: 0, w: 1080 });
+      var AP = A.stand(off, "app", 660, 1170, 250, { expr: "happy", z: 6 }), ap = AP.svg;
+      var K = A.stand(off, "khata", 330, 1180, 250, { expr: "neutral", z: 6 }), k = K.svg, kEl = K.el;
+      A.idle(k, tl, 0, CUT, 0.014); A.idle(ap, tl, 0, CUT, 0.03); A.idle(kr, tl, 0, 17, 0.008);
+      tl.to(AP.el, { y: -16, duration: 1.2, ease: "sine.inOut", repeat: 15, yoyo: true }, 0);
+
+      // the desk calendar: the 29th flips away — month end
+      var cal = HKSet.put(off, HKProp.calendar("২৯", "৩০", "সেপ্টেম্বর", "মাস শেষ!"), { x: 360, y: 170, w: 360, z: 8, origin: "50% 50%" });
+      tl.fromTo(cal, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, 0);
+      tl.to(cal.querySelector(".cal-front"), { scaleY: 0, duration: 0.4, ease: "power2.in" }, B("flip") + 0.2);
+      tl.set(cal.querySelector(".cal-front"), { opacity: 0 }, B("flip") + 0.6);
+      tl.to(cal, { scale: 1.08, duration: 0.15, ease: "power2.out", repeat: 1, yoyo: true }, B("flip") + 0.6);
+      tl.to(cal, { scale: 0, opacity: 0, duration: 0.3, ease: "back.in(1.8)" }, B("card1") - 0.4);
+      A.look(k, tl, 0.1, 6, -10, 0.3);
+      A.look(kr, tl, 0.1, -6, -8, 0.3);
+
+      // "আগে মাস শেষের হিসাবে লাগত চার ঘণ্টা।" — the old number, then struck through
+      var c1 = HKSet.put(off, HKProp.numberCard("৪ ঘণ্টা", "আগে · মাস শেষের হিসাব", "#C0392B"), { x: 180, y: 110, w: 720, z: 8, origin: "50% 50%" });
+      gsap.set(c1, { opacity: 0 });
+      tl.fromTo(c1, { scale: 0.3, opacity: 0, rotation: -6 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.45, ease: "back.out(1.8)", immediateRender: false }, B("card1"));
+      var strike = A.label(off, '<svg viewBox="0 0 500 70" style="display:block;width:100%;overflow:visible"><path d="M12 52 Q250 22 488 14" fill="none" stroke="#C0392B" stroke-width="16" stroke-linecap="round"/></svg>', 280, 200, "width:520px;z-index:9;transform-origin:0% 50%;");
+      gsap.set(strike, { scaleX: 0 });
+      tl.to(strike, { scaleX: 1, duration: 0.3, ease: "power2.out" }, B("strike"));
+      tl.to(c1, { rotation: -2, duration: 0.06, repeat: 3, yoyo: true }, B("strike") + 0.3);
+      A.say(k, tl, P.line("s7-01"), "s7-01", { arm: "r" });
+      A.point(k, tl, P.line("s7-01") + 0.2, "l", 125, 1.4);
+      A.expr(k, tl, B("strike") - 0.6, "angry");
+      A.arms(k, tl, B("strike") - 0.2, -40, 40, 0.3);
+      tl.to(kEl, { rotation: -5, duration: 0.12, repeat: 3, yoyo: true }, B("strike"));
+      A.rest(k, tl, B("card2") - 0.4);
+      // Karim keeps working: taps on the app
+      var armL = kr.querySelector(".c-arm-l"), foreL = kr.querySelector(".c-fore-l");
+      function tapping(t0, t1, taps) {
+        tl.to(armL, { rotation: 92, duration: 0.3, ease: "power2.out" }, t0);
+        tl.to(foreL, { rotation: -15, duration: 0.3, ease: "power2.out" }, t0);
+        taps.forEach(function (t) { tl.to(foreL, { rotation: -30, duration: 0.08, ease: "power2.in", repeat: 1, yoyo: true }, t - 0.08); });
+        tl.to(armL, { rotation: 14, duration: 0.35, ease: "power2.inOut" }, t1);
+        tl.to(foreL, { rotation: 0, duration: 0.35, ease: "power2.inOut" }, t1);
+      }
+      tapping(1.0, 4.3, [1.5, 2.1, 2.7, 3.3, 3.9]);
+      A.look(kr, tl, 1.0, -12, 8, 0.3);
+      A.look(kr, tl, B("strike"), -4, -10, 0.3);
+
+      // "এখন লাগে মাত্র বারো মিনিট। আর ভুল? শূন্য!" — the new number counts up; a stamp slams down
+      var c2 = HKSet.put(off, HKProp.numberCard("০ মিনিট", "এখন · হিসাব খাতায়", "#16603A"), { x: 180, y: 440, w: 720, z: 8, origin: "50% 50%" });
+      gsap.set(c2, { opacity: 0 });
+      tl.fromTo(c2, { scale: 0.3, opacity: 0, rotation: 6 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.45, ease: "back.out(1.8)", immediateRender: false }, B("card2") - 0.2);
+      A.count(c2.querySelector(".nc-big"), tl, B("card2"), 0, 12, B("card2End") - B("card2"), "", " মিনিট");
+      tl.to(c2, { scale: 1.06, duration: 0.15, ease: "power2.out", repeat: 1, yoyo: true }, B("card2End"));
+      var stamp = HKSet.put(off, HKProp.stamp("ভুল", "০"), { x: 810, y: 560, w: 230, z: 9, origin: "50% 50%" });
+      stamp.setAttribute("data-layout-ignore", "");   // one graphic: its two words sit inside one ring
+      gsap.set(stamp, { opacity: 0 });
+      tl.fromTo(stamp, { scale: 2.4, opacity: 0, rotation: 20 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.22, ease: "power3.in", immediateRender: false }, B("zero") - 0.22);
+      tl.to(c2, { y: 8, duration: 0.08, ease: "power2.out", repeat: 1, yoyo: true }, B("zero"));
+      A.expr(k, tl, B("card2") - 0.4, "happy");
+      A.say(k, tl, P.line("s7-02"), "s7-02", { arm: "r" });
+      A.point(k, tl, P.line("s7-02") + 0.4, "l", 115, 1.6);
+      A.hop(kEl, tl, B("zero") + 0.05, 90, 0.5);
+      A.armsUp(k, tl, B("zero") + 0.1, 0.8);
+      A.hop(AP.el, tl, B("card2End"), 50, 0.45);
+      q(ap, ".c-spark").forEach(function (st, i) {
+        tl.fromTo(st, { scale: 0, rotation: 0 }, { scale: 1.3, rotation: 120, duration: 0.4, ease: "back.out(2)", immediateRender: false }, B("zero") + 0.1 + i * 0.08);
+        tl.to(st, { scale: 0, duration: 0.3 }, B("zero") + 1.4 + i * 0.08);
+      });
+      tapping(7.0, 9.4, [7.5, 8.1, 8.7]);
+      A.look(kr, tl, 7.0, -12, 8, 0.3);
+      A.look(kr, tl, B("zero") - 0.3, -4, -10, 0.3);
+      tl.to(kr.querySelector(".c-head"), { rotation: 6, duration: 0.2, ease: "sine.inOut", repeat: 3, yoyo: true }, B("zero") + 0.2);
+      // the cards leave together
+      tl.to([c1, strike, c2, stamp], { y: -160, opacity: 0, duration: 0.4, ease: "power2.in", stagger: 0.05 }, B("montage") - 0.3);
+
+      // ── the montage: one tap, one receipt, three phones ────────────────────────────────────
+      var phones = [["১,২০০", "তানভীর · ৮ম"], ["২,৪০০", "নুসরাত · ৮ম"], ["১,৫০০", "আরিফুল · ৬ষ্ঠ"]].map(function (d, i) {
+        var ph = HKSet.put(off, HKProp.phone(d[0], d[1]), { x: 75 + i * 330, y: 190, w: 270, z: 8, origin: "50% 100%" });
+        gsap.set(ph, { opacity: 0 });
+        gsap.set(ph.querySelector(".ph-note"), { opacity: 0 });
+        return ph;
+      });
+      tapping(B("ph1") - 0.6, B("ph3") + 0.3, [B("ph1") - 0.25, B("ph2") - 0.25, B("ph3") - 0.25]);
+      A.look(kr, tl, B("ph1") - 0.6, -12, 8, 0.3);
+      ["ph1", "ph2", "ph3"].forEach(function (b, i) {
+        var t = B(b), ph = phones[i], rot = [-6, 0, 6][i];
+        tl.set(ph, { opacity: 1 }, t - 0.3);
+        tl.fromTo(ph, { scale: 0, rotation: rot * 3 }, { scale: 1, rotation: rot, duration: 0.4, ease: "back.out(1.8)", immediateRender: false }, t - 0.3);
+        tl.fromTo(ph.querySelector(".ph-note"), { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)", immediateRender: false }, t);
+        tl.to(ph, { rotation: rot + 5, duration: 0.07, repeat: 5, yoyo: true }, t);
+        A.look(k, tl, t - 0.2, [-12, 0, 12][i], -10, 0.2);
+        tl.to(ap.querySelector(".c-glow"), { opacity: 1, duration: 0.15, repeat: 1, yoyo: true }, t - 0.25);
+      });
+      A.expr(k, tl, B("ph1"), "happy");
+      tl.to(phones, { y: -700, rotation: "+=20", duration: 0.5, ease: "power2.in", stagger: 0.07 }, B("done"));
+
+      // ── home time: a stretch, the bag, a little jig, a wave — and out ───────────────────────
+      A.look(kr, tl, B("done"), 0, 0, 0.3);
+      A.arms(kr, tl, B("done"), 165, -165, 0.35);
+      tl.to(kr.querySelector(".c-head"), { rotation: -8, duration: 0.3, ease: "sine.inOut", repeat: 1, yoyo: true }, B("done") + 0.1);
+      A.rest(kr, tl, B("jig") - 0.6, 0.3);
+      var bagHold = kr.querySelector(".c-arm-r .c-hold");
+      bagHold.innerHTML = HKProp.handBag();
+      gsap.set(bagHold, { opacity: 0 });
+      tl.set(bagHold, { opacity: 1 }, B("jig") - 0.3);
+      tl.fromTo(bagHold, { scale: 0.4 }, { scale: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, B("jig") - 0.3);
+      A.hop(KR.el, tl, B("jig"), 60, 0.45);
+      A.hop(KR.el, tl, B("jig") + 0.8, 60, 0.45);
+      A.arms(kr, tl, B("jig"), 120, null, 0.25);
+      A.rest(kr, tl, B("jig") + 1.5, 0.3);
+      // "আজ সবার আগে বাসায়!" — a wave to the two on the desk
+      A.say(kr, tl, P.line("s7-03"), "s7-03", { arm: "none" });
+      A.wave(kr, tl, P.line("s7-03") - 0.1, "l", 6);
+      A.look(kr, tl, P.line("s7-03") - 0.2, -10, 4, 0.3);
+      A.look(k, tl, B("jig"), 12, -6, 0.3);
+      A.look(ap, tl, B("jig"), 12, -6, 0.3);
+      A.wave(k, tl, P.line("s7-03") + 0.2, "r", 5);
+      A.wave(ap, tl, P.line("s7-03") + 0.4, "r", 5);
+      // off he goes, bag swinging
+      A.walk(KR.el, kr, tl, B("exit"), B("exitEnd"), 0, 600, { step: 0.45, bounce: 10, swing: 16, armsBusy: true });
+      tl.fromTo(kr.querySelector(".c-arm-r"), { rotation: -20 }, { rotation: -6, duration: 0.45, ease: "sine.inOut", repeat: 3, yoyo: true, immediateRender: false }, B("exit"));
+      tl.fromTo(kr.querySelector(".c-arm-l"), { rotation: 28 }, { rotation: 0, duration: 0.45, ease: "sine.inOut", repeat: 3, yoyo: true, immediateRender: false }, B("exit"));
+      // the two of them high-five
+      var hf = B("exit") + 1.2;
+      A.look(k, tl, hf - 0.5, 12, 0, 0.2); A.look(ap, tl, hf - 0.5, -12, 0, 0.2);
+      tl.to(kEl, { x: 50, duration: 0.3, ease: "power2.out" }, hf - 0.35);
+      tl.to(AP.el, { x: -50, duration: 0.3, ease: "power2.out" }, hf - 0.35);
+      A.arms(k, tl, hf - 0.35, null, -150, 0.3);
+      A.arms(ap, tl, hf - 0.35, 150, null, 0.3);
+      var burst = HKSet.put(off, HKProp.burst(), { x: 395, y: 640, w: 170, z: 9, origin: "50% 50%" });
+      gsap.set(burst, { opacity: 0 });
+      A.pop(burst, tl, hf, 0.3);
+      tl.to(burst, { opacity: 0, scale: 1.4, duration: 0.3 }, hf + 0.3);
+      A.expr(k, tl, hf, "happy");
+
+      // ═══ the cut: the home slides in ═════════════════════════════════════════════════════════
+      gsap.set(home, { x: 1080 });
+      tl.to(home, { x: 0, duration: 0.45, ease: "power3.inOut" }, CUT - 0.3);
+      tl.to(off, { x: -380, duration: 0.45, ease: "power3.inOut" }, CUT - 0.3);
+      tl.set(off, { opacity: 0 }, CUT + 0.2);
+
+      // ═══ 7b · home ══════════════════════════════════════════════════════════════════════════
+      var hs = HKSet.put(home, HKSet.home(), { x: 0, y: 0, w: 1080 });
+      var door = hs.querySelector(".set-door");
+      // Karim in the doorway; an outer layer carries him forward (down-stage and larger)
+      var walkIn = document.createElement("div");
+      walkIn.className = "layer";
+      walkIn.style.transformOrigin = "805px 1210px";
+      home.appendChild(walkIn);
+      var K2 = A.stand(walkIn, "karim", 805, 1210, 330, { expr: "happy" }), k2 = K2.svg;
+      var bag2 = k2.querySelector(".c-arm-r .c-hold");
+      bag2.innerHTML = HKProp.handBag();
+      gsap.set(walkIn, { opacity: 0 });
+      var G = A.stand(home, "girl", 250, 1660, 290, { expr: "neutral" }), gi = G.svg, gEl = G.el;
+      var floorBag = HKSet.put(home, HKProp.bag(), { x: 790, y: 1500, w: 150 });
+      gsap.set(floorBag, { opacity: 0 });
+      A.idle(gi, tl, CUT, DUR, 0.02); A.idle(k2, tl, CUT, DUR, 0.008);
+      // she is playing on her own: a little side-to-side sway
+      tl.fromTo(gEl, { rotation: -3 }, { rotation: 3, duration: 0.5, ease: "sine.inOut", repeat: 1, yoyo: true, immediateRender: false }, CUT);
+      A.look(gi, tl, CUT, -10, 6, 0.2);
+      // the door opens
+      var dOpen = CUT + 0.3;
+      tl.to(door, { scaleX: 0.12, duration: 0.4, ease: "power2.out" }, dOpen);
+      tl.set(walkIn, { opacity: 1 }, dOpen + 0.15);
+      A.look(gi, tl, dOpen + 0.2, 12, -6, 0.2);
+      A.expr(gi, tl, dOpen + 0.2, "shocked");
+      A.expr(gi, tl, B("girlRun") - 0.3, "happy");
+      // Karim steps in
+      var inT0 = dOpen + 0.3, inT1 = B("girlStop") - 0.6;
+      tl.to(walkIn, { x: -125, y: 390, scale: 1.333, duration: inT1 - inT0, ease: "none" }, inT0);
+      A.walk(K2.el, k2, tl, inT0, inT1, 0, 0, { step: 0.45, bounce: 10, swing: 16, armsBusy: true });
+      A.look(k2, tl, inT0, -12, 6, 0.3);
+      // she runs to him
+      A.walk(gEl, gi, tl, B("girlRun"), B("girlStop"), 0, 170, { step: 0.17, bounce: 16, swing: 28 });
+      // "আব্বু!"
+      A.hop(gEl, tl, B("girlStop"), 60, 0.4);
+      A.armsUp(gi, tl, B("girlStop"), 1.6);
+      A.say(gi, tl, P.line("s7-04"), "s7-04", { arm: "none", open: 1.2 });
+      // the bag goes down, the arms open
+      tl.set(bag2, { opacity: 0 }, B("girlStop") - 0.2);
+      tl.set(floorBag, { opacity: 1 }, B("girlStop") - 0.2);
+      tl.fromTo(floorBag, { y: -60 }, { y: 0, duration: 0.25, ease: "bounce.out", immediateRender: false }, B("girlStop") - 0.2);
+      A.arms(k2, tl, B("girlStop") + 0.3, 70, -70, 0.4);
+      A.look(k2, tl, B("girlStop"), -10, 10, 0.3);
+      // the hug: she runs into his side and hugs his waist; his hand comes to rest on her head
+      var hug = B("hug");
+      tl.to(gEl, { x: 250, duration: 0.3, ease: "power2.out" }, hug - 0.35);
+      tl.to(gEl, { y: -30, duration: 0.15, ease: "power2.out", repeat: 1, yoyo: true }, hug - 0.35);
+      A.arms(gi, tl, hug - 0.1, -25, -78, 0.25);
+      tl.to(gi.querySelector(".c-head"), { rotation: 8, duration: 0.3, ease: "sine.out" }, hug);
+      A.expr(gi, tl, hug, "happy");
+      tl.to(q(gi, ".c-lid"), { scaleY: 0.85, duration: 0.2 }, hug + 0.2);   // eyes shut, smiling
+      A.arms(k2, tl, hug - 0.1, 7, -14, 0.35);
+      tl.to(k2.querySelector(".c-fore-l"), { rotation: 134, duration: 0.35, ease: "power2.out" }, hug - 0.1);
+      tl.to(k2.querySelector(".c-fore-l"), { rotation: 124, duration: 0.3, ease: "sine.inOut", repeat: 5, yoyo: true }, hug + 0.4);   // a gentle pat
+      tl.to(k2.querySelector(".c-head"), { rotation: -10, duration: 0.4, ease: "sine.out" }, hug + 0.1);
+      tl.to(q(k2, ".c-lid"), { scaleY: 0.85, duration: 0.2 }, hug + 0.5);
+      tl.fromTo([gEl, K2.el], { rotation: 0 }, { rotation: 2.5, duration: 0.9, ease: "sine.inOut", repeat: 4, yoyo: true, immediateRender: false }, hug + 0.5);
+      // hearts float up
+      [[520, 900, 0], [700, 820, 0.2], [840, 940, 0.4], [600, 760, 1.9], [780, 700, 2.1]].forEach(function (h, i) {
+        var he = HKSet.put(home, HKProp.heart(i % 2 ? "#F28FB0" : "#E85D75"), { x: h[0], y: h[1], w: 90 + (i % 3) * 20, z: 9, origin: "50% 50%" });
+        gsap.set(he, { opacity: 0 });
+        var t = B("hearts") + h[2];
+        A.pop(he, tl, t, 0.35);
+        tl.to(he, { y: -220, x: (i % 2 ? 30 : -30), duration: 2.2, ease: "sine.out" }, t + 0.2);
+        tl.to(he, { opacity: 0, duration: 0.5 }, t + 1.9);
+      });
+
+      A.blinks(k, tl, 1, CUT, 21); A.blinks(ap, tl, 2, CUT, 22); A.blinks(kr, tl, 0, CUT, 23);
+      A.blinks(gi, tl, CUT, B("hug"), 24); A.blinks(k2, tl, CUT + 1, B("hug"), 25);
+      tl.to({}, { duration: DUR }, 0);
     })();
   </script>
 </template>

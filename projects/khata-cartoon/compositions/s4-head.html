@@ -1,18 +1,175 @@
 <template>
   <style>
     @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
     #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
-    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+    #root .bg, #root .cam, #root .dream { position: absolute; inset: 0; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
   </style>
+
   <div id="root" data-composition-id="s4-head" data-width="1080" data-height="1920" data-duration="50">
-    <div class="clip ph" data-start="0" data-duration="50" data-track-index="0">দৃশ্য 4 (খালি)</div>
+    <div id="s4-bg" class="clip bg" data-start="0" data-duration="50" data-track-index="0">
+      <div class="cam"></div>
+    </div>
   </div>
+
   <script>
     (function () {
-      window.__timelines = window.__timelines || {};
+      var ID = "s4-head", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s4"), A = HKAct, q = HKCast.q, DUR = 50, B = P.beat;
+      var cam = root.querySelector(".cam");
       var tl = gsap.timeline({ paused: true });
-      tl.to({}, { duration: 50 }, 0);
-      window.__timelines["s4-head"] = tl;
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      var set = HKSet.officeScene(cam, tl, DUR, { mode: "day", h: 11, m: 0, lamp: true, creep: false });
+      var o = set.svg;
+      var H = A.stand(cam, "head", 230, 1500, 400, { expr: "neutral" }), hd = H.svg, hEl = H.el;
+      hd.querySelector(".c-arm-l .c-hold").innerHTML = HKProp.file();
+      var KR = A.stand(cam, "karim", 870, 1427, 420, { expr: "neutral" }), kr = KR.svg, krEl = KR.el;
+      HKSet.put(cam, HKSet.deskFront(), { x: 0, y: 0, w: 1080 });
+      var K = A.stand(cam, "khata", 560, 1180, 340, { expr: "neutral" }), k = K.svg, kEl = K.el;
+
+      A.idle(k, tl, 0, DUR, 0.012); A.idle(kr, tl, 0, 23.4, 0.008); A.idle(hd, tl, 0, DUR, 0.008);
+
+      // ── the headmaster walks in and asks ─────────────────────────────────────────────────────
+      gsap.set(hEl, { x: -520 });
+      A.walk(hEl, hd, tl, B("enter"), B("stop"), -520, 0, { step: 0.45, bounce: 8, swing: 14, armsBusy: true });
+      A.look(kr, tl, B("enter") + 0.6, -12, 0, 0.3);
+      A.look(k, tl, B("enter") + 0.6, -12, 0, 0.3);
+      A.expr(hd, tl, B("stop") - 0.2, "angry");
+      A.say(hd, tl, P.line("s4-01"), "s4-01", { arm: "r" });
+      A.expr(kr, tl, P.line("s4-01") + 1.0, "shocked");
+      A.expr(k, tl, P.line("s4-01") + 2.0, "shocked");
+      // "এক মিনিট স্যার… দেখছি…"
+      A.expr(kr, tl, P.line("s4-02") - 0.2, "neutral");
+      A.say(kr, tl, P.line("s4-02"), "s4-02", { arm: "r" });
+      A.look(kr, tl, P.line("s4-02") + 1.4, -6, 10, 0.3);
+
+      // ── flipping: Karim's hand races over the pages, pages fly, the ledger spins ─────────────
+      var armL = kr.querySelector(".c-arm-l"), foreL = kr.querySelector(".c-fore-l");
+      tl.to(armL, { rotation: 62, duration: 0.3 }, B("flip"));
+      tl.fromTo(foreL, { rotation: -50 }, { rotation: -5, duration: 0.16, ease: "sine.inOut", repeat: Math.round((B("flipEnd") - B("flip")) / 0.16) - 1, yoyo: true, immediateRender: false }, B("flip") + 0.3);
+      tl.to(armL, { rotation: 14, duration: 0.3 }, B("flipEnd"));
+      tl.to(foreL, { rotation: 0, duration: 0.3 }, B("flipEnd"));
+      A.expr(kr, tl, B("flip") + 1.0, "sad");
+      for (var i = 0; i < 10; i++) {
+        var pp = HKSet.put(cam, HKProp.paper(i * 37 % 60 - 30), { x: 520, y: 880, w: 110, z: 8 });
+        gsap.set(pp, { opacity: 0 });
+        var tp = B("flip") + 0.3 + i * 0.6, dx = [-420, 380, -300, 460, -480, 300, -200, 420, -380, 260][i], dy = [-620, -560, -760, -480, -520, -700, -820, -600, -450, -760][i];
+        tl.set(pp, { opacity: 1 }, tp);
+        tl.to(pp, { x: dx, y: dy, rotation: (i % 2 ? 1 : -1) * 300, duration: 1.0, ease: "power2.out" }, tp);
+        tl.to(pp, { y: 1100, rotation: "+=140", duration: 1.4, ease: "power1.in" }, tp + 1.0);
+      }
+      // "বাম পাতা, ডান পাতা, আবার বাম… আমার মাথা ঘুরছে!" — spinning, dizzy
+      A.say(k, tl, P.line("s4-03"), "s4-03", { arm: "none" });
+      var sp = B("spin");
+      tl.fromTo(kEl, { scaleX: 1 }, { scaleX: -1, duration: 0.17, ease: "sine.inOut", repeat: Math.round((B("spinEnd") - sp) / 0.17) - 1, yoyo: true, immediateRender: false }, sp);
+      tl.to(kEl, { scaleX: 1, duration: 0.2 }, B("spinEnd"));
+      A.dizzy(k, tl, sp + 0.3, B("spinEnd") + 1.2);
+      A.arms(k, tl, sp, 120, -120, 0.25);
+      A.rest(k, tl, B("spinEnd") + 0.3);
+      // the headmaster waits, checks his watch, gives up and leaves shaking his head
+      var hArmR = hd.querySelector(".c-arm-r"), hForeR = hd.querySelector(".c-fore-r");
+      tl.to(hArmR, { rotation: -46, duration: 0.3 }, 14.4);
+      tl.to(hForeR, { rotation: -112, duration: 0.3 }, 14.4);
+      A.look(hd, tl, 14.6, 8, 10, 0.25);
+      tl.to(hArmR, { rotation: -12, duration: 0.3 }, 16.0);
+      tl.to(hForeR, { rotation: 0, duration: 0.3 }, 16.0);
+      A.look(hd, tl, 16.2, 10, 0, 0.25);
+      tl.to(hd.querySelector(".c-head"), { rotation: 9, duration: 0.25, ease: "sine.inOut", repeat: 5, yoyo: true }, 17.4);
+      A.expr(hd, tl, 17.4, "sad");
+      A.walk(hEl, hd, tl, B("headOut"), 21.5, 0, -560, { step: 0.45, bounce: 8, swing: 14, armsBusy: true });
+
+      // ── time-lapse: the clock races 12 hours, day → evening → night, the lamp comes on ─────────
+      var ch = o.querySelector(".set-clock-h"), cm = o.querySelector(".set-clock-m");
+      var tlp = B("timelapse"), tle = 23.4;
+      tl.fromTo(ch, { rotation: 330 }, { rotation: 690 + 2, duration: tle - tlp, ease: "power1.inOut", immediateRender: false }, tlp);
+      tl.fromTo(cm, { rotation: 0 }, { rotation: 4320 + 24, duration: tle - tlp, ease: "power1.inOut", immediateRender: false }, tlp);
+      HKSet.sky(o, "evening", tl, B("evening"), 0.9);
+      HKSet.sky(o, "night", tl, B("night"), 0.9);
+      tl.to(set.lamp.querySelector(".lamp-light"), { opacity: 0.32, duration: 0.15 }, B("lamp"));
+      tl.fromTo(set.lamp.querySelector(".lamp-light"), { opacity: 0.32 }, { opacity: 0.24, duration: 1.7, ease: "sine.inOut", repeat: 14, yoyo: true, immediateRender: false }, B("lamp") + 0.3);
+      // Karim grows sleepy, then nods off over the ledger
+      A.expr(kr, tl, 20.8, "tired");
+      tl.to(kr.querySelector(".c-mouth-open"), { scaleY: 0.9, duration: 0.4, repeat: 1, yoyo: true }, 21.4);
+      var sk = B("sleepK");
+      A.expr(kr, tl, sk, "sleep");
+      tl.to(krEl, { y: 150, rotation: -7, duration: 0.8, ease: "power2.inOut" }, sk);
+      tl.to(kr.querySelector(".c-head"), { rotation: -16, duration: 0.8, ease: "power2.inOut" }, sk);
+      A.idle(kr, tl, sk + 0.8, DUR, 0.02);
+      var zz = HKSet.put(cam, HKProp.zzz(), { x: 900, y: 800, w: 150, z: 9 });
+      gsap.set(zz, { opacity: 0 });
+      for (var z = 0; z < 7; z++) {
+        var tz = sk + 0.6 + z * 2.2;
+        tl.fromTo(zz, { opacity: 0, y: 40, scale: 0.7 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power2.out", immediateRender: false }, tz);
+        tl.to(zz, { opacity: 0, y: -60, duration: 0.9, ease: "power1.in" }, tz + 1.1);
+      }
+
+      // ── the ledger, alone: a whisper, a pat, a yawn, then sleep ──────────────────────────────
+      A.expr(k, tl, 23.2, "tired");
+      A.look(k, tl, 23.4, 14, 4, 0.3);
+      A.say(k, tl, P.line("s4-04"), "s4-04", { arm: "none", open: 0.7 });
+      A.say(k, tl, P.line("s4-05"), "s4-05", { arm: "none", open: 0.7 });
+      var armR = k.querySelector(".c-arm-r");
+      tl.to(armR, { rotation: -78, duration: 0.4, ease: "power2.out" }, P.line("s4-05") + 0.2);
+      tl.to(armR, { rotation: -64, duration: 0.18, ease: "sine.inOut", repeat: 5, yoyo: true }, P.line("s4-05") + 0.6);
+      tl.to(armR, { rotation: 0, duration: 0.4 }, P.line("s4-05") + 1.9);
+      var yk = B("yawnK");
+      tl.to(q(k, ".c-mouth-open"), { scaleY: 1.05, scaleX: 0.8, duration: 0.45, ease: "power2.out" }, yk);
+      A.armsUp(k, tl, yk, 0.6);
+      tl.to(q(k, ".c-mouth-open"), { scaleY: 0, scaleX: 1, duration: 0.35, ease: "power2.in" }, yk + 0.8);
+      tl.to(kEl, { rotation: -82, duration: 0.8, ease: "power2.inOut" }, B("lie"));
+      A.expr(k, tl, B("lie") + 0.4, "sleep");
+      A.arms(k, tl, B("lie") + 0.4, 160, -160, 0.5, "power2.inOut");
+
+      // ── the dream: a cloud, a mysterious green helper doing the ledger's work ────────────────
+      var dIn = B("dreamIn");
+      var cloud = HKSet.put(cam, HKProp.cloud(), { x: 70, y: 150, w: 940, z: 10 });
+      var cs = cloud.querySelector("svg");
+      gsap.set([cs.querySelector(".cl-b2"), cs.querySelector(".cl-b1"), cs.querySelector(".cl-body")], { opacity: 0 });
+      tl.to(cs.querySelector(".cl-b2"), { opacity: 1, duration: 0.25 }, dIn);
+      tl.to(cs.querySelector(".cl-b1"), { opacity: 1, duration: 0.25 }, dIn + 0.3);
+      tl.set(cs.querySelector(".cl-body"), { opacity: 1 }, dIn + 0.6);
+      // SVG pivots are set once at build time: a pivot inside tween vars is measured when the tween first renders,
+      // and a scene that is hidden at that moment measures nothing (the cloud flew 2,400 px off-screen)
+      gsap.set(cs.querySelector(".cl-body"), { svgOrigin: "200 520" });
+      tl.fromTo(cs.querySelector(".cl-body"), { scale: 0.15 }, { scale: 1, duration: 0.7, ease: "back.out(1.4)", immediateRender: false }, dIn + 0.6);
+      var dream = document.createElement("div");
+      dream.className = "dream";
+      dream.style.zIndex = 11;
+      cam.appendChild(dream);
+      gsap.set(dream, { opacity: 0 });
+      tl.to(dream, { opacity: 1, duration: 0.5 }, dIn + 1.2);
+      var MK = A.stand(dream, "khata", 360, 640, 160, { expr: "happy" }), mk = MK.svg;
+      var HP = A.stand(dream, "app", 660, 660, 230, { expr: "happy" }), hp = HP.svg, hpEl = HP.el;
+      gsap.set(hp.querySelector(".c-face"), { opacity: 0 });
+      var qmark = HKSet.put(dream, HKProp.mark("?", "#16603A"), { x: 615, y: 250, w: 90 });
+      var mini = HKSet.put(dream, HKProp.paper(-6), { x: 470, y: 470, w: 110 });
+      gsap.set([hpEl, qmark, mini], { opacity: 0 });
+      var hlp = B("helper");
+      tl.fromTo(hpEl, { opacity: 0, y: 40 }, { opacity: 0.85, y: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, hlp);
+      A.pop(qmark, tl, hlp + 0.4);
+      tl.to(qmark, { y: -14, duration: 0.6, ease: "sine.inOut", repeat: 9, yoyo: true }, hlp + 0.9);
+      tl.to(mini, { opacity: 1, duration: 0.3 }, hlp + 1.0);
+      tl.fromTo(hp.querySelector(".c-arm-l"), { rotation: 30 }, { rotation: 70, duration: 0.2, ease: "sine.inOut", repeat: 25, yoyo: true, immediateRender: false }, hlp + 1.0);
+      A.idle(hp, tl, hlp, DUR, 0.03);
+      A.idle(mk, tl, dIn + 1.2, DUR, 0.02);
+      A.wave(mk, tl, hlp + 2.2, "r", 4);
+      gsap.set(hp.querySelector(".c-glow"), { svgOrigin: "190 240" });
+      tl.to(hp.querySelector(".c-glow"), { scale: 1.25, duration: 0.8, ease: "sine.inOut", repeat: 7, yoyo: true }, hlp);
+      q(hp, ".c-spark").forEach(function (st, i) {
+        tl.fromTo(st, { scale: 0.4, rotation: 0 }, { scale: 1.3, rotation: 90, duration: 0.7, ease: "sine.inOut", repeat: 11, yoyo: true, immediateRender: false }, hlp + i * 0.2);
+      });
+      // "ইশ… কেউ যদি আমার কাজটা একটু ভাগ করে নিত…" — talking in his sleep
+      A.say(k, tl, P.line("s4-06"), "s4-06", { arm: "none", open: 0.6 });
+      var gl = B("dreamGlow");
+      tl.to(hpEl, { opacity: 1, scale: 1.08, duration: 0.6, ease: "back.out(2)" }, gl);
+      tl.to(qmark, { opacity: 0, duration: 0.3 }, gl);
+      tl.to([dream, cloud], { opacity: 0, duration: 0.9, ease: "power1.in" }, B("dreamOut"));
+
+      A.blinks(k, tl, 1, 33, 7); A.blinks(kr, tl, 0, 23, 8); A.blinks(hd, tl, 0, 21.5, 9); A.blinks(mk, tl, dIn + 1, DUR, 10);
+      tl.to({}, { duration: DUR }, 0);
     })();
   </script>
 </template>

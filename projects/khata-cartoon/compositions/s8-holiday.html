@@ -1,18 +1,159 @@
 <template>
   <style>
     @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
     #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
-    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+    #root .bg, #root .cam { position: absolute; inset: 0; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
   </style>
+
   <div id="root" data-composition-id="s8-holiday" data-width="1080" data-height="1920" data-duration="26">
-    <div class="clip ph" data-start="0" data-duration="26" data-track-index="0">দৃশ্য 8 (খালি)</div>
+    <div id="s8-bg" class="clip bg" data-start="0" data-duration="26" data-track-index="0">
+      <div class="cam"></div>
+    </div>
   </div>
+
   <script>
     (function () {
-      window.__timelines = window.__timelines || {};
+      var ID = "s8-holiday", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s8"), A = HKAct, q = HKCast.q, DUR = 26, B = P.beat;
+      var cam = root.querySelector(".cam");
       var tl = gsap.timeline({ paused: true });
-      tl.to({}, { duration: 26 }, 0);
-      window.__timelines["s8-holiday"] = tl;
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      // the shelf of retired ledgers; holiday props wait behind the khata
+      HKSet.put(cam, HKSet.shelfRoom(), { x: 0, y: 0, w: 1080 });
+      // the sunburst lives on the wall only: clipped at the desk top so the desk stays a desk
+      var rayClip = document.createElement("div");
+      rayClip.style.cssText = "position:absolute;left:0;top:0;width:1080px;height:1180px;overflow:hidden;";
+      cam.appendChild(rayClip);
+      var rays = HKSet.put(rayClip, HKProp.rays(), { x: -240, y: 140, w: 1500, origin: "50% 50%" });
+      gsap.set(rays, { opacity: 0 });
+      var umb = HKSet.put(cam, HKProp.umbrella(), { x: 70, y: 590, w: 520, origin: "50% 100%" });
+      var chair = HKSet.put(cam, HKProp.chair(), { x: 60, y: 920, w: 460, origin: "30% 100%" });
+      gsap.set([umb, chair], { opacity: 0 });
+      var K = A.stand(cam, "khata", 440, 1180, 300, { expr: "neutral" }), k = K.svg, kEl = K.el;
+      var AP = A.stand(cam, "app", 800, 1170, 260, { expr: "happy", z: 6 }), ap = AP.svg, apEl = AP.el;
+      var rain = HKSet.put(cam, HKProp.rainCloud(), { x: 290, y: 470, w: 300, z: 7, origin: "50% 50%" });
+      gsap.set(rain, { opacity: 0 });
+      // the medal and the tea live inside the khata so they move with it
+      k.querySelector(".c-root").insertAdjacentHTML("beforeend", HKProp.medal(205, 450));
+      var medal = k.querySelector(".medal");
+      gsap.set(medal, { svgOrigin: "205 380", opacity: 0 });
+      var tea = k.querySelector(".c-arm-r .c-hold");
+      tea.innerHTML = HKProp.handTea(376, 414);
+      gsap.set(tea, { opacity: 0, svgOrigin: "376 414" });   // pivots are set at build time, never inside a tween
+      gsap.set(k.querySelector(".c-shades"), { svgOrigin: "217 260" });
+
+      A.idle(k, tl, 0, DUR, 0.014); A.idle(ap, tl, 0, DUR, 0.03);
+
+      // ── alone on the desk: "তাহলে আমার আর কোনো কাজ নেই…" ─────────────────────────────────────
+      A.expr(k, tl, B("sad"), "sad");
+      tl.to(k.querySelector(".c-root"), { scaleY: 0.93, duration: 0.5, ease: "power2.out" }, B("sad"));
+      A.look(k, tl, B("sad"), -4, 10, 0.4);
+      A.arms(k, tl, B("sad"), 6, -6, 0.5, "power2.out");
+      tl.to(rain, { opacity: 1, duration: 0.5 }, B("sad") + 0.3);
+      tl.fromTo(rain, { y: -60 }, { y: 0, duration: 0.6, ease: "power2.out" }, B("sad") + 0.3);
+      q(rain, ".drop").forEach(function (d, i) {
+        tl.fromTo(d, { y: 0, opacity: 1 }, { y: 70, opacity: 0, duration: 0.5, ease: "power1.in", repeat: 22, immediateRender: false }, B("sad") + 0.5 + i * 0.11);
+      });
+      tl.to(rain, { x: 14, duration: 1.4, ease: "sine.inOut", repeat: 7, yoyo: true }, B("sad") + 0.9);
+      A.say(k, tl, P.line("s8-01"), "s8-01", { arm: "none", open: 0.7 });
+      tl.to(kEl, { rotation: -3, duration: 1.1, ease: "sine.inOut", repeat: 2, yoyo: true }, P.line("s8-01"));
+
+      // ── the app floats in: "তুমি বিশ বছর অনেক খেটেছ। এখন বিশ্রাম নাও।" — and pins a medal ────────
+      gsap.set(apEl, { x: 520 });
+      tl.to(apEl, { x: 0, duration: 0.9, ease: "back.out(1.3)" }, B("appIn"));
+      tl.to(apEl, { y: -24, duration: 1.1, ease: "sine.inOut", repeat: 5, yoyo: true }, B("appIn") + 0.9);
+      tl.fromTo(ap.querySelector(".c-glow"), { opacity: 0 }, { opacity: 1, duration: 0.5, immediateRender: false }, B("appIn"));
+      A.look(k, tl, B("appIn") + 0.2, 12, 0, 0.3);
+      A.look(ap, tl, B("appIn") + 0.5, -12, 4, 0.3);
+      A.expr(ap, tl, B("appIn") + 0.6, "sad");
+      A.say(ap, tl, P.line("s8-02"), "s8-02", { arm: "r" });
+      A.expr(ap, tl, P.line("s8-02") + 0.8, "happy");
+      // the medal
+      var md = B("medal");
+      tl.to(apEl, { x: -150, duration: 0.45, ease: "power2.inOut" }, md - 0.6);
+      A.arms(ap, tl, md - 0.4, 70, null, 0.3);
+      tl.set(medal, { opacity: 1 }, md);
+      tl.fromTo(medal, { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, md);
+      tl.to(medal, { rotation: 8, duration: 0.5, ease: "sine.inOut", repeat: 3, yoyo: true }, md + 0.45);
+      A.rest(ap, tl, md + 0.4);
+      tl.to(apEl, { x: 0, duration: 0.5, ease: "power2.inOut" }, md + 0.4);
+      A.look(k, tl, md, 0, 12, 0.3);
+      tl.to(q(k, ".c-blush"), { opacity: 1, duration: 0.4 }, md + 0.3);
+      A.expr(k, tl, md + 0.6, "neutral");
+      tl.to(k.querySelector(".c-root"), { scaleY: 1, duration: 0.4, ease: "back.out(2)" }, md + 0.6);
+      A.look(k, tl, md + 1.4, 12, 0, 0.3);
+
+      // ── "তোমার সব হিসাব আমি যত্ন করে রাখব।" — a pat on the head; the rain cloud drifts off ──────
+      A.say(ap, tl, P.line("s8-03"), "s8-03", { arm: "r" });
+      var pt = B("pat");
+      tl.to(apEl, { x: -130, y: -190, duration: 0.6, ease: "power2.inOut" }, pt - 0.7);
+      A.arms(ap, tl, pt - 0.3, 95, null, 0.3);
+      tl.to(ap.querySelector(".c-arm-l"), { rotation: 70, duration: 0.14, ease: "sine.inOut", repeat: 3, yoyo: true }, pt);
+      tl.to(kEl, { scaleY: 0.95, duration: 0.14, ease: "sine.inOut", repeat: 3, yoyo: true }, pt);
+      A.rest(ap, tl, pt + 0.7);
+      tl.to(apEl, { x: 0, y: 0, duration: 0.6, ease: "power2.inOut" }, pt + 0.8);
+      tl.to(rain, { x: 900, y: -300, scale: 0.4, duration: 1.4, ease: "power2.in" }, pt + 0.3);
+      tl.set(rain, { opacity: 0 }, pt + 1.7);
+      A.expr(k, tl, pt + 0.4, "happy");
+      // the ledger's pages fly into the app: kept safe
+      for (var i = 0; i < 3; i++) {
+        var sh = HKSet.put(cam, HKProp.paper((i - 1) * 10), { x: 420, y: 880, w: 110, z: 8, origin: "50% 50%" });
+        gsap.set(sh, { opacity: 0 });
+        var t = B("sheets") + i * 0.22;
+        tl.set(sh, { opacity: 1 }, t);
+        tl.fromTo(sh, { x: 0, y: 0, rotation: 0, scale: 0.6 }, { x: 380, y: -40 - i * 20, rotation: 200, scale: 0.3, duration: 0.6, ease: "power2.inOut", immediateRender: false }, t);
+        tl.set(sh, { opacity: 0 }, t + 0.6);
+      }
+      tl.to(ap.querySelector(".c-glow"), { scale: 1.2, duration: 0.2, ease: "power2.out", repeat: 3, yoyo: true }, B("sheets") + 0.5);
+
+      // ── holiday: shades, umbrella, beach chair, tea ─────────────────────────────────────────
+      var sh0 = B("shades");
+      tl.set(k.querySelector(".c-shades"), { opacity: 1 }, sh0);
+      tl.fromTo(k.querySelector(".c-shades"), { y: -260, rotation: -20 }, { y: 0, rotation: 0, duration: 0.45, ease: "bounce.out", immediateRender: false }, sh0);
+      tl.to(rays, { opacity: 0.32, duration: 0.6 }, sh0);
+      tl.fromTo(rays, { rotation: 0 }, { rotation: 60, duration: DUR - sh0, ease: "none", immediateRender: false }, sh0);
+      A.hop(kEl, tl, sh0 + 0.4, 50, 0.4);
+      tl.set(umb, { opacity: 1 }, B("umbrella"));
+      tl.fromTo(umb, { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(1.8)", immediateRender: false }, B("umbrella"));
+      tl.set(chair, { opacity: 1 }, B("chair"));
+      tl.fromTo(chair, { scale: 0, rotation: -15 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(1.8)", immediateRender: false }, B("chair"));
+      tl.set(tea, { opacity: 1 }, B("tea"));
+      tl.fromTo(tea, { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, B("tea"));
+      A.look(k, tl, B("umbrella"), -12, -6, 0.2);
+      A.look(k, tl, B("chair"), -12, 6, 0.2);
+      A.look(k, tl, B("tea"), 12, 6, 0.2);
+      A.look(ap, tl, B("umbrella"), -12, -2, 0.3);
+      A.wave(ap, tl, B("tea") + 0.3, "r", 4);
+
+      // "অবশেষে… ছুটি!"
+      A.say(k, tl, P.line("s8-04"), "s8-04", { arm: "none" });
+      A.arms(k, tl, P.line("s8-04") + 0.7, 150, -40, 0.3);
+      A.hop(kEl, tl, P.line("s8-04") + 0.8, 70, 0.45);
+      A.rest(k, tl, P.line("s8-04") + 2.0);
+      // a long, happy sigh: into the beach chair
+      var sg = B("sigh");
+      tl.to(kEl, { x: -100, y: -130, rotation: -24, duration: 0.6, ease: "power2.inOut" }, sg - 0.3);
+      A.arms(k, tl, sg - 0.1, 40, -40, 0.4);
+      tl.to(q(k, ".c-lid"), { scaleY: 0.7, duration: 0.3 }, sg + 0.2);
+      // the dance: each boing, the app hops and spins; the khata kicks its feet and raises the tea
+      [0, 1, 2].forEach(function (n) {
+        var t = B("dance") + n;
+        A.hop(apEl, tl, t - 0.1, 90, 0.5);
+        tl.to(ap.querySelector(".c-root"), { scaleX: -1, duration: 0.2, ease: "sine.inOut", repeat: 1, yoyo: true }, t);   // a turn on the spot
+        A.arms(ap, tl, t, 140, -140, 0.2);
+        A.rest(ap, tl, t + 0.55, 0.25);
+        tl.to([k.querySelector(".c-leg-l"), k.querySelector(".c-leg-r")], { rotation: function (i) { return i ? -22 : 22; }, duration: 0.15, ease: "power2.out", repeat: 1, yoyo: true }, t);
+        tl.to(k.querySelector(".c-arm-r"), { rotation: -80, duration: 0.2, ease: "power2.out", repeat: 1, yoyo: true }, t + 0.05);
+      });
+      A.expr(ap, tl, B("dance"), "happy");
+      tl.to(chair, { rotation: -3, duration: 0.5, ease: "sine.inOut", repeat: 5, yoyo: true }, B("dance"));
+
+      A.blinks(k, tl, 1, B("shades"), 31); A.blinks(ap, tl, B("appIn") + 1, DUR, 32);
+      tl.to({}, { duration: DUR }, 0);
     })();
   </script>
 </template>

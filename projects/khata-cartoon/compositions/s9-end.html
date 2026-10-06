@@ -1,18 +1,94 @@
 <template>
   <style>
     @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
-    #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
-    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 500; src: url("assets/fonts/bengali/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #16603A; }
+    #root .bg, #root .cam { position: absolute; inset: 0; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
+    #root .row { position: absolute; left: 60px; right: 60px; text-align: center; }
+    #root .slogan { top: 190px; font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 700; font-size: 78px; line-height: 1.2; color: #F6E7A8; }
+    #root .slogan span { display: inline-block; margin: 0 10px; }
+    #root .mark { top: 400px; font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 800; font-size: 156px; line-height: 1.15; color: #FFF8EC; }
+    #root .rule { position: absolute; left: 280px; top: 610px; width: 520px; height: 14px; border-radius: 7px; background: #E4A11B; transform-origin: 0% 50%; }
+    #root .tag { top: 650px; font-family: "Hind Siliguri", sans-serif; font-weight: 700; font-size: 48px; line-height: 1.3; color: #CFE8D6; }
+    #root .credit { top: 1420px; left: 110px; right: 110px; font-family: "Hind Siliguri", sans-serif; font-weight: 500; font-size: 26px; line-height: 1.35; color: #A9CDB5; }
   </style>
+
   <div id="root" data-composition-id="s9-end" data-width="1080" data-height="1920" data-duration="14">
-    <div class="clip ph" data-start="0" data-duration="14" data-track-index="0">দৃশ্য 9 (খালি)</div>
+    <div id="s9-bg" class="clip bg" data-start="0" data-duration="14" data-track-index="0">
+      <div class="cam">
+        <div class="row slogan"><span>খাতার</span><span>হিসাব</span><span>ছেড়ে</span><span>দিন।</span></div>
+        <div class="row mark">হিসাব খাতা</div>
+        <div class="rule"></div>
+        <div class="row tag">স্কুলের ফি ও হিসাব, এক সফটওয়্যারে</div>
+        <div class="row credit">বাংলা কণ্ঠ: Piper bn_BD-google-medium · Google OpenSLR-37 (CC BY-SA 4.0) ও CMU Indic ডেটায় প্রশিক্ষিত</div>
+      </div>
+    </div>
   </div>
+
   <script>
     (function () {
-      window.__timelines = window.__timelines || {};
+      var ID = "s9-end", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s9"), A = HKAct, q = HKCast.q, DUR = 14, B = P.beat;
+      var cam = root.querySelector(".cam");
       var tl = gsap.timeline({ paused: true });
-      tl.to({}, { duration: 14 }, 0);
-      window.__timelines["s9-end"] = tl;
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      // a slow cream sunburst behind the wordmark
+      var rays = HKSet.put(cam, HKProp.rays("#FFF8EC"), { x: -210, y: -90, w: 1500, origin: "50% 50%", opacity: 0.08 });
+      cam.insertBefore(rays, cam.firstChild);
+      tl.fromTo(rays, { rotation: 0 }, { rotation: 40, duration: DUR, ease: "none" }, 0);
+      var K = A.stand(cam, "khata", 370, 1270, 280, { expr: "happy" }), k = K.svg, kEl = K.el;
+      var AP = A.stand(cam, "app", 710, 1260, 280, { expr: "happy" }), ap = AP.svg, apEl = AP.el;
+      A.idle(k, tl, 0, DUR, 0.016); A.idle(ap, tl, 0, DUR, 0.03);
+
+      // "খাতার হিসাব ছেড়ে দিন।" — word by word
+      q(root, ".slogan span").forEach(function (w, i) {
+        tl.fromTo(w, { y: 40, opacity: 0, scale: 0.7 }, { y: 0, opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, B("slogan") + i * 0.2);
+      });
+      // the wordmark slams in, the ground shakes a little
+      var mark = root.querySelector(".mark"), rule = root.querySelector(".rule"), tag = root.querySelector(".tag"), credit = root.querySelector(".credit");
+      tl.fromTo(mark, { scale: 1.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "power3.in" }, B("logo") - 0.25);
+      tl.fromTo(cam, { y: 0 }, { y: 10, duration: 0.05, repeat: 5, yoyo: true, ease: "none", immediateRender: false }, B("logo"));
+      tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power2.out" }, B("logo") + 0.2);
+      tl.fromTo(tag, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, B("tagline"));
+      tl.fromTo(credit, { opacity: 0 }, { opacity: 1, duration: 0.5 }, B("wink") - 0.6);
+      // the two friends pop up from below the frame
+      tl.fromTo(kEl, { y: 1100 }, { y: 0, duration: 0.55, ease: "back.out(1.5)" }, B("logo") - 0.4);
+      tl.fromTo(apEl, { y: 1100 }, { y: 0, duration: 0.55, ease: "back.out(1.5)" }, B("logo") - 0.25);
+      tl.to(apEl, { y: -18, duration: 1.1, ease: "sine.inOut", repeat: 9, yoyo: true }, B("logo") + 0.3);
+      q(ap, ".c-spark").forEach(function (st, i) {
+        tl.fromTo(st, { scale: 0, rotation: 0 }, { scale: 1.2, rotation: 90, duration: 0.45, ease: "back.out(2)" }, B("tagline") + i * 0.1);
+        tl.to(st, { scale: 0.7, rotation: 180, duration: 0.9, ease: "sine.inOut", repeat: 9, yoyo: true }, B("tagline") + 0.45 + i * 0.1);
+      });
+
+      // "হিসাব খাতা। স্কুলের ফি আর হিসাব, এক সফটওয়্যারে।"
+      A.say(ap, tl, P.line("s9-01"), "s9-01", { arm: "r" });
+      A.look(ap, tl, P.line("s9-01"), 0, 0, 0.3);
+      A.look(k, tl, B("logo") + 0.3, 12, -4, 0.3);
+      A.point(k, tl, B("tagline") + 0.4, "r", -120, 1.6);
+      // a wink and a thumbs-up from the old ledger
+      var wk = B("wink");
+      A.look(k, tl, wk - 0.4, 0, 0, 0.3);
+      var lidR = q(k, ".c-face .c-lid")[1];
+      tl.to(lidR, { scaleY: 1, duration: 0.08, ease: "power1.in" }, wk);
+      tl.to(lidR, { scaleY: HKCast.lidOf("happy"), duration: 0.12, ease: "power1.out" }, wk + 0.55);
+      tl.to(k.querySelector(".c-root"), { rotation: -5, duration: 0.15, ease: "power2.out", repeat: 1, yoyo: true }, wk);
+      A.arms(k, tl, wk, 130, null, 0.25);
+      A.rest(k, tl, wk + 1.3);
+      // the app waves goodbye
+      A.wave(ap, tl, B("wave"), "r", 6);
+      A.wave(k, tl, B("wave") + 1.6, "l", 5);
+      A.hop(kEl, tl, B("wave") + 0.4, 50, 0.4);
+      // to the brand green
+      // the closing dot (index.html) covers the card in the last 0.6 s; the two hold a last pose
+      tl.to(kEl, { y: -30, duration: 0.25, ease: "power2.out", repeat: 1, yoyo: true }, B("fade"));
+      tl.to(apEl, { scale: 1.06, duration: 0.25, ease: "power2.out", repeat: 1, yoyo: true }, B("fade"));
+
+      A.blinks(k, tl, 2, B("wink") - 0.3, 41); A.blinks(k, tl, B("wink") + 1, DUR, 43); A.blinks(ap, tl, 2, DUR, 42);
+      tl.to({}, { duration: DUR }, 0);
     })();
   </script>
 </template>

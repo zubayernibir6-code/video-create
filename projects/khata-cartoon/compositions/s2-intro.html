@@ -1,18 +1,165 @@
 <template>
   <style>
     @font-face { font-family: "Baloo Da 2"; font-style: normal; font-weight: 400 800; src: url("assets/fonts/bengali/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
-    #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3E3C3; }
-    #root .ph { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 90px; color: #8E2A20; }
+    @font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("assets/fonts/bengali/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+    #root { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: #1B2440; }
+    #root .bg, #root .cam { position: absolute; inset: 0; }
+    #root .actor svg, #root .prop svg { display: block; width: 100%; height: auto; overflow: visible; }
+    #root .tag { padding: 14px 34px 8px; border: 5px solid #2A1E17; border-radius: 44px; color: #FFFFFF; font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 50px; line-height: 1.15; white-space: nowrap; }
+    #root .hl { height: 48px; border-radius: 10px; background: rgba(228, 161, 27, 0.42); transform-origin: 0% 50%; }
   </style>
+
   <div id="root" data-composition-id="s2-intro" data-width="1080" data-height="1920" data-duration="40">
-    <div class="clip ph" data-start="0" data-duration="40" data-track-index="0">দৃশ্য 2 (খালি)</div>
+    <div id="s2-bg" class="clip bg" data-start="0" data-duration="40" data-track-index="0">
+      <div class="cam"></div>
+    </div>
   </div>
+
   <script>
     (function () {
-      window.__timelines = window.__timelines || {};
+      var ID = "s2-intro", root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var P = HKPlan.scene("s2"), A = HKAct, q = HKCast.q, DUR = 40;
+      var cam = root.querySelector(".cam");
       var tl = gsap.timeline({ paused: true });
-      tl.to({}, { duration: 40 }, 0);
-      window.__timelines["s2-intro"] = tl;
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+
+      var set = HKSet.officeScene(cam, tl, DUR, { mode: "night", h: 11, m: 5, lamp: true, pile: true, pileX: 660 });
+
+      // ── the ledger: starts on top of the pile (where scene 1 left it), jumps down to the desk ────
+      var K = A.stand(cam, "khata", 540, 1180, 420, { expr: "tired" }), k = K.svg, kEl = K.el;
+      tl.set(kEl, { x: 310, y: -260, scale: 0.857 }, 0);
+      var j = P.beat("jump");
+      A.expr(k, tl, j - 0.2, "shocked");
+      A.armsUp(k, tl, j, 0.55);
+      tl.to(kEl, { x: 0, scale: 1, duration: 0.85, ease: "none" }, j);
+      tl.to(kEl, { y: -430, duration: 0.4, ease: "power2.out" }, j);
+      tl.to(kEl, { y: 0, duration: 0.45, ease: "power2.in" }, j + 0.4);
+      var land = P.beat("land");
+      tl.to(kEl, { scaleY: 0.86, scaleX: 1.1, duration: 0.08, ease: "power2.out" }, land - 0.05);
+      tl.to(kEl, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.45)" }, land + 0.03);
+      A.expr(k, tl, land + 0.2, "happy");
+      A.idle(k, tl, land + 0.6, DUR, 0.012);
+
+      // "আমাকে চিনলেন না? আমি লাল খাতা।" — a wave hello
+      A.wave(k, tl, P.line("s2-01") + 0.1, "r", 4);
+      A.say(k, tl, P.line("s2-01"), "s2-01", { arm: "l" });
+
+      // "বিশ বছর ধরে … সব টাকার হিসাব আমার পাতায়।" — taka notes fly into his pages; he puffs up, proud
+      A.say(k, tl, P.line("s2-02"), "s2-02", { arm: "r" });
+      [[-260, 300, -20, "৫০০"], [1080, 260, 15, "১০০০"], [360, -260, -8, "১০০"]].forEach(function (n, i) {
+        var note = HKSet.put(cam, HKProp.note(n[3]), { x: n[0], y: n[1], w: 220, z: 5 });
+        gsap.set(note, { opacity: 0, rotation: n[2] });
+        var t0 = P.beat("coins") + i * 0.35;
+        tl.set(note, { opacity: 1 }, t0);
+        tl.to(note, { x: 430 - n[0], y: 760 - n[1], rotation: n[2] + 200, scale: 0.15, duration: 0.8, ease: "power2.in" }, t0);
+        tl.to(note, { opacity: 0, duration: 0.12 }, t0 + 0.74);
+      });
+      tl.to(kEl, { scale: 1.06, duration: 0.35, ease: "back.out(2)" }, P.beat("coins") + 1.0);
+      tl.to(kEl, { scale: 1, duration: 0.6, ease: "sine.inOut" }, P.beat("coins") + 2.6);
+
+      // "ভর্তি ফি, মাসের বেতন, পরীক্ষার ফি…" — three tags pop up and he points at each
+      A.say(k, tl, P.line("s2-03"), "s2-03", { arm: "none" });
+      var tags = [["ভর্তি ফি", 50, 560, "#C0392B", "tag1", "l", 112], ["মাসের বেতন", 690, 520, "#16603A", "tag2", "r", -112], ["পরীক্ষার ফি", 50, 830, "#2E5AA8", "tag3", "l", 64]];
+      tags.forEach(function (g) {
+        var d = A.label(cam, g[0], g[1], g[2], "z-index:6;"), t0 = P.beat(g[4]);
+        d.className += " tag";
+        d.style.background = g[3];
+        gsap.set(d, { opacity: 0, transformOrigin: "50% 50%" });
+        A.pop(d, tl, t0, 0.45);
+        tl.to(d, { y: -10, duration: 0.9, ease: "sine.inOut", repeat: 1, yoyo: true }, t0 + 0.5);
+        tl.to(d, { scale: 0, opacity: 0, duration: 0.3, ease: "back.in(2)" }, P.line("s2-04") - 0.5);
+        A.point(k, tl, t0, g[5], g[6], 0.9);
+      });
+
+      // "দেখুন, এই পাতায় রুমানার ফি, ওই পাতায় তানভীরের। আর এই যে… কাটাকুটি!"
+      var pg = P.beat("page");
+      tl.to(kEl, { x: -205, duration: 0.5, ease: "power2.inOut" }, pg - 0.1);
+      var page = HKSet.put(cam, HKProp.page(), { x: 440, y: 190, w: 600, z: 6 });
+      gsap.set(page, { opacity: 0, transformOrigin: "50% 100%" });
+      tl.set(page, { opacity: 1 }, pg);
+      tl.fromTo(page, { scale: 0.2, rotation: -10 }, { scale: 1, rotation: -2, duration: 0.55, ease: "back.out(1.6)", immediateRender: false }, pg);
+      A.say(k, tl, P.line("s2-04"), "s2-04", { arm: "none" });
+      A.point(k, tl, pg + 0.3, "r", -128, 4.8);
+      A.look(k, tl, pg + 0.3, 12, -12, 0.3);
+      var k6 = 600 / 580;
+      [[100, 17.9], [150, 19.6]].forEach(function (r, i) {
+        var hl = A.label(cam, "", 440 + 78 * k6, 190 + r[0] * k6, "width:" + (468 * k6) + "px;z-index:7;");
+        hl.className += " hl";
+        gsap.set(hl, { scaleX: 0 });
+        tl.to(hl, { scaleX: 1, duration: 0.35, ease: "power2.out" }, r[1]);
+        tl.to(hl, { opacity: 0, duration: 0.3 }, r[1] + 1.5);
+      });
+      var scr = page.querySelector(".pg-scribble"), sc = P.beat("scribble");
+      gsap.set(scr, { svgOrigin: "300 330" });
+      tl.fromTo(scr, { scale: 1 }, { scale: 1.12, duration: 0.14, ease: "power2.out", repeat: 5, yoyo: true }, sc);
+      A.expr(k, tl, sc, "shocked");
+      tl.to(q(k, ".c-blush"), { opacity: 1, duration: 0.3 }, sc + 0.3);
+      tl.to(page, { y: -900, rotation: 18, duration: 0.6, ease: "power2.in" }, P.beat("pageOut"));
+      tl.to(q(k, ".c-blush"), { opacity: 0, duration: 0.4 }, P.beat("pageOut") + 0.4);
+      A.expr(k, tl, P.beat("pageOut") + 0.2, "happy");
+      A.look(k, tl, P.beat("pageOut"), 0, 0, 0.3);
+      tl.to(kEl, { x: -150, duration: 0.5, ease: "power2.inOut" }, P.beat("pageOut") + 0.1);
+
+      // the calculator hops in from the right
+      var C = A.stand(cam, "calc", 815, 1180, 230, { expr: "happy" }), c = C.svg, cEl = C.el;
+      gsap.set(cEl, { x: 420 });
+      var ci = P.beat("calcIn"), cl = P.beat("calcLand");
+      A.walk(cEl, c, tl, ci, cl, 420, 0, { step: 0.15, bounce: 26, swing: 28 });
+      tl.to(cEl, { scaleY: 0.82, scaleX: 1.12, duration: 0.08 }, cl);
+      tl.to(cEl, { scaleY: 1, scaleX: 1, duration: 0.4, ease: "elastic.out(1, 0.4)" }, cl + 0.08);
+      var disp = c.querySelector(".c-display");
+      tl.set(disp, { textContent: "হাই!" }, cl + 0.4);
+      A.wave(c, tl, cl + 0.4, "r", 3);
+      A.idle(c, tl, cl + 0.5, DUR, 0.02);
+      // "আর এ হলো আমার বন্ধু, ক্যালকুলেটর।"
+      A.say(k, tl, P.line("s2-05"), "s2-05", { arm: "none" });
+      A.point(k, tl, P.line("s2-05") + 0.3, "r", -72, 2.4);
+      A.look(k, tl, P.line("s2-05") + 0.2, 12, 0, 0.3);
+      A.look(c, tl, cl + 0.3, -8, 0, 0.3);
+      // the joke: 1 + 1 = 3, then a sigh
+      var jk = P.beat("joke");
+      tl.set(disp, { textContent: "১+১=৩" }, jk);
+      tl.to(cEl, { y: -40, duration: 0.18, ease: "power2.out", repeat: 1, yoyo: true }, jk);
+      A.look(k, tl, jk + 0.2, 14, 4, 0.2);
+      A.expr(k, tl, jk + 0.3, "shocked");
+      var fp = P.beat("facepalm");
+      A.expr(k, tl, fp, "tired");
+      tl.to(q(k, ".c-lid"), { scaleY: 0.9, duration: 0.3 }, fp);
+      A.arms(k, tl, fp, 26, -26, 0.4, "power2.out");
+      tl.to(kEl, { scaleY: 0.94, duration: 0.4, ease: "power2.out" }, fp);
+      tl.to(kEl, { scaleY: 1, duration: 0.5, ease: "power2.inOut" }, fp + 1.4);
+      tl.set(disp, { textContent: "?" }, fp + 0.6);
+      A.look(c, tl, fp + 0.6, 0, 8, 0.3);
+      A.rest(k, tl, fp + 1.4);
+      A.expr(k, tl, fp + 1.6, "neutral");
+
+      // "কিন্তু মাস শেষ এলেই আমার বুক ধড়ফড় করে।" — heart pounding, a bead of sweat
+      A.say(k, tl, P.line("s2-06"), "s2-06", { arm: "none" });
+      A.expr(k, tl, P.line("s2-06") + 0.4, "sad");
+      var hb = P.beat("heart");
+      for (var i = 0; i < 4; i++) {
+        var b = hb + i * 0.9;
+        tl.to(kEl, { scale: 1.07, duration: 0.09, ease: "power2.out" }, b);
+        tl.to(kEl, { scale: 1, duration: 0.14, ease: "power2.in" }, b + 0.09);
+        tl.to(kEl, { scale: 1.045, duration: 0.08, ease: "power2.out" }, b + 0.25);
+        tl.to(kEl, { scale: 1, duration: 0.2, ease: "power2.in" }, b + 0.33);
+      }
+      var sw = q(k, ".c-sweat");
+      [0.3, 1.9].forEach(function (d) {
+        tl.fromTo(sw, { opacity: 1, y: -10 }, { y: 70, duration: 1.1, ease: "power1.in", immediateRender: false }, hb + d);
+        tl.to(sw, { opacity: 0, duration: 0.2 }, hb + d + 0.9);
+      });
+      A.look(k, tl, hb + 0.6, -10, 0, 0.15);
+      A.look(k, tl, hb + 1.4, 10, 0, 0.15);
+      A.look(k, tl, hb + 2.2, 0, 0, 0.2);
+      A.look(c, tl, hb, -12, 0, 0.3);
+      A.arms(c, tl, hb + 1.0, 40, -40, 0.3);
+      A.rest(c, tl, hb + 2.2);
+
+      A.blinks(k, tl, 2, DUR, 1);
+      A.blinks(c, tl, cl + 1, DUR, 4);
+      tl.to({}, { duration: DUR }, 0);
     })();
   </script>
 </template>
