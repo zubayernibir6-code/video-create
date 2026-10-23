@@ -47,8 +47,9 @@ read `D:\Video Create`; for `C:\Users\zubay`, read `C:\Users\Zubayer Nibir`. Res
 - **Verified 2026-10-23:** a scratch copy of audio-test passed check (73/73 contrast) and rendered in 40 s: 8.0 s, h264 1080p +
   AAC 48 kHz stereo, −9.0 LUFS (same as the reference). The frames were inspected and the Bengali is correct.
 - **Limits on this login:** D: ~4.3 GB free, C: ~6 GB free, RAM ~1–1.6 GB free (doctor warns). Free space before any long
-  render. `%TEMP%` (frames extract cache) is on C:. **git refuses the repo** ("dubious ownership", the folder belongs to the old
-  SID). Fixing it needs `git config --global --add safe.directory "D:/Video Create"`. Ask before running it.
+  render. `%TEMP%` (frames extract cache) is on C:.
+- **git:** the folder still belongs to the old login's SID, so git refused it ("dubious ownership"). Fixed on 2026-10-23 with the
+  user's OK: `git config --global --add safe.directory "D:/Video Create"`. Commits work again.
 
 ---
 
