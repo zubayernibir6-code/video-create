@@ -11,6 +11,8 @@ projects/*/.media/
 .cache/
 .quarantine/
 tools/pyenv/
+tools/python311/
+tools/ffmpeg/
 tools/whisper.cpp/
 tools/deep-filter/
 assets/models/

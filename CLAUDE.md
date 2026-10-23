@@ -22,6 +22,36 @@
 
 ---
 
+## 0a. ⭐ NEW MACHINE LOGIN (2026-10-20 / 10-23). Read this first: most paths below are from the OLD login.
+
+The workspace is now **`D:\Video Create`** under Windows user **`Zubayer Nibir`** (same i5-8265U laptop, Windows
+reinstalled, new SID). **There is no E: drive and no `C:\Users\zubay`.** Wherever this file says `E:\Video Create`,
+read `D:\Video Create`; for `C:\Users\zubay`, read `C:\Users\Zubayer Nibir`. Restore log: `.work-memory/CURRENT_STATE.md`.
+
+- **Toolchain (restored 2026-10-20, re-verified 2026-10-23):** FFmpeg/FFprobe **9.0.2** in `tools/ffmpeg/ffmpeg-9.0.2-full_build/bin`
+  (user env HYPERFRAMES_FFMPEG_PATH / FFPROBE_PATH point there), Node 24.21, HyperFrames **0.8.134** global (at
+  `%LOCALAPPDATA%\Programs\nodejs`), `tools/pyenv` rebuilt on official Python **3.11.9** (`tools/python311`). The user env vars
+  HYPERFRAMES_PYTHON / WHISPER_PATH / SKIP_SKILLS / NO_AUTO_INSTALL are set. HyperFrames telemetry is disabled in its config.
+  `hyperframes doctor` is green except RAM, MusicGen and Docker (all expected). bn-tts made a 3.4 s line in 8.6 s.
+- **HyperFrames skills installed 2026-10-23, PINNED to v0.8.134** (the user's OK, with "don't upgrade the CLI"). The CLI's own
+  `hyperframes skills` installs the latest from GitHub main, which can need a newer CLI. So the `skills/` folder of tag
+  **v0.8.134** (commit 0dc957f) was sparse-cloned (`core.longpaths=true` is required: some paths exceed 260 chars), and its 21
+  skills were copied into `~/.claude/skills` and `~/.agents/skills` (927 files, 18 MB each). hyperframes and hyperframes-cli are
+  byte-identical to the copies bundled inside the 0.8.134 package. `hyperframes skills check` reports 7 skills as
+  "Outdated": that is intentional. **Do not run `hyperframes skills update`** (it would pull skills for 0.8.181). Upgrade the
+  skills and the CLI together, and only with the user's OK.
+- **media-use:** use the documented `npx hyperframes media-use resolve …` (it runs the global 0.8.134 offline; an sfx resolve
+  took 3.6 s). The legacy `scripts/resolve.mjs` shim exits silently unless `HYPERFRAMES_PLUGIN_VERSION` is set (it falls through
+  to a monorepo/bun path). Set `DO_NOT_TRACK=1` for media-use scripts (PostHog). `hyperframes-audio/scripts/carve.mjs` also
+  falls back to `bun`, which is not installed.
+- **Verified 2026-10-23:** a scratch copy of audio-test passed check (73/73 contrast) and rendered in 40 s: 8.0 s, h264 1080p +
+  AAC 48 kHz stereo, −9.0 LUFS (same as the reference). The frames were inspected and the Bengali is correct.
+- **Limits on this login:** D: ~4.3 GB free, C: ~6 GB free, RAM ~1–1.6 GB free (doctor warns). Free space before any long
+  render. `%TEMP%` (frames extract cache) is on C:. **git refuses the repo** ("dubious ownership", the folder belongs to the old
+  SID). Fixing it needs `git config --global --add safe.directory "D:/Video Create"`. Ask before running it.
+
+---
+
 ## 0b. ⭐ STATUS 2026-10-05 — Smart App Control is OFF. Read this before §2b, §2c and §3.
 
 On 2026-10-04 the user turned Windows Smart App Control off (verified: `SmartAppControlState=Off`,
