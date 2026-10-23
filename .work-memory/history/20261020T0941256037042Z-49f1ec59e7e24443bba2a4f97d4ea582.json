@@ -1,0 +1,28 @@
+{
+    "schema_version":  1,
+    "project_root":  "D:\\Video Create",
+    "project_name":  "Video Create",
+    "session_id":  "efdf59ebac9044d093ca8ca124c77e84",
+    "started_utc":  "2026-10-20T09:41:25.6037042+00:00",
+    "saved_utc":  "2026-10-20T09:41:25.6037042+00:00",
+    "ended_utc":  null,
+    "active":  true,
+    "tool":  "claude",
+    "command":  "start",
+    "summary":  "Session started.",
+    "files":  [
+
+              ],
+    "completed_tasks":  [
+
+                        ],
+    "problems":  [
+
+                 ],
+    "decisions":  [
+
+                  ],
+    "next_steps":  [
+
+                   ]
+}

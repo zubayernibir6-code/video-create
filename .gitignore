@@ -27,5 +27,14 @@ assets/models/
 assets/voices/piper/*.onnx
 !.env.local.example
 
+# big audio: background music beds and voiceover drops (small SFX copies stay versioned)
+/public/
+projects/*/public/*.mp3
+projects/*/assets/audio/
+
+# work-memory engine's lock and machine cache (CURRENT_STATE.md and history/ stay versioned)
+.work-memory/project.lock
+.work-memory/state.json
+
 # the cartoon project's build scripts are source code, not build output
 !projects/khata-cartoon/build/
