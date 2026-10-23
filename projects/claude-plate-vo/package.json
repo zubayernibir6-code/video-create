@@ -1,0 +1,10 @@
+{
+  "name": "claude-plate-vo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "page": "node build-page.mjs",
+    "check": "hyperframes check",
+    "render": "hyperframes render --quality high --workers 1"
+  }
+}
