@@ -19,6 +19,8 @@
 - Secrets (API keys): never ask for them in chat, never print them. Tell him which file to paste into
   (usually `.env.local`) and where to get the value.
 - Never deploy or publish without his OK.
+- **His taste lives in `STYLE.md`; his feedback log is `LESSONS.md`** (both at the workspace root, in Bengali).
+  Read both before planning or editing any video. Details in §0e.
 
 ---
 
@@ -591,6 +593,33 @@ every frame packet / brief you write, and run design-lint after every build chan
 12. **Baloo's line box is huge** (ascent 1.095 em, descent 0.589 em; Hind 1.116 / 0.501). `hyperframes check`'s
     `content_overlap` measures those boxes, so stacked SVG texts need baseline gaps computed from these numbers.
 13. **Captions** get `text-wrap: balance` (otherwise one short word sits alone on the last line; design-lint `orphan_word`).
+
+---
+
+## 0e. STYLE.md + LESSONS.md: the taste layer (added 2026-10-23, from the claude.ai chat)
+
+- `STYLE.md` holds the user's editing taste in simple Bengali. Lines marked **(শেখা)** are rules proven on
+  hishab-khata-promo and khata-cartoon; **(বদলান)** lines are starting defaults he is meant to change; a line ending
+  in `?` is an open question for him. Where STYLE.md speaks, it overrides workflow and skill defaults, but never the
+  §0 working rules or the §0d craft rules.
+- Before building a video: read STYLE.md and LESSONS.md, then show him a shot table (time · on screen ·
+  caption/super · sound) and wait for his OK before rendering.
+- After each round of his feedback: append one row to LESSONS.md (date · video · what he said · rule for next time).
+  When the same lesson shows up twice, propose a STYLE.md edit and apply it only with his OK.
+- Both files (and this §0e) were written from the claude.ai chat, which can read and write files in this folder but
+  cannot run commands. Committed to git from the Code tab on 2026-10-23, with his OK.
+- ⚠️ **Open, not done:** `burn-subs.mjs` puts subtitles 7 % above the bottom edge. On a 1080×1920 Reel that lands
+  inside the bottom ~35 % that Facebook/Instagram cover with the caption, name and buttons (Meta's Reels ad safe
+  zone: top 14 %, bottom 35 %, sides 6 %). STYLE.md asks for 9:16 captions centred at about 60 % of the height. Add a
+  vertical-position option (or a 9:16 default) to burn-subs and check it by eye on a rendered frame.
+- ⚠️ The `zero-cost-video-editor.zip` kit from the same chat must **not** be installed here as-is. Its setup runs
+  `npx skills add heygen-com/hyperframes` (that breaks the v0.8.134 skills pin, §0a) and `pip install stable-ts`
+  (PyTorch, several GB, on a short disk; never pip-install outside `tools/pyenv`, §0b). Its ideas are being merged one
+  step at a time instead: (1) STYLE.md + LESSONS.md, done 2026-10-23. Next, each only with his OK: (2) the
+  plan-then-shot-table step, (3) a contact-sheet tool (a whole video as one timestamped image, for Claude's own
+  review). **Dropped at his request (2026-10-23):** the .otio export for DaVinci Resolve. He wants Claude to deliver the
+  finished video end to end (script → voice → visuals → captions → sound → render → QC → all formats), not a timeline
+  for him to finish by hand. Do not suggest manual editors.
 
 ---
 
