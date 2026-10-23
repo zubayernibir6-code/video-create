@@ -271,6 +271,17 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   and libass doesn't trip over non-font files. The temp folder is always removed. PlayRes equals the video
   size; the font size is 5.5 % of the short side (59 px at 1080p), with safe-area margins of 7 % vertical
   and 6 % horizontal. Fonts: Hind Siliguri (default, Bold), Noto Sans Bengali, Baloo Da 2, Tiro Bangla.
+  **Placement (2026-10-23):** tall videos (height ≥ 1.7 × width, i.e. 9:16) get captions centred 60 % from the
+  top, out of Meta's Reels covered zones (top 14 %, bottom 35 %, sides 6 %). Everything else keeps the 7 % bottom
+  margin; 16:9, 1:1 and 4:5 output is frame-identical to before (framemd5). `--pos=<n>` centres a one-line caption
+  at n % from the top (`60%` and `Bottom` are accepted too), `--pos=bottom` forces the bottom. Captions stay
+  bottom-anchored, so extra lines grow upward. On 9:16 it warns when the drawn caption (outline/box padding and typed
+  line breaks included) reaches into the bottom 35 % or the top 14 %; `--size` must be 12–300.
+  **Rotated phone clips:** portrait recordings stored as 1920×1080 plus a rotation flag were laid out as landscape
+  (bottom placement, PlayRes 1920×1080 stretched to 1.76× size); the tool now reads the rotation with ffprobe and
+  uses the upright size. Note: libass draws a line Fontsize px tall, so "59 px" is the line height, not the em.
+  Measured on 1080×1920, 720×1280 and a rotated 1920×1080 clip: one line centred 59.9 %, two lines 58.3 %, lowest
+  ink 61.3 % (box 62.2 %). An independent 3-lens review (8 agents) found the rotation gap; the fixes were re-measured.
   **Box style uses libass BorderStyle 4** (one box per subtitle, BackColour &H5A000000, OutlineColour
   invisible). BorderStyle 3 draws a box per line, and the boxes overlap into a dark band on two-line subs
   (compared side by side). Verified by eye on 1080p (outline) and 1080x1920 (box): ক্ষুদ্র উজ্জ্বল
@@ -608,10 +619,11 @@ every frame packet / brief you write, and run design-lint after every build chan
   When the same lesson shows up twice, propose a STYLE.md edit and apply it only with his OK.
 - Both files (and this §0e) were written from the claude.ai chat, which can read and write files in this folder but
   cannot run commands. Committed to git from the Code tab on 2026-10-23, with his OK.
-- ⚠️ **Open, not done:** `burn-subs.mjs` puts subtitles 7 % above the bottom edge. On a 1080×1920 Reel that lands
-  inside the bottom ~35 % that Facebook/Instagram cover with the caption, name and buttons (Meta's Reels ad safe
-  zone: top 14 %, bottom 35 %, sides 6 %). STYLE.md asks for 9:16 captions centred at about 60 % of the height. Add a
-  vertical-position option (or a 9:16 default) to burn-subs and check it by eye on a rendered frame.
+- ✅ **Done 2026-10-23:** `burn-subs.mjs` used to put subtitles 7 % above the bottom edge, which on a 1080×1920 Reel
+  measured at 90–91 % from the top, inside the bottom ~35 % that Facebook/Instagram cover with the caption, name and
+  buttons (Meta's Reels ad safe zone: top 14 %, bottom 35 %, sides 6 %). 9:16 captions are now centred at 60 % by
+  default, with `--pos` to override (details in §0b, subtitle tools). Before/after frames:
+  `renders/burn-subs-test/2026-10-23/`.
 - ⚠️ The `zero-cost-video-editor.zip` kit from the same chat must **not** be installed here as-is. Its setup runs
   `npx skills add heygen-com/hyperframes` (that breaks the v0.8.134 skills pin, §0a) and `pip install stable-ts`
   (PyTorch, several GB, on a short disk; never pip-install outside `tools/pyenv`, §0b). Its ideas are being merged one
