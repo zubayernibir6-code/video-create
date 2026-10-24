@@ -1,4 +1,5 @@
-// srt.mjs — shared subtitle reader for burn-subs.mjs and srt-to-words.mjs.
+// srt.mjs — shared subtitle reader for burn-subs.mjs and srt-to-words.mjs, plus the ASS time format that
+// burn-subs.mjs and contact-sheet.mjs write.
 //
 // Reads .srt and .vtt the way Windows actually saves them: UTF-8 with or without a BOM, UTF-16
 // ("Unicode" in Notepad), CRLF line endings. HyperFrames 0.8.33's own SRT import splits cues on
@@ -14,6 +15,13 @@ export function readSubtitleText(file) {
   else if (buf[0] === 0xfe && buf[1] === 0xff) text = Buffer.from(buf.subarray(2)).swap16().toString("utf16le");
   else text = buf.toString("utf8").replace(/^﻿/, "");
   return text.replace(/\r\n?/g, "\n").normalize("NFC");
+}
+
+// seconds → ASS "H:MM:SS.cc"
+export function assTime(t) {
+  const cs = Math.max(0, Math.round(t * 100));
+  const h = Math.floor(cs / 360000), m = Math.floor((cs % 360000) / 6000), s = Math.floor((cs % 6000) / 100);
+  return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}.${String(cs % 100).padStart(2, "0")}`;
 }
 
 // "00:01:02,345", "00:01:02.345" or "01:02.345" → seconds

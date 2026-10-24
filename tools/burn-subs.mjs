@@ -28,8 +28,8 @@ import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { probe } from "./qc.mjs";
-import { parseSubtitles } from "./srt.mjs";
+import { displaySize, probe } from "./qc.mjs";
+import { assTime, parseSubtitles } from "./srt.mjs";
 
 const WORKSPACE = path.resolve(import.meta.dirname, "..");
 const FONTS = ["Hind Siliguri", "Noto Sans Bengali", "Baloo Da 2", "Tiro Bangla"];
@@ -47,25 +47,8 @@ function fail(msg) {
   process.exit(1);
 }
 
-// seconds → ASS "H:MM:SS.cc"
-function assTime(t) {
-  const cs = Math.max(0, Math.round(t * 100));
-  const h = Math.floor(cs / 360000), m = Math.floor((cs % 360000) / 6000), s = Math.floor((cs % 6000) / 100);
-  return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}.${String(cs % 100).padStart(2, "0")}`;
-}
-
 // Braces start ASS override tags and "\N" is a line break, so they are neutralised in plain text.
 const assText = (t) => t.replace(/[{}]/g, (c) => (c === "{" ? "(" : ")")).replace(/\\/g, "/").replace(/\n/g, "\\N");
-
-// Phones store a portrait recording as a landscape picture plus a rotation flag. FFmpeg turns the picture
-// upright before the ass filter, so the captions are laid out for the upright size.
-function displaySize(file, v) {
-  const r = spawnSync("ffprobe", ["-v", "error", "-select_streams", "v:0", "-show_entries",
-    "stream_side_data=rotation:stream_tags=rotate", "-of", "json", file], { encoding: "utf8" });
-  const s = r.status === 0 ? JSON.parse(r.stdout).streams?.[0] ?? {} : {};
-  const rotation = Number(s.side_data_list?.find((d) => d.rotation !== undefined)?.rotation ?? s.tags?.rotate ?? 0);
-  return Math.abs(rotation) % 180 === 90 ? [v.height, v.width] : [v.width, v.height];
-}
 
 // Sizes and margins in video pixels. libass draws a line Fontsize px tall, and the box style pads it by Outline.
 // Captions are bottom-centre aligned: MarginV is 7 % for "bottom", otherwise the margin that puts the middle
@@ -130,7 +113,8 @@ const style = flags.style === "box" ? "box" : "outline";
 const v = probe(video);
 if (!v.width) fail(`${video} has no video stream.`);
 
-const [W, H] = displaySize(video, v);
+// A phone's portrait clip stored sideways with a rotation flag is laid out for its upright size.
+const [W, H] = displaySize(v);
 const tall = H >= W * TALL;
 
 const isAss = path.extname(subs).toLowerCase() === ".ass";

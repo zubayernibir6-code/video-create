@@ -487,6 +487,33 @@ launching `npm install -g hyperframes@<latest>` on its own (it failed with `spaw
   `fix-frame.mjs` sets Bengali roles' tracking to 0 in frame.md; `tools/sfx-leads.mjs [dir]` writes each sound's silent
   lead-in as `lead_s` into manifest.json (ping 0.32 s, typing 0.44, chime 0.42, pop 0.12, cash-register 0.14…).
   **Read §0d before building any new video.**
+- ✅ **`tools/contact-sheet.mjs`: a whole video as one image (2026-10-24).** `node tools/contact-sheet.mjs <video>
+  [--every=<s>] [--from=<time>] [--to=<time>] [--cols=<n>] [--out=<file.png | folder>]`. Plain node and FFmpeg. Default:
+  ONE sheet at the smallest round step that fits (0.25, 0.5, 1, 2, 2.5, 5, 10 … s): 6 s → 24 frames every 0.25 s,
+  45 s → 23 every 2 s, 5 min → 30 every 10 s. `--every=0.5` spreads 600 frames of a 5-minute video over 19 sheets in
+  21.8 s. Each tile is labelled with its time ("1:15.5"); the header names the file, the stretch, the step, the size and
+  the page (Bengali, Hind Siliguri). Sheets stay ≤ ~1560 px a side (8 columns for 9:16, 6 for 1:1 and 4:5, 4 for 16:9),
+  so Claude's image reader sees them unshrunk. A 9:16 tile is then 188 px wide, too small to read captions; `--cols=4`
+  (382 px tiles, 8 a page) made the cartoon's Bengali captions and form text fully legible. Output
+  `<video>-sheet.png` or `-sheet-01.png …` beside the video; earlier sheets of that name are replaced. One FFmpeg pass: `fps=fps=<step>:start_time=0:round=up` → trim → scale → `ass`
+  labels → `tile` → `pad` → `ass` header, run in a temp folder holding only the two fonts (like burn-subs).
+  **Timing trap, found and fixed:** fps's default `round=near` keeps the LAST frame that rounds to each slot, so a tile
+  showed the picture up to half a step after its label (frame 7 under "0:00" on a frame-numbered test video); PSNR of
+  tiles against frames cut at their labelled time matched only 10/32 and 11/24. With `round=up` (the frame on screen at
+  that moment) it is exact: 0:00 = frame 0, 0:00.5 = frame 15, 0:10 = frame 300 with `--from`, a file starting at
+  0.3 s too, and 79/79 tiles on the cartoon and the promo matched their labelled time. A rotated phone clip is tiled
+  upright. **Shared helpers moved for it:** `qc.mjs` probe() now returns `rotation` and exports `displaySize(v)`;
+  `srt.mjs` exports `assTime`; burn-subs imports both (its output is frame-identical on 8 clips).
+  **An independent tester then broke it in 9 ways, all fixed and re-run (2026-10-24):** the old-page cleanup deleted
+  unrelated files such as `frame-17.png` beside `--out=frame.png`, before FFmpeg even ran (now pages are made in a temp
+  folder, copied in only on success, and only `<video>-sheet` pages the tool named itself are replaced); a `%` in a
+  name broke multi-page runs (12 awkward names now work, Bengali and `৫০% ছাড়` included); `--from` dropped the frame
+  already on screen (now the decode starts 10 s early and fps `start_time` cuts; a variable-frame-rate clip 8/8); the
+  length came from the file, not the video track (a 1 s late track and an MKV with longer audio now measure 7.1 s and
+  6.1 s); a non-whole-millisecond step drifted (the step is snapped to ms: 452/452 tiles right at 0.133 s);
+  non-square pixels were squashed; `--cols=1` made a 2808 px sheet; misspelt options were ignored; and raw streams
+  crashed `qc.mjs` `isFaststart` (now guarded for every caller). Ground truth: the tester's videos carry each frame's
+  number as a 12-bit stripe code that a script reads back from every tile; 25, 29.97, 30 and 60 fps all right.
 
 ### Capability audit (2026-10-04): what is ready, and the install plan
 
@@ -594,8 +621,11 @@ every frame packet / brief you write, and run design-lint after every build chan
    typing.mp3 at ~0.22. Overlapping cues must sit on different `data-track-index` lanes (pack onto 20, 21, 22…).
 8. **No dead air:** never a still picture AND silence together for ≥ 1.5 s (qc.mjs WARN). Real music under the SFX is
    the biggest remaining upgrade for any promo (the user's Pixabay task → `music-pick.mjs`).
-9. **Look at it:** after the render, extract frames every 0.5 s (`ffmpeg -vf "fps=2,scale=480:270"` + `tile=4x3`) and
-   review every one, plus the held end of each scene at full size. Lint and design-lint do not judge taste.
+9. **Look at it:** after the render, run `node tools/contact-sheet.mjs <render.mp4>` (one sheet for the whole video)
+   and `--every=0.5` (a frame every half second over several sheets), read every sheet, and check the held end of each
+   scene at full size. Compare the tiles with PLAN.md's shot table by time. At the default columns the on-screen
+   Bengali is too small to proofread; for spelling and captions use `--cols=4` (9:16) or `--cols=2` (16:9) with
+   `--from`/`--to`. Lint and design-lint do not judge taste.
 10. **Quote every font family name** in CSS and in SVG `font-family="…"` attributes. A name with a digit (`Baloo Da 2`)
     is not a valid unquoted CSS identifier, so Chrome throws away the WHOLE list and draws the text in Times New Roman
     + Nirmala UI. No error appears anywhere. In the khata-cartoon every Baloo label was a system font until design-lint's
@@ -647,8 +677,8 @@ every frame packet / brief you write, and run design-lint after every build chan
   `npx skills add heygen-com/hyperframes` (that breaks the v0.8.134 skills pin, §0a) and `pip install stable-ts`
   (PyTorch, several GB, on a short disk; never pip-install outside `tools/pyenv`, §0b). Its ideas are being merged one
   step at a time instead: (1) STYLE.md + LESSONS.md, done 2026-10-23; (2) the plan-then-shot-table step, done
-  2026-10-24 (the plan gate above). Next, only with his OK: (3) a contact-sheet tool (a whole video as one
-  timestamped image, for Claude's own review).
+  2026-10-24 (the plan gate above); (3) the contact-sheet tool, done 2026-10-24 (`tools/contact-sheet.mjs`, §0b and
+  §0d rule 9). All three of the kit's ideas are now merged.
   ⚠️ **Found 2026-10-24: the kit's skill IS installed** at `~/.claude/skills/zero-cost-video-editor` (SKILL.md dated
   2026-10-23 21:53), so it can trigger on edit requests. Its rule 4 says to read the STYLE.md *next to the skill*: a
   generic English default (Montserrat, Anek Bangla titles, size 78), NOT his. In this workspace the root STYLE.md and
@@ -689,6 +719,7 @@ E:\Video Create\
 │   ├── srt.mjs                   ← shared SRT/VTT reader (BOM, UTF-16, CRLF, NFC)
 │   ├── plan-check.mjs            ← checks a video's PLAN.md (shot table, pace, sounds, script length) before he sees it (§0e)
 │   ├── plan\TEMPLATE.md          ← the plan every new video starts from; plan\EXAMPLE.md is a filled 30 s Reel (§0e)
+│   ├── contact-sheet.mjs         ← a whole video as one image of time-labelled frames, for review (§0b, §0d rule 9)
 │   └── pyenv\                    ← workspace Python venv (Kokoro TTS); HYPERFRAMES_PYTHON points here
 ├── projects\
 │   ├── remotion-starter\         ← Remotion 4 + React 19 + Tailwind v4

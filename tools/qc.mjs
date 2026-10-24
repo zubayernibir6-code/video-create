@@ -33,7 +33,7 @@ function isFaststart(file) {
       let size = b.readUInt32BE(0);
       order.push(b.toString("latin1", 4, 8));
       if (size === 1) size = Number(b.readBigUInt64BE(8));
-      if (size < 8) break;
+      if (!Number.isSafeInteger(size) || size < 8) break; // not an MP4 box (e.g. a raw .h264 stream)
       off += size;
     }
   } finally {
@@ -56,6 +56,7 @@ export function probe(file) {
     fps: fd ? +(fn / fd).toFixed(3) : null,
     duration: +(+p.format.duration).toFixed(3),
     vduration: v?.duration ? +(+v.duration).toFixed(3) : null,
+    rotation: Number(v?.side_data_list?.find((d) => d.rotation !== undefined)?.rotation ?? v?.tags?.rotate ?? 0),
     vcodec: v?.codec_name ?? null,
     pix_fmt: v?.pix_fmt ?? null,
     color: v ? `${v.color_range ?? "?"}/${v.color_space ?? "?"}/${v.color_transfer ?? "?"}/${v.color_primaries ?? "?"}` : null,
@@ -67,6 +68,10 @@ export function probe(file) {
     faststart: isFaststart(file),
   };
 }
+
+// Phones store a portrait recording as a landscape picture plus a rotation flag, and FFmpeg turns the
+// picture upright before any filter. This is the size the filters see: [width, height] of probe(file).
+export const displaySize = (v) => (Math.abs(v.rotation) % 180 === 90 ? [v.height, v.width] : [v.width, v.height]);
 
 // Edges: an 8 px band along an edge that is pure black in every sampled frame while the picture right next to it
 // is not. HyperFrames' 1080-wide renders lost their right 8 px exactly like this (FFmpeg 8.1.1's gbrp→YUV bug,
