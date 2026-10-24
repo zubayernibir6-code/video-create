@@ -613,8 +613,27 @@ every frame packet / brief you write, and run design-lint after every build chan
   hishab-khata-promo and khata-cartoon; **(বদলান)** lines are starting defaults he is meant to change; a line ending
   in `?` is an open question for him. Where STYLE.md speaks, it overrides workflow and skill defaults, but never the
   §0 working rules or the §0d craft rules.
-- Before building a video: read STYLE.md and LESSONS.md, then show him a shot table (time · on screen ·
-  caption/super · sound) and wait for his OK before rendering.
+- ⭐ **Plan gate — STANDING (2026-10-24).** Before building ANY video (every skill workflow, hand-built projects, footage
+  edits): read STYLE.md and LESSONS.md, copy `tools/plan/TEMPLATE.md` to `projects/<name>/PLAN.md` and fill it in
+  (example: `tools/plan/EXAMPLE.md`), run `node tools/plan-check.mjs projects/<name>` until it reports no ERROR, then
+  show him in chat, in Bengali: the goal, the hook, the shot table (সময় · পর্দায় কী · ক্যাপশন / লেখা · শব্দ), what is
+  needed, every WARN and the questions. Build, voice and render nothing until he says OK. A skill's own storyboard
+  gate (e.g. product-launch-video's STORYBOARD.md) comes after PLAN.md and follows it. After the OK, PLAN.md is the
+  brief: a change he asks for goes into PLAN.md first, then the check runs again.
+  **plan-check** reads the header lines (ফরম্যাট, দৈর্ঘ্য, ভয়েস, মিউজিক; "নেই" counts as none only on its own) and
+  checks. ERROR: a row with more or fewer cells than the header (a stray |), a blank line splitting the table, times
+  that don't run back to back from 0 to দৈর্ঘ্য. WARN: a row past 3 s on videos up to 90 s (8 s on longer ones) unless
+  its পর্দায় কী cell has the word দম; a দম row over 1.5 s with no voice, music or long-enough sound (dead air); a
+  shot with no sound; a `name` in backticks that is not in assets/sfx or the project's own; ✓/arrow symbols in
+  on-screen text; an end screen over 3 s; a script longer than the video, a numbered line not placed as ভয়েস N, or a
+  line that may still be playing when the next starts or past the end (Piper 1.8 words/s net of bn-tts's 0.25 + 0.4 s
+  of silence; measured on the example's 5 lines made with bn-tts --voice=male: 14.1 s of speech against an estimate of
+  17.2 s, i.e. 22 % long, the safe direction); music with no track in assets/music. INFO:
+  the Piper credit line, the lesson count, STYLE.md's open questions (bullets with "?"). Times may use Bengali
+  digits, any dash, "থেকে", m:ss and "সে."; files may be UTF-8 ± BOM, UTF-16 or CRLF. Exit 1 on ERROR.
+  Verified 2026-10-24: the example passes clean; my 20 broken variants and the 78 plans an independent 3-lens review
+  (9 agents) wrote to break it each give the expected result. That review found the stray-| and "নেই"-anywhere holes,
+  the missing voice-line timing and the দম dead-air loophole; all were fixed and re-run.
 - After each round of his feedback: append one row to LESSONS.md (date · video · what he said · rule for next time).
   When the same lesson shows up twice, propose a STYLE.md edit and apply it only with his OK.
 - Both files (and this §0e) were written from the claude.ai chat, which can read and write files in this folder but
@@ -627,9 +646,15 @@ every frame packet / brief you write, and run design-lint after every build chan
 - ⚠️ The `zero-cost-video-editor.zip` kit from the same chat must **not** be installed here as-is. Its setup runs
   `npx skills add heygen-com/hyperframes` (that breaks the v0.8.134 skills pin, §0a) and `pip install stable-ts`
   (PyTorch, several GB, on a short disk; never pip-install outside `tools/pyenv`, §0b). Its ideas are being merged one
-  step at a time instead: (1) STYLE.md + LESSONS.md, done 2026-10-23. Next, each only with his OK: (2) the
-  plan-then-shot-table step, (3) a contact-sheet tool (a whole video as one timestamped image, for Claude's own
-  review). **Dropped at his request (2026-10-23):** the .otio export for DaVinci Resolve. He wants Claude to deliver the
+  step at a time instead: (1) STYLE.md + LESSONS.md, done 2026-10-23; (2) the plan-then-shot-table step, done
+  2026-10-24 (the plan gate above). Next, only with his OK: (3) a contact-sheet tool (a whole video as one
+  timestamped image, for Claude's own review).
+  ⚠️ **Found 2026-10-24: the kit's skill IS installed** at `~/.claude/skills/zero-cost-video-editor` (SKILL.md dated
+  2026-10-23 21:53), so it can trigger on edit requests. Its rule 4 says to read the STYLE.md *next to the skill*: a
+  generic English default (Montserrat, Anek Bangla titles, size 78), NOT his. In this workspace the root STYLE.md and
+  LESSONS.md win, its plan step is replaced by the plan gate above, and its setup lines (`npx skills add …`,
+  `pip install stable-ts`) must not be run. Whether to keep, adapt or remove that skill is his decision.
+  **Dropped at his request (2026-10-23):** the .otio export for DaVinci Resolve. He wants Claude to deliver the
   finished video end to end (script → voice → visuals → captions → sound → render → QC → all formats), not a timeline
   for him to finish by hand. Do not suggest manual editors.
 
@@ -662,6 +687,8 @@ E:\Video Create\
 │   ├── burn-subs.mjs             ← burn SRT/VTT/ASS into a video with correct Bengali conjuncts (§0b)
 │   ├── srt-to-words.mjs          ← SRT/VTT → word timings JSON for word-by-word captions (§0b)
 │   ├── srt.mjs                   ← shared SRT/VTT reader (BOM, UTF-16, CRLF, NFC)
+│   ├── plan-check.mjs            ← checks a video's PLAN.md (shot table, pace, sounds, script length) before he sees it (§0e)
+│   ├── plan\TEMPLATE.md          ← the plan every new video starts from; plan\EXAMPLE.md is a filled 30 s Reel (§0e)
 │   └── pyenv\                    ← workspace Python venv (Kokoro TTS); HYPERFRAMES_PYTHON points here
 ├── projects\
 │   ├── remotion-starter\         ← Remotion 4 + React 19 + Tailwind v4
