@@ -78,6 +78,10 @@ sidebar profile row, and the account popup (email, org, personal rows), then PRO
    Add a union box for ±0.1 s around each layout change.
 4. `… --find=… --leaks` on the blurred clip for EVERY private spot (greeting, profile row, email, org) → must be 0.
    A sharp-frame report is a real leak until a frame AT THAT TIME proves otherwise.
+Logos too (he asked 2026-10-26): the app's logo beside the greeting (moves with the layout like the name, but stays
+visible while menus are open), its taskbar icon (whole clip), the Code page mascot. Prove them with colour, not words:
+`ffmpeg -i clip -vf "crop=w:h:x:y,signalstats,metadata=print:key=lavfi.signalstats.SATMAX"` per box — the orange logo
+reads SATMAX 58–70 sharp, ≤ 44 blurred; list frames still > 35 and look (a sliding blue bar also scored 70).
 End card: no trademark ("UNLOCK 5X ENTERPRISE AI POWER — SEND MESSAGE NOW"). The recording itself still shows
 the app's own UI and model names; say so to him — blur does not make an ad "100 % compliant", Meta also judges claims.
 
