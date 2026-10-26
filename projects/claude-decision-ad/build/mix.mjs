@@ -26,7 +26,7 @@ cue(T.cta, "whoosh-short", 0.45);
 const DROP = 15.04; // BGM2's bass drop (tools/music-drops.mjs)
 buildMix({
   total: TOTAL, out, graphFile: path.join(PROJECT, "build", "mix.graph.txt"),
-  voice: { file: `${SRC}/VoiceOverCLaude.wav`, eq: true },
+  voice: { file: `${SRC}/voice_1.wav`, eq: true }, // voice v2 (2026-10-26)
   music: [
     { file: `${SRC}/BGM1.mp3`, at: 0, from: 0, env: [[0, -19], [T.xfade0, -19], [T.xfade1, null]] },
     { file: `${SRC}/BGM2.mp3`, at: T.xfade0, from: DROP - (CLICK - T.xfade0),

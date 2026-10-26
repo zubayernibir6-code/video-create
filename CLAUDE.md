@@ -175,7 +175,7 @@ comes out more accurate. After each delivery (and after each round of his feedba
    table; fixed in the next commit).
 
 Skills so far: `screen-promo` (screen recording → SaaS commercial with zooms, cursor glow, tilt, click boom,
-gold end card; reference project `projects/claude-decision-ad`). Its tools: `tools/screen/{watch,keystrokes,cut}.mjs`,
+gold end card; reference project `projects/claude-decision-ad`). Its tools: `tools/screen/{watch,keystrokes,cut,text-scan}.mjs` (cut `--blur` + text-scan = privacy blur, §4b of the skill),
 `tools/screen/track-cursor.py`, `tools/screen/promo-core.mjs` (page), `tools/screen/promo-mix.mjs` (soundtrack),
 `tools/music-drops.mjs`. `plan-check.mjs` now checks a RECORDED voice by each line's measured start
 (`৬. (০:২৮.৮) …`) instead of Piper's estimated pace.

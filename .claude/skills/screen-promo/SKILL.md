@@ -66,7 +66,26 @@ any filter on it floods the chat. Instead wait for the process in a background B
 90 s took ~7 min of capture at ~6.5 frames/s (screenshot mode, see the 3D note). Then: contact sheets
 (`--every=0.5`), the click moment frame by frame, and a null/lag test of the master audio against mix.wav.
 
+## 4b. Meta / Facebook ads: privacy blur and brand-free end card (version 2, 2026-10-26)
+
+Meta's review flags personal data on screen. Blur his name (the greeting "Good evening / Up late, <name>"), the
+sidebar profile row, and the account popup (email, org, personal rows), then PROVE nothing is readable:
+1. `node tools/screen/text-scan.mjs <clip> --band=y0,y1 --at=…` → the name's word boxes per layout
+   (no sidebar / sidebar open move it ~216 px; "Good evening" vs "Up late" differ).
+2. `… --find=A:a-b,B:c-d,…` → frame runs per layout. Gaps are menus covering it — no blur there, or the menu
+   text gets blurred. Cross-check every boundary with `watch.mjs` (they must agree to the frame).
+3. `cut.mjs … --blur-sigma=22 --blur=x,y,w,h@a-b+c-d` per box (sigma 14 still showed the name's outline).
+   Add a union box for ±0.1 s around each layout change.
+4. `… --find=… --leaks` on the blurred clip for EVERY private spot (greeting, profile row, email, org) → must be 0.
+   A sharp-frame report is a real leak until a frame AT THAT TIME proves otherwise.
+End card: no trademark ("UNLOCK 5X ENTERPRISE AI POWER — SEND MESSAGE NOW"). The recording itself still shows
+the app's own UI and model names; say so to him — blur does not make an ad "100 % compliant", Meta also judges claims.
+
 ## 5. Traps found here (each cost a run)
+
+- **FFmpeg rounds a 4:2:0 crop to EVEN sizes.** A 65-row raw crop came out 64 rows; reading frames as 65 rows
+  drifted the scan 1.2 s over 80 s and hid a real unblurred stretch (56.8–57.6 s). Raw-pipe crops: even w/h
+  (text-scan.mjs forces it). Check: total bytes ÷ (w × h) must equal the frame count exactly.
 
 - **Any CSS `perspective` (the 3D tilt) switches the WHOLE render to screenshot capture** (log: "CSS 3D
   rendering context — disabling drawElementImage"). Fine for 90 s; for long videos, fake the tilt in 2D

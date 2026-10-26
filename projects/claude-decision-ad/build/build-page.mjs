@@ -11,7 +11,7 @@ const out = process.argv.find((a) => a.startsWith("--out="))?.slice(6) ?? path.j
 const html = buildPromo({
   title: "Claude 5X — So, what's your decision?",
   total: TOTAL,
-  clip: { src: "assets/media/cam.mp4", dur: CLICK + CAM_HOLD },
+  clip: { src: "assets/media/cam_blur.mp4", dur: CLICK + CAM_HOLD }, // name, email and profile blurred (cut.mjs --blur)
   camera: [
     { t: 0.2, d: 2.0, s: 1.4, l: 548, tp: 180, e: "power2.inOut" }, // in on the model menu
     { t: 2.2, d: 10.3, s: 1.44, l: 586, tp: 188, e: "sine.inOut" }, // slow creep while Max / Fable 5.1 are picked
@@ -39,9 +39,9 @@ const html = buildPromo({
   end: {
     line1: { words: ["SO,", "WHAT'S", "YOUR", "DECISION?"], slams: T.slam1 },
     lift: { t: T.lift, y: -262, scale: 0.64 },
-    line2: { rows: [["UNLOCK", "CLAUDE 5X"], ["ENTERPRISE POWER"]], slams: T.slam2 },
-    sheens: [["#l1", 81.5], ["#l2", T.sheen2, 1.0], ["#l1", 88.2, 1.0]],
-    cta: { text: "GET INSTANT ACCESS NOW", t: T.cta, pulses: [86.9, 87.85, 88.8], sheen: 87.4 },
+    line2: { rows: [["UNLOCK", "5X ENTERPRISE"], ["AI POWER"]], slams: T.slam2 },
+    sheens: [["#l1", 81.6], ["#l2", T.sheen2, 1.0], ["#l1", 89.6, 1.0]],
+    cta: { text: "SEND MESSAGE NOW", t: T.cta, pulses: T.pulses, sheen: 86.8 },
   },
 });
 writeFileSync(out, html);

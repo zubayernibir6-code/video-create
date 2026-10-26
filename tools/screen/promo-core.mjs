@@ -112,7 +112,7 @@ export function buildPromo(spec) {
   const slam = (sel, t, from = 2.6) => {
     js.push(`  tl.fromTo("${sel}", { scale: ${from}, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, ${f3(t - 0.2)});`);
     // the landing jolts the whole card
-    [[10, -6], [-7, 4], [4, -2], [0, 0]].forEach(([x, y], i) => js.push(`  tl.to("#endin", { x: ${x}, y: ${y}, duration: ${f3(1 / fps)}, ease: "none" }, ${f3(t + i / fps)});`));
+    [[10, -6], [-7, 4], [4, -2], [0, 0]].forEach(([x, y], i) => js.push(`  tl.to("#endin", { x: ${x}, y: ${y}, duration: ${f3(1 / fps - 0.003)}, ease: "none" }, ${f3(t + i / fps)});`));
   };
   end.line1.words.forEach((_, i) => slam(`#a${i}`, end.line1.slams[i]));
   js.push(`  tl.fromTo("#l1", { y: 0, scale: 1 }, { y: ${end.lift.y}, scale: ${end.lift.scale}, duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${f3(end.lift.t)});`);

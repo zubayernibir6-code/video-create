@@ -5,6 +5,9 @@
 // --from: first kept moment (e.g. the first frame after the OBS window is gone; find it with watch.mjs).
 // --to:   first frame NOT kept (e.g. the click frame, so the spinner never shows).
 // --hold: repeat the source frame at <at_s> for <dur_s> s (rounded to source frames).
+// --blur=x,y,w,h@a-b+c-d (repeatable): Gaussian-blur that box (source pixels) during those CLIP-time windows —
+//         names, emails, profile rows (privacy / Meta ad review). Find the windows by scanning the clip, not by eye:
+//         a box left on while a menu covers the name blurs the menu instead. --blur-sigma=14 (30 px text unreadable).
 // Prints how source time maps to clip time. Verified 2026-10-25 (Claude ad): 60 fps → 30 fps, 2401 frames,
 // clip frame 1000 = source frame 2090 exactly (PSNR 59 dB, ±2 frames ≤ 39 dB).
 import { spawnSync } from "node:child_process";
@@ -30,7 +33,20 @@ if (flag("hold")) {
   parts.push(`source ${(a / sfps).toFixed(3)}–${(b / sfps).toFixed(3)} → clip 0–${((b - a) / sfps).toFixed(3)}`);
 }
 const tail = Number(flag("tail", 0));
-graph += `,setpts=N/${sfps}/TB,fps=${fps}${tail ? `,tpad=stop_mode=clone:stop_duration=${tail}` : ""},format=yuv420p[v]`;
+graph += `,setpts=N/${sfps}/TB,fps=${fps}${tail ? `,tpad=stop_mode=clone:stop_duration=${tail}` : ""}`;
+const blurs = args.filter((a) => a.startsWith("--blur=")).map((a) => a.slice(7));
+const sigma = flag("blur-sigma", "14");
+if (blurs.length) {
+  graph += "[b0]";
+  blurs.forEach((spec, i) => {
+    const [box, wins] = spec.split("@");
+    const [x, y, w, h] = box.split(",").map(Number);
+    const en = wins.split("+").map((r) => { const [a, b] = r.split("-").map(Number); return `between(t,${a},${b})`; }).join("+");
+    graph += `;[b${i}]split=2[m${i}][c${i}];[c${i}]crop=${w}:${h}:${x}:${y},gblur=sigma=${sigma}[g${i}];[m${i}][g${i}]overlay=${x}:${y}:enable='${en}'[b${i + 1}]`;
+    parts.push(`blur ${w}×${h} at ${x},${y} during ${wins.replace(/\+/g, ", ")} s`);
+  });
+  graph += `;[b${blurs.length}]format=yuv420p[v]`;
+} else graph += ",format=yuv420p[v]";
 const r = spawnSync("ffmpeg", ["-hide_banner", "-v", "error", "-i", src, "-filter_complex", graph, "-map", "[v]", "-an", "-c:v", "libx264", "-preset", "slow", "-crf", crf, "-g", String(fps),
   "-x264-params", "colorprim=bt709:transfer=bt709:colormatrix=bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-movflags", "+faststart", "-y", out], { stdio: "inherit" });
 if (r.status !== 0) process.exit(r.status ?? 1);

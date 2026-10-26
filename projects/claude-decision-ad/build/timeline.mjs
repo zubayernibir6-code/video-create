@@ -1,10 +1,11 @@
 // The single timing source for the ad. All times are seconds on the finished video
-// (= original recording time − 1.5 s up to the hover; the hover is held 25 frames longer so the click lands
-// just after the voice says "decision?"). Measured on 2026-10-25 from Video.mp4 and VoiceOverCLaude.wav.
+// (= original recording time − 1.5 s up to the hover; the hover is held 29 source frames longer so the click lands
+// just after the voice says "decision?"). Measured 2026-10-25 from Video.mp4; voice v2 = voice_1.wav (2026-10-26):
+// "what's your decision?" ends at 79.55, the last word at ~90.7 (file 91.12 s).
 
 export const FPS = 30;
-export const CLICK = 2386 / FPS; // 79.533: the submit click (orig 80.617); last camera frame is orig 4835 @60 fps
-export const TOTAL = 90; // the voice file is 90.04 s; its last word ends at 89.14
+export const CLICK = 2388 / FPS; // 79.600: the submit click (orig 80.617); last camera frame is orig 4835 @60 fps
+export const TOTAL = 91.5; // voice_1.wav is 91.12 s; its last word ends at ~90.7
 export const CAM_HOLD = 0.5; // the clip holds its last frame this long past the click (under the flash)
 
 // the 24 keystrokes of "So what's your Decision?" (caret tracking, orig − 1.5)
@@ -21,9 +22,10 @@ export const T = {
   xfade0: 66.5, // BGM1 → BGM2 crossfade (orig 1:08 → 1:09)
   xfade1: 67.5,
   hover: 77.583, // the cursor reaches the orange button (orig 79.083): the zoom reaches 1.8 here
-  slam1: [80.15, 80.45, 80.75, 81.1], // SO, / WHAT'S / YOUR / DECISION?
-  lift: 82.9, // line 1 moves up
-  slam2: [83.3, 83.6, 83.95], // UNLOCK / CLAUDE 5X / ENTERPRISE POWER
-  sheen2: 84.5,
-  cta: 86.3, // GET INSTANT ACCESS NOW (voice: "এখনই নিচে দেয়া বাটনে ক্লিক" at 86.66)
+  slam1: [80.22, 80.52, 80.82, 81.17], // SO, / WHAT'S / YOUR / DECISION?
+  lift: 83.0, // line 1 moves up
+  slam2: [83.4, 83.7, 84.05], // UNLOCK / 5X ENTERPRISE / AI POWER (no brand names on the end card: Meta ads)
+  sheen2: 84.6,
+  cta: 85.6, // SEND MESSAGE NOW (voice v2: "…send message বাটনে ক্লিক…" ≈ 86–88)
+  pulses: [86.3, 87.25, 88.2, 89.15],
 };
