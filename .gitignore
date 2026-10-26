@@ -45,3 +45,5 @@ projects/*/assets/media/
 # screen-promo reference project: its build scripts are source code (the graph file is generated)
 !projects/claude-decision-ad/build/
 projects/claude-decision-ad/build/mix.graph.txt
+__pycache__/
+*.pyc

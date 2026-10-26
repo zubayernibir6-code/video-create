@@ -1,0 +1,41 @@
+{
+  "name": "zubayer-ep01",
+  "title": "The Age of AI & Systems Thinking",
+  "titleBn": "এআই আর সিস্টেম থিংকিংয়ের যুগ",
+  "byline": "By Zubayer",
+  "source": {
+    "video": "C:/Users/Zubayer Nibir/Downloads/my rc video/the video.mp4",
+    "music": "C:/Users/Zubayer Nibir/Downloads/my rc video/the bgm.mp3",
+    "subtitles": "C:/Users/Zubayer Nibir/Downloads/my rc video/subtitle.txt"
+  },
+  "work": "C:/Users/Zubayer Nibir/VideoWork/zubayer-ep01",
+  "fps": 30,
+  "cuts": {
+    "silenceDb": -45,
+    "minGap": 0.7,
+    "padAfter": 0.18,
+    "padBefore": 0.12,
+    "manual": [
+      [
+        3,
+        5.8
+      ]
+    ],
+    "note": "30.8-32.2 was listed as a cough but is speech (অর্গানাইজড ভাবে অ্যাকশন নিতে পারতেছি, checked with the transcriber) — not cut"
+  },
+  "coldOpen": {
+    "from": 216,
+    "to": 228.6
+  },
+  "titleCard": 3.6,
+  "endCard": 3,
+  "mix": {
+    "musicDb": -14,
+    "duck": {
+      "threshold": 0.03,
+      "ratio": 1.6,
+      "attack": 40,
+      "release": 600
+    }
+  }
+}

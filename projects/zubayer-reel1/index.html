@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>২০৩০ সালে &lt;em&gt;৯.২ কোটি&lt;/em&gt; চাকরি থাকবে না?</title>
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Hind Siliguri"; font-weight: 500; src: url("assets/fonts/HindSiliguri-Medium.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 600; src: url("assets/fonts/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 700; src: url("assets/fonts/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Baloo Da 2"; font-weight: 400 800; src: url("assets/fonts/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Inter"; font-weight: 100 900; src: url("assets/fonts/Inter-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "JetBrains Mono"; font-weight: 100 800; src: url("assets/fonts/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+body { margin: 0; background: #0B0F19; }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #0B0F19; font-family: "Hind Siliguri", "Inter", sans-serif; color: #EAF0F8; }
+#bg { position: absolute; inset: 0;
+  background-image: radial-gradient(ellipse at 50% 38%, rgba(0,245,212,0.12), rgba(11,15,25,0) 60%),
+    linear-gradient(rgba(0,245,212,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,245,212,0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 60px 60px, 60px 60px; }
+#tag { position: absolute; left: 0; right: 0; top: 290px; display: flex; justify-content: center; opacity: 0; }
+#tag span { font-family: "JetBrains Mono", "Hind Siliguri", monospace; font-weight: 700; font-size: 24px; color: #0B0F19; background: #00F5D4; border-radius: 8px; padding: 4px 12px 2px; }
+#hook { position: absolute; left: 65px; right: 65px; top: 334px; height: 140px; display: flex; align-items: center; justify-content: center; text-align: center; opacity: 0;
+  font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 800; font-size: 58px; line-height: 1.15; color: #fff; text-wrap: balance; }
+#hook span { display: block; }
+#hook em { font-style: normal; color: #FFD700; }
+#deco { position: absolute; left: 0; top: 1400px; width: 1080px; height: 200px; background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDgwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDEwODAgMjAwIj48dGV4dCB4PSI1NDAiIHk9Ijk1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iOTIiIGZpbGw9InJnYmEoMCwyNDUsMjEyLDAuMDcpIj5USEUgQUdFIE9GIEFJPC90ZXh0Pjx0ZXh0IHg9IjU0MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iNTgiIGZpbGw9InJnYmEoMjU1LDIxNSwwLDAuMDYpIj4mYW1wOyBTWVNURU1TIFRISU5LSU5HPC90ZXh0Pjwvc3ZnPg==") no-repeat; }
+#card { position: absolute; left: 65px; top: 500px; width: 950px; height: 600px; border-radius: 30px; overflow: hidden; opacity: 0; background: #000; }
+#cardframe { position: absolute; inset: 0; border-radius: 30px; border: 2px solid #00F5D4; box-shadow: 0 0 30px rgba(0,245,212,0.35), inset 0 0 20px rgba(0,245,212,0.10); box-sizing: border-box; pointer-events: none; }
+#camwrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+#camv { position: absolute; inset: 0; transform-origin: 1050px 470px; }
+#camv video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#shade { position: absolute; left: 0; right: 0; bottom: 0; height: 220px; background: linear-gradient(rgba(6,9,18,0), rgba(6,9,18,0.82)); }
+.band { position: absolute; left: 90px; right: 90px; top: 920px; height: 170px; display: flex; align-items: center; justify-content: center; gap: 18px; opacity: 0; }
+.chip { display: inline-flex; align-items: center; gap: 12px; border-radius: 999px; border: 2px solid rgba(0,245,212,0.6); background: rgba(6,9,18,0.82); padding: 10px 24px 8px; font-weight: 700; font-size: 34px; color: #fff; white-space: nowrap; }
+.chip.gold { border-color: rgba(255,215,0,0.8); color: #FFD700; }
+.chip.red { border-color: rgba(255,77,109,0.8); }
+.chip.green { border-color: rgba(16,185,129,0.85); }
+.chip .ico { color: #00F5D4; }
+.chip.gold .ico { color: #FFD700; }
+.stat { flex: 1; border-radius: 22px; background: rgba(6,9,18,0.86); border: 2px solid rgba(255,77,109,0.7); padding: 14px 20px 12px; text-align: center; }
+.stat.green { border-color: rgba(16,185,129,0.8); }
+.stat .num { font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 800; font-size: 64px; line-height: 1.05; color: #FF4D6D; }
+.stat.green .num { color: #10B981; }
+.stat .sl { font-weight: 600; font-size: 28px; color: #E6ECF5; }
+.panel { width: 100%; border-radius: 22px; background: rgba(6,9,18,0.86); border: 2px solid rgba(255,215,0,0.6); padding: 16px 26px; box-sizing: border-box;
+  font-weight: 700; font-size: 36px; line-height: 1.3; color: #fff; text-align: center; text-wrap: balance; }
+.panel em { font-style: normal; color: #FFD700; }
+.col { display: flex; flex-direction: column; gap: 10px; align-items: stretch; width: 100%; }
+.li { display: flex; align-items: center; gap: 14px; border-radius: 16px; background: rgba(6,9,18,0.86); border: 2px solid rgba(255,255,255,0.14); padding: 6px 20px; font-weight: 600; font-size: 30px; color: #fff; }
+.li .ico { color: #9FB0C8; }
+.stamp { position: absolute; right: 10px; top: 20px; border: 6px solid #FF4D6D; border-radius: 12px; padding: 8px 20px 4px; color: #FF4D6D; background: rgba(11,15,25,0.85);
+  font-family: "Inter", sans-serif; font-weight: 900; font-size: 56px; letter-spacing: 0.06em; line-height: 1; opacity: 0; }
+.bars { width: 100%; display: grid; grid-template-columns: 210px 1fr; gap: 10px 16px; align-items: center; }
+.bl { font-weight: 700; font-size: 30px; color: #fff; text-align: right; }
+.track { height: 48px; border-radius: 12px; background: rgba(6,9,18,0.86); border: 1px solid rgba(255,255,255,0.12); overflow: hidden; }
+.hb { height: 100%; border-radius: 12px; transform-origin: 0 50%; display: flex; align-items: center; padding-left: 16px; box-sizing: border-box;
+  font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 800; font-size: 32px; color: #0B0F19; white-space: nowrap; }
+.hb.red { width: 100%; background: #FF4D6D; }
+.hb.green { width: 36%; background: #10B981; }
+.bub { max-width: 860px; border-radius: 24px; padding: 14px 24px; background: rgba(6,9,18,0.88); border: 2px solid rgba(255,255,255,0.18);
+  font-weight: 700; font-size: 34px; line-height: 1.3; color: #fff; display: flex; gap: 14px; align-items: center; }
+.bub .ico { color: #9FB0C8; flex: none; }
+.bub.ai { border-color: rgba(255,215,0,0.85); color: #FFD700; font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-size: 50px; }
+.bub.ai .ico { color: #FFD700; }
+.ico { display: block; flex: none; }
+#caps { position: absolute; left: 0; right: 0; top: 1110px; height: 90px; }
+.cue { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; }
+.cue .pill { display: flex; gap: 18px; white-space: nowrap; padding: 8px 30px 12px; border-radius: 999px; background: rgba(6,9,18,0.86); border: 1px solid rgba(255,255,255,0.12);
+  font-weight: 700; font-size: 50px; line-height: 1.3; color: #fff; }
+.cue .w { display: inline-block; transform-origin: 50% 80%; }
+#endc { position: absolute; inset: 0; background: #0B0F19; opacity: 0;
+  background-image: radial-gradient(ellipse at 50% 42%, rgba(0,245,212,0.16), rgba(11,15,25,0) 60%), linear-gradient(rgba(0,245,212,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,245,212,0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 60px 60px, 60px 60px; }
+#endc .inner { position: absolute; left: 65px; right: 65px; top: 520px; height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 22px; }
+.wm { font-family: "Inter", sans-serif; font-weight: 900; font-size: 104px; letter-spacing: 0.12em; color: #fff; line-height: 1; }
+.wml { width: 460px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #00F5D4, #FFD700); transform-origin: 50% 50%; }
+.e1 { font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 800; font-size: 56px; line-height: 1.25; color: #fff; text-wrap: balance; }
+.e1 em { font-style: normal; color: #FFD700; }
+.e2 { font-weight: 600; font-size: 34px; color: #C9D4E6; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="32.233">
+      <div id="bg"></div>
+      <div id="tag"><span>THE AGE OF AI · EP 01</span></div>
+      <div id="hook"><span>২০৩০ সালে <em>৯.২ কোটি</em> চাকরি থাকবে না?</span></div>
+      <div id="deco"></div>
+      <div id="card" data-layout-allow-overflow>
+        <div id="camwrap"><div id="camv"><video id="camvid" src="assets/media/cam_cut.mp4" muted playsinline data-start="0" data-duration="32.233" data-track-index="0"></video></div></div>
+        <div id="shade"></div>
+        <div id="cardframe"></div>
+      </div>
+<div class="band" id="g0"><div class="stat"><div class="num" id="r1n">−০.০ কোটি</div><div class="sl">চাকরি অবসোলিট</div></div>
+      <div class="stat green" id="r1g"><div class="num" id="r1gn">+০ কোটি</div><div class="sl">নতুন কাজের সুযোগ</div></div></div>
+<div class="band" id="g1"><div class="panel">আসল প্রশ্ন: <em>আপনি</em> টেকনোলজি কীভাবে ব্যবহার করছেন?</div></div>
+
+      <div id="caps">
+<div class="cue" id="cue0"><div class="pill"><span class="w" id="w0">দেখা</span><span class="w" id="w1">গিয়েছে</span><span class="w" id="w2">যে</span><span class="w" id="w3">আগামী</span></div></div>
+<div class="cue" id="cue1"><div class="pill"><span class="w" id="w4">২০৩০</span><span class="w" id="w5">সালের</span><span class="w" id="w6">মধ্যে</span><span class="w" id="w7">৯.২</span><span class="w" id="w8">কোটি</span></div></div>
+<div class="cue" id="cue2"><div class="pill"><span class="w" id="w9">অবসোলিট</span><span class="w" id="w10">হয়ে</span><span class="w" id="w11">এবং</span><span class="w" id="w12">যাবে,</span></div></div>
+<div class="cue" id="cue3"><div class="pill"><span class="w" id="w13">নতুন</span><span class="w" id="w14">করে</span><span class="w" id="w15">১৭</span><span class="w" id="w16">কোটি</span></div></div>
+<div class="cue" id="cue4"><div class="pill"><span class="w" id="w17">চাকরি</span><span class="w" id="w18">তৈরি</span><span class="w" id="w19">হওয়ার</span></div></div>
+<div class="cue" id="cue5"><div class="pill"><span class="w" id="w20">সম্ভাবনা</span><span class="w" id="w21">কিন্তু</span><span class="w" id="w22">এই</span><span class="w" id="w23">আছে।</span></div></div>
+<div class="cue" id="cue6"><div class="pill"><span class="w" id="w24">১৭</span><span class="w" id="w25">কোটির</span><span class="w" id="w26">দিকে</span><span class="w" id="w27">জোর</span></div></div>
+<div class="cue" id="cue7"><div class="pill"><span class="w" id="w28">দেওয়া</span><span class="w" id="w29">যাচ্ছে</span><span class="w" id="w30">না,</span><span class="w" id="w31">কারণ</span></div></div>
+<div class="cue" id="cue8"><div class="pill"><span class="w" id="w32">এটা</span><span class="w" id="w33">নির্ভর</span><span class="w" id="w34">করছে</span><span class="w" id="w35">একজন</span></div></div>
+<div class="cue" id="cue9"><div class="pill"><span class="w" id="w36">ইনডিভিজুয়াল</span><span class="w" id="w37">ব্যক্তি</span></div></div>
+<div class="cue" id="cue10"><div class="pill"><span class="w" id="w38">টেকনোলজিকে</span><span class="w" id="w39">কীভাবে</span></div></div>
+<div class="cue" id="cue11"><div class="pill"><span class="w" id="w40">ব্যবহার</span><span class="w" id="w41">করছে</span><span class="w" id="w42">তার</span><span class="w" id="w43">ওপর।</span><span class="w" id="w44">সাপোজ</span></div></div>
+
+      </div>
+      <div id="endc"><div class="inner"><div class="wm">ZUBAYER</div><div class="wml"></div><div class="e1">পুরো পর্ব দেখুন, <em>লিংক প্রোফাইলে</em></div><div class="e2">ফলো করুন</div></div></div>
+      <audio id="mix" src="assets/media/mix.wav" data-start="0" data-duration="32.233" data-track-index="5" data-volume="1"></audio>
+    </div>
+    <script>
+      const BND = "০১২৩৪৫৬৭৮৯";
+      function bnNum(v, dec) { return v.toFixed(dec).replace(/[0-9]/g, (d) => BND[d]); }
+      const tl = gsap.timeline({ paused: true });
+  tl.set("#cue0", { opacity: 1 }, 0.452); tl.set("#cue0", { opacity: 0 }, 3.257);
+  tl.set("#cue1", { opacity: 1 }, 3.257); tl.set("#cue1", { opacity: 0 }, 7.441);
+  tl.set("#cue2", { opacity: 1 }, 8.121); tl.set("#cue2", { opacity: 0 }, 10.597);
+  tl.set("#cue3", { opacity: 1 }, 10.597); tl.set("#cue3", { opacity: 0 }, 12.625);
+  tl.set("#cue4", { opacity: 1 }, 12.625); tl.set("#cue4", { opacity: 0 }, 14.675);
+  tl.set("#cue5", { opacity: 1 }, 14.675); tl.set("#cue5", { opacity: 0 }, 15.583);
+  tl.set("#cue6", { opacity: 1 }, 15.583); tl.set("#cue6", { opacity: 0 }, 17.665);
+  tl.set("#cue7", { opacity: 1 }, 17.665); tl.set("#cue7", { opacity: 0 }, 20.405);
+  tl.set("#cue8", { opacity: 1 }, 20.405); tl.set("#cue8", { opacity: 0 }, 23.404);
+  tl.set("#cue9", { opacity: 1 }, 23.404); tl.set("#cue9", { opacity: 0 }, 24.890);
+  tl.set("#cue10", { opacity: 1 }, 24.890); tl.set("#cue10", { opacity: 0 }, 26.375);
+  tl.set("#cue11", { opacity: 1 }, 26.375); tl.set("#cue11", { opacity: 0 }, 29.133);
+  tl.set("#w0", { color: "#FFD700" }, 0.512); tl.fromTo("#w0", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 0.512); tl.set("#w0", { color: "#FFFFFF" }, 1.052);
+  tl.set("#w1", { color: "#FFD700" }, 1.072); tl.fromTo("#w1", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 1.072); tl.set("#w1", { color: "#FFFFFF" }, 2.177);
+  tl.set("#w2", { color: "#FFD700" }, 2.197); tl.fromTo("#w2", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 2.197); tl.set("#w2", { color: "#FFFFFF" }, 2.551);
+  tl.set("#w3", { color: "#FFD700" }, 2.571); tl.fromTo("#w3", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 2.571); tl.set("#w3", { color: "#FFFFFF" }, 3.297);
+  tl.set("#w4", { color: "#FFD700" }, 3.317); tl.fromTo("#w4", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 3.317); tl.set("#w4", { color: "#FFFFFF" }, 4.230);
+  tl.set("#w5", { color: "#FFD700" }, 4.250); tl.fromTo("#w5", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 4.250); tl.set("#w5", { color: "#FFFFFF" }, 4.977);
+  tl.set("#w6", { color: "#FFD700" }, 4.997); tl.fromTo("#w6", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 4.997); tl.set("#w6", { color: "#FFFFFF" }, 5.537);
+  tl.set("#w7", { color: "#FFD700" }, 5.557); tl.fromTo("#w7", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 5.557); tl.set("#w7", { color: "#FFFFFF" }, 6.531);
+  tl.set("#w8", { color: "#FFD700" }, 6.551); tl.fromTo("#w8", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 6.551); tl.set("#w8", { color: "#FFFFFF" }, 7.091);
+  tl.set("#w9", { color: "#FFD700" }, 8.181); tl.fromTo("#w9", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 8.181); tl.set("#w9", { color: "#FFFFFF" }, 9.281);
+  tl.set("#w10", { color: "#FFD700" }, 9.301); tl.fromTo("#w10", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 9.301); tl.set("#w10", { color: "#FFFFFF" }, 9.841);
+  tl.set("#w11", { color: "#FFD700" }, 9.833); tl.fromTo("#w11", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 9.833); tl.set("#w11", { color: "#FFFFFF" }, 10.637);
+  tl.set("#w12", { color: "#FFD700" }, 9.861); tl.fromTo("#w12", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 9.861); tl.set("#w12", { color: "#FFFFFF" }, 10.813);
+  tl.set("#w13", { color: "#FFD700" }, 10.657); tl.fromTo("#w13", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 10.657); tl.set("#w13", { color: "#FFFFFF" }, 11.186);
+  tl.set("#w14", { color: "#FFD700" }, 11.206); tl.fromTo("#w14", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 11.206); tl.set("#w14", { color: "#FFFFFF" }, 11.598);
+  tl.set("#w15", { color: "#FFD700" }, 11.618); tl.fromTo("#w15", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 11.618); tl.set("#w15", { color: "#FFFFFF" }, 12.009);
+  tl.set("#w16", { color: "#FFD700" }, 12.029); tl.fromTo("#w16", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 12.029); tl.set("#w16", { color: "#FFFFFF" }, 12.665);
+  tl.set("#w17", { color: "#FFD700" }, 12.685); tl.fromTo("#w17", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 12.685); tl.set("#w17", { color: "#FFFFFF" }, 13.617);
+  tl.set("#w18", { color: "#FFD700" }, 13.637); tl.fromTo("#w18", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 13.637); tl.set("#w18", { color: "#FFFFFF" }, 14.029);
+  tl.set("#w19", { color: "#FFD700" }, 14.049); tl.fromTo("#w19", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 14.049); tl.set("#w19", { color: "#FFFFFF" }, 14.715);
+  tl.set("#w20", { color: "#FFD700" }, 14.735); tl.fromTo("#w20", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 14.735); tl.set("#w20", { color: "#FFFFFF" }, 15.401);
+  tl.set("#w21", { color: "#FFD700" }, 14.833); tl.fromTo("#w21", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 14.833); tl.set("#w21", { color: "#FFFFFF" }, 15.218);
+  tl.set("#w22", { color: "#FFD700" }, 15.238); tl.fromTo("#w22", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 15.238); tl.set("#w22", { color: "#FFFFFF" }, 15.623);
+  tl.set("#w23", { color: "#FFD700" }, 15.421); tl.fromTo("#w23", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 15.421); tl.set("#w23", { color: "#FFFFFF" }, 15.813);
+  tl.set("#w24", { color: "#FFD700" }, 15.643); tl.fromTo("#w24", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 15.643); tl.set("#w24", { color: "#FFFFFF" }, 16.200);
+  tl.set("#w25", { color: "#FFD700" }, 16.374); tl.fromTo("#w25", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 16.374); tl.set("#w25", { color: "#FFFFFF" }, 16.894);
+  tl.set("#w26", { color: "#FFD700" }, 16.914); tl.fromTo("#w26", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 16.914); tl.set("#w26", { color: "#FFFFFF" }, 17.299);
+  tl.set("#w27", { color: "#FFD700" }, 17.319); tl.fromTo("#w27", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 17.319); tl.set("#w27", { color: "#FFFFFF" }, 17.705);
+  tl.set("#w28", { color: "#FFD700" }, 17.725); tl.fromTo("#w28", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 17.725); tl.set("#w28", { color: "#FFFFFF" }, 18.807);
+  tl.set("#w29", { color: "#FFD700" }, 18.827); tl.fromTo("#w29", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 18.827); tl.set("#w29", { color: "#FFFFFF" }, 19.634);
+  tl.set("#w30", { color: "#FFD700" }, 19.654); tl.fromTo("#w30", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 19.654); tl.set("#w30", { color: "#FFFFFF" }, 19.904);
+  tl.set("#w31", { color: "#FFD700" }, 19.924); tl.fromTo("#w31", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 19.924); tl.set("#w31", { color: "#FFFFFF" }, 20.445);
+  tl.set("#w32", { color: "#FFD700" }, 20.465); tl.fromTo("#w32", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 20.465); tl.set("#w32", { color: "#FFFFFF" }, 20.850);
+  tl.set("#w33", { color: "#FFD700" }, 20.870); tl.fromTo("#w33", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 20.870); tl.set("#w33", { color: "#FFFFFF" }, 21.390);
+  tl.set("#w34", { color: "#FFD700" }, 21.410); tl.fromTo("#w34", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 21.410); tl.set("#w34", { color: "#FFFFFF" }, 22.144);
+  tl.set("#w35", { color: "#FFD700" }, 22.164); tl.fromTo("#w35", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 22.164); tl.set("#w35", { color: "#FFFFFF" }, 23.444);
+  tl.set("#w36", { color: "#FFD700" }, 23.464); tl.fromTo("#w36", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 23.464); tl.set("#w36", { color: "#FFFFFF" }, 24.525);
+  tl.set("#w37", { color: "#FFD700" }, 24.545); tl.fromTo("#w37", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 24.545); tl.set("#w37", { color: "#FFFFFF" }, 24.930);
+  tl.set("#w38", { color: "#FFD700" }, 24.950); tl.fromTo("#w38", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 24.950); tl.set("#w38", { color: "#FFFFFF" }, 25.875);
+  tl.set("#w39", { color: "#FFD700" }, 25.895); tl.fromTo("#w39", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 25.895); tl.set("#w39", { color: "#FFFFFF" }, 26.415);
+  tl.set("#w40", { color: "#FFD700" }, 26.435); tl.fromTo("#w40", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 26.435); tl.set("#w40", { color: "#FFFFFF" }, 27.354);
+  tl.set("#w41", { color: "#FFD700" }, 27.374); tl.fromTo("#w41", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 27.374); tl.set("#w41", { color: "#FFFFFF" }, 27.894);
+  tl.set("#w42", { color: "#FFD700" }, 27.914); tl.fromTo("#w42", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 27.914); tl.set("#w42", { color: "#FFFFFF" }, 28.299);
+  tl.set("#w43", { color: "#FFD700" }, 28.319); tl.fromTo("#w43", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 28.319); tl.set("#w43", { color: "#FFFFFF" }, 29.233);
+  tl.set("#w44", { color: "#FFD700" }, 28.433); tl.fromTo("#w44", { scale: 1 }, { scale: 1.05, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, 28.433); tl.set("#w44", { color: "#FFFFFF" }, 29.233);
+  gsap.set("#camwrap", { x: -260.000, y: -50.000, scale: 0.7, transformOrigin: "0 0" });
+  gsap.set("#camv", { scale: 1.025 });
+  tl.fromTo("#camv", { scale: 1.025 }, { scale: 1.000, duration: 7.460, ease: "none", immediateRender: false }, 0.000);
+  tl.fromTo("#camv", { scale: 1.095 }, { scale: 1.070, duration: 8.660, ease: "none", immediateRender: false }, 7.500);
+  tl.fromTo("#camv", { scale: 1.025 }, { scale: 1.000, duration: 12.993, ease: "none", immediateRender: false }, 16.200);
+  tl.fromTo("#hook", { opacity: 1, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 0);
+  tl.fromTo("#tag", { opacity: 1, y: -10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.0);
+  tl.fromTo("#card", { opacity: 0.35, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 0.0);
+  tl.fromTo("#g0", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 5.257);
+  tl.to("#g0", { opacity: 0, duration: 0.3 }, 15.433);
+  { const el = document.querySelector("#r1n"); const st = { v: 0 };
+  tl.to(st, { v: 9.2, duration: 1.2, ease: "power2.out", onUpdate: () => { el.textContent = "−" + bnNum(st.v, 1) + " কোটি"; } }, 5.257); }
+  tl.fromTo("#r1g", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)", stagger: 0 }, 11.318);
+  { const el = document.querySelector("#r1gn"); const st = { v: 0 };
+  tl.to(st, { v: 17, duration: 1.2, ease: "power2.out", onUpdate: () => { el.textContent = "+" + bnNum(st.v, 0) + " কোটি"; } }, 11.318); }
+  tl.fromTo("#g1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 15.733);
+  tl.to("#g1", { opacity: 0, duration: 0.3 }, 28.933);
+  tl.fromTo("#endc", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 28.933);
+  tl.set(["#tag", "#hook", "#deco", "#card", "#caps"], { visibility: "hidden" }, 29.433);
+  tl.fromTo("#endc .e1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 29.383);
+  tl.fromTo("#endc .e2", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 29.683);
+  tl.fromTo("#endc .wml", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, 29.533);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

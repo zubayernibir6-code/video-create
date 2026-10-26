@@ -1,0 +1,33 @@
+{
+  "name": "zubayer-reel3",
+  "title": "The Age of AI — Reel 3",
+  "source": {
+    "video": "C:/Users/Zubayer Nibir/Downloads/my rc video/the video.mp4",
+    "music": "C:/Users/Zubayer Nibir/Downloads/my rc video/the bgm.mp3",
+    "subtitles": "C:/Users/Zubayer Nibir/Downloads/my rc video/subtitle.txt"
+  },
+  "work": "C:/Users/Zubayer Nibir/VideoWork/zubayer-reel3",
+  "fps": 30,
+  "cuts": {
+    "silenceDb": -45,
+    "minGap": 0.7,
+    "padAfter": 0.18,
+    "padBefore": 0.12,
+    "manual": []
+  },
+  "range": [
+    442,
+    498.3
+  ],
+  "endCard": 3,
+  "mix": {
+    "musicDb": -14,
+    "duck": {
+      "threshold": 0.03,
+      "ratio": 1.6,
+      "attack": 40,
+      "release": 600
+    },
+    "endBoostDb": 9
+  }
+}
