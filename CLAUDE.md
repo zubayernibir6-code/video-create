@@ -679,24 +679,24 @@ every frame packet / brief you write, and run design-lint after every build chan
   step at a time instead: (1) STYLE.md + LESSONS.md, done 2026-10-23; (2) the plan-then-shot-table step, done
   2026-10-24 (the plan gate above); (3) the contact-sheet tool, done 2026-10-24 (`tools/contact-sheet.mjs`, §0b and
   §0d rule 9). All three of the kit's ideas are now merged.
-  ⚠️ **Found 2026-10-24: the kit's skill IS installed** at `~/.claude/skills/zero-cost-video-editor` (SKILL.md dated
-  2026-10-23 21:53), so it can trigger on edit requests. Its rule 4 says to read the STYLE.md *next to the skill*: a
-  generic English default (Montserrat, Anek Bangla titles, size 78), NOT his. In this workspace the root STYLE.md and
-  LESSONS.md win, its plan step is replaced by the plan gate above, and its setup lines (`npx skills add …`,
-  `pip install stable-ts`) must not be run. Whether to keep, adapt or remove that skill is his decision.
+  ✅ **The kit's skill is installed and was ADAPTED to this workspace on 2026-10-25, with his OK**
+  (`~/.claude/skills/zero-cost-video-editor`, for editing his own footage; not in git). Its SKILL.md now uses the root
+  STYLE.md/LESSONS.md (the skill's own two files are pointers only), the plan gate, `transcribe.mjs --out=work/voice`,
+  `make_captions.py` + `burn-subs.mjs`, `contact-sheet.mjs` and `finish.mjs`; python only via `tools/pyenv`; hard rule:
+  install nothing (no `npx skills add`, `pip install stable-ts`, `winget`, .otio). doctor.py, export_otio.py and
+  contact_sheet.py were removed from it. The original is in `.quarantine/2026-10-25/zero-cost-video-editor-original/`
+  (hash-checked copy). Every command in its `reference/recipes.md` was run here on FFmpeg 9.0.2; fixes found that way:
+  music volume 0.5 → 0.25 (12.5 → 18.5 dB under the voice), the music fade-out is min(2.5 s, length ÷ 4) written as a
+  number (`afade` refuses `9-2.5` and a negative start), `fps=30` after joining silence_keep cuts (else 29.87 fps and a
+  missing frame), Ken Burns zooms OUT and lands on 1×, SFX `adelay` = hit − `lead_s`, BT.709 labels on intermediates.
+  The whole chain (contact sheet → silence_keep → cut → captions → burn-subs → mix → finish.mjs 9x16 + 1x1) ran on a
+  13.8 s test clip: all QC PASS, −14 LUFS, captions at 60 % with correct conjuncts.
   **Dropped at his request (2026-10-23):** the .otio export for DaVinci Resolve. He wants Claude to deliver the
   finished video end to end (script → voice → visuals → captions → sound → render → QC → all formats), not a timeline
   for him to finish by hand. Do not suggest manual editors.
 
 ---
 
-## 1. What this workspace is
-
-`E:\Video Create` — a local professional video production workspace built on two frameworks:
-
-| Framework | What it is | Status |
-| --- | --- | --- |
-| **HyperFrames** 0.8.134 (was 0.8.33 until 2026-10-06) | Renders video from **HTML**. DOM declares timing via `data-*` attributes. | ✅ installed globally, renders verified |
 ## 0f. ⭐ After every video: make the next one cheaper (STANDING, the user's request, 2026-10-25)
 
 He asked that every video leave the system better, so the same kind of job next time costs fewer tokens and
@@ -709,6 +709,9 @@ comes out more accurate. After each delivery (and after each round of his feedba
    `.claude/skills/<name>/SKILL.md` (versioned in git, loaded only when needed, so it costs nothing on other
    days). Put long histories there, not in this file: this file is read in full every session.
 4. **Commit** the tools, skill and project sources with his OK; say in Bengali what is now faster next time.
+   Stage whole files. Never stage part of a file with `git diff -U0 | git apply --cached --unidiff-zero` while
+   other hunks of it stay out: the hunk lands at old line numbers (on 2026-10-25 it put this section inside §1's
+   table; fixed in the next commit).
 
 Skills so far: `screen-promo` (screen recording → SaaS commercial with zooms, cursor glow, tilt, click boom,
 gold end card; reference project `projects/claude-decision-ad`). Its tools: `tools/screen/{watch,keystrokes,cut}.mjs`,
@@ -718,6 +721,13 @@ gold end card; reference project `projects/claude-decision-ad`). Its tools: `too
 
 ---
 
+## 1. What this workspace is
+
+`E:\Video Create` — a local professional video production workspace built on two frameworks:
+
+| Framework | What it is | Status |
+| --- | --- | --- |
+| **HyperFrames** 0.8.134 (was 0.8.33 until 2026-10-06) | Renders video from **HTML**. DOM declares timing via `data-*` attributes. | ✅ installed globally, renders verified |
 | **Remotion** 4.0.523 | Renders video from **React**. TypeScript compositions. | ✅ installed per-project, renders verified |
 
 Both are installed and **both have produced real 1080p MP4 files on this machine**.
@@ -1656,6 +1666,102 @@ QC: all PASS, including `edges`; −14.1 LUFS, TP −1.4. **Verified by:**
 - PSNR 52–53 dB against the previous render in the unaffected area (nothing moved)
 
 The two earlier renders (with the edge strip) are in `.quarantine/2026-10-06/`.
+
+---
+
+## 4i. Third real video — `projects/zubayer-ep01` (10:35 YouTube episode from the user's own footage, 2026-10-25)
+
+The user handed over a raw talking-head recording (`Downloads/my rc video/the video.mp4`: 11:08, 1280×720, VFR ~28 fps,
+webcam audio at −29 LUFS), a music track and a timed transcript (`subtitle.txt`, `[hh:mm:ss - hh:mm:ss] text (romanised)`),
+asked for "The Age of AI & Systems Thinking — By Zubayer" with 8 motion-graphics scenes, split-screen layout and karaoke
+captions, said "no questions, handle every permission, I'm going to sleep". The plan gate's approval was waived for this
+one video by that instruction; `PLAN.md` records what was built. Nothing was installed.
+
+**The reusable pipeline: `tools/episode/`** (one command: `node tools/episode/run.mjs projects/<name> [--from=<step>]`):
+`voice.mjs` (DeepFilterNet → EQ → de-esser → compressor → −16 LUFS, uncut; speech/noise gap 27.7 → 57 dB) → `cuts.mjs`
+(pauses ≥ 0.7 s shrunk to 0.18 + 0.12 s, manual cuts, optional cold-open copy, frame-snapped → `cuts_map.json`, the single
+timing source) → `grade.mjs` (glare mask, highlight roll-off, warmth, hqdn3d, Lanczos 1080p, CFR 30; UNCUT) →
+`asr_chunks.py` → `align.mjs` → the project's `build-page.mjs` on `page-core.mjs` → `mix.mjs` → `finish.mjs`.
+Project files: `episode.json` (sources, cuts, cold open, title, mix levels), `build-page.mjs` (scenes as beat lists:
+`[time, selector, preset, opts]`, times from `T(source s)` / `TW("spoken word", near s)`), `PLAN.md`, `UPLOAD.md`.
+Heavy media lives on C: (`ep.work`, here `C:/Users/Zubayer Nibir/VideoWork/zubayer-ep01`) and is linked into the
+project as an `assets/media` junction (D: has ~4 GB free). HyperFrames follows the junction.
+
+**How the page is built (page-core.mjs):** one `<video>` per kept piece of the cut list, all on the one graded file with
+`data-media-start` (59 pieces render fine); pieces alternate scale 1.00 / 1.07 to hide jump cuts and each drifts 2.5 % down
+to rest; split mode moves `#cam` with transform + an animated `clip-path: inset(... round)` into a 640×790 card (the
+cyan frame is a separate div that fades in after the move); graphics panel at x 790–1850; caption pill centred at
+y ≈ 985; keyword banners top-left; title and end cards are timed clips. Capture stays `drawelement`-fast with
+clip-path and box-shadow (0.17–0.22 s/frame at 1080p); no CSS `filter` anywhere (it forces screenshot capture).
+
+**Traps found (each cost a run):**
+- **The Bengali ASR could not run on the full file tonight.** `transcribe.py` on 11 min grew to 6.2 GB private and swapped
+  (30 s of audio in 20 min); chunked (`asr_chunks.py`, one model load, ≤ 45 s pieces cut at pauses, resumable through
+  `<out>.progress`) still died twice with `mkl_malloc: failed to allocate memory`, because the machine's commit charge sat at
+  34/37 GB (other apps) and any Chrome job on top tipped it over. Run it with NOTHING else heavy. On an 8 s clip it ran at
+  10.5× real time, 2.3 GB peak. `align.mjs --estimate` is the fallback: the subtitle file's words spread over the spoken
+  stretches of each line (silencedetect −42 dB / 0.18 s), by grapheme count. `--text=script` keeps the file's words but
+  times them by the matched spoken words.
+- **The user's transcript is a cleaned-up paraphrase**, not verbatim ("করছে" for spoken "করতেছে", extra/missing words).
+- **A "cough" the user asked to cut (30.8–32.2 s) was speech**: the transcriber heard "অর্গানাইজড ভাবে অ্যাকশন নিতে পারতেছি"
+  at 31.38–33.42 s. Not cut; `episode.json` `cuts.note` says why. Check user-specified cut times against the audio.
+- **Render coverage gate:** a test copy with a shortened root `data-duration` fails ("Video vN captured 0 of expected
+  frames") for pieces that start after the end. `HF_VIDEO_COVERAGE_THRESHOLD=0` for such test copies only.
+- **A generic class name collided:** scene 06's `.bar { height: 100% }` zeroed the banner's `.low .bar` (an indefinite
+  percentage height defeats flex stretch). Prefix scene classes.
+- **Music level:** −16 LUFS bed + `musicDb −17` + sidechain (threshold 0.02, ratio 4) sat 31 dB under the voice (inaudible);
+  `musicDb −14` + threshold 0.03 / ratio 1.6 sits 20.7 dB under while he talks, as the user asked ("very little, but audible").
+- finish.mjs got `--frames-cache=<folder>`: the 11-min footage extraction must not land on D:.
+- **design-lint `card_straddle` stopped the first full run** (after 9 min of check + 12.5 min of design-lint on 2,542
+  moments): a full-screen keyword banner was still fading out while the camera moved into the card at 3:35.
+  build-page.mjs now ends every banner 0.25 s before the next split. design-lint on a 10-minute page takes ~12 min.
+- **59 `<video data-media-start>` pieces from one 1.2 GB file failed the full render:** "Video extraction failed for 30
+  source(s)" (ffmpeg_failed 20, internal 4, media_start_out_of_range 4) — the 80 s test with 5 pieces had passed.
+  `camcut.mjs` now cuts the graded file to the episode timeline once (`select` by frame number per part + black
+  title/end gaps + concat demuxer `-c copy`; 19,059 frames = 635.3 s), and page-core plays ONE clip; the jump-cut
+  zoom alternation runs on its wrapper. Frame-exact check: offset 0 at three points (MSE 0.2–0.3 vs ≥ 115 for ±1).
+  (A PNG-grab comparison with input `-ss` gave false 21–34 dB mismatches; compare raw frames by index instead.)
+- **The single 635 s clip then failed with `ffmpeg_timeout`:** HyperFrames' FFmpeg limits default to
+  `FFMPEG_PROCESS_TIMEOUT_MS` 300 000 (frame extraction), `FFMPEG_STREAMING_TIMEOUT_MS` 600 000 (the streaming encode
+  that runs for the whole capture) and `FFMPEG_ENCODE_TIMEOUT_MS` 600 000. finish.mjs now sets all three to 3 h unless
+  they are already set. With that, extraction passed and capture ran at ~3.4 frames/s (~95 min for 19,059 frames).
+- **Background tasks die with the Claude session.** The render (and its watchers) stopped when the session ended.
+  Long renders are started detached: PowerShell `Start-Process cmd.exe "/c node tools/finish.mjs … > log 2>&1"
+  -WindowStyle Hidden`, then watched through the log.
+
+**Delivered 2026-10-25 09:21:** `renders/zubayer-ep01/2026-10-25_0921/` and the user's
+`Downloads/my rc video/output/Zubayer_Ep01_Master.mp4` (868 MB, 10:35.3, 1080p30 h264 + AAC). finish.mjs total 4,795 s:
+check 103 s, extraction 4 m 41 s, capture 68 m 17 s (screenshot mode: 242 frames animate clip-path), loudness −16 → −14
+LUFS, TP −1.5 dBTP, QC all PASS incl. edges and bt709 tags. Reviewed: 127 frames every 5 s across all scenes;
+master audio vs mix.wav lag 0.0 ms at 100/400/600 s. Captions use `align.mjs --estimate` timings (the ASR could not run).
+
+**Verified:** check 0 errors (54/54 contrast); an 80 s test render (7 min 12 s, 0.17 s/frame) matched the source frames
+exactly at two moments (A/V sync of the cut pieces), banner text sharp, Bengali correct; mix −16 LUFS, TP −1.5 dBFS before
+finish's −14 LUFS master.
+
+**Instagram Reels from the episode (2026-10-25):** `projects/zubayer-reel1..4` (32–60 s, 1080×1920), built on
+`tools/episode/reel-core.mjs` (`reelContext` + `buildReel({tag, hook, cta, groups})`; `episode.json` `range` cuts one stretch of
+the episode, `endCard` appends a 3 s CTA card). Layout inside the Reels safe zone: tag y 290, hook 334–474, camera card at
+65/500 (950×600), graphics band on the card's lower edge, caption pill at y 1110. Same pipeline as ep01 (cuts → camcut →
+build-page → mix → finish `--formats=9x16`), ~3 min per reel. Delivered to `renders/zubayer-reelN/2026-10-25/` and
+`Downloads/my rc video/output/reels/` (+ covers, Instagram-captions.md). QC all PASS, −14 LUFS; master audio vs mix.wav lag 0 ms.
+Traps found: a flex container holding text + `<em>` eats the spaces (wrap the text in one inner element); `TW()` fell back
+to the given time when the word was not in the window (it now WARNs), and groups whose times cross never hid (now sorted
+and guarded ≥ 1.5 s apart); faint decorative text fails check's contrast gate even as SVG (use a CSS background image);
+hook and tag must be visible at frame 0 (Instagram's first frame); a 1.1× word pop covered the 12 px caption gap (now
+1.05×, 18 px).
+
+**Facebook Reels with cliffhanger endings (2026-10-25):** `projects/zubayer-fbreel1..4` (1:39, 1:19, 1:39, 0:47). Each
+stops on an open question. `episode.json` `cliff: 4.5` adds a freeze after the last word (`cuts.mjs` writes `map.cliff`,
+`camcut.mjs` holds the last frame with `tpad=stop_mode=clone`, `mix.mjs` cuts the music to −70 dB there). `buildReel({ cliff:
+{ text, sub } })` darkens the screen, slams the question in and pulses it (riser tail → impact-bass-1 → heartbeat; SFX cues
+now take `from`/`d` to play part of a file). `patchWords(ctx, from, to, words)` replaces caption words with a Bengali ASR
+pass of the edges: **the subtitle-based word times were up to 3 s off, and the real speech differed** ("রিসার্চে" was
+actually "আইএমএফের একটা রিসার্চে"), so each Reel's last seconds were transcribed (8–30 s clips, ~10× real time) and the cut
+points set on measured 20 ms energy dips. First cliff mix had the hit at −7.6 and the heartbeat at −12 dB mean against
+speech at −17; lowered to −12.6 / −15.9 by swapping the audio into the rendered video (no re-render). design-lint caught
+the stamp class's `letter-spacing` on Bengali text (`bn_tracking`); Bengali stamps need `letter-spacing:0`. Delivered to
+`renders/zubayer-fbreelN/2026-10-25/` and `Downloads/my rc video/output/facebook-reels/` (+ covers, Facebook-captions.md).
 
 ---
 

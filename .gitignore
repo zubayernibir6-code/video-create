@@ -31,6 +31,9 @@ assets/voices/piper/*.onnx
 /public/
 projects/*/public/*.mp3
 projects/*/assets/audio/
+projects/*/assets/music/
+# a project's assets/media is a junction to its work folder on C: (machine-local; git would walk into it)
+projects/*/assets/media/
 
 # work-memory engine's lock and machine cache (CURRENT_STATE.md and history/ stay versioned)
 .work-memory/project.lock

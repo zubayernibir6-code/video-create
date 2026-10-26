@@ -3,7 +3,7 @@
 //
 //   node "E:/Video Create/tools/finish.mjs" <project-folder | video-file>
 //        [--quality=high|standard|draft] [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop]
-//        [--lufs=-14] [--out=<folder>] [--keep] [--skip-design]
+//        [--lufs=-14] [--out=<folder>] [--keep] [--skip-design] [--frames-cache=<folder>]
 //
 // Project folder: hyperframes check + tools/design-lint.mjs (both stop the run on errors; --skip-design
 //                 skips the second) → hyperframes render (1 worker, long-render safe) → master.
@@ -17,7 +17,8 @@
 // - PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS=3600: 0.8.33 refuses renders over 240 s
 //   because C: is nearly full; streaming encode avoids the disk-hungry capture path.
 // - --workers 1: more workers are refused for the same disk reason, and RAM is ~4 GB.
-// - --frames-cache-dir on E:: footage frame extraction would otherwise fill C:.
+// - --frames-cache-dir in the workspace .cache: footage frame extraction would otherwise fill %TEMP%.
+//   --frames-cache=<folder> moves it (a long footage render can need several GB; pick the drive with room).
 // - loudnorm LRA raised to the measured LRA: otherwise it falls back to dynamic mode and misses
 //   the target (audio-test: LRA 11 → -12.0 LUFS; LRA 21 → -14.9 LUFS).
 // - Reframe defaults to "fit" (whole frame over a blurred copy): a plain centre crop cuts the
@@ -175,7 +176,8 @@ const flags = Object.fromEntries(args.filter((a) => a.startsWith("--")).map((a) 
 const target = args.find((a) => !a.startsWith("--"));
 if (!target) {
   console.log(`Usage: node finish.mjs <project-folder | video-file> [--quality=high|standard|draft]
-       [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop] [--lufs=-14] [--out=<folder>] [--keep]`);
+       [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop] [--lufs=-14] [--out=<folder>] [--keep]
+       [--skip-design] [--frames-cache=<folder>]`);
   process.exit(2);
 }
 const input = path.resolve(target);
@@ -201,7 +203,12 @@ let source = input;
 let expect = {};
 if (isProject) {
   const hf = hyperframesBin();
-  const env = { ...process.env, PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS: "3600", HYPERFRAMES_NO_AUTO_INSTALL: "1", HYPERFRAMES_SKIP_SKILLS: "1" };
+  // FFmpeg time limits: HyperFrames gives frame extraction 5 min and the streaming encode 10 min by default. A 10.5-min
+  // 1080p footage page (zubayer-ep01) failed extraction with ffmpeg_timeout; the encode limit would end a long render.
+  const longMs = "10800000";
+  const env = { ...process.env, PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS: "3600", HYPERFRAMES_NO_AUTO_INSTALL: "1", HYPERFRAMES_SKIP_SKILLS: "1",
+    FFMPEG_PROCESS_TIMEOUT_MS: process.env.FFMPEG_PROCESS_TIMEOUT_MS ?? longMs, FFMPEG_ENCODE_TIMEOUT_MS: process.env.FFMPEG_ENCODE_TIMEOUT_MS ?? longMs,
+    FFMPEG_STREAMING_TIMEOUT_MS: process.env.FFMPEG_STREAMING_TIMEOUT_MS ?? longMs };
   expect = compositionSpec(input);
 
   step("1/6  Quality gate before rendering (hyperframes check + design-lint)");
@@ -215,7 +222,7 @@ if (isProject) {
 
   step(`2/6  Rendering (${quality} quality, 1 worker${expect.dur ? `, ${expect.dur} s of video` : ""})`);
   source = path.join(work, `${name}.render.mp4`);
-  const cache = path.join(WORKSPACE, ".cache", "frames");
+  const cache = path.resolve(typeof flags["frames-cache"] === "string" ? flags["frames-cache"] : path.join(WORKSPACE, ".cache", "frames"));
   mkdirSync(cache, { recursive: true });
   // the FFmpeg gbrp edge bug (see gbrpEdgeOk): render on a bigger page, crop back afterwards
   let renderDir = input, pad = null;
