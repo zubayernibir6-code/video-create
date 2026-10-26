@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Claude 5X — So, what's your decision?</title>
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Anton"; font-weight: 400; src: url("assets/fonts/Anton-Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Inter"; font-weight: 100 900; src: url("assets/fonts/Inter-Variable.ttf") format("truetype"); font-display: block; }
+body { margin: 0; background: #050403; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #050403; font-family: "Inter", sans-serif; }
+#bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 65% at 50% 46%, #3a2a10 0%, #160f07 52%, #050403 100%); }
+#shake { position: absolute; inset: 0; perspective: 2200px; }
+#tilt { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 50%; }
+#cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+#cam video { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+#glow { position: absolute; left: 0; top: 0; width: 132px; height: 132px; margin: -66px 0 0 -66px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, rgba(255,205,110,0) 0%, rgba(255,205,110,0.10) 12%, rgba(255,196,96,0.38) 24%, rgba(255,170,60,0.16) 44%, rgba(255,150,40,0) 70%); }
+#glow::after { content: ""; position: absolute; inset: 40px; border-radius: 50%; border: 2px solid rgba(255,222,150,0.55); box-shadow: 0 0 14px rgba(255,190,80,0.65), inset 0 0 10px rgba(255,190,80,0.35); }
+.ring { position: absolute; left: 1418px; top: 648px; width: 200px; height: 200px; margin: -100px 0 0 -100px; border-radius: 50%; opacity: 0; box-sizing: border-box; }
+#ring1 { border: 4px solid rgba(255,240,205,0.95); box-shadow: 0 0 46px rgba(255,200,110,0.95), inset 0 0 36px rgba(255,200,110,0.7); }
+#ring2 { border: 10px solid rgba(255,255,255,0.9); box-shadow: 0 0 60px rgba(255,255,255,0.9); }
+#vig { position: absolute; inset: 0; opacity: 0; background: radial-gradient(ellipse 75% 72% at 50% 50%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.8) 100%); }
+#flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; }
+#end { position: absolute; inset: 0; display: none; opacity: 0; overflow: hidden; background: #050403; }
+#endin { position: absolute; inset: 0; transform-origin: 50% 50%; }
+#endbg { position: absolute; inset: -60px; background: radial-gradient(ellipse 62% 56% at 50% 44%, #42300f 0%, #1c140a 42%, #080605 76%, #030302 100%); }
+#rays { position: absolute; left: 960px; top: 480px; width: 2800px; height: 2800px; margin: -1400px 0 0 -1400px; border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255,214,130,0.06) 0deg 3deg, rgba(0,0,0,0) 3deg 14deg); }
+#shade { position: absolute; inset: -60px; background: radial-gradient(ellipse 55% 52% at 50% 46%, rgba(5,4,3,0) 30%, rgba(5,4,3,0.7) 72%, rgba(5,4,3,0.96) 100%); }
+#frame { position: absolute; left: 48px; top: 48px; right: 48px; bottom: 48px; border: 2px solid rgba(214,175,95,0.34); }
+#frame i { position: absolute; width: 46px; height: 46px; border-color: rgba(246,214,138,0.85); border-style: solid; border-width: 0; }
+#frame i:nth-child(1) { left: -6px; top: -6px; border-left-width: 4px; border-top-width: 4px; }
+#frame i:nth-child(2) { right: -6px; top: -6px; border-right-width: 4px; border-top-width: 4px; }
+#frame i:nth-child(3) { left: -6px; bottom: -6px; border-left-width: 4px; border-bottom-width: 4px; }
+#frame i:nth-child(4) { right: -6px; bottom: -6px; border-right-width: 4px; border-bottom-width: 4px; }
+.dust { position: absolute; left: 0; top: 0; width: 1920px; height: 1200px; opacity: 0; }
+.line { position: absolute; left: 0; width: 1920px; text-align: center; white-space: nowrap; transform-origin: 50% 50%; }
+#l1 { top: 400px; font-size: 140px; line-height: 1.12; }
+#l2 { top: 390px; }
+#l2a, #l2b { position: relative; font-size: 154px; line-height: 1.08; text-align: center; }
+.w { position: relative; display: inline-block; font-family: "Anton", sans-serif; font-weight: 400; letter-spacing: 0.012em; margin: 0 0.03em; opacity: 0; transform-origin: 50% 60%; }
+.halo { position: absolute; left: 50%; border-radius: 50%; transform: translateX(-50%); background: radial-gradient(ellipse closest-side, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0) 100%); }
+#h1 { top: -40px; width: 1700px; height: 260px; }
+#h2 { top: -30px; width: 1500px; height: 400px; }
+.w .metal { position: relative; color: #E9C46A; -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-image: linear-gradient(100deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0) 58%),
+    linear-gradient(180deg, #FFF5D6 0%, #F7DA8E 17%, #DDAD4F 36%, #8E601C 51%, #C59234 60%, #F2D07C 77%, #FFF2C6 89%, #B5852F 100%);
+  background-size: 260% 100%, 100% 100%; background-position: 160% 0%, 0% 0%; background-repeat: no-repeat; }
+#cta { position: absolute; left: 0; top: 806px; width: 1920px; height: 110px; display: flex; align-items: center; justify-content: center; gap: 40px; }
+#cta .rule { width: 230px; height: 3px; transform-origin: 50% 50%; opacity: 0; }
+#cta .rule.l { background: linear-gradient(90deg, rgba(232,190,100,0), rgba(246,214,138,0.95)); }
+#cta .rule.r { background: linear-gradient(90deg, rgba(246,214,138,0.95), rgba(232,190,100,0)); }
+#btn { position: relative; overflow: hidden; border-radius: 999px; padding: 24px 62px 22px; opacity: 0;
+  background: linear-gradient(180deg, #FCE6A6 0%, #E7BA5E 52%, #B8842C 100%);
+  box-shadow: 0px 0px 0px 2px rgba(255,236,190,0.5), 0px 14px 40px 0px rgba(0,0,0,0.55), 0px 0px 40px 0px rgba(230,170,70,0.35); }
+#btn span { position: relative; font-family: "Inter", sans-serif; font-weight: 800; font-size: 44px; letter-spacing: 0.035em; color: #1A1205; }
+#btn .metal-sheen { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.75) 50%, rgba(255,255,255,0) 60%);
+  background-size: 260% 100%; background-position: 160% 0%; background-repeat: no-repeat; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="90.000">
+      <div id="bg"></div>
+      <div id="shake">
+        <div id="tilt">
+          <div id="cam">
+            <video id="camvid" src="assets/media/cam.mp4" muted playsinline data-start="0" data-duration="80.033" data-track-index="0"></video>
+            <div id="glow"></div>
+            <div class="ring" id="ring1"></div>
+            <div class="ring" id="ring2"></div>
+          </div>
+        </div>
+      </div>
+      <div id="vig"></div>
+      <div id="end">
+        <div id="endin">
+          <div id="endbg"></div>
+          <div id="rays" data-layout-allow-overflow></div>
+          <div id="shade"></div>
+          <i class="dust" id="dust1" style="background-image:radial-gradient(circle at 20px 545px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.1px, rgba(240,190,90,0) 5.0px),radial-gradient(circle at 105px 975px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.5px, rgba(240,190,90,0) 6.0px),radial-gradient(circle at 993px 566px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.9px, rgba(240,190,90,0) 7.0px),radial-gradient(circle at 549px 307px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.1px, rgba(240,190,90,0) 9.8px),radial-gradient(circle at 284px 476px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 3.4px, rgba(240,190,90,0) 8.2px),radial-gradient(circle at 1574px 478px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 0.9px, rgba(240,190,90,0) 2.2px),radial-gradient(circle at 429px 845px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 3.5px, rgba(240,190,90,0) 8.4px),radial-gradient(circle at 1062px 578px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 1.7px, rgba(240,190,90,0) 4.1px),radial-gradient(circle at 599px 908px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 0.6px, rgba(240,190,90,0) 1.4px),radial-gradient(circle at 383px 679px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.1px, rgba(240,190,90,0) 9.8px),radial-gradient(circle at 45px 480px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.9px, rgba(240,190,90,0) 11.8px),radial-gradient(circle at 1002px 181px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 3.6px, rgba(240,190,90,0) 8.6px),radial-gradient(circle at 1823px 413px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 5.0px, rgba(240,190,90,0) 12.0px),radial-gradient(circle at 55px 826px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.5px, rgba(240,190,90,0) 10.8px),radial-gradient(circle at 1805px 378px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 1.3px, rgba(240,190,90,0) 3.1px),radial-gradient(circle at 1523px 1066px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.2px, rgba(240,190,90,0) 10.1px),radial-gradient(circle at 1900px 913px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.7px, rgba(240,190,90,0) 6.5px),radial-gradient(circle at 499px 720px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 0.6px, rgba(240,190,90,0) 1.4px)"></i><i class="dust" id="dust2" style="background-image:radial-gradient(circle at 1810px 945px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.3px, rgba(240,190,90,0) 5.5px),radial-gradient(circle at 1664px 81px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 3.8px, rgba(240,190,90,0) 9.1px),radial-gradient(circle at 1808px 652px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 3.9px, rgba(240,190,90,0) 9.4px),radial-gradient(circle at 978px 967px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.7px, rgba(240,190,90,0) 6.5px),radial-gradient(circle at 1764px 1118px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.6px, rgba(240,190,90,0) 6.2px),radial-gradient(circle at 1545px 608px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 1.6px, rgba(240,190,90,0) 3.8px),radial-gradient(circle at 110px 134px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.6px, rgba(240,190,90,0) 11.0px),radial-gradient(circle at 225px 445px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 3.3px, rgba(240,190,90,0) 7.9px),radial-gradient(circle at 728px 571px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 1.0px, rgba(240,190,90,0) 2.4px),radial-gradient(circle at 733px 262px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 3.4px, rgba(240,190,90,0) 8.2px),radial-gradient(circle at 1055px 1042px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 1.0px, rgba(240,190,90,0) 2.4px),radial-gradient(circle at 1862px 1114px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.4px, rgba(240,190,90,0) 10.6px),radial-gradient(circle at 1082px 464px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 4.8px, rgba(240,190,90,0) 11.5px),radial-gradient(circle at 1235px 602px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 2.0px, rgba(240,190,90,0) 4.8px),radial-gradient(circle at 1022px 347px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 5.3px, rgba(240,190,90,0) 12.7px),radial-gradient(circle at 1090px 1027px, rgba(255,236,180,0.95) 0px, rgba(240,190,90,0.45) 1.2px, rgba(240,190,90,0) 2.9px)"></i>
+          <div id="frame"><i></i><i></i><i></i><i></i></div>
+          <div class="line" id="l1"><i class="halo" id="h1"></i><span class="w" id="a0"><span class="metal" data-layout-allow-overlap>SO,</span></span> <span class="w" id="a1"><span class="metal" data-layout-allow-overlap>WHAT'S</span></span> <span class="w" id="a2"><span class="metal" data-layout-allow-overlap>YOUR</span></span> <span class="w" id="a3"><span class="metal" data-layout-allow-overlap>DECISION?</span></span></div>
+          <div class="line" id="l2"><i class="halo" id="h2"></i><div id="l2a"><span class="w" id="b0"><span class="metal" data-layout-allow-overlap>UNLOCK</span></span> <span class="w" id="b1"><span class="metal" data-layout-allow-overlap>CLAUDE 5X</span></span></div><div id="l2b"><span class="w" id="b2"><span class="metal" data-layout-allow-overlap>ENTERPRISE POWER</span></span></div></div>
+          <div id="cta"><i class="rule l"></i><div id="btn"><i class="metal-sheen"></i><span>GET INSTANT ACCESS NOW</span></div><i class="rule r"></i></div>
+        </div>
+      </div>
+      <div id="flash"></div>
+      <audio id="mix" src="assets/media/mix.wav" data-start="0" data-duration="90.000" data-track-index="5" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#cam", { x: 0, y: 0, scale: 1, transformOrigin: "0 0" });
+      gsap.set("#tilt", { scale: 1, rotationX: 0, rotationY: 0, transformOrigin: "50% 50%" });
+  tl.fromTo("#cam", { x: 0.000, y: 0.000, scale: 1 }, { x: -767.200, y: -252.000, scale: 1.4, duration: 2.000, ease: "power2.inOut", immediateRender: false }, 0.200);
+  tl.fromTo("#cam", { x: -767.200, y: -252.000, scale: 1.4 }, { x: -843.840, y: -270.720, scale: 1.44, duration: 10.300, ease: "sine.inOut", immediateRender: false }, 2.200);
+  tl.fromTo("#cam", { x: -843.840, y: -270.720, scale: 1.44 }, { x: 0.000, y: 0.000, scale: 1, duration: 1.800, ease: "power2.inOut", immediateRender: false }, 12.600);
+  tl.fromTo("#cam", { x: 0.000, y: 0.000, scale: 1 }, { x: 0.000, y: -145.000, scale: 1.25, duration: 1.000, ease: "power3.inOut", immediateRender: false }, 16.900);
+  tl.fromTo("#cam", { x: 0.000, y: -145.000, scale: 1.25 }, { x: -96.800, y: -53.900, scale: 1.1, duration: 1.050, ease: "power3.inOut", immediateRender: false }, 20.550);
+  tl.fromTo("#cam", { x: -96.800, y: -53.900, scale: 1.1 }, { x: -288.600, y: -117.000, scale: 1.3, duration: 1.200, ease: "power3.inOut", immediateRender: false }, 22.900);
+  tl.fromTo("#cam", { x: -288.600, y: -117.000, scale: 1.3 }, { x: -288.600, y: -195.000, scale: 1.3, duration: 10.400, ease: "sine.inOut", immediateRender: false }, 24.100);
+  tl.fromTo("#cam", { x: -288.600, y: -195.000, scale: 1.3 }, { x: -288.600, y: -156.000, scale: 1.3, duration: 3.500, ease: "sine.inOut", immediateRender: false }, 34.500);
+  tl.fromTo("#cam", { x: -288.600, y: -156.000, scale: 1.3 }, { x: -278.200, y: -123.500, scale: 1.3, duration: 1.200, ease: "power2.inOut", immediateRender: false }, 38.000);
+  tl.fromTo("#cam", { x: -278.200, y: -123.500, scale: 1.3 }, { x: 0.000, y: 0.000, scale: 1, duration: 1.200, ease: "power3.inOut", immediateRender: false }, 42.600);
+  tl.fromTo("#cam", { x: 0.000, y: 0.000, scale: 1 }, { x: -768.600, y: -549.000, scale: 1.8, duration: 11.083, ease: "power1.in", immediateRender: false }, 66.500);
+  tl.fromTo("#cam", { x: -768.600, y: -549.000, scale: 1.8 }, { x: -825.600, y: -585.300, scale: 1.86, duration: 1.950, ease: "none", immediateRender: false }, 77.583);
+  tl.fromTo("#tilt", { scale: 1, rotationX: 0, rotationY: 0, borderRadius: 0, boxShadow: "0px 0px 0px 0px rgba(214,170,80,0), 0px 0px 0px 0px rgba(0,0,0,0)" }, { scale: 0.84, rotationX: 5, rotationY: -9, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)", duration: 1.400, ease: "power3.inOut", immediateRender: false }, 42.800);
+  tl.fromTo("#tilt", { scale: 0.84, rotationX: 5, rotationY: -9, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)" }, { scale: 0.85, rotationX: 4, rotationY: 7, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)", duration: 2.400, ease: "sine.inOut", immediateRender: false }, 45.600);
+  tl.fromTo("#tilt", { scale: 0.85, rotationX: 4, rotationY: 7, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)" }, { scale: 0.86, rotationX: 3, rotationY: 4, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)", duration: 5.000, ease: "sine.inOut", immediateRender: false }, 48.000);
+  tl.fromTo("#tilt", { scale: 0.86, rotationX: 3, rotationY: 4, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)" }, { scale: 0.85, rotationX: 5, rotationY: -8, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)", duration: 2.200, ease: "sine.inOut", immediateRender: false }, 53.000);
+  tl.fromTo("#tilt", { scale: 0.85, rotationX: 5, rotationY: -8, borderRadius: 22, boxShadow: "0px 0px 0px 2px rgba(214,170,80,0.45), 0px 40px 110px 0px rgba(0,0,0,0.7)" }, { scale: 1, rotationX: 0, rotationY: 0, borderRadius: 0, boxShadow: "0px 0px 0px 0px rgba(214,170,80,0), 0px 0px 0px 0px rgba(0,0,0,0)", duration: 1.700, ease: "power3.inOut", immediateRender: false }, 56.800);
+  tl.fromTo("#vig", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "sine.inOut", immediateRender: false }, 14.6);
+  tl.to("#vig", { opacity: 0, duration: 0.8, ease: "sine.inOut" }, 42.6);
+  tl.set("#glow", { x: 1102.0, y: 1061.0 }, 0.000);
+  tl.to("#glow", { opacity: 1, duration: 0.15, ease: "sine.inOut" }, 0.000);
+  tl.set("#glow", { x: 1099.8, y: 1055.5 }, 0.066);
+  tl.set("#glow", { x: 1095.5, y: 1044.5 }, 0.099);
+  tl.set("#glow", { x: 1080.3, y: 1006.7 }, 0.132);
+  tl.set("#glow", { x: 1056.5, y: 947.5 }, 0.166);
+  tl.set("#glow", { x: 1039.8, y: 878.8 }, 0.199);
+  tl.set("#glow", { x: 1044.7, y: 790.7 }, 0.232);
+  tl.set("#glow", { x: 1055.0, y: 752.5 }, 0.266);
+  tl.set("#glow", { x: 1071.0, y: 683.0 }, 0.299);
+  tl.to("#glow", { opacity: 0, duration: 0.15, ease: "sine.inOut" }, 0.299);
+  tl.set("#glow", { x: 400.0, y: 351.5 }, 1.166);
+  tl.to("#glow", { opacity: 1, duration: 0.15, ease: "sine.inOut" }, 1.166);
+  tl.set("#glow", { x: 405.0, y: 338.0 }, 1.199);
+  tl.set("#glow", { x: 467.3, y: 290.7 }, 1.232);
+  tl.set("#glow", { x: 572.3, y: 257.3 }, 1.266);
+  tl.set("#glow", { x: 703.3, y: 227.3 }, 1.299);
+  tl.set("#glow", { x: 844.3, y: 234.0 }, 1.332);
+  tl.set("#glow", { x: 961.0, y: 258.7 }, 1.366);
+  tl.set("#glow", { x: 1053.0, y: 292.7 }, 1.399);
+  tl.set("#glow", { x: 1100.0, y: 341.0 }, 1.432);
+  tl.set("#glow", { x: 1138.0, y: 388.0 }, 1.466);
+  tl.set("#glow", { x: 1170.0, y: 447.5 }, 1.499);
+  tl.set("#glow", { x: 1180.0, y: 501.5 }, 1.532);
+  tl.set("#glow", { x: 1164.1, y: 551.0 }, 1.566);
+  tl.set("#glow", { x: 1132.3, y: 589.5 }, 1.599);
+  tl.set("#glow", { x: 1084.7, y: 617.0 }, 1.632);
+  tl.set("#glow", { x: 1037.0, y: 644.5 }, 1.666);
+  tl.set("#glow", { x: 989.3, y: 672.0 }, 1.699);
+  tl.set("#glow", { x: 941.7, y: 699.5 }, 1.732);
+  tl.set("#glow", { x: 891.2, y: 719.5 }, 1.766);
+  tl.set("#glow", { x: 837.3, y: 731.0 }, 1.799);
+  tl.set("#glow", { x: 778.0, y: 732.0 }, 1.832);
+  tl.set("#glow", { x: 714.5, y: 725.0 }, 1.866);
+  tl.set("#glow", { x: 647.5, y: 711.0 }, 1.899);
+  tl.set("#glow", { x: 613.3, y: 701.5 }, 1.932);
+  tl.set("#glow", { x: 579.0, y: 692.0 }, 1.966);
+  tl.to("#glow", { opacity: 0, duration: 0.15, ease: "sine.inOut" }, 1.966);
+  tl.set("#glow", { x: 1125.5, y: 739.5 }, 2.699);
+  tl.to("#glow", { opacity: 1, duration: 0.15, ease: "sine.inOut" }, 2.699);
+  tl.set("#glow", { x: 1137.3, y: 742.3 }, 2.732);
+  tl.set("#glow", { x: 1162.3, y: 748.0 }, 2.766);
+  tl.set("#glow", { x: 1167.0, y: 748.0 }, 2.799);
+  tl.set("#glow", { x: 1181.3, y: 746.7 }, 2.832);
+  tl.set("#glow", { x: 1194.3, y: 745.3 }, 2.866);
+  tl.set("#glow", { x: 1207.3, y: 743.3 }, 2.899);
+  tl.set("#glow", { x: 1229.0, y: 742.3 }, 2.932);
+  tl.set("#glow", { x: 1250.7, y: 741.3 }, 2.966);
+  tl.set("#glow", { x: 1269.0, y: 741.0 }, 2.999);
+  tl.set("#glow", { x: 1269.0, y: 740.3 }, 3.099);
+  tl.set("#glow", { x: 1269.0, y: 739.7 }, 3.332);
+  tl.set("#glow", { x: 1268.7, y: 739.0 }, 3.399);
+  tl.set("#glow", { x: 1267.7, y: 739.0 }, 3.466);
+  tl.set("#glow", { x: 1264.0, y: 737.3 }, 3.532);
+  tl.set("#glow", { x: 1259.7, y: 734.3 }, 3.566);
+  tl.set("#glow", { x: 1254.3, y: 730.3 }, 3.599);
+  tl.set("#glow", { x: 1249.3, y: 724.3 }, 3.632);
+  tl.set("#glow", { x: 1244.4, y: 717.1 }, 3.666);
+  tl.set("#glow", { x: 1239.3, y: 708.3 }, 3.699);
+  tl.set("#glow", { x: 1235.7, y: 700.7 }, 3.732);
+  tl.set("#glow", { x: 1231.2, y: 690.2 }, 3.766);
+  tl.set("#glow", { x: 1227.7, y: 680.0 }, 3.799);
+  tl.set("#glow", { x: 1223.7, y: 665.7 }, 3.832);
+  tl.set("#glow", { x: 1221.0, y: 653.3 }, 3.866);
+  tl.set("#glow", { x: 1218.7, y: 641.7 }, 3.899);
+  tl.set("#glow", { x: 1215.7, y: 629.7 }, 3.932);
+  tl.set("#glow", { x: 1213.3, y: 618.0 }, 3.966);
+  tl.set("#glow", { x: 1210.7, y: 607.0 }, 3.999);
+  tl.set("#glow", { x: 1210.3, y: 601.3 }, 4.032);
+  tl.set("#glow", { x: 1210.0, y: 598.7 }, 4.066);
+  tl.set("#glow", { x: 1210.0, y: 597.0 }, 4.099);
+  tl.set("#glow", { x: 1210.0, y: 597.7 }, 4.399);
+  tl.set("#glow", { x: 1211.0, y: 599.3 }, 4.432);
+  tl.set("#glow", { x: 1212.3, y: 600.7 }, 4.466);
+  tl.set("#glow", { x: 1213.7, y: 602.0 }, 4.499);
+  tl.set("#glow", { x: 1219.0, y: 602.0 }, 4.666);
+  tl.set("#glow", { x: 1225.7, y: 602.0 }, 4.699);
+  tl.set("#glow", { x: 1241.7, y: 602.0 }, 4.732);
+  tl.set("#glow", { x: 1268.0, y: 602.0 }, 4.766);
+  tl.set("#glow", { x: 1295.0, y: 602.0 }, 4.799);
+  tl.set("#glow", { x: 1313.7, y: 602.3 }, 4.832);
+  tl.set("#glow", { x: 1318.0, y: 603.0 }, 4.866);
+  tl.set("#glow", { x: 1320.3, y: 603.7 }, 4.899);
+  tl.set("#glow", { x: 1324.0, y: 604.7 }, 4.932);
+  tl.set("#glow", { x: 1327.0, y: 605.3 }, 4.966);
+  tl.set("#glow", { x: 1330.3, y: 606.3 }, 4.999);
+  tl.set("#glow", { x: 1337.0, y: 609.7 }, 5.032);
+  tl.set("#glow", { x: 1348.7, y: 617.7 }, 5.066);
+  tl.set("#glow", { x: 1364.7, y: 632.0 }, 5.099);
+  tl.set("#glow", { x: 1380.0, y: 650.0 }, 5.132);
+  tl.set("#glow", { x: 1395.0, y: 670.0 }, 5.166);
+  tl.set("#glow", { x: 1408.7, y: 691.3 }, 5.199);
+  tl.set("#glow", { x: 1420.3, y: 717.0 }, 5.232);
+  tl.set("#glow", { x: 1428.0, y: 740.3 }, 5.266);
+  tl.set("#glow", { x: 1432.0, y: 757.7 }, 5.299);
+  tl.set("#glow", { x: 1433.0, y: 773.7 }, 5.332);
+  tl.set("#glow", { x: 1433.0, y: 789.0 }, 5.366);
+  tl.set("#glow", { x: 1433.0, y: 804.0 }, 5.399);
+  tl.set("#glow", { x: 1432.7, y: 814.7 }, 5.432);
+  tl.set("#glow", { x: 1432.3, y: 824.0 }, 5.466);
+  tl.set("#glow", { x: 1432.0, y: 832.3 }, 5.499);
+  tl.set("#glow", { x: 1431.7, y: 837.3 }, 5.532);
+  tl.set("#glow", { x: 1431.3, y: 840.7 }, 5.566);
+  tl.set("#glow", { x: 1431.0, y: 843.3 }, 5.599);
+  tl.set("#glow", { x: 1431.0, y: 844.3 }, 5.632);
+  tl.set("#glow", { x: 1431.0, y: 845.0 }, 5.699);
+  tl.set("#glow", { x: 1431.0, y: 845.7 }, 5.766);
+  tl.set("#glow", { x: 1431.0, y: 846.3 }, 6.366);
+  tl.set("#glow", { x: 1431.0, y: 847.0 }, 6.432);
+  tl.set("#glow", { x: 1430.0, y: 845.0 }, 6.666);
+  tl.set("#glow", { x: 1427.7, y: 842.7 }, 6.699);
+  tl.set("#glow", { x: 1422.3, y: 836.7 }, 6.732);
+  tl.set("#glow", { x: 1406.7, y: 821.0 }, 6.766);
+  tl.set("#glow", { x: 1384.3, y: 799.0 }, 6.799);
+  tl.set("#glow", { x: 1351.0, y: 774.0 }, 6.832);
+  tl.set("#glow", { x: 1324.0, y: 757.3 }, 6.866);
+  tl.set("#glow", { x: 1303.0, y: 746.7 }, 6.899);
+  tl.set("#glow", { x: 1288.0, y: 737.0 }, 6.932);
+  tl.set("#glow", { x: 1275.7, y: 730.0 }, 6.966);
+  tl.set("#glow", { x: 1264.3, y: 723.3 }, 6.999);
+  tl.set("#glow", { x: 1261.0, y: 722.3 }, 7.032);
+  tl.set("#glow", { x: 1260.0, y: 722.0 }, 7.066);
+  tl.set("#glow", { x: 1260.0, y: 722.7 }, 7.366);
+  tl.set("#glow", { x: 1255.3, y: 718.3 }, 7.466);
+  tl.set("#glow", { x: 1248.0, y: 709.0 }, 7.499);
+  tl.set("#glow", { x: 1226.3, y: 679.3 }, 7.532);
+  tl.set("#glow", { x: 1205.3, y: 646.3 }, 7.566);
+  tl.set("#glow", { x: 1187.0, y: 616.7 }, 7.599);
+  tl.set("#glow", { x: 1181.3, y: 604.3 }, 7.632);
+  tl.set("#glow", { x: 1179.7, y: 600.0 }, 7.666);
+  tl.set("#glow", { x: 1178.0, y: 597.0 }, 7.699);
+  tl.set("#glow", { x: 1177.3, y: 596.3 }, 7.799);
+  tl.set("#glow", { x: 1178.0, y: 596.0 }, 8.332);
+  tl.set("#glow", { x: 1178.7, y: 598.3 }, 8.499);
+  tl.set("#glow", { x: 1179.3, y: 610.0 }, 8.532);
+  tl.set("#glow", { x: 1181.0, y: 624.0 }, 8.566);
+  tl.set("#glow", { x: 1182.0, y: 636.7 }, 8.599);
+  tl.set("#glow", { x: 1183.7, y: 646.7 }, 8.632);
+  tl.set("#glow", { x: 1184.3, y: 654.3 }, 8.666);
+  tl.set("#glow", { x: 1185.0, y: 661.0 }, 8.699);
+  tl.set("#glow", { x: 1187.0, y: 662.0 }, 9.032);
+  tl.set("#glow", { x: 1198.0, y: 663.3 }, 9.066);
+  tl.set("#glow", { x: 1208.7, y: 664.3 }, 9.099);
+  tl.set("#glow", { x: 1241.0, y: 666.0 }, 9.132);
+  tl.set("#glow", { x: 1289.3, y: 667.0 }, 9.166);
+  tl.set("#glow", { x: 1346.3, y: 668.0 }, 9.199);
+  tl.set("#glow", { x: 1386.3, y: 667.3 }, 9.232);
+  tl.set("#glow", { x: 1405.0, y: 664.7 }, 9.266);
+  tl.set("#glow", { x: 1415.0, y: 662.0 }, 9.299);
+  tl.set("#glow", { x: 1419.3, y: 660.0 }, 9.332);
+  tl.set("#glow", { x: 1424.0, y: 657.0 }, 9.366);
+  tl.set("#glow", { x: 1431.0, y: 646.4 }, 9.399);
+  tl.set("#glow", { x: 1440.0, y: 628.3 }, 9.432);
+  tl.set("#glow", { x: 1447.0, y: 605.7 }, 9.466);
+  tl.set("#glow", { x: 1452.7, y: 586.6 }, 9.499);
+  tl.set("#glow", { x: 1458.7, y: 559.7 }, 9.532);
+  tl.set("#glow", { x: 1462.3, y: 532.0 }, 9.566);
+  tl.set("#glow", { x: 1465.0, y: 503.7 }, 9.599);
+  tl.set("#glow", { x: 1461.7, y: 470.3 }, 9.632);
+  tl.set("#glow", { x: 1454.7, y: 432.0 }, 9.666);
+  tl.set("#glow", { x: 1447.0, y: 393.3 }, 9.699);
+  tl.set("#glow", { x: 1440.3, y: 367.0 }, 9.732);
+  tl.set("#glow", { x: 1436.0, y: 351.3 }, 9.766);
+  tl.set("#glow", { x: 1432.3, y: 339.3 }, 9.799);
+  tl.set("#glow", { x: 1430.7, y: 332.0 }, 9.832);
+  tl.set("#glow", { x: 1430.3, y: 327.3 }, 9.866);
+  tl.set("#glow", { x: 1430.0, y: 324.0 }, 9.899);
+  tl.set("#glow", { x: 1428.3, y: 323.7 }, 9.966);
+  tl.set("#glow", { x: 1423.0, y: 323.3 }, 9.999);
+  tl.set("#glow", { x: 1384.7, y: 324.0 }, 10.032);
+  tl.set("#glow", { x: 1306.3, y: 321.0 }, 10.066);
+  tl.set("#glow", { x: 1220.3, y: 317.0 }, 10.099);
+  tl.set("#glow", { x: 1162.7, y: 310.3 }, 10.132);
+  tl.set("#glow", { x: 1146.7, y: 307.7 }, 10.166);
+  tl.set("#glow", { x: 1142.0, y: 306.0 }, 10.199);
+  tl.set("#glow", { x: 1140.3, y: 306.0 }, 10.232);
+  tl.set("#glow", { x: 1137.3, y: 306.3 }, 10.266);
+  tl.set("#glow", { x: 1134.0, y: 307.0 }, 10.299);
+  tl.set("#glow", { x: 1132.3, y: 307.7 }, 10.332);
+  tl.set("#glow", { x: 1131.7, y: 309.3 }, 10.366);
+  tl.set("#glow", { x: 1131.0, y: 311.7 }, 10.399);
+  tl.set("#glow", { x: 1129.7, y: 315.3 }, 10.432);
+  tl.set("#glow", { x: 1128.7, y: 317.7 }, 10.466);
+  tl.set("#glow", { x: 1128.0, y: 319.0 }, 10.499);
+  tl.set("#glow", { x: 1129.7, y: 320.7 }, 10.766);
+  tl.set("#glow", { x: 1132.7, y: 324.0 }, 10.799);
+  tl.set("#glow", { x: 1143.0, y: 339.0 }, 10.832);
+  tl.set("#glow", { x: 1165.0, y: 377.7 }, 10.866);
+  tl.set("#glow", { x: 1188.7, y: 426.3 }, 10.899);
+  tl.set("#glow", { x: 1208.0, y: 491.7 }, 10.932);
+  tl.set("#glow", { x: 1216.3, y: 544.0 }, 10.966);
+  tl.set("#glow", { x: 1224.0, y: 597.0 }, 10.999);
+  tl.set("#glow", { x: 1231.0, y: 634.0 }, 11.032);
+  tl.set("#glow", { x: 1238.0, y: 671.0 }, 11.066);
+  tl.set("#glow", { x: 1243.7, y: 703.3 }, 11.099);
+  tl.set("#glow", { x: 1249.7, y: 729.3 }, 11.132);
+  tl.set("#glow", { x: 1253.3, y: 743.0 }, 11.166);
+  tl.set("#glow", { x: 1256.0, y: 749.0 }, 11.199);
+  tl.set("#glow", { x: 1256.3, y: 750.0 }, 11.232);
+  tl.set("#glow", { x: 1256.7, y: 751.0 }, 11.266);
+  tl.set("#glow", { x: 1257.0, y: 752.0 }, 11.299);
+  tl.set("#glow", { x: 1257.0, y: 750.7 }, 11.366);
+  tl.set("#glow", { x: 1257.0, y: 749.0 }, 11.399);
+  tl.set("#glow", { x: 1257.0, y: 747.3 }, 11.432);
+  tl.set("#glow", { x: 1257.0, y: 745.3 }, 11.799);
+  tl.set("#glow", { x: 1257.0, y: 743.7 }, 11.832);
+  tl.set("#glow", { x: 1257.0, y: 742.0 }, 11.866);
+  tl.set("#glow", { x: 1257.3, y: 741.0 }, 12.132);
+  tl.set("#glow", { x: 1257.7, y: 740.0 }, 12.166);
+  tl.set("#glow", { x: 1258.0, y: 739.0 }, 12.199);
+  tl.set("#glow", { x: 1279.7, y: 739.0 }, 12.432);
+  tl.set("#glow", { x: 1316.7, y: 739.0 }, 12.466);
+  tl.set("#glow", { x: 1361.0, y: 739.0 }, 12.499);
+  tl.set("#glow", { x: 1540.3, y: 754.3 }, 12.532);
+  tl.set("#glow", { x: 1626.0, y: 762.0 }, 12.566);
+  tl.set("#glow", { x: 1861.0, y: 785.0 }, 12.599);
+  tl.to("#glow", { opacity: 0, duration: 0.15, ease: "sine.inOut" }, 12.599);
+  tl.set("#glow", { x: 1897.0, y: 1013.0 }, 13.199);
+  tl.to("#glow", { opacity: 1, duration: 0.15, ease: "sine.inOut" }, 13.199);
+  tl.set("#glow", { x: 1896.3, y: 1014.5 }, 13.232);
+  tl.set("#glow", { x: 1895.0, y: 1017.5 }, 13.266);
+  tl.set("#glow", { x: 1890.0, y: 1022.0 }, 13.299);
+  tl.set("#glow", { x: 1885.0, y: 1026.5 }, 13.332);
+  tl.set("#glow", { x: 1880.0, y: 1031.0 }, 13.366);
+  tl.set("#glow", { x: 1875.0, y: 1035.5 }, 13.399);
+  tl.set("#glow", { x: 1870.0, y: 1040.0 }, 13.432);
+  tl.set("#glow", { x: 1865.0, y: 1044.5 }, 13.466);
+  tl.set("#glow", { x: 1860.0, y: 1049.0 }, 13.499);
+  tl.set("#glow", { x: 1855.0, y: 1053.5 }, 13.532);
+  tl.set("#glow", { x: 1852.8, y: 1056.2 }, 13.566);
+  tl.set("#glow", { x: 1853.3, y: 1057.0 }, 13.599);
+  tl.set("#glow", { x: 1856.7, y: 1056.0 }, 13.632);
+  tl.set("#glow", { x: 1860.0, y: 1055.0 }, 13.666);
+  tl.set("#glow", { x: 1863.3, y: 1054.0 }, 13.699);
+  tl.set("#glow", { x: 1866.7, y: 1053.0 }, 13.732);
+  tl.set("#glow", { x: 1868.9, y: 1054.0 }, 13.766);
+  tl.set("#glow", { x: 1870.0, y: 1055.3 }, 13.799);
+  tl.set("#glow", { x: 1870.0, y: 1057.0 }, 13.832);
+  tl.set("#glow", { x: 1870.0, y: 1057.7 }, 13.899);
+  tl.set("#glow", { x: 1864.7, y: 1056.0 }, 14.132);
+  tl.set("#glow", { x: 1842.3, y: 1046.7 }, 14.166);
+  tl.set("#glow", { x: 1795.7, y: 1026.3 }, 14.199);
+  tl.set("#glow", { x: 1702.7, y: 988.3 }, 14.232);
+  tl.set("#glow", { x: 1595.7, y: 941.0 }, 14.266);
+  tl.set("#glow", { x: 1486.3, y: 893.0 }, 14.299);
+  tl.set("#glow", { x: 1372.7, y: 843.0 }, 14.332);
+  tl.set("#glow", { x: 1286.7, y: 806.7 }, 14.366);
+  tl.set("#glow", { x: 1223.7, y: 778.7 }, 14.399);
+  tl.set("#glow", { x: 1194.7, y: 760.0 }, 14.432);
+  tl.set("#glow", { x: 1180.0, y: 750.5 }, 14.466);
+  tl.to("#glow", { opacity: 0, duration: 0.3, ease: "sine.in" }, 14.2);
+  tl.fromTo("#ring1", { scale: 0.1, opacity: 1 }, { scale: 5.2, opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, 79.533);
+  tl.fromTo("#ring2", { scale: 0.1, opacity: 0.9 }, { scale: 3.0, opacity: 0, duration: 0.38, ease: "power3.out", immediateRender: false }, 79.566);
+  tl.to("#shake", { x: -26.0, y: 21.9, duration: 0.033, ease: "none" }, 79.533);
+  tl.to("#shake", { x: -8.5, y: -11.7, duration: 0.033, ease: "none" }, 79.567);
+  tl.to("#shake", { x: 7.3, y: 1.0, duration: 0.033, ease: "none" }, 79.600);
+  tl.to("#shake", { x: -4.2, y: 6.2, duration: 0.033, ease: "none" }, 79.633);
+  tl.to("#shake", { x: 4.9, y: 0.8, duration: 0.033, ease: "none" }, 79.667);
+  tl.to("#shake", { x: 2.8, y: 2.0, duration: 0.033, ease: "none" }, 79.700);
+  tl.to("#shake", { x: 3.7, y: -3.0, duration: 0.033, ease: "none" }, 79.733);
+  tl.to("#shake", { x: -1.1, y: 1.9, duration: 0.033, ease: "none" }, 79.767);
+  tl.to("#shake", { x: 1.4, y: -3.2, duration: 0.033, ease: "none" }, 79.800);
+  tl.to("#shake", { x: 1.0, y: -0.2, duration: 0.033, ease: "none" }, 79.833);
+  tl.to("#shake", { x: 1.8, y: 1.3, duration: 0.033, ease: "none" }, 79.867);
+  tl.to("#shake", { x: -1.3, y: 0.0, duration: 0.033, ease: "none" }, 79.900);
+  tl.to("#shake", { x: 0, y: 0, duration: 0.05, ease: "none" }, 79.933);
+  tl.set("#flash", { opacity: 0.3 }, 79.533);
+  tl.to("#flash", { opacity: 1, duration: 0.1, ease: "power2.in" }, 79.533);
+  tl.set("#end", { opacity: 1 }, 79.683);
+  tl.to("#flash", { opacity: 0, duration: 0.55, ease: "power2.out" }, 79.783);
+  tl.fromTo("#a0", { scale: 2.6, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, 79.950);
+  tl.to("#endin", { x: 10, y: -6, duration: 0.033, ease: "none" }, 80.150);
+  tl.to("#endin", { x: -7, y: 4, duration: 0.033, ease: "none" }, 80.183);
+  tl.to("#endin", { x: 4, y: -2, duration: 0.033, ease: "none" }, 80.217);
+  tl.to("#endin", { x: 0, y: 0, duration: 0.033, ease: "none" }, 80.250);
+  tl.fromTo("#a1", { scale: 2.6, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, 80.250);
+  tl.to("#endin", { x: 10, y: -6, duration: 0.033, ease: "none" }, 80.450);
+  tl.to("#endin", { x: -7, y: 4, duration: 0.033, ease: "none" }, 80.483);
+  tl.to("#endin", { x: 4, y: -2, duration: 0.033, ease: "none" }, 80.517);
+  tl.to("#endin", { x: 0, y: 0, duration: 0.033, ease: "none" }, 80.550);
+  tl.fromTo("#a2", { scale: 2.6, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, 80.550);
+  tl.to("#endin", { x: 10, y: -6, duration: 0.033, ease: "none" }, 80.750);
+  tl.to("#endin", { x: -7, y: 4, duration: 0.033, ease: "none" }, 80.783);
+  tl.to("#endin", { x: 4, y: -2, duration: 0.033, ease: "none" }, 80.817);
+  tl.to("#endin", { x: 0, y: 0, duration: 0.033, ease: "none" }, 80.850);
+  tl.fromTo("#a3", { scale: 2.6, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, 80.900);
+  tl.to("#endin", { x: 10, y: -6, duration: 0.033, ease: "none" }, 81.100);
+  tl.to("#endin", { x: -7, y: 4, duration: 0.033, ease: "none" }, 81.133);
+  tl.to("#endin", { x: 4, y: -2, duration: 0.033, ease: "none" }, 81.167);
+  tl.to("#endin", { x: 0, y: 0, duration: 0.033, ease: "none" }, 81.200);
+  tl.fromTo("#l1", { y: 0, scale: 1 }, { y: -262, scale: 0.64, duration: 0.55, ease: "power3.inOut", immediateRender: false }, 82.900);
+  tl.fromTo("#b0", { scale: 2.6, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, 83.100);
+  tl.to("#endin", { x: 10, y: -6, duration: 0.033, ease: "none" }, 83.300);
+  tl.to("#endin", { x: -7, y: 4, duration: 0.033, ease: "none" }, 83.333);
+  tl.to("#endin", { x: 4, y: -2, duration: 0.033, ease: "none" }, 83.367);
+  tl.to("#endin", { x: 0, y: 0, duration: 0.033, ease: "none" }, 83.400);
+  tl.fromTo("#b1", { scale: 2.6, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, 83.400);
+  tl.to("#endin", { x: 10, y: -6, duration: 0.033, ease: "none" }, 83.600);
+  tl.to("#endin", { x: -7, y: 4, duration: 0.033, ease: "none" }, 83.633);
+  tl.to("#endin", { x: 4, y: -2, duration: 0.033, ease: "none" }, 83.667);
+  tl.to("#endin", { x: 0, y: 0, duration: 0.033, ease: "none" }, 83.700);
+  tl.fromTo("#b2", { scale: 2.2, opacity: 0, y: -24 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, 83.750);
+  tl.to("#endin", { x: 10, y: -6, duration: 0.033, ease: "none" }, 83.950);
+  tl.to("#endin", { x: -7, y: 4, duration: 0.033, ease: "none" }, 83.983);
+  tl.to("#endin", { x: 4, y: -2, duration: 0.033, ease: "none" }, 84.017);
+  tl.to("#endin", { x: 0, y: 0, duration: 0.033, ease: "none" }, 84.050);
+  tl.fromTo("#l1 .metal", { backgroundPosition: "160% 0%, 0% 0%" }, { backgroundPosition: "-60% 0%, 0% 0%", duration: 0.9, ease: "sine.inOut", immediateRender: false }, 81.500);
+  tl.fromTo("#l2 .metal", { backgroundPosition: "160% 0%, 0% 0%" }, { backgroundPosition: "-60% 0%, 0% 0%", duration: 1, ease: "sine.inOut", immediateRender: false }, 84.500);
+  tl.fromTo("#l1 .metal", { backgroundPosition: "160% 0%, 0% 0%" }, { backgroundPosition: "-60% 0%, 0% 0%", duration: 1, ease: "sine.inOut", immediateRender: false }, 88.200);
+  tl.fromTo("#cta .rule", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.6, ease: "power3.out", immediateRender: false }, 86.300);
+  tl.fromTo("#btn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, 86.300);
+  tl.to("#btn", { scale: 1.045, boxShadow: "0px 0px 0px 3px rgba(255,236,190,0.75), 0px 14px 40px 0px rgba(0,0,0,0.55), 0px 0px 70px 10px rgba(240,180,70,0.6)", duration: 0.42, ease: "sine.out" }, 86.900);
+  tl.to("#btn", { scale: 1, boxShadow: "0px 0px 0px 2px rgba(255,236,190,0.5), 0px 14px 40px 0px rgba(0,0,0,0.55), 0px 0px 40px 0px rgba(230,170,70,0.35)", duration: 0.47, ease: "sine.in" }, 87.330);
+  tl.to("#btn", { scale: 1.045, boxShadow: "0px 0px 0px 3px rgba(255,236,190,0.75), 0px 14px 40px 0px rgba(0,0,0,0.55), 0px 0px 70px 10px rgba(240,180,70,0.6)", duration: 0.42, ease: "sine.out" }, 87.850);
+  tl.to("#btn", { scale: 1, boxShadow: "0px 0px 0px 2px rgba(255,236,190,0.5), 0px 14px 40px 0px rgba(0,0,0,0.55), 0px 0px 40px 0px rgba(230,170,70,0.35)", duration: 0.47, ease: "sine.in" }, 88.280);
+  tl.to("#btn", { scale: 1.045, boxShadow: "0px 0px 0px 3px rgba(255,236,190,0.75), 0px 14px 40px 0px rgba(0,0,0,0.55), 0px 0px 70px 10px rgba(240,180,70,0.6)", duration: 0.42, ease: "sine.out" }, 88.800);
+  tl.to("#btn", { scale: 1, boxShadow: "0px 0px 0px 2px rgba(255,236,190,0.5), 0px 14px 40px 0px rgba(0,0,0,0.55), 0px 0px 40px 0px rgba(230,170,70,0.35)", duration: 0.47, ease: "sine.in" }, 89.230);
+  tl.fromTo("#btn .metal-sheen", { backgroundPosition: "160% 0%" }, { backgroundPosition: "-60% 0%", duration: 0.9, ease: "sine.inOut", immediateRender: false }, 87.4);
+  tl.fromTo("#endin", { scale: 1.045 }, { scale: 1, duration: 10.467, ease: "sine.out", immediateRender: false }, 79.533);
+  tl.fromTo("#rays", { rotation: 0 }, { rotation: 14, duration: 10.467, ease: "none", immediateRender: false }, 79.533);
+  tl.fromTo("#dust1", { y: 0, opacity: 0 }, { y: -90, opacity: 0.8, duration: 10.467, ease: "none", immediateRender: false }, 79.533);
+  tl.fromTo("#dust2", { y: 0, opacity: 0 }, { y: -150, opacity: 0.8, duration: 10.467, ease: "none", immediateRender: false }, 79.533);
+  tl.set("#end", { display: "block" }, 79.633);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

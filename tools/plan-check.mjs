@@ -17,7 +17,8 @@
 //   longer than 1.5 s carries a voice line, music or a sound long enough (STYLE.md §৫: a still picture with
 //   no sound for at most 1.5 s).
 // - The end screen of a short video is at most 3 s, and on-screen text has no ✓ or arrow symbols.
-// - Voice: the script fits the video, every numbered line is placed in a shot (ভয়েস N), and no line runs into
+// - Voice: a recorded voice (every line starts with its measured time in brackets, "৬. (০:২৮.৮) …") is checked
+//   line by line against the shots that name it; otherwise the script fits the video, every numbered line is placed in a shot (ভয়েস N), and no line runs into
 //   the next one or past the end. Piper speaks about 1.8 words a second, not counting the 0.25 s + 0.4 s of
 //   silence bn-tts adds (measured on khata-cartoon's 38 lines, 2026-10-24), so the estimates err long.
 // - Music only when assets/music has a track; a Piper voice needs its credit line.
@@ -238,7 +239,12 @@ if (shots.length) {
 // Voice: the script must fit, every numbered line must be placed, and no line may run into the next one.
 const script = section("স্ক্রিপ্ট");
 const numbered = (script ?? "").split("\n").map((l) => ascii(l).match(/^\s*(?:[-*+]\s+)?\**\s*(\d+)\s*[.)।]\**\s*(.*)$/)).filter(Boolean)
-  .map((m) => ({ k: Number(m[1]), words: words(m[2]) }));
+  .map((m) => {
+    // a recorded voice: the line's measured start in brackets, "৬. (০:২৮.৮) …"
+    const at = m[2].match(/^\(\s*(\d+(?::\d+)?(?:\.\d+)?)\s*\)/);
+    return { k: Number(m[1]), words: words(m[2].replace(/^\([^)]*\)/, "")), at: at ? seconds(at[1]) : null };
+  });
+const recorded = numbered.length > 0 && numbered.every((l) => l.at !== null);
 const placed = rows.some((r) => voiceIn(r.sound).length);
 if (voiceLine === null && (numbered.length || placed)) warns.push("The plan has a script or ভয়েস N in the shots, but the header has no ভয়েস line.");
 if (voiceLine !== null && none(voiceLine) && placed) warns.push(`ভয়েস is "${voiceLine}", but shots name voice lines (ভয়েস N).`);
@@ -248,14 +254,25 @@ if (voiceLine === null ? numbered.length || placed : !none(voiceLine)) {
   else {
     const total = numbered.length ? numbered.reduce((sum, l) => sum + l.words, 0) : words(script);
     const speech = total / WORDS_PER_SECOND;
-    infos.push(`Script: ${numbered.length ? `${numbered.length} lines, ` : ""}${total} words, about ${fmt(speech)} s of speech at ${WORDS_PER_SECOND} words/s (video ${fmt(length)} s).`);
-    if (length > 0 && speech > length) warns.push(`The script needs about ${fmt(speech)} s at Piper's pace, longer than the ${fmt(length)} s video. Shorten it or lengthen the video.`);
+    if (recorded) infos.push(`Script: ${numbered.length} recorded lines with measured starts, ${total} words (video ${fmt(length)} s); timing checked against the shots, not estimated.`);
+    else infos.push(`Script: ${numbered.length ? `${numbered.length} lines, ` : ""}${total} words, about ${fmt(speech)} s of speech at ${WORDS_PER_SECOND} words/s (video ${fmt(length)} s).`);
+    if (!recorded && length > 0 && speech > length) warns.push(`The script needs about ${fmt(speech)} s at Piper's pace, longer than the ${fmt(length)} s video. Shorten it or lengthen the video.`);
     if (rows.length) {
       const spoken = new Set(rows.flatMap((r) => voiceIn(r.sound)));
       for (const l of numbered) if (!spoken.has(l.k)) warns.push(`Script line ${l.k} is not placed in any shot (write ভয়েস ${l.k} in the শব্দ cell).`);
       for (const k of spoken) if (numbered.length && !numbered.some((l) => l.k === k)) warns.push(`A shot says ভয়েস ${k}, but the script has no line ${k}.`);
+      // A recorded voice: each line's measured start must fall inside the shot that names it, in order.
+      if (recorded) {
+        numbered.forEach((l, i) => {
+          if (i && l.at < numbered[i - 1].at) warns.push(`Script line ${l.k} starts at ${fmt(l.at)} s, before line ${numbered[i - 1].k} (${fmt(numbered[i - 1].at)} s).`);
+          if (length > 0 && l.at >= length) warns.push(`Script line ${l.k} starts at ${fmt(l.at)} s, after the end of the ${fmt(length)} s video.`);
+          const s = shots.find((x) => voiceIn(x.sound).includes(l.k));
+          if (s && (l.at < s.start - 0.5 || l.at > s.end + 0.5)) warns.push(`Script line ${l.k} starts at ${fmt(l.at)} s but is placed in shot ${s.n} (${fmt(s.start)}–${fmt(s.end)} s). Move "ভয়েস ${l.k}" to the shot that holds ${fmt(l.at)} s.`);
+        });
+      }
       // Each line starts with its shot; two lines in one shot play one after the other.
       const timeline = [];
+      if (!recorded)
       for (const s of shots) {
         for (const k of voiceIn(s.sound)) {
           const line = numbered.find((l) => l.k === k);

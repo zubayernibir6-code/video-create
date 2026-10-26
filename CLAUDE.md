@@ -697,6 +697,27 @@ every frame packet / brief you write, and run design-lint after every build chan
 | Framework | What it is | Status |
 | --- | --- | --- |
 | **HyperFrames** 0.8.134 (was 0.8.33 until 2026-10-06) | Renders video from **HTML**. DOM declares timing via `data-*` attributes. | ✅ installed globally, renders verified |
+## 0f. ⭐ After every video: make the next one cheaper (STANDING, the user's request, 2026-10-25)
+
+He asked that every video leave the system better, so the same kind of job next time costs fewer tokens and
+comes out more accurate. After each delivery (and after each round of his feedback):
+1. **LESSONS.md:** one row per piece of his feedback (§0e).
+2. **Code:** anything written by hand that the next video of that kind will need again moves into `tools/`
+   (a header comment with usage + what it was verified on), and the project's own build files shrink to data.
+   Prove the move: the refactored builder must reproduce the delivered output (diff the HTML, null-test the WAV).
+3. **Skill:** the workflow, commands and every trap that cost a run go into that kind of video's skill in
+   `.claude/skills/<name>/SKILL.md` (versioned in git, loaded only when needed, so it costs nothing on other
+   days). Put long histories there, not in this file: this file is read in full every session.
+4. **Commit** the tools, skill and project sources with his OK; say in Bengali what is now faster next time.
+
+Skills so far: `screen-promo` (screen recording → SaaS commercial with zooms, cursor glow, tilt, click boom,
+gold end card; reference project `projects/claude-decision-ad`). Its tools: `tools/screen/{watch,keystrokes,cut}.mjs`,
+`tools/screen/track-cursor.py`, `tools/screen/promo-core.mjs` (page), `tools/screen/promo-mix.mjs` (soundtrack),
+`tools/music-drops.mjs`. `plan-check.mjs` now checks a RECORDED voice by each line's measured start
+(`৬. (০:২৮.৮) …`) instead of Piper's estimated pace.
+
+---
+
 | **Remotion** 4.0.523 | Renders video from **React**. TypeScript compositions. | ✅ installed per-project, renders verified |
 
 Both are installed and **both have produced real 1080p MP4 files on this machine**.

@@ -38,3 +38,7 @@ projects/*/assets/audio/
 
 # the cartoon project's build scripts are source code, not build output
 !projects/khata-cartoon/build/
+
+# screen-promo reference project: its build scripts are source code (the graph file is generated)
+!projects/claude-decision-ad/build/
+projects/claude-decision-ad/build/mix.graph.txt
