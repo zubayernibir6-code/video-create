@@ -5,7 +5,9 @@
 //   - an optional 3D tilt card (tilt: [{ t, d, s, rx, ry, br, e }], end on s 1 / rx 0 / ry 0 / br 0)
 //     ⚠ any CSS perspective makes HyperFrames capture the WHOLE render by screenshot (~6.5 frames/s here)
 //   - a vignette over chosen stretches (vignette: [{ in, out }])
-//   - a gold glow following the tracked cursor (glow: { track: <track-cursor.py json>, out: <s> })
+//   - a gold glow following the tracked cursor (glow: { track: <track-cursor.py json>, out?: <s> }).
+//     WHOLE-VIDEO BY DEFAULT (CLAUDE.md §0h): out defaults to the click (boom.t). An earlier out (unless
+//     glow.partial: true, i.e. he asked for one stretch) or a track that stops early is reported as a coverage gap.
 //   - the click "boom": shockwave rings from a point, camera shake, white flash, cut to the end card
 //     (boom: { t, at: [x, y] } in source pixels; the clip should hold its last frame ~0.5 s: cut.mjs --tail)
 //   - a dark-gold end card: line 1 slams word by word, lifts; line 2 (rows) slams; a gold CTA button pulses
@@ -23,6 +25,7 @@ const f3 = (x) => Number(x).toFixed(3);
 export function buildPromo(spec) {
   const { fps = 30, total, title, clip, camera = [], tilt = [], vignette = [], glow, boom, end, audio = "assets/media/mix.wav" } = spec;
   const js = [];
+  const warnings = []; // whole-video coverage gaps, printed by the builder (§0h)
   const T0 = boom.t;
 
   // ── 2D camera on #cam ──
@@ -53,7 +56,19 @@ export function buildPromo(spec) {
   // ── cursor glow: tracked tip → halo on the arrow's body; misses ≤ 10 frames are bridged, longer ones fade ──
   if (glow) {
     const track = glow.track, [ox, oy] = glow.offset ?? [8, 12];
+    const glowOut = glow.out ?? T0 - 0.1;
+    const covered = track.length ? track.at(-1).t : 0;
+    if (glowOut < T0 - 1 && !glow.partial) warnings.push(`glow: ends at ${glowOut.toFixed(1)} s, the clip runs to ${T0.toFixed(1)} s. A cursor highlight belongs on the whole video; set glow.partial: true only if he asked for one stretch.`);
+    if (covered < glowOut - 1) warnings.push(`glow: the cursor track ends at ${covered.toFixed(1)} s but the video runs to ${glowOut.toFixed(1)} s. Track the whole clip (track-cursor.py <clip> 0 <clip length>), or pass glow.out to end it on purpose.`);
     const ok = track.map((f) => f.s >= 0.85);
+    // hysteresis: a weaker match (≥ 0.72) chained to a confirmed one and moving < 60 px a frame is the cursor too
+    // (the white arrow on the orange send button scores 0.76–0.84; without this the hover glow came 0.9 s late)
+    for (let pass = 0; pass < 2; pass++) for (let i = 0; i < track.length; i++) {
+      if (ok[i] || track[i].s < 0.72) continue;
+      const near = (j) => j >= 0 && j < track.length && ok[j] && Math.hypot(track[j].x - track[i].x, track[j].y - track[i].y) < 60;
+      if (near(i - 1) || near(i + 1)) ok[i] = true;
+    }
+    for (let i = track.length - 2; i >= 0; i--) if (!ok[i] && track[i].s >= 0.72 && ok[i + 1] && Math.hypot(track[i + 1].x - track[i].x, track[i + 1].y - track[i].y) < 60) ok[i] = true;
     const pos = track.map((f) => ({ x: f.x + ox, y: f.y + oy }));
     const vis = ok.slice();
     for (let i = 0; i < track.length; ) {
@@ -85,7 +100,7 @@ export function buildPromo(spec) {
         shown = vis[i];
       }
     });
-    js.push(`  tl.to("#glow", { opacity: 0, duration: 0.3, ease: "sine.in" }, ${glow.out});`);
+    js.push(`  tl.to("#glow", { opacity: 0, duration: 0.3, ease: "sine.in" }, ${f3(glowOut)});`);
   }
 
   // ── the click: shockwave, shake, white flash, cut to the end card ──
@@ -199,7 +214,7 @@ body { margin: 0; background: #050403; }
   background-size: 260% 100%; background-position: 160% 0%; background-repeat: no-repeat; }
 `;
 
-  return `<!doctype html>
+  const html = `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -248,4 +263,7 @@ ${js.join("\n")}
   </body>
 </html>
 `;
+  // a whole-video effect that stops early is a broken video, not a style choice: stop the build (§0h)
+  if (warnings.length) throw new Error(`promo-core: whole-video coverage gap\n  ${warnings.join("\n  ")}`);
+  return html;
 }

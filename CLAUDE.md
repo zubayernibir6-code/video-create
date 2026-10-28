@@ -182,6 +182,22 @@ gold end card; reference project `projects/claude-decision-ad`). Its tools: `too
 
 ---
 
+## 0h. ⭐ Whole-video by default (STANDING, the user's request, 2026-10-28)
+
+On the Claude ad the cursor glow ran only 0–14.5 s because his brief listed it under "00:01–00:16". He wants such
+things applied across the whole video by the system itself, without having to say so each time.
+- **Two kinds of treatment.** *Persistent* ones follow something that exists all through the video: cursor highlight,
+  privacy blurs (names, emails, faces, profile rows), logo/brand blurs, captions, a watermark or logo bug, colour grade,
+  loudness, platform safe zones. *Moments* are tied to one beat: a zoom, pan, tilt, vignette, a callout on one button.
+- **A persistent treatment runs from the first frame to the last that shows its subject**, even when the brief mentions
+  it inside one time range (read the range as where he first noticed it). Narrow it only when he says "only" / "শুধু".
+  Write each one in PLAN.md's "পুরো ভিডিও জুড়ে" line so he sees it.
+- **Prove coverage before rendering, by machine:** promo-core stops the build when the glow ends early or its cursor
+  track does (`glow.partial: true` only for a stretch he asked for); `text-scan.mjs --leaks` for every blurred spot;
+  qc.mjs for loudness. A new persistent effect gets the same kind of guard in its tool when it is first built.
+
+---
+
 ## 0g. Where everything is (CLAUDE.md was slimmed on 2026-10-26: 152 KB → this file + `docs/`)
 
 This file holds only what every session needs. Everything else was moved **verbatim** (nothing deleted) into

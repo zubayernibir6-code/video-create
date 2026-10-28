@@ -34,7 +34,7 @@ const html = buildPromo({
     { t: 56.8, d: 1.7, s: 1, rx: 0, ry: 0, br: 0, e: "power3.inOut" }, // flat and full screen at 58.5 (orig 1:00)
   ],
   vignette: [{ in: 14.6, out: 42.6 }],
-  glow: { track: JSON.parse(readFileSync(path.join(PROJECT, "build", "cursor.json"), "utf8")), out: 14.2 },
+  glow: { track: JSON.parse(readFileSync(path.join(PROJECT, "build", "cursor-full.json"), "utf8")) }, // whole clip (§0h)
   boom: { t: CLICK, at: [1418, 648] }, // the orange submit button
   end: {
     line1: { words: ["SO,", "WHAT'S", "YOUR", "DECISION?"], slams: T.slam1 },

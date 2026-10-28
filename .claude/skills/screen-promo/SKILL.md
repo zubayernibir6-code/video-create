@@ -85,6 +85,13 @@ reads SATMAX 58–70 sharp, ≤ 44 blurred; list frames still > 35 and look (a s
 End card: no trademark ("UNLOCK 5X ENTERPRISE AI POWER — SEND MESSAGE NOW"). The recording itself still shows
 the app's own UI and model names; say so to him — blur does not make an ad "100 % compliant", Meta also judges claims.
 
+## 4c. Whole-video treatments (CLAUDE.md §0h, 2026-10-28)
+
+Cursor glow, privacy blurs and logo blurs cover the WHOLE clip. Track the cursor over the full clip
+(`track-cursor.py <clip> 0 <clip length>`, ~6.5 min for 80 s) and leave `glow.out` unset (it defaults to the
+click). promo-core throws "whole-video coverage gap" if the glow or its track stops > 1 s early; only
+`glow.partial: true` (he asked for one stretch) silences it.
+
 ## 5. Traps found here (each cost a run)
 
 - **FFmpeg rounds a 4:2:0 crop to EVEN sizes.** A 65-row raw crop came out 64 rows; reading frames as 65 rows
