@@ -6,8 +6,8 @@
 // reference project's build files to edit instead of writing from scratch:
 //   screen-promo  ← projects/claude-decision-ad/build/{timeline,build-page,mix}.mjs   (skill: screen-promo)
 //   episode       ← projects/zubayer-ep01/{episode.json,build-page.mjs}             (skill: episode-edit)
-//   tools-reel    PLAN.md + fonts + GSAP + empty assets/voice, assets/music, build/ (skill: tools-reel; no reference
-//                 build exists yet: the first video writes it, then moves it into tools/reel, CLAUDE.md §0f)
+//   tools-reel    PLAN.md + fonts + GSAP + assets/voice, assets/music, build/ and reel.json copied from
+//                 .claude/skills/tools-reel/reel.example.json; tools/reel/build.mjs makes the page   (skill: tools-reel)
 //   blank         PLAN.md + fonts + GSAP only (HyperFrames skills build the page)
 // Refuses a name that already exists. Prints the next steps.
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, symlinkSync, writeFileSync, appendFileSync } from "node:fs";
@@ -66,12 +66,13 @@ if (kind === "tools-reel") {
   for (const d of ["voice", "music"]) mkdirSync(path.join(dir, "assets", d), { recursive: true });
   mkdirSync(path.join(dir, "build"));
   appendFileSync(path.join(WS, ".gitignore"), `!projects/${name}/build/\nprojects/${name}/build/mix.graph.txt\n`);
-  notes.push("save his message as CONTEXT.md with a Facts table; voice → assets/voice/, BGM → assets/music/ (skill tools-reel §1-§3)");
-  notes.push("measure the voice, write the script, then PLAN.md in the shape of .claude/skills/tools-reel/EXAMPLE-PLAN.md (the plan gate comes first)");
+  copyFileSync(path.join(WS, ".claude", "skills", "tools-reel", "reel.example.json"), path.join(dir, "reel.json"));
+  notes.push("voice → assets/voice/, BGM → assets/music/; rewrite reel.json (a working 5-tool example now) for his tools (skill tools-reel §2-§3)");
+  notes.push(`node tools/reel/build.mjs projects/${name} --check, then --plan (the engine writes PLAN.md: do not fill it by hand)`);
+  notes.push(`node tools/plan-check.mjs projects/${name}   (show him in Bengali, wait for OK)`);
 }
 
 console.log(`✓ projects/${name} (${kind})
   PLAN.md, hyperframes.json, ${FONTS[kind].length} fonts, GSAP, assets/media → ${work}/media
-Next:
-  1. fill PLAN.md, then: node tools/plan-check.mjs projects/${name}   (show him in Bengali, wait for OK)${notes.map((n, i) => `\n  ${i + 2}. ${n}`).join("")}
-  ${notes.length + 2}. node tools/finish.mjs projects/${name} --quality=high --frames-cache=${work}/frames-cache   (start it detached)`);
+Next:${[...(kind === "tools-reel" ? [] : [`fill PLAN.md, then: node tools/plan-check.mjs projects/${name}   (show him in Bengali, wait for OK)`]), ...notes].map((n, i) => `\n  ${i + 1}. ${n}`).join("")}
+  ${notes.length + (kind === "tools-reel" ? 1 : 2)}. node tools/finish.mjs projects/${name} --quality=high --frames-cache=${work}/frames-cache   (start it detached)`);

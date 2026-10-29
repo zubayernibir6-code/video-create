@@ -1,189 +1,140 @@
 ---
 name: tools-reel
-description: Make a vertical "N tools" Reel on its own in the D:\Video Create workspace from a CONTEXT (which tools / topic) plus a voice-over and music - a hook, one animated dark-UI scene per tool with a live terminal "installing" each one, word-by-word captions, hit-stop sound design and a comment-keyword CTA; 9:16 master + 1:1, -14 LUFS. Use when the user types /tools-reel, or says "5 tools reel", "top N tools for X", "tools list video", or hands over a tool list with a voice and BGM. The reference reel and its measurements are in reference-ref01.md next to this file. Screen recordings -> screen-promo; his own talking footage -> zero-cost-video-editor / episode-edit; any other video -> hyperframes.
+description: Make a vertical "N tools" Reel on its own in the D:\Video Create workspace from a CONTEXT (which tools / topic) plus a voice-over and music - a hook, one animated dark-UI scene per tool with a live terminal "installing" each one, word-by-word captions, hit-stop sound design and a comment-keyword CTA; 9:16 master + 1:1, -14 LUFS. The look is fixed in code (tools/reel); the model only fills reel.json and runs commands, so a mid-size model at medium effort is enough. Use when the user types /tools-reel, or says "5 tools reel", "top N tools for X", "tools list video", or hands over a tool list with a voice and BGM. Screen recordings -> screen-promo; his own talking footage -> zero-cost-video-editor / episode-edit; any other video -> hyperframes.
 ---
 
-# tools-reel: an "N tools" Reel, made on its own
+# tools-reel: fill one JSON file, run the commands
 
-Learned from the user's reference Reel `assets/refs/ref-01.mp4` (2026-10-29). **Read `reference-ref01.md` first**: the
-measured beat sheet, colours, layout and sound are there. CLAUDE.md is the authority (simple Bengali to the user, one
-step at a time, plan gate §0e, craft rules §0d, whole-video §0h, learn-after-every-video §0f); STYLE.md and
-LESSONS.md are read before planning. This skill is the fast path for this one kind of video.
+Everything visual and audible is already decided in `tools/reel/` (verified 2026-10-29 on `projects/tools-reel-demo`):
+layout in the Reels safe area, colours, captions, terminal, mascot, six scene types, every sound, the mix, the
+plan. **Your job is only:** the script, the facts, one `reel.json`, the commands below, and looking at the pictures.
+Proven with a Sonnet agent the same day: from SKILL.md alone, a new 3-tool reel up to the snapshots in 22 tool calls
+(~8 min), with 0 engine errors. The gaps it hit are now written into §1, §3 and §5.
+Never edit `index.html` by hand (it is regenerated). A layout bug is fixed in `tools/reel/*.mjs`, once, for every
+future video. CLAUDE.md rules still hold: simple Bengali to the user, the plan gate, no publishing.
 
-## 0. The contract (what "on its own" means)
+## 0. The contract
 
-He calls `/tools-reel`, gives a CONTEXT (what the tools are) and a VOICE (+ BGM). You produce the finished video:
-script, plan, scenes, captions, sound, render, QC, 9:16 master + 1:1. He is asked for **one thing only: the plan OK
-(§5)**. Never ask about colours, fonts, scene design, sounds, pacing or formats: decide them from this skill. The bar
-in §9 is the minimum ("this level or more"), and a fact you cannot verify is dropped, never invented.
-Pack for him (Bengali, copy-paste prompts for voice and BGM): `PROMPT-PACK-tools-reel.md` at the workspace root.
+He gives a CONTEXT (the tools) and a VOICE (+ BGM). He is asked **one thing: the plan OK**. Never ask about colours,
+fonts, scenes, sounds or pacing. A fact you cannot verify is dropped, never invented.
+His copy-paste pack (form, AI Studio voice settings, Lyria BGM prompt): `PROMPT-PACK-tools-reel.md`.
 
-## 1. Inputs and defaults
+## 1. Set up (1 command)
 
-| Input | If missing |
+```
+node tools/new-video.mjs <name> --kind=tools-reel
+```
+It also puts a **working 5-tool `reel.json`** (the example) and a stub PLAN.md in the project: rewrite reel.json for
+his tools (§3); never fill PLAN.md by hand, `build.mjs --plan` writes it (§4).
+Copy his voice into `projects/<name>/assets/voice/` (any of wav/mp3/m4a) and his BGM into `assets/music/`.
+**No voice yet?** Write the script (§2), give him the pack's §৩ TTS settings with the script to paste, and stop.
+**No BGM?** Give him the pack's §৪ Lyria prompt. The engine also builds without music (draft only).
+**Test or fallback voice** (only for a test, or when he asks for an AI voice): Kokoro, offline, ~75 s for 45 s of speech:
+`hyperframes tts "<the whole script>" --voice am_michael --speed 1.35 -o projects/<name>/assets/voice/voice.wav`
+
+## 2. The script (skip if his voice already exists: then the script is what the voice says)
+
+- Hook ≤ 4 s: "Don't {build / start} with {platform} until you've installed these {N} free tools."
+- Per tool, 25-40 words: `intro` "The {first…fifth} is {Name}[, from {maker}]." then `body` "It lets {platform} {does X}, so {the outcome the viewer wants}." + an optional 3-5 word punchline. The last tool starts "And the fifth is…".
+- CTA: "Comment {KEYWORD}, and I'll send you one link with all {N}."
+- Plain words, second person, no hype ("incredible", "game-changing"). ≤ 1 number per tool, and only with a source.
+- 3 tools ≈ 30 s, 5 ≈ 47-58 s, 7 ≈ 75 s. The voice should run ≥ 3.2 words/s (the reference: 3.58).
+
+## 3. reel.json (copy `reel.example.json` from this folder: it is a verified, working file)
+
+`intro`, `body`, `hook.line` and `cta.line` must be **exactly what the voice says**, in order (the engine aligns
+them to the voice; < 85 % match stops it). Spell tool names the way they should appear on screen.
+
+| Field | What to put |
 | --- | --- |
-| Tools (3-7; name, what it does, optional proof number, install command) | names only is enough: research each on its OFFICIAL page / repo (WebSearch, WebFetch) and put the facts in CONTEXT.md |
-| Topic / platform ("Claude Code") | derive it from the tools; it feeds the hook line and the terminal title |
-| Language | English, like the reference (STYLE.md §১ says Bengali: this kind follows the reference; Bengali = Hind Siliguri + Baloo Da 2, captions in the page, no letter-spacing) |
-| Voice | a file he gives (AI Studio TTS is his usual) · else §3 makes one (Kokoro) and tells him so |
-| BGM | a file he gives · none exists in assets/music: write the Lyria prompt from the pack and wait; never use MusicGen. Draft renders without music are for checking only |
-| Length | 3 tools ≈ 40 s, 5 ≈ 58 s, 7 ≈ 80 s (STYLE: 45-90 s); at 3.2-3.6 words/s |
-| CTA | keyword `TOOLS`, "I'll send you one link with all N", his handle if he gave it, else a neutral `@yourhandle` placeholder that you list as a question |
-| Mascot | an ORIGINAL pixel sprite (light body, so it never clashes with the five tool colours), same sprite every video; the Claude crab only if he asks, with the ads warning |
+| `title`, `goal` | the video's name (plan heading); one Bengali line: what the viewer learns and does |
+| `lang`, `platform` | `"en"` (default) or `"bn"`; the platform the tools are for (`"Claude Code"`, used in the default goal) |
+| `voice`, `voiceLabel` | path inside the project (`assets/voice/voice.wav`); a Bengali label for the plan ("AI Studio TTS, Sadaltager") |
+| `music.file`, `music.from` | `assets/music/bgm.mp3`; seconds into the track to start (put a drop on the first card) |
+| `project` | the folder name shown in the terminal title (`claude — ~/<project>`) |
+| `handle`, `keyword` | his handle (else `"@yourhandle"`, which becomes a plan question) and the comment word (`"TOOLS"`) |
+| `hook.line`, `hook.banner`, `hook.on` | the first sentence; 2 strings `["Don't build yet", "0 of 5 tools installed"]`; the hook word the banner lands on |
+| `tools[].name` | ≤ 24 chars, spelled as on screen; `mono` (optional) 2 badge letters, else the engine picks unique ones |
+| `tools[].maker`, `stat` | `maker` ≤ 36 ("from Upstash"); `stat` ≤ 32, only with a `facts[]` entry |
+| `tools[].install`, `result` | the terminal lines, ≤ 40 chars. `install` = a REAL command from the tool's docs; leave it out if unsure, then the terminal shows only `✓ <result>` |
+| `tools[].intro`, `body` | the spoken lines (§2), exactly as voiced |
+| `tools[].scene` | one archetype from the table below. Every timing word (`on`, `linkOn`, `fixOn`, `countOn`) must be a word of THAT tool's `body`, and they must come in the body's order |
+| `cta.line`, `cta.dm` | the last sentence; the DM card's heading (`"All 5 tools in one link:"`) |
+| `emphasis` (optional) | extra caption words to box (tool names, numbers and the keyword are boxed already) |
+| `facts[]` | `{ "claim": "<tool name> has 60k GitHub stars", "value": "60k", "source": "<url>", "checked": "<date>" }` |
+| `questions[]` | only questions he must answer for THIS video. plan-check also lists STYLE.md's open questions: ignore them unless they change this video |
 
-Save his message as `projects/<name>/CONTEXT.md` (verbatim) plus a **Facts** table: claim · value · source URL ·
-date checked. Every number on screen (stars, price, versions, "zero API fees") comes from that table.
+Counts inside a scene (rows `to`, the dial's `from`/`to`, the counter) are the demo UI, not claims, so they need no
+source. Claims about the real tool (stars, prices, "saves 10 hours") do.
 
-## 2. Set up
+**Pick the scene by what the tool does** (exact shapes are printed by `--check` when a field is wrong):
 
-`node tools/new-video.mjs <name> --kind=tools-reel` makes `projects/<name>/` with PLAN.md (template), fonts (Inter,
-JetBrains Mono, Hind Siliguri, Baloo Da 2), local GSAP, `assets/voice/`, `assets/music/`, `build/`, and
-`assets/media` as a junction to `C:/Users/Zubayer Nibir/VideoWork/<name>/media` (D: has ~3 GB; heavy files go on C:).
-Copy his voice into `assets/voice/voice.<ext>` and the BGM into `assets/music/` (plan-check looks there).
+| The tool … | `type` | fill |
+| --- | --- | --- |
+| reads / fetches from many places (web, APIs, platforms) | `hub` | `nodes` 3-4 `{label ≤ 12, on, icon}`, optional `chip {text ≤ 24, on}`, `proof {text ≤ 24, on, tone: "good"/"bad"}` |
+| runs steps / a workflow / many skills | `pipeline` | `steps` 3-8 `{label ≤ 12, on}`, `proof {text ≤ 26, on}` |
+| supplies docs / context / memory to the model | `fix` | `sources` 2-4 (≤ 10), `file` ≤ 16, `bad` 2-4 old code lines (≤ 28), `fixOn`, `proof {text ≤ 16}` |
+| tests or debugs a running app / browser | `dial` | `url` ≤ 22, `app` ≤ 12, `errors` 1-3 (≤ 30), `from`, `to` (0-100), `label`, `fixOn`, `proof {text ≤ 26, on}` |
+| analyses, traces, scans, checks flows | `trace` | `inputs` 2-4 (≤ 10), `rows` 2-4 `{label ≤ 10, to, unit}`, `result` ≤ 18, `proof {text ≤ 18, on}`, optional `linkOn` |
+| saves money or time | `counter` | `from`, `to`, `max`, `pre`/`post`, `label` ≤ 28, `countOn`, `proof {text ≤ 26}` |
 
-## 3. Measure (never guess times)
+List items may be plain strings (`"Login"`) or `{ "label": "Login", "on": "login" }`; without `on`, the beat is spread
+by position. Keep labels short: a long one fails `--check` with the limit in the message.
 
-- Voice file given: `node tools/transcribe.mjs <voice> --lang=en --model=small` → `<voice>.words.json`
-  `[{id,text,start,end}]`. `small` is right for clean TTS (WER 1.5 %; ~33 s for 22.5 s of audio); `--model=turbo` only under loud
-  music (3.7x slower than real time, ~1.1 GB RAM: run it alone, RAM is ~1.5 GB free). **Display text comes from the
-  SCRIPT, timing from the ASR**: align the two like `tools/episode/align.mjs` and merge tokens (ASR "Context" + "7," =
-  script "Context7"). No script given? The ASR text is the script; fix tool names from CONTEXT.md.
-- No voice yet: write the script (§4), then either (a) hand him the TTS brief (pack §৩) and wait, or (b) Kokoro:
-  `hyperframes tts "<text>" --voice am_michael -o assets/voice/voice.wav` (verified 2026-10-29: 9 s of speech in 43 s
-  incl. model load, 24 kHz mono). Pace below 3.2 words/s: speed up ≤ 1.12x with `atempo` (pitch kept).
-- BGM: `node tools/music-drops.mjs <track> --map` finds the bass drops; put the first tool card on one: `from = drop − (card
-  time − bed start)` (`tools/screen/promo-mix.mjs`). Rough tempo/key of any track: `node tools/ref-analyze.mjs`.
-- Sound lead-ins: `tools/sfx-leads.mjs` has already written `lead_s` for every file in assets/sfx/manifest.json.
+Icons are Lucide names (`assets/icons/lucide/icons/*.svg`; no brand logos exist: GitHub, YouTube, Chrome are missing,
+the engine draws a letter badge). Use two different types for neighbouring tools when you can.
 
-## 4. Script grammar (from the reference; in his words if he gave a script)
+## 4. Build and the plan gate
 
-- **Hook ≤ 4 s:** "Don't {start / ship / build} {X} with {platform} unless you've installed these {N} tools." Other
-  shapes that work: "{N} free tools that make {platform} {outcome}." Result or tension first, never a greeting.
-- **Tool block, 34-40 words, 9-11 s:**
-  1. "The {first|second|…} is {Name}[, from {maker}[, with over {N} stars]]." ≤ 1.5 s; the name lands on the beat.
-  2. "It lets {platform} {verb phrase}, so {outcome the viewer wants}." Verb first; one clause per visual beat.
-  3. Optional punchline, 3-5 words: "…and you never have to guess." / "One app, start to finish." / "Fresh docs, every time."
-  Last tool starts "And the fifth is…".
-- **CTA ≈ 4 s:** "{Closing proof line}. Comment {KEYWORD}, and I'll send you one link with all {N}."
-- Rules: second person, plain words, ≤ 1 number per tool, no hype words ("incredible", "game-changing", STYLE §১), every
-  claim checkable, tools in the order of the viewer's journey (understand → gather → build → docs → test).
-- Pace check: words ÷ speech seconds ≥ 3.2 (5 tools ≈ 190-205 words for 58 s; the reference has 206).
+```
+node tools/reel/build.mjs projects/<name> --check       # every problem in one go; fix reel.json until ✓
+node tools/reel/build.mjs projects/<name> --plan        # transcribes (small model), aligns, page, mix, PLAN.md (~40 s)
+node tools/plan-check.mjs projects/<name>               # must say: No errors or warnings
+```
+Every `WARN … word "X" is not in its body line` means a scene beat fell back to an estimated time: fix that `on`.
+Show him PLAN.md's goal, hook, shot table, what is needed and the questions, in simple Bengali. **Stop until he says OK.**
+A change he asks for goes into reel.json, then `--plan=force`, then plan-check again.
 
-## 5. Plan gate (the one pause)
+## 5. After the OK: check, look, render
 
-`tools/plan/TEMPLATE.md` → `projects/<name>/PLAN.md` (a filled example in this folder: `EXAMPLE-PLAN.md`), then
-`node tools/plan-check.mjs projects/<name>` until no ERROR. Shot table: one row per visual change, ≤ 3 s each (22-30
-rows for 58 s). Put each line's measured start in the script (`৬. (০:২৮.৮) …`) once the voice exists; before that,
-plan-check's Piper pace WARNs ("line too long") are false alarms for a 3.5 words/s voice: tell him so.
-Show him in simple Bengali: goal, hook, the shot table (সময় · পর্দায় কী · ক্যাপশন · শব্দ), what is needed, every WARN
-and only these questions: handle/keyword if not given · music licence if it is for paid ads (Lyria vs Pixabay) ·
-facts you could not verify · mascot (original unless he wants the crab). Build and render nothing until he says OK.
-If the voice or BGM is still missing, give him the pack's prompts and stop there.
+```
+cd projects/<name> && hyperframes check && cd ../..      # must end "Check passed" (one file-size warning is normal)
+node tools/design-lint.mjs projects/<name>               # must be 0 errors, 0 warnings
+cd projects/<name> && hyperframes snapshot --at "t1,t2,…" --no-end --describe false && cd ../..
+```
+In PowerShell the time list MUST be in quotes: unquoted, only the first time is captured and it still says success.
+Snapshot times: about 10, each 0.6-1 s after a card or a proof starts (the times are the `rows` in
+`build/timeline.json`; exactly at a row time the element is still animating in). Read
+`projects/<name>/snapshots/contact-sheet*.jpg` and check that nothing overlaps, sticks out of the frame, or leaves the
+stage empty. Then render detached (it dies with the session otherwise):
+```
+Start-Process cmd.exe -ArgumentList "/c cd /d ""D:\Video Create"" && node tools/finish.mjs projects/<name> --quality=high --formats=1x1 ""--frames-cache=C:/Users/Zubayer Nibir/VideoWork/<name>/frames-cache"" > ""C:\Users\Zubayer Nibir\VideoWork\<name>\finish.log"" 2>&1" -WindowStyle Hidden -PassThru
+```
+Wait on the PID in a background Bash (`until ! tasklist //FI "PID eq <pid>" | grep -q <pid>; do sleep 5; done`), then
+read the log once without the `Render:trace|[INFO]|Streaming frame` lines. QC must PASS. Then
+`node tools/contact-sheet.mjs <render>` (one sheet) and `--cols=4 --from=<a> --to=<b>` where names and numbers show.
+Deliver in Bengali: where the files are (`renders/<name>/<date>/`), what was checked, what he must decide.
 
-## 6. Build
+## 6. Rules the engine cannot check for you
 
-Start from the proven pattern, not from scratch: a Node script that writes `index.html`
-(`projects/claude-decision-ad/build/{timeline,build-page,mix}.mjs`; helpers in `tools/episode/page-core.mjs`:
-`icon()` (Lucide as inline SVG), `captionPages()`, `esc()`; mix in `tools/screen/promo-mix.mjs`). Load the
-`hyperframes-core` skill for the composition contract and `hyperframes-animation` for GSAP; keep CLAUDE.md §0d. Do not
-run `hyperframes init` or the entry skill's capture flow (CLAUDE.md §0a): new-video.mjs already made the project.
+- Numbers on screen come from `facts[]` with a URL. Demo apps must look fictional. No fake reviews (STYLE §১৩).
+- No Claude logo, no real faces, no personal data. The mascot is the engine's own pixel bot.
+- His handle goes in the DM card, never the reference creator's (`assets/refs/ref-01.mp4` is someone else's reel).
+- Lyria music: say once that its terms for paid ads are unchecked; Pixabay is the verified safe source.
 
-**Layout, 1080×1920** (safe area: top 14 %, bottom 35 %, the Reels button rail on the right): content box x 65-905,
-y 269-1248. Captions y 285-405 (this kind follows the reference: captions at the top of the safe area because the lower
-part carries the stage; STYLE §৪'s 60 % is for face videos); stage y 430-1000; terminal y 1030-1240; everything else
-is empty or soft glow. Colours are in the reference doc (`#07080F`, panel `#0D121D`, five tool colours).
+## 7. Traps (each cost a run)
 
-**Always on screen, from first frame to last (§0h):** the dot-grid background, the terminal, the caption window, the
-stage light in the current tool's colour.
+- `hyperframes check` errors that come from the engine (overlap, clipping, contrast) are engine bugs: fix `tools/reel/`,
+  rebuild, and note it here. Already fixed: blurred caption words and CSS-filter glows (≥ 40 "heavy overlay" elements
+  make HyperFrames capture black frames), terminal lines clipped by line-height 1, a scene fading out while the next
+  fades in (two texts at once), an empty stage between a body's end and the next card, the last proof hidden by the CTA.
+- PowerShell 5.1 breaks a commit message with `"quotes"` in it: write it to a file and `git commit -F <file>`.
+- The Edit tool can turn a mixed-line-ending file into all CRLF (START-HERE.md): check `git diff --stat` before committing.
+- Check the HF cache before using `--model=turbo`: it downloaded 1.5 GB on 2026-10-29. The engine uses `small`.
+- Python only via `tools/pyenv/Scripts/python.exe -I`; never upgrade HyperFrames or its skills.
 
-**Captions:** rolling window of 3 words, Inter 800-900 ≈ 56 px: the word being said white, earlier words grey, the next
-blurs in; tool names, claims and the last word get an outlined box in the tool colour with four corner dots. 100 %
-of the spoken words, timed from words.json; `text-wrap: balance` (CLAUDE.md §0d 13).
+## 8. After the video (CLAUDE.md §0f)
 
-**Terminal:** `claude - ~/<project>` header, ≤ 4 visible lines (JetBrains Mono ≥ 26 px), per tool `❯ <install command>`
-then `✓ <result>` in the tool colour; status bar "context 100%" + bar + ">> accept edits on". ✓ and ❯ are drawn as SVG
-(§0d 11). Real install commands only (from CONTEXT.md); otherwise a neutral `/<name> ready`.
-
-**Per tool (identity → mechanism → proof):** identity card 1.2-2 s (logo or monogram, name in white with the tool's
-word in its colour, maker line, stat line); mechanism 4-5 s drawn from the tool's function; proof 3-4 s (a number
-landing, or a before→after state). The mechanism must follow the sentence word by word: each noun the voice says
-appears on that word (from words.json), at most 3 s per beat. Pick an archetype, or compose one in the same
-language:
-
-| The tool … | Archetype (reference example) |
-| --- | --- |
-| analyses / traces something | input chips → scan beam → rows going from "0 ?" to counted results → source panel (REA) |
-| gathers from the internet | hub-and-spoke: mascot centre, 3-5 platform nodes on glowing curves, a cost chip "$0.00", a count chip (Agent Reach) |
-| runs a pipeline / many skills | chips light up in order, mascot workers, a blank page becoming the finished thing (Replica) |
-| supplies docs / context | sheets fly from library icons into the mascot (hat + staff); a code panel's red "N deprecated" → green "0" with the one flash (Context7) |
-| tests / inspects a running app | browser mock + console errors + a quality dial 62 → 100, mascot with sword (DevTools) |
-| saves money / time | big counter falling to zero, a before/after split |
-| protects / secures | scan sweep over a file tree, shield, red items turning green |
-
-Hook scene: red banner "Don't start · 0 of N tools installed" + a panel of N progress bars in the tool colours with the
-names blurred (the teaser). CTA scene: comment box types the keyword → send → a DM card "All N tools in one link:" with N
-chips in the tool colours → "Follow for more" → "Following". Use the user's handle, never the reference's. Logos: no
-catalog exists here (`media-use resolve --type=logo` found none, fetching is untested); use text wordmarks or a
-monogram badge in the tool colour, never a redrawn brand mark. Demo apps must be obviously fictional; no fake reviews
-or testimonials about real products (STYLE §১৩).
-
-**Sound (design it as you place the visuals):** `lead_s` is subtracted by `buildMix`, so cue `t` = visual hit.
-
-| Event | Sound |
-| --- | --- |
-| identity card lands | `impact-bass-1` (dur 0.6) + `whoosh-short` 0.35 s before |
-| tool → tool | `whoosh-cinematic`, then a **hit-stop**: bed envelope to `null` (silence) for 0.25-0.4 s right after the name line, then `impact-bass-2` on the next card |
-| chip / node appears | `pop` or `click-soft` 0.3 |
-| counter running | `typing` ~0.22 |
-| proof chip lands | `ping` or `chime` |
-| red state / green state | `error` or `glitch-3` / `success` or `sparkle` |
-| the one full-frame flash | `boom` + `glitch-1` |
-| terminal line | `key-press` while typing, `click` on ✓ |
-| CTA: send / DM / end | `click` / `notification` / `chime` |
-
-Mix with `buildMix`: voice with `eq: true`, BGM bed at −19 dB, ducked a further 4-5 dB under the voice and dipped to
-`null` in hit-stops (derive both envelopes from words.json), cues from the table. `finish.mjs` does the final −14 LUFS.
-Overlapping cues need different `data-track-index` lanes (§0d 7). No still + silence ≥ 1.5 s (§0d 8).
-
-## 7. Check, render, review
-
-1. `hyperframes check` → `hyperframes snapshot --at <hits> --no-end --describe false` → `node tools/design-lint.mjs .`
-   (small text, orphan words, font fallbacks, card straddles, misaligned peers, frame breach). It does not know the
-   Reels safe area: check that by eye on a snapshot with temporary guide lines at y 269 and 1248 and x 905 (remove them
-   before the render). Fix, repeat.
-2. Render detached (it dies with the session otherwise), heavy cache on C:, one job at a time (RAM ~1.5 GB):
-   `Start-Process cmd.exe "/c cd /d ""D:\Video Create"" && node tools/finish.mjs projects/<name> --quality=high --formats=1x1 ""--frames-cache=C:/Users/Zubayer Nibir/VideoWork/<name>/frames-cache"" > <log> 2>&1" -WindowStyle Hidden`
-   then wait on the PID and read the log summary once (never tail it: one line per frame). ~58 s ≈ 5 min.
-   `--formats=1x1`: the 9:16 master is always made and finish adds only the listed extra shapes (its default list
-   would also add 16:9 and 4:5).
-   CSS `perspective` switches the whole render to slower screenshot capture (screen-promo §5).
-3. `node tools/contact-sheet.mjs <render> --every=0.5` and look at every sheet; `--cols=4 --from --to` to proofread the
-   captions, tool names and numbers against CONTEXT.md; check the held end of each tool block at full size.
-4. Deliver in simple Bengali: where the files are (`renders/<name>/<date>/`), what was checked, what is untested, what
-   he must decide. Never publish or post.
-
-## 8. Traps that will cost a run
-
-- ASR spells names its own way ("Context 7" for Context7, "DevTools" may split): captions use the script, not the ASR text.
-- `ametadata=file=` and other filter options break on a path with spaces: write to a relative path.
-- A PowerShell command that does `Set-Location` changes the session's folder: use absolute paths.
-- `riser.mp3` builds 0-4.12 s and stops dead; `boom` rings 1.2 s; `impact-bass-1` is 2.1 s (trim); mono voice doubled to
-  stereo reads +3 LU. More traps: screen-promo §5 and CLAUDE.md §0d.
-- Python only via `tools/pyenv/Scripts/python.exe -I`; never upgrade HyperFrames or its skills; the HF cache holds both
-  English ASR models (small 0.46 GB since 2026-10-25; turbo 1.5 GB, downloaded 2026-10-29 during the first reference
-  analysis), so nothing is downloaded again. Check the cache before asking a tool for a model that may be missing.
-
-## 9. Quality bar (all of it, measured, before delivery)
-
-1080×1920 · 30 fps · −14 LUFS ±1, true peak ≤ −1.5 · hook shows the tension/result within 2 s · something visibly changes
-at least every 3 s · every spoken word captioned, each within 1 frame of its time · all read text ≥ 28 px, labels ≥ 24 px,
-decorative microtext ≥ 18 px and never the only carrier of a fact · nothing readable in the top 14 %, bottom 35 % or the
-right rail · one colour per tool all the way through · max 2 font families · a sound on every scene change and UI event,
-hit-stops deliberate · numbers sourced · no real faces, no Claude logo, no personal data · credits for Piper/Noto if used.
-
-## 10. After the video (do not skip: this is what makes the next one cheaper, CLAUDE.md §0f)
-
-LESSONS.md row per piece of his feedback · the first video also **extracts the kit** into `tools/reel/` (caption window,
-terminal, identity card, chips, mascot sprite + props, stage light, hit-stop mix) and the project's build files shrink to
-data; prove it by diffing the rebuilt HTML and null-testing the WAV · new traps go in §8 · commit tools + skill with his OK
-(stage whole files; other sessions' edits are in the tree).
+One LESSONS.md row per piece of his feedback. A fix that every reel needs goes into `tools/reel/`, a new trap into §7.
+Commit the engine and skill with his OK (stage whole files; other sessions' edits are in the tree).
+The measured reference (beat sheet, colours, sound) is `reference-ref01.md`: read it only to change the look itself.

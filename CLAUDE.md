@@ -237,6 +237,7 @@ HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new v
 | `tools/bijoy2unicode.mjs` | SutonnyMJ/Bijoy text → Unicode |
 | `tools/screen/*` | screen-promo kit: watch, keystrokes, cut, track-cursor.py, promo-core, promo-mix (skill `screen-promo`) |
 | `tools/episode/*` | episode kit: run.mjs pipeline, voice, cuts, grade, ASR chunks, align, page/reel cores, mix (skill `episode-edit`) |
+| `tools/reel/*` | tools-reel engine: `reel.json` + voice → aligned captions, six scene types, terminal, mascot, mix, PLAN.md (skill `tools-reel`) |
 | `tools/ref-analyze.mjs` | measure a reference video once (LUFS, BPM, voice pace and pitch, silences, sheet, transcript) → `assets/refs/<name>.analysis.md` |
 | `tools/session-status.mjs` | the start-of-session health line (disk, RAM, git, last render) — runs as a SessionStart hook |
 
