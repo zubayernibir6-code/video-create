@@ -59,7 +59,7 @@ The claude-video-tutorial took three 2-hour renders because privacy spots were f
    - Times are source seconds on the frame grid. Put each boundary at a half-frame midpoint, for example 294.108 between frames 294.100 and 294.117.
 3. **Burn the blurs in.**
    - For a single cut: `cut.mjs --blur`.
-   - For a project like claude-video-tutorial: the `specs.json` blurs that `build/screen.mjs` burns in. That file uses one split for all boxes, counts time from the frame-rounded seek, and uses sigma 22. Use sigma 60 on large text.
+   - For a project like claude-video-tutorial: the `specs.json` blurs that `tools/tutorial/screen.mjs` burns in. That file uses one split for all boxes, counts time from the frame-rounded seek, and uses sigma 22. Use sigma 60 on large text.
 4. **Prove it before rendering.**
    - Run `text-scan.mjs --find=… --leaks` on the blurred clip; it must show 0 sharp frames.
    - Pull frames of the blurred clip at every spot, at full size.

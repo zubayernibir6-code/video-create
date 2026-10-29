@@ -12,7 +12,7 @@ elements now has a check that runs **before** the expensive step, mostly by mach
 
 | Mistake (render time) | Root cause | Guard now |
 | --- | --- | --- |
-| In-ad blur showed one frame early (450.18) | blur `enable` counted time from the piece's start `a`, not from the frame the seek landed on (up to ½ frame off) | `build/screen.mjs` rounds `a` to the frame grid (project code; copy it) |
+| In-ad blur showed one frame early (450.18) | blur `enable` counted time from the piece's start `a`, not from the frame the seek landed on (up to ½ frame off) | `tools/tutorial/screen.mjs` rounds `a` to the frame grid (engine code since 2026-10-29; it was the project's `build/screen.mjs`) |
 | Freeze still showed the double window (424.47) | `use` 518.914 rounded onto the first ghost frame; `to` stopped 4 frames short | boundaries at half-frame midpoints, `use` = an exact clean frame number checked by eye (glitch-scan strips) |
 | Green box lingered 1 s past a cut (210.9); "All 4 Assets" pill 0.7 s after its window closed (359.5) | hide time written as "show + 2.4 s" instead of "before the window's own end" | rule: hide = S(window close or cut) − 0.3; preflight `under_changed` (calibrated: lingering labels 0.10 / 0.49, correct ones ≥ 0.66) |
 | Blur boxes a few frames into the next app (231.3, 223.6, 259.0) | box ends written as round numbers, not the last frame of the window | boxes end at the midpoint after the last frame (privacy-blur skill) |

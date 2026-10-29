@@ -1,0 +1,108 @@
+{
+  "note": "The page of the tutorial for tools/tutorial/page.mjs (PLAN.md shot table). Times: final seconds, or S(source s) / V(voice s) / SA / SE / TOTAL expressions. Label places from the per-scene frame review 2026-10-29 (specs.json anchors).",
+  "title": "Claude দিয়ে কমার্শিয়াল ভিডিও — টিউটোরিয়াল",
+  "intro": {
+    "streaks": [1.0, 19.0],
+    "monitor_in": 38.4,
+    "dive": 42.0,
+    "cards": [
+      { "kind": "alert", "id": "c1", "tone": "red", "top": 360, "icon": ["x", 66, "#FF5A69", 3], "icon_in": "spin",
+        "lines": [["kick", "Traditional Ad Cost:"], ["main", "High $$$ &amp; Slow Delivery"]],
+        "in": 1.35, "sound": ["error", 0.35] },
+      { "kind": "flow", "id": "c2", "top": 300, "in": 6.1,
+        "nodes": [
+          { "icon": ["sparkles", 58, "#8CEBFF"], "text": "Claude AI" },
+          { "icon": ["zap", 58, "#8CEBFF"], "text": "Motion Graphics Engine", "t": 10.9 },
+          { "icon": ["clapper", 58, "#F7D27A"], "text": "Commercial Grade Ad", "t": 12.95 }] },
+      { "kind": "alert", "id": "c3", "tone": "yellow", "top": 340, "icon": ["alert", 64, "#FFC83D", 2.6],
+        "lines": [["kick", "Standard Pro Plan:"], ["main", "Low Usage Limit"]],
+        "in": 18.2, "sound": ["notification", 0.4], "meter": { "drain": 23.5 }, "out": "24.8-0.3" },
+      { "kind": "hero", "id": "c4", "top": 270, "icon": ["rocket", 66, "#F7D27A", 2.4], "big": "CLAUDE MAX POWER",
+        "l2": "Massive Usage Limit + <b><span id=\"ten\">10</span>x</b> Production Output",
+        "in": 24.8, "slam": 25.97, "l2_at": 31.0, "count": { "id": "ten", "t": 32.95, "to": 10 }, "out": 37.0 }
+    ]
+  },
+  "screen": {
+    "sounds": [
+      ["S(82.02)", "whoosh-short", 0.35], ["S(109.2)", "whoosh-short", 0.35], ["S(166.7)", "whoosh-short", 0.35], ["S(214.25)", "whoosh", 0.4],
+      ["S(269.5)", "whoosh-short", 0.35], ["S(292.5)", "whoosh-short", 0.35], ["S(326.8)", "whoosh-short", 0.35], ["S(349.6)", "whoosh-short", 0.35],
+      ["S(424.6)", "whoosh-short", 0.35], ["S(442.85)", "whoosh-short", 0.35], ["S(483.4)", "whoosh", 0.4], ["S(517.35)", "whoosh", 0.4],
+      ["S(526.2)", "whoosh-short", 0.3],
+      ["S(127.4)", "typing", 0.22, "max(0.5, S(135.1)-S(127.4))"],
+      ["S(429.6)", "typing", 0.22, "max(0.5, S(433.3)-S(429.6))"],
+      ["S(555.45)", "glitch-1", 0.35]
+    ],
+    "lists": [
+      { "id": "s1", "anchor": "s1panel", "note": "the prompt's four parts, a panel in the free area right of Gemini's reply",
+        "items": [{ "text": "Video Analysis", "t": "V(9.05)" }, { "text": "Voice Script", "t": "V(12.71)" },
+          { "text": "BGM Prompts", "t": "V(15.21)" }, { "text": "Claude Code Prompt", "t": "V(20.87)" }],
+        "out": "S(75.9)-1.6" }
+    ],
+    "labels": [
+      { "kind": "tag", "id": "t_folder", "anchor": "s3_folder", "dx": -674, "dy": 77, "in": "S(127.6)", "out": "S(136.0)-0.15",
+        "style": "bn", "icon": ["check", 30, "#8CEBFF", 3], "text": "ফোল্ডার: Claude Video Create",
+        "note": "left of Explorer, level with the rename row: above it, it covered two file names" },
+      { "kind": "tag", "id": "t_files", "anchor": "s3_files", "dy": 70, "in": "S(159.5)", "out": "min(S(166.7)-0.3, S(159.5)+5.5)",
+        "sound": ["success", 0.38], "style": "bn green", "icon": ["ccheck", 34, "#5BE39B", 2.6], "text": "২টা ফাইল জমা",
+        "note": "the 2nd file lands at 159.48" },
+      { "kind": "box", "id": "t_chip", "anchor": "s5_chip", "in": "S(254.7)", "out": "S(258.3)-0.35", "sound": ["success", 0.38],
+        "note": "gone before the cut at 258.3" },
+      { "kind": "ticks", "size": "big", "out": "S(323.85)-0.4", "sound": ["success", 0.36],
+        "items": [{ "id": "t_s6_bgm1", "anchor": "s6_bgm1", "in": "S(311.0)" }, { "id": "t_s6_bgm2", "anchor": "s6_bgm2", "in": "S(317.0)" },
+          { "id": "t_s6_video", "anchor": "s6_video", "in": "S(322.5)" }],
+        "note": "the Explorer window closes at 323.85: the ticks are gone by then" },
+      { "kind": "tag", "id": "t_masc", "anchor": "s7a_masc", "dx": -590, "dy": 35, "in": "S(375.72)", "out": "S(379.3)-0.2",
+        "text": "Masculine · Medium",
+        "note": "left of the Speaker settings panel (x ≥ 1080), level with its filter chips: above them it hid 'Search 2,000+ voices'; shows when the Pitch chip first reads 'Medium'" },
+      { "kind": "tag", "id": "t_sad", "anchor": "s7b_sad", "dx": -285, "dy": 60, "in": "S(401.7)", "out": "S(401.7)+3.6", "sound": ["ping", 0.45],
+        "style": "gold", "icon": ["sparkles", 32, "#F7D27A"], "text": "Sadaltager",
+        "note": "left of the Sadaltager row (above it hid Rasalgethi)" },
+      { "kind": "tag", "id": "t_temp", "anchor": "s7b_temp", "dx": -38, "dy": 139, "in": "S(420.7)+0.25", "out": "S(420.9)-0.25", "sound": ["pop", 0.4],
+        "style": "gold", "text": "Temperature 0.7",
+        "note": "under the slider (above it hid 'Model settings')" },
+      { "kind": "tag", "id": "t_vo", "anchor": "s7b_type", "dx": 900, "dy": 36, "in": "S(429.7)", "out": "S(434.6)-0.2",
+        "text": "VoiceOverClaude",
+        "note": "right of the renamed row, past the Explorer window" },
+      { "kind": "tag", "id": "t_4", "anchor": "s7b_4files", "dx": 216, "dy": 265, "in": "S(439.05)", "out": "S(441.8)-0.3", "sound": ["success", 0.45],
+        "style": "gold", "icon": ["flame", 36, "#FFB347", 2.6], "text": "All 4 Assets Ready!",
+        "note": "under the 4 rows; Explorer starts closing at 441.8" },
+      { "kind": "tag", "id": "t_opus", "anchor": "s8_opus", "dx": 40, "dy": 406, "in": "S(452.65)", "out": "S(455.0)-0.2",
+        "style": "gold", "text": "Opus 5.5 · Extra",
+        "note": "below the model badge (nothing free beside it); after the cursor leaves the badge" },
+      { "kind": "ticks", "size": "sm", "id": "tk", "anchor": "s8_ticks", "in": "S(483.4)+4.4", "stagger": 0.85, "out": "S(506.7)-0.3",
+        "sound": ["click-soft", 0.32],
+        "note": "on Claude's task circles, one after another; gone before the cut at 506.7 (S(517.35) is after it)" }
+    ],
+    "banners": [
+      { "id": "dm", "icon": ["chat", 44, "#8CEBFF", 2.4], "html": "Comment <b>'DM'</b> Below to Get the Complete Claude Code Video Creation Prompt Pack!",
+        "in": "V(419.86)-0.15", "out": "S(517.35)-0.35" }
+    ],
+    "callouts": [
+      { "id": "k1", "icon": ["sparkles", 44, "#8CEBFF"], "text": "Dynamic Cursor Glow", "in": "S(526.2)+0.5", "out": "S(533.1)-0.2",
+        "sound": ["sparkle", 0.42], "top": 996,
+        "note": "below the effort submenu's 'Extra' row and its tooltip; the model dropdown opens at the top" },
+      { "id": "k2", "icon": ["ruler", 44, "#8CEBFF"], "text": "3D Perspective Tilt", "in": "S(538.5)+0.1", "out": "S(545.5)",
+        "sound": ["whoosh-short", 0.34] },
+      { "id": "k3", "icon": ["bomb", 44, "#F7D27A"], "text": "Bombastic Golden End-Screen Transition", "in": "S(555.45)+0.12", "out": "SE-0.4",
+        "sound": ["impact-bass-1", 0.6], "gold": true }
+    ]
+  },
+  "outro": {
+    "streaks": ["SE+1.2"],
+    "cards": [
+      { "kind": "alert", "id": "o1", "tone": "green", "top": 330, "icon": ["ccheck", 66, "#5BE39B", 2.4], "icon_in": "pop",
+        "lines": [["main", "100% Automated"], ["kick", "via Claude Code + Max Plan", "margin-top:10px"]],
+        "in": "SE+0.55", "out": "SE+7.6", "sound": ["success", 0.4] },
+      { "kind": "tiles", "id": "o2", "top": 230,
+        "tiles": [
+          { "icon": ["code", 80, "#8CEBFF", 2.4], "text": "Coding", "t": "S(575.33)-0.1" },
+          { "icon": ["clapper", 80, "#8CEBFF", 2.2], "text": "Video", "t": "S(577.41)-0.1" },
+          { "icon": ["zap", 80, "#F7D27A", 2.2], "text": "Automation", "t": "S(579.07)-0.1" }],
+        "pill": { "id": "o3", "top": 590, "icon": ["mail", 56, "#8CEBFF", 2.2], "html": "Send Personal Message or Comment <b>'DM'</b>", "in": "S(584.45)-0.4" },
+        "out": "S(591.0)-0.6" },
+      { "kind": "offer", "id": "o4", "top": 250, "icon": ["key", 64, "#F7D27A", 2.4], "label": "VIP", "big": "CLAUDE CODE SETUP SERVICE",
+        "lines": [["", "Full Terminal Setup + Guidance"], ["p", "(Affordable Price)"]],
+        "in": "S(591.0)-0.1", "l2_at": "S(595.31)+2.6" }
+    ]
+  }
+}

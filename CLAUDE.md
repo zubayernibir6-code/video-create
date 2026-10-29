@@ -245,7 +245,7 @@ first render: default "basic" = names, emails, phones, photos, others' messages,
 his file names; his rule 2026-10-29: no re-render for harmless items), `tools-reel` ("N tools" Reel made on its own from a
 context + voice + BGM; reference `assets/refs/ref-01.mp4`; his Bengali pack is `PROMPT-PACK-tools-reel.md`). The
 HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new video with**
-`node tools/new-video.mjs <name> --kind=<screen-promo|episode|tools-reel|blank>`.
+`node tools/new-video.mjs <name> --kind=<screen-promo|screen-tutorial|episode|tools-reel|blank>`.
 
 ### Tools quick reference (details: `docs/tools-and-setup.md` unless noted)
 
@@ -268,6 +268,7 @@ HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new v
 | `tools/bijoy2unicode.mjs` | SutonnyMJ/Bijoy text → Unicode |
 | `tools/screen/*` | screen kit: watch, keystrokes, cut, text-scan, glitch-scan (source flashes + change strips, once per recording, §0i), track-cursor.py, promo-core, promo-mix |
 | `tools/episode/*` | episode kit: run.mjs pipeline, voice, cuts, grade, ASR chunks, align, page/reel cores, mix (skill `episode-edit`) |
+| `tools/tutorial/*` | screen-tutorial engine: `build.mjs <project> [check] [steps]` makes the whole tutorial from `build/{tutorial,page,specs,cursor}.json` (skill `screen-tutorial`) |
 | `tools/reel/*` | tools-reel engine: `reel.json` + voice → aligned captions, six scene types, terminal, mascot, mix, PLAN.md (skill `tools-reel`) |
 | `tools/ref-analyze.mjs` | measure a reference video once (LUFS, BPM, voice pace and pitch, silences, sheet, transcript) → `assets/refs/<name>.analysis.md` |
 | `tools/session-status.mjs` | the start-of-session health line (disk, RAM, git, last render) — runs as a SessionStart hook |

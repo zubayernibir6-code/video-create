@@ -1,10 +1,12 @@
 // Starts a new video project with everything the house workflow expects, so no session rebuilds it by hand:
-//   node tools/new-video.mjs <name> [--kind=screen-promo|episode|blank]
+//   node tools/new-video.mjs <name> [--kind=screen-promo|screen-tutorial|episode|tools-reel|blank]
 // Makes projects/<name>/ with PLAN.md (from tools/plan/TEMPLATE.md, the plan gate §0e), hyperframes.json, the fonts
 // and GSAP copied in (../../ paths fail lint), a work folder on C: (C:/Users/Zubayer Nibir/VideoWork/<name>/media,
 // D: is nearly full) linked as assets/media (a junction: no admin needed; git ignores it), and for a kind the
 // reference project's build files to edit instead of writing from scratch:
 //   screen-promo  ← projects/claude-decision-ad/build/{timeline,build-page,mix}.mjs   (skill: screen-promo)
+//   screen-tutorial  build/{tutorial,page}.json copied from projects/claude-video-tutorial (a working example to
+//                 rewrite) + an empty build/specs.json; tools/tutorial/build.mjs makes everything   (skill: screen-tutorial)
 //   episode       ← projects/zubayer-ep01/{episode.json,build-page.mjs}             (skill: episode-edit)
 //   tools-reel    PLAN.md + fonts + GSAP + assets/voice, assets/music, build/ and reel.json copied from
 //                 .claude/skills/tools-reel/reel.example.json; tools/reel/build.mjs makes the page   (skill: tools-reel)
@@ -18,7 +20,7 @@ const WORK_ROOT = "C:/Users/Zubayer Nibir/VideoWork";
 const args = process.argv.slice(2);
 const name = args.find((a) => !a.startsWith("--"));
 const kind = (args.find((a) => a.startsWith("--kind=")) ?? "--kind=blank").slice(7);
-const KINDS = ["screen-promo", "episode", "tools-reel", "blank"];
+const KINDS = ["screen-promo", "screen-tutorial", "episode", "tools-reel", "blank"];
 if (!name || !/^[a-z0-9][a-z0-9-]*$/.test(name) || !KINDS.includes(kind)) {
   console.log(`Usage: node tools/new-video.mjs <name: lower-case-with-dashes> [--kind=${KINDS.join("|")}]`);
   process.exit(1);
@@ -28,6 +30,7 @@ if (existsSync(dir)) { console.error(`✗ projects/${name} already exists — pi
 
 const FONTS = {
   "screen-promo": ["latin/Anton-Regular.ttf", "latin/Inter-Variable.ttf"],
+  "screen-tutorial": ["latin/Inter-Variable.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf"],
   episode: ["bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf"],
   "tools-reel": ["latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf"],
   blank: ["bengali/HindSiliguri-Regular.ttf", "bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf"],
@@ -43,7 +46,7 @@ const work = `${WORK_ROOT}/${name}`;
 mkdirSync(`${work}/media`, { recursive: true });
 symlinkSync(path.resolve(`${work}/media`), path.join(dir, "assets", "media"), "junction");
 
-const notes = [];
+const before = [], notes = []; // before: steps that come ahead of the plan gate
 if (kind === "screen-promo") {
   const ref = path.join(WS, "projects", "claude-decision-ad", "build");
   mkdirSync(path.join(dir, "build"));
@@ -62,6 +65,18 @@ if (kind === "episode") {
   copyFileSync(path.join(ref, "build-page.mjs"), path.join(dir, "build-page.mjs"));
   notes.push("set episode.json source.video / music / subtitles and the cuts; rewrite the scenes in build-page.mjs (skill episode-edit)");
 }
+if (kind === "screen-tutorial") {
+  const ref = path.join(WS, "projects", "claude-video-tutorial", "build");
+  mkdirSync(path.join(dir, "build"));
+  appendFileSync(path.join(WS, ".gitignore"), `!projects/${name}/build/\nprojects/${name}/build/mix.graph.txt\n`);
+  const tag = `EXAMPLE copied from projects/claude-video-tutorial on ${new Date().toISOString().slice(0, 10)}: measure and replace every value (skill screen-tutorial). `;
+  for (const f of ["tutorial.json", "page.json"]) writeFileSync(path.join(dir, "build", f), readFileSync(path.join(ref, f), "utf8").replace(`"note": "`, `"note": "${tag}`));
+  writeFileSync(path.join(dir, "build", "specs.json"), JSON.stringify({ note: "From the per-scene frame review, in SOURCE seconds and pixels (skill screen-tutorial §3-§4).", camera: [], anchors: {}, clicks: [], drags: [], blurs: [], freezes: [] }, null, 1) + "\n");
+  before.push("check the source BEFORE planning: contact-sheet --every=0.5, tools/screen/glitch-scan.mjs, the privacy-blur level (skill screen-tutorial §1)");
+  notes.push("fill build/tutorial.json (sources, frames, voice pauses/cuts, anchors), build/specs.json (frame review), build/cursor.json (tools/screen/track-cursor.py), then rewrite build/page.json (cards, labels, callouts) — skill screen-tutorial §3-§5");
+  notes.push(`node tools/tutorial/build.mjs projects/${name} check   (until it prints ✓), then: node tools/tutorial/build.mjs projects/${name}`);
+  notes.push(`node tools/preflight.mjs projects/${name}   (0 ERRORs; read every sheet in .preflight/)`);
+}
 if (kind === "tools-reel") {
   for (const d of ["voice", "music"]) mkdirSync(path.join(dir, "assets", d), { recursive: true });
   mkdirSync(path.join(dir, "build"));
@@ -74,5 +89,5 @@ if (kind === "tools-reel") {
 
 console.log(`✓ projects/${name} (${kind})
   PLAN.md, hyperframes.json, ${FONTS[kind].length} fonts, GSAP, assets/media → ${work}/media
-Next:${[...(kind === "tools-reel" ? [] : [`fill PLAN.md, then: node tools/plan-check.mjs projects/${name}   (show him in Bengali, wait for OK)`]), ...notes].map((n, i) => `\n  ${i + 1}. ${n}`).join("")}
-  ${notes.length + (kind === "tools-reel" ? 1 : 2)}. node tools/finish.mjs projects/${name} --quality=high --frames-cache=${work}/frames-cache   (start it detached)`);
+Next:${[...before, ...(kind === "tools-reel" ? [] : [`fill PLAN.md, then: node tools/plan-check.mjs projects/${name}   (show him in Bengali, wait for OK)`]), ...notes].map((n, i) => `\n  ${i + 1}. ${n}`).join("")}
+  ${before.length + notes.length + (kind === "tools-reel" ? 1 : 2)}. node tools/finish.mjs projects/${name} --quality=high --frames-cache=${work}/frames-cache   (start it detached)`);
