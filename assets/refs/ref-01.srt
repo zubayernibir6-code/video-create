@@ -1,0 +1,103 @@
+1
+00:00:00,000 --> 00:00:02,460
+Don't start vibe coding with Claude code unless you've
+
+2
+00:00:02,460 --> 00:00:03,600
+installed these five tools.
+
+3
+00:00:03,840 --> 00:00:04,920
+The first is REA.
+
+4
+00:00:05,100 --> 00:00:08,660
+It lets Claude open any app, website, or APK and trace every
+
+5
+00:00:08,660 --> 00:00:10,900
+feature down to the code, so the moment you wonder how
+
+6
+00:00:10,900 --> 00:00:13,260
+something works, it shows you the proof, and you never have
+
+7
+00:00:13,260 --> 00:00:13,680
+to guess.
+
+8
+00:00:14,100 --> 00:00:15,480
+The second is Agent Reach.
+
+9
+00:00:15,660 --> 00:00:19,100
+It lets Claude read Reddit, X, YouTube, and GitHub with zero
+
+10
+00:00:19,100 --> 00:00:22,360
+API fees, which shows you exactly what users hate before you
+
+11
+00:00:22,360 --> 00:00:24,580
+write a line, install it, and build what they want.
+
+12
+00:00:24,760 --> 00:00:25,780
+The third is Replica.
+
+13
+00:00:25,780 --> 00:00:29,420
+It gives Claude 11 skills that scan the app, plan it, build
+
+14
+00:00:29,420 --> 00:00:32,000
+it, and test it, so you never start from a blank page.
+
+15
+00:00:32,260 --> 00:00:33,460
+One app, start to finish.
+
+16
+00:00:33,880 --> 00:00:37,560
+The fourth is Context 7, from Upstash, with over 60 ,000
+
+17
+00:00:37,560 --> 00:00:37,900
+stars.
+
+18
+00:00:38,520 --> 00:00:41,600
+It pulls the current docs for any library you use, so Claude
+
+19
+00:00:41,600 --> 00:00:43,660
+stops writing code that broke two versions ago.
+
+20
+00:00:43,860 --> 00:00:45,080
+Fresh docs, every time.
+
+21
+00:00:45,260 --> 00:00:48,260
+And the fifth is Chrome DevTools MCP, from the Chrome team
+
+22
+00:00:48,260 --> 00:00:48,680
+at Google.
+
+23
+00:00:48,880 --> 00:00:51,680
+It lets Claude open your app in a real browser, so it sees
+
+24
+00:00:51,680 --> 00:00:53,440
+the red errors and fixes them itself.
+
+25
+00:00:53,440 --> 00:00:56,880
+It tests itself, comment tools, and I'll send you one link
+
+26
+00:00:56,880 --> 00:00:57,540
+with all five.

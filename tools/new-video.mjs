@@ -6,6 +6,8 @@
 // reference project's build files to edit instead of writing from scratch:
 //   screen-promo  ← projects/claude-decision-ad/build/{timeline,build-page,mix}.mjs   (skill: screen-promo)
 //   episode       ← projects/zubayer-ep01/{episode.json,build-page.mjs}             (skill: episode-edit)
+//   tools-reel    PLAN.md + fonts + GSAP + empty assets/voice, assets/music, build/ (skill: tools-reel; no reference
+//                 build exists yet: the first video writes it, then moves it into tools/reel, CLAUDE.md §0f)
 //   blank         PLAN.md + fonts + GSAP only (HyperFrames skills build the page)
 // Refuses a name that already exists. Prints the next steps.
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, symlinkSync, writeFileSync, appendFileSync } from "node:fs";
@@ -16,7 +18,7 @@ const WORK_ROOT = "C:/Users/Zubayer Nibir/VideoWork";
 const args = process.argv.slice(2);
 const name = args.find((a) => !a.startsWith("--"));
 const kind = (args.find((a) => a.startsWith("--kind=")) ?? "--kind=blank").slice(7);
-const KINDS = ["screen-promo", "episode", "blank"];
+const KINDS = ["screen-promo", "episode", "tools-reel", "blank"];
 if (!name || !/^[a-z0-9][a-z0-9-]*$/.test(name) || !KINDS.includes(kind)) {
   console.log(`Usage: node tools/new-video.mjs <name: lower-case-with-dashes> [--kind=${KINDS.join("|")}]`);
   process.exit(1);
@@ -27,6 +29,7 @@ if (existsSync(dir)) { console.error(`✗ projects/${name} already exists — pi
 const FONTS = {
   "screen-promo": ["latin/Anton-Regular.ttf", "latin/Inter-Variable.ttf"],
   episode: ["bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf"],
+  "tools-reel": ["latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf"],
   blank: ["bengali/HindSiliguri-Regular.ttf", "bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf"],
 };
 mkdirSync(path.join(dir, "assets", "fonts"), { recursive: true });
@@ -58,6 +61,13 @@ if (kind === "episode") {
   writeFileSync(path.join(dir, "episode.json"), JSON.stringify(ep, null, 2) + "\n");
   copyFileSync(path.join(ref, "build-page.mjs"), path.join(dir, "build-page.mjs"));
   notes.push("set episode.json source.video / music / subtitles and the cuts; rewrite the scenes in build-page.mjs (skill episode-edit)");
+}
+if (kind === "tools-reel") {
+  for (const d of ["voice", "music"]) mkdirSync(path.join(dir, "assets", d), { recursive: true });
+  mkdirSync(path.join(dir, "build"));
+  appendFileSync(path.join(WS, ".gitignore"), `!projects/${name}/build/\nprojects/${name}/build/mix.graph.txt\n`);
+  notes.push("save his message as CONTEXT.md with a Facts table; voice → assets/voice/, BGM → assets/music/ (skill tools-reel §1-§3)");
+  notes.push("measure the voice, write the script, then PLAN.md in the shape of .claude/skills/tools-reel/EXAMPLE-PLAN.md (the plan gate comes first)");
 }
 
 console.log(`✓ projects/${name} (${kind})

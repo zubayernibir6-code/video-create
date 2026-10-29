@@ -212,8 +212,10 @@ three reference files. Open the one you need with Read + Grep; do not read them 
 
 **Skills in this workspace (`.claude/skills/`, versioned, loaded only when a job matches):**
 `screen-promo` (screen recording → commercial), `episode-edit` (long talking-head episode + Reels from it),
-`zero-cost-video-editor` (cut/caption/B-roll his own footage). The HyperFrames skills (pinned v0.8.134) live in
-`~/.claude/skills`. **Start a new video with** `node tools/new-video.mjs <name> --kind=<screen-promo|episode|blank>`.
+`zero-cost-video-editor` (cut/caption/B-roll his own footage), `tools-reel` ("N tools" Reel made on its own from a
+context + voice + BGM; reference `assets/refs/ref-01.mp4`; his Bengali pack is `PROMPT-PACK-tools-reel.md`). The
+HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new video with**
+`node tools/new-video.mjs <name> --kind=<screen-promo|episode|tools-reel|blank>`.
 
 ### Tools quick reference (details: `docs/tools-and-setup.md` unless noted)
 
@@ -235,6 +237,7 @@ three reference files. Open the one you need with Read + Grep; do not read them 
 | `tools/bijoy2unicode.mjs` | SutonnyMJ/Bijoy text → Unicode |
 | `tools/screen/*` | screen-promo kit: watch, keystrokes, cut, track-cursor.py, promo-core, promo-mix (skill `screen-promo`) |
 | `tools/episode/*` | episode kit: run.mjs pipeline, voice, cuts, grade, ASR chunks, align, page/reel cores, mix (skill `episode-edit`) |
+| `tools/ref-analyze.mjs` | measure a reference video once (LUFS, BPM, voice pace and pitch, silences, sheet, transcript) → `assets/refs/<name>.analysis.md` |
 | `tools/session-status.mjs` | the start-of-session health line (disk, RAM, git, last render) — runs as a SessionStart hook |
 
 ### Traps that bite on every job (full story in the docs)
