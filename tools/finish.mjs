@@ -5,8 +5,9 @@
 //        [--quality=high|standard|draft] [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop]
 //        [--lufs=-14] [--out=<folder>] [--keep] [--skip-design] [--frames-cache=<folder>]
 //
-// Project folder: hyperframes check + tools/design-lint.mjs (both stop the run on errors; --skip-design
-//                 skips the second) → hyperframes render (1 worker, long-render safe) → master.
+// Project folder: a video over 60 s needs a clean tools/preflight.mjs report of the current build first
+//                 (--no-preflight skips it) → hyperframes check + tools/design-lint.mjs (both stop the run on
+//                 errors; --skip-design skips the second) → hyperframes render (1 worker, long-render safe) → master.
 // Video file:     skips check/render; re-encodes to h264/yuv420p only when it isn't already.
 // Then for both:  two-pass loudness to -14 LUFS / -1.5 dBTP → QC gate (tools/qc.mjs) →
 //                 other aspect ratios → thumbnail + 8 s preview GIF → qc.json.
@@ -17,6 +18,9 @@
 // - PRODUCER_STREAMING_ENCODE_MAX_DURATION_SECONDS=3600: 0.8.33 refuses renders over 240 s
 //   because C: is nearly full; streaming encode avoids the disk-hungry capture path.
 // - --workers 1: more workers are refused for the same disk reason, and RAM is ~4 GB.
+// - --experimental-fast-capture=false: the drawElement capture placed GSAP-moved elements wrongly (click rings
+//   ~1000 px off, inside a scaled layer) on claude-video-tutorial, 2026-10-29; screenshot capture of the same
+//   seconds was right, and faster there (7.8 vs 5.8 frames/s).
 // - --frames-cache-dir in the workspace .cache: footage frame extraction would otherwise fill %TEMP%.
 //   --frames-cache=<folder> moves it (a long footage render can need several GB; pick the drive with room).
 // - loudnorm LRA raised to the measured LRA: otherwise it falls back to dynamic mode and misses
@@ -211,6 +215,18 @@ if (isProject) {
     FFMPEG_STREAMING_TIMEOUT_MS: process.env.FFMPEG_STREAMING_TIMEOUT_MS ?? longMs };
   expect = compositionSpec(input);
 
+  // a long render only after preflight.mjs ran on THIS build (index.html + its clips) with no errors and its sheets
+  // were looked at: claude-video-tutorial (2026-10-29) took three 2-hour renders for mistakes a 7-minute preflight finds
+  if ((expect.dur ?? 0) > 60 && !flags["no-preflight"]) {
+    const rp = path.join(input, ".preflight", "report.json");
+    const rep = existsSync(rp) ? JSON.parse(readFileSync(rp, "utf8")) : null;
+    const { buildHash } = await import("./preflight.mjs");
+    const why = !rep ? "no preflight report" : !rep.whole ? "the last preflight checked only part of the video (--from/--to)"
+      : rep.hash !== buildHash(input) ? "the build changed since the last preflight" : !rep.ok ? "the last preflight found errors" : null;
+    if (why) fail(`${why}. Run: node tools/preflight.mjs ${target}, fix its errors and LOOK at its sheets, then render (nothing was rendered; --no-preflight skips this).`);
+    console.log(`preflight ✓ (${rep.at}, ${rep.findings.filter((f) => f.sev === "warn").length} warning(s) looked at)`);
+  }
+
   step("1/6  Quality gate before rendering (hyperframes check + design-lint)");
   const chk = spawnSync(process.execPath, [hf, "check"], { cwd: input, env, stdio: "inherit" });
   if (chk.status !== 0) fail("hyperframes check found errors — fix them before rendering (nothing was rendered).");
@@ -234,7 +250,7 @@ if (isProject) {
   }
   const rnd = spawnSync(
     process.execPath,
-    [hf, "render", "--quality", quality, "--workers", "1", "--frames-cache-dir", cache, "--output", source],
+    [hf, "render", "--quality", quality, "--workers", "1", "--experimental-fast-capture=false", "--frames-cache-dir", cache, "--output", source],
     { cwd: renderDir, env, stdio: "inherit" },
   );
   if (pad) rmSync(renderDir, { recursive: true, force: true });

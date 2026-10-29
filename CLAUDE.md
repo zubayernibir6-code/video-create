@@ -198,6 +198,32 @@ things applied across the whole video by the system itself, without having to sa
 
 ---
 
+## 0i. ⭐ The five elements of a video mistake + the self-upgrade loop (STANDING, the user's request, 2026-10-29)
+
+claude-video-tutorial needed three 2-hour renders. Every one of its ~35 mistakes came from one of five roots. Check
+each root BEFORE the expensive step, by machine where possible. The full analysis is in `docs/fundamentals.md`.
+1. **সময় Time.** Every time is on the frame grid and tied to the event it belongs to: a label hides before ITS window
+   closes or cuts; boundaries sit at half-frame midpoints; a freeze's `use` is an exact clean frame.
+2. **জায়গা Space.** An overlay's place is measured on the source frames over its WHOLE show time. It sits beside its
+   target, never on other text, inside the frame and bezel. "Above the anchor" is not a default.
+3. **অবস্থা State.** The renderer SEEKS frame by frame. Every element's state at any time must follow from the timeline
+   alone: x/y in both fromTo vars, hidden before an entrance, a starting value `set` at 0, no layer showing a stale
+   frame after its clip ends, and effects that follow the picture (the glow) reading the same edit list (freezes).
+4. **উৎস Source.** The recording itself has glitches and private data that the plan never mentions. Run
+   `tools/screen/glitch-scan.mjs` once per recording, before planning, and read every strip. Decide the blur level once
+   (`privacy-blur` skill). Check every clip cut from the source (intro, outro, posters) too.
+5. **প্রমাণ Proof.** Cheap checks before expensive ones. `node tools/preflight.mjs <project>` takes about 7 min on an
+   8.5-min video. It finds seek-state bugs and labels that outlive their window, and snapshots every overlay. Read
+   its sheets. finish.mjs refuses a render over 60 s without a clean preflight of the exact current build. After a
+   fix, prove it with snapshots or `preflight --from/--to` of that stretch, never with a full render.
+**Self-upgrade loop, after every video and every round of his feedback (do it without being asked):**
+1. Sort each mistake into one of the five elements and write its root cause.
+2. Turn it into a GUARD: a tool rule that fails or warns, or a skill step that runs. A note alone is not a fix.
+3. Prove the guard catches the old mistake on a copy of the old build.
+4. Add one line to `docs/system-log.md` and raise the system version.
+
+---
+
 ## 0g. Where everything is (CLAUDE.md was slimmed on 2026-10-26: 152 KB → this file + `docs/`)
 
 This file holds only what every session needs. Everything else was moved **verbatim** (nothing deleted) into
@@ -207,12 +233,16 @@ three reference files. Open the one you need with Read + Grep; do not read them 
 | --- | --- |
 | `docs/tools-and-setup.md` | §0b every tool's full notes and measurements (voice, finish, qc, subtitles, ASR, TTS, denoise, music, stock, Bijoy, design-lint, contact-sheet, background removal), §0c FFmpeg editing cookbook, §1 folder layout, §2 machine facts, §4 known-good commands, §5 render speeds, §6 Windows gotchas |
 | `docs/craft-reference.md` | §4b font pack, §4c animation runtimes (GSAP/Anime.js/Lottie + seek gotchas), §4d SFX/music/audio contract, §4e LUTs, §4f loudnorm/ducking/denoise, §7 Remotion licence |
+| `docs/fundamentals.md`, `docs/system-log.md` | the five-element root-cause analysis (every 2026-10-29 mistake → its guard); system versions 1.0 → 3.0 |
 | `docs/projects-history.md` | §4g hishab-khata-promo, §4h khata-cartoon, §4i zubayer-ep01 + Reels, §8 progress log, §9 skill list, §2b/§2c/§3 superseded Smart-App-Control fallbacks |
 | `START-HERE.md` | the user's own Bengali guide (one section per feature) |
 
 **Skills in this workspace (`.claude/skills/`, versioned, loaded only when a job matches):**
 `screen-promo` (screen recording → commercial), `episode-edit` (long talking-head episode + Reels from it),
-`zero-cost-video-editor` (cut/caption/B-roll his own footage), `tools-reel` ("N tools" Reel made on its own from a
+`zero-cost-video-editor` (cut/caption/B-roll his own footage), `screen-tutorial` (long recording + voice → 16:9
+tutorial; reference `projects/claude-video-tutorial`), `privacy-blur` (WHAT to blur, decided once before the
+first render: default "basic" = names, emails, phones, photos, others' messages, keys/money; `/privacy-blur strict` adds
+his file names; his rule 2026-10-29: no re-render for harmless items), `tools-reel` ("N tools" Reel made on its own from a
 context + voice + BGM; reference `assets/refs/ref-01.mp4`; his Bengali pack is `PROMPT-PACK-tools-reel.md`). The
 HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new video with**
 `node tools/new-video.mjs <name> --kind=<screen-promo|episode|tools-reel|blank>`.
@@ -223,7 +253,8 @@ HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new v
 | --- | --- |
 | `tools/new-video.mjs` | new project: folders, PLAN.md, fonts, GSAP, C: work folder + `assets/media` junction, reference build |
 | `tools/plan-check.mjs` | checks PLAN.md (shot table, pace, sounds; a recorded voice by measured line starts) — §0e |
-| `tools/finish.mjs` | ONE command: check → design-lint → render → −14 LUFS → QC → formats → thumbnail/GIF |
+| `tools/preflight.mjs` | BEFORE a long render (~7 min / 8.5-min video): seek-state bugs, labels outliving their window, snapshots of every overlay; `--from/--to` for one stretch — §0i |
+| `tools/finish.mjs` | ONE command: (preflight gate) → check → design-lint → render → −14 LUFS → QC → formats → thumbnail/GIF |
 | `tools/qc.mjs`, `tools/design-lint.mjs` | delivery QC; measured design review (run by finish.mjs) |
 | `tools/contact-sheet.mjs` | whole video as time-labelled sheets (`--every=0.5`, `--cols=4` to read text) — §0d rule 9 |
 | `tools/transcribe.mjs` | Bengali (fine-tuned, ~13× real time, 2.4 GB) / English ASR → words.json, srt, txt |
@@ -235,7 +266,7 @@ HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new v
 | `tools/sfx-leads.mjs` | writes each SFX's silent lead-in (`lead_s`) into assets/sfx/manifest.json |
 | `tools/hf-postassemble.mjs`, `tools/fix-frame.mjs` | fix skill-workflow traps (CDN GSAP, fonts, dropped audio; frame.md roles) |
 | `tools/bijoy2unicode.mjs` | SutonnyMJ/Bijoy text → Unicode |
-| `tools/screen/*` | screen-promo kit: watch, keystrokes, cut, track-cursor.py, promo-core, promo-mix (skill `screen-promo`) |
+| `tools/screen/*` | screen kit: watch, keystrokes, cut, text-scan, glitch-scan (source flashes + change strips, once per recording, §0i), track-cursor.py, promo-core, promo-mix |
 | `tools/episode/*` | episode kit: run.mjs pipeline, voice, cuts, grade, ASR chunks, align, page/reel cores, mix (skill `episode-edit`) |
 | `tools/reel/*` | tools-reel engine: `reel.json` + voice → aligned captions, six scene types, terminal, mascot, mix, PLAN.md (skill `tools-reel`) |
 | `tools/ref-analyze.mjs` | measure a reference video once (LUFS, BPM, voice pace and pitch, silences, sheet, transcript) → `assets/refs/<name>.analysis.md` |

@@ -47,3 +47,15 @@ projects/*/assets/media/
 projects/claude-decision-ad/build/mix.graph.txt
 __pycache__/
 *.pyc
+!projects/claude-video-tutorial/build/
+projects/claude-video-tutorial/build/mix.graph.txt
+
+# reference videos from other creators are for measuring only, never committed (the analysis files beside them are)
+assets/refs/*.mp4
+!projects/tools-reel-demo/build/
+projects/tools-reel-demo/build/mix.graph.txt
+!projects/zz-sonnet-test/build/
+projects/zz-sonnet-test/build/mix.graph.txt
+
+# preflight.mjs reports and snapshots (rebuilt before each render)
+.preflight/

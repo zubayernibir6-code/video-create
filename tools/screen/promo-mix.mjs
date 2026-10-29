@@ -47,12 +47,19 @@ export function buildMix({ total, out, voice, music = [], cues = [], graphFile }
     parts.push(`[${inputs.length - 1}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=${f3(m.from)}:${f3(m.from + len)},asetpts=PTS-STARTPTS,volume=eval=frame:volume='${envelope(m.env, m.at)}'${m.at > 0 ? `,adelay=${Math.round(m.at * 1000)}:all=1` : ""},apad,atrim=0:${f3(total)}[m${k}]`);
     labels.push(`[m${k}]`);
   });
+  // one input per sound file, split for every use (a 9-minute video has ~300 cues; one input each is too many)
+  const byFile = new Map();
+  cues.forEach((c, i) => byFile.set(c.file, [...(byFile.get(c.file) ?? []), i]));
+  for (const [file, idx] of byFile) {
+    inputs.push(path.join(SFX, `${file}.mp3`).replace(/\\/g, "/"));
+    const n = inputs.length - 1;
+    parts.push(`[${n}:a]aresample=48000,aformat=channel_layouts=stereo,asplit=${idx.length}${idx.map((i) => `[u${i}]`).join("")}`);
+  }
   cues.forEach((c, i) => {
-    inputs.push(path.join(SFX, `${c.file}.mp3`).replace(/\\/g, "/"));
     const ld = lead[c.file] ?? 0;
     const at = Math.max(0, c.t - ld);
     const trim = c.dur ? `,atrim=0:${f3(c.dur + ld)},afade=t=out:st=${f3(Math.max(0, c.dur + ld - 0.08))}:d=0.08` : "";
-    parts.push(`[${inputs.length - 1}:a]aresample=48000,aformat=channel_layouts=stereo${trim},volume=${c.vol.toFixed(3)},adelay=${Math.round(at * 1000)}:all=1[s${i}]`);
+    parts.push(`[u${i}]anull${trim},volume=${c.vol.toFixed(3)},adelay=${Math.round(at * 1000)}:all=1[s${i}]`);
     labels.push(`[s${i}]`);
   });
   parts.push(`${labels.join("")}amix=inputs=${labels.length}:normalize=0:dropout_transition=0,alimiter=limit=0.94:attack=2:release=60:level=false,atrim=0:${f3(total)}[out]`);

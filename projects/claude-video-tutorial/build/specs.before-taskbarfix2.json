@@ -1,0 +1,2406 @@
+{
+ "note": "Merged 2026-10-29 from the per-scene frame review (build/specs.raw.json: design + independent verify per scene, fixes applied). Source time/pixels.",
+ "blurs": [
+  {
+   "x": 1684,
+   "y": 68,
+   "w": 52,
+   "h": 52,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Chrome toolbar profile avatar ('n' circle, centre 1710,94); same place in every Gemini frame and it continues on AI Studio in the next scene",
+   "scene": "s1"
+  },
+  {
+   "x": 10,
+   "y": 930,
+   "w": 60,
+   "h": 60,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Gemini sidebar account avatar ('n' circle, centre 40,960, r~21); disappears at the tab switch (~82.02)",
+   "scene": "s1"
+  },
+  {
+   "x": 903,
+   "y": 1023,
+   "w": 30,
+   "h": 30,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Taskbar: Chrome profile badge 'n' on the active Chrome icon (centre ~918,1038)",
+   "scene": "s1"
+  },
+  {
+   "x": 1000,
+   "y": 1024,
+   "w": 30,
+   "h": 30,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Taskbar: Chrome profile badge with a PERSON PHOTO (centre ~1015,1039); not in privacy.txt",
+   "scene": "s1"
+  },
+  {
+   "x": 1143,
+   "y": 1023,
+   "w": 30,
+   "h": 30,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Taskbar: Chrome profile badge 'Z' (centre ~1158,1038)",
+   "scene": "s1"
+  },
+  {
+   "x": 1239,
+   "y": 1023,
+   "w": 30,
+   "h": 30,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Taskbar: Chrome profile badge 'N' (centre ~1254,1038)",
+   "scene": "s1"
+  },
+  {
+   "x": 1287,
+   "y": 1023,
+   "w": 30,
+   "h": 30,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Taskbar: Chrome profile badge 'S' (centre ~1302,1038)",
+   "scene": "s1"
+  },
+  {
+   "x": 1335,
+   "y": 1023,
+   "w": 30,
+   "h": 30,
+   "from": 45.1,
+   "to": 82.03,
+   "what": "Taskbar: Chrome profile badge 'Z' (centre ~1350,1038)",
+   "scene": "s1"
+  },
+  {
+   "x": 16,
+   "y": 915,
+   "w": 300,
+   "h": 75,
+   "from": 82.02,
+   "to": 112.3,
+   "what": "AI Studio account row bottom-left: 'n' avatar + 'domainnibir@...' + PRO pill (measured [30,930,270,46]); same place all scene; Gemini's 'n' avatar is already gone at 82.02 (tab switch 82.0-82.02) and would sit inside this box anyway; continues past 112.3 (visible to kept end 113.8)",
+   "scene": "s2"
+  },
+  {
+   "x": 1682,
+   "y": 66,
+   "w": 56,
+   "h": 56,
+   "from": 82.02,
+   "to": 112.3,
+   "what": "Chrome toolbar profile avatar 'n' (centre ~1710,94, r~17), static all scene; clear of the media icon (x<=1666) and 'Finish update' (x>=1740); continues past 112.3",
+   "scene": "s2"
+  },
+  {
+   "x": 60,
+   "y": 740,
+   "w": 1320,
+   "h": 280,
+   "from": 112.25,
+   "to": 113.8,
+   "what": "Windows taskbar hover preview of File Explorer (5 window thumbnails: 'skills and 2 more tabs', This PC, Videos, two 2026-10-25_0921... folders with photo thumbnails). Absent at 112.233, first frame 112.267 (sliding in: y~850-1008), full from ~112.5 at [74,752,1292,236]; box covers both phases. Still up at 113.78 (kept range ends 113.8), so it runs past the scene end; supersedes the FIX box [62,744,1320,250], which misses the bottom 994-1008 while it slides in",
+   "scene": "s2"
+  },
+  {
+   "x": 4,
+   "y": 910,
+   "w": 330,
+   "h": 86,
+   "from": 112.25,
+   "to": 113.8,
+   "what": "AI Studio account chip: 'n' avatar + 'domainnibir@...' + PRO (bottom-left of Chrome; partly under the thumbnail strip)",
+   "scene": "s3"
+  },
+  {
+   "x": 4,
+   "y": 910,
+   "w": 330,
+   "h": 86,
+   "from": 115.3,
+   "to": 160.5,
+   "what": "AI Studio account chip 'domainnibir@...' to the left of the Explorer window (does not move)",
+   "scene": "s3"
+  },
+  {
+   "x": 4,
+   "y": 910,
+   "w": 330,
+   "h": 86,
+   "from": 166.6,
+   "to": 166.7,
+   "what": "AI Studio account chip at the scene boundary",
+   "scene": "s3"
+  },
+  {
+   "x": 1680,
+   "y": 64,
+   "w": 62,
+   "h": 62,
+   "from": 112.25,
+   "to": 113.8,
+   "what": "Chrome profile avatar 'n' in the toolbar (hidden by Explorer from 115.33)",
+   "scene": "s3"
+  },
+  {
+   "x": 1680,
+   "y": 64,
+   "w": 62,
+   "h": 62,
+   "from": 166.6,
+   "to": 166.7,
+   "what": "Chrome profile avatar 'n' once Explorer leaves (boundary)",
+   "scene": "s3"
+  },
+  {
+   "x": 64,
+   "y": 738,
+   "w": 1316,
+   "h": 278,
+   "from": 112.25,
+   "to": 113.8,
+   "what": "Taskbar thumbnail strip of 5 Explorer windows ('skills...' path window, zubayer-ep01 previews with face thumbnails); slides in at 112.3, bottom edge reaches y~1010",
+   "scene": "s3"
+  },
+  {
+   "x": 0,
+   "y": 468,
+   "w": 132,
+   "h": 156,
+   "from": 115.3,
+   "to": 115.33,
+   "what": "Desktop shortcut '788 Zubayer - Chrome' with a profile photo: frames 115.300 and 115.317 still show the desktop (This PC Aero Peek); Chrome/Explorer are back at 115.333",
+   "scene": "s3"
+  },
+  {
+   "x": 903,
+   "y": 1023,
+   "w": 28,
+   "h": 28,
+   "from": 112.25,
+   "to": 166.7,
+   "what": "Taskbar Chrome profile badge 'n' (persistent, whole video)",
+   "scene": "s3"
+  },
+  {
+   "x": 1000,
+   "y": 1023,
+   "w": 28,
+   "h": 28,
+   "from": 112.25,
+   "to": 166.7,
+   "what": "Taskbar Chrome profile badge with a person's photo (persistent, whole video)",
+   "scene": "s3"
+  },
+  {
+   "x": 1142,
+   "y": 1023,
+   "w": 28,
+   "h": 28,
+   "from": 112.25,
+   "to": 166.7,
+   "what": "Taskbar Chrome profile badge 'Z' (persistent, whole video)",
+   "scene": "s3"
+  },
+  {
+   "x": 1240,
+   "y": 1023,
+   "w": 28,
+   "h": 28,
+   "from": 112.25,
+   "to": 166.7,
+   "what": "Taskbar Chrome profile badge 'N' (persistent, whole video)",
+   "scene": "s3"
+  },
+  {
+   "x": 1287,
+   "y": 1023,
+   "w": 28,
+   "h": 28,
+   "from": 112.25,
+   "to": 166.7,
+   "what": "Taskbar Chrome profile badge 'S' (persistent, whole video)",
+   "scene": "s3"
+  },
+  {
+   "x": 1335,
+   "y": 1023,
+   "w": 28,
+   "h": 28,
+   "from": 112.25,
+   "to": 166.7,
+   "what": "Taskbar Chrome profile badge 'z' (orange) (persistent, whole video)",
+   "scene": "s3"
+  },
+  {
+   "x": 16,
+   "y": 918,
+   "w": 312,
+   "h": 70,
+   "from": 166.6,
+   "to": 169,
+   "what": "Google AI Studio account chip: 'n' avatar + 'domainnibir@...' + PRO (bottom-left sidebar); also visible at 166.6 under the BGM1 Explorer window",
+   "scene": "s4"
+  },
+  {
+   "x": 12,
+   "y": 930,
+   "w": 62,
+   "h": 62,
+   "from": 168.9,
+   "to": 170.7,
+   "what": "Gemini page account avatar 'n' (bottom-left rail), Gemini tab on screen ~168.97-170.6",
+   "scene": "s4"
+  },
+  {
+   "x": 16,
+   "y": 918,
+   "w": 312,
+   "h": 70,
+   "from": 170.6,
+   "to": 214.3,
+   "what": "Google AI Studio account chip 'n' + 'domainnibir@...' + PRO; stays visible left of the Explorer window 200.3-213",
+   "scene": "s4"
+  },
+  {
+   "x": 1684,
+   "y": 68,
+   "w": 54,
+   "h": 54,
+   "from": 166.65,
+   "to": 200.5,
+   "what": "Chrome toolbar profile avatar 'n' (hidden under Explorer at 166.6; fades under the new Explorer window by 200.55)",
+   "scene": "s4"
+  },
+  {
+   "x": 1684,
+   "y": 68,
+   "w": 54,
+   "h": 54,
+   "from": 213,
+   "to": 214.3,
+   "what": "Chrome toolbar profile avatar 'n' after Chrome returns to the front (Pause click)",
+   "scene": "s4"
+  },
+  {
+   "x": 730,
+   "y": 340,
+   "w": 220,
+   "h": 64,
+   "from": 200.5,
+   "to": 201.15,
+   "what": "File Explorer navigation pane OneDrive entry 'Suroj - Personal' while the new window loads (label at ~802-927 x 360-384)",
+   "scene": "s4"
+  },
+  {
+   "x": 1150,
+   "y": 105,
+   "w": 210,
+   "h": 60,
+   "from": 201.2,
+   "to": 206.6,
+   "what": "File Explorer breadcrumb 'Zubayer Nibir > Downloads' (name at ~1182-1310 x 123-147)",
+   "scene": "s4"
+  },
+  {
+   "x": 1150,
+   "y": 105,
+   "w": 210,
+   "h": 60,
+   "from": 213,
+   "to": 213.05,
+   "what": "Same Explorer breadcrumb 'Zubayer Nibir' on the first kept frames after the 206.6-213 cut, until Chrome comes to the front at ~213.03",
+   "scene": "s4"
+  },
+  {
+   "x": 15,
+   "y": 920,
+   "w": 250,
+   "h": 62,
+   "from": 214.15,
+   "to": 214.35,
+   "what": "AI Studio account email 'domainnibir@...' + avatar (Chrome still in front until ~214.28)",
+   "scene": "s5"
+  },
+  {
+   "x": 1685,
+   "y": 70,
+   "w": 50,
+   "h": 50,
+   "from": 214.15,
+   "to": 214.35,
+   "what": "Chrome toolbar profile avatar 'n' (until Claude window covers it)",
+   "scene": "s5"
+  },
+  {
+   "x": 15,
+   "y": 920,
+   "w": 250,
+   "h": 62,
+   "from": 215.15,
+   "to": 216.1,
+   "what": "AI Studio email 'domainnibir@...' + avatar: NEW, Claude is minimised and restored from the taskbar, Chrome exposed ~215.22-216.0",
+   "scene": "s5"
+  },
+  {
+   "x": 1685,
+   "y": 70,
+   "w": 50,
+   "h": 50,
+   "from": 215.15,
+   "to": 216.1,
+   "what": "Chrome profile avatar 'n' during the same minimise/restore",
+   "scene": "s5"
+  },
+  {
+   "x": 15,
+   "y": 745,
+   "w": 1550,
+   "h": 272,
+   "from": 217.7,
+   "to": 219.4,
+   "what": "Taskbar hover thumbnail strip of 6 File Explorer windows (folder previews with images)",
+   "scene": "s5"
+  },
+  {
+   "x": 10,
+   "y": 942,
+   "w": 322,
+   "h": 62,
+   "from": 220.95,
+   "to": 258.3,
+   "what": "Claude sidebar account row: avatar + 'Zubayer Nibir · Lamppost' (same place overlay and docked, under the picker too)",
+   "scene": "s5"
+  },
+  {
+   "x": 1096,
+   "y": 420,
+   "w": 354,
+   "h": 86,
+   "from": 224.75,
+   "to": 227.15,
+   "what": "Name 'Zubayer Nibir?' in greeting 'Up late, Zubayer Nibir?' (keeps 'Up late,' readable)",
+   "scene": "s5",
+   "sigma": 60
+  },
+  {
+   "x": 1508,
+   "y": 718,
+   "w": 290,
+   "h": 214,
+   "from": 234.4,
+   "to": 240.6,
+   "what": "Old session Outputs list 'Zubayer_FB_Reel1..4.mp4' (Facebook-captions.md above stays clear)",
+   "scene": "s5"
+  },
+  {
+   "x": 220,
+   "y": 54,
+   "w": 640,
+   "h": 52,
+   "from": 248.9,
+   "to": 250.2,
+   "what": "Folder picker breadcrumb 'Zubayer Nibir >' and search box 'Search Zubayer Nibir' (replaced by Downloads at ~250.05)",
+   "scene": "s5"
+  },
+  {
+   "x": 48,
+   "y": 226,
+   "w": 186,
+   "h": 48,
+   "from": 248.6,
+   "to": 249.25,
+   "what": "Picker OneDrive entry 'Suroj - Personal', first layout while the dialog draws",
+   "scene": "s5"
+  },
+  {
+   "x": 48,
+   "y": 168,
+   "w": 186,
+   "h": 48,
+   "from": 249.15,
+   "to": 254.7,
+   "what": "Picker OneDrive entry 'Suroj - Personal', final layout (picker fades out by 254.65)",
+   "scene": "s5"
+  },
+  {
+   "x": 15,
+   "y": 920,
+   "w": 250,
+   "h": 62,
+   "from": 268.5,
+   "to": 269.5,
+   "what": "AI Studio email 'domainnibir@...' + avatar after Chrome returns (visible from 267.6, continue into next scene)",
+   "scene": "s5"
+  },
+  {
+   "x": 1685,
+   "y": 70,
+   "w": 50,
+   "h": 50,
+   "from": 268.5,
+   "to": 269.5,
+   "what": "Chrome profile avatar 'n' after Chrome returns (continue into next scene)",
+   "scene": "s5"
+  },
+  {
+   "x": 18,
+   "y": 920,
+   "w": 290,
+   "h": 66,
+   "from": 269.5,
+   "to": 269.6,
+   "what": "Google AI Studio account chip (avatar + 'domainnibir@...' + PRO), bottom-left; gone when Gemini loads at 269.6",
+   "scene": "s6"
+  },
+  {
+   "x": 1684,
+   "y": 70,
+   "w": 52,
+   "h": 48,
+   "from": 269.5,
+   "to": 285.45,
+   "what": "Chrome toolbar profile avatar 'n' (AI Studio then Gemini tab), until Claude takes the screen at 285.45",
+   "scene": "s6"
+  },
+  {
+   "x": 14,
+   "y": 932,
+   "w": 56,
+   "h": 58,
+   "from": 269.5,
+   "to": 285.45,
+   "what": "Gemini sidebar profile avatar 'n', bottom-left",
+   "scene": "s6"
+  },
+  {
+   "x": 980,
+   "y": 748,
+   "w": 346,
+   "h": 292,
+   "from": 284.8,
+   "to": 285.45,
+   "what": "Taskbar hover thumbnail '(2) Facebook - Google Chr...' with a Facebook feed preview (slides in from 284.83, reaches the taskbar while animating)",
+   "scene": "s6"
+  },
+  {
+   "x": 12,
+   "y": 942,
+   "w": 324,
+   "h": 62,
+   "from": 285.4,
+   "to": 326.8,
+   "what": "Claude desktop account row 'Zubayer Nibir · Lamppost' with avatar, bottom-left; stays put under the Explorer window too; continues past the scene end",
+   "scene": "s6"
+  },
+  {
+   "x": 14,
+   "y": 752,
+   "w": 1552,
+   "h": 264,
+   "from": 292.65,
+   "to": 294.2,
+   "what": "File Explorer taskbar thumbnail strip (6 window previews and titles); slides in at 292.7, gone by 294.15",
+   "scene": "s6"
+  },
+  {
+   "x": 1166,
+   "y": 110,
+   "w": 158,
+   "h": 52,
+   "from": 294.05,
+   "to": 295.42,
+   "what": "Explorer breadcrumb 'Zubayer Nibir > Downloads' (name visible 294.1-295.35; at 295.4 the path collapses to '... > Downloads > Claude Video Create')",
+   "scene": "s6"
+  },
+  {
+   "x": 744,
+   "y": 756,
+   "w": 334,
+   "h": 284,
+   "from": 325.8,
+   "to": 326.8,
+   "what": "Taskbar hover thumbnail 'Claude 5x Premium Ads Sc...' (Gemini window preview); appears 325.85 and continues past the scene end into the next scene",
+   "scene": "s6"
+  },
+  {
+   "x": 4,
+   "y": 938,
+   "w": 334,
+   "h": 70,
+   "from": 326.8,
+   "to": 326.85,
+   "what": "Claude desktop account row (avatar + 'Zubayer Nibir · Lamppost'), last 3 frames before the switch to Chrome (Gemini first frame 326.85)",
+   "scene": "s7a"
+  },
+  {
+   "x": 744,
+   "y": 754,
+   "w": 338,
+   "h": 246,
+   "from": 326.8,
+   "to": 326.85,
+   "what": "Taskbar hover thumbnail of the Chrome window ('Claude 5x Premium Ads Sc...') over the Claude app, gone at 326.85 [fixed: The Chrome taskbar hover thumbnail spans about x 755-1072, y 765-990 at 326.833.]",
+   "scene": "s7a"
+  },
+  {
+   "x": 12,
+   "y": 402,
+   "w": 186,
+   "h": 56,
+   "from": 326.8,
+   "to": 326.85,
+   "what": "OPTIONAL: Claude sidebar workplace name 'shaheen-school' (employer)",
+   "scene": "s7a"
+  },
+  {
+   "x": 1678,
+   "y": 62,
+   "w": 64,
+   "h": 64,
+   "from": 326.84,
+   "to": 384,
+   "what": "Chrome profile avatar 'n' in the toolbar (same spot in Gemini and AI Studio, before and after the recording cut)",
+   "scene": "s7a"
+  },
+  {
+   "x": 10,
+   "y": 930,
+   "w": 60,
+   "h": 60,
+   "from": 326.84,
+   "to": 347.52,
+   "what": "Gemini left-rail account avatar 'n' (bottom-left); last Gemini frame 347.50, AI Studio from 347.517",
+   "scene": "s7a"
+  },
+  {
+   "x": 10,
+   "y": 918,
+   "w": 322,
+   "h": 70,
+   "from": 347.5,
+   "to": 362.15,
+   "what": "AI Studio account row: avatar + 'domainnibir@...' + PRO. Keep it on under the model-selection modal (357-361.2): the backdrop blur still shows it, and it is sharp again at 361.3",
+   "scene": "s7a"
+  },
+  {
+   "x": 10,
+   "y": 918,
+   "w": 322,
+   "h": 70,
+   "from": 362.6,
+   "to": 384,
+   "what": "AI Studio account row after the cut ('domainnibir@...' + PRO, truncated again from 362.483). Keep it on under the Speaker settings panel (369.4-384)",
+   "scene": "s7a"
+  },
+  {
+   "x": 1678,
+   "y": 66,
+   "w": 60,
+   "h": 58,
+   "from": 384,
+   "to": 442.85,
+   "what": "Chrome toolbar profile avatar 'n' (inside Chrome the whole time; the Claude app takes over at ~442.81, so it is harmless there)",
+   "scene": "s7b"
+  },
+  {
+   "x": 10,
+   "y": 908,
+   "w": 316,
+   "h": 84,
+   "from": 384,
+   "to": 442.85,
+   "what": "AI Studio account chip: avatar + 'domainnibir@...' + PRO (bottom-left). Faint under the Speaker-panel backdrop 384-405.7, sharp from 405.7, still visible beside the terminal and Explorer",
+   "scene": "s7b"
+  },
+  {
+   "x": 668,
+   "y": 278,
+   "w": 170,
+   "h": 50,
+   "from": 424.5,
+   "to": 438.9,
+   "what": "File Explorer breadcrumb 'Zubayer Nibir' (> Zubayer Nibir > Downloads). Last seen at 438.8; at 438.9 it reads Downloads > Claude Video Create",
+   "scene": "s7b"
+  },
+  {
+   "x": 268,
+   "y": 412,
+   "w": 176,
+   "h": 46,
+   "from": 424.5,
+   "to": 437.45,
+   "what": "Explorer nav pane OneDrive 'Suroj - Personal', first layout (text y ~422-446)",
+   "scene": "s7b"
+  },
+  {
+   "x": 268,
+   "y": 412,
+   "w": 176,
+   "h": 96,
+   "from": 437.3,
+   "to": 437.6,
+   "what": "'Suroj - Personal' during the nav-pane scroll at the drop (union box; it jumps from y~434 to y~482 at 437.45)",
+   "scene": "s7b"
+  },
+  {
+   "x": 268,
+   "y": 460,
+   "w": 176,
+   "h": 46,
+   "from": 437.45,
+   "to": 438.8,
+   "what": "'Suroj - Personal' after the pane scroll (Gallery shows above it). Gone at 438.8 once the folder opens",
+   "scene": "s7b"
+  },
+  {
+   "x": 12,
+   "y": 940,
+   "w": 320,
+   "h": 68,
+   "from": 442.75,
+   "to": 442.85,
+   "what": "Claude desktop account row 'Zubayer Nibir · Lamppost' + avatar. The Claude app first appears at ~442.81; this box continues into the next scene",
+   "scene": "s7b"
+  },
+  {
+   "x": 14,
+   "y": 400,
+   "w": 184,
+   "h": 46,
+   "from": 442.75,
+   "to": 442.85,
+   "what": "Claude desktop sidebar project 'shaheen-school' (workplace). Continues into the next scene",
+   "scene": "s7b"
+  },
+  {
+   "x": 10,
+   "y": 942,
+   "w": 330,
+   "h": 62,
+   "from": 442.85,
+   "to": 477.4,
+   "what": "Claude app account row: avatar + 'Zubayer Nibir · Lamppost' (bottom-left; same spot before and after the 463.1 submit)",
+   "scene": "s8"
+  },
+  {
+   "x": 10,
+   "y": 942,
+   "w": 330,
+   "h": 62,
+   "from": 483.4,
+   "to": 506.7,
+   "what": "Claude app account row: avatar + 'Zubayer Nibir · Lamppost' after jump cut 1 (text at 24-312 x 958-992)",
+   "scene": "s8"
+  },
+  {
+   "x": 14,
+   "y": 404,
+   "w": 186,
+   "h": 38,
+   "from": 442.85,
+   "to": 506.7,
+   "what": "Optional: sidebar project 'shaheen-school' (his workplace), same spot in both layouts",
+   "scene": "s8"
+  },
+  {
+   "x": 915,
+   "y": 1007,
+   "w": 42,
+   "h": 40,
+   "from": 483.4,
+   "to": 506.7,
+   "what": "Optional: taskbar Chrome icon profile-photo badge (face, ~22 px) after jump cut 1",
+   "scene": "s8"
+  },
+  {
+   "x": 1174,
+   "y": 1014,
+   "w": 38,
+   "h": 38,
+   "from": 483.4,
+   "to": 506.7,
+   "what": "Optional: taskbar Chrome profile letter badge 'z'",
+   "scene": "s8"
+  },
+  {
+   "x": 1306,
+   "y": 1014,
+   "w": 38,
+   "h": 38,
+   "from": 483.4,
+   "to": 506.7,
+   "what": "Optional: taskbar Chrome profile letter badge 'N'",
+   "scene": "s8"
+  },
+  {
+   "x": 0,
+   "y": 476,
+   "w": 130,
+   "h": 140,
+   "from": 517.3,
+   "to": 517.35,
+   "what": "Desktop shortcut '788 Zubayer - Chrome' with profile photo (desktop shows while Explorer opens)",
+   "scene": "s8"
+  },
+  {
+   "x": 250,
+   "y": 750,
+   "w": 815,
+   "h": 245,
+   "from": 517.3,
+   "to": 517.35,
+   "what": "Taskbar hover thumbnails of 3 File Explorer windows ('skills and 2 more tabs', '2026-10-25_0921...', '2026-10-25...')",
+   "scene": "s8"
+  },
+  {
+   "x": 912,
+   "y": 722,
+   "w": 176,
+   "h": 44,
+   "from": 517.3,
+   "to": 517.35,
+   "what": "File Explorer nav pane OneDrive 'Suroj - Personal'",
+   "scene": "s8"
+  },
+  {
+   "x": 850,
+   "y": 1006,
+   "w": 42,
+   "h": 42,
+   "from": 517.3,
+   "to": 517.35,
+   "what": "Optional: taskbar Chrome profile-photo badge (layout at 517.3)",
+   "scene": "s8"
+  },
+  {
+   "x": 1114,
+   "y": 1013,
+   "w": 38,
+   "h": 38,
+   "from": 517.3,
+   "to": 517.35,
+   "what": "Optional: taskbar Chrome 'z' profile badge (layout at 517.3)",
+   "scene": "s8"
+  },
+  {
+   "x": 1244,
+   "y": 1013,
+   "w": 38,
+   "h": 38,
+   "from": 517.3,
+   "to": 517.35,
+   "what": "Optional: taskbar Chrome 'N' profile badge (layout at 517.3)",
+   "scene": "s8"
+  },
+  {
+   "x": 0,
+   "y": 478,
+   "w": 118,
+   "h": 140,
+   "from": 517.3,
+   "to": 517.39,
+   "what": "Aero Peek desktop: shortcut '788 Zubayer - Chrome' (name + profile photo); peek frames 517.300-517.383, held 0.65 s by the 517.333 hold",
+   "scene": "s9"
+  },
+  {
+   "x": 236,
+   "y": 740,
+   "w": 846,
+   "h": 262,
+   "from": 517.3,
+   "to": 517.333,
+   "what": "Taskbar hover thumbnails of 3 Explorer windows (last visible frame 517.317) [fixed: At 517.317 the taskbar thumbnail strip runs about 250-1062 x 753-990. The old bo]",
+   "scene": "s9"
+  },
+  {
+   "x": 12,
+   "y": 940,
+   "w": 320,
+   "h": 62,
+   "from": 517.39,
+   "to": 519.075,
+   "what": "Claude app sidebar footer avatar + 'Zubayer Nibir · Lamppost' (behind Explorer until the maximize snap covers it at ~519.067)",
+   "scene": "s9"
+  },
+  {
+   "x": 905,
+   "y": 715,
+   "w": 190,
+   "h": 52,
+   "from": 517.3,
+   "to": 518.958,
+   "what": "'Suroj - Personal' in Explorer nav pane, window at right (incl. peek frames)",
+   "scene": "s9"
+  },
+  {
+   "x": 805,
+   "y": 615,
+   "w": 140,
+   "h": 50,
+   "from": 518.958,
+   "to": 518.975,
+   "what": "'Suroj - Personal' snap copy 1 (frame 518.967)",
+   "scene": "s9"
+  },
+  {
+   "x": 885,
+   "y": 703,
+   "w": 160,
+   "h": 50,
+   "from": 518.958,
+   "to": 518.975,
+   "what": "'Suroj - Personal' snap copy 2 (frame 518.967)",
+   "scene": "s9"
+  },
+  {
+   "x": 625,
+   "y": 541,
+   "w": 145,
+   "h": 50,
+   "from": 518.975,
+   "to": 518.992,
+   "what": "'Suroj - Personal' snap copy 1 (frame 518.983)",
+   "scene": "s9"
+  },
+  {
+   "x": 840,
+   "y": 693,
+   "w": 165,
+   "h": 50,
+   "from": 518.975,
+   "to": 518.992,
+   "what": "'Suroj - Personal' snap copy 2 (frame 518.983)",
+   "scene": "s9"
+  },
+  {
+   "x": 305,
+   "y": 401,
+   "w": 150,
+   "h": 50,
+   "from": 518.992,
+   "to": 519.008,
+   "what": "'Suroj - Personal' snap main copy (frame 519.0)",
+   "scene": "s9"
+  },
+  {
+   "x": 755,
+   "y": 671,
+   "w": 170,
+   "h": 50,
+   "from": 518.992,
+   "to": 519.008,
+   "what": "'Suroj - Personal' snap ghost copy (frame 519.0)",
+   "scene": "s9"
+  },
+  {
+   "x": 220,
+   "y": 363,
+   "w": 150,
+   "h": 50,
+   "from": 519.008,
+   "to": 519.025,
+   "what": "'Suroj - Personal' snap main copy (frame 519.017)",
+   "scene": "s9"
+  },
+  {
+   "x": 472,
+   "y": 601,
+   "w": 200,
+   "h": 50,
+   "from": 519.008,
+   "to": 519.025,
+   "what": "'Suroj - Personal' snap ghost copy (frame 519.017)",
+   "scene": "s9"
+  },
+  {
+   "x": 165,
+   "y": 341,
+   "w": 150,
+   "h": 50,
+   "from": 519.025,
+   "to": 519.042,
+   "what": "'Suroj - Personal' snap (frame 519.033)",
+   "scene": "s9"
+  },
+  {
+   "x": 30,
+   "y": 298,
+   "w": 255,
+   "h": 72,
+   "from": 519.042,
+   "to": 519.11,
+   "what": "'Suroj - Personal' settling into maximized nav pane (519.05-519.1)",
+   "scene": "s9"
+  },
+  {
+   "x": 30,
+   "y": 300,
+   "w": 200,
+   "h": 46,
+   "from": 519.11,
+   "to": 523,
+   "what": "'Suroj - Personal' in maximized Explorer nav pane (text 52-205,312-334); faint through Media Player splash until ~522.92",
+   "scene": "s9"
+  },
+  {
+   "x": 935,
+   "y": 396,
+   "w": 340,
+   "h": 90,
+   "from": 526.04,
+   "to": 526.7,
+   "what": "In-ad greeting name 'Zubayer Nibir' (Good evening, ad opening) [fixed: The ad's 'Good evening, Zubayer Nibir' already shows at frame 526.050 (name 983-]",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 852,
+   "y": 381,
+   "w": 400,
+   "h": 84,
+   "from": 526.7,
+   "to": 527,
+   "what": "In-ad greeting name, ad camera moving left/up",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 718,
+   "y": 354,
+   "w": 478,
+   "h": 99,
+   "from": 527,
+   "to": 527.3,
+   "what": "In-ad greeting name, ad camera moving",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 645,
+   "y": 340,
+   "w": 460,
+   "h": 93,
+   "from": 527.3,
+   "to": 527.6,
+   "what": "In-ad greeting name, ad camera moving",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 620,
+   "y": 334,
+   "w": 435,
+   "h": 88,
+   "from": 527.6,
+   "to": 528,
+   "what": "In-ad greeting name, settling",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 618,
+   "y": 334,
+   "w": 420,
+   "h": 84,
+   "from": 528,
+   "to": 529.16,
+   "what": "In-ad greeting name 'Zubayer Nibir' (text 632-1023, 346-406); model menu covers it from frame 529.15",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 488,
+   "y": 334,
+   "w": 545,
+   "h": 88,
+   "from": 532.36,
+   "to": 533.35,
+   "what": "In-ad greeting name after menu closes (532.383): 'Good evening, Zubayer Nibir' crossfading to 'Up late, Zubayer Nibir?'; seek at 533.10 removes it",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 168,
+   "y": 835,
+   "w": 285,
+   "h": 58,
+   "from": 538.36,
+   "to": 542,
+   "what": "In-ad tilted Claude Code window footer avatar + 'Zubayer Nibir · Lamppost' (from first tilt frame 538.40)",
+   "scene": "s9"
+  },
+  {
+   "x": 195,
+   "y": 822,
+   "w": 270,
+   "h": 58,
+   "from": 541.95,
+   "to": 542.62,
+   "what": "In-ad tilted footer avatar + name, window shifted",
+   "scene": "s9"
+  },
+  {
+   "x": 185,
+   "y": 808,
+   "w": 300,
+   "h": 72,
+   "from": 542.58,
+   "to": 545.585,
+   "what": "In-ad tilted chat-home footer avatar + name (to last frame 545.55 before sidebar collapses) [fixed: Frame 545.567 still shows the tilted window with the footer avatar and 'Zubayer ]",
+   "scene": "s9"
+  },
+  {
+   "x": 1066,
+   "y": 410,
+   "w": 305,
+   "h": 68,
+   "from": 542.55,
+   "to": 545.585,
+   "what": "In-ad tilted chat-home greeting name 'Zubayer Nibir?' (text 1082-1358, 424-464) [fixed: Frame 545.567 still shows the tilted greeting line 948-1362 x 423-462, and the f]",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 884,
+   "y": 403,
+   "w": 330,
+   "h": 70,
+   "from": 545.565,
+   "to": 550.36,
+   "what": "In-ad flat chat-home greeting name 'Zubayer Nibir?' (text ~898-1199, 415-462)",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 847,
+   "y": 274,
+   "w": 502,
+   "h": 116,
+   "from": 550.34,
+   "to": 551.635,
+   "what": "In-ad zoomed greeting name above typed prompt after seek (ad zooming in, text 860-1336, 286-378); end card from 551.63 [fixed: The first zoomed frame is 550.350 (name 874-1305 x 315-378), which falls in the ]",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 805,
+   "y": 200,
+   "w": 615,
+   "h": 135,
+   "from": 554.1,
+   "to": 555.57,
+   "what": "In-ad greeting name 'Zubayer Nibir?' above 'So what's your Decision?' incl. shake/flash-in frames to 555.55; full white from 555.567",
+   "scene": "s9",
+   "sigma": 60
+  },
+  {
+   "x": 893,
+   "y": 660,
+   "w": 160,
+   "h": 50,
+   "from": 518.908,
+   "to": 518.958,
+   "what": "Faint ghost copy of 'Suroj - Personal' above-left of the main nav-pane entry as the maximize snap starts (frames 518.917-518.950, text ~905-1040 x 681-692). Box 3 (y 715-767) does not cover it.",
+   "scene": "s9"
+  },
+  {
+   "x": 300,
+   "y": 558,
+   "w": 210,
+   "h": 50,
+   "from": 519.025,
+   "to": 519.042,
+   "what": "Faint but readable ghost 'Suroj - Personal' at about 310-495 x 583 in frame 519.033. Box 12 covers only the main copy at y 341-391.",
+   "scene": "s9"
+  },
+  {
+   "x": 236,
+   "y": 1008,
+   "w": 1240,
+   "h": 72,
+   "from": 45.1,
+   "to": 566.2,
+   "what": "Windows taskbar app-icon strip (Chrome profile badges incl. a photo), whole screen part",
+   "scene": "all"
+  },
+  {
+   "x": 12,
+   "y": 398,
+   "w": 204,
+   "h": 56,
+   "from": 226.95,
+   "to": 248.3,
+   "what": "Claude sidebar group header shaheen-school (school name; leak scan 2026-10-29)",
+   "scene": "leakfix"
+  },
+  {
+   "x": 12,
+   "y": 398,
+   "w": 204,
+   "h": 56,
+   "from": 254.3,
+   "to": 258.4,
+   "what": "Claude sidebar group header shaheen-school (school name; leak scan 2026-10-29)",
+   "scene": "leakfix"
+  },
+  {
+   "x": 12,
+   "y": 398,
+   "w": 204,
+   "h": 56,
+   "from": 285.3,
+   "to": 327,
+   "what": "Claude sidebar group header shaheen-school (school name; leak scan 2026-10-29)",
+   "scene": "leakfix"
+  },
+  {
+   "x": 12,
+   "y": 398,
+   "w": 204,
+   "h": 56,
+   "from": 517.3,
+   "to": 519.2,
+   "what": "Claude sidebar group header shaheen-school (school name; leak scan 2026-10-29)",
+   "scene": "leakfix"
+  },
+  {
+   "x": 12,
+   "y": 450,
+   "w": 380,
+   "h": 150,
+   "from": 226.95,
+   "to": 230.45,
+   "what": "Claude sidebar rows Shaheen School automation system / শাহীন প্রজেক্ট নির্মাণ (leak scan)",
+   "scene": "leakfix"
+  },
+  {
+   "x": 170,
+   "y": 385,
+   "w": 350,
+   "h": 145,
+   "from": 538.2,
+   "to": 542.7,
+   "what": "In-ad tilted Claude Code sidebar: shaheen-school + Shaheen School rows (leak scan)",
+   "scene": "leakfix"
+  },
+  {
+   "x": 500,
+   "y": 940,
+   "w": 920,
+   "h": 72,
+   "from": 523.738,
+   "to": 527.1579999999999,
+   "what": "In-ad taskbar inside the played claude-decision-ad: Chrome profile badges n / photo / N (verify scan 2026-10-29)",
+   "scene": "leakfix2"
+  },
+  {
+   "x": 560,
+   "y": 872,
+   "w": 1060,
+   "h": 80,
+   "from": 538.1560000000001,
+   "to": 543.4509999999999,
+   "what": "In-ad taskbar, tilted, inside the played ad: Chrome profile badges",
+   "scene": "leakfix2"
+  },
+  {
+   "x": 500,
+   "y": 898,
+   "w": 920,
+   "h": 104,
+   "from": 543.096,
+   "to": 550.49,
+   "what": "In-ad taskbar, flat, inside the played ad: Chrome profile badges",
+   "scene": "leakfix2"
+  }
+ ],
+ "camera": [
+  {
+   "from": 53.6,
+   "to": 58.7,
+   "s": 1.12,
+   "l": 205,
+   "tp": 100,
+   "what": "Slow push on the expanded user prompt bubble (x 756-1524) while he scrolls through it; view x 205-1919, y 100-1064; cursor stays x 540-1200 throughout; back at 1 before badge 1 at 59.49",
+   "scene": "s1"
+  },
+  {
+   "from": 76.4,
+   "to": 78.45,
+   "s": 1.35,
+   "l": 310,
+   "tp": 110,
+   "what": "1.35x on point 4 (Claude Code prompt, directions 1-5, text x 516-1526 y 138-840); page stops scrolling at ~75.4, still and no cursor until the scroll-up at ~78.5; view x 310-1732, y 110-910; eases back to 1 by ~79.25, before the drag-select at 80.34",
+   "scene": "s1"
+  },
+  {
+   "from": 122.9,
+   "to": 127.4,
+   "s": 1.12,
+   "l": 205,
+   "tp": 115,
+   "what": "Slow push toward the 'New folder' row in rename mode (row y760-800, name box x870-1116); the view covers the list and the cursor (~1306,630); it is held bottom-right because s=1.12 allows at most l=206, tp=116",
+   "scene": "s3"
+  },
+  {
+   "from": 136.7,
+   "to": 140.2,
+   "s": 1.4,
+   "l": 500,
+   "tp": 180,
+   "what": "1.4x on the BGM drag: MP3 row (y330-370) down to the 'Claude Video Create' row (y760-800); the cursor path x1030-1090, y350-800 and the 'Move to Claude Video Create' tooltip (y~822) stay inside; drop 138.95, the MP3 leaves the list at 140.3, and the view is back to 1 by ~141",
+   "scene": "s3"
+  },
+  {
+   "from": 228,
+   "to": 232.2,
+   "s": 1.45,
+   "l": 0,
+   "tp": 140,
+   "what": "Video Create group in the Claude Code sidebar: header y~653 before collapse, y~477 after shaheen-school collapses at 230.2; view y 140-885 keeps both positions and the cursor (y 157-723, clicks at 430 and 660)",
+   "scene": "s5"
+  },
+  {
+   "from": 241.8,
+   "to": 247,
+   "s": 1.15,
+   "l": 250,
+   "tp": 140,
+   "what": "Slow push on the prompt box (x 600-1752, y 882-948) with the chip row; held through the '+' attach menu (245.25) and the Add folder click (246.95), cursor stays inside; picker view follows",
+   "scene": "s5"
+  },
+  {
+   "from": 248.6,
+   "to": 254.6,
+   "s": 1.45,
+   "l": 0,
+   "tp": 0,
+   "what": "Add folder to session picker [10,0,938,710]; clicks Downloads (122,342), row (403,300), Select Folder (655,672) all inside; ease back to 1 reveals the chip that appears at 254.8",
+   "scene": "s5"
+  },
+  {
+   "from": 287.4,
+   "to": 291,
+   "s": 1.5,
+   "l": 536,
+   "tp": 360,
+   "what": "1.5x zoom on the pasted prompt in the Claude Code input (box x600-1752, y500-946); paste lands 286.68, view jumps to the prompt top 287.5-287.8; no cursor on screen 286.7-292.4",
+   "scene": "s6"
+  },
+  {
+   "from": 299.5,
+   "to": 306.4,
+   "s": 1.15,
+   "l": 250,
+   "tp": 30,
+   "what": "Slow push onto the Explorer 'Claude Video Create' window (x725-1903, y43-931) with its 3 files; cursor stays inside (min y ~78 on the title bar at 300), selection click 305.72 at (1124,398) inside",
+   "scene": "s6"
+  },
+  {
+   "from": 307.2,
+   "to": 322.7,
+   "s": 1.5,
+   "l": 640,
+   "tp": 40,
+   "what": "1.5x zoom covering the three renames (rows y340-445, rename box x996-1240) BGM1, BGM2, Video; cursor stays at x1110-1210, y360-475 the whole time; eases back to 1 by ~323.5 before the 323.85 click on the Claude window at (648,420)",
+   "scene": "s6"
+  },
+  {
+   "from": 356.65,
+   "to": 358.6,
+   "s": 1.12,
+   "l": 205,
+   "tp": 70,
+   "what": "Slow push on the right side: the Run settings 'Gemini 3.8 Flash' card (clicked 356.8), then the Model selection panel (x 1122-1920) up to the Audio chip click at 358.65 (1798,338). The view is x 206-1920, y 70-1034, so the tab strip and taskbar stay out",
+   "scene": "s7a"
+  },
+  {
+   "from": 366.2,
+   "to": 369.3,
+   "s": 1.4,
+   "l": 400,
+   "tp": 120,
+   "what": "1.4x on 'The Ad Voiceover' card (968-1234 x 428-648) and the editor it loads (speech blocks x 390-1410). Every cursor action stays inside: card click (1050,555), X deletes (1346-1360,~318), Tavi card click (1580,700) at 369.25. The view is x 400-1771, y 120-891",
+   "scene": "s7a"
+  },
+  {
+   "from": 411.6,
+   "to": 414.8,
+   "s": 1.12,
+   "l": 100,
+   "tp": 96,
+   "what": "Slow push toward the Style dropdown (chip 752,286 / menu 752-1168 x 286-880). The view stays held through the 3.08 s freeze at 414.783. It holds every cursor stop: dropdown 411.0 (890,314), closing click 412.8 (640,486), Run hover 413.9 (1336,954) and the Model settings click 414.8 (1600,500). View x 100-1814, y 96-1060",
+   "scene": "s7b"
+  },
+  {
+   "from": 420.7,
+   "to": 420.9,
+   "s": 1.5,
+   "l": 640,
+   "tp": 300,
+   "what": "1.5x on the Temperature slider showing 0.7, first frames after the jump cut, held through the 7.65 s freeze at 420.883. View x 640-1920, y 300-1020. It holds the slider (1496-1880, 552-620), the cursor on Download (1060,948) and, while easing in from 419.9, the cursor on Run (1326,962)",
+   "scene": "s7b"
+  },
+  {
+   "from": 446.2,
+   "to": 450.6,
+   "s": 1.1,
+   "l": 174,
+   "tp": 98,
+   "what": "Slow push toward the model picker 'Fable 5.1 Extra' (1620,978) and composer; it keeps the 449.8 menu (1480-1690 x 620-1000) and cursor in view",
+   "scene": "s8"
+  },
+  {
+   "from": 451.5,
+   "to": 452.3,
+   "s": 1.5,
+   "l": 640,
+   "tp": 360,
+   "what": "1.5x on the model menu / Opus 5.5 row + 'Opus 5.5 Extra' label (view 640-1920 x 360-1080, the max right/bottom framing; it contains [1180,560,740,440] and the More-models submenu)",
+   "scene": "s8"
+  },
+  {
+   "from": 456,
+   "to": 463.05,
+   "s": 1.12,
+   "l": 200,
+   "tp": 110,
+   "what": "Slow push on the prompt box (600-1750 x 524-944); cursor stays 1228-1800 x 840-1000; send popup at 461 inside",
+   "scene": "s8"
+  },
+  {
+   "from": 488,
+   "to": 506,
+   "s": 1.1,
+   "l": 120,
+   "tp": 40,
+   "what": "Slow push on the build checklist (495-1401 x 290-658); it keeps the usage popover (490.2-491.6), model menu (492.35-493.2), cursor at picker (1293,970) and right-panel scroll cursor (1790,822) in view",
+   "scene": "s8"
+  },
+  {
+   "from": 519.9,
+   "to": 522.45,
+   "s": 1.15,
+   "l": 0,
+   "tp": 0,
+   "what": "Slow push on the maximized Explorer file area: claude-decision-ad.mp4 tile (262-418,203-403) and the cursor (520 on file, 521 on qc at ~800,330, 522.4 double-click at 378,320) stay inside; window is maximized by 519.15 so the ease-in starts after the snap",
+   "scene": "s9"
+  },
+  {
+   "from": 529.4,
+   "to": 532.3,
+   "s": 1.4,
+   "l": 380,
+   "tp": 150,
+   "what": "1.4x zoom on the in-ad cursor glow: glow path 528.75-532.4 is x 880-1215, y 540-905 (on 'Fable 5 High' chip, then Effort, then Max near the seek bar); view 380-1751 x 150-921 also keeps the model menu and Effort submenu; ease back to 1 by ~533.1 (seek)",
+   "scene": "s9"
+  },
+  {
+   "from": 551,
+   "to": 555.45,
+   "s": 1.12,
+   "l": 150,
+   "tp": 98,
+   "what": "Slow push toward the in-ad send button (1722-1790,545-613): view 150-1864 x 98-1062 keeps the zoomed prompt, the end-card title/CTA seen via seeks 551.63-554.27, the creator's seek-bar clicks (1576-1690,~864) and the button; hold through the 2.8 s freeze at 555.433",
+   "scene": "s9"
+  }
+ ],
+ "clicks": [
+  {
+   "t": 51.2,
+   "x": 1405,
+   "y": 398,
+   "what": "Click on 'Expand text' (chevron) of the user prompt; bubble expands at 51.25",
+   "scene": "s1"
+  },
+  {
+   "t": 80.34,
+   "x": 1220,
+   "y": 520,
+   "what": "Mouse-down to start the drag-select at the end of BGM Prompt 2 ('energy.'); dragged backwards to 'Epic', released ~80.8 near (536,382)",
+   "scene": "s1"
+  },
+  {
+   "t": 82.02,
+   "x": 1252,
+   "y": 3,
+   "what": "Click on the 'Music | Google AI Studio' tab; AI Studio is drawn by 82.05 (end of scene)",
+   "scene": "s1"
+  },
+  {
+   "t": 82.9,
+   "x": 1148,
+   "y": 416,
+   "what": "Mouse down at the end of the old BGM 1 prompt text (caret appears 82.9, box border focuses); starts the drag-select back to the start (ends ~83.7 near 370,320)",
+   "scene": "s2"
+  },
+  {
+   "t": 85.63,
+   "x": 1343,
+   "y": 942,
+   "what": "Generate click: unchanged at 85.6, 'Stop composing' spinner at 85.65",
+   "scene": "s2"
+  },
+  {
+   "t": 109.2,
+   "x": 1598,
+   "y": 90,
+   "what": "Chrome Downloads toolbar icon: pressed/hover by 109.15, 'Recent download history' panel fades in from 109.267 (kept range starts 109.2)",
+   "scene": "s2"
+  },
+  {
+   "t": 109.9,
+   "x": 1598,
+   "y": 90,
+   "what": "Second click on the Downloads toolbar icon closes the panel (fading at 109.95, gone by 110.4)",
+   "scene": "s2"
+  },
+  {
+   "t": 112.25,
+   "x": 728,
+   "y": 1066,
+   "what": "File Explorer icon on the taskbar (the thumbnail strip slides in at 112.3)",
+   "scene": "s3"
+  },
+  {
+   "t": 116.1,
+   "x": 725,
+   "y": 371,
+   "what": "'Downloads' in the nav pane (pressed at 116.1, busy cursor at 116.2)",
+   "scene": "s3"
+  },
+  {
+   "t": 119.65,
+   "x": 875,
+   "y": 428,
+   "what": "Right-click on empty space at the left of the file list; the menu is open at 119.7",
+   "scene": "s3"
+  },
+  {
+   "t": 122.05,
+   "x": 1306,
+   "y": 630,
+   "what": "New > Folder (submenu closes at 122.1; the row appears at ~122.8)",
+   "scene": "s3"
+  },
+  {
+   "t": 136.28,
+   "x": 1037,
+   "y": 350,
+   "what": "Button down on 'Futuristic Tech Product Launch Music' MP3 (selected at 136.3); held, drag moves from ~137.2",
+   "scene": "s3"
+  },
+  {
+   "t": 138.95,
+   "x": 1080,
+   "y": 790,
+   "what": "Drop (button up) on the 'Claude Video Create' row",
+   "scene": "s3"
+  },
+  {
+   "t": 144.7,
+   "x": 715,
+   "y": 565,
+   "what": "'Videos' in the nav pane (Downloads list is blank at 144.8; the grid loads at 145.2)",
+   "scene": "s3"
+  },
+  {
+   "t": 147.05,
+   "x": 1356,
+   "y": 628,
+   "what": "Selects the video '2026-10-25 22-05-58' (selected at 147.1); Ctrl+C at ~148.3 is keyboard only",
+   "scene": "s3"
+  },
+  {
+   "t": 152.1,
+   "x": 730,
+   "y": 365,
+   "what": "'Downloads' in the nav pane",
+   "scene": "s3"
+  },
+  {
+   "t": 154.7,
+   "x": 1007,
+   "y": 695,
+   "what": "Selects the 'Claude Video Create' row (status '1 item selected' at 154.8)",
+   "scene": "s3"
+  },
+  {
+   "t": 156.35,
+   "x": 1017,
+   "y": 695,
+   "what": "Double-click opens 'Claude Video Create' (busy at 156.4, open at 156.9); Ctrl+V at ~159.2 is keyboard only",
+   "scene": "s3"
+  },
+  {
+   "t": 167.15,
+   "x": 998,
+   "y": 476,
+   "what": "'Make a wake-up track' sample card",
+   "scene": "s4"
+  },
+  {
+   "t": 168.95,
+   "x": 162,
+   "y": 6,
+   "what": "First Chrome tab 'Claude 5x Premium Ads Script' (Gemini)",
+   "scene": "s4"
+  },
+  {
+   "t": 170.6,
+   "x": 1070,
+   "y": 5,
+   "what": "Chrome tab 'Music | Google AI Studio'",
+   "scene": "s4"
+  },
+  {
+   "t": 171.58,
+   "x": 1110,
+   "y": 388,
+   "what": "Mouse-down at end of the sample prompt, then drag-select leftward to the text start (~390,330) by ~171.8 (x approximate: cursor hidden on press)",
+   "scene": "s4"
+  },
+  {
+   "t": 173.4,
+   "x": 1370,
+   "y": 943,
+   "what": "Generate",
+   "scene": "s4"
+  },
+  {
+   "t": 198.15,
+   "x": 1085,
+   "y": 965,
+   "what": "Download icon on the player",
+   "scene": "s4"
+  },
+  {
+   "t": 200.2,
+   "x": 1528,
+   "y": 158,
+   "what": "'Show in folder' icon in the Chrome download bubble",
+   "scene": "s4"
+  },
+  {
+   "t": 202.3,
+   "x": 1063,
+   "y": 350,
+   "what": "Press on the MP3 row to start the drag (released on 'Claude Video Create' at 205.75, 1103,738)",
+   "scene": "s4"
+  },
+  {
+   "t": 213.03,
+   "x": 403,
+   "y": 955,
+   "what": "Pause button on the AI Studio player (also brings Chrome to the front)",
+   "scene": "s4"
+  },
+  {
+   "t": 214.25,
+   "x": 1104,
+   "y": 1042,
+   "what": "Claude taskbar icon, window up at 214.3 (button down just before kept start)",
+   "scene": "s5"
+  },
+  {
+   "t": 215.2,
+   "x": 1106,
+   "y": 1048,
+   "what": "Claude taskbar icon again: minimises Claude, Chrome shows 215.25-215.95",
+   "scene": "s5"
+  },
+  {
+   "t": 215.9,
+   "x": 1106,
+   "y": 1048,
+   "what": "Claude taskbar icon: restores Claude by 216.05",
+   "scene": "s5"
+  },
+  {
+   "t": 221.05,
+   "x": 38,
+   "y": 26,
+   "what": "Hamburger: overlay sidebar opens",
+   "scene": "s5"
+  },
+  {
+   "t": 222.15,
+   "x": 92,
+   "y": 35,
+   "what": "Dock-sidebar icon: sidebar docks",
+   "scene": "s5"
+  },
+  {
+   "t": 224.75,
+   "x": 132,
+   "y": 108,
+   "what": "'+ New' in sidebar",
+   "scene": "s5"
+  },
+  {
+   "t": 226.5,
+   "x": 393,
+   "y": 27,
+   "what": "Code (</>) toggle: Claude Code view by 227.1",
+   "scene": "s5"
+  },
+  {
+   "t": 230.2,
+   "x": 147,
+   "y": 430,
+   "what": "shaheen-school header: collapses",
+   "scene": "s5"
+  },
+  {
+   "t": 232,
+   "x": 125,
+   "y": 660,
+   "what": "Cloud header: collapses",
+   "scene": "s5"
+  },
+  {
+   "t": 234.4,
+   "x": 148,
+   "y": 510,
+   "what": "Session 'ভিডিও ক্যাপশন পজিশনিং' opens 234.5",
+   "scene": "s5"
+  },
+  {
+   "t": 240.45,
+   "x": 393,
+   "y": 500,
+   "what": "'+' on Video Create group: new session 240.55",
+   "scene": "s5"
+  },
+  {
+   "t": 245.2,
+   "x": 635,
+   "y": 925,
+   "what": "Prompt '+': attach menu open 245.25",
+   "scene": "s5"
+  },
+  {
+   "t": 246.95,
+   "x": 750,
+   "y": 670,
+   "what": "'Add folder'",
+   "scene": "s5"
+  },
+  {
+   "t": 250.1,
+   "x": 122,
+   "y": 342,
+   "what": "Downloads in picker",
+   "scene": "s5"
+  },
+  {
+   "t": 253.6,
+   "x": 403,
+   "y": 300,
+   "what": "'Claude Video Create' row selected",
+   "scene": "s5"
+  },
+  {
+   "t": 254.35,
+   "x": 655,
+   "y": 672,
+   "what": "'Select Folder': picker closes, chip at 254.8",
+   "scene": "s5"
+  },
+  {
+   "t": 269.58,
+   "x": 161,
+   "y": 8,
+   "what": "Chrome tab 'Claude 5x Premium Ads Scri...' -> Gemini (switch visible at 269.6)",
+   "scene": "s6"
+  },
+  {
+   "t": 272.6,
+   "x": 514,
+   "y": 344,
+   "what": "Mouse-down on the opening quote of 'Prompt for Claude Code' to start the drag-select (highlight from 272.7; release ~280.0)",
+   "scene": "s6"
+  },
+  {
+   "t": 285.43,
+   "x": 1092,
+   "y": 1051,
+   "what": "Claude desktop taskbar icon -> Claude Code New session (shown at 285.45)",
+   "scene": "s6"
+  },
+  {
+   "t": 292.65,
+   "x": 711,
+   "y": 1072,
+   "what": "File Explorer taskbar icon -> thumbnail strip (slides in 292.7)",
+   "scene": "s6"
+  },
+  {
+   "t": 294.1,
+   "x": 1526,
+   "y": 876,
+   "what": "'Downloads - File...' thumbnail -> Downloads window",
+   "scene": "s6"
+  },
+  {
+   "t": 295.17,
+   "x": 1064,
+   "y": 696,
+   "what": "Double-click 'Claude Video Create' folder (list blanks 295.2, files shown 295.5)",
+   "scene": "s6"
+  },
+  {
+   "t": 305.72,
+   "x": 1124,
+   "y": 398,
+   "what": "Select 'Futuristic Tech Product Launch Music' row (status '1 item selected 3.83 MB' at 305.75)",
+   "scene": "s6"
+  },
+  {
+   "t": 307,
+   "x": 1152,
+   "y": 410,
+   "what": "Slow second click on the same row -> rename box opens (307.0)",
+   "scene": "s6"
+  },
+  {
+   "t": 311.95,
+   "x": 1115,
+   "y": 364,
+   "what": "Select 'Epic Cinematic Hybrid Trailer Riser.' row (1.43 MB at 312.0)",
+   "scene": "s6"
+  },
+  {
+   "t": 313.15,
+   "x": 1128,
+   "y": 366,
+   "what": "Slow second click -> rename box on Epic row (open at 313.2)",
+   "scene": "s6"
+  },
+  {
+   "t": 317,
+   "x": 1120,
+   "y": 442,
+   "what": "Click on the MP4 row: commits 'BGM2' and selects '2026-10-25 22-05-58'",
+   "scene": "s6"
+  },
+  {
+   "t": 318.33,
+   "x": 1126,
+   "y": 453,
+   "what": "Slow second click -> rename box on MP4 row (open at 318.35)",
+   "scene": "s6"
+  },
+  {
+   "t": 323.85,
+   "x": 648,
+   "y": 420,
+   "what": "Click on the Claude window left of Explorer -> Claude Code to front (323.9)",
+   "scene": "s6"
+  },
+  {
+   "t": 326.83,
+   "x": 915,
+   "y": 1044,
+   "what": "Chrome taskbar icon (switch from the Claude app to Gemini)",
+   "scene": "s7a"
+  },
+  {
+   "t": 331.6,
+   "x": 535,
+   "y": 356,
+   "what": "Mouse down to start the drag-select at '[00:01 - 00:07]'",
+   "scene": "s7a"
+  },
+  {
+   "t": 337.85,
+   "x": 530,
+   "y": 290,
+   "what": "Click clears the overshoot selection (position approximate, I-beam not visible)",
+   "scene": "s7a"
+  },
+  {
+   "t": 338.75,
+   "x": 530,
+   "y": 214,
+   "what": "Mouse down to restart the drag-select at '[00:01'",
+   "scene": "s7a"
+  },
+  {
+   "t": 345.65,
+   "x": 1105,
+   "y": 680,
+   "what": "RIGHT-click on the selected script; the context menu is visible by 345.8",
+   "scene": "s7a"
+  },
+  {
+   "t": 346.7,
+   "x": 1229,
+   "y": 334,
+   "what": "'Copy' in the context menu (the script COPY moment)",
+   "scene": "s7a"
+  },
+  {
+   "t": 347.5,
+   "x": 1164,
+   "y": 19,
+   "what": "'Music | Google AI Studio' tab",
+   "scene": "s7a"
+  },
+  {
+   "t": 349.3,
+   "x": 34,
+   "y": 95,
+   "what": "Browser Back button",
+   "scene": "s7a"
+  },
+  {
+   "t": 350.5,
+   "x": 34,
+   "y": 95,
+   "what": "Browser Back button again (part of the back/forward fiddling)",
+   "scene": "s7a"
+  },
+  {
+   "t": 352.8,
+   "x": 34,
+   "y": 95,
+   "what": "Back button; the URL turns to prompts/new_chat?model=lyria at 352.9",
+   "scene": "s7a"
+  },
+  {
+   "t": 353.55,
+   "x": 34,
+   "y": 95,
+   "what": "Back/forward nav; the URL is back to new_music by 353.6 (approximate)",
+   "scene": "s7a"
+  },
+  {
+   "t": 355.4,
+   "x": 138,
+   "y": 309,
+   "what": "Left-nav 'Playground'; prompts/new_chat loads at 355.6",
+   "scene": "s7a"
+  },
+  {
+   "t": 356.8,
+   "x": 1620,
+   "y": 276,
+   "what": "Run settings 'Gemini 3.8 Flash' model card; the model panel starts sliding in at 356.9",
+   "scene": "s7a"
+  },
+  {
+   "t": 358.65,
+   "x": 1798,
+   "y": 338,
+   "what": "'Audio' filter chip; the TTS model shows at the top of the list by 358.7",
+   "scene": "s7a"
+  },
+  {
+   "t": 361.25,
+   "x": 1464,
+   "y": 648,
+   "what": "'Gemini 3.8 Flash TTS' card (model selected); the panel is sliding out at 361.3",
+   "scene": "s7a"
+  },
+  {
+   "t": 363.55,
+   "x": 1362,
+   "y": 394,
+   "what": "Right arrow of the 'Explore Text to speech' carousel",
+   "scene": "s7a"
+  },
+  {
+   "t": 366.1,
+   "x": 1050,
+   "y": 555,
+   "what": "'The Ad Voiceover' template card",
+   "scene": "s7a"
+  },
+  {
+   "t": 367.25,
+   "x": 1346,
+   "y": 318,
+   "what": "X 'Delete speech block' (first block)",
+   "scene": "s7a"
+  },
+  {
+   "t": 367.7,
+   "x": 1360,
+   "y": 318,
+   "what": "X 'Delete speech block' (second block), one block left",
+   "scene": "s7a"
+  },
+  {
+   "t": 369.25,
+   "x": 1580,
+   "y": 700,
+   "what": "'Tavi / Speaker 1' card; the Speaker settings panel opens",
+   "scene": "s7a"
+  },
+  {
+   "t": 371.5,
+   "x": 1250,
+   "y": 508,
+   "what": "'Language' dropdown",
+   "scene": "s7a"
+  },
+  {
+   "t": 372.3,
+   "x": 1232,
+   "y": 518,
+   "what": "'All languages' (closes the Language dropdown with no change)",
+   "scene": "s7a"
+  },
+  {
+   "t": 372.7,
+   "x": 1338,
+   "y": 508,
+   "what": "'Gender' dropdown",
+   "scene": "s7a"
+  },
+  {
+   "t": 374.3,
+   "x": 1365,
+   "y": 594,
+   "what": "'Masculine'",
+   "scene": "s7a"
+  },
+  {
+   "t": 374.7,
+   "x": 1525,
+   "y": 482,
+   "what": "'Pitch' dropdown",
+   "scene": "s7a"
+  },
+  {
+   "t": 375.7,
+   "x": 1550,
+   "y": 630,
+   "what": "'Medium'",
+   "scene": "s7a"
+  },
+  {
+   "t": 376.1,
+   "x": 1675,
+   "y": 482,
+   "what": "'Style' dropdown",
+   "scene": "s7a"
+  },
+  {
+   "t": 377.7,
+   "x": 1682,
+   "y": 505,
+   "what": "'All styles' (closes the Style dropdown with no change)",
+   "scene": "s7a"
+  },
+  {
+   "t": 379.15,
+   "x": 1867,
+   "y": 808,
+   "what": "Play on 'Rasalgethi' (loading ring at 379.2, then the sample plays)",
+   "scene": "s7a"
+  },
+  {
+   "t": 381.9,
+   "x": 1855,
+   "y": 893,
+   "what": "Play on 'Sadaltager' (loading ring from 382.0)",
+   "scene": "s7a"
+  },
+  {
+   "t": 398.6,
+   "x": 1862,
+   "y": 800,
+   "what": "Play on the Rasalgethi preview (click ring at 398.6; pause icon 399.0-399.2)",
+   "scene": "s7b"
+  },
+  {
+   "t": 399.3,
+   "x": 1866,
+   "y": 886,
+   "what": "Play on the Sadaltager preview (ring 399.3-399.4, spinner, then playing)",
+   "scene": "s7b"
+  },
+  {
+   "t": 401.7,
+   "x": 1530,
+   "y": 896,
+   "what": "Click on the Sadaltager row to select the voice (checkmark, Current voice changes)",
+   "scene": "s7b"
+  },
+  {
+   "t": 405.65,
+   "x": 979,
+   "y": 444,
+   "what": "Click on the dimmed area left of the panel; Speaker settings closes at 405.7",
+   "scene": "s7b"
+  },
+  {
+   "t": 406.6,
+   "x": 1014,
+   "y": 420,
+   "what": "Mouse down at the end of the English sample text, starting a drag-select backwards (approx. position from the caret). Release ~408.0 near (286,372); whole text selected at 408.2",
+   "scene": "s7b"
+  },
+  {
+   "t": 410.8,
+   "x": 890,
+   "y": 314,
+   "what": "Click the Style dropdown 'High-energy, s...'",
+   "scene": "s7b"
+  },
+  {
+   "t": 412.8,
+   "x": 640,
+   "y": 486,
+   "what": "Click outside the menu closes the dropdown with no change",
+   "scene": "s7b"
+  },
+  {
+   "t": 414.8,
+   "x": 1600,
+   "y": 500,
+   "what": "Click 'Model settings' (expands, Temperature 1)",
+   "scene": "s7b"
+  },
+  {
+   "t": 415.65,
+   "x": 1628,
+   "y": 602,
+   "what": "Mouse down on the Temperature slider thumb; drag left to 0.65 (416.0), released at 0.6 at ~416.8 near (1574,602)",
+   "scene": "s7b"
+  },
+  {
+   "t": 418.2,
+   "x": 1326,
+   "y": 962,
+   "what": "Click Run (button turns to Stop)",
+   "scene": "s7b"
+  },
+  {
+   "t": 420.9,
+   "x": 1060,
+   "y": 948,
+   "what": "Click Download in the player bar (cursor already there after the jump cut)",
+   "scene": "s7b"
+  },
+  {
+   "t": 423.4,
+   "x": 1652,
+   "y": 104,
+   "what": "Click the Chrome Downloads toolbar icon (bubble open by 423.5)",
+   "scene": "s7b"
+  },
+  {
+   "t": 424.4,
+   "x": 1576,
+   "y": 176,
+   "what": "Click 'Show in folder' on the 10_25PM.wav download",
+   "scene": "s7b"
+  },
+  {
+   "t": 434.6,
+   "x": 704,
+   "y": 984,
+   "what": "Mouse down on the VoiceOverCLaude row to start the drag",
+   "scene": "s7b"
+  },
+  {
+   "t": 437.2,
+   "x": 676,
+   "y": 910,
+   "what": "Drop (mouse up) on the 'Claude Video Create' folder",
+   "scene": "s7b"
+  },
+  {
+   "t": 438.5,
+   "x": 676,
+   "y": 912,
+   "what": "Double-click 'Claude Video Create' (opens: 'Working on it...' 438.6, 4 files 438.9)",
+   "scene": "s7b"
+  },
+  {
+   "t": 441.6,
+   "x": 1366,
+   "y": 236,
+   "what": "Click the File Explorer close X (turns red)",
+   "scene": "s7b"
+  },
+  {
+   "t": 442.7,
+   "x": 1086,
+   "y": 1058,
+   "what": "Click the Claude icon in the taskbar (Claude app shows from ~442.81)",
+   "scene": "s7b"
+  },
+  {
+   "t": 442.85,
+   "x": 1086,
+   "y": 1058,
+   "what": "Taskbar Claude icon; Claude app appears at 442.85 (button down ~442.8, just before the kept range)",
+   "scene": "s8"
+  },
+  {
+   "t": 449.8,
+   "x": 1640,
+   "y": 988,
+   "what": "Model picker 'Fable 5.1 Extra': menu opens",
+   "scene": "s8"
+  },
+  {
+   "t": 451.55,
+   "x": 1570,
+   "y": 694,
+   "what": "Selects Opus 5.5; menu closes, label reads 'Opus 5.5 Extra'",
+   "scene": "s8"
+  },
+  {
+   "t": 452.35,
+   "x": 1624,
+   "y": 986,
+   "what": "Reopens the model picker (Opus 5.5 ticked)",
+   "scene": "s8"
+  },
+  {
+   "t": 454.1,
+   "x": 1228,
+   "y": 846,
+   "what": "Click inside the prompt text closes the menu",
+   "scene": "s8"
+  },
+  {
+   "t": 463.1,
+   "x": 1658,
+   "y": 904,
+   "what": "Send button: prompt submitted, session page appears",
+   "scene": "s8"
+  },
+  {
+   "t": 474.3,
+   "x": 674,
+   "y": 516,
+   "what": "'Show more' on the user message",
+   "scene": "s8"
+  },
+  {
+   "t": 476.4,
+   "x": 712,
+   "y": 680,
+   "what": "'Show less': prompt collapses",
+   "scene": "s8"
+  },
+  {
+   "t": 492.35,
+   "x": 1293,
+   "y": 970,
+   "what": "Opens the 'Opus 5.5 Extra' picker after jump cut 1",
+   "scene": "s8"
+  },
+  {
+   "t": 493.2,
+   "x": 1293,
+   "y": 970,
+   "what": "Clicks the picker again: menu closes, no change",
+   "scene": "s8"
+  },
+  {
+   "t": 517.3,
+   "x": 1006,
+   "y": 902,
+   "what": "Clicks the third Explorer taskbar thumbnail; Explorer window appears",
+   "scene": "s8"
+  },
+  {
+   "t": 517.39,
+   "x": 1006,
+   "y": 914,
+   "what": "Creator clicks 3rd Explorer taskbar thumbnail; window comes to front at 517.40",
+   "scene": "s9"
+  },
+  {
+   "t": 518.92,
+   "x": 1443,
+   "y": 459,
+   "what": "Creator double-clicks Explorer title bar (maximize snap 518.93-519.15)",
+   "scene": "s9"
+  },
+  {
+   "t": 522.4,
+   "x": 378,
+   "y": 320,
+   "what": "Creator double-clicks claude-decision-ad.mp4",
+   "scene": "s9"
+  },
+  {
+   "t": 529.15,
+   "x": 995,
+   "y": 716,
+   "what": "In-ad click on 'Fable 5 High' chip opens model menu",
+   "scene": "s9"
+  },
+  {
+   "t": 532.38,
+   "x": 1205,
+   "y": 868,
+   "what": "In-ad click on 'Max' effort; menu closes",
+   "scene": "s9"
+  },
+  {
+   "t": 533.1,
+   "x": 762,
+   "y": 866,
+   "what": "Creator seek-bar click 0:06 -> 0:34",
+   "scene": "s9"
+  },
+  {
+   "t": 538.12,
+   "x": 1070,
+   "y": 864,
+   "what": "Creator seek-bar click 0:38 -> 0:50",
+   "scene": "s9"
+  },
+  {
+   "t": 545.56,
+   "x": 284,
+   "y": 104,
+   "what": "In-ad click on sidebar toggle; sidebar collapses",
+   "scene": "s9"
+  },
+  {
+   "t": 550.17,
+   "x": 1504,
+   "y": 866,
+   "what": "Creator seek-bar click 1:01 -> 1:14",
+   "scene": "s9"
+  },
+  {
+   "t": 551.5,
+   "x": 1690,
+   "y": 862,
+   "what": "Creator seek-bar click 1:15 -> 1:24 (end card)",
+   "scene": "s9"
+  },
+  {
+   "t": 553.7,
+   "x": 1644,
+   "y": 862,
+   "what": "Creator seek-bar click back to ~1:22",
+   "scene": "s9"
+  },
+  {
+   "t": 554.15,
+   "x": 1576,
+   "y": 868,
+   "what": "Creator seek-bar click back to 1:18 (prompt view at 554.25)",
+   "scene": "s9"
+  },
+  {
+   "t": 555.45,
+   "x": 1755,
+   "y": 562,
+   "what": "In-ad click on orange send button -> white flash",
+   "scene": "s9"
+  }
+ ],
+ "anchors": {
+  "s1panel": {
+   "x": 1546,
+   "y": 250,
+   "w": 360,
+   "h": 330
+  },
+  "s3_folder": {
+   "x": 995,
+   "y": 758
+  },
+  "s3_files": {
+   "x": 1150,
+   "y": 500
+  },
+  "s5_chip": {
+   "x": 888,
+   "y": 980,
+   "w": 196,
+   "h": 44
+  },
+  "s6_bgm2": {
+   "x": 1106,
+   "y": 351
+  },
+  "s6_bgm1": {
+   "x": 1106,
+   "y": 393
+  },
+  "s6_video": {
+   "x": 1102,
+   "y": 436
+  },
+  "s7a_masc": {
+   "x": 1463,
+   "y": 452
+  },
+  "s7b_sad": {
+   "x": 1240,
+   "y": 860
+  },
+  "s7b_temp": {
+   "x": 1690,
+   "y": 550
+  },
+  "s7b_type": {
+   "x": 730,
+   "y": 976
+  },
+  "s7b_4files": {
+   "x": 944,
+   "y": 500
+  },
+  "s8_opus": {
+   "x": 1580,
+   "y": 666
+  },
+  "s8_ticks": [
+   {
+    "x": 542,
+    "y": 340
+   },
+   {
+    "x": 542,
+    "y": 382
+   },
+   {
+    "x": 542,
+    "y": 424
+   },
+   {
+    "x": 542,
+    "y": 466
+   }
+  ]
+ },
+ "drags": [
+  [
+   136.7,
+   138.95
+  ],
+  [
+   202.3,
+   205.75
+  ],
+  [
+   434.6,
+   437.2
+  ]
+ ]
+}
