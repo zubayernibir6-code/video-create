@@ -245,7 +245,7 @@ first render: default "basic" = names, emails, phones, photos, others' messages,
 his file names; his rule 2026-10-29: no re-render for harmless items), `abroll` (talking head + B-roll in the named
 styles AB1–AB5; demo `projects/abroll-variants-demo`), `tools-reel` ("N tools" Reel made on its own from a
 context + voice + BGM; reference `assets/refs/ref-01.mp4`; his Bengali pack is `PROMPT-PACK-tools-reel.md`). `reel-cutdown` (9:16 Reels cut from a FINISHED 16:9 video; reference
-`projects/claude-reel-1..4`), `post-copy` (FB/IG/YouTube post copy + hashtags after EVERY video, unasked). The
+`projects/claude-reel-1..4`), `post-copy` (FB/IG/YouTube post copy + hashtags after EVERY video, unasked). `motion-broll` (generated 4K60 motion-graphics B-roll, styles MG1…; kit `tools/broll`). The
 HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new video with**
 `node tools/new-video.mjs <name> --kind=<screen-promo|screen-tutorial|episode|abroll|tools-reel|blank>`.
 **Every style has a NAME and a code** (TUT1, PROMO1, EP1, REEL1, EDIT1, AB1–AB5 …): his guide `VARIANTS.md`, the
@@ -276,9 +276,11 @@ codes fit. A new style is not done until it has a line in both files with its pr
 | `tools/screen/*` | screen kit: watch, keystrokes, cut, text-scan, glitch-scan (source flashes + change strips, once per recording, §0i), track-cursor.py, promo-core, promo-mix |
 | `tools/episode/*` | episode kit: run.mjs pipeline, voice, cuts, grade, ASR chunks, align, page/reel cores, mix (skill `episode-edit`) |
 | `tools/abroll/*` | A-roll + B-roll engine: `build.mjs <project> [check] [steps]` from `abroll.json` → styles AB1–AB5 (skill `abroll`); AI B-roll options: `docs/ai-video-generation.md` |
+| `tools/broll/*` | motion-graphics B-roll kit: typed physics `motion.ts` (+ `motion.test.ts`), scenes like `signal-core.ts` → 4K60, no raster (skill `motion-broll`, spec `docs/broll-motion-spec.md`) |
 | `tools/tutorial/*` | screen-tutorial engine: `build.mjs <project> [check] [steps]` makes the whole tutorial from `build/{tutorial,page,specs,cursor}.json` (skill `screen-tutorial`) |
 | `tools/cutdown/*` | Reels from a finished video: `cut.mjs` (pieces, face window, voice) → `page.mjs` (layout, pans, chips, captions) → `mix.mjs` (skill `reel-cutdown`) |
 | `tools/reel/*` | tools-reel engine: `reel.json` + voice → aligned captions, six scene types, terminal, mascot, mix, PLAN.md (skill `tools-reel`) |
+| `tools/release/*` | platform rules in ONE file (`platforms.json`, sources + dates) + `spec-check.mjs <render>` (FB Reels / IG Reels / Shorts / X / LinkedIn / YouTube: FAIL/WARN per platform; `--limits=universal-reel` = the one-file caps + text-safe box). Plan of the whole release system: `docs/release-system-plan.md` |
 | `tools/ref-analyze.mjs` | measure a reference video once (LUFS, BPM, voice pace and pitch, silences, sheet, transcript) → `assets/refs/<name>.analysis.md` |
 | `tools/session-status.mjs` | the start-of-session health line (disk, RAM, git, last render) — runs as a SessionStart hook |
 
