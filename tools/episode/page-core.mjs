@@ -110,6 +110,8 @@ const PRESETS = {
   pop: (s, t, o) => `tl.fromTo(${s}, { opacity: 0, scale: ${o.from ?? 0.6} }, { opacity: 1, scale: 1, duration: ${o.d ?? 0.45}, ease: "back.out(1.7)", stagger: ${o.stagger ?? 0} }, ${f3(t)});`,
   out: (s, t, o) => `tl.to(${s}, { opacity: 0, duration: ${o.d ?? 0.3}, ease: "power1.in" }, ${f3(t)});`,
   dim: (s, t, o) => `tl.to(${s}, { opacity: ${o.to ?? 0.3}, duration: ${o.d ?? 0.4}, ease: "power1.out" }, ${f3(t)});`,
+  // a bar emptying to o.to of its width (a usage meter draining)
+  shrink: (s, t, o) => `tl.fromTo(${s}, { scaleX: 1 }, { scaleX: ${o.to ?? 0.1}, duration: ${o.d ?? 1}, ease: "power1.inOut", immediateRender: false }, ${f3(t)});`,
   grow: (s, t, o) => `tl.fromTo(${s}, { scaleX: 0 }, { scaleX: 1, duration: ${o.d ?? 0.6}, ease: "${o.ease ?? "power2.out"}", stagger: ${o.stagger ?? 0} }, ${f3(t)});`,
   stamp: (s, t, o) => `tl.fromTo(${s}, { opacity: 0, scale: 1.9, rotation: ${o.r0 ?? -4} }, { opacity: 1, scale: 1, rotation: ${o.r ?? -9}, duration: 0.32, ease: "power4.in" }, ${f3(t)});`,
   glow: (s, t, o) => `tl.to(${s}, { borderColor: "${o.c ?? "rgba(255,215,0,0.9)"}", backgroundColor: "${o.bgc ?? "rgba(255,215,0,0.14)"}", color: "${o.tc ?? C.gold}", duration: 0.3, ease: "power1.out" }, ${f3(t)});`,

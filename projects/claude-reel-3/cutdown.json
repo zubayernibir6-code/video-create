@@ -1,0 +1,43 @@
+{
+ "name": "claude-reel-3",
+ "master": "F:/Video Create Renders/claude-video-tutorial/2026-10-29_1233/claude-video-tutorial.mp4",
+ "bed": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/bed.wav",
+ "faces": [
+  {
+   "file": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/intro.mp4",
+   "at": 0,
+   "band": [
+    380,
+    880
+   ]
+  },
+  {
+   "file": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/outro.mp4",
+   "at": 472.917,
+   "band": [
+    300,
+    880
+   ]
+  }
+ ],
+ "work": "C:/Users/Zubayer Nibir/VideoWork/claude-reel-3",
+ "fps": 30,
+ "bedDb": 12,
+ "segments": [
+  {
+   "from": 338.6,
+   "to": 341.1,
+   "mute": true
+  },
+  {
+   "from": 271.3,
+   "to": 304.6
+  },
+  {
+   "from": 314.2,
+   "to": 345
+  }
+ ],
+ "tail": 3,
+ "faceMode": "window"
+}

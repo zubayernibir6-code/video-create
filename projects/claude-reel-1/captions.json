@@ -1,0 +1,9 @@
+{
+ "note": "Caption words: the Reel's ASR (asr.words.json, Reel seconds) with the texts corrected by ear. Key = word index.",
+ "asr": "asr.words.json",
+ "fix": {
+  "3": "অ্যাড", "5": "গিয়ে", "10": "হচ্ছে।", "11": "Claude", "12": "AI", "19": "SaaS", "22": "গ্রাফিক্স", "31": "যায়,",
+  "37": "দেখিয়েছি।", "41": "Claude", "42": "Pro", "47": "Claude", "48": "Pro-তে", "51": "ইউজেস", "53": "থাকে।",
+  "58": "Claude", "59": "Max,", "62": "ইউজেস", "71": "বেশি।", "75": "পারছি।", "78": "দেখি", "83": "প্রজেক্ট", "84": "কমপ্লিট", "85": "করেছি।"
+ }
+}

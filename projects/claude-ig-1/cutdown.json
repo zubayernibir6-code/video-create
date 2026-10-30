@@ -1,0 +1,48 @@
+{
+ "name": "claude-ig-1",
+ "master": "F:/Video Create Renders/claude-video-tutorial/2026-10-29_1233/claude-video-tutorial.mp4",
+ "bed": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/bed.wav",
+ "faces": [
+  {
+   "file": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/intro.mp4",
+   "at": 0,
+   "band": [
+    380,
+    880
+   ],
+   "fullBand": [
+    495,
+    832
+   ]
+  },
+  {
+   "file": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/outro.mp4",
+   "at": 472.917,
+   "band": [
+    300,
+    880
+   ],
+   "fullBand": [
+    450,
+    855
+   ]
+  }
+ ],
+ "fps": 30,
+ "bedDb": 12,
+ "faceMode": "full",
+ "bedUnderVoiceDb": 0,
+ "work": "C:/Users/Zubayer Nibir/VideoWork/claude-ig-1",
+ "segments": [
+  {
+   "from": 1.2,
+   "to": 43.8,
+   "face": true
+  },
+  {
+   "from": 45.4,
+   "to": 78.5
+  }
+ ],
+ "tail": 5.5
+}

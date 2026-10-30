@@ -1,0 +1,23 @@
+{
+ "note": "Caption words reused by master time from the corrected Reels (no new ASR), plus small extra pieces.",
+ "reuse": [
+  "../claude-reel-1",
+  "../claude-reel-2"
+ ],
+ "extra": [
+  {
+   "asr": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/measure/intro.words.json",
+   "at": 0,
+   "range": [
+    41.25,
+    43.8
+   ],
+   "fix": {
+    "88": "যাক।",
+    "89": null,
+    "90": null,
+    "91": null
+   }
+  }
+ ]
+}

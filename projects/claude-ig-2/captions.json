@@ -1,0 +1,22 @@
+{
+ "note": "Caption words reused by master time from the corrected Reels (no new ASR), plus small extra pieces.",
+ "reuse": [
+  "../claude-reel-4"
+ ],
+ "extra": [
+  {
+   "asr": "C:/Users/Zubayer Nibir/VideoWork/claude-ig-2/asr-piece/m481.3.words.json",
+   "at": 481.3,
+   "fix": {
+    "4": "থাকেন,",
+    "5": "ভিডিও",
+    "13": "থাকেন,",
+    "19": "করবেন।",
+    "22": "দিবেন",
+    "23": "পার্সোনালি,",
+    "27": "লিখবেন",
+    "28": "DM।"
+   }
+  }
+ ]
+}
