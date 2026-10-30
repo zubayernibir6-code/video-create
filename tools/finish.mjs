@@ -3,7 +3,13 @@
 //
 //   node "E:/Video Create/tools/finish.mjs" <project-folder | video-file>
 //        [--quality=high|standard|draft] [--formats=16x9,9x16,1x1,4x5] [--reframe=fit|crop]
-//        [--lufs=-14] [--out=<folder>] [--keep] [--skip-design] [--frames-cache=<folder>]
+//        [--lufs=-14] [--out=<folder>] [--keep] [--skip-design] [--frames-cache=<folder>] [--release]
+//
+// --release (release system, 2026-10-30): the master is encoded for upload to every platform — x264 ABR at YouTube's
+//   recommended rate (10 Mbps at 1080p ≤ 30 fps, 14 Mbps above; peaks 1.4×), a keyframe every 2 s (Facebook's API asks
+//   2–5 s), no MP4 edit list (YouTube and the Instagram API ask for none; FFmpeg writes one for AAC's delay), and no
+//   extra screen shapes unless --formats is given (a universal Reel IS the platform file). tools/release/spec-check.mjs
+//   found all three on the 2026-10-29/30 renders.
 //
 // Project folder: a video over 60 s needs a clean tools/preflight.mjs report of the current build first
 //                 (--no-preflight skips it) → hyperframes check + tools/design-lint.mjs (both stop the run on
@@ -132,7 +138,7 @@ function ebur(file) {
 // Two-pass loudness normalisation of the audio; the video stream is copied untouched.
 // A final small gain trims the result onto the target as ebur128 measures it.
 // The audio is cut to the video's length: loudnorm leaves a ~0.1 s tail (phone test: 6.0 s → 6.1 s, no shift).
-function normaliseAudio(input, output, target, videoArgs, videoDur) {
+function normaliseAudio(input, output, target, videoArgs, videoDur, mux = ["-movflags", "+faststart"]) {
   const cut = videoDur ? `,atrim=end=${videoDur}` : "";
   const m = loudnormJson(ffmpeg(["-i", input, "-vn", "-af", `loudnorm=I=${target}:TP=${TP_TARGET}:LRA=11:print_format=json`, "-f", "null", "-"]).stderr);
   if (!Number.isFinite(Number(m.input_i)) || Number(m.input_i) < -70) return { skipped: "silent audio track" };
@@ -141,7 +147,7 @@ function normaliseAudio(input, output, target, videoArgs, videoDur) {
     `loudnorm=I=${target}:TP=${TP_TARGET}:LRA=${lra}:linear=true:measured_I=${m.input_i}:measured_TP=${m.input_tp}` +
     `:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset},aresample=48000`;
   const encode = (af) =>
-    ffmpeg(["-i", input, ...videoArgs, "-af", af + cut, "-c:a", "aac", "-b:a", "256k", "-ac", "2", "-movflags", "+faststart", output]);
+    ffmpeg(["-i", input, ...videoArgs, "-af", af + cut, "-c:a", "aac", "-b:a", "256k", "-ac", "2", ...mux, output]);
   const before = ebur(input);
   encode(norm);
   let after = ebur(output);
@@ -193,7 +199,16 @@ const name = isProject ? path.basename(input) : path.parse(input).name;
 const lufs = Number(flags.lufs ?? -14);
 const quality = flags.quality ?? "high";
 const reframe = flags.reframe === "crop" ? "crop" : "fit";
-const formats = String(flags.formats ?? "16x9,9x16,1x1,4x5").split(",").map((f) => f.trim()).filter(Boolean);
+const release = !!flags.release;
+const formats = flags.formats == null && release ? [] : String(flags.formats ?? "16x9,9x16,1x1,4x5").split(",").map((f) => f.trim()).filter(Boolean);
+// --release: the upload encode (ABR at YouTube's rate, 2 s keyframes) and the MP4 mux without an edit list
+const releaseVideo = (fps) => {
+  const mb = fps > 30.5 ? 14 : 10, g = Math.round(2 * fps);
+  return ["-c:v", "libx264", "-preset", "medium", "-b:v", `${mb}M`, "-maxrate", `${Math.round(mb * 1.4)}M`, "-bufsize", `${mb * 2}M`,
+    "-g", String(g), "-keyint_min", String(Math.round(fps)), "-pix_fmt", "yuv420p", ...COLOUR];
+};
+const mux = ["-movflags", "+faststart", ...(release ? ["-use_editlist", "0"] : [])];
+let releaseEncoded = false;
 for (const f of formats) if (!FORMATS[f]) fail(`Unknown format "${f}". Use: ${Object.keys(FORMATS).join(", ")}`);
 const d = new Date();
 const stamp = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}_${String(d.getHours()).padStart(2, "0")}${String(d.getMinutes()).padStart(2, "0")}`;
@@ -259,8 +274,9 @@ if (isProject) {
     const cropped = path.join(work, `${name}.render-crop.mp4`);
     const crf = { high: "15", standard: "18", draft: "23" }[quality] ?? "18";
     console.log(`  cropping ${pad[0]}x${pad[1]} → ${expect.w}x${expect.h} (x264 CRF ${crf})`);
-    ffmpeg(["-i", source, "-map", "0:v:0", "-map", "0:a:0?", "-vf", `crop=${expect.w}:${expect.h}:0:0`, "-c:v", "libx264", "-preset", "medium",
-      "-crf", crf, "-pix_fmt", "yuv420p", ...COLOUR, "-c:a", "copy", cropped]);
+    ffmpeg(["-i", source, "-map", "0:v:0", "-map", "0:a:0?", "-vf", `crop=${expect.w}:${expect.h}:0:0`,
+      ...(release ? releaseVideo(probe(source).fps) : ["-c:v", "libx264", "-preset", "medium", "-crf", crf, "-pix_fmt", "yuv420p", ...COLOUR]), "-c:a", "copy", cropped]);
+    if (release) { releaseEncoded = true; console.log("  --release: upload encode (ABR, 2 s keyframes)"); }
     source = cropped;
   }
 } else {
@@ -271,20 +287,23 @@ step("3/6  Master file: loudness to the web standard");
 const src = probe(source);
 const master = path.join(outDir, `${name}.mp4`);
 const videoOk = src.vcodec === "h264" && src.pix_fmt === "yuv420p";
-const videoArgs = videoOk
+const videoArgs = release && !releaseEncoded
+  ? ["-map", "0:v:0", "-map", "0:a:0?", ...releaseVideo(src.fps)]
+  : videoOk
   ? ["-map", "0:v:0", "-map", "0:a:0?", "-c:v", "copy"]
   : ["-map", "0:v:0", "-map", "0:a:0?", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", ...COLOUR];
-if (!videoOk) console.log(`  video is ${src.vcodec}/${src.pix_fmt} — re-encoding to h264/yuv420p`);
+if (release && !releaseEncoded) console.log("  --release: upload encode (ABR, 2 s keyframes)");
+else if (!videoOk) console.log(`  video is ${src.vcodec}/${src.pix_fmt} — re-encoding to h264/yuv420p`);
 let loud = null;
 if (src.acodec) {
-  loud = normaliseAudio(source, master, lufs, videoArgs, src.vduration);
+  loud = normaliseAudio(source, master, lufs, videoArgs, src.vduration, mux);
   if (loud.skipped) {
     console.log(`  audio: ${loud.skipped} — left as it is`);
-    ffmpeg(["-i", source, ...videoArgs, "-c:a", "copy", "-movflags", "+faststart", master]);
+    ffmpeg(["-i", source, ...videoArgs, "-c:a", "copy", ...mux, master]);
   } else console.log(`  audio: ${loud.before} → ${loud.after} LUFS, peak ${loud.peak} dBTP (${loud.method})`);
 } else {
   console.log("  no audio track — video only");
-  ffmpeg(["-i", source, ...videoArgs, "-movflags", "+faststart", master]);
+  ffmpeg(["-i", source, ...videoArgs, ...mux, master]);
 }
 
 step("4/6  Final quality check of the master");

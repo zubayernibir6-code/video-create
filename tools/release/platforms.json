@@ -1,0 +1,228 @@
+{
+  "checked": "2026-10-30",
+  "about": "One place for every platform's upload rules. tools/release/spec-check.mjs tests a rendered file against them; later release steps read safeZone, captions and copy from here. level: FAIL = an official hard limit, WARN = an official recommendation or an API-only limit (he uploads by hand), INFO = good to know. When a platform changes a rule, change it HERE (with the source and the date) and nothing else.",
+
+  "sources": {
+    "S1": { "kind": "official", "url": "https://about.fb.com/news/2025/06/making-it-easier-create-videos-facebook/", "what": "Facebook: every video posts as a Reel, no length or format limit (rollout complete Sept 2025)" },
+    "S2": { "kind": "official", "url": "https://www.facebook.com/business/ads-guide/update/video/facebook-facebook-reels", "what": "Facebook Reels ads guide: 4 GB, H.264, fixed frame rate, stereo AAC >= 128 kbps, safe zone 14/35/6" },
+    "S3": { "kind": "official-api", "url": "https://developers.facebook.com/docs/video-api/guides/reels-publishing", "what": "Reels Publishing API: 3-90 s, 1080x1920, min 540x960, 24-60 fps, H.264/H.265, closed GOP 2-5 s, AAC-LC 48 kHz" },
+    "S4": { "kind": "official", "url": "https://www.facebook.com/business/ads-guide/update/video/instagram-reels", "what": "Instagram Reels ads guide: 4 GB, up to 15 min, 1440x2560, safe zone 14/35/6" },
+    "S5": { "kind": "official-snippet", "url": "https://help.instagram.com/225190788256708", "what": "Instagram: record/edit Reels up to 20 min; over 3 min not recommended to new audiences" },
+    "S6": { "kind": "official-api", "url": "https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media", "what": "Instagram Graph API: 3 s-15 min, 300 MB, 23-60 fps, H.264/HEVC, <= 1920 px wide, VBR <= 25 Mbps, moov at front, no edit lists, AAC <= 48 kHz" },
+    "S7": { "kind": "official", "url": "https://www.facebook.com/help/1038071743007909", "what": "Instagram: 1.91:1 to 9:16, >= 720 px, >= 30 fps, cover 420x654" },
+    "S8": { "kind": "official", "url": "https://support.google.com/youtube/answer/15424877", "what": "YouTube Shorts: up to 3 min, square or vertical; Shorts over 1 min with a Content ID claim are blocked" },
+    "S9": { "kind": "official", "url": "https://support.google.com/youtube/answer/1722171", "what": "YouTube upload encoding: H.264 High, closed GOP, 4:2:0, BT.709, 8 Mbps @1080p30 / 12 Mbps @1080p60, AAC-LC 48 kHz, moov at front, no edit lists" },
+    "S10": { "kind": "official", "url": "https://support.google.com/youtube/answer/6373554", "what": "YouTube auto-captions: Bengali included" },
+    "S11": { "kind": "official", "url": "https://support.google.com/youtube/answer/2734698", "what": "YouTube: SRT caption upload" },
+    "S13": { "kind": "official-snippet", "url": "https://help.x.com/en/using-x/premium-longer-videos", "what": "X: free accounts 140 s / 512 MB; Premium much longer (pages conflict: 3-4 h, 8-16 GB)" },
+    "S15": { "kind": "official", "url": "https://help.x.com/en/using-x/media-studio-faqs", "what": "X Media Studio: SRT captions, AAC-LC" },
+    "S16": { "kind": "official", "url": "https://business.x.com/en/help/campaign-setup/creative-ad-specifications", "what": "X video: 9:16 1080x1920 (also 1:1, 16:9, 4:5, 2:3, 1.91:1), H.264 High/Main/Baseline, <= 60 fps, 5-10 Mbps; overlay hides after 2 s" },
+    "S17": { "kind": "official", "url": "https://www.linkedin.com/help/linkedin/answer/a548372", "what": "LinkedIn member video: 3 s-15 min, 75 KB-5 GB, 1:2.4 to 2.4:1, 256x144 to 4096x2304, 10-60 fps, 192 kbps-30 Mbps" },
+    "S18": { "kind": "official", "url": "https://www.linkedin.com/help/linkedin/answer/a1311816", "what": "LinkedIn Page video: 10 min, no MOV" },
+    "S19": { "kind": "official", "url": "https://www.linkedin.com/help/linkedin/answer/a1327025", "what": "LinkedIn video tips: 92% of mobile viewers watch without sound, first 6 s count, shorter is better, senior audiences <= 3 min; auto-captions in 10 languages, no Bengali" },
+    "S20": { "kind": "official", "url": "https://www.linkedin.com/help/linkedin/answer/a552177", "what": "LinkedIn: SRT caption upload (desktop only)" },
+    "S23": { "kind": "official", "url": "https://www.facebook.com/help/www/261764017354370", "what": "Facebook page video: SRT upload, file name video.xx_XX.srt" },
+    "S25": { "kind": "blog", "url": "https://contentin.io/blog/linkedin-video-format/", "what": "LinkedIn desktop letterboxes 9:16" },
+    "S26": { "kind": "blog", "url": "https://kapwing.com/resources/instagrams-new-grid-layout-size-and-dimensions-2025/", "what": "Instagram profile grid crops to 3:4" },
+    "S27": { "kind": "blog", "url": "https://socialync.io/tools/safe-zones/youtube-shorts", "what": "YouTube Shorts UI: top 15%, left 48 px, right 18% (button rail)" },
+    "S29": { "kind": "blog", "url": "neowin.net (2022 article, exact URL not kept)", "what": "Instagram auto-captions (2022): 17 languages, no Bengali" },
+    "PC": { "kind": "house", "url": ".claude/skills/post-copy/SKILL.md", "what": "post-copy skill §3, hashtag counts and link placement checked 2026-10-30" }
+  },
+
+  "platforms": {
+    "facebook-reels": {
+      "name": "Facebook Reels",
+      "rules": [
+        { "check": "duration", "min": 3, "level": "WARN", "src": "S3", "note": "the API wants >= 3 s" },
+        { "check": "duration", "max": 90, "level": "INFO", "src": "S3", "note": "only the Reels Publishing API still says 90 s; by hand there is no limit (S1)" },
+        { "check": "aspect", "is": "9:16", "level": "WARN", "src": "S3" },
+        { "check": "minSize", "w": 540, "h": 960, "level": "WARN", "src": "S3" },
+        { "check": "size", "max": 4294967296, "level": "FAIL", "src": "S2" },
+        { "check": "fps", "min": 24, "max": 60, "level": "WARN", "src": "S3" },
+        { "check": "cfr", "level": "FAIL", "src": "S2", "note": "fixed frame rate" },
+        { "check": "vcodec", "in": ["h264", "hevc"], "level": "FAIL", "src": "S2" },
+        { "check": "keyint", "max": 5, "level": "INFO", "src": "S3", "note": "API asks for a closed GOP of 2-5 s" },
+        { "check": "acodec", "in": ["aac"], "level": "FAIL", "src": "S2" },
+        { "check": "channels", "min": 2, "level": "WARN", "src": "S2" },
+        { "check": "abitrate", "min": 128, "level": "WARN", "src": "S2" },
+        { "check": "sampleRate", "in": [48000], "level": "WARN", "src": "S3" }
+      ],
+      "safeZone": { "top": 0.14, "bottom": 0.35, "left": 0.06, "right": 0.06, "src": "S2" },
+      "captions": { "srtUpload": true, "autoBengali": null, "src": "S23" },
+      "feed": "mobile feed may mask 9:16 to 4:5 (blog)",
+      "copy": { "hashtags": [3, 4], "link": "first comment", "src": "PC" }
+    },
+
+    "facebook-video": {
+      "name": "Facebook page video (long)",
+      "rules": [
+        { "check": "size", "max": 4294967296, "level": "FAIL", "src": "S2" },
+        { "check": "cfr", "level": "FAIL", "src": "S2" },
+        { "check": "vcodec", "in": ["h264", "hevc"], "level": "FAIL", "src": "S2" },
+        { "check": "acodec", "in": ["aac"], "level": "FAIL", "src": "S2" },
+        { "check": "channels", "min": 2, "level": "WARN", "src": "S2" },
+        { "check": "abitrate", "min": 128, "level": "WARN", "src": "S2" }
+      ],
+      "captions": { "srtUpload": true, "autoBengali": null, "src": "S23", "fileName": "<name>.bn_IN.srt" },
+      "copy": { "hashtags": [3, 4], "link": "first comment", "src": "PC" }
+    },
+
+    "instagram-reels": {
+      "name": "Instagram Reels",
+      "rules": [
+        { "check": "duration", "min": 3, "level": "WARN", "src": "S6" },
+        { "check": "duration", "max": 1200, "level": "FAIL", "src": "S5" },
+        { "check": "duration", "max": 180, "level": "WARN", "src": "S5", "note": "over 3 min is not shown to new audiences" },
+        { "check": "aspect", "min": 0.5625, "max": 1.91, "level": "FAIL", "src": "S7" },
+        { "check": "aspect", "is": "9:16", "level": "WARN", "src": "S4" },
+        { "check": "minShortSide", "px": 720, "level": "FAIL", "src": "S7" },
+        { "check": "maxWidth", "px": 1920, "level": "WARN", "src": "S6" },
+        { "check": "size", "max": 4294967296, "level": "FAIL", "src": "S4" },
+        { "check": "size", "max": 314572800, "level": "WARN", "src": "S6", "note": "API cap 300 MB" },
+        { "check": "fps", "min": 30, "level": "FAIL", "src": "S7" },
+        { "check": "fps", "max": 60, "level": "WARN", "src": "S6" },
+        { "check": "vcodec", "in": ["h264", "hevc"], "level": "FAIL", "src": "S6" },
+        { "check": "vbitrate", "max": 25000, "level": "WARN", "src": "S6" },
+        { "check": "acodec", "in": ["aac"], "level": "FAIL", "src": "S6" },
+        { "check": "sampleRate", "max": 48000, "level": "WARN", "src": "S6" },
+        { "check": "faststart", "level": "WARN", "src": "S6" },
+        { "check": "editList", "level": "WARN", "src": "S6" }
+      ],
+      "safeZone": { "top": 0.14, "bottom": 0.35, "left": 0.06, "right": 0.06, "src": "S4" },
+      "cover": { "w": 420, "h": 654, "grid": "3:4", "src": "S7, S26" },
+      "captions": { "srtUpload": false, "autoBengali": false, "src": "S29" },
+      "copy": { "hashtags": [3, 5], "link": "Bio", "src": "PC" }
+    },
+
+    "youtube-shorts": {
+      "name": "YouTube Shorts",
+      "rules": [
+        { "check": "duration", "max": 180, "level": "FAIL", "src": "S8" },
+        { "check": "duration", "max": 60, "level": "INFO", "src": "S8", "note": "over 60 s a Content ID music claim blocks the Short worldwide; fine with his own AI Studio music" },
+        { "check": "aspect", "max": 1.0, "level": "FAIL", "src": "S8", "note": "wider than square becomes a long video" },
+        { "check": "vcodec", "in": ["h264"], "level": "WARN", "src": "S9" },
+        { "check": "vprofile", "in": ["High"], "level": "WARN", "src": "S9" },
+        { "check": "pixfmt", "in": ["yuv420p"], "level": "WARN", "src": "S9" },
+        { "check": "bt709", "level": "WARN", "src": "S9" },
+        { "check": "ytBitrate", "level": "WARN", "src": "S9", "note": "1080p: 8 Mbps at 24-30 fps, 12 Mbps at 48-60 fps" },
+        { "check": "acodec", "in": ["aac"], "level": "WARN", "src": "S9" },
+        { "check": "sampleRate", "in": [48000, 96000], "level": "WARN", "src": "S9" },
+        { "check": "faststart", "level": "WARN", "src": "S9" },
+        { "check": "editList", "level": "WARN", "src": "S9" }
+      ],
+      "safeZone": { "top": 0.15, "bottom": null, "left": 0.045, "right": 0.18, "src": "S27" },
+      "captions": { "srtUpload": true, "autoBengali": true, "src": "S10, S11" },
+      "copy": { "hashtags": [3, 3], "link": "Related video (YouTube Studio)", "src": "PC" }
+    },
+
+    "x-video": {
+      "name": "X (free account)",
+      "rules": [
+        { "check": "duration", "max": 140, "level": "FAIL", "src": "S13", "note": "free account; Premium is much longer" },
+        { "check": "size", "max": 536870912, "level": "FAIL", "src": "S13" },
+        { "check": "aspect", "min": 0.418, "max": 2.39, "level": "FAIL", "src": "S16" },
+        { "check": "aspect", "is": "9:16", "level": "INFO", "src": "S16" },
+        { "check": "fps", "max": 60, "level": "FAIL", "src": "S16" },
+        { "check": "vcodec", "in": ["h264"], "level": "FAIL", "src": "S16" },
+        { "check": "vprofile", "in": ["High", "Main", "Baseline", "Constrained Baseline"], "level": "WARN", "src": "S16" },
+        { "check": "vbitrate", "min": 5000, "max": 10000, "level": "INFO", "src": "S16", "note": "X re-encodes anyway" },
+        { "check": "acodec", "in": ["aac"], "level": "FAIL", "src": "S15" }
+      ],
+      "safeZone": null,
+      "captions": { "srtUpload": "Media Studio", "autoBengali": null, "src": "S15" },
+      "copy": { "hashtags": [1, 2], "link": "reply", "src": "PC" }
+    },
+
+    "linkedin-video": {
+      "name": "LinkedIn (member post)",
+      "rules": [
+        { "check": "duration", "min": 3, "max": 900, "level": "FAIL", "src": "S17" },
+        { "check": "duration", "max": 600, "level": "WARN", "src": "S18", "note": "a LinkedIn Page allows only 10 min" },
+        { "check": "size", "min": 76800, "max": 5368709120, "level": "FAIL", "src": "S17" },
+        { "check": "aspect", "min": 0.4167, "max": 2.4, "level": "FAIL", "src": "S17" },
+        { "check": "minSize", "w": 256, "h": 144, "level": "FAIL", "src": "S17" },
+        { "check": "maxSize", "w": 4096, "h": 2304, "level": "FAIL", "src": "S17" },
+        { "check": "fps", "min": 10, "max": 60, "level": "FAIL", "src": "S17" },
+        { "check": "bitrate", "min": 192, "max": 30000, "level": "FAIL", "src": "S17" },
+        { "check": "container", "in": ["mp4"], "level": "WARN", "src": "S18", "note": "Pages refuse MOV" },
+        { "check": "acodec", "in": ["aac"], "level": "WARN", "src": "S17" }
+      ],
+      "safeZone": null,
+      "captions": { "srtUpload": "desktop only", "autoBengali": false, "src": "S19, S20" },
+      "feed": "9:16 is letterboxed on desktop (S25, blog); 92% of mobile viewers watch muted (S19)",
+      "copy": { "hashtags": [3, 3], "link": "first comment or none", "src": "PC" }
+    },
+
+    "youtube-video": {
+      "name": "YouTube (long video)",
+      "rules": [
+        { "check": "vcodec", "in": ["h264"], "level": "WARN", "src": "S9" },
+        { "check": "vprofile", "in": ["High"], "level": "WARN", "src": "S9" },
+        { "check": "pixfmt", "in": ["yuv420p"], "level": "WARN", "src": "S9" },
+        { "check": "bt709", "level": "WARN", "src": "S9" },
+        { "check": "ytBitrate", "level": "WARN", "src": "S9" },
+        { "check": "acodec", "in": ["aac"], "level": "WARN", "src": "S9" },
+        { "check": "sampleRate", "in": [48000, 96000], "level": "WARN", "src": "S9" },
+        { "check": "faststart", "level": "WARN", "src": "S9" },
+        { "check": "editList", "level": "WARN", "src": "S9" }
+      ],
+      "captions": { "srtUpload": true, "autoBengali": true, "src": "S10, S11" },
+      "copy": { "hashtags": [3, 3], "link": "description", "src": "PC" }
+    }
+  },
+
+  "copyRules": {
+    "about": "Post-copy rules per kind of text block, read by tools/release/copy-check.mjs. A block in a copy file is tagged by an HTML comment on the line before its ``` fence: <!-- copy: universal-reel -->. hashtags = [min, max] at the end; xLength = X's weighted length (twitter-text v3: code points up to U+10FF incl. Bengali count 1, others 2, a URL 23); noLink = no URL in the text (a placeholder like (এখানে … লিংক) counts as a link too).",
+    "tells": ["আসুন জেনে নিই", "আজকের এই পোস্টে", "বর্তমান ডিজিটাল যুগে", "প্রযুক্তির এই যুগে", "পরিশেষে", "আশা করি পোস্টটি", "সাথেই থাকুন", "অত্যন্ত গুরুত্বপূর্ণ", "নিঃসন্দেহে", "যুগান্তকারী", "অভূতপূর্ব", "অপরিহার্য", "সর্বোপরি", "উল্লেখ্য যে", "game-changer", "game changer", "unlock", "unleash", "revolutionize", "seamless", "leverage", "Let's dive", "In today's", "ভাইরাল হবে", "গ্যারান্টি"],
+    "kinds": {
+      "universal-reel": { "bn": "একটাই ক্যাপশন: Facebook Reels, Instagram Reels, X আর Shorts-এর বিবরণ", "hashtags": [3, 3], "xLength": 280, "noLink": true, "banned": ["Bio", "বায়ো", "লিংক কমেন্টে", "কমেন্টে লিংক", "link in bio"], "why": "3 hashtags meet Facebook (3-4), Instagram (max 5) and Shorts (3); X has no limit (1-2 is common advice). No platform's own words: Bio is Instagram-only, 'link in comments' Facebook-only" },
+      "x-post": { "bn": "X-এর পোস্ট", "hashtags": [1, 2], "xLength": 280, "noLink": true },
+      "x-reply": { "bn": "X-এ নিজের পোস্টের নিচে উত্তর (লিংক এখানে)", "hashtags": [0, 0], "xLength": 280 },
+      "linkedin-post": { "bn": "LinkedIn পোস্ট", "hashtags": [3, 3], "noLink": true, "maxWords": 250, "banned": ["কমেন্টে লিখুন", "কমেন্ট করুন", "DM", "লাইক দিন", "শেয়ার করুন", "ট্যাগ করুন"], "why": "LinkedIn holds back engagement bait; the link goes in the first comment or nowhere" },
+      "first-comment": { "bn": "নিজের প্রথম কমেন্ট বা পিন করা কমেন্ট (লিংক এখানে)", "hashtags": [0, 0] },
+      "youtube-title": { "bn": "YouTube টাইটেল", "maxChars": 100 },
+      "youtube-pinned": { "bn": "YouTube-এ নিজের পিন করা কমেন্ট", "hashtags": [0, 0] },
+      "youtube-description": { "bn": "YouTube ডেসক্রিপশন (চ্যাপ্টারসহ)", "hashtags": [3, 3], "maxChars": 5000, "why": "the first three hashtags show above the title; over 15 are all ignored (PC)" },
+      "youtube-tags": { "bn": "YouTube Studio-র Tags বক্স (কমা দিয়ে)", "hashtags": [0, 0], "maxChars": 500 },
+      "facebook-post": { "bn": "Facebook পেজের পোস্ট (পুরো ভিডিও)", "hashtags": [3, 4], "noLink": true }
+    }
+  },
+
+  "profiles": {
+    "universal-reel": {
+      "bn": "ইউনিভার্সাল Reel: একই ফাইল Facebook, Instagram, YouTube Shorts আর X-এ",
+      "platforms": ["facebook-reels", "instagram-reels", "youtube-shorts", "x-video"],
+      "house": [
+        { "check": "exactSize", "w": 1080, "h": 1920, "level": "FAIL", "src": "house" },
+        { "check": "fps", "min": 30, "max": 30, "level": "WARN", "src": "house", "note": "constant 30 fps meets every platform's min and max" },
+        { "check": "duration", "min": 30, "max": 90, "level": "WARN", "src": "house", "note": "house target 45-90 s; the hard cap is X's 140 s" },
+        { "check": "loudness", "target": -14, "tol": 1, "level": "WARN", "src": "house", "note": "a convention, not an official platform rule" }
+      ]
+    },
+    "linkedin-clip": {
+      "bn": "LinkedIn-এর ছোট কাট (4:5)",
+      "platforms": ["linkedin-video"],
+      "safeZone": { "top": 0.05, "bottom": 0.1, "left": 0.06, "right": 0.06, "src": "house", "note": "LinkedIn publishes no safe zone; this keeps text off the player's mute/captions buttons and progress bar along the bottom and the edges (house choice 2026-10-30)" },
+      "house": [
+        { "check": "exactSize", "w": 1080, "h": 1350, "level": "FAIL", "src": "house" },
+        { "check": "duration", "min": 30, "max": 120, "level": "WARN", "src": "house", "note": "shorter is better, senior audiences <= 3 min (S19)" },
+        { "check": "loudness", "target": -14, "tol": 1, "level": "WARN", "src": "house" }
+      ]
+    },
+    "linkedin-full": {
+      "bn": "LinkedIn-এ পুরো ভিডিও",
+      "platforms": ["linkedin-video"],
+      "house": [{ "check": "loudness", "target": -14, "tol": 1, "level": "WARN", "src": "house" }]
+    },
+    "youtube-main": {
+      "bn": "YouTube-এ পুরো ভিডিও",
+      "platforms": ["youtube-video"],
+      "house": [{ "check": "loudness", "target": -14, "tol": 1, "level": "WARN", "src": "house" }]
+    },
+    "facebook-main": {
+      "bn": "Facebook পেজে পুরো ভিডিও",
+      "platforms": ["facebook-video"],
+      "house": []
+    }
+  }
+}

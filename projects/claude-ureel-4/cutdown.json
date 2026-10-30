@@ -1,0 +1,73 @@
+{
+ "name": "claude-ureel-4",
+ "note": "Universal Reel 4 = Reel 4's approved cut, the face piece ends after '…সঠিক নির্দেশনা দিয়ে।' ('আনলিমিটেড পাওয়ার…' left out, his OK 2026-10-30). Cut points moved onto pauses 2026-10-30 (tools/cutdown/boundaries.mjs): from 432.8→432.5, to 443.6→441.95, from 450.2→450.08, to 477.75→477.27.",
+ "master": "F:/Video Create Renders/claude-video-tutorial/2026-10-29_1233/claude-video-tutorial.mp4",
+ "bed": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/bed.wav",
+ "faces": [
+  {
+   "file": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/intro.mp4",
+   "at": 0,
+   "band": [
+    380,
+    880
+   ],
+   "fullBand": [
+    495,
+    832
+   ]
+  },
+  {
+   "file": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/media/outro.mp4",
+   "at": 472.917,
+   "band": [
+    300,
+    880
+   ],
+   "fullBand": [
+    450,
+    855
+   ]
+  }
+ ],
+ "fps": 30,
+ "bedDb": 12,
+ "faceMode": "full",
+ "work": "C:/Users/Zubayer Nibir/VideoWork/claude-ureel-4",
+ "segments": [
+  {
+   "from": 382.8,
+   "to": 385.3,
+   "mute": true
+  },
+  {
+   "from": 387,
+   "to": 391.5,
+   "speed": 2,
+   "mute": true
+  },
+  {
+   "from": 399,
+   "to": 403.4,
+   "speed": 2,
+   "mute": true
+  },
+  {
+   "from": 422.5,
+   "to": 428.1
+  },
+  {
+   "from": 432.5,
+   "to": 441.95
+  },
+  {
+   "from": 450.08,
+   "to": 472.9
+  },
+  {
+   "from": 472.95,
+   "to": 477.27,
+   "face": true
+  }
+ ],
+ "tail": 3
+}

@@ -170,7 +170,7 @@ export function printQc(result) {
   for (const c of result.checks) console.log(`  ${c.level.padEnd(4)}  ${c.name.padEnd(18)} ${c.value}${c.note ? `   (${c.note})` : ""}`);
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const file = process.argv[2];
   if (!file) {
     console.log("Usage: node qc.mjs <video.mp4> [--w= --h= --fps= --dur= --lufs=-14 --json=qc.json]");

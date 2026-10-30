@@ -1,0 +1,76 @@
+{
+  "note": "The release list of this video (tools/release/pack.mjs, skill release-kit). Paths are relative to this project or absolute. items: the main video, then the universal Reels in POSTING order, then the LinkedIn cut; copy = the heading in RELEASE-COPY.md whose tagged blocks belong to the item. A missing file is reported as pending with 'make'.",
+  "series": "claude-video-tutorial",
+  "out": "F:/Video Create Renders/claude-video-tutorial/release",
+  "copy": "RELEASE-COPY.md",
+  "xMain": "৩. X",
+  "linkedinMain": "খ) পুরো ৮:৩০ ভিডিওর পোস্ট",
+  "notes": [
+    "Reel ২-এ আপনার কণ্ঠে আছে \"কমেন্টে লিখুন DM\"। Facebook আর Instagram-এ অটো-রিপ্লাই চালু থাকলে নিজে থেকে মেসেজ যাবে। YouTube Shorts আর X-এ এমন কিছু নেই, ওখানে কেউ DM লিখলে হাতে উত্তর দিতে হবে।"
+  ],
+  "items": [
+    {
+      "id": "main",
+      "bn": "পুরো ভিডিও (৮:৩০)",
+      "file": "F:/Video Create Renders/claude-video-tutorial/2026-10-29_1233/claude-video-tutorial.mp4",
+      "profiles": [
+        "youtube-main",
+        "facebook-main",
+        "linkedin-full"
+      ],
+      "srt": "subtitles/claude-video-tutorial",
+      "thumb": "F:/Video Create Renders/claude-video-tutorial/2026-10-29_1233/claude-video-tutorial-thumb.jpg",
+      "copy": "০. পুরো ভিডিও"
+    },
+    {
+      "id": "reel-1",
+      "bn": "Reel ১",
+      "profile": "universal-reel",
+      "project": "../claude-ureel-1",
+      "cover": "../claude-ureel-1/cover.jpg",
+      "file": "F:/Video Create Renders/claude-video-tutorial/universal/claude-ureel-1/claude-ureel-1.mp4",
+      "copy": "Reel ১",
+      "make": "ধাপ ৭ (skill release-kit §2): PLAN.md → build-page → preflight → finish --out=F:/Video Create Renders/claude-video-tutorial/universal/claude-ureel-1"
+    },
+    {
+      "id": "reel-4",
+      "bn": "Reel ৪",
+      "profile": "universal-reel",
+      "project": "../claude-ureel-4",
+      "cover": "../claude-ureel-4/cover.jpg",
+      "file": "F:/Video Create Renders/claude-video-tutorial/universal/claude-ureel-4/claude-ureel-4.mp4",
+      "copy": "Reel ৪",
+      "make": "ধাপ ৭: projects/claude-ureel-4 এখনো তৈরি হয়নি (node tools/new-video.mjs claude-ureel-4 --kind=ureel)"
+    },
+    {
+      "id": "reel-3",
+      "bn": "Reel ৩",
+      "profile": "universal-reel",
+      "project": "../claude-ureel-3",
+      "cover": "../claude-ureel-3/cover.jpg",
+      "file": "F:/Video Create Renders/claude-video-tutorial/universal/claude-ureel-3/claude-ureel-3.mp4",
+      "copy": "Reel ৩",
+      "make": "ধাপ ৭: projects/claude-ureel-3 এখনো তৈরি হয়নি (node tools/new-video.mjs claude-ureel-3 --kind=ureel)"
+    },
+    {
+      "id": "reel-2",
+      "bn": "Reel ২",
+      "profile": "universal-reel",
+      "project": "../claude-ureel-2",
+      "cover": "../claude-ureel-2/cover.jpg",
+      "file": "F:/Video Create Renders/claude-video-tutorial/universal/claude-ureel-2/claude-ureel-2.mp4",
+      "copy": "Reel ২",
+      "make": "ধাপ ৭: projects/claude-ureel-2 এখনো তৈরি হয়নি (node tools/new-video.mjs claude-ureel-2 --kind=ureel)"
+    },
+    {
+      "id": "linkedin-1",
+      "bn": "LinkedIn কাট ১",
+      "profile": "linkedin-clip",
+      "project": "../claude-li-1",
+      "cover": "../claude-li-1/cover.jpg",
+      "file": "F:/Video Create Renders/claude-video-tutorial/linkedin/claude-li-1/claude-li-1.mp4",
+      "copy": "ক) 4:5 কাটের পোস্ট",
+      "make": "ধাপ ৭ (skill linkedin-kit): PLAN.md OK → cutdown.json-এ PLAN-এর অংশ → build-page → preflight → finish --out=F:/Video Create Renders/claude-video-tutorial/linkedin/claude-li-1"
+    }
+  ]
+}

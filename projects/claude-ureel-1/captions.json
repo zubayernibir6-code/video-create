@@ -1,0 +1,9 @@
+{
+ "note": "Caption words from the master's corrected word list (tools/release/master-words.mjs): no new ASR.",
+ "extra": [
+  {
+   "asr": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/master.words.json",
+   "at": 0
+  }
+ ]
+}

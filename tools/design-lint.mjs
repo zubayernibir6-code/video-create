@@ -15,6 +15,12 @@
 //                          on every edge, top, bottom and baseline: almost aligned, which reads as a mistake.
 //   WARN   orphan_word     a heading that wraps one lonely word onto its last line.
 //   INFO   small_text      text under 20 px at 1080p: unreadable on a phone (fine for page furniture).
+//   Only when the page's root has data-safe-profile="<profile>" (or --profile=<profile>, e.g. to test an old page):
+//   ERROR  safe_zone       text outside the profile's text-safe box (tools/release/platforms.json → limits(): for
+//                          universal-reel x 65–886, y 288–1248 at 1080×1920), where platform buttons, the caption
+//                          strip or the 4:5 feed crop cover it. Escape: data-safe-ignore.
+//   WARN   text_zones      more than 3 separate text zones on screen at once (zone = the root child the text is in):
+//                          the eye has no single place to go. Visual hierarchy: header, chips, caption.
 //
 // Layout findings only count when HELD: seen at 2+ consecutive samples with the element standing still, so
 // entrances, exits and crossfades never trigger them. When a finding comes from a scaled ancestor (a slow
@@ -26,6 +32,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { openProject } from "./hf-page.mjs";
+import { limits } from "./release/spec-check.mjs";
 
 const args = process.argv.slice(2);
 const flags = Object.fromEntries(args.filter((a) => a.startsWith("--")).map((a) => { const [k, ...v] = a.slice(2).split("="); return [k, v.join("=") || true]; }));
@@ -144,6 +151,11 @@ function collect() {
     return n;
   };
   const scaleOf = (el) => { const w = el.offsetWidth; return w ? el.getBoundingClientRect().width / w : 1; };
+  const zoneOf = (el) => {
+    let n = el;
+    while (n.parentElement && !n.parentElement.hasAttribute("data-composition-id")) n = n.parentElement;
+    return n.id ? `#${n.id}` : n.className && typeof n.className === "string" ? `.${n.className.trim().split(/\s+/)[0]}` : n.tagName.toLowerCase();
+  };
 
   // text blocks
   const owners = new Map();
@@ -213,8 +225,8 @@ function collect() {
       text: o.text.replace(/\s+/g, " ").trim().slice(0, 60), words: o.text.trim().split(/\s+/).length,
       rect: rectOf(box), lines: lines.length, lastLineW: r1(lines.at(-1).r - lines.at(-1).l), maxLineW: r1(Math.max(...lines.map((L) => L.r - L.l))),
       fontPx: r1(o.fontPx), baseline: o.baseline === null ? null : r1(o.baseline), vis: r1(o.vis), bnTracking: o.leaves,
-      rot: rotated(o.el), scaled: scaledAncestors(o.el),
-      allow: { breach: flagOf(o.el, "data-design-allow-breach") || flagOf(o.el, "data-layout-allow-overflow"), straddle: flagOf(o.el, "data-design-allow-straddle"), misalign: flagOf(o.el, "data-design-allow-misalign") },
+      rot: rotated(o.el), scaled: scaledAncestors(o.el), zone: zoneOf(o.el),
+      allow: { breach: flagOf(o.el, "data-design-allow-breach") || flagOf(o.el, "data-layout-allow-overflow"), straddle: flagOf(o.el, "data-design-allow-straddle"), misalign: flagOf(o.el, "data-design-allow-misalign"), safe: flagOf(o.el, "data-safe-ignore") },
       _el: o.el,
     });
   }
@@ -254,7 +266,7 @@ function collect() {
     t.inCards = cards.filter((c) => c._el.contains(t._el)).map((c) => c.id);
   }
   const strip = (a) => a.map(({ _el, ...rest }) => rest);
-  return { W, H, texts: strip(texts), cards: strip(cards), rules: strip(rules), media: strip(media) };
+  return { W, H, profile: document.querySelector("[data-safe-profile]")?.getAttribute("data-safe-profile") ?? null, texts: strip(texts), cards: strip(cards), rules: strip(rules), media: strip(media) };
 }
 
 // ── rules, applied to one sample ─────────────────────────────────────────────────────────────────────────
@@ -271,7 +283,29 @@ const inter = (a, b) => area({ l: Math.max(a.l, b.l), t: Math.max(a.t, b.t), r: 
 const scaleNote = (it) => (it.scaled?.length ? ` — it is held at scale ${it.scaled[0].s} by its ancestor .${it.scaled[0].cls || it.scaled[0].id} (a camera push that leaves the frame furniture behind: end the push at scale 1, or push the furniture too)` : "");
 const px = (v) => `${Math.round(v)} px`;
 
+// platform safe zones and visual hierarchy, for pages that declare a profile (release system step 2)
+const boxes = new Map();
+function safeRules(t, s, prof) {
+  const key = `${prof}|${s.W}x${s.H}`;
+  if (!boxes.has(key)) boxes.set(key, limits(prof, s.W, s.H).box);
+  const b = boxes.get(key);
+  const zones = new Set();
+  for (const tx of s.texts) {
+    if (tx.vis < 0.5) continue;
+    zones.add(tx.zone);
+    if (tx.allow.safe) continue;
+    const r = tx.rect;
+    const [side, d] = Object.entries({ left: b.x0 - r.l, right: r.r - b.x1, top: b.y0 - r.t, bottom: r.b - b.y1 }).sort((p, q) => q[1] - p[1])[0];
+    if (d > 1) hit("safe_zone", "error", tx.comp, [tx.id], t, [tx.rect],
+      `"${tx.text}" (${tx.zone}) sits ${px(d)} past the ${side} edge of the ${prof} text-safe box (x ${b.x0}–${b.x1}, y ${b.y0}–${b.y1}) — a platform's buttons, caption strip or feed crop can cover it there`, { size: d });
+  }
+  if (zones.size > 3) hit("text_zones", "warn", "main", ["zones"], t, [],
+    `${zones.size} text zones on screen at once (${[...zones].join(", ")}) — the eye has no single place to go; keep at most 3 (header, chips, caption)`, { size: zones.size });
+}
+
 function analyse(t, s) {
+  const prof = typeof flags.profile === "string" ? flags.profile : s.profile;
+  if (prof) safeRules(t, s, prof);
   const minPx = 20 * Math.min(s.W, s.H) / 1080;
   const byComp = new Map();
   for (const kind of ["texts", "cards", "rules", "media"]) for (const it of s[kind]) {

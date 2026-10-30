@@ -1,5 +1,5 @@
 // Starts a new video project with everything the house workflow expects, so no session rebuilds it by hand:
-//   node tools/new-video.mjs <name> [--kind=screen-promo|screen-tutorial|episode|abroll|tools-reel|blank]
+//   node tools/new-video.mjs <name> [--kind=screen-promo|screen-tutorial|episode|abroll|tools-reel|ureel|linkedin|blank]
 // Makes projects/<name>/ with PLAN.md (from tools/plan/TEMPLATE.md, the plan gate §0e), hyperframes.json, the fonts
 // and GSAP copied in (../../ paths fail lint), a work folder on C: (C:/Users/Zubayer Nibir/VideoWork/<name>/media,
 // D: is nearly full) linked as assets/media (a junction: no admin needed; git ignores it), and for a kind the
@@ -12,6 +12,10 @@
 //                 rewrite); tools/abroll/build.mjs makes everything   (skill: abroll, styles AB1–AB5)
 //   tools-reel    PLAN.md + fonts + GSAP + assets/voice, assets/music, build/ and reel.json copied from
 //                 .claude/skills/tools-reel/reel.example.json; tools/reel/build.mjs makes the page   (skill: tools-reel)
+//   ureel         a universal 9:16 Reel cut from a FINISHED video (style UREEL1): cutdown.json, captions.json and
+//                 build-page.mjs copied from projects/claude-ureel-1 (profile universal-reel)   (skills: release-kit, reel-cutdown)
+//   linkedin      a 4:5 LinkedIn cut of a finished video (style LI1): the same three files from projects/claude-li-1
+//                 (profile linkedin-clip)   (skill: linkedin-kit)
 //   blank         PLAN.md + fonts + GSAP only (HyperFrames skills build the page)
 // Refuses a name that already exists. Prints the next steps.
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, symlinkSync, writeFileSync, appendFileSync } from "node:fs";
@@ -22,7 +26,7 @@ const WORK_ROOT = "C:/Users/Zubayer Nibir/VideoWork";
 const args = process.argv.slice(2);
 const name = args.find((a) => !a.startsWith("--"));
 const kind = (args.find((a) => a.startsWith("--kind=")) ?? "--kind=blank").slice(7);
-const KINDS = ["screen-promo", "screen-tutorial", "episode", "abroll", "tools-reel", "blank"];
+const KINDS = ["screen-promo", "screen-tutorial", "episode", "abroll", "tools-reel", "ureel", "linkedin", "blank"];
 if (!name || !/^[a-z0-9][a-z0-9-]*$/.test(name) || !KINDS.includes(kind)) {
   console.log(`Usage: node tools/new-video.mjs <name: lower-case-with-dashes> [--kind=${KINDS.join("|")}]`);
   process.exit(1);
@@ -37,6 +41,8 @@ const FONTS = {
   episode: ["bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf"],
   "tools-reel": ["latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf"],
   blank: ["bengali/HindSiliguri-Regular.ttf", "bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf"],
+  ureel: ["bengali/HindSiliguri-Regular.ttf", "bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf"],
+  linkedin: ["bengali/HindSiliguri-Regular.ttf", "bengali/HindSiliguri-Medium.ttf", "bengali/HindSiliguri-SemiBold.ttf", "bengali/HindSiliguri-Bold.ttf", "bengali/BalooDa2-Variable.ttf", "latin/Inter-Variable.ttf", "latin/JetBrainsMono-Variable.ttf"],
 };
 mkdirSync(path.join(dir, "assets", "fonts"), { recursive: true });
 for (const f of FONTS[kind]) copyFileSync(path.join(WS, "assets", "fonts", f), path.join(dir, "assets", "fonts", path.basename(f)));
@@ -96,6 +102,24 @@ if (kind === "tools-reel") {
   notes.push("voice → assets/voice/, BGM → assets/music/; rewrite reel.json (a working 5-tool example now) for his tools (skill tools-reel §2-§3)");
   notes.push(`node tools/reel/build.mjs projects/${name} --check, then --plan (the engine writes PLAN.md: do not fill it by hand)`);
   notes.push(`node tools/plan-check.mjs projects/${name}   (show him in Bengali, wait for OK)`);
+}
+
+if (kind === "ureel" || kind === "linkedin") {
+  // a cut-down of a finished video: the reference project's three data files, to rewrite (tools/cutdown engine)
+  const refName = kind === "ureel" ? "claude-ureel-1" : "claude-li-1", ref = path.join(WS, "projects", refName);
+  const cd = JSON.parse(readFileSync(path.join(ref, "cutdown.json"), "utf8"));
+  cd.name = name; cd.work = work;
+  cd.note = `EXAMPLE copied from projects/${refName} on ${new Date().toLocaleDateString("sv-SE")}: set master (the finished render), bed, faces and the segments of THIS cut (master seconds, word boundaries).`;
+  writeFileSync(path.join(dir, "cutdown.json"), JSON.stringify(cd, null, 1) + "\n");
+  copyFileSync(path.join(ref, "captions.json"), path.join(dir, "captions.json"));
+  // the note goes AFTER the shebang: a "#!" on line 2 is a syntax error
+  const page = readFileSync(path.join(ref, "build-page.mjs"), "utf8").replace(/^#!.*\r?\n/, "");
+  writeFileSync(path.join(dir, "build-page.mjs"), `#!/usr/bin/env node\n// COPIED from projects/${refName} on ${new Date().toLocaleDateString("sv-SE")}: keep profile "${kind === "ureel" ? "universal-reel" : "linkedin-clip"}"; rewrite title, tag, hook, chips, jumps, pans, cliff and cta for THIS cut.\n${page}`);
+  before.push(`the main video's words, once per main video: node tools/release/master-words.mjs projects/<main>   (skill release-kit §2)`);
+  notes.push(`rewrite cutdown.json (segments on word boundaries), captions.json, build-page.mjs (skill ${kind === "ureel" ? "release-kit §4" : "linkedin-kit"})`);
+  notes.push(`node tools/cutdown/cut.mjs projects/${name} && node projects/${name}/build-page.mjs && node tools/cutdown/mix.mjs projects/${name}`);
+  notes.push(`cd projects/${name} && node ../../tools/design-lint.mjs . && hyperframes check   (0 safe_zone errors), then node tools/release/cover.mjs projects/${name}`);
+  notes.push(`node tools/preflight.mjs projects/${name}   (over 60 s)`);
 }
 
 console.log(`✓ projects/${name} (${kind})

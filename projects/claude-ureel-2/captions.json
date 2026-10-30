@@ -1,0 +1,12 @@
+{
+ "note": "Caption words from the master's corrected word list (tools/release/master-words.mjs): no new ASR. Word 145 (\"এবং\" 78.36) dropped: an ASR phantom over music at the piece end (boundaries.mjs).",
+ "extra": [
+  {
+   "asr": "C:/Users/Zubayer Nibir/VideoWork/claude-video-tutorial/master.words.json",
+   "at": 0,
+   "fix": {
+    "145": null
+   }
+  }
+ ]
+}

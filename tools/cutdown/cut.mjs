@@ -13,7 +13,9 @@
 //                    hair, chips over the forehead, the window rows = eyebrows→chin, the caption under the chin)
 //          bedUnderVoiceDb  optional: the bed added under the SPOKEN pieces too at this gain (it is already in the
 //                    master ducked ~19 dB under the voice; 0 → about 15 dB under, "halka kintu shona jay")
-//          segments  [{ from, to, speed=1, mute=false, face=false }] in MASTER seconds, played back to back
+//          segments  [{ from, to, speed=1, mute=false, face=false, cutOk? }] in MASTER seconds, played back to back;
+//                    every spoken cut is checked first against the sound (boundaries.mjs) and the run stops on a
+//                    clipped or stray word
 //          tail      seconds held after the last piece (cliff freeze + end card); the picture holds its last frame
 //          bedDb     gain on the bed where it plays alone (it sits ducked under the voice in the master)
 //          window    { w, h } the picture window of the vertical page; faceBand [y0, y1] the camera rows (eyebrows
@@ -26,11 +28,16 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { duration, fail, ffmpeg, readJSON, run, writeJSON } from "../episode/lib.mjs";
+import { checkBoundaries, masterWords } from "./boundaries.mjs";
 
 const dir = path.resolve(process.argv[2] ?? ".");
 const cfgFile = path.join(dir, "cutdown.json");
 if (!existsSync(cfgFile)) fail(`No cutdown.json in ${dir}`);
 const cfg = readJSON(cfgFile);
+// every spoken cut must sit on a pause (boundaries.mjs): stops here before any media is made
+const cutIssues = checkBoundaries(cfg, masterWords(dir));
+for (const x of cutIssues) console.log(`${x.level}  piece ${x.seg} ${x.side}=${x.at}: ${x.msg}${x.fix != null ? `  → pause at ${x.fix}` : ""}`);
+if (cutIssues.length) fail(`${cutIssues.length} cut(s) clip a word: move them in cutdown.json (or mark a deliberate one with cutOk)`);
 const fps = cfg.fps ?? 30, tail = cfg.tail ?? 3, bedDb = cfg.bedDb ?? 12;
 const W = cfg.work, M = path.join(W, "media"), P = path.join(W, "pieces");
 mkdirSync(M, { recursive: true });

@@ -123,6 +123,17 @@
       "proof": "renders/broll-signal-core/2026-10-30_1123 (4K60, QC 9/9 PASS; 10/10 frames identical on two snapshot passes; motion.test.ts 11/11)"
     },
     {
+      "id": "MG2",
+      "bn": "উন্নতির রেখা",
+      "en": "Growth Curve",
+      "status": "beta",
+      "needs": "nothing: every frame is generated (no footage, no images)",
+      "builds": "6 s 4K60 motion-graphics B-roll: a glowing line climbs through nine points whose heights are the Fibonacci numbers (1, 2, 3, 5 … 55), the camera follows its tip and pulls back as it speeds up, the line hits the peak on the golden point, a hexagon marker locks with a flash and ripples, the points below hop once in a wave; the right side stays clear for a title; slate + one cyan accent, grain, three-layer parallax; with or without SFX",
+      "engine": "tools/broll/growth-curve.ts on tools/broll/scene.ts (physics: tools/broll/motion.ts)",
+      "skill": "motion-broll",
+      "proof": "renders/broll-growth-curve/2026-10-30_1302 (4K60 + silent + 1080p60, QC 9/9 PASS each; hyperframes check clean; 11/12 snapshots byte-identical on two passes, the 12th within 2 levels (PSNR 90 dB, GPU rounding); motion.test.ts 13/13; contact sheet every 0.25 s read)"
+    },
+    {
       "id": "TUT2",
       "bn": "লাইভ-ভয়েস টিউটোরিয়াল",
       "en": "Live-voice Tutorial",
@@ -141,6 +152,28 @@
       "builds": "5-10 s cinematic B-roll clips made from a sentence or a photo, dropped into any AB variant",
       "engine": "see docs/ai-video-generation.md",
       "skill": "abroll"
+    },
+    {
+      "id": "UREEL1",
+      "bn": "ইউনিভার্সাল রিল",
+      "en": "Universal Reel",
+      "status": "beta",
+      "needs": "a FINISHED main video (its render + master.words.json)",
+      "builds": "9:16 cut-down that uploads unchanged to Facebook Reels, Instagram Reels, YouTube Shorts and X: every text inside the four platforms' safe box, burned word captions, a platform-neutral end card, a cover",
+      "engine": "tools/cutdown/page.mjs (profile universal-reel)",
+      "skill": "release-kit",
+      "proof": "projects/claude-ureel-1 (layout + guards 2026-10-30; first render: release step 7)"
+    },
+    {
+      "id": "LI1",
+      "bn": "LinkedIn কাট",
+      "en": "LinkedIn Cut",
+      "status": "beta",
+      "needs": "a FINISHED main video",
+      "builds": "4:5 LinkedIn cut: result first, name plate, two-line Bengali captions, calm close, a message-me end card (no engagement bait)",
+      "engine": "tools/cutdown/page.mjs (profile linkedin-clip)",
+      "skill": "linkedin-kit",
+      "proof": "projects/claude-li-1 (layout + PLAN 2026-10-30; first render: release step 7)"
     }
   ]
 }

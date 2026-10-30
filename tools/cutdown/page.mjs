@@ -13,13 +13,39 @@
 //   tail         optional cliff (freeze, dark veil, the open question) then the end card (CTA to the full video)
 // Rules kept by construction: pushes land on scale 1 (CLAUDE.md §0d.1), Bengali has no letter-spacing, every font
 // name is quoted, ticks and arrows are SVG (icon()).
+//
+// profile: "universal-reel" (release system step 2, 2026-10-30) — ONE file for Facebook Reels, Instagram Reels, YouTube
+// Shorts and X. Pages without a profile come out byte-identical to before (proved with cmp on claude-reel-1..4, ig-1..2).
+//   safe text box   every text sits in the union of the four platforms' safe zones (tools/release/platforms.json →
+//                   limits(): top 15 %, bottom 35 %, left 6 %, right 18 % = x 65–886, y 288–1248), as a column centred
+//                   on the frame (x 194–886); tag y 290, hook y 330–442; the root says data-safe-profile so
+//                   design-lint's safe_zone rule measures it at every 0.25 s
+//   CTA             no platform words ("লিংক কমেন্টে", "Bio-তে"): the end card must be true everywhere ("পুরো ভিডিও
+//                   আমার প্রোফাইলে"); the post copy says where the link is
+//   hierarchy       tag + hook are one header (#head): at most 3 text zones at once (head, chip band, caption)
+//   tactile         layered soft shadows and a top highlight on chips, pill, window and CTA; camera drifts ease out
+//                   instead of linear. Film grain is OFF by default (opts.grain = opacity, e.g. 0.12, for bright
+//                   footage): measured 2026-10-30 at 0.07/0.15/0.25 on this dark design, after a 3.5 Mbps platform-like
+//                   encode the noise rose by ≤ 0.5 of 255 levels — invisible, only render cost
+//   pacing          the build lists every visual event (cuts, morphs, pans, pushes, jumps, chips, beats) and WARNs on a
+//                   still stretch over 3 s; it refuses linear easing on anything but the progress line and the cliff shake
+//
+// profile: "linkedin-clip" (release system step 3) — 4:5, 1080×1350, for LinkedIn's feed (9:16 is letterboxed on desktop;
+// 92 % of mobile viewers watch muted, the first 6 s decide: LinkedIn help a1327025). Text box from platforms.json's house
+// zone (x 65–1015, y 68–1215). Header y 74–232, chips 244–328, a true 16:9 window 1000×563 at y 336, two-line calmer
+// captions (≤ 40 characters) at y 912–1048, an optional name plate (opts.lower: { name, role, at, out }) for the first
+// seconds; the camera's eyebrows→chin land on y 340–865. Calmer: a 0.3 cut flash, no progress line, the cliff fades in
+// without the shake, pulses or heartbeat. The end card may not ask for comments, likes or shares (engagement bait);
+// ask for a message. Pacing WARNs over 4 s. Same tactile layer and design-lint rules as universal-reel.
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 import { C, FONT_CSS, beatsToJs, captionPages, esc } from "../episode/page-core.mjs";
 import { readJSON, writeJSON } from "../episode/lib.mjs";
+import { limits } from "../release/spec-check.mjs";
 
 const f3 = (x) => Number(x).toFixed(3);
 export const WIN = { x: 40, y: 562, w: 1000, h: 548 };
+export const WIN_LI = { x: 40, y: 336, w: 1000, h: 563 }; // linkedin-clip (1080×1350): a true 16:9 window
 
 // ctx: the cut (map.json), the caption words and M(), which turns a MASTER second into a Reel second
 export function cutdownContext(dir) {
@@ -74,6 +100,10 @@ export function cutdownContext(dir) {
   for (const w of kept) {
     const sg = map.segments.find((x) => !x.mute && w.m0 >= x.from - 0.02 && w.m0 < x.to);
     if (!sg) continue;
+    // a word reaching the piece's end with only a sliver inside it is not heard there (ASR edges are loose): no caption.
+    // LinkedIn cut 1: "অথবা" 492.43–492.79 at a 492.45 end, a 60 ms phantom "এটা" 428.04–428.10 at 428.05 (2026-10-30)
+    const inside = Math.min(w.m1, sg.to) - w.m0;
+    if (w.m1 > sg.to - 0.01 && (inside < 0.08 || inside / Math.max(0.01, w.m1 - w.m0) < 0.3)) continue;
     words.push({ text: w.text, start: Number(f3(sg.out0 + Math.max(0, w.m0 - sg.from) / sg.speed)), end: Number(f3(Math.min(sg.out1, sg.out0 + (w.m1 - sg.from) / sg.speed))), part: "main" });
   }
   words.sort((a, b) => a.start - b.start);
@@ -95,16 +125,35 @@ export function buildCutdown(ctx, opts) {
   const cliffD = opts.cliff ? opts.cliff.d ?? 2.5 : 0, end0 = tail0 + cliffD;
   const js = [], sfx = [];
   const cue = (t, file, vol, from, d) => sfx.push({ t: Number(f3(t)), file: file.endsWith(".mp3") ? file : `${file}.mp3`, vol, ...(from != null && { from }), ...(d != null && { d }) });
+  const PROF = opts.profile ?? null;
+  const U = PROF === "universal-reel", LI = PROF === "linkedin-clip", NEW = U || LI;
+  if (PROF && !NEW) throw new Error(`unknown profile "${PROF}" (known: universal-reel, linkedin-clip)`);
+  const H = LI ? 1350 : 1920, win = LI ? WIN_LI : WIN; // the canvas: 9:16 Reels, 4:5 for LinkedIn's feed
+  const SB = NEW ? limits(PROF, 1080, H).box : null;
+  const IN = U ? Math.max(SB.x0, 1080 - SB.x1) : LI ? SB.x0 : 0; // the text column's inset on both sides
+  if (NEW) {
+    const said = opts.cta.map((s) => s.replace(/<[^>]+>/g, "")).join(" ");
+    if (U && /কমেন্ট|Bio|বায়ো|লিংক|link/i.test(said))
+      throw new Error(`universal-reel: the end card says "${said}" — a platform's own words (Facebook: comment, Instagram: Bio) are not true on the others. Use e.g. "পুরো ভিডিও আমার প্রোফাইলে"; the post copy says where the link is.`);
+    if (LI && /কমেন্ট|comment|\bDM\b|লাইক|শেয়ার|like|share/i.test(said))
+      throw new Error(`linkedin-clip: the end card asks for comments, likes or shares ("${said}") — LinkedIn holds back engagement bait. Ask for a message instead, e.g. "কাজের জন্য মেসেজ করুন".`);
+  }
 
-  // captions: 2–4 words, the spoken word gold with a small pop
-  const pages = captionPages(words, { maxWords: 4, minWords: 2, maxChars: 24, gapBreak: 0.7 });
+  // captions: 2–4 words, the spoken word gold with a small pop (universal: 2–3 words, ≤ 20 characters, so the pill
+  // stays inside the 692 px text column; LinkedIn: calmer two-line phrases, ≤ 40 characters, most viewers are muted)
+  const pages = captionPages(words, U ? { maxWords: 3, minWords: 2, maxChars: 20, gapBreak: 0.7 } : LI ? { maxWords: 8, minWords: 3, maxChars: 40, gapBreak: 0.7 } : { maxWords: 4, minWords: 2, maxChars: 24, gapBreak: 0.7 });
   let capsHtml = "", wi = 0;
+  // LinkedIn: a page over 40 characters (a lone last word joined to it) wraps, and a flex pill ignores text-wrap:
+  // balance, so "…মেসেজ দিবেন / পার্সোনালি" left one word alone (claude-li-1): break such a page at its middle
+  const clen = (a) => a.reduce((s, w) => s + [...w.text].length + 1, 0) - 1;
+  const split = (p) => p.slice(1).reduce((b, _, k) => (Math.abs(clen(p.slice(0, k + 1)) - clen(p.slice(k + 1))) < Math.abs(clen(p.slice(0, b)) - clen(p.slice(b))) ? k + 1 : b), 1);
   pages.forEach((p, i) => {
     const next = pages[i + 1];
     const show = Math.max(0, p[0].start - 0.06);
     let hide = Math.min(p.at(-1).end + 0.35, tail0 - 0.05);
     if (next) hide = Math.min(hide, next[0].start - 0.06);
-    capsHtml += `<div class="cue" id="cue${i}"><div class="pill">${p.map((w) => `<span class="w" id="w${wi++}">${esc(w.text)}</span>`).join("")}</div></div>\n`;
+    const br = LI && p.length > 1 && clen(p) > 40 ? split(p) : -1;
+    capsHtml += `<div class="cue" id="cue${i}"><div class="pill">${p.map((w, k) => `${k === br ? `<i class="br"></i>` : ""}<span class="w" id="w${wi++}">${esc(w.text)}</span>`).join("")}</div></div>\n`;
     js.push(`  tl.set("#cue${i}", { opacity: 1 }, ${f3(show)}); tl.set("#cue${i}", { opacity: 0 }, ${f3(hide)});`);
   });
   wi = 0;
@@ -116,7 +165,7 @@ export function buildCutdown(ctx, opts) {
   // the picture: screen crop (1:1) or the camera, switched per piece; every state set from the timeline alone
   // a view is [cx, cy, s]: the master point at the window's centre and its scale (1 = native pixels; 0.52 shows
   // the whole 16:9 frame). Pans are [t, cx, cy, d = 0.6, s = 1]; d = 0 cuts.
-  const pos = (cx, cy, k = 1) => ({ x: WIN.w / 2 - cx * k, y: WIN.h / 2 - cy * k, scale: k });
+  const pos = (cx, cy, k = 1) => ({ x: win.w / 2 - cx * k, y: win.h / 2 - cy * k, scale: k });
   const p0 = pos(...(opts.start ?? [960, 540, 1]));
   js.push(`  gsap.set("#scrv", { x: ${f3(p0.x)}, y: ${f3(p0.y)}, scale: ${f3(p0.scale)}, transformOrigin: "0 0" });`);
   for (const [t, cx, cy, d = 0.6, k = 1] of opts.pans ?? []) {
@@ -130,10 +179,10 @@ export function buildCutdown(ctx, opts) {
     js.push(`  tl.to("#scrwrap", { scale: 1, duration: ${f3(d)}, ease: "power1.out" }, ${f3(t)});`);
   }
   const full = (map.faceMode ?? "window") === "full", segs = map.segments;
-  const FULL = "inset(0px 0px 0px 0px round 0px)", WCLIP = `inset(${WIN.y}px ${1080 - WIN.x - WIN.w}px ${1920 - WIN.y - WIN.h}px ${WIN.x}px round 28px)`;
+  const FULL = "inset(0px 0px 0px 0px round 0px)", WCLIP = `inset(${win.y}px ${1080 - win.x - win.w}px ${H - win.y - win.h}px ${win.x}px round 28px)`;
   // the morph outline is an SVG rect whose attributes tween sub-pixel (HyperFrames refuses left/top tweens:
   // gsap_non_transform_motion, claude-ig-1)
-  const FULLBOX = { x: 1, y: 1, width: 1078, height: 1918, rx: 0 }, WINBOX = { x: WIN.x, y: WIN.y, width: WIN.w, height: WIN.h, rx: 28 };
+  const FULLBOX = { x: 1, y: 1, width: 1078, height: H - 2, rx: 0 }, WINBOX = { x: win.x, y: win.y, width: win.w, height: win.h, rx: 28 };
   const box = (b) => `attr: { ${Object.entries(b).map(([k, v]) => `${k}: ${v}`).join(", ")} }`;
   const MORPH = 0.7;
   if (!full) {
@@ -170,10 +219,10 @@ export function buildCutdown(ctx, opts) {
   js.push(`  gsap.set("${faceV}", { scale: 1 });`);
   jumps.forEach((t, i) => {
     const z = i % 2 ? 1.0 : full ? 1.05 : 1.07, nextT = jumps[i + 1] ?? tail0;
-    js.push(`  tl.fromTo("${faceV}", { scale: ${f3(z + 0.02)} }, { scale: ${f3(z)}, duration: ${f3(Math.max(0.3, nextT - t - 0.05))}, ease: "none", immediateRender: false }, ${f3(t)});`);
+    js.push(`  tl.fromTo("${faceV}", { scale: ${f3(z + 0.02)} }, { scale: ${f3(z)}, duration: ${f3(Math.max(0.3, nextT - t - 0.05))}, ease: "${NEW ? "sine.out" : "none"}", immediateRender: false }, ${f3(t)});`);
   });
-  // a soft flash at every cut between pieces
-  map.segments.slice(1).forEach((s) => js.push(`  tl.fromTo("#cutfx", { opacity: 0.55 }, { opacity: 0, duration: 0.22, ease: "power2.out", immediateRender: false }, ${f3(s.out0)});`));
+  // a soft flash at every cut between pieces (LinkedIn: calmer)
+  map.segments.slice(1).forEach((s) => js.push(`  tl.fromTo("#cutfx", { opacity: ${LI ? "0.3" : "0.55"} }, { opacity: 0, duration: 0.22, ease: "power2.out", immediateRender: false }, ${f3(s.out0)});`));
 
   js.push(`  tl.fromTo("#prog i", { scaleX: 0 }, { scaleX: 1, duration: ${f3(end0)}, ease: "none" }, 0);`);
   js.push(`  tl.set("#prog", { visibility: "hidden" }, ${f3(end0 + 0.3)});`);
@@ -185,9 +234,11 @@ export function buildCutdown(ctx, opts) {
   // chips in the band, one group at a time
   let chipsHtml = "";
   const chips = [...(opts.chips ?? [])].sort((a, b) => a.at - b.at);
+  const chipTimes = [];
   chips.forEach((g, i) => {
     const next = chips[i + 1];
     const out = g.out ?? Math.min(next ? next.at - 0.3 : tail0 - 0.3, tail0 - 0.3);
+    chipTimes.push(g.at, out, ...(g.beats ?? []).map((b) => b[0]));
     if (next && next.at < out + 0.25 - 1e-6) throw new Error(`chip group ${i} (out ${out.toFixed(2)}) overlaps the next at ${next.at.toFixed(2)}`);
     chipsHtml += `<div class="band" id="g${i}">${g.html}</div>\n`;
     js.push(`  tl.fromTo("#g${i}", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, ${f3(g.at)});`);
@@ -197,20 +248,40 @@ export function buildCutdown(ctx, opts) {
   });
   for (const s of opts.sfx ?? []) cue(...s);
 
+  // LinkedIn: who is speaking, in the first seconds (a name plate over the lower frame), then it leaves
+  let lowerHtml = "";
+  const lower = LI && opts.lower ? { at: 0.3, out: 4.5, ...opts.lower } : null;
+  if (lower) {
+    lowerHtml = `<div id="lower"><div class="ln">${esc(lower.name)}</div>${lower.role ? `<div class="lr">${esc(lower.role)}</div>` : ""}</div>`;
+    js.push(`  tl.fromTo("#lower", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, ${f3(lower.at)});`);
+    js.push(`  tl.to("#lower", { opacity: 0, x: -16, duration: 0.35, ease: "power2.in" }, ${f3(lower.out)});`);
+    chipTimes.push(lower.at, lower.out);
+  }
+
   // cliff: frozen picture, dark veil, the question slams in and pulses
   let cliffHtml = "";
   if (opts.cliff) {
     const c0 = tail0, c1 = end0;
     cliffHtml = `<div id="cliff"><div id="cq">${opts.cliff.text}</div>${opts.cliff.sub ? `<div id="cs">${opts.cliff.sub}</div>` : ""}</div>`;
     js.push(`  tl.set("#caps", { opacity: 0 }, ${f3(c0)});`);
+    // profiles: the question owns the frame (hierarchy) — the header fades instead of showing dimmed under the veil
+    if (NEW) js.push(`  tl.to("#head", { opacity: 0, duration: 0.25, ease: "power1.out" }, ${f3(c0)});`);
     js.push(`  tl.fromTo("#cliff", { opacity: 0 }, { opacity: 1, duration: 0.25 }, ${f3(c0)});`);
-    js.push(`  tl.fromTo("#cq", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, ${f3(c0 + 0.05)});`);
-    js.push(`  tl.fromTo("#cq", { x: 0 }, { x: 8, duration: 0.05, yoyo: true, repeat: 3, ease: "none", immediateRender: false }, ${f3(c0 + 0.4)});`);
-    for (let t = c0 + 0.9; t < c1 - 0.5; t += 0.8) js.push(`  tl.fromTo("#cq", { scale: 1 }, { scale: 1.045, duration: 0.14, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, ${f3(t)});`);
+    if (LI) {
+      // LinkedIn: the question fades up calmly (no slam, shake, pulse or heartbeat)
+      js.push(`  tl.fromTo("#cq", { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, ${f3(c0 + 0.05)});`);
+    } else {
+      js.push(`  tl.fromTo("#cq", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, ${f3(c0 + 0.05)});`);
+      js.push(`  tl.fromTo("#cq", { x: 0 }, { x: 8, duration: 0.05, yoyo: true, repeat: 3, ease: "none", immediateRender: false }, ${f3(c0 + 0.4)});`);
+      for (let t = c0 + 0.9; t < c1 - 0.5; t += 0.8) js.push(`  tl.fromTo("#cq", { scale: 1 }, { scale: 1.045, duration: 0.14, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, ${f3(t)});`);
+    }
     if (opts.cliff.sub) js.push(`  tl.fromTo("#cs", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35 }, ${f3(c0 + 0.8)});`);
     js.push(`  tl.to("#cliff", { opacity: 0, duration: 0.2, ease: "power1.in" }, ${f3(c1 - 0.22)});`);
-    cue(c0, "impact-bass-2.mp3", 0.4, 0, 1.4);
-    cue(c0 + 0.5, "heartbeat.mp3", 0.4, 0, Math.max(0.5, c1 - c0 - 0.5));
+    if (LI) cue(c0, "whoosh-short.mp3", 0.3);
+    else {
+      cue(c0, "impact-bass-2.mp3", 0.4, 0, 1.4);
+      cue(c0 + 0.5, "heartbeat.mp3", 0.4, 0, Math.max(0.5, c1 - c0 - 0.5));
+    }
   }
 
   // end card: the CTA to the full video
@@ -223,12 +294,78 @@ export function buildCutdown(ctx, opts) {
   js.push(`  tl.fromTo("#endc .e2", { scale: 1 }, { scale: 1.04, duration: 0.3, yoyo: true, repeat: 1, ease: "power2.inOut", immediateRender: false }, ${f3(end0 + 1.4)});`);
   cue(end0, "chime.mp3", 0.28);
 
-  const hookLen = [...opts.hook.replace(/<[^>]+>/g, "")].length, hookPx = hookLen > 38 ? 44 : 52;
+  const grain = NEW && opts.grain > 0;
+  if (NEW) {
+    // film grain (opt-in): a 256 px noise tile stepped 12 times a second by an odd offset, so every step shows a new grain
+    const n = Math.max(1, Math.round(total * 12));
+    if (grain) js.push(`  tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "${101 * n}px ${67 * n}px", duration: ${f3(total)}, ease: "steps(${n})" }, 0);`);
+    // craft: anything that visibly moves eases (weight); linear only for the progress line and the cliff's shake
+    const flat = js.filter((l) => /ease: "(none|linear)"/.test(l) && !['("#prog i"', '("#cq"'].some((a) => l.includes(a)));
+    if (flat.length) throw new Error(`craft: ${flat.length} visible move(s) with linear easing, e.g. ${flat[0].trim().slice(0, 140)} — use a sine/power ease`);
+    // pacing: when something new happens or moves on screen (a cut, morph, pan, push, jump cut, chip in/out, a beat and
+    // how long it runs, the cliff and end card); a still stretch over 3 s (LinkedIn 4 s) loses the scroller. The
+    // camera's slow drift and the screen recording's own motion are not counted: the WARN says to check those.
+    const MAX_STILL = LI ? 4 : 3;
+    const morphs = full ? segs.filter((s, i) => s.face && segs[i + 1] && !segs[i + 1].face).map((s) => s.out1 - MORPH) : [];
+    const act = [[0, 0.6], ...segs.slice(1).map((s) => [s.out0, s.out0 + (full ? MORPH : 0.25)]), ...morphs.map((t) => [t, t + MORPH]),
+      ...(opts.pans ?? []).map(([t, , , d = 0.6]) => [t, t + d]), ...(opts.pushes ?? []).map(([t, d]) => [t - 0.5, t + d]),
+      ...jumps.map((t) => [t, t + 0.3]), ...chipTimes.map((t) => [t, t + 0.4]),
+      ...chips.flatMap((g) => (g.beats ?? []).map(([t, , , o = {}]) => [t, t + (o.d ?? 0.4)])), [tail0, total]]
+      .filter(([a]) => a <= total).sort((a, b) => a[0] - b[0]);
+    const gaps = [];
+    let reach = 0;
+    for (const [a, b] of act) { if (a - reach > MAX_STILL) gaps.push([reach, a]); reach = Math.max(reach, b); }
+    const longest = Math.max(0, ...gaps.map(([a, b]) => b - a));
+    console.log(`${PROF}: text column x ${IN}–${1080 - IN}, y ${SB.y0}–${SB.y1}; ${act.length} moves, ${gaps.length ? `longest still stretch ${longest.toFixed(1)} s` : `no still stretch over ${MAX_STILL} s`}`);
+    for (const [a, b] of gaps) console.warn(`WARN pacing: nothing new on screen ${a.toFixed(1)}–${b.toFixed(1)} s (${(b - a).toFixed(1)} s > ${MAX_STILL} s) — add a pan, push, jump cut or chip there, or check on a snapshot that the screen itself moves`);
+  }
+
+  const hookLen = [...opts.hook.replace(/<[^>]+>/g, "")].length, hookPx = U ? (hookLen > 30 ? 44 : 50) : LI ? (hookLen > 34 ? 46 : 52) : hookLen > 38 ? 44 : 52;
+  const PILL = `background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0) 50%), rgba(6,9,18,0.9);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 12px 26px rgba(0,0,0,0.5), 0 3px 6px rgba(0,0,0,0.35); }`;
+  // LinkedIn 4:5 (1080×1350): header y 74–232, chips 244–328, window 336–899 (16:9), captions 912–1048 (two lines),
+  // name plate 1066–~1170 for the first seconds; the camera's eyebrows→chin (585–1110 of 1920) land on y 340–865
+  const POS = U ? `#head { position: absolute; inset: 0; }
+#tag { top: ${SB.y0 + 2}px; }
+#hook { left: ${IN}px; right: ${IN}px; top: ${SB.y0 + 42}px; height: 112px; }
+.band { left: ${IN}px; right: ${IN}px; }
+#caps { left: ${IN}px; right: ${IN}px; }
+.cue .pill { font-size: 48px; ${PILL}
+#cq, #cs { left: ${IN}px; right: ${IN}px; }
+#endc .inner { left: ${IN}px; right: ${IN}px; }
+` : LI ? `#head { position: absolute; inset: 0; }
+#tag { top: ${SB.y0 + 6}px; }
+#hook { left: ${IN}px; right: ${IN}px; top: ${SB.y0 + 48}px; height: 116px; }
+.band { left: ${IN}px; right: ${IN}px; top: 244px; height: 84px; }
+#caps { left: ${IN}px; right: ${IN}px; top: 912px; height: 136px; }
+.cue .pill { flex-wrap: wrap; justify-content: center; white-space: normal; column-gap: 14px; row-gap: 0; max-width: 100%; box-sizing: border-box;
+  font-size: 44px; line-height: 1.32; border-radius: 30px; padding: 8px 30px 10px; ${PILL}
+.cue .pill .br { flex-basis: 100%; height: 0; }
+#ffv { top: -245px; }
+#ffshade { background: linear-gradient(rgba(4,6,12,0.82), rgba(4,6,12,0.32) 300px, rgba(4,6,12,0) 390px, rgba(4,6,12,0) 850px, rgba(4,6,12,0.62) 960px, rgba(4,6,12,0.9)); }
+#prog { display: none; }
+#cq { left: ${IN}px; right: ${IN}px; top: 360px; height: 420px; }
+#cs { left: ${IN}px; right: ${IN}px; top: 820px; }
+#endc .inner { left: ${IN}px; right: ${IN}px; top: 240px; height: 700px; }
+#lower { position: absolute; left: ${IN}px; top: 1066px; display: flex; flex-direction: column; gap: 2px; padding: 10px 26px 12px 22px; opacity: 0;
+  border-left: 6px solid ${C.gold}; border-radius: 6px 16px 16px 6px; background: linear-gradient(90deg, rgba(6,9,18,0.94), rgba(6,9,18,0.72)); box-shadow: 0 12px 26px rgba(0,0,0,0.45); }
+#lower .ln { font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-weight: 800; font-size: 36px; line-height: 1.2; color: #fff; }
+#lower .lr { font-weight: 600; font-size: 28px; line-height: 1.35; color: #CFE3F0; }
+` : "";
+  const UCSS = !NEW ? "" : `${POS}#tag span { box-shadow: 0 6px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.35); }
+.chip { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0) 55%), rgba(6,9,18,0.86);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 10px 22px rgba(0,0,0,0.45), 0 2px 5px rgba(0,0,0,0.35); }
+.chip.gold { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 22px rgba(0,0,0,0.45), 0 0 24px rgba(255,215,0,0.18); }
+#win { box-shadow: 0 34px 70px rgba(0,0,0,0.55), 0 12px 24px rgba(0,0,0,0.35); }
+.e2 { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 14px 30px rgba(0,0,0,0.5), 0 0 26px rgba(255,215,0,0.15); }
+${grain ? `#grain { position: absolute; inset: 0; pointer-events: none; opacity: ${opts.grain}; mix-blend-mode: overlay; background-size: 256px 256px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E"); }
+` : ""}`;
   const html = `<!doctype html>
 <html lang="bn">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="viewport" content="width=1080, height=${H}" />
     <title>${esc(opts.title ?? opts.tag)}</title>
     <script src="assets/js/gsap/gsap.min.js"></script>
     <style>${FONT_CSS}
@@ -258,20 +395,20 @@ body { margin: 0; background: ${C.bg}; }
 .arw { color: ${C.muted}; display: block; flex: none; }
 .meter { width: 150px; height: 16px; border-radius: 8px; background: rgba(255,255,255,0.12); overflow: hidden; flex: none; }
 .meter i { display: block; height: 100%; border-radius: 8px; transform-origin: 0 50%; }
-#win { position: absolute; left: ${WIN.x}px; top: ${WIN.y}px; width: ${WIN.w}px; height: ${WIN.h}px; border-radius: 28px; overflow: hidden; background: #05070d; opacity: 0; }
+#win { position: absolute; left: ${win.x}px; top: ${win.y}px; width: ${win.w}px; height: ${win.h}px; border-radius: 28px; overflow: hidden; background: #05070d; opacity: 0; }
 #winframe { position: absolute; inset: 0; border-radius: 28px; border: 2px solid rgba(0,245,212,0.75); box-shadow: 0 0 34px rgba(0,245,212,0.30), inset 0 0 22px rgba(0,245,212,0.10); box-sizing: border-box; pointer-events: none; }
 #scrwrap { position: absolute; inset: 0; transform-origin: 50% 50%; }
 #scrv { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
 #facewrap { position: absolute; inset: 0; overflow: hidden; }
-#facev { position: absolute; inset: 0; width: ${WIN.w}px; height: ${WIN.h}px; transform-origin: 50% 40%; }
+#facev { position: absolute; inset: 0; width: ${win.w}px; height: ${win.h}px; transform-origin: 50% 40%; }
 ${full ? `#ffwrap { position: absolute; inset: 0; overflow: hidden; }
 #ffv { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 540px 835px; }
 #ffshade { position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(rgba(4,6,12,0.78), rgba(4,6,12,0.30) 470px, rgba(4,6,12,0) 640px, rgba(4,6,12,0) 1120px, rgba(4,6,12,0.55) 1320px, rgba(4,6,12,0.85)); }
-#ffframe { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; pointer-events: none; filter: drop-shadow(0 0 14px rgba(0,245,212,0.55)); }
+#ffframe { position: absolute; left: 0; top: 0; width: 1080px; height: ${H}px; pointer-events: none; filter: drop-shadow(0 0 14px rgba(0,245,212,0.55)); }
 #hook { text-shadow: 0 2px 14px rgba(0,0,0,0.55); }
 ` : ""}#cutfx { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
-#prog { position: absolute; left: ${WIN.x}px; width: ${WIN.w}px; top: 1232px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; }
+#prog { position: absolute; left: ${win.x}px; width: ${win.w}px; top: 1232px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; }
 #prog i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, ${C.cyan}, ${C.gold}); transform-origin: 0 50%; box-shadow: 0 0 12px rgba(255,215,0,0.5); }
 #caps { position: absolute; left: 0; right: 0; top: 1124px; height: 92px; }
 .cue { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; }
@@ -292,16 +429,16 @@ ${full ? `#ffwrap { position: absolute; inset: 0; overflow: hidden; }
 .wml { width: 480px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, ${C.cyan}, ${C.gold}); transform-origin: 50% 50%; }
 .e2 { display: inline-flex; align-items: center; gap: 14px; border-radius: 999px; border: 2px solid rgba(255,215,0,0.85); padding: 12px 30px 10px; font-weight: 700; font-size: 40px; color: ${C.gold}; background: rgba(6,9,18,0.8); }
 .e2 .ico { color: ${C.gold}; display: block; flex: none; }
-${opts.css ?? ""}
+${UCSS}${opts.css ?? ""}
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="${f3(total)}">
+    <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="${H}" data-duration="${f3(total)}"${NEW ? ` data-safe-profile="${PROF}"` : ""}>
       <div id="bg"></div>${full ? `
       <div id="ffwrap"><video id="ffv" src="assets/media/face.mp4" muted playsinline data-start="0" data-duration="${f3(total)}" data-track-index="1"></video><div id="ffshade"></div></div>
-      <svg id="ffframe" width="1080" height="1920" viewBox="0 0 1080 1920"><rect id="ffrect" x="1" y="1" width="1078" height="1918" rx="0" fill="none" stroke="rgba(0,245,212,0.9)" stroke-width="2"/></svg>` : ""}
-      <div id="tag"><span>${esc(opts.tag)}</span></div>
-      <div id="hook"><div>${opts.hook}</div></div>
+      <svg id="ffframe" width="1080" height="${H}" viewBox="0 0 1080 ${H}"><rect id="ffrect" x="1" y="1" width="1078" height="${H - 2}" rx="0" fill="none" stroke="rgba(0,245,212,0.9)" stroke-width="2"/></svg>` : ""}
+      ${NEW ? `<div id="head">` : ""}<div id="tag"><span>${esc(opts.tag)}</span></div>
+      <div id="hook"><div>${opts.hook}</div></div>${NEW ? `</div>` : ""}
 ${chipsHtml}
       <div id="win" data-layout-allow-overflow>
         <div id="scrwrap"><video id="scrv" src="assets/media/screen.mp4" muted playsinline data-start="0" data-duration="${f3(total)}" data-track-index="0"></video></div>
@@ -313,8 +450,9 @@ ${full ? "" : `        <div id="facewrap"><video id="facev" src="assets/media/fa
       <div id="caps">
 ${capsHtml}
       </div>
-${cliffHtml}
-      <div id="endc"><div class="inner"><div class="k">${esc(opts.endTag ?? opts.tag)}</div><div class="e1">${opts.cta[0]}</div><div class="wml"></div><div class="e2">${opts.cta[1]}</div></div></div>
+${lowerHtml}${cliffHtml}
+      <div id="endc"><div class="inner"><div class="k">${esc(opts.endTag ?? opts.tag)}</div><div class="e1">${opts.cta[0]}</div><div class="wml"></div><div class="e2">${opts.cta[1]}</div></div></div>${grain ? `
+      <div id="grain"></div>` : ""}
       <audio id="mix" src="assets/media/mix.wav" data-start="0" data-duration="${f3(total)}" data-track-index="5" data-volume="1"></audio>
     </div>
     <script>
