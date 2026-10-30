@@ -242,16 +242,23 @@ three reference files. Open the one you need with Read + Grep; do not read them 
 `zero-cost-video-editor` (cut/caption/B-roll his own footage), `screen-tutorial` (long recording + voice → 16:9
 tutorial; reference `projects/claude-video-tutorial`), `privacy-blur` (WHAT to blur, decided once before the
 first render: default "basic" = names, emails, phones, photos, others' messages, keys/money; `/privacy-blur strict` adds
-his file names; his rule 2026-10-29: no re-render for harmless items), `tools-reel` ("N tools" Reel made on its own from a
-context + voice + BGM; reference `assets/refs/ref-01.mp4`; his Bengali pack is `PROMPT-PACK-tools-reel.md`). The
+his file names; his rule 2026-10-29: no re-render for harmless items), `abroll` (talking head + B-roll in the named
+styles AB1–AB5; demo `projects/abroll-variants-demo`), `tools-reel` ("N tools" Reel made on its own from a
+context + voice + BGM; reference `assets/refs/ref-01.mp4`; his Bengali pack is `PROMPT-PACK-tools-reel.md`). `reel-cutdown` (9:16 Reels cut from a FINISHED 16:9 video; reference
+`projects/claude-reel-1..4`), `post-copy` (FB/IG/YouTube post copy + hashtags after EVERY video, unasked). The
 HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new video with**
-`node tools/new-video.mjs <name> --kind=<screen-promo|screen-tutorial|episode|tools-reel|blank>`.
+`node tools/new-video.mjs <name> --kind=<screen-promo|screen-tutorial|episode|abroll|tools-reel|blank>`.
+**Every style has a NAME and a code** (TUT1, PROMO1, EP1, REEL1, EDIT1, AB1–AB5 …): his guide `VARIANTS.md`, the
+machine list `tools/variants.json`. He may just say a code. When he hands over a folder, run `node tools/route.mjs
+<folder>` first: it says the SHAPE of the material (S1–S7: screen + facecam, talking head, voice only …) and which
+codes fit. A new style is not done until it has a line in both files with its proof.
 
 ### Tools quick reference (details: `docs/tools-and-setup.md` unless noted)
 
 | Tool | One line |
 | --- | --- |
 | `tools/new-video.mjs` | new project: folders, PLAN.md, fonts, GSAP, C: work folder + `assets/media` junction, reference build |
+| `tools/route.mjs` | his folder → the shape of the material (camera / screen / graphics stretches, speech / music) → fitting style codes |
 | `tools/plan-check.mjs` | checks PLAN.md (shot table, pace, sounds; a recorded voice by measured line starts) — §0e |
 | `tools/preflight.mjs` | BEFORE a long render (~7 min / 8.5-min video): seek-state bugs, labels outliving their window, snapshots of every overlay; `--from/--to` for one stretch — §0i |
 | `tools/finish.mjs` | ONE command: (preflight gate) → check → design-lint → render → −14 LUFS → QC → formats → thumbnail/GIF |
@@ -268,7 +275,9 @@ HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new v
 | `tools/bijoy2unicode.mjs` | SutonnyMJ/Bijoy text → Unicode |
 | `tools/screen/*` | screen kit: watch, keystrokes, cut, text-scan, glitch-scan (source flashes + change strips, once per recording, §0i), track-cursor.py, promo-core, promo-mix |
 | `tools/episode/*` | episode kit: run.mjs pipeline, voice, cuts, grade, ASR chunks, align, page/reel cores, mix (skill `episode-edit`) |
+| `tools/abroll/*` | A-roll + B-roll engine: `build.mjs <project> [check] [steps]` from `abroll.json` → styles AB1–AB5 (skill `abroll`); AI B-roll options: `docs/ai-video-generation.md` |
 | `tools/tutorial/*` | screen-tutorial engine: `build.mjs <project> [check] [steps]` makes the whole tutorial from `build/{tutorial,page,specs,cursor}.json` (skill `screen-tutorial`) |
+| `tools/cutdown/*` | Reels from a finished video: `cut.mjs` (pieces, face window, voice) → `page.mjs` (layout, pans, chips, captions) → `mix.mjs` (skill `reel-cutdown`) |
 | `tools/reel/*` | tools-reel engine: `reel.json` + voice → aligned captions, six scene types, terminal, mascot, mix, PLAN.md (skill `tools-reel`) |
 | `tools/ref-analyze.mjs` | measure a reference video once (LUFS, BPM, voice pace and pitch, silences, sheet, transcript) → `assets/refs/<name>.analysis.md` |
 | `tools/session-status.mjs` | the start-of-session health line (disk, RAM, git, last render) — runs as a SessionStart hook |

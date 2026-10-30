@@ -1,0 +1,208 @@
+{
+  "note": "Demo of the five A-roll + B-roll styles (AB1–AB5) on his own talk (zubayer-ep01 source). Section times are SOURCE seconds of the recording; cut points sit on measured pauses of voice_master.wav. B-roll: generated scenes + his own AI clips (Openverse was down on 2026-10-30).",
+  "title": "A-roll + B-roll · ৫টা স্টাইল",
+  "fps": 30,
+  "aroll": {
+    "video": "C:/Users/Zubayer Nibir/Downloads/my rc video/the video.mp4",
+    "voice": "C:/Users/Zubayer Nibir/VideoWork/zubayer-ep01/audio/voice_master.wav",
+    "words": [
+      {
+        "file": "C:/Users/Zubayer Nibir/VideoWork/abroll-variants-demo/asr/w_33.0.words.json",
+        "offset": 33
+      },
+      {
+        "file": "C:/Users/Zubayer Nibir/VideoWork/abroll-variants-demo/asr/w_142.5.words.json",
+        "offset": 142.5
+      },
+      {
+        "file": "C:/Users/Zubayer Nibir/VideoWork/abroll-variants-demo/asr/w_214.5.words.json",
+        "offset": 214.5
+      }
+    ],
+    "face": [
+      57,
+      38
+    ],
+    "fix": {
+      "এজিআই": "AGI",
+      "পাওয়ার ফুল": "পাওয়ারফুল",
+      "এয়ারি": "এআই"
+    }
+  },
+  "music": {
+    "file": "C:/Users/Zubayer Nibir/Downloads/my rc video/the bgm.mp3",
+    "under_db": -24,
+    "up_db": -15
+  },
+  "badges": true,
+  "intro": {
+    "dur": 2.8,
+    "video": "C:/Users/Zubayer Nibir/Downloads/universe_to_bangladesh_3d.mp4",
+    "from": 5,
+    "kicker": "A-ROLL + B-ROLL",
+    "title": "৫টা নতুন স্টাইল",
+    "sub": "আপনার পর্বের কথা দিয়ে বানানো ডেমো"
+  },
+  "outro": {
+    "dur": 3,
+    "title": "স্টাইলগুলোর নাম"
+  },
+  "sections": [
+    {
+      "variant": "AB1",
+      "from": 34.62,
+      "to": 48.5,
+      "window": {
+        "title": "ছোট ছোট স্টেপে বড় লক্ষ্য",
+        "start": "ছোট",
+        "goal": "গন্তব্যে",
+        "low": "ছোট স্টেপ",
+        "high": "বড় লক্ষ্য"
+      },
+      "fix": {
+        "পারে": "পারে,",
+        "দিন শেষে": "দিনশেষে",
+        "যায়": "যায়।"
+      }
+    },
+    {
+      "variant": "AB4",
+      "from": 143.45,
+      "to": 159.85,
+      "heading": {
+        "text": "পাওয়ার গেম",
+        "at": "পাওয়ার"
+      },
+      "then": {
+        "scene": "temple",
+        "label": "তখন: সাম্রাজ্য বনাম সাম্রাজ্য",
+        "at": "পাওয়ার",
+        "out": "কোম্পানি"
+      },
+      "cards": [
+        {
+          "label": "কোম্পানি",
+          "at": "কোম্পানি",
+          "scene": "skyline"
+        },
+        {
+          "label": "টেকনোলজি",
+          "at": "টেকনোলজি",
+          "video": "C:/Users/Zubayer Nibir/Downloads/Camera_gliding_toward_futuristic…_20261022011911.mp4",
+          "from": 4
+        },
+        {
+          "label": "এআই",
+          "at": "এআই",
+          "scene": "neural"
+        }
+      ],
+      "fix": {
+        "প্রাচীনকালে": "প্রাচীনকালে।",
+        "ভেদে#1": "ভেদে,",
+        "ভেদে#2": "ভেদে,",
+        "ভেদে#3": "ভেদে!"
+      }
+    },
+    {
+      "variant": "AB3",
+      "from": 159.85,
+      "to": 181.05,
+      "punch": [
+        {
+          "at": "গুরুত্বপূর্ণ",
+          "icon": "star",
+          "text": "সবচেয়ে জরুরি কী?"
+        },
+        {
+          "at": "তলোয়ার",
+          "icon": "sword",
+          "text": "তলোয়ার?",
+          "strike": true
+        },
+        {
+          "at": "আশ্রয়কেন্দ্রে",
+          "icon": "shelter",
+          "text": "আশ্রয়কেন্দ্র?",
+          "strike": true
+        },
+        {
+          "at": "কিছুই",
+          "icon": "none",
+          "text": "কিছুই না?"
+        }
+      ],
+      "fix": {
+        "হচ্ছে": "হচ্ছে,",
+        "কি#1": "কি?",
+        "হবে#1": "হবে?",
+        "হবে#2": "হবে?",
+        "না": "না?"
+      }
+    },
+    {
+      "variant": "AB2",
+      "from": 181.85,
+      "to": 197.6,
+      "broll": [
+        {
+          "video": "C:/Users/Zubayer Nibir/Downloads/Camera_gliding_toward_futuristic…_20261022011911.mp4",
+          "speed": 0.68
+        }
+      ],
+      "slam": {
+        "text": "AGI",
+        "sub": "Artificial General Intelligence",
+        "at": "AGI"
+      },
+      "fix": {
+        "প্রয়োজন#2": "প্রয়োজন।",
+        "পড়ল": "পড়ল,",
+        "পড়তেছে": "পড়তেছে!"
+      }
+    },
+    {
+      "variant": "AB5",
+      "from": 216.2,
+      "to": 232.52,
+      "year": {
+        "text": "২০৩০ সালের মধ্যে",
+        "at": "২০৩০"
+      },
+      "bars": [
+        {
+          "value": 9.2,
+          "unit": "কোটি",
+          "label": "চাকরি হারাবে",
+          "color": "red",
+          "at": "৯.২"
+        },
+        {
+          "value": 17,
+          "unit": "কোটি",
+          "label": "নতুন চাকরি",
+          "color": "green",
+          "at": "১৭"
+        }
+      ],
+      "source": "সূত্র: World Economic Forum, Future of Jobs Report 2025",
+      "fix": {
+        "দুই হাজার ত্রিশ": "২০৩০",
+        "নয় দশমিক দুই": "৯.২",
+        "সতের": "১৭",
+        "অবসোলেট": "অবসোলিট",
+        "যাবে": "যাবে,",
+        "আছে": "আছে।",
+        "আইএমএফের": {
+          "start": 216.36,
+          "end": 217.45
+        },
+        "মধ্যে": {
+          "start": 222.48,
+          "end": 223.26
+        }
+      },
+      "title": "চাকরির বাজার: সামনের কয়েক বছর"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "note": "The named video styles of this workspace (VARIANTS.md is the user's Bengali guide to the same list). tools/route.mjs recommends these ids. status: ready = delivered and proven on a real video; beta = engine built and a demo rendered, not yet used for a client video; planned = designed, not built. Add a variant here the day it is built, with its proof.",
+  "variants": [
+    {
+      "id": "TUT1",
+      "bn": "ফ্লোটিং মনিটর টিউটোরিয়াল",
+      "en": "Floating Monitor Tutorial",
+      "status": "ready",
+      "needs": "one recording: facecam at the start and/or end, the screen in the middle; a separate voice-over; BGM",
+      "builds": "16:9 tutorial: facecam in a glass frame with cards, the screen in a floating monitor re-timed to the voice, zooms, labels, ticks, click rings, cursor glow, blurs, speed chip",
+      "engine": "tools/tutorial/build.mjs",
+      "skill": "screen-tutorial",
+      "proof": "projects/claude-video-tutorial (8:30, 2026-10-29)"
+    },
+    {
+      "id": "PROMO1",
+      "bn": "গোল্ড কমার্শিয়াল",
+      "en": "Gold Commercial",
+      "status": "ready",
+      "needs": "a short screen recording (under ~3 min) of an app; a voice-over; music",
+      "builds": "SaaS-style ad: zooms and pans on UI moments, cursor glow, 3D tilt, typed-text push, click boom + flash, dark-gold end card",
+      "engine": "tools/screen/promo-core.mjs",
+      "skill": "screen-promo",
+      "proof": "projects/claude-decision-ad (2026-10-28)"
+    },
+    {
+      "id": "EP1",
+      "bn": "কার্ড স্প্লিট পর্ব",
+      "en": "Card Split Episode",
+      "status": "ready",
+      "needs": "his long talking-head recording (+ music, + a timed transcript)",
+      "builds": "YouTube episode with motion-graphics scenes, split-screen cards, word-by-word Bengali captions; Reels cut from it",
+      "engine": "tools/episode/run.mjs",
+      "skill": "episode-edit",
+      "proof": "projects/zubayer-ep01 (2026-10-2x)"
+    },
+    {
+      "id": "REEL1",
+      "bn": "টুলস রিল",
+      "en": "Tools Reel",
+      "status": "ready",
+      "needs": "a topic / tool list + a voice-over + BGM (no camera footage needed)",
+      "builds": "9:16 'N tools' Reel: hook, one dark-UI scene per tool with a live terminal, word captions, comment-keyword CTA",
+      "engine": "tools/reel/build.mjs",
+      "skill": "tools-reel",
+      "proof": "projects/tools-reel-demo (2026-10-29)"
+    },
+    {
+      "id": "EDIT1",
+      "bn": "ক্লিন কাট",
+      "en": "Clean Cut",
+      "status": "ready",
+      "needs": "his own footage of any kind (talking, screen with live voice)",
+      "builds": "silences cut, Bengali captions burned in, music + SFX, Reels/Shorts/YouTube formats",
+      "engine": "zero-cost-video-editor recipes (FFmpeg)",
+      "skill": "zero-cost-video-editor",
+      "proof": "13.8 s test chain (2026-10-25)"
+    },
+    {
+      "id": "AB1",
+      "bn": "গ্লাস স্প্লিট",
+      "en": "Glass Split",
+      "status": "beta",
+      "needs": "talking-head footage + B-roll (clips, photos or generated scenes)",
+      "builds": "the speaker slides into a glass portrait frame on one side; a floating window with the B-roll comes in on the other; captions under the window",
+      "engine": "tools/abroll",
+      "skill": "abroll",
+      "proof": "projects/abroll-variants-demo (2026-10-30): demo render renders/abroll-variants-demo/2026-10-30_0429 (78.4 s, QC 9/9 PASS, -14 LUFS, preflight 0 errors); a Sonnet run of skill abroll built its own 3-section page"
+    },
+    {
+      "id": "AB2",
+      "bn": "বাবল কাট",
+      "en": "Bubble Cut",
+      "status": "beta",
+      "needs": "talking-head footage + full-screen B-roll clips",
+      "builds": "the B-roll fills the screen; the speaker stays in a round bubble whose glowing ring breathes with his voice",
+      "engine": "tools/abroll",
+      "skill": "abroll",
+      "proof": "projects/abroll-variants-demo (2026-10-30): demo render renders/abroll-variants-demo/2026-10-30_0429 (78.4 s, QC 9/9 PASS, -14 LUFS, preflight 0 errors); a Sonnet run of skill abroll built its own 3-section page"
+    },
+    {
+      "id": "AB3",
+      "bn": "পাঞ্চ টাইপ",
+      "en": "Punch Type",
+      "status": "beta",
+      "needs": "talking-head footage (no B-roll needed)",
+      "builds": "full-screen speaker; punch-in zooms on key words; giant kinetic words slam in with sound",
+      "engine": "tools/abroll",
+      "skill": "abroll",
+      "proof": "projects/abroll-variants-demo (2026-10-30): demo render renders/abroll-variants-demo/2026-10-30_0429 (78.4 s, QC 9/9 PASS, -14 LUFS, preflight 0 errors); a Sonnet run of skill abroll built its own 3-section page"
+    },
+    {
+      "id": "AB4",
+      "bn": "কার্ড ফ্যান",
+      "en": "Card Fan",
+      "status": "beta",
+      "needs": "talking-head footage + one picture or clip per list item",
+      "builds": "for a list (3 things): the speaker in a frame, a card per item fans out beside him on its word, each with its own B-roll",
+      "engine": "tools/abroll",
+      "skill": "abroll",
+      "proof": "projects/abroll-variants-demo (2026-10-30): demo render renders/abroll-variants-demo/2026-10-30_0429 (78.4 s, QC 9/9 PASS, -14 LUFS, preflight 0 errors); a Sonnet run of skill abroll built its own 3-section page"
+    },
+    {
+      "id": "AB5",
+      "bn": "ডেটা স্টেজ",
+      "en": "Data Stage",
+      "status": "beta",
+      "needs": "talking-head footage + the numbers he says",
+      "builds": "the speaker steps back (blurred) and a stage card shows the numbers: count-ups, bars, a morphing shape",
+      "engine": "tools/abroll",
+      "skill": "abroll",
+      "proof": "projects/abroll-variants-demo (2026-10-30): demo render renders/abroll-variants-demo/2026-10-30_0429 (78.4 s, QC 9/9 PASS, -14 LUFS, preflight 0 errors); a Sonnet run of skill abroll built its own 3-section page"
+    },
+    {
+      "id": "TUT2",
+      "bn": "লাইভ-ভয়েস টিউটোরিয়াল",
+      "en": "Live-voice Tutorial",
+      "status": "planned",
+      "needs": "a screen recording where he talks while recording (no separate voice-over)",
+      "builds": "TUT1's look, re-timed by cutting his own pauses instead of matching a separate voice",
+      "engine": "tools/tutorial (needs a live-voice timeline)",
+      "skill": "screen-tutorial"
+    },
+    {
+      "id": "AIGEN",
+      "bn": "AI-তৈরি B-roll",
+      "en": "AI-generated B-roll",
+      "status": "planned",
+      "needs": "an AI video service (this laptop has no NVIDIA GPU); a paid API key or free credits — his decision",
+      "builds": "5-10 s cinematic B-roll clips made from a sentence or a photo, dropped into any AB variant",
+      "engine": "see docs/ai-video-generation.md",
+      "skill": "abroll"
+    }
+  ]
+}

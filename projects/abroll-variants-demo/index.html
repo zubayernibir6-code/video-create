@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>A-roll + B-roll · ৫টা স্টাইল</title>
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+    <style>
+@font-face { font-family: "Hind Siliguri"; font-weight: 600; src: url("assets/fonts/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 700; src: url("assets/fonts/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Baloo Da 2"; font-weight: 400 800; src: url("assets/fonts/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+body { margin: 0; background: #07090E; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #07090E; font-family: "Hind Siliguri", "Baloo Da 2", sans-serif; color: #EAF2FF; }
+#bg { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 80% at 60% 40%, #13203A 0%, #0A0F1C 55%, #06080D 100%); }
+#grid { position: absolute; left: -40px; top: -40px; width: 2000px; height: 1300px;
+  background-image: linear-gradient(rgba(90,200,255,0.06) 1px, rgba(0,0,0,0) 1px), linear-gradient(90deg, rgba(90,200,255,0.06) 1px, rgba(0,0,0,0) 1px); background-size: 96px 96px; }
+.seg { position: absolute; inset: 0; visibility: hidden; opacity: 0; }
+.aw { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; z-index: 3; }
+.aw video { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: 57% 38%; }
+.bfull { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; z-index: 1; visibility: hidden; opacity: 0; }
+.shade { position: absolute; left: 0; right: 0; bottom: 0; height: 420px; z-index: 2; background: linear-gradient(180deg, rgba(4,6,12,0) 0%, rgba(4,6,12,0.82) 100%); }
+/* AB1 */
+.win { position: absolute; z-index: 2; border-radius: 24px; overflow: hidden; visibility: hidden; opacity: 0; background: #08101F;
+  box-shadow: 0px 0px 0px 2px rgba(120,230,255,0.6), 0px 0px 60px 6px rgba(60,200,255,0.22), 0px 40px 90px 0px rgba(0,0,0,0.7); }
+.win video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.wtitle { position: absolute; left: 780px; top: 108px; z-index: 4; display: flex; align-items: center; gap: 14px; padding: 10px 26px 10px 18px; border-radius: 999px; visibility: hidden; opacity: 0;
+  background: rgba(8,12,20,0.94); box-shadow: 0px 0px 0px 2px rgba(246,214,138,0.9), 0px 0px 30px 4px rgba(240,180,70,0.3); font-size: 38px; font-weight: 700; color: #FFF3D6; }
+.steps { position: absolute; left: 0; top: 0; }
+.slab { position: absolute; font-size: 34px; font-weight: 700; color: #EAF2FF; }
+.slab.lo { left: 70px; top: 490px; } .slab.hi { right: 170px; top: 40px; }
+.dot { position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 18px; background: #F7D27A; box-shadow: 0px 0px 24px 8px rgba(247,210,122,0.75); visibility: hidden; opacity: 0; }
+/* AB2 */
+#vring { position: absolute; z-index: 40; width: 380px; height: 380px; margin: 0px; border-radius: 50%; box-sizing: border-box; border: 5px solid rgba(140,235,255,0.95);
+  box-shadow: 0px 0px 36px 6px rgba(80,210,255,0.55), inset 0px 0px 20px 2px rgba(80,210,255,0.4); visibility: hidden; opacity: 0; }
+.slam { position: absolute; left: 820px; top: 230px; width: 1000px; z-index: 4; text-align: center; visibility: hidden; opacity: 0; }
+.slam .big { font-family: "Baloo Da 2", sans-serif; font-weight: 800; font-size: 260px; line-height: 1; visibility: hidden; opacity: 0; }
+.slam .sub { font-family: "Baloo Da 2", sans-serif; font-weight: 700; font-size: 40px; line-height: 1.2; color: #EAF2FF; margin-top: 130px; visibility: hidden; opacity: 0; }
+.metal { color: #E9C46A; -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-image: linear-gradient(100deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0) 58%), linear-gradient(180deg, #FFF5D6 0%, #F7DA8E 22%, #DDAD4F 45%, #A9762A 58%, #E2B456 74%, #FFF2C6 92%);
+  background-size: 260% 100%, 100% 100%; background-position: 160% 0%, 0% 0%; background-repeat: no-repeat; }
+/* AB3 */
+.band { position: absolute; left: 0; right: 0; bottom: 0; height: 460px; z-index: 4; background: linear-gradient(180deg, rgba(4,6,12,0) 0%, rgba(4,6,12,0.85) 100%); }
+.stk { position: absolute; z-index: 5; display: flex; align-items: center; gap: 20px; padding: 22px 34px 22px 24px; border-radius: 28px; visibility: hidden; opacity: 0;
+  background: rgba(8,12,20,0.92); box-shadow: 0px 0px 0px 3px rgba(140,235,255,0.9), 0px 0px 40px 4px rgba(60,200,255,0.35), 0px 20px 50px 0px rgba(0,0,0,0.6); }
+.stk span { font-size: 64px; font-weight: 700; color: #FFFFFF; line-height: 1.2; white-space: nowrap; }
+.stk .strike { position: absolute; left: 18px; right: 18px; top: 50%; height: 9px; margin-top: -4px; border-radius: 5px; background: #FF5A69; box-shadow: 0px 0px 18px 2px rgba(255,90,105,0.7); transform-origin: 0% 50%; transform: scaleX(0); }
+/* AB4 */
+.chip { position: absolute; left: 700px; top: 92px; z-index: 4; display: flex; align-items: center; gap: 14px; padding: 12px 30px 12px 20px; border-radius: 999px; visibility: hidden; opacity: 0;
+  background: rgba(8,12,20,0.94); box-shadow: 0px 0px 0px 2px rgba(246,214,138,0.9), 0px 0px 30px 4px rgba(240,180,70,0.3); font-size: 44px; font-weight: 700; color: #FFF3D6; }
+.then { position: absolute; left: 760px; top: 220px; width: 980px; z-index: 2; border-radius: 26px; overflow: hidden; visibility: hidden; opacity: 0; background: #120B05;
+  box-shadow: 0px 0px 0px 2px rgba(246,214,138,0.8), 0px 40px 90px 0px rgba(0,0,0,0.7); }
+.then .tm { position: relative; height: 430px; } .then .tl { padding: 18px 30px; font-size: 44px; font-weight: 700; color: #FFF3D6; background: #1A1108; }
+.then .sun { transform-box: fill-box; transform-origin: 50% 50%; }
+.card { position: absolute; width: 360px; z-index: 3; border-radius: 24px; overflow: hidden; visibility: hidden; opacity: 0; background: #0B1220;
+  box-shadow: 0px 0px 0px 3px rgba(247,210,122,0.95), 0px 24px 60px 0px rgba(0,0,0,0.6); }
+.card .cm { position: relative; width: 360px; height: 300px; overflow: hidden; } .card .cm video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card .cl { padding: 22px 20px 26px; text-align: center; font-size: 48px; font-weight: 700; color: #FFFFFF; }
+/* AB5 */
+.blob { position: absolute; left: 120px; top: 110px; z-index: 2; }
+.stage { position: absolute; left: 220px; top: 180px; width: 1160px; height: 700px; z-index: 4; border-radius: 30px; visibility: hidden; opacity: 0;
+  background: linear-gradient(160deg, rgba(16,24,42,0.9) 0%, rgba(7,10,18,0.92) 100%); box-shadow: 0px 0px 0px 2px rgba(120,230,255,0.55), 0px 40px 100px 0px rgba(0,0,0,0.7); }
+.year { position: absolute; left: 44px; top: 36px; padding: 8px 26px; border-radius: 999px; font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-size: 46px; font-weight: 700; color: #1A1205;
+  background: linear-gradient(180deg, #F9DE98 0%, #D9A443 100%); visibility: hidden; opacity: 0; }
+.bcol { position: absolute; bottom: 0px; width: 380px; height: 700px; visibility: hidden; opacity: 0; }
+.bcol .bar { position: absolute; left: 90px; width: 200px; bottom: 150px; border-radius: 14px 14px 4px 4px; transform-origin: 50% 100%; transform: scaleY(0); }
+.bcol .num { position: absolute; left: 0px; width: 380px; text-align: center; font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; line-height: 1; }
+.bcol .num b { font-size: 104px; font-weight: 800; } .bcol .num span { font-family: "Hind Siliguri", sans-serif; font-size: 44px; font-weight: 700; margin-left: 10px; }
+.bcol .blab { position: absolute; left: 0px; width: 380px; bottom: 82px; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 40px; font-weight: 700; color: #EAF2FF; }
+.stitle { position: absolute; left: 40px; right: 40px; top: 250px; text-align: center; text-wrap: balance; font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-size: 78px; font-weight: 700; line-height: 1.25; color: #FFFFFF; visibility: hidden; opacity: 0; }
+.src { position: absolute; left: 44px; bottom: 26px; font-size: 28px; font-weight: 600; color: #A9B8D3; visibility: hidden; opacity: 0; }
+/* captions */
+#cap { position: absolute; z-index: 50; text-align: center; text-wrap: balance; font-weight: 700; line-height: 1.32; color: #FFFFFF; text-shadow: 0px 0px 4px rgba(0,0,0,0.95), 0px 0px 10px rgba(0,0,0,0.85), 0px 4px 18px rgba(0,0,0,0.8); }
+#cap .w { color: rgba(255,255,255,0.93); } #cap .w.on { color: #F7D27A; }
+#cap.c1 { left: 780px; width: 1000px; top: 785px; font-size: 54px; }
+#cap.c2 { left: 480px; width: 1360px; top: 860px; font-size: 56px; }
+#cap.c3 { left: 160px; width: 1600px; top: 780px; font-size: 84px; line-height: 1.22; }
+#cap.c4 { left: 700px; width: 1080px; top: 840px; font-size: 52px; }
+#cap.c5 { left: 220px; width: 1160px; top: 905px; font-size: 50px; }
+#cap.off { visibility: hidden; }
+#badge { position: absolute; left: 48px; top: 36px; z-index: 60; display: flex; align-items: center; gap: 12px; padding: 8px 24px 8px 16px; border-radius: 999px; visibility: hidden; opacity: 0;
+  background: rgba(8,12,20,0.88); box-shadow: 0px 0px 0px 2px rgba(140,235,255,0.75); font-size: 30px; font-weight: 700; color: #EAF2FF; }
+#badge i { width: 14px; height: 14px; border-radius: 7px; background: #F7D27A; box-shadow: 0px 0px 12px 3px rgba(247,210,122,0.7); }
+#flash { position: absolute; inset: 0; z-index: 70; background: #FFFFFF; visibility: hidden; opacity: 0; }
+/* intro / outro */
+#intro { position: absolute; inset: 0; z-index: 30; background: #05070C; }
+#intro video { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+#intro .dim { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(5,7,12,0.35) 0%, rgba(5,7,12,0.85) 100%); }
+#ik, #it, #is { position: absolute; left: 0; width: 1920px; text-align: center; visibility: hidden; opacity: 0; }
+#ik { top: 268px; line-height: 1.2; font-family: "Baloo Da 2", sans-serif; font-size: 40px; font-weight: 700; color: #8CEBFF; }
+#it { top: 390px; font-family: "Baloo Da 2", "Hind Siliguri", sans-serif; font-size: 132px; font-weight: 700; color: #FFFFFF; line-height: 1.15; text-shadow: 0px 6px 40px rgba(0,0,0,0.6); }
+#is { top: 600px; font-size: 44px; font-weight: 600; color: #FFF3D6; }
+#outro { position: absolute; inset: 0; z-index: 30; background: radial-gradient(ellipse 80% 80% at 50% 45%, #13203A 0%, #05070C 100%); visibility: hidden; opacity: 0; }
+#ot { position: absolute; left: 0; width: 1920px; top: 150px; text-align: center; font-size: 72px; font-weight: 700; color: #FFFFFF; visibility: hidden; opacity: 0; }
+.orow { position: absolute; left: 400px; width: 1120px; box-sizing: border-box; display: flex; align-items: center; gap: 26px; padding: 14px 30px; border-radius: 20px; visibility: hidden; opacity: 0;
+  background: rgba(12,18,32,0.9); box-shadow: 0px 0px 0px 2px rgba(120,230,255,0.5); }
+.orow b { font-family: "Baloo Da 2", sans-serif; font-size: 44px; font-weight: 800; color: #F7D27A; } .orow span { font-size: 48px; font-weight: 700; color: #FFFFFF; } .orow em { font-style: normal; margin-left: auto; font-size: 32px; font-weight: 600; color: #A9B8D3; }
+#or0 { top: 300px; } #or1 { top: 418px; } #or2 { top: 536px; } #or3 { top: 654px; } #or4 { top: 772px; } #or5 { top: 890px; }
+#fade { position: absolute; inset: 0; z-index: 80; background: #000000; visibility: hidden; opacity: 0; }
+#wn0 { left: 780px; top: 190px; width: 1000px; height: 562px; }
+#cd1_0 { left: 690px; top: 280px; }
+#cd1_1 { left: 1075px; top: 250px; }
+#cd1_2 { left: 1460px; top: 280px; }
+#pk2_0 { left: 90px; top: 150px; }
+#pk2_1 { left: 1410px; top: 150px; }
+#pk2_2 { left: 90px; top: 430px; }
+#pk2_3 { left: 1410px; top: 430px; }
+#br4_0 { left: 170px; } #br4_0 .bar { height: 195px; background: linear-gradient(180deg, #FF5A69 0%, rgba(0,0,0,0) 140%); box-shadow: 0px 0px 40px 4px #FF5A6955; } #br4_0 .num { color: #FF5A69; bottom: 345px; }
+#br4_1 { left: 610px; } #br4_1 .bar { height: 360px; background: linear-gradient(180deg, #5BE39B 0%, rgba(0,0,0,0) 140%); box-shadow: 0px 0px 40px 4px #5BE39B55; } #br4_1 .num { color: #5BE39B; bottom: 510px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-fps="30" data-duration="78.400">
+      <div id="bg"></div>
+      <div id="grid" data-layout-allow-overflow></div>
+      <div class="seg" id="s0"><div class="aw" id="aw0"><video id="av0" src="assets/media/a0.mp4" muted playsinline data-start="2.800" data-duration="12.767" data-track-index="1"></video></div>
+        <div class="win" id="wn0"><svg class="steps" width="1000" height="562" viewBox="0 0 1000 562"><defs><linearGradient id="sg0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1D3A6E" stop-opacity="0.9"/><stop offset="1" stop-color="#0A1020" stop-opacity="0.2"/></linearGradient></defs>
+            <rect width="1000" height="562" fill="#08101F"/><path d="M90 470 H210 V418 H330 V366 H450 V314 H570 V262 H690 V210 H810 V158 H930 V540 H90 Z" fill="url(#sg0)"/><path id="sp0" d="M90 470 H210 V418 H330 V366 H450 V314 H570 V262 H690 V210 H810 V158 H930" fill="none" stroke="#6EDCFF" stroke-width="6" stroke-linejoin="round" stroke-dasharray="1300" stroke-dashoffset="1300"/>
+            <g id="fl0" style="transform-origin:880px 158px"><path d="M880 158 V48" stroke="#F7D27A" stroke-width="6" stroke-linecap="round"/><path d="M883 48 L960 70 L883 94 Z" fill="#F7D27A"/></g></svg>
+            <div class="slab lo">ছোট স্টেপ</div><div class="slab hi" id="hi0">বড় লক্ষ্য</div><div class="dot" id="dt0"></div></div><div class="wtitle" id="wt0"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F7D27A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15v4"/><path d="M21 17h-4"/></svg><span>ছোট ছোট স্টেপে বড় লক্ষ্য</span></div></div>
+      <div class="seg" id="s1"><div class="aw" id="aw1"><video id="av1" src="assets/media/a1.mp4" muted playsinline data-start="15.567" data-duration="12.933" data-track-index="1"></video></div><div class="chip" id="hd1"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#F7D27A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><span>পাওয়ার গেম</span></div><div class="then" id="th1"><div class="tm"><svg width="980" height="430" viewBox="0 0 980 430"><defs>
+<linearGradient id="tm1s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1608"/><stop offset="0.6" stop-color="#8A4A1C"/><stop offset="1" stop-color="#D99248"/></linearGradient>
+<linearGradient id="tm1c" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F3D9A8"/><stop offset="0.5" stop-color="#FFF1D2"/><stop offset="1" stop-color="#C9A26A"/></linearGradient>
+<radialGradient id="tm1g"><stop offset="0" stop-color="#FFE3A3" stop-opacity="0.95"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/></radialGradient></defs>
+<rect width="980" height="430" fill="url(#tm1s)"/><circle class="sun" cx="744.8" cy="129" r="94.6" fill="url(#tm1g)"/>
+<path d="M186.2 180.6 L490 94.6 L793.8000000000001 180.6 Z" fill="url(#tm1c)"/><rect x="235.2" y="180.6" width="44.1" height="146.20000000000002" rx="9.8" fill="url(#tm1c)"/><rect x="333.2" y="180.6" width="44.1" height="146.20000000000002" rx="9.8" fill="url(#tm1c)"/><rect x="431.2" y="180.6" width="44.1" height="146.20000000000002" rx="9.8" fill="url(#tm1c)"/><rect x="529.2" y="180.6" width="44.1" height="146.20000000000002" rx="9.8" fill="url(#tm1c)"/><rect x="627.2" y="180.6" width="44.1" height="146.20000000000002" rx="9.8" fill="url(#tm1c)"/><rect x="725.2" y="180.6" width="44.1" height="146.20000000000002" rx="9.8" fill="url(#tm1c)"/>
+<rect x="156.8" y="326.8" width="666.4000000000001" height="17.2" fill="#E8C690"/><rect x="117.6" y="344" width="744.8" height="21.5" fill="#C79A5E"/>
+<rect y="365.5" width="980" height="64.5" fill="#5A3416"/></svg></div><div class="tl">তখন: সাম্রাজ্য বনাম সাম্রাজ্য</div></div><div class="card" id="cd1_0"><div class="cm"><svg width="360" height="300" viewBox="0 0 360 300"><defs><linearGradient id="cs10n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060B1C"/><stop offset="1" stop-color="#16244A"/></linearGradient>
+<linearGradient id="cs10b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B5BA5"/><stop offset="1" stop-color="#1A2850"/></linearGradient></defs>
+<rect width="360" height="300" fill="url(#cs10n)"/><g class="bld" style="transform-origin:20px 276px"><rect x="3.2" y="175.2" width="33.6" height="100.8" rx="4" fill="url(#cs10b)"/><rect x="25.6" y="187.2" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="10.399999999999999" y="213.2" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="25.6" y="213.2" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="10.399999999999999" y="239.2" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:60px 276px"><rect x="43.2" y="112.79999999999998" width="33.6" height="163.20000000000002" rx="4" fill="url(#cs10b)"/><rect x="50.400000000000006" y="124.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="65.60000000000001" y="124.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="50.400000000000006" y="150.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="65.60000000000001" y="176.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="50.400000000000006" y="202.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="65.60000000000001" y="202.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="50.400000000000006" y="228.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="65.60000000000001" y="254.79999999999998" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:100px 276px"><rect x="83.2" y="144" width="33.6" height="132" rx="4" fill="url(#cs10b)"/><rect x="90.4" y="156" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="105.60000000000001" y="182" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="90.4" y="208" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="105.60000000000001" y="208" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="90.4" y="234" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="105.60000000000001" y="260" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:140px 276px"><rect x="123.2" y="69.6" width="33.6" height="206.4" rx="4" fill="url(#cs10b)"/><rect x="145.6" y="81.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="130.4" y="107.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="145.6" y="107.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="130.4" y="133.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="145.6" y="159.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="130.4" y="185.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="145.6" y="185.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="130.4" y="211.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="145.6" y="237.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:180px 276px"><rect x="163.2" y="132" width="33.6" height="144" rx="4" fill="url(#cs10b)"/><rect x="170.39999999999998" y="144" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="185.6" y="144" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="170.39999999999998" y="170" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="185.6" y="196" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="170.39999999999998" y="222" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="185.6" y="222" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="170.39999999999998" y="248" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:220px 276px"><rect x="203.2" y="98.4" width="33.6" height="177.6" rx="4" fill="url(#cs10b)"/><rect x="210.39999999999998" y="110.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="225.6" y="136.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="210.39999999999998" y="162.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="225.6" y="162.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="210.39999999999998" y="188.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="225.6" y="214.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="210.39999999999998" y="240.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="225.6" y="240.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:260px 276px"><rect x="243.2" y="156" width="33.6" height="120" rx="4" fill="url(#cs10b)"/><rect x="265.59999999999997" y="168" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="250.39999999999998" y="194" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="265.59999999999997" y="194" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="250.39999999999998" y="220" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="265.59999999999997" y="246" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:300px 276px"><rect x="283.2" y="122.4" width="33.6" height="153.6" rx="4" fill="url(#cs10b)"/><rect x="290.4" y="134.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="305.59999999999997" y="134.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="290.4" y="160.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="305.59999999999997" y="186.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="290.4" y="212.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="305.59999999999997" y="212.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="290.4" y="238.4" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><g class="bld" style="transform-origin:340px 276px"><rect x="323.2" y="165.6" width="33.6" height="110.4" rx="4" fill="url(#cs10b)"/><rect x="330.4" y="177.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="345.59999999999997" y="203.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="330.4" y="229.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="345.59999999999997" y="229.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/><rect x="330.4" y="255.6" width="8.8" height="10" fill="#FFD27A" opacity="0.85"/></g><rect y="276" width="360" height="24" fill="#0B1226"/></svg></div><div class="cl">কোম্পানি</div></div><div class="card" id="cd1_1"><div class="cm"><video id="cv1_1" src="assets/media/c1_1.mp4" muted playsinline data-start="15.567" data-duration="12.933" data-track-index="3"></video></div><div class="cl">টেকনোলজি</div></div><div class="card" id="cd1_2"><div class="cm"><svg width="360" height="300" viewBox="0 0 360 300"><defs><radialGradient id="cs12r"><stop offset="0" stop-color="#1B2D5C"/><stop offset="1" stop-color="#070B18"/></radialGradient></defs>
+<rect width="360" height="300" fill="url(#cs12r)"/><line x1="72" y1="75" x2="180" y2="50" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="75" x2="180" y2="100" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="75" x2="180" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="75" x2="180" y2="200" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="75" x2="180" y2="250" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="150" x2="180" y2="50" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="150" x2="180" y2="100" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="150" x2="180" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="150" x2="180" y2="200" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="150" x2="180" y2="250" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="225" x2="180" y2="50" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="225" x2="180" y2="100" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="225" x2="180" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="225" x2="180" y2="200" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="72" y1="225" x2="180" y2="250" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="50" x2="288" y2="75" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="50" x2="288" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="50" x2="288" y2="225" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="100" x2="288" y2="75" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="100" x2="288" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="100" x2="288" y2="225" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="150" x2="288" y2="75" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="150" x2="288" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="150" x2="288" y2="225" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="200" x2="288" y2="75" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="200" x2="288" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="200" x2="288" y2="225" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="250" x2="288" y2="75" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="250" x2="288" y2="150" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><line x1="180" y1="250" x2="288" y2="225" stroke="#6EDCFF" stroke-opacity="0.28" stroke-width="2"/><circle class="nd nd0" cx="72" cy="75" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd0" cx="72" cy="150" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd0" cx="72" cy="225" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd1" cx="180" cy="50" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd1" cx="180" cy="100" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd1" cx="180" cy="150" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd1" cx="180" cy="200" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd1" cx="180" cy="250" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd2" cx="288" cy="75" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd2" cx="288" cy="150" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/><circle class="nd nd2" cx="288" cy="225" r="13.5" fill="#0B1830" stroke="#8CEBFF" stroke-width="3"/></svg></div><div class="cl">এআই</div></div></div>
+      <div class="seg" id="s2"><div class="aw" id="aw2"><video id="av2" src="assets/media/a2.mp4" muted playsinline data-start="28.500" data-duration="18.533" data-track-index="1"></video></div><div class="band"></div><div class="stk" id="pk2_0"><svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#8CEBFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg><span>সবচেয়ে জরুরি কী?</span></div><div class="stk" id="pk2_1"><svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#8CEBFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="m13 19 6-6"/><path d="m16 16 4 4"/><path d="m19 21 2-2"/></svg><span>তলোয়ার?</span><i class="strike"></i></div><div class="stk" id="pk2_2"><svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#8CEBFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg><span>আশ্রয়কেন্দ্র?</span><i class="strike"></i></div><div class="stk" id="pk2_3"><svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#8CEBFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg><span>কিছুই না?</span></div></div>
+      <div class="seg" id="s3"><video class="bfull" id="bv3" src="assets/media/b3_0.mp4" muted playsinline data-start="47.033" data-duration="14.733" data-track-index="4"></video>
+        <div class="shade"></div><div class="slam" id="sl3"><div class="big metal">AGI</div><div class="sub">Artificial General Intelligence</div></div>
+        <div class="aw" id="aw3"><video id="av3" src="assets/media/a3.mp4" muted playsinline data-start="47.033" data-duration="14.733" data-track-index="1"></video></div></div>
+      <div class="seg" id="s4"><video class="bfull" id="bb4" src="assets/media/a4_blur.mp4" muted playsinline data-start="61.767" data-duration="13.633" data-track-index="5"></video>
+        <svg class="blob" width="1400" height="860" viewBox="0 0 1400 860"><defs><linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3FD0FF" stop-opacity="0.38"/><stop offset="1" stop-color="#9B5CFF" stop-opacity="0.30"/></linearGradient></defs><path id="bl4" d="M700,90 C960,60 1240,200 1260,420 C1280,650 1010,800 720,780 C420,760 150,640 160,420 C170,200 440,120 700,90 Z" fill="url(#bg4)"/></svg>
+        <div class="aw" id="aw4"><video id="av4" src="assets/media/a4.mp4" muted playsinline data-start="61.767" data-duration="13.633" data-track-index="1"></video></div><div class="stage" id="st4"><div class="stitle" id="stt4">চাকরির বাজার: সামনের কয়েক বছর</div><div class="year" id="yr4">২০৩০ সালের মধ্যে</div><div class="bcol" id="br4_0"><div class="num"><b id="nbr4_0">০.০</b><span>কোটি</span></div><div class="bar"></div><div class="blab"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF5A69" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m6 14 6 6 6-6"/></svg><span>চাকরি হারাবে</span></div></div><div class="bcol" id="br4_1"><div class="num"><b id="nbr4_1">০</b><span>কোটি</span></div><div class="bar"></div><div class="blab"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#5BE39B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4"/><path d="m6 10 6-6 6 6"/></svg><span>নতুন চাকরি</span></div></div><div class="src" id="sr4">সূত্র: World Economic Forum, Future of Jobs Report 2025</div></div></div>
+      <div id="vring"></div>
+      <div id="intro"><video id="iv" src="assets/media/intro_bg.mp4" muted playsinline data-start="0" data-duration="2.800" data-track-index="2"></video><div class="dim"></div>
+        <div id="ik">A-ROLL + B-ROLL</div><div id="it">৫টা নতুন স্টাইল</div><div id="is">আপনার পর্বের কথা দিয়ে বানানো ডেমো</div></div>
+      <div id="cap" class="off"></div>
+      <div id="badge"><i></i><span id="bdt"></span></div>
+      <div id="outro"><div id="ot">স্টাইলগুলোর নাম</div><div class="orow" id="or0"><b>AB1</b><span>গ্লাস স্প্লিট</span><em>মুখ কাচের ফ্রেমে, পাশে B-roll জানালা</em></div><div class="orow" id="or1"><b>AB2</b><span>বাবল কাট</span><em>B-roll পুরো পর্দায়, মুখ গোল বাবলে</em></div><div class="orow" id="or2"><b>AB3</b><span>পাঞ্চ টাইপ</span><em>বড় লেখা, জুম-ধাক্কা, স্টিকার</em></div><div class="orow" id="or3"><b>AB4</b><span>কার্ড ফ্যান</span><em>তালিকার কার্ড পাখার মতো খোলে</em></div><div class="orow" id="or4"><b>AB5</b><span>ডেটা স্টেজ</span><em>সংখ্যা গুনে ওঠে, বার-চার্ট</em></div></div>
+      <div id="flash"></div>
+      <div id="fade"></div>
+      <audio id="mix" src="assets/media/mix.wav" data-start="0" data-duration="78.400" data-track-index="30" data-volume="1"></audio>
+    </div>
+    <script>
+      gsap.registerPlugin(MorphSVGPlugin);
+      const tl = gsap.timeline({ paused: true });
+      // per-frame layer: captions (chunk + active word), the AB2 voice ring, the AB5 count-ups
+      const FPS = 30;
+      const CAP = [[2.8,4.787,"c1",[[2.8,"একটা"],[3.407,"গবেষণায়"],[3.787,"দেখা"],[3.987,"গিয়েছে"]]],[4.787,7.233,"c1",[[4.787,"যে"],[5.453,"যে"],[5.633,"ব্যক্তি"],[6.373,"প্রতিদিন"]]],[7.233,8.833,"c1",[[7.233,"একটা"],[7.593,"বড়"],[7.793,"লক্ষ্যকে"],[8.553,"ছোট"]]],[8.833,11.047,"c1",[[8.833,"ছোট"],[9.113,"স্টেপে"],[9.827,"পরিপূর্ণভাবে"],[10.647,"সম্পন্ন"]]],[11.047,11.967,"c1",[[11.047,"করতে"],[11.327,"পারে,"]]],[11.967,13.887,"c1",[[11.967,"দিনশেষে"],[13.047,"তারা"],[13.527,"একদিন"],[13.827,"না"]]],[13.887,15.547,"c1",[[13.887,"একদিন"],[14.167,"গন্তব্যে"],[14.607,"পৌঁছিয়ে"],[15.147,"যায়।"]]],[15.567,17.433,"c4",[[15.567,"কিন্তু"],[16.273,"এই"],[16.433,"ওয়ার্ল্ডের"],[16.893,"মধ্যে"]]],[17.433,20.373,"c4",[[17.433,"যে"],[18.06,"পাওয়ার"],[18.56,"গেমটা"],[18.9,"চলতেছে"]]],[20.373,22.3,"c4",[[20.373,"মানুষে"],[20.773,"মানুষে"],[21.113,"চলছে"],[21.64,"সাম্রাজ্য"]]],[22.3,23.54,"c4",[[22.3,"ছিল"],[22.56,"প্রাচীনকালে।"]]],[23.54,25.4,"c4",[[23.54,"এখন"],[23.84,"বর্তমানে"],[24.88,"পাওয়ার"],[25.18,"গেমটা"]]],[25.4,26.827,"c4",[[25.4,"চলছে"],[26.147,"কোম্পানি"],[26.667,"ভেদে,"]]],[26.827,27.767,"c4",[[26.827,"টেকনোলজি"],[27.447,"ভেদে,"]]],[27.767,28.48,"c4",[[27.767,"এআই"],[28.187,"ভেদে!"]]],[28.693,29.593,"c3",[[28.693,"তো"],[28.993,"এই"],[29.253,"যে"]]],[29.593,31.153,"c3",[[29.593,"কম্বিনেশনটা"],[30.233,"হচ্ছে,"]]],[31.153,32.493,"c3",[[31.153,"তো"],[31.413,"এখানে"],[32.273,"একজন"]]],[32.493,33.613,"c3",[[32.493,"মানুষের"],[33.053,"টিকে"],[33.233,"থাকার"]]],[33.613,35.333,"c3",[[33.613,"জন্য"],[34.153,"সবথেকে"],[34.713,"গুরুত্বপূর্ণ"]]],[35.333,36.2,"c3",[[35.333,"জিনিসটি"],[35.673,"কি?"]]],[36.2,38.947,"c3",[[36.2,"এটা"],[36.567,"কি"],[37.127,"আমাদেরকে"]]],[38.947,40.607,"c3",[[38.947,"তলোয়ার"],[40.127,"নিয়ে"],[40.287,"দাঁড়াতে"]]],[40.607,41.233,"c3",[[40.607,"হবে?"]]],[41.233,44.133,"c3",[[41.233,"নাকি"],[42.033,"আমাদেরকে"],[43.173,"কোন"]]],[44.133,45.093,"c3",[[44.133,"আশ্রয়কেন্দ্রে"],[44.913,"যেতে"]]],[45.093,45.647,"c3",[[45.093,"হবে?"]]],[45.647,46.447,"c3",[[45.647,"নাকি"],[45.907,"কিছুই"],[46.247,"করতে"]]],[46.447,47.013,"c3",[[46.447,"হবে"],[46.627,"না?"]]],[47.267,48.287,"c2",[[47.267,"এটার"],[47.607,"প্রয়োজন"],[47.927,"কি"],[48.107,"আদৌ"]]],[48.287,49.82,"c2",[[48.287,"আমরা"],[48.487,"বুঝতেছি"],[49.26,"যে"],[49.5,"কেন"]]],[49.82,51.98,"c2",[[49.82,"আমাদের"],[51,"এই"],[51.22,"বিষয়টা"],[51.62,"প্রয়োজন।"]]],[51.98,53.04,"c2",[[51.98,"এই"],[52.12,"বিষয়ে"],[52.4,"এখন"],[52.6,"মনোযোগ"]]],[53.04,55.553,"c2",[[53.04,"দেওয়া"],[53.16,"প্রয়োজন"],[53.6,"যে"],[55.233,"এই"]]],[55.553,56.853,"c2",[[55.553,"যে"],[55.933,"টেকনোলজি"],[56.533,"এসে"],[56.673,"পড়ল,"]]],[56.853,59.847,"c2",[[56.853,"সবথেকে"],[57.393,"পাওয়ারফুল"],[57.833,"যে"],[57.953,"টেকনোলজি"]]],[59.847,61.047,"c2",[[59.847,"কদিন"],[60.187,"পরে"],[60.367,"AGI"],[60.747,"এসে"]]],[61.047,61.747,"c2",[[61.047,"পড়তেছে!"]]],[61.927,63.4,"c5",[[61.927,"আইএমএফের"]]],[63.4,64.58,"c5",[[63.4,"একটা"],[63.6,"রিসার্চে"],[63.98,"দেখা"],[64.16,"গিয়েছে"]]],[64.58,67.18,"c5",[[64.58,"যে"],[65.28,"আগামী"],[65.58,"২০৩০"],[66.16,"সালের"]]],[67.18,68.307,"c5",[[67.18,"মধ্যে"]]],[68.307,70.267,"c5",[[68.307,"৯.২"],[69.207,"কোটি"],[69.447,"চাকরি"],[69.867,"অবসোলিট"]]],[70.267,71.067,"c5",[[70.267,"হয়ে"],[70.487,"যাবে,"]]],[71.067,72.527,"c5",[[71.067,"এবং"],[71.347,"নতুন"],[71.787,"করে"],[72.127,"১৭"]]],[72.527,74.447,"c5",[[72.527,"কোটি"],[73.107,"চাকরি"],[73.767,"তৈরি"],[74.147,"হওয়ার"]]],[74.447,75.38,"c5",[[74.447,"সম্ভাবনা"],[74.887,"আছে।"]]]];
+      const ENV = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000245479766452658594979895899597969290878787929698949196939190898274728086837167616672727067625041342823191513100817406380868887837461504134282319151825477288959793969897826755453961778383828179685646373125211714427690828594938782848790868380776957473831262117375448437785837875899597989999999999999786726870837865565666747569574738312621174052748981929083827776849397989490757282929085868886807360494033272218151223688794979385849397969898939088857984939185838282929088837587949189949178788781676184897984918883807977705847393226211815121008070504040302377489908586949396959494919698999691796553443629242016135481919190939494938783819193888071748886858995979079687575757271889493908377908680728893846967869497928786828088959689797877848379756760534436292420161311090749798989847777858579725949403327447288959492919698999999999690949089888583818993888175645760686763564637312521171411091935353343638391929189786453617380859094979898978980829295918680676480796663627891898268626562605752515755524235282319161311090728556870727171737271686052433529255266819191929290918989899294949390879289807887949793868379838280736049403327221815123562677786868584939590848384767482808884818380657489938886858482807380858281807771615041342823191512101054817871799196949290878170574739322621415782929690786464858989939592888891898676625572828693979896909397938885938780779096958980767169747775696049403327221815124274899391898593979798999897989899999785728895847171849293929086807574726869767772658190878477686374849394959798989182797875625142352924191613110907060504031153686556657991969898989897948883829296989584707991928986839393909088858083837969838281787991918169687471686654483932272218151415141210080705040449748884818292958981798991909495949390867561504134282319151351778885808292969695939798979696949089959380666070716361848575748694929698959086859088827670666153443629242016131131556664859387736049403953687288958984819294948066544864625141688684829295928894939493917775827461505857748592918680715948393226221815417684809196948071646882909698989999958569574738312621171412214465767980838889909089868381798893919095979487889597989998989693846957496181929698999999969490877561505180919196989999999999999998989896897864524879919698989999999795939697928493969497948472869492929390878888867158483932262218151240638493897970697884889193918570574738312621171412266183859196989388959795928473617086949798979489796453433629242016324963677071696664626159554840332722181512407485838691888383909087858382789196989786779096949389929691868988796980797875736860565957504133272218151210095681808485786459727180878693938493979077637185858689848383787165595041332722181512100807060529676765849388746053789196989689939694918878707991969796898593949391899393867980878376626074726760526365635646383126211714122529577573604945678691918993959595929091918585939798948981665445373125211714163659737881838384878584827979889597969289878584819296898987776352668694979690898986828290928884837976717991949592827977747272828179828075747772676380878681685662819194918680777369666261596978818077736049403836333128231915122751677475747479838280787569645847393226211814121008548192969899999999989690827985939798999898937662567989816765728691918780757581818484818073606073727069686762586575705747393761606069635163758186909289807165687878757572596786827067656472787670636166655746383126232325242226241916456674798182828180777572686151433529241916131109070605045682929096969488879497989795979899948985919698999999989598939386736071817158484755524742566768646056504134282319151210080706568292949392929392908570627389959798959497989582685983939696939290786452433529241916568280717087949798938793979289889590959896949798938887949795868077799088827573879497969591836856463731252117141145778985869494949798938694979899979497948569597070808588949193959597979591888584827872635772818684796755453730252017142446647284939798999992787890898177808588878580685646383125211714144970889497989798989694939291969894888175758995979791789196928592969080779095979178686573788180808291867569658694979690858493979590929290858584827664534335292420161311357389889597989693919096989279839396939187939798979896938674666568658593867790889497979194979587798583817769564638312521171432618493948470645869757472665444363024201613115280919697989998979798999995928990959695989898959792929291898788959790756765646169696963524335292419161311090706050403030202010101010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+      const COUNT = [[68.307,1.1,9.2,1,"nbr4_0"],[72.127,1.1,17,0,"nbr4_1"]];
+      const cap = document.getElementById("cap"), ring = document.getElementById("vring");
+      const BN = (s) => String(s).replace(/[0-9]/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
+      let curCap = -2;
+      tl.to({}, { duration: 78.400, ease: "none", onUpdate() {
+        const t = this.time();
+        let k = -1; for (let i = 0; i < CAP.length; i++) if (t >= CAP[i][0] && t < CAP[i][1]) { k = i; break; }
+        if (k !== curCap) {
+          curCap = k;
+          if (k < 0) { cap.className = "off"; cap.innerHTML = ""; }
+          else { cap.className = CAP[k][2]; cap.innerHTML = CAP[k][3].map((w) => '<span class="w">' + w[1] + "</span>").join(" "); }
+        }
+        if (k >= 0) { const sp = cap.children; for (let j = 0; j < sp.length; j++) sp[j].className = t >= CAP[k][3][j][0] ? "w on" : "w"; }
+        const f = Math.min(ENV.length / 2 - 1, Math.max(0, Math.round(t * FPS))), e = Number(ENV.substr(f * 2, 2)) / 99;
+        ring.style.transform = "scale(" + (1 + 0.1 * e).toFixed(3) + ")";
+        ring.style.borderColor = "rgba(140,235,255," + (0.55 + 0.45 * e).toFixed(2) + ")";
+        for (const [t0, d, to, dec, id] of COUNT) {
+          const u = Math.min(1, Math.max(0, (t - t0) / d)), v = to * (1 - Math.pow(1 - u, 3));
+          document.getElementById(id).textContent = BN(v.toFixed(dec));
+        }
+      } }, 0);
+  tl.fromTo("#ik", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.500, ease: "power3.out", immediateRender: false }, 0.150);
+  tl.fromTo("#it", { autoAlpha: 0, scale: 0.86 }, { autoAlpha: 1, scale: 1, duration: 0.600, ease: "back.out(1.7)", immediateRender: false }, 0.350);
+  tl.fromTo("#is", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.500, ease: "power3.out", immediateRender: false }, 0.850);
+  tl.fromTo("#iv", { scale: 1.1 }, { scale: 1, duration: 2.800, ease: "none", immediateRender: false }, 0.000);
+  tl.fromTo("#intro", { autoAlpha: 1, scale: 1 }, { autoAlpha: 0, scale: 0.94, duration: 0.300, ease: "power2.in", immediateRender: false }, 2.500);
+  tl.set("#s0", { autoAlpha: 1 }, 2.800);
+  tl.set("#s0", { autoAlpha: 0 }, 15.567);
+  tl.set("#bdt", { textContent: "AB1 · গ্লাস স্প্লিট" }, 2.800);
+  tl.fromTo("#aw0", { scale: 1.05 }, { scale: 1, duration: 0.600, ease: "power2.out", immediateRender: false }, 2.800);
+  tl.fromTo("#aw0", { x: 0, y: 0, width: 1920, height: 1080, borderRadius: 0, boxShadow: "0px 0px 0px 0px rgba(110,220,255,0)" }, { x: 150, y: 110, width: 540, height: 880, borderRadius: 32, boxShadow: "0px 0px 0px 3px rgba(150,230,255,0.75)", duration: 1.000, ease: "power3.inOut", immediateRender: false }, 3.600);
+  tl.fromTo("#sp0", { strokeDashoffset: 1300 }, { strokeDashoffset: 0, duration: 1.300, ease: "power2.inOut", immediateRender: false }, 4.700);
+  tl.set("#dt0", { x: 132, y: 430, autoAlpha: 0 }, 0.000);
+  tl.fromTo("#dt0", { autoAlpha: 0, scale: 0.3 }, { autoAlpha: 1, scale: 1, duration: 0.300, ease: "back.out(1.6)", immediateRender: false }, 5.700);
+  tl.fromTo("#dt0", { x: 132, y: 430 }, { x: 252, y: 378, duration: 0.300, ease: "power2.out", immediateRender: false }, 9.189);
+  tl.fromTo("#dt0", { x: 252, y: 378 }, { x: 372, y: 326, duration: 0.300, ease: "power2.out", immediateRender: false }, 10.124);
+  tl.fromTo("#dt0", { x: 372, y: 326 }, { x: 492, y: 274, duration: 0.300, ease: "power2.out", immediateRender: false }, 11.060);
+  tl.fromTo("#dt0", { x: 492, y: 274 }, { x: 612, y: 222, duration: 0.300, ease: "power2.out", immediateRender: false }, 11.996);
+  tl.fromTo("#dt0", { x: 612, y: 222 }, { x: 732, y: 170, duration: 0.300, ease: "power2.out", immediateRender: false }, 12.931);
+  tl.fromTo("#dt0", { x: 732, y: 170 }, { x: 852, y: 118, duration: 0.300, ease: "power2.out", immediateRender: false }, 13.867);
+  tl.set("#fl0", { scale: 0 }, 0.000);
+  tl.fromTo("#fl0", { scale: 0 }, { scale: 1, duration: 0.500, ease: "back.out(2.2)", immediateRender: false }, 14.217);
+  tl.fromTo("#hi0", { color: "#EAF2FF" }, { color: "#F7D27A", duration: 0.400, ease: "none", immediateRender: false }, 14.267);
+  tl.fromTo("#wn0", { autoAlpha: 0, x: 140 }, { autoAlpha: 1, x: 0, duration: 0.700, ease: "back.out(1.3)", immediateRender: false }, 4.100);
+  tl.fromTo("#wt0", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.450, ease: "power3.out", immediateRender: false }, 4.500);
+  tl.set("#s1", { autoAlpha: 1 }, 15.567);
+  tl.set("#s1", { autoAlpha: 0 }, 28.500);
+  tl.set("#bdt", { textContent: "AB4 · কার্ড ফ্যান" }, 15.567);
+  tl.fromTo("#flash", { autoAlpha: 0 }, { autoAlpha: 0.5, duration: 0.060, ease: "none", immediateRender: false }, 15.527);
+  tl.fromTo("#flash", { autoAlpha: 0.5 }, { autoAlpha: 0, duration: 0.300, ease: "power2.out", immediateRender: false }, 15.607);
+  tl.fromTo("#aw1", { scale: 1.05 }, { scale: 1, duration: 0.600, ease: "power2.out", immediateRender: false }, 15.567);
+  tl.fromTo("#aw1", { x: 0, y: 0, width: 1920, height: 1080, borderRadius: 0, boxShadow: "0px 0px 0px 0px rgba(110,220,255,0)" }, { x: 110, y: 150, width: 500, height: 780, borderRadius: 30, boxShadow: "0px 0px 0px 3px rgba(150,230,255,0.75)", duration: 1.000, ease: "power3.inOut", immediateRender: false }, 16.367);
+  tl.fromTo("#hd1", { autoAlpha: 0, y: -30 }, { autoAlpha: 1, y: 0, duration: 0.450, ease: "back.out(1.8)", immediateRender: false }, 18.060);
+  tl.fromTo("#th1", { autoAlpha: 0, x: 120 }, { autoAlpha: 1, x: 0, duration: 0.600, ease: "power3.out", immediateRender: false }, 18.060);
+  tl.fromTo("#th1 .sun", { scale: 0.85 }, { scale: 1.12, duration: 8.087, ease: "sine.inOut", immediateRender: false }, 18.060);
+  tl.fromTo("#th1", { autoAlpha: 1, x: 0 }, { autoAlpha: 0, x: -160, duration: 0.400, ease: "power2.in", immediateRender: false }, 26.047);
+  tl.fromTo("#cd1_0", { autoAlpha: 0, y: 240, rotation: -18, scale: 0.7 }, { autoAlpha: 1, y: 0, rotation: -6, scale: 1, duration: 0.600, ease: "back.out(1.5)", immediateRender: false }, 26.047);
+  tl.set("#cd1_0 .bld", { scaleY: 0 }, 0.000);
+  tl.fromTo("#cd1_0 .bld", { scaleY: 0 }, { scaleY: 1, duration: 0.900, ease: "power3.out", immediateRender: false }, 26.347);
+  tl.fromTo("#cd1_1", { autoAlpha: 0, y: 240, rotation: 0, scale: 0.7 }, { autoAlpha: 1, y: 0, rotation: 0, scale: 1, duration: 0.600, ease: "back.out(1.5)", immediateRender: false }, 26.727);
+  tl.fromTo("#cd1_0", { boxShadow: "0px 0px 0px 3px rgba(247,210,122,0.95), 0px 24px 60px 0px rgba(0,0,0,0.6)" }, { boxShadow: "0px 0px 0px 2px rgba(120,230,255,0.55), 0px 24px 60px 0px rgba(0,0,0,0.6)", duration: 0.300, ease: "none", immediateRender: false }, 26.827);
+  tl.fromTo("#cd1_2", { autoAlpha: 0, y: 240, rotation: 18, scale: 0.7 }, { autoAlpha: 1, y: 0, rotation: 6, scale: 1, duration: 0.600, ease: "back.out(1.5)", immediateRender: false }, 27.667);
+  tl.fromTo("#cd1_2 .nd0", { fill: "#8CEBFF" }, { fill: "#0B1830", duration: 0.450, ease: "power1.out", immediateRender: false }, 28.067);
+  tl.fromTo("#cd1_1", { boxShadow: "0px 0px 0px 3px rgba(247,210,122,0.95), 0px 24px 60px 0px rgba(0,0,0,0.6)" }, { boxShadow: "0px 0px 0px 2px rgba(120,230,255,0.55), 0px 24px 60px 0px rgba(0,0,0,0.6)", duration: 0.300, ease: "none", immediateRender: false }, 27.767);
+  tl.set("#s2", { autoAlpha: 1 }, 28.500);
+  tl.set("#s2", { autoAlpha: 0 }, 47.033);
+  tl.set("#bdt", { textContent: "AB3 · পাঞ্চ টাইপ" }, 28.500);
+  tl.fromTo("#flash", { autoAlpha: 0 }, { autoAlpha: 0.5, duration: 0.060, ease: "none", immediateRender: false }, 28.460);
+  tl.fromTo("#flash", { autoAlpha: 0.5 }, { autoAlpha: 0, duration: 0.300, ease: "power2.out", immediateRender: false }, 28.540);
+  tl.set("#aw2", { scale: 1.13, transformOrigin: "57% 44%" }, 34.713);
+  tl.fromTo("#aw2", { scale: 1.13 }, { scale: 1, duration: 1.700, ease: "power2.out", immediateRender: false }, 34.747);
+  tl.fromTo("#pk2_0", { autoAlpha: 0, scale: 1.5, rotation: -8 }, { autoAlpha: 1, scale: 1, rotation: -3, duration: 0.260, ease: "power4.in", immediateRender: false }, 34.673);
+  tl.set("#aw2", { scale: 1.13, transformOrigin: "57% 44%" }, 38.947);
+  tl.fromTo("#aw2", { scale: 1.13 }, { scale: 1, duration: 1.700, ease: "power2.out", immediateRender: false }, 38.980);
+  tl.fromTo("#pk2_1", { autoAlpha: 0, scale: 1.5, rotation: 8 }, { autoAlpha: 1, scale: 1, rotation: 3, duration: 0.260, ease: "power4.in", immediateRender: false }, 38.907);
+  tl.fromTo("#pk2_1 .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.250, ease: "power2.out", immediateRender: false }, 43.983);
+  tl.fromTo("#pk2_1", { opacity: 1 }, { opacity: 0.55, duration: 0.300, ease: "none", immediateRender: false }, 44.033);
+  tl.set("#aw2", { scale: 1.13, transformOrigin: "57% 44%" }, 44.133);
+  tl.fromTo("#aw2", { scale: 1.13 }, { scale: 1, duration: 1.700, ease: "power2.out", immediateRender: false }, 44.167);
+  tl.fromTo("#pk2_2", { autoAlpha: 0, scale: 1.5, rotation: -8 }, { autoAlpha: 1, scale: 1, rotation: -3, duration: 0.260, ease: "power4.in", immediateRender: false }, 44.093);
+  tl.fromTo("#pk2_2 .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.250, ease: "power2.out", immediateRender: false }, 45.757);
+  tl.fromTo("#pk2_2", { opacity: 1 }, { opacity: 0.55, duration: 0.300, ease: "none", immediateRender: false }, 45.807);
+  tl.set("#aw2", { scale: 1.13, transformOrigin: "57% 44%" }, 45.907);
+  tl.fromTo("#aw2", { scale: 1.13 }, { scale: 1, duration: 1.700, ease: "power2.out", immediateRender: false }, 45.940);
+  tl.fromTo("#pk2_3", { autoAlpha: 0, scale: 1.5, rotation: 8 }, { autoAlpha: 1, scale: 1, rotation: 3, duration: 0.260, ease: "power4.in", immediateRender: false }, 45.867);
+  tl.set("#s3", { autoAlpha: 1 }, 47.033);
+  tl.set("#s3", { autoAlpha: 0 }, 61.767);
+  tl.set("#bdt", { textContent: "AB2 · বাবল কাট" }, 47.033);
+  tl.fromTo("#flash", { autoAlpha: 0 }, { autoAlpha: 0.5, duration: 0.060, ease: "none", immediateRender: false }, 46.993);
+  tl.fromTo("#flash", { autoAlpha: 0.5 }, { autoAlpha: 0, duration: 0.300, ease: "power2.out", immediateRender: false }, 47.073);
+  tl.fromTo("#aw3", { scale: 1.05 }, { scale: 1, duration: 0.600, ease: "power2.out", immediateRender: false }, 47.033);
+  tl.fromTo("#bv3", { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1.04, duration: 0.600, ease: "power2.out", immediateRender: false }, 47.483);
+  tl.fromTo("#bv3", { scale: 1.04 }, { scale: 1, duration: 13.433, ease: "sine.out", immediateRender: false }, 48.083);
+  tl.fromTo("#aw3", { x: 0, y: 0, width: 1920, height: 1080, borderRadius: 0, boxShadow: "0px 0px 0px 0px rgba(110,220,255,0)" }, { x: 70, y: 650, width: 360, height: 360, borderRadius: 180, boxShadow: "0px 0px 0px 3px rgba(150,230,255,0.75)", duration: 1.000, ease: "power3.inOut", immediateRender: false }, 47.533);
+  tl.set("#vring", { left: 56, top: 636, autoAlpha: 0 }, 47.033);
+  tl.fromTo("#vring", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.300, ease: "none", immediateRender: false }, 48.333);
+  tl.set("#vring", { autoAlpha: 0 }, 61.767);
+  tl.fromTo("#sl3 .big", { scale: 1.8, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.220, ease: "power4.in", immediateRender: false }, 60.167);
+  tl.to("#sl3", { x: 12, y: -7, duration: 0.033, ease: "none" }, 60.387);
+  tl.to("#sl3", { x: -8, y: 5, duration: 0.033, ease: "none" }, 60.453);
+  tl.to("#sl3", { x: 4, y: -2, duration: 0.033, ease: "none" }, 60.520);
+  tl.to("#sl3", { x: 0, y: 0, duration: 0.033, ease: "none" }, 60.587);
+  tl.set("#sl3", { autoAlpha: 1 }, 0.000);
+  tl.fromTo("#sl3 .sub", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.400, ease: "power3.out", immediateRender: false }, 60.717);
+  tl.fromTo("#sl3 .big", { backgroundPosition: "160% 0%, 0% 0%" }, { backgroundPosition: "-60% 0%, 0% 0%", duration: 1.200, ease: "sine.inOut", immediateRender: false }, 60.867);
+  tl.set("#s4", { autoAlpha: 1 }, 61.767);
+  tl.set("#s4", { autoAlpha: 0 }, 75.400);
+  tl.set("#bdt", { textContent: "AB5 · ডেটা স্টেজ" }, 61.767);
+  tl.fromTo("#flash", { autoAlpha: 0 }, { autoAlpha: 0.5, duration: 0.060, ease: "none", immediateRender: false }, 61.727);
+  tl.fromTo("#flash", { autoAlpha: 0.5 }, { autoAlpha: 0, duration: 0.300, ease: "power2.out", immediateRender: false }, 61.807);
+  tl.fromTo("#bb4", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.600, ease: "none", immediateRender: false }, 62.267);
+  tl.fromTo("#aw4", { x: 0, y: 0, width: 1920, height: 1080, borderRadius: 0, boxShadow: "0px 0px 0px 0px rgba(110,220,255,0)" }, { x: 1430, y: 60, width: 420, height: 236, borderRadius: 22, boxShadow: "0px 0px 0px 3px rgba(150,230,255,0.75)", duration: 1.000, ease: "power3.inOut", immediateRender: false }, 62.267);
+  tl.fromTo("#st4", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.600, ease: "power3.out", immediateRender: false }, 62.767);
+  tl.fromTo("#bl4", { morphSVG: "M700,90 C960,60 1240,200 1260,420 C1280,650 1010,800 720,780 C420,760 150,640 160,420 C170,200 440,120 700,90 Z" }, { morphSVG: "M720,60 C1010,110 1300,260 1220,480 C1150,700 900,820 640,790 C380,760 120,600 190,380 C260,160 470,20 720,60 Z", duration: 3.2, ease: "sine.inOut", immediateRender: false }, 62.767);
+  tl.fromTo("#bl4", { morphSVG: "M720,60 C1010,110 1300,260 1220,480 C1150,700 900,820 640,790 C380,760 120,600 190,380 C260,160 470,20 720,60 Z" }, { morphSVG: "M680,110 C930,40 1180,140 1280,360 C1380,600 1080,780 760,800 C470,820 210,700 140,470 C80,240 430,180 680,110 Z", duration: 3.2, ease: "sine.inOut", immediateRender: false }, 65.967);
+  tl.fromTo("#bl4", { morphSVG: "M680,110 C930,40 1180,140 1280,360 C1380,600 1080,780 760,800 C470,820 210,700 140,470 C80,240 430,180 680,110 Z" }, { morphSVG: "M700,90 C960,60 1240,200 1260,420 C1280,650 1010,800 720,780 C420,760 150,640 160,420 C170,200 440,120 700,90 Z", duration: 3.2, ease: "sine.inOut", immediateRender: false }, 69.167);
+  tl.fromTo("#bl4", { morphSVG: "M700,90 C960,60 1240,200 1260,420 C1280,650 1010,800 720,780 C420,760 150,640 160,420 C170,200 440,120 700,90 Z" }, { morphSVG: "M720,60 C1010,110 1300,260 1220,480 C1150,700 900,820 640,790 C380,760 120,600 190,380 C260,160 470,20 720,60 Z", duration: 3.2, ease: "sine.inOut", immediateRender: false }, 72.367);
+  tl.fromTo("#stt4", { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.500, ease: "back.out(1.6)", immediateRender: false }, 63.017);
+  tl.fromTo("#stt4", { autoAlpha: 1, scale: 1 }, { autoAlpha: 0, scale: 0.9, duration: 0.300, ease: "power2.in", immediateRender: false }, 67.857);
+  tl.fromTo("#yr4", { autoAlpha: 0, scale: 0.6 }, { autoAlpha: 1, scale: 1, duration: 0.450, ease: "back.out(2)", immediateRender: false }, 65.580);
+  tl.fromTo("#br4_0", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.350, ease: "power3.out", immediateRender: false }, 68.057);
+  tl.fromTo("#br4_0 .bar", { scaleY: 0 }, { scaleY: 1, duration: 1.100, ease: "power3.out", immediateRender: false }, 68.307);
+  tl.fromTo("#br4_1", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.350, ease: "power3.out", immediateRender: false }, 71.877);
+  tl.fromTo("#br4_1 .bar", { scaleY: 0 }, { scaleY: 1, duration: 1.100, ease: "power3.out", immediateRender: false }, 72.127);
+  tl.fromTo("#sr4", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.400, ease: "power2.out", immediateRender: false }, 63.367);
+  tl.fromTo("#badge", { autoAlpha: 0, x: -30 }, { autoAlpha: 1, x: 0, duration: 0.400, ease: "power3.out", immediateRender: false }, 3.100);
+  tl.fromTo("#badge", { autoAlpha: 1, x: 0 }, { autoAlpha: 0, x: -30, duration: 0.300, ease: "power2.in", immediateRender: false }, 75.100);
+  tl.set("#outro", { autoAlpha: 1 }, 75.400);
+  tl.fromTo("#ot", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.350, ease: "power3.out", immediateRender: false }, 75.400);
+  tl.fromTo("#or0", { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 0.400, ease: "power3.out", immediateRender: false }, 75.650);
+  tl.fromTo("#or1", { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 0.400, ease: "power3.out", immediateRender: false }, 75.810);
+  tl.fromTo("#or2", { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 0.400, ease: "power3.out", immediateRender: false }, 75.970);
+  tl.fromTo("#or3", { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 0.400, ease: "power3.out", immediateRender: false }, 76.130);
+  tl.fromTo("#or4", { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 0.400, ease: "power3.out", immediateRender: false }, 76.290);
+  tl.fromTo("#fade", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.500, ease: "sine.in", immediateRender: false }, 77.850);
+  tl.fromTo("#grid", { y: 0 }, { y: -96, duration: 78.400, ease: "none", immediateRender: false }, 0.000);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
