@@ -1,6 +1,6 @@
 // motion.test.ts — proves the B-roll physics before anything renders (docs/broll-motion-spec.md §4).
 //   node tools/broll/motion.test.ts     → one line per check, exit 1 on any failure
-import { cubicBezier, GOLDEN_ANGLE, mulberry32, pageScript, phyllotaxis, springEase, springValue } from "./motion.ts";
+import { cubicBezier, fibonacci, GOLDEN_ANGLE, monotoneCubic, mulberry32, pageScript, phyllotaxis, springEase, springValue } from "./motion.ts";
 
 let failed = 0;
 const check = (name: string, ok: boolean, detail: string): void => {
@@ -37,6 +37,20 @@ const sa = Array.from({ length: 1000 }, a), sb = Array.from({ length: 1000 }, b)
 check("PRNG deterministic", sa.every((v, i) => v === sb[i]) && sa.every((v) => v >= 0 && v < 1), `1000 values equal for seed 42, all in [0, 1)`);
 const p1 = phyllotaxis(34, 60, { x: 0, y: 0 }), p2 = phyllotaxis(34, 60, { x: 0, y: 0 });
 check("phyllotaxis", p1.length === 34 && JSON.stringify(p1) === JSON.stringify(p2) && Math.abs(GOLDEN_ANGLE * 180 / Math.PI - 137.5078) < 1e-3, `34 points, golden angle ${(GOLDEN_ANGLE * 180 / Math.PI).toFixed(4)}°`);
+
+
+// continuous Fibonacci: exact at the integers, increasing in between (the MG2 growth curve)
+const fibs = [1, 2, 3, 5, 8, 13, 21, 34, 55];
+let fibMono = true, fprev = -1;
+for (let n = 2; n <= 10.0000001; n += 0.001) { const v = fibonacci(n); if (v < fprev - 1e-12) fibMono = false; fprev = v; }
+check("fibonacci", fibs.every((v, k) => Math.abs(fibonacci(k + 2) - v) < 1e-9) && fibMono, `F(2…10) = ${fibs.join(", ")} exactly, increasing over 8001 samples`);
+
+// monotone cubic: through every knot, never backwards, no overshoot
+const kx = [0.3, 0.95, 1.5, 2.0, 2.45, 2.85, 3.25, 3.7, 4.2], ky = [0, 210, 421, 633, 851, 1081, 1341, 1667, 2122];
+const mc = monotoneCubic(kx, ky);
+let mcMono = true, mcIn = true, mprev = -Infinity;
+for (let t = 0; t <= 5; t += 0.0005) { const v = mc(t); if (v < mprev - 1e-9) mcMono = false; if (v < 0 || v > 2122) mcIn = false; mprev = v; }
+check("monotoneCubic", kx.every((x, i) => Math.abs(mc(x) - ky[i]) < 1e-9) && mcMono && mcIn && mc(0) === 0 && mc(9) === 2122, "hits all 9 knots, never decreases, stays inside [first, last], clamps outside");
 
 // the injected page code compiles as plain JS and gives the same numbers
 const injected = new Function(`${pageScript()}; return { springEase, cubicBezier, mulberry32 };`)() as { springEase: typeof springEase; cubicBezier: typeof cubicBezier; mulberry32: typeof mulberry32 };

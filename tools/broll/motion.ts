@@ -95,6 +95,34 @@ export function grainTile(size: number, baseFrequency: number, seed: number): st
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 }
 
+/** Fibonacci numbers for real n (Binet's formula with the cos term): exact at integers (F(10) = 55), smooth and
+ *  increasing for n ≥ 2, so a curve through 1, 2, 3, 5, 8… grows by φ per step with no kinks. */
+export function fibonacci(n: number): number {
+  return (Math.pow(PHI, n) - Math.cos(Math.PI * n) * Math.pow(PHI, -n)) / Math.sqrt(5);
+}
+
+/** Monotone cubic interpolation (Fritsch–Carlson) through (xs[i], ys[i]), xs increasing: C1, never overshoots
+ *  between knots, so a time → distance map built on it never runs backwards. Clamps outside the knots. */
+export function monotoneCubic(xs: number[], ys: number[]): (x: number) => number {
+  const n = xs.length, d: number[] = [], m: number[] = [];
+  for (let i = 0; i < n - 1; i++) d.push((ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]));
+  m.push(d[0]);
+  for (let i = 1; i < n - 1; i++) m.push(d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2);
+  m.push(d[n - 2]);
+  for (let i = 0; i < n - 1; i++) {
+    if (d[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+    const a = m[i] / d[i], b = m[i + 1] / d[i], s = a * a + b * b;
+    if (s > 9) { const t = 3 / Math.sqrt(s); m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
+  }
+  return (x: number): number => {
+    if (x <= xs[0]) return ys[0];
+    if (x >= xs[n - 1]) return ys[n - 1];
+    let i = 0; while (x > xs[i + 1]) i++;
+    const h = xs[i + 1] - xs[i], t = (x - xs[i]) / h, t2 = t * t, t3 = t2 * t;
+    return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * h * m[i] + (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * h * m[i + 1];
+  };
+}
+
 /** The source of these functions for a page <script>: what the test ran is what the browser runs. */
 export function pageScript(): string {
   return [springEase, cubicBezier, mulberry32].map((f) => f.toString()).join("\n");

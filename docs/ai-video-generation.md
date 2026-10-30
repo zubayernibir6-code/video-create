@@ -165,7 +165,7 @@ already covers this.
 | Internet Archive | no key **(unv.)** | per item | depends |
 
 **Keys he can add to `.env.local`, in this order (never paste one in chat)**
-1. `PEXELS_API_KEY` (free)
+1. `PEXELS_API_KEY` (free; **new keys paused**, see the third pass)
 2. `PIXABAY_API_KEY` (free)
 3. `HF_TOKEN` (free; to download model weights)
 4. `KAGGLE_USERNAME` + `KAGGLE_KEY` (free; the Wan2GP GPU route)
@@ -181,3 +181,41 @@ stability.ai/license · copyright.gov/ai (Part 2 report) · support.google.com/y
 github.com/DepthAnything/Depth-Anything-V2 · github.com/danielgatis/rembg · github.com/hzwer/Practical-RIFE ·
 github.com/xinntao/Real-ESRGAN · github.com/WyattBlue/auto-editor · github.com/m-bain/whisperX · pexels.com/license ·
 pixabay.com/service/license-summary · coverr.co/license · mixkit.co/license · nasa.gov brand center · commons.wikimedia.org.
+
+## Third pass (2026-10-30): cheap image generation, and the exact key steps
+
+He found Gemini images expensive. Checked on each provider's own page (unv. = not verified):
+- **Gemini API images have no free tier** ("Not available"): Nano Banana 2 costs $0.067 per image.
+- **Free: Cloudflare Workers AI.**
+  - The free tier is 10,000 neurons a day (resets at 00:00 UTC). FLUX.1 schnell at 1024² is about 58 neurons, so
+    about 170 images a day. FLUX.2 klein 4B is about 104 neurons, so about 95 a day, and the pictures are better.
+  - Both models are Apache-2.0, and Cloudflare's terms leave the output rights with him.
+  - No card needed (unv.). Keys: `CLOUDFLARE_ACCOUNT_ID` + `CLOUDFLARE_API_TOKEN`.
+  - **`tools/image-gen.mjs` calls it** (written 2026-10-30, after he set the keys). klein at 1920×1088 takes ~8 s and returns
+    a 0.9–1.1 MB JPEG. The Workers AI dashboard's model list also has FLUX.2 [dev] and klein 9B as "partner" models; the tool
+    refuses both (non-commercial licence terms). AI draws gibberish letters on screens and paper, so add real words in the page.
+- **Cheapest paid: fal.ai.** Prepaid, no monthly fee.
+  - schnell $0.003/MP; FLUX.2 Flash $0.005/MP; Recraft V3 $0.04 and Ideogram V3 $0.03–0.09 per image.
+  - Each model page says "Commercial usage rights included". Credits expire after 365 days.
+- **Avoid for selling:**
+  - Microsoft Designer ("personal use only").
+  - Recraft free plan (images "owned by Recraft").
+  - Pollinations (now needs a key; no terms found).
+  - FLUX [dev] run directly: its licence §4(a) bars commercial use of outputs. Only use it through a host that sells
+    the rights.
+- **Changed since pass 2:**
+  - **Pexels has paused new API keys** (pexels.com/api, checked 2026-10-30). Use Pixabay (and Openverse, keyless).
+  - Hugging Face free accounts get no Inference credits any more. `HF_TOKEN` is only for downloading model weights.
+- **Key steps** (also in `.env.local.example`, and for him in START-HERE §২৫):
+  - **Pixabay:** pixabay.com/api/docs, logged in. The key is in the `key (required)` row under Parameters.
+  - **Cloudflare:** dash → Workers AI → Use REST API → Create a Workers AI API Token → Copy. The Account ID is on the
+    same page.
+  - **fal:** fal.ai/dashboard/keys → Create Key (shown once).
+  - **Kaggle:** first Settings → Phone Verification (+880), for GPU and internet. Then kaggle.com/settings/api →
+    Generate New Token → `C:\Users\Zubayer Nibir\.kaggle\access_token`.
+  - **AI Studio:** aistudio.google.com/apikey. The key is free, but images need billing.
+Sources: developers.cloudflare.com/workers-ai/platform/pricing/ and /models/flux-1-schnell/ and /get-started/rest-api/ ·
+cloudflare.com/service-specific-terms-developer-platform/ · huggingface.co/black-forest-labs/FLUX.2-klein-4B · fal.ai/pricing ·
+fal.ai/models/fal-ai/flux/schnell · fal.ai/docs/model-apis/authentication · ai.google.dev/gemini-api/docs/pricing ·
+bfl.ai/legal/non-commercial-license-terms · designer.microsoft.com/termsOfUse.pdf · recraft.ai/pricing · pexels.com/api/ ·
+pixabay.com/api/docs/ · huggingface.co/docs/inference-providers/pricing · github.com/Kaggle/kaggle-api docs.
