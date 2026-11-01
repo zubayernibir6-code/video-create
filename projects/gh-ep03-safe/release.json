@@ -17,16 +17,16 @@
       "profile": "universal-reel",
       "project": ".",
       "cover": "cover.jpg",
-      "file": "D:/Video Create/renders/gh-ep03-safe/2026-11-01_1129/gh-ep03-safe.mp4",
+      "file": "D:/Video Create/renders/gh-ep03-safe/2026-11-01_1755/gh-ep03-safe.mp4",
       "copy": "পর্ব ৩"
     },
     {
       "id": "linkedin",
       "bn": "LinkedIn ৪:৫ কাট",
       "profile": "linkedin-clip",
-      "file": "D:/Video Create/renders/gh-ep03-safe/2026-11-01_1129/gh-ep03-safe-li.mp4",
+      "file": "D:/Video Create/renders/gh-ep03-safe/2026-11-01_1755/gh-ep03-safe-li.mp4",
       "copy": "LinkedIn",
-      "make": "node tools/release/li-crop.mjs \"D:/Video Create/renders/gh-ep03-safe/2026-11-01_1129/gh-ep03-safe.mp4\" \"D:/Video Create/renders/gh-ep03-safe/2026-11-01_1129/gh-ep03-safe-li.mp4\""
+      "make": "node tools/release/li-crop.mjs \"D:/Video Create/renders/gh-ep03-safe/2026-11-01_1755/gh-ep03-safe.mp4\" \"D:/Video Create/renders/gh-ep03-safe/2026-11-01_1755/gh-ep03-safe-li.mp4\""
     }
   ]
 }

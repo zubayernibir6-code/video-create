@@ -1,68 +1,117 @@
-# প্ল্যান: ভিডিওর নাম
-
-<!--
-  Claude: copy this to projects/<name>/PLAN.md, fill every section, then run
-    node tools/plan-check.mjs projects/<name>
-  until it reports no ERROR. Show the user the goal, hook, shot table, "যা লাগবে", any WARN (in Bengali)
-  and the questions, and build nothing until the user says OK. Example: tools/plan/EXAMPLE.md.
-
-  Header: ফরম্যাট and দৈর্ঘ্য are required. Write নেই on its own for no voice or no music.
-  Voice: STYLE.md §৮ puts the user's own voice first; if unsure, plan Piper and ask.
-
-  Shot table rules (the checker reads them):
-  - সময় is seconds on the finished video: "0–2.5", "2.5–5". Over a minute, "1:05–1:08" works too.
-    Rows run back to back from 0 and the last one ends at দৈর্ঘ্য. No blank line inside the table, and no
-    | inside a cell (write \| if you must).
-  - One row per change on screen (cut, zoom, new graphic). On a Reel something changes every 2–3 s
-    (STYLE.md §৫). For a deliberate still beat, write the word দম in the পর্দায় কী cell; a still over
-    1.5 s still needs sound (a voice line, `room-tone` or music).
-  - ক্যাপশন / লেখা holds only extra on-screen text, written exactly as it will appear (Bengali digits; no ✓
-    or arrows: draw those and say so in পর্দায় কী). Voice captions follow the voice by themselves; write —
-    when there is no extra text.
-  - Sounds go in backticks with the file name from assets/sfx (or the project's own assets/sfx), with
-    ×N for repeats: `whoosh-short`, `click` ×৩. A whoosh at every new scene (STYLE.md §৭). Write
-    ভয়েস ১, ভয়েস ২ … for the script lines that start in that shot.
-
-  Questions: only what STYLE.md and the request do not answer, plus any number or claim the user did not
-  give you (a time saved, a price) and how any extra formats in আউটপুট are made (a quick blurred "fit" or
-  a separate layout, STYLE.md §৬).
--->
+# প্ল্যান: ৫টা GitHub রিপো · পর্ব ১০: Claude Code-এর শক্তি বাড়ানো
 
 ফরম্যাট: 9:16
-দৈর্ঘ্য: 30 সেকেন্ড
-প্ল্যাটফর্ম: Facebook Reels
-ধরন: অফার বা প্রোমো
-ভয়েস: নিজের গলা (না হলে Piper, পুরুষ, speaker 5)
-মিউজিক: নেই
+দৈর্ঘ্য: 83.3 সেকেন্ড
+প্ল্যাটফর্ম: Facebook Reels, Instagram Reels, YouTube Shorts আর X (একই ফাইল, universal-reel)
+ধরন: "৫টা GitHub রিপো" সিরিজ, স্টাইল REEL1 টার্মিনাল
+ভয়েস: আপনার ক্লোন করা গলা খ (Gemini, talha-b) (voice.wav), প্রতি সেকেন্ডে ২.৪ শব্দ
+মিউজিক: bgm.mp3 (Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে)
 আউটপুট: 9:16, সাথে 1:1
-পুরো ভিডিও জুড়ে: (যেমন: কার্সরের আভা, নাম-ইমেইল ঝাপসা, লোগো ঝাপসা, ক্যাপশন — CLAUDE.md §0h; না থাকলে "নেই")
+পুরো ভিডিও জুড়ে: প্রায় কালো ডার্ক-UI ঘর, বিন্দুর গ্রিড, কমলা আলোর আভা; স্টেজে উপরে কার্ড, নিচে টার্মিনাল, টাইটেল-বারে "ইনস্টল" গোনা; উপরে বাঁয়ে সিরিজের ব্যাজ "৫টা GitHub রিপো · পর্ব ১০" আর ৫টা বিন্দু; উপরে ডানে "ইনবক্সে CLAUDE" চিহ্ন (প্রথম রিপো থেকে শেষ পর্দা পর্যন্ত, "ইনবক্স" বললেই একটু লাফায়); ৩-শব্দের ক্যাপশন (বলা প্রতিটা শব্দ, উপর থেকে প্রায় ৬০%); সব লেখা প্ল্যাটফর্মের নিরাপদ এলাকায়; ফাইনাল আওয়াজ −১৪ LUFS
 
 ## লক্ষ্য
 
-<!-- One line: what the viewer will know or do after watching. -->
+দর্শক পরিষ্কার জানবে ভিডিওটা কী নিয়ে (Claude Code-এর ৫টা ফ্রি পাওয়ার-আপ; Claude Code নিজে পেইড প্ল্যানে চলে), প্রতিটা কী করে আর কীভাবে বসাতে হয়, আর লিংক ও বসানোর বাংলা গাইড পেতে পেজের ইনবক্সে CLAUDE লিখবে।
 
 ## হুক (প্রথম ২ সেকেন্ড)
 
-<!-- What is on screen and in the ear in the first 2 seconds: the result or the most striking line, never a greeting. -->
+প্রথম কথা: "Claude Code দিয়ে কিছু বানানোর আগে, এই পাঁচটা ফ্রি জিনিস বসিয়ে নিন।" বড় টার্মিনাল খোলে, প্রম্পটে "claude" টাইপ হয়, উপরে "০ / ৫ ইনস্টল"। শুভেচ্ছা দিয়ে শুরু নয়।
 
 ## স্ক্রিপ্ট
 
-<!-- The voice lines, numbered (১. … ২. …). With no voice, write: ভয়েস নেই। -->
+১. (০:০০.০) Claude Code দিয়ে কিছু বানানোর আগে, এই পাঁচটা ফ্রি জিনিস বসিয়ে নিন।
+২. (০:০৩.৭) প্রতিটা কী করে, আর কীভাবে বসাবেন, দেখাচ্ছি। Claude Code নিজে চলে পেইড প্ল্যানে। সব লিংক ইনবক্সে।
+৩. (০:১০.২) প্রথমটা Superpowers।
+৪. (০:১১.৫) কোড লেখার আগে Claude প্রশ্ন করে, প্ল্যান বানায়, তারপর টেস্ট করে। এলোমেলো কোড আর হয় না।
+৫. (০:১৬.৪) Claude Code-এর ভেতরে plugin install লিখে বসান, তারপর কিছু বানাতে বলুন।
+৬. (০:২১.৪) দ্বিতীয়টা Anthropic-এর নিজের Skills।
+৭. (০:২৪.১) বললেই আসল Word, Excel আর PowerPoint ফাইল বানিয়ে দেয়, শুধু চ্যাটের লেখা নয়।
+৮. (০:২৮.৭) marketplace-এ skills যোগ করে document skills বসান, তারপর বলুন পাঁচ স্লাইডের PowerPoint বানাও।
+৯. (০:৩৪.৫) তৃতীয়টা Upstash-এর Context7।
+১০. (০:৩৭.৬) Claude পুরোনো মনে-রাখা জিনিস দিয়ে নয়, আজকের ডকুমেন্টেশন পড়ে কোড লেখে।
+১১. (০:৪২.২) টার্মিনালে npx ctx7 setup চালান, তারপর প্রম্পটের শেষে লিখুন use context7।
+১২. (০:৪৮.৫) চতুর্থটা Microsoft-এর Playwright MCP।
+১৩. (০:৫১.৩) Claude নিজেই ব্রাউজার খোলে, ক্লিক করে, ফর্ম পূরণ করে দেখে সাইট ঠিকমতো চলছে কি না।
+১৪. (০:৫৬.০) এক লাইনে mcp add দিয়ে যোগ করুন, তারপর বলুন নিজের সাইটের ফর্মটা পরীক্ষা করো। ব্যাংকের সাইটে নয়।
+১৫. (১:০১.৭) আর পঞ্চমটা ccusage।
+১৬. (১:০৩.৭) Claude Code চলে পেইড প্ল্যানে। ccusage এক কমান্ডে দেখায় কত টোকেন গেল, লিমিটের কত কাছে আছেন।
+১৭. (১:০৯.৯) টার্মিনালে npx ccusage লিখুন। পাঁচ ঘণ্টার হিসাব দেখতে শেষে blocks লিখুন।
+১৮. (১:১৪.৯) পাঁচটার লিংক আর বসানোর বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন CLAUDE। আমি নিজে আপনাকে পাঠিয়ে দেব।
 
 ## শট টেবিল
 
 | সময় | পর্দায় কী | ক্যাপশন / লেখা | শব্দ |
 | --- | --- | --- | --- |
-| 0–2 |  |  |  |
+| 0–1.8 | অন্ধকার ঘরে বড় টার্মিনাল খোলে; প্রম্পটে "claude" টাইপ হয়, তারপর স্বাগত বাক্স ধাক্কা দিয়ে আসে | claude | `whoosh-short` `key-press` ×৬ `impact-bass-2` ভয়েস ১ |
+| 1.8–3.6 | নিচে গোনা "০ / ৫ ইনস্টল হয়েছে" | ০ / ৫ | `ping` `whoosh-short` |
+| 3.6–5.2 | হুক সরে যায়; কার্ডে বড় করে লেখা ভিডিওটা কী নিয়ে; প্রতিশ্রুতির একটা সারি জ্বলে | এই ভিডিওতে: ৫টা পাওয়ার-আপ · Claude Code-এর শক্তি বাড়াতে · কোনটা কী করে | `whoosh-short` `impact-bass-2` `key-press` ভয়েস ২ |
+| 5.2–7.1 | প্রতিশ্রুতির একটা সারি জ্বলে | কীভাবে বসাবেন | `key-press` |
+| 7.1–9 | দৃশ্যে হালকা ক্যামেরা-ঠেলা (১ গুণে এসে থামে) | — | `whoosh-short` |
+| 9–10.4 | প্রতিশ্রুতির একটা সারি জ্বলে; উপরে ডানে "ইনবক্সে CLAUDE" চিহ্ন আসে, শেষ পর্দা পর্যন্ত থাকে | লিংক: ইনবক্সে CLAUDE · ইনবক্সে CLAUDE | `key-press` `whoosh-short` `ping` ভয়েস ৩ |
+| 10.4–12.4 | প্রথম রিপো: হিট-স্টপ: নাম আসতেই কার্ড ঝাঁকি দিয়ে ঢোকে, ঝলক, ভারী আঘাত; টার্মিনালে "/plugin install superpowers" টাইপ হয়, বার ভরে, সবুজ টিক; নাম বড় হয়ে মাঝে, তারপর উপরে বসে | Superpowers | `whoosh-short` `typing` `impact-bass-2` ভয়েস ৪ |
+| 12.4–13.3 | ফিচার ঝটকায় পাশ থেকে আসে; নামের নিচে প্রমাণের সংখ্যা জ্বলে ওঠে | আগে প্রশ্ন · ৩ লাখ স্টার | `success` `ping` `key-press` |
+| 13.3–14.2 | ফিচার ঝটকায় পাশ থেকে আসে | প্ল্যান বানায় | `key-press` |
+| 14.2–15.2 | ফিচার ঝটকায় পাশ থেকে আসে | টেস্ট করে | `key-press` |
+| 15.2–16.3 | সবুজ পিল বসে | এলোমেলো কোড নয় | `success` |
+| 16.3–17.7 | ফিচারগুলো সরে যায়, "কীভাবে চালাবেন" প্যানেল আসে | কীভাবে বসাবেন | `whoosh-short` ভয়েস ৫ |
+| 17.7–19.9 | ১ নম্বর ধাপ আসে | plugin install | `key-press` |
+| 19.9–22 | ২ নম্বর ধাপ আসে | কিছু বানাতে বলুন | `key-press` ভয়েস ৬ |
+| 22–24.9 | দ্বিতীয় রিপো: হিট-স্টপ: নাম আসতেই কার্ড ঝাঁকি দিয়ে ঢোকে, ঝলক, ভারী আঘাত; টার্মিনালে "/plugin install document-skills" টাইপ হয়, বার ভরে, সবুজ টিক; নাম বড় হয়ে মাঝে, তারপর উপরে বসে | Anthropic Skills | `whoosh-short` `typing` `success` `impact-bass-2` ভয়েস ৭ |
+| 24.9–26.2 | ফিচার ঝটকায় পাশ থেকে আসে; ফিচার ঝটকায় পাশ থেকে আসে | Word · Excel | `key-press` ×২ |
+| 26.2–27.7 | ফিচার ঝটকায় পাশ থেকে আসে | PowerPoint | `key-press` |
+| 27.7–28.9 | সবুজ পিল বসে; ফিচারগুলো সরে যায়, "কীভাবে চালাবেন" প্যানেল আসে | আসল ফাইল, লেখা নয় · কীভাবে বসাবেন | `success` `whoosh-short` ভয়েস ৮ |
+| 28.9–30.6 | ১ নম্বর ধাপ আসে | marketplace-এ যোগ | `key-press` |
+| 30.6–32 | ২ নম্বর ধাপ আসে | document skills | `key-press` |
+| 32–33.5 | দৃশ্যে হালকা ক্যামেরা-ঠেলা (১ গুণে এসে থামে) | — | `whoosh-short` |
+| 33.5–34.8 | ৩ নম্বর ধাপ আসে | PowerPoint বানাও | `key-press` ভয়েস ৯ |
+| 34.8–36.1 | দৃশ্যে হালকা ক্যামেরা-ঠেলা (১ গুণে এসে থামে) | — | `whoosh-short` |
+| 36.1–38 | তৃতীয় রিপো: হিট-স্টপ: নাম আসতেই কার্ড ঝাঁকি দিয়ে ঢোকে, ঝলক, ভারী আঘাত; টার্মিনালে "npx ctx7 setup" টাইপ হয়, বার ভরে, সবুজ টিক; নাম বড় হয়ে মাঝে, তারপর উপরে বসে | Context7 | `whoosh-short` `typing` `impact-bass-2` ভয়েস ১০ |
+| 38–39.3 | আরও উপাদান আসে, ক্যাপশন চলতে থাকে | — | `success` |
+| 39.3–41.1 | নামের নিচে প্রমাণের সংখ্যা জ্বলে ওঠে; ফিচার ঝটকায় পাশ থেকে আসে | ৬৪ হাজার স্টার · আজকের ডক | `ping` `key-press` |
+| 41.1–42.1 | ফিচার ঝটকায় পাশ থেকে আসে; সবুজ পিল বসে | ঠিক কোড · নতুন ডক পড়ে লেখে | `key-press` `success` |
+| 42.1–44.4 | ফিচারগুলো সরে যায়, "কীভাবে চালাবেন" প্যানেল আসে | কীভাবে বসাবেন | `whoosh-short` ভয়েস ১১ |
+| 44.4–46.8 | ১ নম্বর ধাপ আসে | setup চালান | `key-press` |
+| 46.8–48.3 | ২ নম্বর ধাপ আসে | use context7 লিখুন | `key-press` |
+| 48.3–49.9 | দৃশ্যে হালকা ক্যামেরা-ঠেলা (১ গুণে এসে থামে) | — | `whoosh-short` ভয়েস ১২ |
+| 49.9–51.9 | চতুর্থ রিপো: হিট-স্টপ: নাম আসতেই কার্ড ঝাঁকি দিয়ে ঢোকে, ঝলক, ভারী আঘাত; টার্মিনালে "claude mcp add playwright" টাইপ হয়, বার ভরে, সবুজ টিক; নাম বড় হয়ে মাঝে, তারপর উপরে বসে | Playwright MCP | `whoosh-short` `typing` `impact-bass-2` ভয়েস ১৩ |
+| 51.9–53.1 | ফিচার ঝটকায় পাশ থেকে আসে; ফিচার ঝটকায় পাশ থেকে আসে | ব্রাউজার খোলে · ক্লিক করে | `success` `key-press` ×২ |
+| 53.1–54.9 | ফিচার ঝটকায় পাশ থেকে আসে | ফর্ম পূরণ | `key-press` |
+| 54.9–55.9 | সবুজ পিল বসে | সাইট টেস্ট নিজেই | `success` |
+| 55.9–58 | ফিচারগুলো সরে যায়, "কীভাবে চালাবেন" প্যানেল আসে; ১ নম্বর ধাপ আসে | কীভাবে বসাবেন · mcp add দিন | `whoosh-short` `key-press` ভয়েস ১৪ |
+| 58–59.5 | দৃশ্যে হালকা ক্যামেরা-ঠেলা (১ গুণে এসে থামে) | — | `whoosh-short` |
+| 59.5–61.2 | ২ নম্বর ধাপ আসে; ৩ নম্বর ধাপ আসে | ফর্ম পরীক্ষা করো · ব্যাংকের সাইটে নয় | `key-press` ×২ |
+| 61.2–62.8 | আরও উপাদান আসে, ক্যাপশন চলতে থাকে | — | ভয়েস ১৫ |
+| 62.8–65.2 | পঞ্চম রিপো: হিট-স্টপ: নাম আসতেই কার্ড ঝাঁকি দিয়ে ঢোকে, ঝলক, ভারী আঘাত; টার্মিনালে "npx ccusage@latest" টাইপ হয়, বার ভরে, সবুজ টিক; নাম বড় হয়ে মাঝে, তারপর উপরে বসে | ccusage | `whoosh-short` `typing` `success` `impact-bass-2` ভয়েস ১৬ |
+| 65.2–67.4 | আরও উপাদান আসে, ক্যাপশন চলতে থাকে | — | মিউজিক |
+| 67.4–69 | ফিচার ঝটকায় পাশ থেকে আসে; ফিচার ঝটকায় পাশ থেকে আসে | কত টোকেন গেল · লিমিট কত কাছে | `key-press` ×২ |
+| 69–70.4 | সবুজ পিল বসে; ফিচারগুলো সরে যায়, "কীভাবে চালাবেন" প্যানেল আসে | লিমিটের হিসাব এক নজরে · কীভাবে বসাবেন | `success` `whoosh-short` ভয়েস ১৭ |
+| 70.4–72 | ১ নম্বর ধাপ আসে | npx ccusage | `key-press` |
+| 72–73.6 | দৃশ্যে হালকা ক্যামেরা-ঠেলা (১ গুণে এসে থামে) | — | `whoosh-short` |
+| 73.6–74.8 | ২ নম্বর ধাপ আসে | শেষে blocks | `key-press` |
+| 74.8–77.5 | শেষ পর্দা: ৫টা রিপোর কার্ড পাশাপাশি (৩ + ২) আসে | ৫টা পাওয়ার-আপ এক নজরে | `pop` ×৫ ভয়েস ১৮ |
+| 77.5–78.4 | কার্ডগুলো সরে যায়; ইনবক্সে মেসেজ করার ৩টা ধাপ আসে; মেসেজের ১ নম্বর ধাপ আসে | লিংক আর বাংলা গাইড পেতে · পেজে যান | `whoosh-short` `pop` |
+| 78.4–79.6 | মেসেজের ২ নম্বর ধাপ আসে | Message চাপুন | `pop` `whoosh-short` |
+| 79.6–81 | মেসেজের ৩ নম্বর ধাপ আসে; মেসেজ-বক্সে কিওয়ার্ড টাইপ হয়, পাঠানোর বোতাম চাপা, টিক | লিখুন CLAUDE · CLAUDE | `pop` `key-press` ×৬ `click` |
+| 81–83.3 | আরও উপাদান আসে, ক্যাপশন চলতে থাকে | — | `notification` |
 
 ## যা লাগবে
 
-<!-- Voice, sounds, music, footage or photos, credits, extra formats: what is ready, what is free, what must come from the user. -->
+- ভয়েস: assets/voice/clone-b/voice.wav (আছে; শব্দের সময় মাপা, স্ক্রিপ্টের সাথে ৯৩% মিল)।
+- মিউজিক: assets/music/bgm.mp3 (আছে)।
+- সাউন্ড ইফেক্ট: সবই assets/sfx-এ আছে।
+- ছবি: সব কোডে আঁকা (ডার্ক কার্ড, টার্মিনাল, প্রগ্রেস বার, টিক)। কোনো আসল লোগো নেই: রিপোর নামের লেখা আর রঙিন আদ্যক্ষর-ব্যাজ।
+- তথ্য: ৫টা সূত্রসহ (৩০ অক্টোবর ২০২৬-এ রিপোর নিজের পাতা থেকে যাচাই)।
 
 ## STYLE.md আর LESSONS.md থেকে যা মানছি
 
-<!-- The STYLE.md rules and LESSONS.md lessons this video follows, each in one line with its section. -->
+- STYLE §৫: প্রতি ২–৩ সেকেন্ডে পর্দায় কিছু বদলায়; প্রথম ২ সেকেন্ডে সবচেয়ে চমকানো কথা।
+- STYLE §৬: পড়ার লেখা ১০৮০p-তে অন্তত ২৮ px, ছোট লেবেল অন্তত ২৪ px।
+- STYLE §৭: প্রতি দৃশ্য বদলে শব্দ, শব্দ ঠিক ছবির মুহূর্তে; ভয়েসের নিচে মিউজিক; ফাইনাল −১৪ LUFS।
+- STYLE §১৩: ভুয়া রিভিউ নয়; রিপোর সংখ্যা সূত্রসহ।
+- LESSONS ২০২৬-১০-২৮: ক্যাপশন, ব্যাজ আর পেছনের দুনিয়া প্রথম ফ্রেম থেকে শেষ ফ্রেম পর্যন্ত (CLAUDE.md §০h)।
+- SERIES-PLAN §৩: প্রতিটা পর্ব আলাদা দুনিয়া আর নড়াচড়া, কিন্তু ব্যাজ, ক্যাপশন আর শেষের কার্ড সব পর্বে একই।
+- LESSONS ২০২৬-১১-০১: দর্শক যেন পরিষ্কার বোঝে ভিডিওটা কী নিয়ে (শুরুর কার্ড), প্রতিটা টুল কীভাবে চালাবে (ধাপ ১-২-৩), আর লিংক পেতে কীভাবে ইনবক্সে মেসেজ করবে (শেষ পর্দার ৩ ধাপ + পুরো ভিডিওতে "ইনবক্সে CLAUDE" চিহ্ন)।
 
 ## আপনার কাছে প্রশ্ন
 
-<!-- Only what STYLE.md and the request do not answer. plan-check lists STYLE.md's open questions. -->
+- কোনো প্রশ্ন নেই।

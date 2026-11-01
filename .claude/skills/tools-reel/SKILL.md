@@ -221,6 +221,10 @@ Traps that cost a run on 2026-11-01:
   started. Two voice chains then ran at once (both made every voice, one fit a half-written file, two ASR jobs). Before
   restarting a chain, list processes (PowerShell `Get-CimInstance Win32_Process` by command line) and stop the old one;
   a long chain takes a lock (`mkdir <lock> || exit`).
+- **"Attempted to use detached Frame"** (render or preflight stops at a random frame): the headless page crashed under
+  load (a heavy look such as REEL4/REEL7 while ASR runs). Not the composition. Render that episode alone after the rest.
+- **True peak over -1 dBTP after AAC** (REEL9, -0.4): finish.mjs now limits 4× oversampled and tighter until ≤ -1.
+- **Covers**: `node tools/release/cover.mjs <p> --at=<promise card with all rows>` (the card says what the video is for).
 - **Over 60 s = preflight before finish.mjs.** It caught: a world element visible before its fromTo (REEL2 #floor →
   `ctx.pre`), the camera push snapping 1 → 0.975 (now a breath: ease to 0.975, settle on 1), a child scale tween
   starting after its parent's entrance (#prt, .csn: start together).

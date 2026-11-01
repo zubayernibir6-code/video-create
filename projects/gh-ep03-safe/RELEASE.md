@@ -1,14 +1,14 @@
 # রিলিজ চেকলিস্ট: gh-ep03-safe
 
-তৈরি: 2026-11-01 11:43 · `node tools/release/pack.mjs projects/gh-ep03-safe` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep03-safe/release`
+তৈরি: 2026-11-01 18:04 · `node tools/release/pack.mjs projects/gh-ep03-safe` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep03-safe/release`
 লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
 | ফাইল | কী | মাপ | প্ল্যাটফর্মের নিয়ম |
 | --- | --- | --- | --- |
-| পর্ব ৩ (অ্যাকাউন্টের নিরাপত্তা) | universal-reel | 1080×1920, 81.0 s, 82.8 MB | ✓ পাস (universal-reel PASS) |
-| LinkedIn ৪:৫ কাট | linkedin-clip | 1080×1350, 81.0 s, 74.5 MB | ✓ পাস (linkedin-clip PASS) |
+| পর্ব ৩ (অ্যাকাউন্টের নিরাপত্তা) | universal-reel | 1080×1920, 80.8 s, 80.7 MB | ✓ পাস (universal-reel PASS) |
+| LinkedIn ৪:৫ কাট | linkedin-clip | 1080×1350, 80.8 s, 72.4 MB | ✓ পাস (linkedin-clip PASS) |
 
 ## আপলোডের ক্রম
 
@@ -109,7 +109,7 @@ _(লেখা পাওয়া যায়নি: RELEASE-COPY.md দেখ�
 
 ## মনে রাখবেন
 
-- **AI গলা:** এই ভিডিওর ভয়েস আপনার গলার ক্লোন। YouTube Studio → Details → "Altered or synthetic content" = **Yes**; Facebook/Instagram-এ পোস্ট করার সময় "AI info / Made with AI" লেবেল দিন; X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লিখুন। না দিলে ভিডিও সরানো বা চ্যানেলে শাস্তির ঝুঁকি।
+- **AI গলা:** এই ভিডিওর ভয়েস আপনার নিজের গলার ক্লোন। Facebook/Instagram-এ পোস্ট করার সময় "AI info" (AI দিয়ে বানানো) লেবেল চালু করুন — Meta-র নিয়মে বাস্তব-শোনানো AI অডিওতে এটা বাধ্যতামূলক। YouTube-এ লাগবে না: YouTube-এর নিয়মে নিজের গলার ক্লোন দিয়ে ভয়েস-ওভার জানানোর তালিকায় নেই (চালু করলেও আয়ে প্রভাব নেই)। X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লেখা ভালো।
 - Chrome-এ পুরো uBlock Origin আর নেই, নামাতে হবে uBO Lite (ভিডিওতেও বলা)।
 - Cryptomator-এর রিকভারি কী হারালে ফাইল আর খোলা যায় না।
 - ব্যাকগ্রাউন্ড মিউজিক Lyria-তে বানানো। পেইড বিজ্ঞাপনে লাগানোর আগে Google-এর শর্ত একবার দেখে নেবেন।

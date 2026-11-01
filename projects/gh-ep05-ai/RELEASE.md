@@ -1,6 +1,6 @@
 # রিলিজ চেকলিস্ট: gh-ep05-ai
 
-তৈরি: 2026-11-01 15:54 · `node tools/release/pack.mjs projects/gh-ep05-ai` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep05-ai/release`
+তৈরি: 2026-11-01 18:14 · `node tools/release/pack.mjs projects/gh-ep05-ai` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep05-ai/release`
 লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
@@ -111,7 +111,7 @@ _(লেখা পাওয়া যায়নি: RELEASE-COPY.md দেখ�
 
 ## মনে রাখবেন
 
-- **AI গলা:** এই ভিডিওর ভয়েস আপনার গলার ক্লোন। YouTube Studio → Details → "Altered or synthetic content" = **Yes**; Facebook/Instagram-এ পোস্ট করার সময় "AI info / Made with AI" লেবেল দিন; X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লিখুন। না দিলে ভিডিও সরানো বা চ্যানেলে শাস্তির ঝুঁকি।
+- **AI গলা:** এই ভিডিওর ভয়েস আপনার নিজের গলার ক্লোন। Facebook/Instagram-এ পোস্ট করার সময় "AI info" (AI দিয়ে বানানো) লেবেল চালু করুন — Meta-র নিয়মে বাস্তব-শোনানো AI অডিওতে এটা বাধ্যতামূলক। YouTube-এ লাগবে না: YouTube-এর নিয়মে নিজের গলার ক্লোন দিয়ে ভয়েস-ওভার জানানোর তালিকায় নেই (চালু করলেও আয়ে প্রভাব নেই)। X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লেখা ভালো।
 - ল্যাপটপের AI ছোট মডেলে চলে (৮ GB RAM-এ), উত্তর ChatGPT-এর চেয়ে দুর্বল: ভিডিও আর LinkedIn পোস্টে বলা আছে।
 - ব্যাকগ্রাউন্ড মিউজিক Lyria-তে বানানো। পেইড বিজ্ঞাপনে লাগানোর আগে Google-এর শর্ত একবার দেখে নেবেন।
 - কিওয়ার্ডের অটো-রিপ্লাই (ইনবক্সের মেসেজ) Facebook আর Instagram-এ চালু রাখবেন। মেসেজের লেখা series/github-repos/INBOX-AND-COMMUNITY.md-এ আছে।

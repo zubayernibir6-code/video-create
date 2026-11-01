@@ -1,6 +1,6 @@
 # রিলিজ চেকলিস্ট: gh-ep01-phone
 
-তৈরি: 2026-11-01 14:28 · `node tools/release/pack.mjs projects/gh-ep01-phone` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep01-phone/release`
+তৈরি: 2026-11-01 18:13 · `node tools/release/pack.mjs projects/gh-ep01-phone` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep01-phone/release`
 লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
@@ -109,7 +109,7 @@ _(লেখা পাওয়া যায়নি: RELEASE-COPY.md দেখ�
 
 ## মনে রাখবেন
 
-- **AI গলা:** এই ভিডিওর ভয়েস আপনার গলার ক্লোন। YouTube Studio → Details → "Altered or synthetic content" = **Yes**; Facebook/Instagram-এ পোস্ট করার সময় "AI info / Made with AI" লেবেল দিন; X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লিখুন। না দিলে ভিডিও সরানো বা চ্যানেলে শাস্তির ঝুঁকি।
+- **AI গলা:** এই ভিডিওর ভয়েস আপনার নিজের গলার ক্লোন। Facebook/Instagram-এ পোস্ট করার সময় "AI info" (AI দিয়ে বানানো) লেবেল চালু করুন — Meta-র নিয়মে বাস্তব-শোনানো AI অডিওতে এটা বাধ্যতামূলক। YouTube-এ লাগবে না: YouTube-এর নিয়মে নিজের গলার ক্লোন দিয়ে ভয়েস-ওভার জানানোর তালিকায় নেই (চালু করলেও আয়ে প্রভাব নেই)। X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লেখা ভালো।
 - Canta দিয়ে শুধু "নিরাপদ" লেখা অ্যাপ সরাবেন, ভুল অ্যাপ সরালে ফোন রিসেট লাগতে পারে (ইনবক্স-গাইডেও আছে)।
 - ব্যাকগ্রাউন্ড মিউজিক Lyria-তে বানানো। পেইড বিজ্ঞাপনে লাগানোর আগে Google-এর শর্ত একবার দেখে নেবেন।
 - কিওয়ার্ডের অটো-রিপ্লাই (ইনবক্সের মেসেজ) Facebook আর Instagram-এ চালু রাখবেন। মেসেজের লেখা series/github-repos/INBOX-AND-COMMUNITY.md-এ আছে।

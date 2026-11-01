@@ -159,10 +159,15 @@ function normaliseAudio(input, output, target, videoArgs, videoDur, mux = ["-mov
     method += `, trimmed ${delta > 0 ? "+" : ""}${delta.toFixed(1)} dB`;
   }
   // Linear loudnorm cannot raise a peaky mix without breaking the peak limit; fall back to gain + limiter.
+  // The limiter runs 4× oversampled (a true-peak limiter), and tighter until the AAC file's true peak is under -1:
+  // at 48 kHz with limit 0.794 an AAC master still measured -0.4 dBTP (gh-ep08-bangla, 2026-11-01).
   if (Math.abs(after.I - target) > 1 || after.TP > -1) {
-    encode(`volume=${(target - before.I).toFixed(2)}dB,alimiter=limit=0.794:level=false,aresample=48000`);
-    after = ebur(output);
-    method = "gain + limiter";
+    for (const limit of [0.708, 0.631, 0.562]) {
+      encode(`volume=${(target - before.I).toFixed(2)}dB,aresample=192000,alimiter=limit=${limit}:level=false,aresample=48000`);
+      after = ebur(output);
+      method = `gain + 4x true-peak limiter (${limit})`;
+      if (after.TP <= -1) break;
+    }
   }
   return { before: before.I, after: after.I, peak: after.TP, method };
 }
