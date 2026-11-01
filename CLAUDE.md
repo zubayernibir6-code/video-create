@@ -270,7 +270,7 @@ codes fit. A new style is not done until it has a line in both files with its pr
 | `tools/voice.mjs` | record / clean a voice (AI denoise) → −16 LUFS WAV |
 | `tools/bn-tts.mjs` | offline Bengali TTS (Piper; credit line required) |
 | `tools/burn-subs.mjs`, `srt-to-words.mjs`, `srt.mjs` | Bengali-safe burned subtitles (never `subtitles=`) |
-| `tools/music-pick.mjs`, `tools/music-drops.mjs` | pick/trim a mood track; find bass drops to land on a moment |
+| `tools/music-pick.mjs`, `tools/music-drops.mjs`, `tools/lyria.mjs`, `tools/music-extend.mjs` | pick/trim a mood track; find bass drops to land on a moment; a new song from a prompt (Lyria, $0.08, his key); make a song longer than the video (crossfaded copy, free) |
 | `tools/stock-fetch.mjs` | licensed stock photos (Openverse keyless; Pexels/Pixabay need keys) |
 | `tools/sfx-leads.mjs` | writes each SFX's silent lead-in (`lead_s`) into assets/sfx/manifest.json |
 | `tools/hf-postassemble.mjs`, `tools/fix-frame.mjs` | fix skill-workflow traps (CDN GSAP, fonts, dropped audio; frame.md roles) |
@@ -284,6 +284,7 @@ codes fit. A new style is not done until it has a line in both files with its pr
 | `tools/cutdown/*` | Reels from a finished video: `cut.mjs` (pieces, face window, voice; stops first if a cut clips a word: `boundaries.mjs`) → `page.mjs` (layout, pans, chips, captions) → `mix.mjs` (skill `reel-cutdown`) |
 | `tools/reel/*` | tools-reel engine: `reel.json` + voice → aligned captions, six scene types, terminal, mascot, mix, PLAN.md (skill `tools-reel`) |
 | `tools/release/*` | platform rules in ONE file (`platforms.json`, sources + dates) + `spec-check.mjs <render>` (FB Reels / IG Reels / Shorts / X / LinkedIn / YouTube: FAIL/WARN per platform; `--limits=universal-reel` = the one-file caps + text-safe box); `master-words.mjs <tutorial>` (every word of a finished master in master seconds, corrected, no new ASR) → `srt-export.mjs` (`<name>.bn.srt` + `.bn_IN.srt` for YouTube/LinkedIn/Facebook). Cut-down profiles `universal-reel` / `linkedin-clip` live in `tools/cutdown/page.mjs`. Plan of the whole release system: `docs/release-system-plan.md` |
+| `tools/autocap/*` | auto-tutorial, NO screen recording (style AT1): `capture.mjs` (robot runs demo.json in Chrome → 2× states + DOM boxes; stops on CAPTCHA, never on claude.ai/ChatGPT/Meta/Canva) → `compose.mjs` (one voice file aligned by `voice-times.mjs`, clicks on the spoken word, result-first hook) → `plan.mjs` (PLAN.md from data) · `teleprompter.mjs --check` (his phone take). Plan: `docs/auto-tutorial-plan.md` |
 | `tools/ref-analyze.mjs` | measure a reference video once (LUFS, BPM, voice pace and pitch, silences, sheet, transcript) → `assets/refs/<name>.analysis.md` |
 | `tools/session-status.mjs` | the start-of-session health line (disk, RAM, git, last render) — runs as a SessionStart hook |
 

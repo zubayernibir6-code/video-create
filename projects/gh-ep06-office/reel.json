@@ -1,0 +1,343 @@
+{
+ "engine": "series",
+ "style": "REEL7",
+ "series": "৫টা GitHub রিপো",
+ "episode": 6,
+ "title": "৫টা GitHub রিপো · পর্ব ৬: ফ্রিল্যান্সিং আর অফিসের ফ্রি টুল",
+ "lang": "bn",
+ "voice": "assets/voice/clone-b/voice.wav",
+ "voiceLabel": "আপনার ক্লোন করা গলা খ (Gemini, talha-b)",
+ "music": {
+  "file": "assets/music/bgm.mp3",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে"
+ },
+ "keyword": "OFFICE",
+ "minMatch": 0.75,
+ "goal": "দর্শক পরিষ্কার জানবে ভিডিওটা কী নিয়ে (ফ্রিল্যান্সিং আর অফিসের ৫টা ফ্রি টুল, সাবস্ক্রিপশন ছাড়া), প্রতিটা কী করে আর কীভাবে চালাতে হয়, আর লিংক ও বাংলা গাইড পেতে পেজের ইনবক্সে OFFICE লিখবে।",
+ "hook": {
+  "line": "প্রতিটা অফিস-কাজের জন্য আলাদা সাবস্ক্রিপশন লাগে না। ফ্রিল্যান্সারদের জন্য পাঁচটা ফ্রি টুল।",
+  "on": "লাগে",
+  "stamp": "বাতিল",
+  "title": "মাসিক সাবস্ক্রিপশন (উদাহরণ)",
+  "bill": [
+   {
+    "label": "PDF এডিটর",
+    "price": "৳১,২০০"
+   },
+   {
+    "label": "হোয়াইটবোর্ড",
+    "price": "৳৮০০"
+   },
+   {
+    "label": "ইনভয়েস অ্যাপ",
+    "price": "৳১,৫০০"
+   },
+   {
+    "label": "ই-সাইন",
+    "price": "৳১,১০০"
+   }
+  ],
+  "total": 4600
+ },
+ "promise": {
+  "line": "প্রতিটা কী কাজ করে, আর কীভাবে চালাবেন, এখনই দেখাচ্ছি। সব লিংক পাবেন ইনবক্সে।",
+  "kicker": "এই ভিডিওতে",
+  "title": "৫টা ফ্রি টুল",
+  "sub": "ফ্রিল্যান্সিং আর অফিসের কাজে",
+  "rows": [
+   {
+    "label": "কোনটা কী কাজ করে",
+    "on": "কাজ",
+    "icon": "sparkles"
+   },
+   {
+    "label": "কীভাবে চালাবেন",
+    "on": "চালাবেন",
+    "icon": "list-checks"
+   },
+   {
+    "label": "লিংক: ইনবক্সে OFFICE",
+    "on": "ইনবক্সে",
+    "icon": "message-circle"
+   }
+  ]
+ },
+ "tools": [
+  {
+   "name": "Stirling-PDF",
+   "maker": "PDF-এর সব কাজ, অফলাইনে",
+   "intro": "প্রথমটা Stirling-PDF।",
+   "body": "PDF জোড়া লাগানো, ছোট করা, সই করা, সব এক অ্যাপে। অফলাইনে চলে, তাই স্যালারি শিট অচেনা সাইটে তুলতে হয় না।",
+   "stat": {
+    "text": "৯৫ হাজার স্টার"
+   },
+   "features": [
+    {
+     "label": "জোড়া লাগানো",
+     "on": "জোড়া",
+     "icon": "combine"
+    },
+    {
+     "label": "ছোট করা",
+     "on": "ছোট",
+     "icon": "minimize-2"
+    },
+    {
+     "label": "সই করা",
+     "on": "সই",
+     "icon": "pen-line"
+    }
+   ],
+   "proof": {
+    "text": "অচেনা সাইটে নয়",
+    "on": "অচেনা"
+   },
+   "how": {
+    "line": "Windows installer নামিয়ে খুলুন, তারপর Continue without signing in চাপুন, ব্যস।",
+    "steps": [
+     {
+      "label": "installer নামান",
+      "on": "installer"
+     },
+     {
+      "label": "খুলে চালান",
+      "on": "খুলুন"
+     },
+     {
+      "label": "সাইন-ইন ছাড়া চালান",
+      "on": "Continue"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Excalidraw",
+   "maker": "হাতে আঁকার হোয়াইটবোর্ড",
+   "intro": "দ্বিতীয়টা Excalidraw।",
+   "body": "হাতে আঁকার মতো হোয়াইটবোর্ড, ব্রাউজারেই। ক্লায়েন্টকে লিংক পাঠান, দুজনে একসাথে আঁকুন।",
+   "stat": {
+    "text": "১.৩ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "হাতে আঁকার মতো",
+     "on": "হাতে",
+     "icon": "pencil"
+    },
+    {
+     "label": "ব্রাউজারেই চলে",
+     "on": "ব্রাউজারেই",
+     "icon": "globe"
+    },
+    {
+     "label": "দুজনে একসাথে",
+     "on": "দুজনে",
+     "icon": "users"
+    }
+   ],
+   "proof": {
+    "text": "লিংকেই একসাথে কাজ",
+    "on": "লিংক"
+   },
+   "how": {
+    "line": "ব্রাউজারে সাইটটা খুলুন, Share চেপে live session চালু করুন, লিংকটা ক্লায়েন্টকে পাঠান।",
+    "steps": [
+     {
+      "label": "সাইটটা খুলুন",
+      "on": "সাইটটা"
+     },
+     {
+      "label": "Share চাপুন",
+      "on": "Share"
+     },
+     {
+      "label": "লিংকটা পাঠান",
+      "on": "লিংকটা"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Invoice Ninja",
+   "maker": "প্রফেশনাল ইনভয়েস",
+   "intro": "তৃতীয়টা Invoice Ninja।",
+   "body": "বিদেশি ক্লায়েন্টের জন্য প্রফেশনাল ইনভয়েস। ফ্রি প্ল্যানে পাঁচজন ক্লায়েন্ট, ইনভয়েস যত খুশি।",
+   "features": [
+    {
+     "label": "বিদেশে পাঠান",
+     "on": "বিদেশি",
+     "icon": "globe"
+    },
+    {
+     "label": "পেশাদার ইনভয়েস",
+     "on": "প্রফেশনাল",
+     "icon": "receipt"
+    },
+    {
+     "label": "৫ জন ক্লায়েন্ট",
+     "on": "পাঁচজন",
+     "icon": "users"
+    }
+   ],
+   "proof": {
+    "text": "ইনভয়েস যত খুশি",
+    "on": "যত"
+   },
+   "how": {
+    "line": "ফ্রি অ্যাকাউন্ট খুলে লোগো আর কারেন্সি বসান, Client যোগ করে New Invoice চাপুন।",
+    "steps": [
+     {
+      "label": "ফ্রি অ্যাকাউন্ট",
+      "on": "অ্যাকাউন্ট"
+     },
+     {
+      "label": "লোগো আর কারেন্সি",
+      "on": "লোগো"
+     },
+     {
+      "label": "New Invoice",
+      "on": "New"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Documenso",
+   "maker": "অনলাইনে কন্ট্রাক্ট সই",
+   "intro": "চতুর্থটা Documenso।",
+   "body": "কন্ট্রাক্ট পাঠান, ক্লায়েন্ট অনলাইনেই সই করে। প্রিন্ট আর স্ক্যানের ঝামেলা শেষ। মাসে পাঁচটা ডকুমেন্ট ফ্রি।",
+   "features": [
+    {
+     "label": "অনলাইনে সই",
+     "on": "সই",
+     "icon": "file-pen-line"
+    },
+    {
+     "label": "প্রিন্ট লাগে না",
+     "on": "প্রিন্ট",
+     "icon": "printer"
+    }
+   ],
+   "proof": {
+    "text": "মাসে ৫টা ফ্রি",
+    "on": "মাসে"
+   },
+   "how": {
+    "line": "PDF তুলুন, ক্লায়েন্টের ইমেইল দিন, সইয়ের ঘর বসিয়ে Send চাপুন।",
+    "steps": [
+     {
+      "label": "PDF তুলুন",
+      "on": "PDF"
+     },
+     {
+      "label": "ক্লায়েন্টের ইমেইল",
+      "on": "ইমেইল"
+     },
+     {
+      "label": "সইয়ের ঘর, তারপর Send",
+      "on": "সইয়ের"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Joplin",
+   "maker": "নোট আর কাজের তালিকা",
+   "intro": "আর পঞ্চমটা Joplin।",
+   "body": "ক্লায়েন্টের ব্রিফ আর কাজের তালিকা এক জায়গায়, ফোন আর ল্যাপটপে একসাথে। নিজের OneDrive দিয়েই সিঙ্ক হয়।",
+   "features": [
+    {
+     "label": "ব্রিফ আর তালিকা",
+     "on": "ব্রিফ",
+     "icon": "notebook-pen"
+    },
+    {
+     "label": "ফোন আর ল্যাপটপে",
+     "on": "ফোন",
+     "icon": "smartphone"
+    }
+   ],
+   "proof": {
+    "text": "নিজের OneDrive-এ সিঙ্ক",
+    "on": "OneDrive"
+   },
+   "how": {
+    "line": "ল্যাপটপে আর ফোনে নামান, Sync সেটিংসে OneDrive বেছে encryption চালু করুন।",
+    "steps": [
+     {
+      "label": "দুটোতেই নামান",
+      "on": "ল্যাপটপে"
+     },
+     {
+      "label": "Sync-এ OneDrive",
+      "on": "Sync"
+     },
+     {
+      "label": "encryption চালু",
+      "on": "encryption"
+     }
+    ]
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটা টুলের লিংক আর ইনস্টলের বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন OFFICE। আমি নিজে আপনাকে পাঠিয়ে দেব।",
+  "heading": "৫টা টুল এক নজরে",
+  "ask": "লিংক আর বাংলা গাইড পেতে",
+  "steps": [
+   {
+    "label": "পেজে যান",
+    "on": "পেজে",
+    "icon": "house"
+   },
+   {
+    "label": "Message চাপুন",
+    "on": "Message",
+    "icon": "message-circle"
+   },
+   {
+    "label": "লিখুন OFFICE",
+    "on": "লিখুন",
+    "icon": "keyboard"
+   }
+  ],
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "অফলাইনে",
+  "ফ্রি",
+  "সাবস্ক্রিপশন"
+ ],
+ "facts": [
+  {
+   "claim": "Stirling-PDF has about 95.4k GitHub stars",
+   "value": "৯৫ হাজার",
+   "source": "https://github.com/Stirling-Tools/Stirling-PDF",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Excalidraw has about 134.9k GitHub stars",
+   "value": "১.৩ লাখ",
+   "source": "https://github.com/excalidraw/excalidraw",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Invoice Ninja's free plan: 5 clients, unlimited invoices (source-available, Elastic License: say ফ্রি, not open source)",
+   "source": "https://invoiceninja.com",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Documenso: 5 documents a month free, no card",
+   "source": "https://documenso.com",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Joplin syncs through OneDrive or Dropbox with end-to-end encryption",
+   "source": "https://github.com/laurent22/joplin",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": []
+}

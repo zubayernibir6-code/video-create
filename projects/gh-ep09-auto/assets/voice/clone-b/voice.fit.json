@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep09-auto/assets/voice/clone-b/voice.raw.wav",
+ "before_s": 89.04,
+ "after_pauses_s": 88.11,
+ "tempo": 1.1,
+ "after_s": 80.08,
+ "gap": 0.3,
+ "max": 80
+}

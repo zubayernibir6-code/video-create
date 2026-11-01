@@ -104,9 +104,10 @@ ${items.map((it) => `| ${it.bn} | ${[].concat(it.profiles ?? it.profile).join(",
 
 ## আপলোডের ক্রম
 
-১. **দিন ১:** পুরো ভিডিও YouTube-এ (লিংকটা আমাকে দিন, লেখায় বসিয়ে দেব), তারপর Facebook পেজে, তারপর LinkedIn-এ।
+${main ? `১. **দিন ১:** পুরো ভিডিও YouTube-এ (লিংকটা আমাকে দিন, লেখায় বসিয়ে দেব), তারপর Facebook পেজে, তারপর LinkedIn-এ।
 ২. **এরপর দিনে একটা Reel:** ${reels.map((r) => r.bn).join(" → ")}। প্রতিটা Reel একই দিনে Facebook, Instagram, X আর YouTube Shorts-এ। সময়: Page Insights-এ যখন ফলোয়াররা বেশি অনলাইনে।
-৩. **LinkedIn কাট** পুরো ভিডিওর পরের দিন বা তার পরে, আলাদা পোস্টে।
+৩. **LinkedIn কাট** পুরো ভিডিওর পরের দিন বা তার পরে, আলাদা পোস্টে।` : `১. **এই Reel-টাই মূল ভিডিও** (আলাদা পুরো ভিডিও নেই): ${reels.map((r) => r.bn).join(" → ")}। একই দিনে Facebook, Instagram, X আর YouTube Shorts-এ। সময়: Page Insights-এ যখন ফলোয়াররা বেশি অনলাইনে।
+২. **LinkedIn কাট** একই দিনে বা পরদিন, আলাদা পোস্টে।`}
 `;
 if (main) {
   R += `\n## ১. YouTube\n\n**পুরো ভিডিও** — ফাইল ${fileLine(main, "youtube")}${main.srt ? `, সাবটাইটেল ${fileLine(main, "youtube", "srt.bn")} (Studio → Subtitles → Upload file → With timing)` : ""}, থাম্বনেইল ${fileLine(main, "youtube", "thumb")}।\n\nটাইটেল:\n\n${one(copyFor(main.copy, "youtube-title"))}\n\nডেসক্রিপশন:\n\n${one(copyFor(main.copy, "youtube-description"))}\n\nTags বক্স:\n\n${one(copyFor(main.copy, "youtube-tags"))}\n\nপিন করা কমেন্ট:\n\n${one(copyFor(main.copy, "youtube-pinned"))}\n`;
@@ -123,7 +124,10 @@ R += `\n## ৫. LinkedIn\n\nকমেন্ট, লাইক বা DM চাও
 for (const l of lis) R += `\n**${l.bn}** — ফাইল ${fileLine(l, "linkedin")}, কভার ${fileLine(l, "linkedin", "cover")}।\n\nপোস্ট:\n\n${one(copyFor(l.copy, "linkedin-post"))}\n\nপ্রথম কমেন্ট (চাইলে):\n\n${one(copyFor(l.copy, "first-comment"))}\n`;
 if (main && rel.linkedinMain) R += `\n**পুরো ভিডিও (চাইলে)** — ফাইল ${fileLine(main, "linkedin")}${main.srt ? `, সাবটাইটেল ${fileLine(main, "linkedin", "srt.bn")} (ডেস্কটপ থেকে)` : ""}।\n\nপোস্ট:\n\n${one(copyFor(rel.linkedinMain, "linkedin-post"))}\n`;
 // his notes (claims left out of the copy, open questions) reach the checklist
-if (rel.notes?.length) R += `\n## মনে রাখবেন\n\n${rel.notes.map((n) => `- ${n}`).join("\n")}\n`;
+const notes = [...(rel.notes ?? [])];
+// a cloned / synthetic voice (release.json "voice": "clone") must be disclosed on every platform (voice-clone skill)
+if (rel.voice === "clone") notes.unshift("**AI গলা:** এই ভিডিওর ভয়েস আপনার নিজের গলার ক্লোন। Facebook/Instagram-এ পোস্ট করার সময় \"AI info\" (AI দিয়ে বানানো) লেবেল চালু করুন — Meta-র নিয়মে বাস্তব-শোনানো AI অডিওতে এটা বাধ্যতামূলক। YouTube-এ লাগবে না: YouTube-এর নিয়মে নিজের গলার ক্লোন দিয়ে ভয়েস-ওভার জানানোর তালিকায় নেই (চালু করলেও আয়ে প্রভাব নেই)। X আর LinkedIn-এ পোস্টের লেখায় \"AI দিয়ে বানানো গলা\" লেখা ভালো।");
+if (notes.length) R += `\n## মনে রাখবেন\n\n${notes.map((n) => `- ${n}`).join("\n")}\n`;
 if (pend.length) R +=`\n## যা এখনো বাকি\n\n${pend.map((p) => `- **${p.bn}**: ফাইল নেই (\`${(p.file ?? "?").replace(/\\/g, "/")}\`)। ${p.make ?? "রেন্ডার করুন"}`).join("\n")}\n`;
 const warns = items.filter((it) => it.res).flatMap((it) => it.res.groups.flatMap((g) => g.results.filter((x) => x.status === "WARN").map((x) => `${it.bn}: ${g.target}/${x.group} ${x.check} ${x.value} (চাই ${x.want})`)));
 if (warns.length) R += `\n## সতর্কতা (আটকাবে না, তবে ভালো করা যায়)\n\n${[...new Set(warns)].map((w) => `- ${w}`).join("\n")}\n`;

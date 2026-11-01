@@ -1,0 +1,83 @@
+1
+00:00:00,000 --> 00:00:01,880
+Don't build with Claude Code until you've installed these
+
+2
+00:00:01,880 --> 00:00:02,640
+five free tools.
+
+3
+00:00:03,120 --> 00:00:05,060
+The first is Context 7, from Upstash.
+
+4
+00:00:05,560 --> 00:00:08,420
+It pulls the current docs for any library you use, so Claude
+
+5
+00:00:08,420 --> 00:00:10,340
+stops writing code that broke two versions ago.
+
+6
+00:00:10,780 --> 00:00:11,860
+Fresh docs every time.
+
+7
+00:00:12,260 --> 00:00:13,300
+The second is Firecrawl.
+
+8
+00:00:13,660 --> 00:00:14,580
+Let's Claude read any website.
+
+9
+00:00:14,820 --> 00:00:17,620
+Docs, blogs, and pricing pages is clean text, so research
+
+10
+00:00:17,620 --> 00:00:18,740
+takes seconds, not hours.
+
+11
+00:00:19,220 --> 00:00:20,920
+The third is the GitHub MCP server.
+
+12
+00:00:21,360 --> 00:00:24,000
+It lets Claude open issues, write the fix, review the pull
+
+13
+00:00:24,000 --> 00:00:26,500
+request, and merge it so one prompt ships the whole change.
+
+14
+00:00:27,000 --> 00:00:29,120
+The fourth is Playwright MCP from Microsoft.
+
+15
+00:00:29,120 --> 00:00:31,860
+Click through your login, check out and search like a real
+
+16
+00:00:31,860 --> 00:00:34,060
+user so every flow is tested before you ship.
+
+17
+00:00:34,440 --> 00:00:37,840
+And the fifth is Chrome DevTools MCP from the Chrome team at
+
+18
+00:00:37,840 --> 00:00:38,080
+Google.
+
+19
+00:00:38,600 --> 00:00:41,240
+It opens your app in a real Chrome, reads the red errors in
+
+20
+00:00:41,240 --> 00:00:42,640
+the console, and fixes them itself.
+
+21
+00:00:43,080 --> 00:00:45,440
+Comment tools, and I'll send you one link with all five.

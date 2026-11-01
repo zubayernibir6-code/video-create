@@ -138,3 +138,92 @@ Deliver in Bengali: where the files are (`renders/<name>/<date>/`), what was che
 One LESSONS.md row per piece of his feedback. A fix that every reel needs goes into `tools/reel/`, a new trap into §7.
 Commit the engine and skill with his OK (stage whole files; other sessions' edits are in the tree).
 The measured reference (beat sheet, colours, sound) is `reference-ref01.md`: read it only to change the look itself.
+
+## 9. Series looks REEL2–REEL6 (`tools/reel/series.mjs`, made 2026-11-01 for the GitHub series episodes 1–5)
+
+A series episode (`"style": "REEL2"…"REEL6"` in reel.json) is built by `series.mjs`, not build.mjs. Same commands
+(`--check`, `--plan=force`, `--no-mix`), same plan gate, same render line. What every look shares: the universal-reel
+safe box (the Reel IS the platform file: `finish.mjs … --release --formats=1x1`), the badge "৫টা GitHub রিপো · পর্ব N"
+with five dots, word captions at ~60 %, per tool "name big and centred → settles into a header → 2–4 features on their
+words → proof", and the end card (five repo cards 3 + 2, the inbox keyword typed into a message box).
+
+| Look | World | Extra reel.json fields |
+| --- | --- | --- |
+| REEL2 পকেট গ্লাস | glass phone + app icons that jump out into glass cards | `hook.title`, `hook.sub`, `hook.on` |
+| REEL3 স্পিডরান | speed gauge + whip pans + road | `hook.title`, `hook.sub`, `hook.on` |
+| REEL4 ভল্ট | dial padlocks + shattering password + steel plates | `hook.secret`, `hook.accounts`, `hook.crack`, `hook.lose`, `hook.lostText` |
+| REEL5 ফিল্ম রিল | monitor + timeline clips + playhead + 3-2-1 | `tools[].step` (≤ 10), `hook.strike`, `hook.free`, `hook.neg`, `hook.on` |
+| REEL6 অফলাইন রাত | night sky + constellation + offline chat | `hook.off`, `hook.reply`, `hook.money`, `hook.ask`, `hook.answer`, `hook.cost` |
+
+Per tool: `features` 2–4 `{label ≤ 16, on, icon (Lucide)}`, `proof {text ≤ 22, on, tone: good|warn}`, optional
+`stat {text ≤ 18, on}` (a number needs a `facts[]` source), `maker` ≤ 30, `short` (end-card name). Data of the five
+episodes: `projects/gh-ep01-phone … gh-ep05-ai/reel.json`. A new look = one file in `tools/reel/looks/` with the same
+exports (colors, layout, sfx, plan texts, css, world, stageBack, hook, hookOut, enter, exit, cta).
+
+Traps that cost a run on 2026-11-01:
+- **Gemini TTS voice + Bengali ASR**: English repo names come back transliterated (Win11Debloat → উইন ইলেভেন ডিব্লোট),
+  so alignment is ~77–80 %: set `"minMatch": 0.75` in reel.json. A name the ASR garbles leaves words squeezed to 0 s;
+  series.mjs re-spreads such runs between their good neighbours. Make the voice with
+  `node tools/clone/gemini.mjs say <script.txt> <out.wav> --voice=Sadaltager` WITHOUT `--verify` (it re-transcribes every
+  block, ~10 min a voice); the engine's alignment check is the verification.
+- **Bengali transcription is slow** (~10 min for 50 s with the `bengali` model; two at once both slow down): start the
+  voices' transcriptions in the background first, write the looks/data meanwhile.
+- **BGM without him**: `node tools/lyria.mjs "<series BGM prompt>" <project>/assets/music/bgm.mp3 --min=60` ($0.08 a song,
+  his paid key; ~25 s). Say once that Lyria's terms for paid ads are unchecked.
+- A header grown with `scale` on a full-width flex row overflowed its card (card_straddle, safe_zone): the header now
+  hugs its text and its growth is estimated from the text length (`look.layout {inner, mono, nm}`).
+- Initial states go through `ctx.pre()` (gsap.set before the timeline): a `tl.set(…, 0)` does not render at frame 0.
+- LinkedIn: the 4:5 cut is a crop of the Reel's safe box, `node tools/release/li-crop.mjs <reel.mp4> <out.mp4>` (30 s).
+
+### 9b. Clear purpose, how-to, message me (his brief 2026-11-01) + looks REEL7–REEL10, REEL1 on the series engine
+
+His words: the viewer must be crystal clear what the video is for, how to use each tool, and must message him. So a
+series episode now has (all optional fields, all used on episodes 1–10):
+- `promise` {line, kicker, title ≤ 18, sub ≤ 34, rows ≤ 3 [{label ≤ 24, on, icon}]}: spoken right after the hook; the
+  look's hook leaves and the look's own card shows "এই ভিডিওতে / ৫টা ফ্রি অ্যাপ / sub", rows lit on their words.
+- per tool `how` {line, steps 2–3 [{label ≤ 22, on}]}: features + proof step aside, "কীভাবে চালাবেন" (or `howTitle`,
+  e.g. "কীভাবে শুরু করবেন") with numbered steps on their words. Take the steps from INBOX-AND-COMMUNITY.md so the
+  video and the inbox guide say the same thing.
+- the inbox chip "ইনবক্সে <KEYWORD>" top right (one `#top` band with the badge, or design-lint text_zones warns),
+  from the promise's inbox row to the end card; it pulses on every spoken "ইনবক্স…".
+- `cta` {line, heading, ask, steps (exactly 3: পেজে যান · Message চাপুন · লিখুন KW), sent}: phase A the 5 cards
+  (≥ 2.4 s), phase B the 3 numbered steps on their words, the box, the keyword typed and sent.
+- Order of spoken lines: `series-lines.mjs` (hook · promise · intro/body/how × N · cta). Looks must use
+  `ctx.LN.tools[k].intro` etc., never `1 + 2 * k` (REEL6's twinkle used it; fixed).
+
+| Look | World | Extra reel.json fields |
+| --- | --- | --- |
+| REEL7 কাগজের টেবিল | walnut desk; sheets slide in with washi tape, pen underlines, rubber-stamp proof, sheets pile up | `hook.bill` [{label, price}], `hook.total`, `hook.stamp`, `hook.title`, `hook.on` |
+| REEL8 জ্ঞানের সিঁড়ি | night library rising; book stairs "লেভেল ১–৫", a cap token hops up; cards turn like pages (3D) | `hook.cover`, `hook.title`, `hook.on`; `howTitle` |
+| REEL9 আলপনা | maroon earth, a rice-paste alpona that draws itself and turns; 5 lotus petals fill; "অ" writes itself | `hook.letter`, `hook.code` |
+| REEL10 ব্লুপ্রিন্ট | blueprint grid; 5 machine nodes on wires, a signal races to each; messy task chips snap into rows | `hook.chips`, `hook.on` |
+| REEL1 টার্মিনাল (series) | dark UI; card + terminal that types each repo's install, bar, green tick, counter | `tools[].cmd` ≤ 40, `hook.cmd`, `hook.on` |
+
+Voice in HIS cloned voice (approved by him in chat 2026-11-01, `gemini-voices.json`):
+1. `node tools/reel/voice-script.mjs projects/<p> projects/<p>/assets/voice/clone/script.txt` (default merges the
+   lines into ~5 requests; `--split` = 13).
+2. `node tools/clone/gemini.mjs say <script> <dir>/voice.raw.wav --voice=talha-a` (~$0.02 an 80-s episode).
+3. `node tools/reel/voice-fit.mjs <dir>/voice.raw.wav <dir>/voice.wav --max=80` (pauses ≤ 0.3 s, then atempo ≤ 1.10,
+   pitch kept). talha-a reads ~2.3 words/s: 200 words ≈ 89 s raw ≈ 80 s fitted.
+4. transcribe in chunks (series.mjs does it when words.json is missing; by hand: `tools/pyenv/Scripts/python.exe -I
+   tools/episode/asr_chunks.py <voice.wav> <voice.words.json> --max-chunk 18`, ~20 min for 80 s), then `--plan=force`.
+Traps that cost a run on 2026-11-01:
+- **Gemini TTS quota: 100 requests a day on Tier 1** (429, "retry in 3h"). Split scripts (13 requests an episode)
+  ran it out on episode 4: merge (default) = ~5 requests an episode.
+- **Alignment with English UI words** ("Play Store", "Wireless debugging"): 68 % before; `align.mjs` now compares a
+  Latin consonant skeleton across scripts (প্লে = Play, ওয়্যারলেস = Wireless) → 79 %.
+- **Longer episodes (80 s) need longer BGM**: `node tools/music-extend.mjs <bgm> <out.wav> --min=88` (crossfade copy,
+  free) for an existing song; new Lyria prompts say "90 seconds".
+- **Whole-file Bengali ASR loses stretches**: it decodes 30-s windows and can stop early inside one (episode 3 lost
+  ~8 s, episodes 1–2 lost 19–31 words). Chunked ASR at ≤ 18 s: 93 % alignment. series.mjs now stops on ≥ 12 script
+  words in a row with no spoken match. asr_chunks.py writes words.json after EVERY chunk: wait for its "✓ N words" line.
+- **A stopped background chain can keep running**: stopping the task kills the wrapper, not the bash script it
+  started. Two voice chains then ran at once (both made every voice, one fit a half-written file, two ASR jobs). Before
+  restarting a chain, list processes (PowerShell `Get-CimInstance Win32_Process` by command line) and stop the old one;
+  a long chain takes a lock (`mkdir <lock> || exit`).
+- **Over 60 s = preflight before finish.mjs.** It caught: a world element visible before its fromTo (REEL2 #floor →
+  `ctx.pre`), the camera push snapping 1 → 0.975 (now a breath: ease to 0.975, settle on 1), a child scale tween
+  starting after its parent's entrance (#prt, .csn: start together).
+- **Check a new look before its voice exists**: `node tools/reel/dry-voice.mjs projects/<p>` then
+  `series.mjs projects/<p> --voice=assets/voice/dry/voice.wav` (no --plan; never render a dry build), then
+  `hyperframes check`, design-lint, snapshots.

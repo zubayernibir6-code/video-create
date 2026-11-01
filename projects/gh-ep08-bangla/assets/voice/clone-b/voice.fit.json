@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep08-bangla/assets/voice/clone-b/voice.raw.wav",
+ "before_s": 90.48,
+ "after_pauses_s": 89.66,
+ "tempo": 1.12,
+ "after_s": 80.04,
+ "gap": 0.3,
+ "max": 80
+}

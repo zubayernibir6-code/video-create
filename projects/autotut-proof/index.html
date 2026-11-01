@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Claude Code-এ স্কিল বানানো শিখবেন কোথায়</title>
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Inter"; font-weight: 100 900; src: url("assets/fonts/Inter-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 600; src: url("assets/fonts/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 700; src: url("assets/fonts/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Baloo Da 2"; font-weight: 400 800; src: url("assets/fonts/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+body { margin: 0; background: #08080B; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Inter", "Hind Siliguri", sans-serif; color: #EDEDF0;
+  background: radial-gradient(1200px 700px at 50% 42%, #1B1712 0%, #0D0C10 55%, #08080B 100%); }
+#grid { position: absolute; inset: 0; opacity: 0.35; background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px); background-size: 48px 48px; }
+#glow { position: absolute; left: 460px; top: 160px; width: 1000px; height: 760px; border-radius: 50%; background: radial-gradient(closest-side, rgba(217,119,87,0.16), transparent); }
+#win { position: absolute; left: 160px; top: 62px; width: 1600px; height: 944px; border-radius: 16px; overflow: hidden; opacity: 0;
+  background: #121216; box-shadow: 0 40px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08); transform-origin: 50% 50%; }
+#bar { position: absolute; left: 0; top: 0; right: 0; height: 44px; background: #18181D; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.dot { position: absolute; top: 15px; width: 13px; height: 13px; border-radius: 50%; }
+#addr { position: absolute; left: 50%; top: 8px; width: 760px; height: 28px; margin-left: -380px; border-radius: 8px; background: #0E0E12; border: 1px solid rgba(255,255,255,0.07); }
+#addr svg { position: absolute; left: 12px; top: 6px; }
+.url { position: absolute; left: 38px; top: 0; line-height: 28px; font: 500 15px/28px "Inter", sans-serif; color: #B9BDC7; white-space: nowrap; opacity: 0; }
+#view { position: absolute; left: 0; top: 44px; width: 1600px; height: 900px; overflow: hidden; background: #0A0A0C; }
+#scale { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; transform: scale(1.111111); transform-origin: 0 0; }
+#cam { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; transform-origin: 0 0; }
+.st { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; opacity: 0; }
+.ring { position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; border: 3px solid #F2B84B; opacity: 0; box-shadow: 0 0 18px rgba(242,184,75,0.55); }
+.hl { position: absolute; border-radius: 10px; border: 3px solid #F2B84B; box-shadow: 0 0 0 6px rgba(242,184,75,0.16), 0 0 28px rgba(242,184,75,0.45); opacity: 0; }
+#cursor { position: absolute; left: 0; top: 0; transform-origin: 3px 2px; opacity: 0; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.55)); }
+.tip { position: absolute; opacity: 0; }
+.chipw { position: absolute; left: 0; right: 0; top: 462px; display: flex; justify-content: center; opacity: 0; }
+.chip { display: flex; align-items: center; gap: 14px; padding: 9px 26px 11px 20px; border-radius: 999px; background: rgba(12,12,16,0.9);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(242,184,75,0.5); font: 600 30px/1.35 "Hind Siliguri", sans-serif; color: #F2B84B; white-space: nowrap; }
+.chip .pin { width: 14px; height: 14px; border-radius: 50%; background: #F2B84B; box-shadow: 0 0 0 5px rgba(242,184,75,0.22); }
+.cap { position: absolute; left: 0; right: 0; bottom: 74px; display: flex; justify-content: center; opacity: 0; }
+.pill { max-width: 1320px; padding: 16px 30px 18px 22px; display: flex; align-items: center; gap: 18px; border-radius: 22px;
+  background: rgba(12,12,16,0.86); box-shadow: 0 18px 50px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.09); }
+.cap .n { flex: none; width: 50px; height: 50px; border-radius: 50%; background: #F2B84B; color: #1A1408; display: flex; align-items: center; justify-content: center; font: 700 30px/1 "Baloo Da 2", sans-serif; padding-top: 4px; box-sizing: border-box; }
+.cap .t { font: 600 38px/1.42 "Hind Siliguri", sans-serif; color: #F4F4F6; text-wrap: balance; }
+.cap .en { color: #F2B84B; font-family: "Inter", "Hind Siliguri", sans-serif; font-weight: 600; }
+#fade { position: absolute; inset: 0; background: #000; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="22.150">
+      <audio id="mix" src="assets/media/mix.wav" data-start="0" data-duration="22.150" data-track-index="5" data-volume="1"></audio>
+      <div id="grid"></div><div id="glow"></div>
+      <div id="win">
+        <div id="bar"><span class="dot" style="left:18px;background:#FF5F57"></span><span class="dot" style="left:40px;background:#FEBC2E"></span><span class="dot" style="left:62px;background:#28C840"></span>
+          <div id="addr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa0aa" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span class="url" id="u0">code.claude.com/docs/en/overview</span><span class="url" id="u1">code.claude.com/docs/en/skills#extend-claude-with-skills</span><span class="url" id="u2">code.claude.com/docs/en/skills#create-your-first-skill</span><span class="url" id="uh" style="opacity:1">code.claude.com/docs/en/skills#create-your-first-skill</span></div></div>
+        <div id="view"><div id="scale"><div id="cam" data-layout-allow-overflow style="transform: translate(-32.891px, 0.000px) scale(1.6364)">
+          <img class="st" id="s0" src="assets/media/capture/shots/00-home-after.png" alt="" style="opacity:1" />
+          <img class="st" id="s1" src="assets/media/capture/shots/01-search-before.png" alt="" />
+          <img class="st" id="s2" src="assets/media/capture/shots/02-search-hover.png" alt="" />
+          <img class="st" id="s3" src="assets/media/capture/shots/03-search-after.png" alt="" />
+          <img class="st" id="s4" src="assets/media/capture/shots/04-type-k1.png" alt="" />
+          <img class="st" id="s5" src="assets/media/capture/shots/05-type-k2.png" alt="" />
+          <img class="st" id="s6" src="assets/media/capture/shots/06-type-k3.png" alt="" />
+          <img class="st" id="s7" src="assets/media/capture/shots/07-type-k4.png" alt="" />
+          <img class="st" id="s8" src="assets/media/capture/shots/08-type-k5.png" alt="" />
+          <img class="st" id="s9" src="assets/media/capture/shots/09-type-k6.png" alt="" />
+          <img class="st" id="s10" src="assets/media/capture/shots/10-type-after.png" alt="" />
+          <img class="st" id="s11" src="assets/media/capture/shots/11-result-before.png" alt="" />
+          <img class="st" id="s12" src="assets/media/capture/shots/12-result-hover.png" alt="" />
+          <img class="st" id="s13" src="assets/media/capture/shots/13-result-after.png" alt="" />
+          <img class="st" id="s14" src="assets/media/capture/shots/14-toc-before.png" alt="" />
+          <img class="st" id="s15" src="assets/media/capture/shots/15-toc-hover.png" alt="" />
+          <img class="st" id="s16" src="assets/media/capture/shots/16-toc-after.png" alt="" />
+          <img class="st" id="hk" src="assets/media/capture/shots/16-toc-after.png" alt="" style="opacity:1" />
+          <img class="st" id="w0" src="assets/media/capture/shots/15-toc-hover.png" alt="" />
+          <img class="st" id="w1" src="assets/media/capture/shots/12-result-hover.png" alt="" />
+          <img class="st" id="w2" src="assets/media/capture/shots/09-type-k6.png" alt="" />
+          <img class="st" id="w3" src="assets/media/capture/shots/07-type-k4.png" alt="" />
+          <img class="st" id="w4" src="assets/media/capture/shots/04-type-k1.png" alt="" />
+          <img class="st" id="w5" src="assets/media/capture/shots/01-search-before.png" alt="" />
+          <div class="ring" id="r0" style="left:625.9px;top:31.5px"></div>
+          <div class="ring" id="r1" style="left:520.6px;top:132px"></div>
+          <div class="ring" id="r2" style="left:1276px;top:384px"></div>
+          <div class="hl" id="hlh" style="left:349.2px;top:142.3px;width:221.9px;height:48px"></div>
+          <div class="hl" id="hl" style="left:349.2px;top:142.3px;width:221.9px;height:48px"></div>
+          <svg id="cursor" width="30" height="30" viewBox="0 0 30 30"><path d="M3 2 L3 24 L9 18.5 L13.2 27.5 L17 25.8 L12.8 17 L21 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div></div></div>
+        <div class="tip" id="hc" style="left:598px;top:414px"><div class="chip"><span class="pin"></span>শেষে এখানে পৌঁছাব</div></div>
+        <div class="chipw" id="rc"><div class="chip"><svg width="34" height="22" viewBox="0 0 34 22"><path d="M16 2 L2 11 L16 20 Z M32 2 L18 11 L32 20 Z" fill="#F2B84B"/></svg>শুরু থেকে দেখি</div></div>
+      </div>
+      <div class="cap" id="c0"><div class="pill"><div class="t"><span class="en">Claude</span>-এর স্কিল বানানো শিখতে চান? চলুন দেখি, কোথায় শিখবেন।</div></div></div>
+      <div class="cap" id="c1"><div class="pill"><div class="n">১</div><div class="t"><span class="en">Claude Code Docs</span> খুলে উপরের <span class="en">Search</span> বক্সে ক্লিক করুন।</div></div></div>
+      <div class="cap" id="c2"><div class="pill"><div class="n">২</div><div class="t">তারপর লিখুন, <span class="en">skills</span>।</div></div></div>
+      <div class="cap" id="c3"><div class="pill"><div class="n">৩</div><div class="t">প্রথম ফলাফলটাই আমাদের পাতা। এটা খুলুন।</div></div></div>
+      <div class="cap" id="c4"><div class="pill"><div class="n">৪</div><div class="t">এবার ডান পাশে <span class="en">Create your first skill</span> চাপলেই, প্রথম স্কিল বানানোর পুরো নিয়ম পেয়ে যাবেন।</div></div></div>
+      <div id="fade"></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const MOVES = [[6.811,7.61,720,502.2,625.9,31.5],[12.614,13.31,625.9,31.5,520.6,132],[15.75,16.66,520.6,132,1276,384]];
+      const CLICKS = [7.77,13.47,16.82];
+      const REST = [720,502.2];
+      const cursor = document.getElementById("cursor");
+      const mj = (s) => s * s * s * (10 - 15 * s + 6 * s * s);
+      function place(t) {
+        let x = REST[0], y = REST[1];
+        for (const [t0, t1, x0, y0, x1, y1] of MOVES) {
+          if (t >= t1) { x = x1; y = y1; continue; }
+          if (t > t0) {
+            const u = mj((t - t0) / (t1 - t0)), dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy) || 1;
+            const cx = (x0 + x1) / 2 - (dy / L) * L * 0.12, cy = (y0 + y1) / 2 + (dx / L) * L * 0.12;
+            x = (1 - u) * (1 - u) * x0 + 2 * (1 - u) * u * cx + u * u * x1;
+            y = (1 - u) * (1 - u) * y0 + 2 * (1 - u) * u * cy + u * u * y1;
+          }
+          break;
+        }
+        let press = 1;
+        for (const c of CLICKS) { const d = t - c; if (d > -0.05 && d < 0.17) press = 1 - 0.16 * Math.sin(Math.PI * (d + 0.05) / 0.22); }
+        cursor.style.transform = "translate(" + (x - 3).toFixed(2) + "px," + (y - 2).toFixed(2) + "px) scale(" + press.toFixed(3) + ")";
+      }
+      const clock = { t: 0 };
+      tl.to(clock, { t: 22.150, duration: 22.150, ease: "none", onUpdate: () => place(clock.t) }, 0);
+      place(0);
+      tl.fromTo("#win", { opacity: 0, y: 36, scale: 0.955 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out" }, 0.08);
+      tl.fromTo("#glow", { opacity: 0.5, scale: 0.9 }, { opacity: 1, scale: 1.06, duration: 22.150, ease: "sine.inOut" }, 0);
+      tl.fromTo("#cursor", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.540);
+      tl.fromTo("#hlh", { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 0.6); tl.fromTo("#hlh", { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power1.in", immediateRender: false }, 2.720);
+      tl.fromTo("#hc", { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.75); tl.fromTo("#hc", { opacity: 1 }, { opacity: 0, duration: 0.15, ease: "power1.in", immediateRender: false }, 2.570);
+      tl.fromTo("#rc", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power2.out" }, 2.720); tl.fromTo("#rc", { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power1.in", immediateRender: false }, 3.590);
+      tl.set("#w0", { opacity: 1 }, 2.720); tl.set("#hk", { opacity: 0 }, 2.720);
+      tl.set("#w1", { opacity: 1 }, 2.823); tl.set("#w0", { opacity: 0 }, 2.823);
+      tl.set("#w2", { opacity: 1 }, 2.927); tl.set("#w1", { opacity: 0 }, 2.927);
+      tl.set("#w3", { opacity: 1 }, 3.030); tl.set("#w2", { opacity: 0 }, 3.030);
+      tl.set("#w4", { opacity: 1 }, 3.133); tl.set("#w3", { opacity: 0 }, 3.133);
+      tl.set("#w5", { opacity: 1 }, 3.237); tl.set("#w4", { opacity: 0 }, 3.237);
+      tl.set("#w5", { opacity: 0 }, 3.340);
+      tl.set("#u0", { opacity: 1 }, 3.290); tl.set("#uh", { opacity: 0 }, 3.290);
+      tl.set("#u1", { opacity: 1 }, 13.570); tl.set("#u0", { opacity: 0 }, 13.570);
+      tl.set("#u2", { opacity: 1 }, 16.920); tl.set("#u1", { opacity: 0 }, 16.920);
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.100, ease: "power1.out" }, 6.811); tl.set("#s0", { opacity: 0 }, 6.931);
+      tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.080, ease: "power1.out" }, 7.610); tl.set("#s1", { opacity: 0 }, 7.710);
+      tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.140, ease: "power1.out" }, 7.830); tl.set("#s2", { opacity: 0 }, 7.990);
+      tl.set("#s4", { opacity: 1 }, 9.220); tl.set("#s3", { opacity: 0 }, 9.240);
+      tl.set("#s5", { opacity: 1 }, 9.340); tl.set("#s4", { opacity: 0 }, 9.360);
+      tl.set("#s6", { opacity: 1 }, 9.460); tl.set("#s5", { opacity: 0 }, 9.480);
+      tl.set("#s7", { opacity: 1 }, 9.580); tl.set("#s6", { opacity: 0 }, 9.600);
+      tl.set("#s8", { opacity: 1 }, 9.700); tl.set("#s7", { opacity: 0 }, 9.720);
+      tl.set("#s9", { opacity: 1 }, 9.820); tl.set("#s8", { opacity: 0 }, 9.840);
+      tl.fromTo("#s10", { opacity: 0 }, { opacity: 1, duration: 0.120, ease: "power1.out" }, 10.140); tl.set("#s9", { opacity: 0 }, 10.280);
+      tl.fromTo("#s11", { opacity: 0 }, { opacity: 1, duration: 0.100, ease: "power1.out" }, 12.614); tl.set("#s10", { opacity: 0 }, 12.734);
+      tl.fromTo("#s12", { opacity: 0 }, { opacity: 1, duration: 0.080, ease: "power1.out" }, 13.310); tl.set("#s11", { opacity: 0 }, 13.410);
+      tl.fromTo("#s12", { opacity: 1 }, { opacity: 0, duration: 0.1, ease: "power1.in", immediateRender: false }, 13.530); tl.fromTo("#s13", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.out" }, 13.650);
+      tl.fromTo("#s14", { opacity: 0 }, { opacity: 1, duration: 0.100, ease: "power1.out" }, 15.750); tl.set("#s13", { opacity: 0 }, 15.870);
+      tl.fromTo("#s15", { opacity: 0 }, { opacity: 1, duration: 0.080, ease: "power1.out" }, 16.660); tl.set("#s14", { opacity: 0 }, 16.760);
+      tl.fromTo("#s15", { opacity: 1, y: 0 }, { opacity: 0, y: -220, duration: 0.248, ease: "power2.in", immediateRender: false }, 16.880); tl.fromTo("#s16", { opacity: 0, y: 220 }, { opacity: 1, y: 0, duration: 0.315, ease: "power3.out" }, 17.015);
+      tl.fromTo("#r0", { opacity: 0.95, scale: 0.35 }, { opacity: 0, scale: 2.3, duration: 0.55, ease: "power2.out", immediateRender: false }, 7.770);
+      tl.fromTo("#r1", { opacity: 0.95, scale: 0.35 }, { opacity: 0, scale: 2.3, duration: 0.55, ease: "power2.out", immediateRender: false }, 13.470);
+      tl.fromTo("#r2", { opacity: 0.95, scale: 0.35 }, { opacity: 0, scale: 2.3, duration: 0.55, ease: "power2.out", immediateRender: false }, 16.820);
+      tl.fromTo("#cam", { x: -32.891, y: 0.000, scale: 1.6364 }, { x: 0.000, y: 0.000, scale: 1.0000, duration: 0.620, ease: "power2.inOut", immediateRender: false }, 2.720);
+      tl.fromTo("#cam", { x: 0.000, y: 0.000, scale: 1.0000 }, { x: -62.609, y: -52.826, scale: 1.0870, duration: 2.120, ease: "power3.inOut", immediateRender: false }, 3.490);
+      tl.fromTo("#cam", { x: -62.609, y: -52.826, scale: 1.0870 }, { x: -760.000, y: 0.000, scale: 2.0000, duration: 2.000, ease: "power3.inOut", immediateRender: false }, 5.610);
+      tl.fromTo("#cam", { x: -760.000, y: 0.000, scale: 2.0000 }, { x: -594.000, y: -36.000, scale: 1.8000, duration: 0.600, ease: "power3.inOut", immediateRender: false }, 8.620);
+      tl.fromTo("#cam", { x: -594.000, y: -36.000, scale: 1.8000 }, { x: -594.000, y: -36.000, scale: 1.8000, duration: 2.000, ease: "power3.inOut", immediateRender: false }, 11.310);
+      tl.fromTo("#cam", { x: -594.000, y: -36.000, scale: 1.8000 }, { x: 0.000, y: 0.000, scale: 1.0000, duration: 0.900, ease: "power3.inOut", immediateRender: false }, 13.720);
+      tl.fromTo("#cam", { x: 0.000, y: 0.000, scale: 1.0000 }, { x: -1440.000, y: -150.000, scale: 2.0000, duration: 2.000, ease: "power3.inOut", immediateRender: false }, 14.660);
+      tl.fromTo("#cam", { x: -1440.000, y: -150.000, scale: 2.0000 }, { x: -16.160, y: 0.000, scale: 1.6000, duration: 1.000, ease: "power3.inOut", immediateRender: false }, 17.370);
+      tl.fromTo("#cam", { x: -16.160, y: 0.000, scale: 1.6000 }, { x: 0.000, y: 0.000, scale: 1.0000, duration: 1.100, ease: "power3.inOut", immediateRender: false }, 20.150);
+      tl.fromTo("#hl", { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 18.420);
+      tl.fromTo("#c0", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.400); tl.fromTo("#c0", { opacity: 1, y: 0 }, { opacity: 0, y: -10, duration: 0.16, ease: "power1.in", immediateRender: false }, 4.610);
+      tl.fromTo("#c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 4.830); tl.fromTo("#c1", { opacity: 1, y: 0 }, { opacity: 0, y: -10, duration: 0.16, ease: "power1.in", immediateRender: false }, 8.580);
+      tl.fromTo("#c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 8.800); tl.fromTo("#c2", { opacity: 1, y: 0 }, { opacity: 0, y: -10, duration: 0.16, ease: "power1.in", immediateRender: false }, 10.700);
+      tl.fromTo("#c3", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 10.920); tl.fromTo("#c3", { opacity: 1, y: 0 }, { opacity: 0, y: -10, duration: 0.16, ease: "power1.in", immediateRender: false }, 14.150);
+      tl.fromTo("#c4", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 14.370); tl.fromTo("#c4", { opacity: 1, y: 0 }, { opacity: 0, y: -10, duration: 0.16, ease: "power1.in", immediateRender: false }, 21.650);
+      tl.to("#fade", { opacity: 1, duration: 0.45, ease: "power1.in" }, 21.700);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

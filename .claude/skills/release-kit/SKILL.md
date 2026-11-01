@@ -112,6 +112,7 @@ node tools/contact-sheet.mjs "<render>.mp4" --every=1                      # rea
 | সময় Time | a still stretch > 3 s (LinkedIn 4 s) = WARN; captions/SRT timing checks | page.mjs build, srt-export |
 | অবস্থা State | linear easing on a visible move = refused; header fades under the cliff | page.mjs build |
 | প্রমাণ Proof | platform words in a universal CTA, engagement bait on LinkedIn = refused; copy rules | page.mjs, copy-check |
+| উৎস Source | a cloned voice (release.json `"voice": "clone"`, set whenever tools/clone made the voice) puts the platform AI-disclosure line first under "মনে রাখবেন" in RELEASE.md (YouTube synthetic toggle, Meta AI label) | pack.mjs |
 
 ## 5. Traps (each cost a run on 2026-10-30)
 

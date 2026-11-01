@@ -1,0 +1,18 @@
+[natural Bangladeshi Bengali (standard Dhaka cholito), a confident tech creator talking to a friend on Facebook Reels, fast and clear, English tool names said clearly in English with a small lift in energy, no filler words, not a news announcer; a little lower and more serious, calm and trustworthy, never scary] একটা পাসওয়ার্ড ফাঁস হলেই Facebook, Gmail সব একসাথে হাতছাড়া। এই পাঁচটা ফ্রি টুল সেটা আটকায়।
+[pause 0.2]
+প্রথমটা Bitwarden।
+প্রতিটা সাইটের জন্য আলাদা কঠিন পাসওয়ার্ড বানায়, আর নিজেই মনে রাখে। ফ্রি প্ল্যানেই যত খুশি ডিভাইস।
+[pause 0.2]
+দ্বিতীয়টা uBlock Origin।
+ভুয়া ডাউনলোড বাটন আর স্ক্যামের পপ-আপ আটকায়। Chrome চালালে নামাবেন uBO Lite।
+[pause 0.2]
+তৃতীয়টা Ente Auth।
+লগইনের সময় ছয় অঙ্কের কোড দেয়। পাসওয়ার্ড চুরি হলেও কোড ছাড়া কেউ ঢুকতে পারবে না।
+[pause 0.2]
+চতুর্থটা Cryptomator।
+Google Drive-এর ভেতরে তালা দেওয়া ফোল্ডার। NID-এর স্ক্যান রাখুন, অ্যাকাউন্ট হ্যাক হলেও কেউ পড়তে পারবে না। রিকভারি কী লিখে রাখবেন।
+[pause 0.2]
+আর পঞ্চমটা PrivateBin।
+পাসওয়ার্ড পাঠাতে হলে Messenger-এ নয়। এখানে লিখে লিংকটা পাঠান, একবার পড়লেই নিজে থেকে মুছে যায়।
+[pause 0.2]
+পাঁচটার লিংক আর ইনস্টলের বাংলা গাইড চাইলে, পেজের ইনবক্সে লিখুন SAFE।

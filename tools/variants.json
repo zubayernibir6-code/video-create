@@ -46,6 +46,116 @@
       "proof": "projects/tools-reel-demo (2026-10-29)"
     },
     {
+      "id": "REEL2",
+      "bn": "পকেট গ্লাস",
+      "en": "Pocket Glass",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof)",
+      "builds": "9:16 series Reel: a floating glass phone; each repo's app icon jumps out and springs open as a glass card, settings-row features with switches, toast proofs, inbox-keyword end card",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel2-pocket-glass.mjs",
+      "skill": "tools-reel (series section)",
+      "proof": "projects/gh-ep01-phone (2026-11-01)"
+    },
+    {
+      "id": "REEL3",
+      "bn": "স্পিডরান",
+      "en": "Speedrun",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof)",
+      "builds": "9:16 series Reel: race HUD with a speed gauge that climbs a segment per repo, horizontal whip pans with light streaks, skewed boost rows, a rushing road",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel3-speedrun.mjs",
+      "skill": "tools-reel (series section)",
+      "proof": "projects/gh-ep02-pc (2026-11-01)"
+    },
+    {
+      "id": "REEL4",
+      "bn": "ভল্ট",
+      "en": "Vault",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof)",
+      "builds": "9:16 series Reel: brushed steel, five dial padlocks that lock one per repo, a password field that cracks and shatters, steel plates that swing shut with a glint, stamped proofs",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel4-vault.mjs",
+      "skill": "tools-reel (series section)",
+      "proof": "projects/gh-ep03-safe (2026-11-01)"
+    },
+    {
+      "id": "REEL5",
+      "bn": "ফিল্ম রিল",
+      "en": "Film Reel",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof)",
+      "builds": "9:16 series Reel: an edit suite — 16:9 monitor with REC and timecode, a timeline of one clip per repo with a travelling playhead, 3-2-1 leader, hard cuts with light leaks",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel5-film-reel.mjs",
+      "skill": "tools-reel (series section)",
+      "proof": "projects/gh-ep04-creator (2026-11-01)"
+    },
+    {
+      "id": "REEL6",
+      "bn": "অফলাইন রাত",
+      "en": "Offline Night",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof)",
+      "builds": "9:16 series Reel: a night sky in parallax, a constellation that lights a star per repo, a Wi-Fi sign struck through while a chat still answers, slow frosted panels",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel6-offline-night.mjs",
+      "skill": "tools-reel (series section)",
+      "proof": "projects/gh-ep05-ai (2026-11-01)"
+    },
+    {
+      "id": "REEL7",
+      "bn": "কাগজের টেবিল",
+      "en": "Paper Desk",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof, optional promise / how / cta.steps)",
+      "builds": "9:16 series Reel: a walnut desk from above, a subscription bill stamped cancelled, sheets with washi tape sliding in, pen underlines, rubber-stamp proofs, a pile of finished sheets",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel7-paper-desk.mjs",
+      "skill": "tools-reel (series section 9b)",
+      "proof": "projects/gh-ep06-office (2026-11-01)"
+    },
+    {
+      "id": "REEL8",
+      "bn": "জ্ঞানের সিঁড়ি",
+      "en": "Knowledge Stairs",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof, optional promise / how / cta.steps)",
+      "builds": "9:16 series Reel: a rising night library, book stairs with levels 1-5, a cap token hopping up, cards turning in like pages, a book cover opening in the hook",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel8-knowledge-stairs.mjs",
+      "skill": "tools-reel (series section 9b)",
+      "proof": "projects/gh-ep07-learn (2026-11-01)"
+    },
+    {
+      "id": "REEL9",
+      "bn": "আলপনা",
+      "en": "Alpona",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof, optional promise / how / cta.steps)",
+      "builds": "9:16 series Reel: a rice-paste alpona drawing itself on maroon earth and turning slowly, lotus petals filling per repo, a letter written by a pen stroke, calligraphic name wipes",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel9-alpona.mjs",
+      "skill": "tools-reel (series section 9b)",
+      "proof": "projects/gh-ep08-bangla (2026-11-01)"
+    },
+    {
+      "id": "REEL10",
+      "bn": "ব্লুপ্রিন্ট",
+      "en": "Blueprint",
+      "status": "beta",
+      "needs": "a series episode: 3-5 tools + a voice-over + BGM (reel.json with style, features, proof, optional promise / how / cta.steps)",
+      "builds": "9:16 series Reel: a blueprint grid, messy task chips snapping into rows, five machine nodes on wires lit by a racing signal, panels unfolding from a line",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel10-blueprint.mjs",
+      "skill": "tools-reel (series section 9b)",
+      "proof": "projects/gh-ep09-auto (2026-11-01)"
+    },
+    {
+      "id": "REEL1S",
+      "bn": "টার্মিনাল (সিরিজ)",
+      "en": "Terminal (series)",
+      "status": "beta",
+      "needs": "a series episode as above + tools[].cmd (the install command)",
+      "builds": "9:16 series Reel in the REEL1 dark UI: a card over a terminal that types each repo's install command, a progress bar and a green tick, an install counter, hit-stops on names (reel.json style REEL1, engine series)",
+      "engine": "tools/reel/series.mjs + tools/reel/looks/reel1-terminal.mjs",
+      "skill": "tools-reel (series section 9b)",
+      "proof": "projects/gh-ep10-claude (2026-11-01)"
+    },
+    {
       "id": "EDIT1",
       "bn": "ক্লিন কাট",
       "en": "Clean Cut",
@@ -142,6 +252,61 @@
       "builds": "TUT1's look, re-timed by cutting his own pauses instead of matching a separate voice",
       "engine": "tools/tutorial (needs a live-voice timeline)",
       "skill": "screen-tutorial"
+    },
+    {
+      "id": "AT1",
+      "bn": "স্টুডিও জানালা",
+      "en": "Studio Window",
+      "status": "beta",
+      "needs": "a topic + the app/site to show (no screen recording); optional: his phone face video or his cloned voice; BGM",
+      "builds": "16:9 tutorial from robot-captured 2x screen states: opens on the finished result (gold frame + chip) and rewinds to the start, browser window with the live address, smart camera zooms (<= 2x, sharp), curved cursor that clicks on the spoken anchor word, step-numbered captions, gold highlight; face bubble (phase 2)",
+      "engine": "tools/autocap/capture.mjs + compose.mjs (voice-times.mjs: one voice file aligned to the lines) + plan.mjs (PLAN.md) + teleprompter.mjs (his phone take)",
+      "skill": "(planned) auto-tutorial; plan docs/auto-tutorial-plan.md",
+      "proof": "projects/autotut-proof (2026-11-01: silent preview 26.5 s; then his cloned voice talha-a from ONE Gemini request + the hook, 23.7 s)"
+    },
+    {
+      "id": "AT2",
+      "bn": "পাশাপাশি ডেস্ক",
+      "en": "Side Desk",
+      "status": "planned",
+      "needs": "as AT1 + his face video",
+      "builds": "face in a tall glass card on the left third, the window on the right; finished steps tick off under the face",
+      "engine": "tools/autocap (planned)",
+      "skill": "(planned) auto-tutorial",
+      "proof": ""
+    },
+    {
+      "id": "AT3",
+      "bn": "ফুল জুম",
+      "en": "Full Zoom",
+      "status": "planned",
+      "needs": "as AT1",
+      "builds": "screen edge to edge, deep zooms and fast cuts; face full screen at intro and outro, a small pill during steps",
+      "engine": "tools/autocap (planned)",
+      "skill": "(planned) auto-tutorial",
+      "proof": ""
+    },
+    {
+      "id": "AT4",
+      "bn": "খাড়া স্ট্যাক",
+      "en": "Vertical Stack",
+      "status": "planned",
+      "needs": "as AT1",
+      "builds": "9:16 Reel: screen on top (the site mobile layout when it has one), face below, word-by-word captions, Reels safe zone",
+      "engine": "tools/autocap (planned)",
+      "skill": "(planned) auto-tutorial",
+      "proof": ""
+    },
+    {
+      "id": "AT5",
+      "bn": "ধাপ কার্ড",
+      "en": "Step Cards",
+      "status": "planned",
+      "needs": "as AT1",
+      "builds": "a big numbered card before each step; the button to press cut from the 2x capture and enlarged",
+      "engine": "tools/autocap (planned)",
+      "skill": "(planned) auto-tutorial",
+      "proof": ""
     },
     {
       "id": "AIGEN",

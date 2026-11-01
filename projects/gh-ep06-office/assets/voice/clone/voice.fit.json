@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep06-office/assets/voice/clone/voice.raw.wav",
+ "before_s": 88.96,
+ "after_pauses_s": 87.38,
+ "tempo": 1.0922,
+ "after_s": 79.98,
+ "gap": 0.3,
+ "max": 80
+}

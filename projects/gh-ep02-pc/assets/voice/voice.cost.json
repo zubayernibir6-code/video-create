@@ -1,0 +1,8 @@
+{
+ "model": "gemini-3.8-flash-tts",
+ "voice": "Sadaltager",
+ "blocks": 7,
+ "new_audio_s": 45.3,
+ "usd_estimate": 0.0107,
+ "at": "2026-10-31T21:52:49.406Z"
+}

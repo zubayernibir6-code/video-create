@@ -26,6 +26,35 @@ function similar(a, b) {
   return 1 - prev[n] / Math.max(m, n);
 }
 
+// An English word in the script comes back from the Bengali transcriber in Bengali letters ("Play Store" → "প্লে
+// স্টোর", "Wireless debugging" → "ওয়্যারলেস ডিবাগিং"). Both sides are reduced to a rough consonant skeleton in Latin
+// (Bengali consonants romanised, vowels, h, w and y dropped, ph→f, c→k, v→b, z→j, repeats collapsed) and compared
+// there when the spellings are in different scripts. Added 2026-11-01: the GitHub series voices with how-to lines
+// (many English UI words) aligned at 68 % without it.
+const BN = { "ক": "k", "খ": "k", "গ": "g", "ঘ": "g", "ঙ": "n", "চ": "c", "ছ": "c", "জ": "j", "ঝ": "j", "ঞ": "n", "ট": "t", "ঠ": "t", "ড": "d", "ঢ": "d", "ণ": "n", "ত": "t", "থ": "t", "দ": "d", "ধ": "d", "ন": "n", "প": "p", "ফ": "f", "ব": "b", "ভ": "b", "ম": "m", "য": "j", "র": "r", "ল": "l", "শ": "s", "ষ": "s", "স": "s", "হ": "", "ৎ": "t", "ং": "n" };
+const skelCache = new Map();
+export function skeleton(n) {
+  if (skelCache.has(n)) return skelCache.get(n);
+  const t = n.normalize("NFC").replace(/্য/g, "").replace(/ড়|ড়|ঢ়|ঢ়/g, "র").replace(/য়|য়/g, "").replace(/্/g, "");
+  let out = "";
+  for (const run of t.match(/[a-z]+|[0-9]+|[^a-z0-9]+/g) ?? []) {
+    if (/^[a-z]/.test(run)) out += run.replace(/ph/g, "f").replace(/sh/g, "s").replace(/ch/g, "c").replace(/ck/g, "k").replace(/c/g, "k").replace(/q/g, "k").replace(/x/g, "ks").replace(/v/g, "b").replace(/z/g, "j").replace(/[aeiouwyh]/g, "");
+    else if (/^[0-9]/.test(run)) out += run;
+    else for (const ch of run) { if (BN[ch] !== undefined) out += BN[ch]; else { const d = "০১২৩৪৫৬৭৮৯".indexOf(ch); if (d >= 0) out += d; } }
+  }
+  out = out.replace(/(.)\1+/g, "$1");
+  skelCache.set(n, out);
+  return out;
+}
+const latin = (s) => /[a-z]/.test(s), bangla = (s) => /[ঀ-৿]/.test(s);
+function simX(a, b) {
+  const s = similar(a, b);
+  if (s >= 0.6 || !((latin(a) && bangla(b)) || (bangla(a) && latin(b)))) return s;
+  const x = skeleton(a), y = skeleton(b);
+  if (x.length < 2 || y.length < 2) return s;
+  return similar(x, y) >= 0.66 ? 0.6 : s;
+}
+
 export function alignScript(lines, asr) {
   const script = lines.flatMap((l, line) => String(l).split(/\s+/).filter(Boolean).map((text) => ({ text, line, n: norm(text) })));
   const spoken = asr.map((w) => ({ ...w, n: norm(w.text) })).filter((w) => w.n);
@@ -40,7 +69,7 @@ export function alignScript(lines, asr) {
       if (here === NEG) continue;
       const put = (ii, jj, s, m) => { if (ii <= S && jj <= A && here + s > score[ii][jj]) { score[ii][jj] = here + s; move[ii][jj] = m; } };
       if (i < S && j < A) {
-        const sim = similar(script[i].n, spoken[j].n);
+        const sim = simX(script[i].n, spoken[j].n);
         put(i + 1, j + 1, sim === 1 ? 3 : sim >= 0.6 ? 1.5 : -0.5, 1);
       }
       if (i < S && j + 1 < A && script[i].n === spoken[j].n + spoken[j + 1].n) put(i + 1, j + 2, 4, 2);
@@ -54,7 +83,7 @@ export function alignScript(lines, asr) {
   let i = S, j = A, good = 0;
   while (i > 0 || j > 0) {
     const m = move[i][j];
-    if (m === 1) { i--; j--; pairs[i] = { start: spoken[j].start, end: spoken[j].end }; if (similar(script[i].n, spoken[j].n) >= 0.6) good++; }
+    if (m === 1) { i--; j--; pairs[i] = { start: spoken[j].start, end: spoken[j].end }; if (simX(script[i].n, spoken[j].n) >= 0.6) good++; }
     else if (m === 2) { i--; j -= 2; pairs[i] = { start: spoken[j].start, end: spoken[j + 1].end }; good++; }
     else if (m === 3) {
       i -= 2; j--;

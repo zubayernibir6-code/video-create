@@ -1,0 +1,55 @@
+1
+00:00:00,000 --> 00:00:01,840
+Don't ship with Claude code until you've installed these
+
+2
+00:00:01,840 --> 00:00:02,940
+three MCP servers.
+
+3
+00:00:03,460 --> 00:00:05,140
+The first is SuperBase MCP.
+
+4
+00:00:05,540 --> 00:00:08,580
+It lets Claude create tables, run SQL and read logs in your
+
+5
+00:00:08,580 --> 00:00:10,980
+SuperBase project, so your backend gets built while you
+
+6
+00:00:10,980 --> 00:00:11,220
+talk.
+
+7
+00:00:11,720 --> 00:00:13,260
+The second is Sentry MCP.
+
+8
+00:00:13,720 --> 00:00:15,620
+Let's Claude read your real production errors and stack
+
+9
+00:00:15,620 --> 00:00:17,940
+traces, so it fixes the actual bug, not a guess.
+
+10
+00:00:18,440 --> 00:00:20,040
+And the third is Linear MCP.
+
+11
+00:00:20,500 --> 00:00:22,720
+It lets Claude create, update and close issues without
+
+12
+00:00:22,720 --> 00:00:24,960
+leaving the terminal, so your board stays honest while you
+
+13
+00:00:24,960 --> 00:00:25,200
+ship.
+
+14
+00:00:25,200 --> 00:00:27,920
+Comment tools, and I'll send you one link with all three.

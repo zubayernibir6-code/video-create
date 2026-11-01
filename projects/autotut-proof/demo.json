@@ -1,0 +1,26 @@
+{
+ "note": "Proof of the auto-tutorial idea (2026-11-01): the robot opens the Claude Code docs, searches 'skills', opens the guide and jumps to 'Create your first skill'. say = the voice line spoken during that step (his cloned voice talha-a); anchor = the word in it on which the action lands.",
+ "title": "Claude Code-এ স্কিল বানানো শিখবেন কোথায়",
+ "url": "https://code.claude.com/docs/en/overview",
+ "viewport": [1440, 810],
+ "dpr": 2,
+ "voice": "talha-a",
+ "bgm": "assets/music/bgm.mp3",
+ "steps": [
+  { "id": "home", "do": "goto",
+    "say": "Claude-এর স্কিল বানানো শিখতে চান? চলুন দেখি, কোথায় শিখবেন।", "anchor": "চলুন" },
+  { "id": "search", "do": "click", "target": { "css": "#search-bar-entry" }, "label": "Search বক্স", "result": "Search-এর জানালা খোলে",
+    "say": "Claude Code Docs খুলে উপরের Search বক্সে ক্লিক করুন।", "anchor": "ক্লিক",
+    "view": [380, 0, 720, 405] },
+  { "id": "type", "do": "type", "text": "skills", "result": "ফলাফলের তালিকা",
+    "say": "তারপর লিখুন, skills।", "anchor": "লিখুন",
+    "view": [330, 20, 800, 450] },
+  { "id": "result", "do": "click", "target": { "text": "Extend Claude with skills" },
+    "say": "প্রথম ফলাফলটাই আমাদের পাতা। এটা খুলুন।", "anchor": "খুলুন",
+    "view": [330, 20, 800, 450] },
+  { "id": "toc", "do": "click", "target": { "text": "Create your first skill" },
+    "mark": { "css": "#create-your-first-skill" },
+    "say": "এবার ডান পাশে Create your first skill চাপলেই, প্রথম স্কিল বানানোর পুরো নিয়ম পেয়ে যাবেন।", "anchor": "চাপলেই",
+    "view": [880, 120, 560, 315] }
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep01-phone/assets/voice/clone-b/voice.raw.wav",
+ "before_s": 91.93,
+ "after_pauses_s": 89.33,
+ "tempo": 1.1,
+ "after_s": 81.19,
+ "gap": 0.3,
+ "max": 80
+}

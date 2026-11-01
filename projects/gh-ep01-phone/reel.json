@@ -1,0 +1,335 @@
+{
+ "engine": "series",
+ "style": "REEL2",
+ "series": "৫টা GitHub রিপো",
+ "episode": 1,
+ "title": "৫টা GitHub রিপো · পর্ব ১: ফোনের জন্য ফ্রি অ্যাপ",
+ "lang": "bn",
+ "voice": "assets/voice/clone-b/voice.wav",
+ "voiceLabel": "আপনার ক্লোন করা গলা খ (Gemini, talha-b)",
+ "music": {
+  "file": "assets/music/bgm-90.wav",
+  "from": 0,
+  "label": "আপনার Lyria BGM (জোড়া দিয়ে লম্বা)"
+ },
+ "keyword": "PHONE",
+ "goal": "দর্শক পরিষ্কার জানবে ভিডিওটা কী নিয়ে (ফোনের ডেটা আর স্টোরেজ বাঁচানোর ৫টা ফ্রি অ্যাপ), প্রতিটা অ্যাপ কী করে আর কীভাবে চালাতে হয়, আর লিংক ও বাংলা গাইড পেতে পেজের ইনবক্সে PHONE লিখবে।",
+ "hook": {
+  "line": "ফোনে এই পাঁচটা ফ্রি অ্যাপ না থাকলে, প্রতিদিন ডেটা আর স্টোরেজ দুটোই নষ্ট করছেন।",
+  "title": "Storage full",
+  "sub": "০ / ৫ অ্যাপ বসানো",
+  "on": "পাঁচটা"
+ },
+ "tools": [
+  {
+   "name": "LocalSend",
+   "maker": "ফোন থেকে ল্যাপটপে ফাইল",
+   "intro": "প্রথমটা LocalSend।",
+   "body": "ফোন থেকে ল্যাপটপে ভিডিও পাঠায়, একই Wi-Fi-তে, ইন্টারনেট ছাড়াই। কোয়ালিটিও কমে না।",
+   "stat": {
+    "text": "৯৭ হাজার স্টার"
+   },
+   "features": [
+    {
+     "label": "ভিডিও পাঠান",
+     "on": "ভিডিও",
+     "icon": "send"
+    },
+    {
+     "label": "একই Wi-Fi",
+     "on": "Wi-Fi-তে",
+     "icon": "wifi"
+    },
+    {
+     "label": "নেট লাগে না",
+     "on": "ইন্টারনেট",
+     "icon": "wifi-off"
+    }
+   ],
+   "proof": {
+    "text": "কোয়ালিটি কমে না",
+    "on": "কোয়ালিটিও"
+   },
+   "how": {
+    "line": "ফোনে Play Store থেকে, ল্যাপটপে GitHub থেকে নামান। তারপর ফাইল বেছে ল্যাপটপের নাম চাপুন।",
+    "steps": [
+     {
+      "label": "ফোনে Play Store",
+      "on": "Play"
+     },
+     {
+      "label": "ল্যাপটপে GitHub",
+      "on": "ল্যাপটপে"
+     },
+     {
+      "label": "ফাইল বেছে পাঠান",
+      "on": "ফাইল"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Fossify Gallery",
+   "short": "Fossify Gallery",
+   "maker": "বিজ্ঞাপন ছাড়া গ্যালারি",
+   "intro": "দ্বিতীয়টা Fossify Gallery।",
+   "body": "বিজ্ঞাপন ছাড়া গ্যালারি। ছবি লক করে রাখা যায়, আর শেয়ারের আগে ছবির লোকেশন মুছে দেয়।",
+   "features": [
+    {
+     "label": "বিজ্ঞাপন নেই",
+     "on": "বিজ্ঞাপন",
+     "icon": "ban"
+    },
+    {
+     "label": "ছবি লক",
+     "on": "লক",
+     "icon": "lock"
+    },
+    {
+     "label": "লোকেশন মোছা",
+     "on": "লোকেশন",
+     "icon": "map-pin-off"
+    }
+   ],
+   "proof": {
+    "text": "শেয়ারের আগে GPS মোছে",
+    "on": "মুছে"
+   },
+   "how": {
+    "line": "Play Store-এ Fossify Gallery লিখে নামান, আর পুরোনো গ্যালারির বদলে এটাই খুলুন।",
+    "steps": [
+     {
+      "label": "Play Store-এ খুঁজুন",
+      "on": "Play"
+     },
+     {
+      "label": "পুরোনোটার বদলে খুলুন",
+      "on": "পুরোনো"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Canta + Shizuku",
+   "short": "Canta + Shizuku",
+   "mono": "CA",
+   "maker": "রুট ছাড়া অ্যাপ সরানো",
+   "intro": "তৃতীয়টা Canta, সাথে Shizuku।",
+   "body": "রুট ছাড়াই ফোনে আগে থেকে বসানো অ্যাপ সরায়। শুধু যেগুলো নিরাপদ লেখা আছে, সেগুলোই সরাবেন।",
+   "features": [
+    {
+     "label": "রুট লাগে না",
+     "on": "রুট",
+     "icon": "shield-check"
+    },
+    {
+     "label": "বাড়তি অ্যাপ",
+     "on": "বসানো",
+     "icon": "package"
+    },
+    {
+     "label": "সরিয়ে দেয়",
+     "on": "সরায়",
+     "icon": "trash"
+    }
+   ],
+   "proof": {
+    "text": "শুধু নিরাপদগুলো সরান",
+    "on": "নিরাপদ",
+    "tone": "warn"
+   },
+   "how": {
+    "line": "আগে Shizuku, তারপর Canta নামান। Developer options-এর Wireless debugging দিয়ে Shizuku চালু করুন।",
+    "steps": [
+     {
+      "label": "আগে Shizuku",
+      "on": "Shizuku"
+     },
+     {
+      "label": "তারপর Canta",
+      "on": "Canta"
+     },
+     {
+      "label": "Wireless debugging",
+      "on": "Wireless"
+     }
+    ]
+   }
+  },
+  {
+   "name": "scrcpy",
+   "maker": "ফোনের স্ক্রিন ল্যাপটপে",
+   "intro": "চতুর্থটা scrcpy।",
+   "body": "ফোনের পুরো স্ক্রিন ল্যাপটপে আসে, মাউস দিয়েই চালানো যায়। স্ক্রিন ভাঙা থাকলেও কাজ আটকাবে না।",
+   "stat": {
+    "text": "১.৫ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "পুরো স্ক্রিন",
+     "on": "স্ক্রিন",
+     "icon": "monitor-smartphone"
+    },
+    {
+     "label": "মাউসে চালান",
+     "on": "মাউস",
+     "icon": "mouse"
+    },
+    {
+     "label": "ভাঙা স্ক্রিনেও",
+     "on": "ভাঙা",
+     "icon": "smartphone"
+    }
+   ],
+   "proof": {
+    "text": "কাজ আটকাবে না",
+    "on": "আটকাবে"
+   },
+   "how": {
+    "line": "ফোনে USB debugging চালু করে কেবল লাগান, তারপর ল্যাপটপে scrcpy চালান।",
+    "steps": [
+     {
+      "label": "USB debugging চালু",
+      "on": "USB"
+     },
+     {
+      "label": "কেবল লাগান",
+      "on": "কেবল"
+     },
+     {
+      "label": "ল্যাপটপে scrcpy",
+      "on": "ল্যাপটপে"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Obtainium",
+   "maker": "অ্যাপ আপডেট রাখে",
+   "intro": "আর পঞ্চমটা Obtainium।",
+   "body": "GitHub থেকে নামানো অ্যাপগুলো নিজে থেকেই আপডেট রাখে। ভুয়া ওয়েবসাইট থেকে আর APK খুঁজতে হয় না।",
+   "features": [
+    {
+     "label": "GitHub-এর অ্যাপ",
+     "on": "GitHub",
+     "icon": "download"
+    },
+    {
+     "label": "নিজেই আপডেট",
+     "on": "আপডেট",
+     "icon": "refresh-cw"
+    },
+    {
+     "label": "ভুয়া সাইট বাদ",
+     "on": "ভুয়া",
+     "icon": "shield-x"
+    }
+   ],
+   "proof": {
+    "text": "APK খোঁজা শেষ",
+    "on": "APK"
+   },
+   "how": {
+    "line": "এটা Play Store-এ নেই, GitHub-এর Releases পাতা থেকে নামান। তারপর Add app চেপে অ্যাপের লিংক দিন।",
+    "steps": [
+     {
+      "label": "Releases পাতা থেকে",
+      "on": "Releases"
+     },
+     {
+      "label": "Add app চাপুন",
+      "on": "Add"
+     },
+     {
+      "label": "অ্যাপের লিংক দিন",
+      "on": "লিংক"
+     }
+    ]
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটা অ্যাপের লিংক আর ইনস্টলের বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন PHONE। আমি নিজে আপনাকে পাঠিয়ে দেব।",
+  "heading": "৫টা অ্যাপ এক নজরে",
+  "ask": "লিংক আর বাংলা গাইড পেতে",
+  "steps": [
+   {
+    "label": "পেজে যান",
+    "on": "পেজে",
+    "icon": "house"
+   },
+   {
+    "label": "Message চাপুন",
+    "on": "Message",
+    "icon": "message-circle"
+   },
+   {
+    "label": "লিখুন PHONE",
+    "on": "লিখুন",
+    "icon": "keyboard"
+   }
+  ],
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "ইন্টারনেট",
+  "রুট",
+  "নিরাপদ",
+  "ভুয়া"
+ ],
+ "facts": [
+  {
+   "claim": "LocalSend has about 96.6k GitHub stars",
+   "value": "৯৭ হাজার",
+   "source": "https://github.com/localsend/localsend",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "scrcpy has about 153.6k GitHub stars",
+   "value": "১.৫ লাখ",
+   "source": "https://github.com/Genymobile/scrcpy",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Fossify Gallery is ad-free, can lock photos and strips location (EXIF) before sharing",
+   "source": "https://github.com/FossifyOrg/Gallery",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Canta uninstalls preinstalled apps without root via Shizuku and marks safe ones",
+   "source": "https://github.com/samolego/Canta",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Obtainium updates apps directly from their GitHub releases",
+   "source": "https://github.com/ImranR98/Obtainium",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": [],
+ "minMatch": 0.75,
+ "promise": {
+  "line": "প্রতিটা কী কাজ করে, আর কীভাবে চালাবেন, এখনই দেখাচ্ছি। সব লিংক পাবেন ইনবক্সে।",
+  "kicker": "এই ভিডিওতে",
+  "title": "৫টা ফ্রি অ্যাপ",
+  "sub": "ফোনের ডেটা আর স্টোরেজ বাঁচাতে",
+  "rows": [
+   {
+    "label": "কোনটা কী কাজ করে",
+    "on": "কাজ",
+    "icon": "sparkles"
+   },
+   {
+    "label": "কীভাবে চালাবেন",
+    "on": "চালাবেন",
+    "icon": "list-checks"
+   },
+   {
+    "label": "লিংক: ইনবক্সে PHONE",
+    "on": "ইনবক্সে",
+    "icon": "message-circle"
+   }
+  ]
+ }
+}

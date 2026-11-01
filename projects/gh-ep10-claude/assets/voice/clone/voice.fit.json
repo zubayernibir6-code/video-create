@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep10-claude/assets/voice/clone/voice.raw.wav",
+ "before_s": 93.24,
+ "after_pauses_s": 92.07,
+ "tempo": 1.1,
+ "after_s": 83.68,
+ "gap": 0.3,
+ "max": 80
+}

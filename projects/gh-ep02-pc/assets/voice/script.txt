@@ -1,0 +1,18 @@
+[natural Bangladeshi Bengali (standard Dhaka cholito), a confident tech creator talking to a friend on Facebook Reels, fast and clear, English tool names said clearly in English with a small lift in energy, no filler words, not a news announcer; energetic and quick, like a mechanic showing exactly what to fix] ল্যাপটপ স্লো বলে নতুন কেনার আগে, এই পাঁচটা ফ্রি টুল একবার চালিয়ে দেখুন।
+[pause 0.2]
+প্রথমটা Win11Debloat।
+এক লাইনের কমান্ডে Windows-এর আগে থেকে বসানো অ্যাপ আর বিজ্ঞাপন সরায়। চালানোর আগে অবশ্যই restore point বানিয়ে নেবেন।
+[pause 0.2]
+দ্বিতীয়টা Bulk Crap Uninstaller।
+অনেকগুলো সফটওয়্যার একসাথে মুছে দেয়, পেছনে পড়ে থাকা ফাইলসহ। একটা একটা করে আনইনস্টলের দিন শেষ।
+[pause 0.2]
+তৃতীয়টা WinDirStat।
+C ড্রাইভ লাল হয়ে গেলে এটা চালান। রঙিন ম্যাপে দেখাবে কোন বড় ফাইলটা জায়গা খাচ্ছে।
+[pause 0.2]
+চতুর্থটা Microsoft-এর নিজের PowerToys।
+Win, Shift আর T একসাথে চাপুন। স্ক্রিনের ছবি বা ভিডিও থেকেও ইংরেজি লেখা কপি হয়ে যাবে।
+[pause 0.2]
+আর পঞ্চমটা NanaZip।
+WinRAR-এর trial শেষের সেই মেসেজ আর আসবে না। Microsoft Store থেকে এক ক্লিকেই বসে যায়।
+[pause 0.2]
+পাঁচটার লিংক আর ইনস্টলের বাংলা গাইড চাইলে, পেজের ইনবক্সে লিখুন PC।

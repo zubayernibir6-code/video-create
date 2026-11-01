@@ -1,0 +1,602 @@
+[
+  {
+    "id": "w0",
+    "text": "Don't",
+    "start": 0.0,
+    "end": 0.2
+  },
+  {
+    "id": "w1",
+    "text": "ship",
+    "start": 0.2,
+    "end": 0.3
+  },
+  {
+    "id": "w2",
+    "text": "with",
+    "start": 0.3,
+    "end": 0.48
+  },
+  {
+    "id": "w3",
+    "text": "Claude",
+    "start": 0.48,
+    "end": 0.72
+  },
+  {
+    "id": "w4",
+    "text": "code",
+    "start": 0.72,
+    "end": 0.92
+  },
+  {
+    "id": "w5",
+    "text": "until",
+    "start": 0.92,
+    "end": 1.14
+  },
+  {
+    "id": "w6",
+    "text": "you've",
+    "start": 1.14,
+    "end": 1.32
+  },
+  {
+    "id": "w7",
+    "text": "installed",
+    "start": 1.32,
+    "end": 1.62
+  },
+  {
+    "id": "w8",
+    "text": "these",
+    "start": 1.62,
+    "end": 1.84
+  },
+  {
+    "id": "w9",
+    "text": "three",
+    "start": 1.84,
+    "end": 2.1
+  },
+  {
+    "id": "w10",
+    "text": "MCP",
+    "start": 2.1,
+    "end": 2.64
+  },
+  {
+    "id": "w11",
+    "text": "servers.",
+    "start": 2.64,
+    "end": 2.94
+  },
+  {
+    "id": "w12",
+    "text": "The",
+    "start": 3.46,
+    "end": 3.58
+  },
+  {
+    "id": "w13",
+    "text": "first",
+    "start": 3.58,
+    "end": 3.84
+  },
+  {
+    "id": "w14",
+    "text": "is",
+    "start": 3.84,
+    "end": 4.02
+  },
+  {
+    "id": "w15",
+    "text": "SuperBase",
+    "start": 4.02,
+    "end": 4.46
+  },
+  {
+    "id": "w16",
+    "text": "MCP.",
+    "start": 4.46,
+    "end": 5.14
+  },
+  {
+    "id": "w17",
+    "text": "It",
+    "start": 5.54,
+    "end": 5.62
+  },
+  {
+    "id": "w18",
+    "text": "lets",
+    "start": 5.62,
+    "end": 5.74
+  },
+  {
+    "id": "w19",
+    "text": "Claude",
+    "start": 5.74,
+    "end": 6.08
+  },
+  {
+    "id": "w20",
+    "text": "create",
+    "start": 6.08,
+    "end": 6.28
+  },
+  {
+    "id": "w21",
+    "text": "tables,",
+    "start": 6.28,
+    "end": 6.64
+  },
+  {
+    "id": "w22",
+    "text": "run",
+    "start": 6.98,
+    "end": 7.18
+  },
+  {
+    "id": "w23",
+    "text": "SQL",
+    "start": 7.18,
+    "end": 7.6
+  },
+  {
+    "id": "w24",
+    "text": "and",
+    "start": 7.6,
+    "end": 7.92
+  },
+  {
+    "id": "w25",
+    "text": "read",
+    "start": 7.92,
+    "end": 8.08
+  },
+  {
+    "id": "w26",
+    "text": "logs",
+    "start": 8.08,
+    "end": 8.32
+  },
+  {
+    "id": "w27",
+    "text": "in",
+    "start": 8.32,
+    "end": 8.5
+  },
+  {
+    "id": "w28",
+    "text": "your",
+    "start": 8.5,
+    "end": 8.58
+  },
+  {
+    "id": "w29",
+    "text": "SuperBase",
+    "start": 8.58,
+    "end": 8.92
+  },
+  {
+    "id": "w30",
+    "text": "project,",
+    "start": 8.92,
+    "end": 9.32
+  },
+  {
+    "id": "w31",
+    "text": "so",
+    "start": 9.58,
+    "end": 9.76
+  },
+  {
+    "id": "w32",
+    "text": "your",
+    "start": 9.76,
+    "end": 9.88
+  },
+  {
+    "id": "w33",
+    "text": "backend",
+    "start": 9.88,
+    "end": 10.1
+  },
+  {
+    "id": "w34",
+    "text": "gets",
+    "start": 10.1,
+    "end": 10.48
+  },
+  {
+    "id": "w35",
+    "text": "built",
+    "start": 10.48,
+    "end": 10.68
+  },
+  {
+    "id": "w36",
+    "text": "while",
+    "start": 10.68,
+    "end": 10.86
+  },
+  {
+    "id": "w37",
+    "text": "you",
+    "start": 10.86,
+    "end": 10.98
+  },
+  {
+    "id": "w38",
+    "text": "talk.",
+    "start": 10.98,
+    "end": 11.22
+  },
+  {
+    "id": "w39",
+    "text": "The",
+    "start": 11.72,
+    "end": 11.84
+  },
+  {
+    "id": "w40",
+    "text": "second",
+    "start": 11.84,
+    "end": 12.08
+  },
+  {
+    "id": "w41",
+    "text": "is",
+    "start": 12.08,
+    "end": 12.3
+  },
+  {
+    "id": "w42",
+    "text": "Sentry",
+    "start": 12.3,
+    "end": 12.6
+  },
+  {
+    "id": "w43",
+    "text": "MCP.",
+    "start": 12.6,
+    "end": 13.26
+  },
+  {
+    "id": "w44",
+    "text": "Let's",
+    "start": 13.72,
+    "end": 13.9
+  },
+  {
+    "id": "w45",
+    "text": "Claude",
+    "start": 13.9,
+    "end": 14.14
+  },
+  {
+    "id": "w46",
+    "text": "read",
+    "start": 14.14,
+    "end": 14.3
+  },
+  {
+    "id": "w47",
+    "text": "your",
+    "start": 14.3,
+    "end": 14.46
+  },
+  {
+    "id": "w48",
+    "text": "real",
+    "start": 14.46,
+    "end": 14.66
+  },
+  {
+    "id": "w49",
+    "text": "production",
+    "start": 14.66,
+    "end": 14.88
+  },
+  {
+    "id": "w50",
+    "text": "errors",
+    "start": 14.88,
+    "end": 15.22
+  },
+  {
+    "id": "w51",
+    "text": "and",
+    "start": 15.22,
+    "end": 15.4
+  },
+  {
+    "id": "w52",
+    "text": "stack",
+    "start": 15.4,
+    "end": 15.62
+  },
+  {
+    "id": "w53",
+    "text": "traces,",
+    "start": 15.62,
+    "end": 16.02
+  },
+  {
+    "id": "w54",
+    "text": "so",
+    "start": 16.32,
+    "end": 16.48
+  },
+  {
+    "id": "w55",
+    "text": "it",
+    "start": 16.48,
+    "end": 16.6
+  },
+  {
+    "id": "w56",
+    "text": "fixes",
+    "start": 16.6,
+    "end": 16.8
+  },
+  {
+    "id": "w57",
+    "text": "the",
+    "start": 16.8,
+    "end": 17.0
+  },
+  {
+    "id": "w58",
+    "text": "actual",
+    "start": 17.0,
+    "end": 17.18
+  },
+  {
+    "id": "w59",
+    "text": "bug,",
+    "start": 17.18,
+    "end": 17.48
+  },
+  {
+    "id": "w60",
+    "text": "not",
+    "start": 17.58,
+    "end": 17.66
+  },
+  {
+    "id": "w61",
+    "text": "a",
+    "start": 17.66,
+    "end": 17.8
+  },
+  {
+    "id": "w62",
+    "text": "guess.",
+    "start": 17.8,
+    "end": 17.94
+  },
+  {
+    "id": "w63",
+    "text": "And",
+    "start": 18.44,
+    "end": 18.56
+  },
+  {
+    "id": "w64",
+    "text": "the",
+    "start": 18.56,
+    "end": 18.66
+  },
+  {
+    "id": "w65",
+    "text": "third",
+    "start": 18.66,
+    "end": 18.9
+  },
+  {
+    "id": "w66",
+    "text": "is",
+    "start": 18.9,
+    "end": 19.04
+  },
+  {
+    "id": "w67",
+    "text": "Linear",
+    "start": 19.04,
+    "end": 19.32
+  },
+  {
+    "id": "w68",
+    "text": "MCP.",
+    "start": 19.32,
+    "end": 20.04
+  },
+  {
+    "id": "w69",
+    "text": "It",
+    "start": 20.5,
+    "end": 20.6
+  },
+  {
+    "id": "w70",
+    "text": "lets",
+    "start": 20.6,
+    "end": 20.72
+  },
+  {
+    "id": "w71",
+    "text": "Claude",
+    "start": 20.72,
+    "end": 21.04
+  },
+  {
+    "id": "w72",
+    "text": "create,",
+    "start": 21.04,
+    "end": 21.24
+  },
+  {
+    "id": "w73",
+    "text": "update",
+    "start": 21.5,
+    "end": 21.76
+  },
+  {
+    "id": "w74",
+    "text": "and",
+    "start": 21.76,
+    "end": 21.98
+  },
+  {
+    "id": "w75",
+    "text": "close",
+    "start": 21.98,
+    "end": 22.18
+  },
+  {
+    "id": "w76",
+    "text": "issues",
+    "start": 22.18,
+    "end": 22.48
+  },
+  {
+    "id": "w77",
+    "text": "without",
+    "start": 22.48,
+    "end": 22.72
+  },
+  {
+    "id": "w78",
+    "text": "leaving",
+    "start": 22.72,
+    "end": 22.92
+  },
+  {
+    "id": "w79",
+    "text": "the",
+    "start": 22.92,
+    "end": 23.06
+  },
+  {
+    "id": "w80",
+    "text": "terminal,",
+    "start": 23.06,
+    "end": 23.32
+  },
+  {
+    "id": "w81",
+    "text": "so",
+    "start": 23.6,
+    "end": 23.74
+  },
+  {
+    "id": "w82",
+    "text": "your",
+    "start": 23.74,
+    "end": 23.84
+  },
+  {
+    "id": "w83",
+    "text": "board",
+    "start": 23.84,
+    "end": 24.04
+  },
+  {
+    "id": "w84",
+    "text": "stays",
+    "start": 24.04,
+    "end": 24.28
+  },
+  {
+    "id": "w85",
+    "text": "honest",
+    "start": 24.28,
+    "end": 24.62
+  },
+  {
+    "id": "w86",
+    "text": "while",
+    "start": 24.62,
+    "end": 24.82
+  },
+  {
+    "id": "w87",
+    "text": "you",
+    "start": 24.82,
+    "end": 24.96
+  },
+  {
+    "id": "w88",
+    "text": "ship.",
+    "start": 24.96,
+    "end": 25.2
+  },
+  {
+    "id": "w89",
+    "text": "Comment",
+    "start": 25.2,
+    "end": 25.84
+  },
+  {
+    "id": "w90",
+    "text": "tools,",
+    "start": 25.84,
+    "end": 26.14
+  },
+  {
+    "id": "w91",
+    "text": "and",
+    "start": 26.56,
+    "end": 26.64
+  },
+  {
+    "id": "w92",
+    "text": "I'll",
+    "start": 26.64,
+    "end": 26.8
+  },
+  {
+    "id": "w93",
+    "text": "send",
+    "start": 26.8,
+    "end": 26.92
+  },
+  {
+    "id": "w94",
+    "text": "you",
+    "start": 26.92,
+    "end": 27.06
+  },
+  {
+    "id": "w95",
+    "text": "one",
+    "start": 27.06,
+    "end": 27.22
+  },
+  {
+    "id": "w96",
+    "text": "link",
+    "start": 27.22,
+    "end": 27.42
+  },
+  {
+    "id": "w97",
+    "text": "with",
+    "start": 27.42,
+    "end": 27.56
+  },
+  {
+    "id": "w98",
+    "text": "all",
+    "start": 27.56,
+    "end": 27.7
+  },
+  {
+    "id": "w99",
+    "text": "three.",
+    "start": 27.7,
+    "end": 27.92
+  }
+]

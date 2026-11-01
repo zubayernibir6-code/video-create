@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>৫টা GitHub রিপো · পর্ব ১০: Claude Code-এর শক্তি বাড়ানো</title>
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Inter"; font-weight: 100 900; src: url("assets/fonts/Inter-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "JetBrains Mono"; font-weight: 100 800; src: url("assets/fonts/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 600; src: url("assets/fonts/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 700; src: url("assets/fonts/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Baloo Da 2"; font-weight: 400 800; src: url("assets/fonts/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+body { margin: 0; background: #0B0B0F; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #0B0B0F; font-family: "Inter", "Hind Siliguri", sans-serif; color: #E6E6E6; }
+#world { position: absolute; inset: 0; }
+#stage { position: absolute; left: 65px; top: 372px; width: 821px; height: 690px; transform-origin: 50% 50%; }
+.tool, #cta, .hook { position: absolute; inset: 0; opacity: 0; }
+.mono { flex: none; display: flex; align-items: center; justify-content: center; font: 900 34px/1 "Inter", "Hind Siliguri", sans-serif; color: var(--c); }
+.hd { position: relative; display: flex; align-items: center; gap: 24px; width: fit-content; max-width: 100%; align-self: flex-start; transform-origin: 0% 50%; }
+.nm { font: 900 54px/1.08 "Inter", "Hind Siliguri", sans-serif; color: #FFFFFF; text-wrap: balance; }
+.nm em { font-style: normal; color: var(--c); }
+.mk { font: 700 30px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #9DA3AE; margin-top: 6px; text-wrap: balance; }
+.st { display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; font: 700 28px/1.2 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; opacity: 0; }
+.fxs { position: relative; display: flex; flex-direction: column; }
+.fx { position: relative; display: flex; align-items: center; gap: 20px; opacity: 0; }
+.fx .fi { flex: none; display: flex; align-items: center; justify-content: center; }
+.fx .fl { font: 700 34px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; white-space: nowrap; }
+.pf { position: relative; display: inline-flex; align-items: center; gap: 14px; font: 700 32px/1.25 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; white-space: nowrap; opacity: 0; }
+/* badge */
+#badge { position: absolute; left: 65px; top: 298px; height: 52px; display: flex; align-items: center; gap: 16px; padding: 0 22px; border-radius: 999px; box-sizing: border-box; }
+#badge .bt { font: 700 26px/1 "Hind Siliguri", "Inter", sans-serif; white-space: nowrap; }
+#badge .bdots { display: flex; gap: 8px; }
+#badge .bdots i { width: 13px; height: 13px; border-radius: 50%; display: block; background: rgba(255,255,255,0.22); transform: scale(0.8); }
+/* captions */
+#caps { position: absolute; left: 65px; top: 1092px; width: 821px; height: 140px; }
+.cp { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; gap: 18px; opacity: 0; }
+.cw { position: relative; display: inline-block; font: 700 62px/1.3 "Hind Siliguri", "Inter", sans-serif; color: rgba(230,230,230,0.42); white-space: nowrap; transform-origin: 50% 60%; }
+/* the end */
+#cta { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 18px; padding-top: 6px; box-sizing: border-box; }
+#cta .eh { font: 800 40px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; opacity: 0; }
+.erow { display: flex; gap: 18px; justify-content: center; }
+.ec { width: 255px; height: 164px; box-sizing: border-box; border-radius: 24px; padding: 18px 16px 14px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px;
+  background: var(--cb); border: 3px solid var(--c); opacity: 0; }
+.ec .emono { width: 56px; height: 56px; border-radius: 50%; background: var(--c); color: #0B0B0F; display: flex; align-items: center; justify-content: center; font: 900 24px/1 "Inter", "Hind Siliguri", sans-serif; flex: none; }
+.ec .enm { font: 800 28px/1.12 "Inter", "Hind Siliguri", sans-serif; color: #FFFFFF; text-align: center; text-wrap: balance; }
+#cta .cph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 18px; padding-top: 6px; box-sizing: border-box; }
+#cta #ctaB { justify-content: center; gap: 26px; padding-top: 0; opacity: 0; }
+#ctaB .eh { opacity: 0; }
+.csr { display: flex; gap: 18px; justify-content: center; }
+.cs { position: relative; width: 255px; height: 172px; box-sizing: border-box; border-radius: 24px; padding: 18px 12px 14px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px;
+  background: rgba(255,255,255,0.07); border: 3px solid rgba(217,119,87,0.75); opacity: 0; }
+.cs .csn { position: absolute; left: 14px; top: 14px; width: 42px; height: 42px; border-radius: 50%; background: #D97757; color: #0B0B0F; display: flex; align-items: center; justify-content: center; font: 800 28px/1 "Baloo Da 2", "Hind Siliguri", "Inter", sans-serif; }
+.cs .csi { display: flex; align-items: center; justify-content: center; height: 48px; }
+.cs .csl { font: 700 30px/1.25 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; text-align: center; text-wrap: balance; }
+.ibox { position: relative; width: 600px; height: 104px; border-radius: 999px; box-sizing: border-box; padding: 0 16px 0 44px; display: flex; align-items: center; opacity: 0;
+  background: rgba(255,255,255,0.1); border: 3px solid #D97757; box-shadow: 0 0 40px rgba(217,119,87,0.35); }
+/* the promise card and the how-to steps (inside the look's own card skin) */
+.tool .bx { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: inherit; }
+.hws { position: absolute; left: 0; right: 0; top: 0; display: flex; flex-direction: column; gap: 14px; opacity: 0; }
+.hwk { display: flex; align-items: center; gap: 12px; font: 700 28px/1.3 "Hind Siliguri", "Inter", sans-serif; color: var(--c); }
+.hw { display: flex; align-items: center; gap: 18px; opacity: 0; }
+.hw .hn { flex: none; width: 54px; height: 54px; border-radius: 50%; background: var(--c); color: #0B0B0F; display: flex; align-items: center; justify-content: center; font: 800 32px/1 "Baloo Da 2", "Hind Siliguri", "Inter", sans-serif; }
+.hw .hl { font: 700 32px/1.25 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; text-wrap: balance; }
+.tool.pr { justify-content: center; }
+.pr .prk { font: 700 28px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #9DA3AE; }
+.pr .prt { font: 800 72px/1.3 "Baloo Da 2", "Hind Siliguri", "Inter", sans-serif; color: var(--c); transform-origin: 0% 60%; }
+.pr .prs { font: 700 34px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; text-wrap: balance; opacity: 0; }
+.pr .prl { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.pr .prr { display: flex; align-items: center; gap: 16px; font: 700 30px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; opacity: 0; }
+.pr .prr .fi { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--cb); display: flex; align-items: center; justify-content: center; }
+/* the inbox chip, top right, opposite the badge: one top band (#top) so design-lint counts badge + chip as one zone */
+#top { position: absolute; left: 0; top: 0; width: 1080px; height: 360px; pointer-events: none; }
+#ichip { position: absolute; right: 194px; top: 298px; height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 22px 0 16px; border-radius: 999px; box-sizing: border-box;
+  background: rgba(217,119,87,0.16); border: 2px solid #D97757; transform-origin: 100% 50%; opacity: 0; }
+#ichip span { font: 700 26px/1 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; white-space: nowrap; }
+#ichip b { font: 900 26px/1 "Inter", "Hind Siliguri", sans-serif; color: #D97757; white-space: nowrap; }
+.ikw { font: 900 60px/1 "Inter", "Hind Siliguri", sans-serif; color: #FFFFFF; white-space: nowrap; }
+.icar { display: block; width: 4px; height: 58px; margin-left: 6px; background: #D97757; }
+.isend { margin-left: auto; width: 76px; height: 76px; border-radius: 50%; background: #D97757; display: flex; align-items: center; justify-content: center; flex: none; }
+.isent { display: flex; align-items: center; gap: 10px; font: 700 28px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #9DA3AE; opacity: 0; }
+#flash { position: absolute; inset: 0; background: #FFFFFF; opacity: 0; pointer-events: none; }
+
+#world .room { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% 35%, #1B1512 0%, #0F0E10 50%, #0B0B0F 85%);
+  background-image: radial-gradient(rgba(255,255,255,0.07) 1.5px, rgba(0,0,0,0) 2px), radial-gradient(ellipse 80% 50% at 50% 35%, #1B1512 0%, #0F0E10 50%, #0B0B0F 85%); background-size: 36px 36px, 100% 100%; }
+#world .glow { position: absolute; left: 140px; top: 360px; width: 800px; height: 600px; border-radius: 50%; background: radial-gradient(closest-side, rgba(217,119,87,0.18), rgba(217,119,87,0)); }
+#badge { background: rgba(255,255,255,0.06); border: 2px solid rgba(217,119,87,0.6); }
+/* terminal */
+#term { position: absolute; left: 0px; top: 516px; width: 821px; height: 174px; box-sizing: border-box; border-radius: 16px; background: #0E0F14; border: 1.5px solid #2A2D36; box-shadow: 0 24px 60px rgba(0,0,0,0.5); overflow: hidden; transform-origin: 50% 0%; }
+#term .tb { height: 40px; display: flex; align-items: center; gap: 10px; padding: 0 18px; background: #16171D; border-bottom: 1px solid #2A2D36; }
+#term .tb i { width: 13px; height: 13px; border-radius: 50%; display: block; }
+#term .tb .tc { margin-left: auto; font: 700 24px/1 "Hind Siliguri", "Inter", sans-serif; color: #C9CDD4; }
+#term .tb .tn { position: relative; display: inline-block; width: 70px; height: 30px; }
+#term .tb .tn span { position: absolute; right: 0; top: 0; font: 700 26px/30px "JetBrains Mono", "Hind Siliguri", monospace; color: #D97757; opacity: 0; }
+#term .bd { position: relative; height: 134px; }
+#term .ln { position: absolute; left: 22px; right: 22px; top: 14px; font: 600 28px/1.4 "JetBrains Mono", "Hind Siliguri", monospace; color: #E6E6E6; white-space: nowrap; opacity: 0; }
+#term .ln b { color: #3FB950; font-weight: 700; }
+#term .ln .cmd { display: inline-block; clip-path: inset(0 100% 0 0); }
+#term .pg { position: absolute; left: 22px; right: 22px; top: 70px; display: flex; align-items: center; gap: 16px; opacity: 0; }
+#term .pg .bar { width: 380px; height: 18px; border-radius: 9px; background: #23252D; overflow: hidden; }
+#term .pg .bar b { display: block; height: 100%; width: 100%; background: var(--c); transform-origin: 0 50%; transform: scaleX(0); }
+#term .pg .ok { display: flex; align-items: center; gap: 10px; font: 700 28px/1.3 "JetBrains Mono", "Hind Siliguri", monospace; color: #3FB950; opacity: 0; }
+/* hook */
+#hk .big { position: absolute; left: 30px; right: 30px; top: 90px; height: 420px; border-radius: 20px; background: #0E0F14; border: 1.5px solid #2A2D36; box-shadow: 0 30px 80px rgba(0,0,0,0.6); overflow: hidden; }
+#hk .big .tb { height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 22px; background: #16171D; border-bottom: 1px solid #2A2D36; }
+#hk .big .tb i { width: 15px; height: 15px; border-radius: 50%; display: block; }
+#hk .big .wl { position: absolute; left: 34px; top: 86px; padding: 18px 26px; border: 2px solid #D97757; border-radius: 12px; font: 700 34px/1.3 "JetBrains Mono", "Hind Siliguri", monospace; color: #D97757; opacity: 0; }
+#hk .big .pr { position: absolute; left: 34px; top: 230px; font: 600 40px/1.3 "JetBrains Mono", "Hind Siliguri", monospace; color: #E6E6E6; white-space: nowrap; }
+#hk .big .pr b { color: #3FB950; }
+#hk .big .pr .hc { display: inline-block; clip-path: inset(0 100% 0 0); }
+#hk .big .cur { display: inline-block; width: 18px; height: 40px; margin-left: 6px; background: #D97757; vertical-align: -6px; }
+#hk .cnt { position: absolute; left: 0; right: 0; top: 560px; text-align: center; font: 800 44px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; opacity: 0; }
+#hk .cnt b { font: 800 56px/1.3 "Baloo Da 2", "Hind Siliguri", "Inter", sans-serif; color: #D97757; }
+/* the card */
+.tool { left: 0px !important; top: 0px !important; width: 821px; height: 500px; right: auto !important; bottom: auto !important; box-sizing: border-box; padding: 30px 32px 24px;
+  border-radius: 18px; background: #15161C; border: 1.5px solid #2A2D36; box-shadow: 0 24px 60px rgba(0,0,0,0.5), inset 0 3px 0 var(--c); display: flex; flex-direction: column; gap: 16px; }
+.tool .mono { width: 80px; height: 80px; border-radius: 16px; background: var(--c); color: #0B0B0F; font-size: 30px; }
+.tool .nm { font-size: 50px; }
+.tool .fxs { gap: 10px; }
+.tool .fx { height: 58px; padding: 0 18px 0 10px; border-radius: 12px; background: #1C1E25; border: 1px solid #2A2D36; }
+.tool .fx .fi { width: 44px; height: 44px; border-radius: 10px; background: var(--cb); }
+.tool .fx .fl { font-size: 31px; }
+.tool .pf { margin-top: auto; align-self: flex-start; padding: 10px 24px 10px 14px; border-radius: 10px; background: rgba(63,185,80,0.12); border: 1.5px solid #3FB950; font-size: 30px; }
+.tool .pf.warn { background: rgba(242,204,96,0.12); border-color: #F2CC60; }
+.tool .hws { gap: 12px; }
+.tool .hw .hn { width: 50px; height: 50px; border-radius: 12px; font-size: 30px; }
+.ec, .cs { background: #15161C; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-safe-profile="universal-reel" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="86.670">
+      <div id="world"><div class="room"></div><div class="glow"></div></div>
+      <div id="stage">
+<div id="term"><div class="tb"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><span class="tc">ইনস্টল</span><span class="tn"><span id="tn0" style="opacity:1">০/৫</span><span id="tn1">১/৫</span><span id="tn2">২/৫</span><span id="tn3">৩/৫</span><span id="tn4">৪/৫</span><span id="tn5">৫/৫</span></span></div><div class="bd"><div class="ln" id="tl0"><b>$</b> <span class="cmd" id="tcm0">/plugin install superpowers</span></div><div class="pg" id="tpg0" style="--c:#D97757"><div class="bar"><b id="tbr0"></b></div><div class="ok" id="tok0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>ready</span></div></div><div class="ln" id="tl1"><b>$</b> <span class="cmd" id="tcm1">/plugin install document-skills</span></div><div class="pg" id="tpg1" style="--c:#58A6FF"><div class="bar"><b id="tbr1"></b></div><div class="ok" id="tok1"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>ready</span></div></div><div class="ln" id="tl2"><b>$</b> <span class="cmd" id="tcm2">npx ctx7 setup</span></div><div class="pg" id="tpg2" style="--c:#BC8CFF"><div class="bar"><b id="tbr2"></b></div><div class="ok" id="tok2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>ready</span></div></div><div class="ln" id="tl3"><b>$</b> <span class="cmd" id="tcm3">claude mcp add playwright</span></div><div class="pg" id="tpg3" style="--c:#3FB950"><div class="bar"><b id="tbr3"></b></div><div class="ok" id="tok3"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>ready</span></div></div><div class="ln" id="tl4"><b>$</b> <span class="cmd" id="tcm4">npx ccusage@latest</span></div><div class="pg" id="tpg4" style="--c:#F2CC60"><div class="bar"><b id="tbr4"></b></div><div class="ok" id="tok4"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>ready</span></div></div></div></div>
+<div class="hook" id="hk"><div class="big"><div class="tb"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></div>
+  <div class="wl">Claude Code</div><div class="pr"><b>$</b> <span class="hc" id="hcm">claude</span><i class="cur" id="hcur"></i></div></div>
+  <div class="cnt"><b>০ / ৫</b> ইনস্টল হয়েছে</div></div>
+<div class="tool pr" id="tP" style="--c:#D97757;--cb:rgba(217,119,87,0.16);--cg:rgba(217,119,87,0.4)">
+  <div class="prk">এই ভিডিওতে</div><div class="prt" id="prt">৫টা পাওয়ার-আপ</div><div class="prs" id="prs">Claude Code-এর শক্তি বাড়াতে</div>
+  <div class="prl"><div class="prr" id="prr0"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /> <path d="M20 2v4" /> <path d="M22 4h-4" /> <circle cx="4" cy="20" r="2" /></svg></span><span>কোনটা কী করে</span></div><div class="prr" id="prr1"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg></span><span>কীভাবে বসাবেন</span></div><div class="prr" id="prr2"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg></span><span>লিংক: ইনবক্সে CLAUDE</span></div></div>
+</div>
+<div class="tool" id="t0" style="--c:#D97757;--cb:rgba(217,119,87,0.16);--cg:rgba(217,119,87,0.4)">
+  <div class="hd" id="hd0"><div class="mono" id="mono0">SU</div><div class="nmw"><div class="nm">Superpowers</div><div class="mk">আগে প্ল্যান, তারপর কোড</div><div class="st" id="st0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg><span>৩ লাখ স্টার</span></div></div></div>
+  <div class="bx"><div class="fxs" id="fxs0"><div class="fx" id="fx0_0"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><circle cx="12" cy="12" r="10" /> <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /> <path d="M12 17h.01" /></svg></span><span class="fl">আগে প্রশ্ন</span></div><div class="fx" id="fx0_1"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg></span><span class="fl">প্ল্যান বানায়</span></div><div class="fx" id="fx0_2"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /> <path d="M6.453 15h11.094" /> <path d="M8.5 2h7" /></svg></span><span class="fl">টেস্ট করে</span></div></div>
+  <div class="pf good" id="pf0"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>এলোমেলো কোড নয়</span></div>
+  <div class="hws" id="hws0"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে বসাবেন</span></div><div class="hw" id="hw0_0"><span class="hn">১</span><span class="hl">plugin install</span></div><div class="hw" id="hw0_1"><span class="hn">২</span><span class="hl">কিছু বানাতে বলুন</span></div></div></div>
+  
+</div>
+<div class="tool" id="t1" style="--c:#58A6FF;--cb:rgba(88,166,255,0.16);--cg:rgba(88,166,255,0.4)">
+  <div class="hd" id="hd1"><div class="mono" id="mono1">AS</div><div class="nmw"><div class="nm">Anthropic <em>Skills</em></div><div class="mk">আসল Word, Excel ফাইল</div></div></div>
+  <div class="bx"><div class="fxs" id="fxs1"><div class="fx" id="fx1_0"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#58A6FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /></svg></span><span class="fl">Word</span></div><div class="fx" id="fx1_1"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#58A6FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /> <line x1="3" x2="21" y1="9" y2="9" /> <line x1="3" x2="21" y1="15" y2="15" /> <line x1="9" x2="9" y1="9" y2="21" /> <line x1="15" x2="15" y1="9" y2="21" /></svg></span><span class="fl">Excel</span></div><div class="fx" id="fx1_2"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#58A6FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2 3h20" /> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" /> <path d="m7 21 5-5 5 5" /></svg></span><span class="fl">PowerPoint</span></div></div>
+  <div class="pf good" id="pf1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>আসল ফাইল, লেখা নয়</span></div>
+  <div class="hws" id="hws1"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#58A6FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে বসাবেন</span></div><div class="hw" id="hw1_0"><span class="hn">১</span><span class="hl">marketplace-এ যোগ</span></div><div class="hw" id="hw1_1"><span class="hn">২</span><span class="hl">document skills</span></div><div class="hw" id="hw1_2"><span class="hn">৩</span><span class="hl">PowerPoint বানাও</span></div></div></div>
+  
+</div>
+<div class="tool" id="t2" style="--c:#BC8CFF;--cb:rgba(188,140,255,0.16);--cg:rgba(188,140,255,0.4)">
+  <div class="hd" id="hd2"><div class="mono" id="mono2">C7</div><div class="nmw"><div class="nm">Context7</div><div class="mk">আজকের ডকুমেন্টেশন</div><div class="st" id="st2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#BC8CFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg><span>৬৪ হাজার স্টার</span></div></div></div>
+  <div class="bx"><div class="fxs" id="fxs2"><div class="fx" id="fx2_0"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#BC8CFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M12 5v16" /> <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" /></svg></span><span class="fl">আজকের ডক</span></div><div class="fx" id="fx2_1"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#BC8CFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="m16 18 6-6-6-6" /> <path d="m8 6-6 6 6 6" /></svg></span><span class="fl">ঠিক কোড</span></div></div>
+  <div class="pf good" id="pf2"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>নতুন ডক পড়ে লেখে</span></div>
+  <div class="hws" id="hws2"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#BC8CFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে বসাবেন</span></div><div class="hw" id="hw2_0"><span class="hn">১</span><span class="hl">setup চালান</span></div><div class="hw" id="hw2_1"><span class="hn">২</span><span class="hl">use context7 লিখুন</span></div></div></div>
+  
+</div>
+<div class="tool" id="t3" style="--c:#3FB950;--cb:rgba(63,185,80,0.16);--cg:rgba(63,185,80,0.4)">
+  <div class="hd" id="hd3"><div class="mono" id="mono3">PM</div><div class="nmw"><div class="nm">Playwright <em>MCP</em></div><div class="mk">Claude-এর হাতে ব্রাউজার</div></div></div>
+  <div class="bx"><div class="fxs" id="fxs3"><div class="fx" id="fx3_0"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><circle cx="12" cy="12" r="10" /> <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /> <path d="M2 12h20" /></svg></span><span class="fl">ব্রাউজার খোলে</span></div><div class="fx" id="fx3_1"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M14 4.1 12 6" /> <path d="m5.1 8-2.9-.8" /> <path d="m6 12-1.9 2" /> <path d="M7.2 2.2 8 5.1" /> <path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z" /></svg></span><span class="fl">ক্লিক করে</span></div><div class="fx" id="fx3_2"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M12 20h-1a2 2 0 0 1-2-2 2 2 0 0 1-2 2H6" /> <path d="M13 8h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-7" /> <path d="M5 16H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1" /> <path d="M6 4h1a2 2 0 0 1 2 2 2 2 0 0 1 2-2h1" /> <path d="M9 6v12" /></svg></span><span class="fl">ফর্ম পূরণ</span></div></div>
+  <div class="pf good" id="pf3"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>সাইট টেস্ট নিজেই</span></div>
+  <div class="hws" id="hws3"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে বসাবেন</span></div><div class="hw" id="hw3_0"><span class="hn">১</span><span class="hl">mcp add দিন</span></div><div class="hw" id="hw3_1"><span class="hn">২</span><span class="hl">ফর্ম পরীক্ষা করো</span></div><div class="hw" id="hw3_2"><span class="hn">৩</span><span class="hl">ব্যাংকের সাইটে নয়</span></div></div></div>
+  
+</div>
+<div class="tool" id="t4" style="--c:#F2CC60;--cb:rgba(242,204,96,0.16);--cg:rgba(242,204,96,0.4)">
+  <div class="hd" id="hd4"><div class="mono" id="mono4">CC</div><div class="nmw"><div class="nm">ccusage</div><div class="mk">কত টোকেন গেল</div></div></div>
+  <div class="bx"><div class="fxs" id="fxs4"><div class="fx" id="fx4_0"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F2CC60" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13.744 17.736a6 6 0 1 1-7.48-7.48" /> <path d="M15 6h1v4" /> <path d="m6.134 14.768.866-.5 2 3.464" /> <circle cx="16" cy="8" r="6" /></svg></span><span class="fl">কত টোকেন গেল</span></div><div class="fx" id="fx4_1"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F2CC60" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="m12 14 4-4" /> <path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg></span><span class="fl">লিমিট কত কাছে</span></div></div>
+  <div class="pf good" id="pf4"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>লিমিটের হিসাব এক নজরে</span></div>
+  <div class="hws" id="hws4"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F2CC60" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে বসাবেন</span></div><div class="hw" id="hw4_0"><span class="hn">১</span><span class="hl">npx ccusage</span></div><div class="hw" id="hw4_1"><span class="hn">২</span><span class="hl">শেষে blocks</span></div></div></div>
+  
+</div>
+<div id="cta"><div class="cph" id="ctaA"><div class="eh" id="eh">৫টা পাওয়ার-আপ এক নজরে</div>
+  <div class="erow"><div class="ec" id="ec0" style="--c:#D97757;--cb:rgba(217,119,87,0.16)"><div class="emono">SU</div><div class="enm">Superpowers</div></div><div class="ec" id="ec1" style="--c:#58A6FF;--cb:rgba(88,166,255,0.16)"><div class="emono">AS</div><div class="enm">Anthropic Skills</div></div><div class="ec" id="ec2" style="--c:#BC8CFF;--cb:rgba(188,140,255,0.16)"><div class="emono">C7</div><div class="enm">Context7</div></div></div><div class="erow"><div class="ec" id="ec3" style="--c:#3FB950;--cb:rgba(63,185,80,0.16)"><div class="emono">PM</div><div class="enm">Playwright MCP</div></div><div class="ec" id="ec4" style="--c:#F2CC60;--cb:rgba(242,204,96,0.16)"><div class="emono">CC</div><div class="enm">ccusage</div></div></div></div>
+  <div class="cph" id="ctaB"><div class="eh" id="eh2">লিংক আর বাংলা গাইড পেতে</div>
+    <div class="csr"><div class="cs" id="cs0"><span class="csn">১</span><span class="csi"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /> <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg></span><span class="csl">পেজে যান</span></div><div class="cs" id="cs1"><span class="csn">২</span><span class="csi"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg></span><span class="csl">Message চাপুন</span></div><div class="cs" id="cs2"><span class="csn">৩</span><span class="csi"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M10 8h.01" /> <path d="M12 12h.01" /> <path d="M14 8h.01" /> <path d="M16 12h.01" /> <path d="M18 8h.01" /> <path d="M6 8h.01" /> <path d="M7 16h10" /> <path d="M8 12h.01" /> <rect width="20" height="16" x="2" y="4" rx="2" /></svg></span><span class="csl">লিখুন CLAUDE</span></div></div>
+    <div class="ibox" id="ibx"><span class="ikw" id="ikw">CLAUDE</span><i class="icar" id="icar"></i><span class="isend" id="isend"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></svg></span></div>
+    <div class="isent" id="isent"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3FB950" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>লিংক আর বাংলা গাইড আসবে</span></div></div></div>
+
+      </div>
+      
+      <div id="top"><div id="badge"><span class="bt">৫টা GitHub রিপো · পর্ব ১০</span><span class="bdots"><i id="bd0"></i><i id="bd1"></i><i id="bd2"></i><i id="bd3"></i><i id="bd4"></i></span></div>
+      <div id="ichip"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg><span>ইনবক্সে</span><b>CLAUDE</b></div></div>
+      <div id="caps">
+<div class="cp" id="cp0"><span class="cw em" id="cw0" style="--wc:#D97757">Claude</span> <span class="cw" id="cw1">Code</span> <span class="cw" id="cw2">দিয়ে</span></div>
+<div class="cp" id="cp1"><span class="cw" id="cw3">কিছু</span> <span class="cw" id="cw4">বানানোর</span> <span class="cw" id="cw5">আগে,</span></div>
+<div class="cp" id="cp2"><span class="cw" id="cw6">এই</span> <span class="cw" id="cw7">পাঁচটা</span> <span class="cw em" id="cw8" style="--wc:#D97757">ফ্রি</span></div>
+<div class="cp" id="cp3"><span class="cw" id="cw9">জিনিস</span> <span class="cw" id="cw10">বসিয়ে</span> <span class="cw" id="cw11">নিন।</span></div>
+<div class="cp" id="cp4"><span class="cw" id="cw12">প্রতিটা</span> <span class="cw" id="cw13">কী</span> <span class="cw" id="cw14">করে,</span></div>
+<div class="cp" id="cp5"><span class="cw" id="cw15">আর</span> <span class="cw" id="cw16">কীভাবে</span> <span class="cw" id="cw17">বসাবেন,</span></div>
+<div class="cp" id="cp6"><span class="cw" id="cw18">দেখাচ্ছি।</span> <span class="cw em" id="cw19" style="--wc:#D97757">Claude</span></div>
+<div class="cp" id="cp7"><span class="cw" id="cw20">Code</span> <span class="cw" id="cw21">নিজে</span> <span class="cw" id="cw22">চলে</span></div>
+<div class="cp" id="cp8"><span class="cw em" id="cw23" style="--wc:#D97757">পেইড</span> <span class="cw" id="cw24">প্ল্যানে।</span></div>
+<div class="cp" id="cp9"><span class="cw" id="cw25">সব</span> <span class="cw" id="cw26">লিংক</span> <span class="cw" id="cw27">ইনবক্সে।</span></div>
+<div class="cp" id="cp10"><span class="cw" id="cw28">প্রথমটা</span> <span class="cw em" id="cw29" style="--wc:#D97757">Superpowers।</span></div>
+<div class="cp" id="cp11"><span class="cw" id="cw30">কোড</span> <span class="cw" id="cw31">লেখার</span> <span class="cw" id="cw32">আগে</span></div>
+<div class="cp" id="cp12"><span class="cw em" id="cw33" style="--wc:#D97757">Claude</span> <span class="cw" id="cw34">প্রশ্ন</span> <span class="cw" id="cw35">করে,</span></div>
+<div class="cp" id="cp13"><span class="cw" id="cw36">প্ল্যান</span> <span class="cw" id="cw37">বানায়,</span></div>
+<div class="cp" id="cp14"><span class="cw" id="cw38">তারপর</span> <span class="cw" id="cw39">টেস্ট</span> <span class="cw" id="cw40">করে।</span></div>
+<div class="cp" id="cp15"><span class="cw" id="cw41">এলোমেলো</span> <span class="cw" id="cw42">কোড</span> <span class="cw" id="cw43">আর</span></div>
+<div class="cp" id="cp16"><span class="cw" id="cw44">হয়</span> <span class="cw" id="cw45">না।</span></div>
+<div class="cp" id="cp17"><span class="cw em" id="cw46" style="--wc:#D97757">Claude</span> <span class="cw" id="cw47">Code-এর</span></div>
+<div class="cp" id="cp18"><span class="cw" id="cw48">ভেতরে</span> <span class="cw" id="cw49">plugin</span></div>
+<div class="cp" id="cp19"><span class="cw" id="cw50">install</span> <span class="cw" id="cw51">লিখে</span> <span class="cw" id="cw52">বসান,</span></div>
+<div class="cp" id="cp20"><span class="cw" id="cw53">তারপর</span> <span class="cw" id="cw54">কিছু</span> <span class="cw" id="cw55">বানাতে</span> <span class="cw" id="cw56">বলুন।</span></div>
+<div class="cp" id="cp21"><span class="cw" id="cw57">দ্বিতীয়টা</span></div>
+<div class="cp" id="cp22"><span class="cw" id="cw58">Anthropic-এর</span> <span class="cw" id="cw59">নিজের</span></div>
+<div class="cp" id="cp23"><span class="cw em" id="cw60" style="--wc:#58A6FF">Skills।</span></div>
+<div class="cp" id="cp24"><span class="cw" id="cw61">বললেই</span> <span class="cw" id="cw62">আসল</span> <span class="cw" id="cw63">Word,</span></div>
+<div class="cp" id="cp25"><span class="cw" id="cw64">Excel</span> <span class="cw" id="cw65">আর</span> <span class="cw" id="cw66">PowerPoint</span></div>
+<div class="cp" id="cp26"><span class="cw" id="cw67">ফাইল</span> <span class="cw" id="cw68">বানিয়ে</span> <span class="cw" id="cw69">দেয়,</span></div>
+<div class="cp" id="cp27"><span class="cw" id="cw70">শুধু</span> <span class="cw" id="cw71">চ্যাটের</span> <span class="cw" id="cw72">লেখা</span> <span class="cw" id="cw73">নয়।</span></div>
+<div class="cp" id="cp28"><span class="cw" id="cw74">marketplace-এ</span></div>
+<div class="cp" id="cp29"><span class="cw em" id="cw75" style="--wc:#58A6FF">skills</span> <span class="cw" id="cw76">যোগ</span> <span class="cw" id="cw77">করে</span></div>
+<div class="cp" id="cp30"><span class="cw" id="cw78">document</span> <span class="cw em" id="cw79" style="--wc:#58A6FF">skills</span></div>
+<div class="cp" id="cp31"><span class="cw" id="cw80">বসান,</span> <span class="cw" id="cw81">তারপর</span> <span class="cw" id="cw82">বলুন</span></div>
+<div class="cp" id="cp32"><span class="cw" id="cw83">পাঁচ</span> <span class="cw" id="cw84">স্লাইডের</span></div>
+<div class="cp" id="cp33"><span class="cw" id="cw85">PowerPoint</span> <span class="cw" id="cw86">বানাও।</span></div>
+<div class="cp" id="cp34"><span class="cw" id="cw87">তৃতীয়টা</span> <span class="cw" id="cw88">Upstash-এর</span></div>
+<div class="cp" id="cp35"><span class="cw em" id="cw89" style="--wc:#BC8CFF">Context7।</span></div>
+<div class="cp" id="cp36"><span class="cw em" id="cw90" style="--wc:#BC8CFF">Claude</span> <span class="cw" id="cw91">পুরোনো</span></div>
+<div class="cp" id="cp37"><span class="cw" id="cw92">মনে-রাখা</span> <span class="cw" id="cw93">জিনিস</span></div>
+<div class="cp" id="cp38"><span class="cw" id="cw94">দিয়ে</span> <span class="cw" id="cw95">নয়,</span> <span class="cw" id="cw96">আজকের</span></div>
+<div class="cp" id="cp39"><span class="cw" id="cw97">ডকুমেন্টেশন</span> <span class="cw" id="cw98">পড়ে</span></div>
+<div class="cp" id="cp40"><span class="cw" id="cw99">কোড</span> <span class="cw" id="cw100">লেখে।</span></div>
+<div class="cp" id="cp41"><span class="cw" id="cw101">টার্মিনালে</span> <span class="cw" id="cw102">npx</span> <span class="cw em" id="cw103" style="--wc:#BC8CFF">ctx7</span></div>
+<div class="cp" id="cp42"><span class="cw" id="cw104">setup</span> <span class="cw" id="cw105">চালান,</span> <span class="cw" id="cw106">তারপর</span></div>
+<div class="cp" id="cp43"><span class="cw" id="cw107">প্রম্পটের</span> <span class="cw" id="cw108">শেষে</span></div>
+<div class="cp" id="cp44"><span class="cw" id="cw109">লিখুন</span> <span class="cw" id="cw110">use</span> <span class="cw em" id="cw111" style="--wc:#BC8CFF">context7।</span></div>
+<div class="cp" id="cp45"><span class="cw" id="cw112">চতুর্থটা</span> <span class="cw" id="cw113">Microsoft-এর</span></div>
+<div class="cp" id="cp46"><span class="cw em" id="cw114" style="--wc:#3FB950">Playwright</span> <span class="cw em" id="cw115" style="--wc:#3FB950">MCP।</span></div>
+<div class="cp" id="cp47"><span class="cw em" id="cw116" style="--wc:#3FB950">Claude</span> <span class="cw" id="cw117">নিজেই</span></div>
+<div class="cp" id="cp48"><span class="cw" id="cw118">ব্রাউজার</span> <span class="cw" id="cw119">খোলে,</span></div>
+<div class="cp" id="cp49"><span class="cw" id="cw120">ক্লিক</span> <span class="cw" id="cw121">করে,</span> <span class="cw" id="cw122">ফর্ম</span></div>
+<div class="cp" id="cp50"><span class="cw" id="cw123">পূরণ</span> <span class="cw" id="cw124">করে</span> <span class="cw" id="cw125">দেখে</span></div>
+<div class="cp" id="cp51"><span class="cw" id="cw126">সাইট</span> <span class="cw" id="cw127">ঠিকমতো</span> <span class="cw" id="cw128">চলছে</span></div>
+<div class="cp" id="cp52"><span class="cw" id="cw129">কি</span> <span class="cw" id="cw130">না।</span></div>
+<div class="cp" id="cp53"><span class="cw" id="cw131">এক</span> <span class="cw" id="cw132">লাইনে</span> <span class="cw em" id="cw133" style="--wc:#3FB950">mcp</span></div>
+<div class="cp" id="cp54"><span class="cw" id="cw134">add</span> <span class="cw" id="cw135">দিয়ে</span> <span class="cw" id="cw136">যোগ</span></div>
+<div class="cp" id="cp55"><span class="cw" id="cw137">করুন,</span> <span class="cw" id="cw138">তারপর</span> <span class="cw" id="cw139">বলুন</span></div>
+<div class="cp" id="cp56"><span class="cw" id="cw140">নিজের</span> <span class="cw" id="cw141">সাইটের</span> <span class="cw" id="cw142">ফর্মটা</span></div>
+<div class="cp" id="cp57"><span class="cw" id="cw143">পরীক্ষা</span> <span class="cw" id="cw144">করো।</span></div>
+<div class="cp" id="cp58"><span class="cw em" id="cw145" style="--wc:#3FB950">ব্যাংকের</span> <span class="cw" id="cw146">সাইটে</span> <span class="cw" id="cw147">নয়।</span></div>
+<div class="cp" id="cp59"><span class="cw" id="cw148">আর</span> <span class="cw" id="cw149">পঞ্চমটা</span> <span class="cw em" id="cw150" style="--wc:#F2CC60">ccusage।</span></div>
+<div class="cp" id="cp60"><span class="cw em" id="cw151" style="--wc:#F2CC60">Claude</span> <span class="cw" id="cw152">Code</span> <span class="cw" id="cw153">চলে</span></div>
+<div class="cp" id="cp61"><span class="cw em" id="cw154" style="--wc:#F2CC60">পেইড</span> <span class="cw" id="cw155">প্ল্যানে।</span></div>
+<div class="cp" id="cp62"><span class="cw em" id="cw156" style="--wc:#F2CC60">ccusage</span> <span class="cw" id="cw157">এক</span> <span class="cw" id="cw158">কমান্ডে</span></div>
+<div class="cp" id="cp63"><span class="cw" id="cw159">দেখায়</span> <span class="cw" id="cw160">কত</span> <span class="cw" id="cw161">টোকেন</span></div>
+<div class="cp" id="cp64"><span class="cw" id="cw162">গেল,</span> <span class="cw" id="cw163">লিমিটের</span> <span class="cw" id="cw164">কত</span></div>
+<div class="cp" id="cp65"><span class="cw" id="cw165">কাছে</span> <span class="cw" id="cw166">আছেন।</span></div>
+<div class="cp" id="cp66"><span class="cw" id="cw167">টার্মিনালে</span> <span class="cw" id="cw168">npx</span></div>
+<div class="cp" id="cp67"><span class="cw em" id="cw169" style="--wc:#F2CC60">ccusage</span> <span class="cw" id="cw170">লিখুন।</span></div>
+<div class="cp" id="cp68"><span class="cw" id="cw171">পাঁচ</span> <span class="cw" id="cw172">ঘণ্টার</span> <span class="cw" id="cw173">হিসাব</span></div>
+<div class="cp" id="cp69"><span class="cw" id="cw174">দেখতে</span> <span class="cw" id="cw175">শেষে</span> <span class="cw" id="cw176">blocks</span></div>
+<div class="cp" id="cp70"><span class="cw" id="cw177">লিখুন।</span></div>
+<div class="cp" id="cp71"><span class="cw" id="cw178">পাঁচটার</span> <span class="cw" id="cw179">লিংক</span> <span class="cw" id="cw180">আর</span></div>
+<div class="cp" id="cp72"><span class="cw" id="cw181">বসানোর</span> <span class="cw" id="cw182">বাংলা</span> <span class="cw" id="cw183">গাইড</span></div>
+<div class="cp" id="cp73"><span class="cw" id="cw184">ফ্রিতে</span> <span class="cw" id="cw185">পেতে,</span> <span class="cw" id="cw186">আমার</span></div>
+<div class="cp" id="cp74"><span class="cw" id="cw187">পেজে</span> <span class="cw" id="cw188">গিয়ে</span> <span class="cw" id="cw189">Message</span></div>
+<div class="cp" id="cp75"><span class="cw" id="cw190">বাটন</span> <span class="cw" id="cw191">চাপুন,</span> <span class="cw" id="cw192">আর</span></div>
+<div class="cp" id="cp76"><span class="cw" id="cw193">লিখুন</span> <span class="cw em" id="cw194" style="--wc:#D97757">CLAUDE।</span></div>
+<div class="cp" id="cp77"><span class="cw" id="cw195">আমি</span> <span class="cw" id="cw196">নিজে</span> <span class="cw" id="cw197">আপনাকে</span></div>
+<div class="cp" id="cp78"><span class="cw" id="cw198">পাঠিয়ে</span> <span class="cw" id="cw199">দেব।</span></div>
+      </div>
+      <div id="flash"></div>
+      <audio id="mix" src="assets/media/mix.wav" data-start="0" data-duration="86.670" data-track-index="5" data-volume="1"></audio>
+    </div>
+    <script>
+      const bnN = (v) => String(Math.round(v)).replace(/[0-9]/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#term", { opacity: 0 });
+      gsap.set("#hk .big", { opacity: 0 });
+      gsap.set("#hk .wl", { opacity: 0 });
+      gsap.set("#hk .cnt", { opacity: 0 });
+      gsap.set("#tP", { opacity: 0 });
+      gsap.set("#prs", { opacity: 0 });
+      gsap.set("#prr0", { opacity: 0 });
+      gsap.set("#prr1", { opacity: 0 });
+      gsap.set("#prr2", { opacity: 0 });
+      gsap.set("#mono0", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd0", { x: 128.1, y: 150, scale: 1.12, transformOrigin: "0% 50%" });
+      gsap.set("#st0", { opacity: 0 });
+      gsap.set("#fx0_0", { opacity: 0 });
+      gsap.set("#fx0_1", { opacity: 0 });
+      gsap.set("#fx0_2", { opacity: 0 });
+      gsap.set("#pf0", { opacity: 0 });
+      gsap.set("#hws0", { opacity: 0 });
+      gsap.set("#hw0_0", { opacity: 0 });
+      gsap.set("#hw0_1", { opacity: 0 });
+      gsap.set("#mono1", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd1", { x: 51.5, y: 150, scale: 1.12, transformOrigin: "0% 50%" });
+      gsap.set("#fx1_0", { opacity: 0 });
+      gsap.set("#fx1_1", { opacity: 0 });
+      gsap.set("#fx1_2", { opacity: 0 });
+      gsap.set("#pf1", { opacity: 0 });
+      gsap.set("#hws1", { opacity: 0 });
+      gsap.set("#hw1_0", { opacity: 0 });
+      gsap.set("#hw1_1", { opacity: 0 });
+      gsap.set("#hw1_2", { opacity: 0 });
+      gsap.set("#mono2", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd2", { x: 171.7, y: 150, scale: 1.12, transformOrigin: "0% 50%" });
+      gsap.set("#st2", { opacity: 0 });
+      gsap.set("#fx2_0", { opacity: 0 });
+      gsap.set("#fx2_1", { opacity: 0 });
+      gsap.set("#pf2", { opacity: 0 });
+      gsap.set("#hws2", { opacity: 0 });
+      gsap.set("#hw2_0", { opacity: 0 });
+      gsap.set("#hw2_1", { opacity: 0 });
+      gsap.set("#mono3", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd3", { x: 85.1, y: 150, scale: 1.12, transformOrigin: "0% 50%" });
+      gsap.set("#fx3_0", { opacity: 0 });
+      gsap.set("#fx3_1", { opacity: 0 });
+      gsap.set("#fx3_2", { opacity: 0 });
+      gsap.set("#pf3", { opacity: 0 });
+      gsap.set("#hws3", { opacity: 0 });
+      gsap.set("#hw3_0", { opacity: 0 });
+      gsap.set("#hw3_1", { opacity: 0 });
+      gsap.set("#hw3_2", { opacity: 0 });
+      gsap.set("#mono4", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd4", { x: 202.7, y: 150, scale: 1.12, transformOrigin: "0% 50%" });
+      gsap.set("#fx4_0", { opacity: 0 });
+      gsap.set("#fx4_1", { opacity: 0 });
+      gsap.set("#pf4", { opacity: 0 });
+      gsap.set("#hws4", { opacity: 0 });
+      gsap.set("#hw4_0", { opacity: 0 });
+      gsap.set("#hw4_1", { opacity: 0 });
+      gsap.set("#cta", { opacity: 0 });
+      gsap.set("#eh", { opacity: 0 });
+      gsap.set("#ec0", { opacity: 0 });
+      gsap.set("#ec1", { opacity: 0 });
+      gsap.set("#ec2", { opacity: 0 });
+      gsap.set("#ec3", { opacity: 0 });
+      gsap.set("#ec4", { opacity: 0 });
+      gsap.set("#ctaB", { opacity: 0 });
+      gsap.set("#eh2", { opacity: 0 });
+      gsap.set("#cs0", { opacity: 0 });
+      gsap.set("#cs1", { opacity: 0 });
+      gsap.set("#cs2", { opacity: 0 });
+      gsap.set("#ibx", { opacity: 0 });
+      gsap.set("#ikw", { clipPath: "inset(0 100% 0 0)" });
+      gsap.set("#isent", { opacity: 0 });
+      gsap.set("#ichip", { opacity: 0 });
+  tl.fromTo("#hk", {"opacity":0}, {"opacity":1,"duration":0.01,"ease":"power3.out","immediateRender":false}, 0.000);
+  tl.fromTo("#hk .big", {"opacity":0,"scale":0.9,"y":40}, {"opacity":1,"scale":1,"y":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 0.050);
+  tl.fromTo("#hcm", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.420, ease: "steps(6)", immediateRender: false }, 0.5);
+  tl.fromTo("#hcur", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 9, repeatDelay: 0.44, yoyo: true, immediateRender: false }, 0.5);
+  tl.fromTo("#hk .wl", {"opacity":0,"scale":0.85}, {"opacity":1,"scale":1,"duration":0.35,"ease":"back.out(1.8)","immediateRender":false}, 1.220);
+  tl.fromTo("#hk .cnt", {"opacity":0,"y":20,"scale":0.9}, {"opacity":1,"y":0,"scale":1,"duration":0.4,"ease":"back.out(1.8)","immediateRender":false}, 2.702);
+  tl.to("#hk", { y: -60, opacity: 0, duration: 0.3, ease: "power3.in" }, 4.428);
+  tl.fromTo("#term", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out", immediateRender: false }, 4.778);
+  tl.fromTo("#tP", {"opacity":0,"y":50,"scale":0.95}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.4)","immediateRender":false}, 4.828);
+  tl.fromTo("#prt", { scale: 0.6 }, { scale: 1, duration: 0.6, ease: "back.out(1.8)", immediateRender: false }, 4.828);
+  tl.fromTo("#prs", {"opacity":0,"y":16}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 5.178);
+  tl.fromTo("#prr0", {"opacity":0,"x":-36}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 5.473);
+  tl.fromTo("#prr1", {"opacity":0,"x":-36}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 6.374);
+  tl.fromTo("#prr2", {"opacity":0,"x":-36}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 10.276);
+  tl.to("#tP", { y: -80, opacity: 0, duration: 0.3, ease: "power2.in" }, 11.232);
+  tl.set("#t0", { opacity: 1 }, 11.462); tl.fromTo("#t0", { scale: 1.08 }, { scale: 1, duration: 0.22, ease: "power4.out", immediateRender: false }, 11.462);
+  tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.18, duration: 0.06, immediateRender: false }, 11.762); tl.to("#flash", { opacity: 0, duration: 0.4, ease: "power2.out" }, 11.832);
+  tl.set("#tl0", { opacity: 1 }, 11.632); tl.fromTo("#tcm0", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.200, ease: "steps(27)", immediateRender: false }, 11.632);
+  tl.set("#tpg0", { opacity: 1 }, 12.982); tl.fromTo("#tbr0", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power1.inOut", immediateRender: false }, 12.982);
+  tl.fromTo("#tok0", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.25, immediateRender: false }, 13.932);
+  tl.set("#tn0", { opacity: 0 }, 13.932); tl.set("#tn1", { opacity: 1 }, 13.932);
+  tl.fromTo("#mono0", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 11.532);
+  tl.fromTo("#hd0", { x: 128.1, y: 150, scale: 1.12 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 13.508);
+  tl.fromTo("#st0", {"opacity":0,"x":-20}, {"opacity":1,"x":0,"duration":0.35,"ease":"power3.out","immediateRender":false}, 14.308);
+  tl.fromTo("#fx0_0", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 14.258);
+  tl.fromTo("#fx0_1", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 14.959);
+  tl.fromTo("#fx0_2", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 16.385);
+  tl.fromTo("#pf0", {"opacity":0,"scale":0.7}, {"opacity":1,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 17.060);
+  tl.to("#fxs0", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 18.611);
+  tl.to("#pf0", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 18.611);
+  tl.fromTo("#hws0", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 18.781);
+  tl.fromTo("#hw0_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 20.032);
+  tl.fromTo("#hw0_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 20.032);
+  tl.fromTo("#hw0_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 22.358);
+  tl.fromTo("#hw0_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 22.358);
+  tl.to("#bd0", { backgroundColor: "#D97757", scale: 1, boxShadow: "0 0 14px rgba(217,119,87,0.8)", duration: 0.3 }, 11.782);
+  tl.to("#t0", { x: -60, opacity: 0, duration: 0.2, ease: "power3.in" }, 23.714);
+  tl.set("#t1", { opacity: 1 }, 23.994); tl.fromTo("#t1", { scale: 1.08 }, { scale: 1, duration: 0.22, ease: "power4.out", immediateRender: false }, 23.994);
+  tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.18, duration: 0.06, immediateRender: false }, 24.294); tl.to("#flash", { opacity: 0, duration: 0.4, ease: "power2.out" }, 24.364);
+  tl.to("#tl0, #tpg0", { opacity: 0, duration: 0.15 }, 23.914);
+  tl.set("#tl1", { opacity: 1 }, 24.164); tl.fromTo("#tcm1", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.200, ease: "steps(31)", immediateRender: false }, 24.164);
+  tl.set("#tpg1", { opacity: 1 }, 25.514); tl.fromTo("#tbr1", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power1.inOut", immediateRender: false }, 25.514);
+  tl.fromTo("#tok1", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.25, immediateRender: false }, 26.464);
+  tl.set("#tn1", { opacity: 0 }, 26.464); tl.set("#tn2", { opacity: 1 }, 26.464);
+  tl.fromTo("#mono1", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 24.064);
+  tl.fromTo("#hd1", { x: 51.5, y: 150, scale: 1.12 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 26.266);
+  tl.fromTo("#fx1_0", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 27.016);
+  tl.fromTo("#fx1_1", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 27.341);
+  tl.fromTo("#fx1_2", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 27.866);
+  tl.fromTo("#pf1", {"opacity":0,"scale":0.7}, {"opacity":1,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 30.118);
+  tl.to("#fxs1", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 31.443);
+  tl.to("#pf1", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 31.443);
+  tl.fromTo("#hws1", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 31.613);
+  tl.fromTo("#hw1_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 31.843);
+  tl.fromTo("#hw1_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 31.843);
+  tl.fromTo("#hw1_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 33.389);
+  tl.fromTo("#hw1_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 33.389);
+  tl.fromTo("#hw1_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 36.391);
+  tl.fromTo("#hw1_2 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 36.391);
+  tl.to("#bd1", { backgroundColor: "#58A6FF", scale: 1, boxShadow: "0 0 14px rgba(88,166,255,0.8)", duration: 0.3 }, 24.314);
+  tl.to("#t1", { x: -60, opacity: 0, duration: 0.2, ease: "power3.in" }, 38.723);
+  tl.set("#t2", { opacity: 1 }, 39.003); tl.fromTo("#t2", { scale: 1.08 }, { scale: 1, duration: 0.22, ease: "power4.out", immediateRender: false }, 39.003);
+  tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.18, duration: 0.06, immediateRender: false }, 39.303); tl.to("#flash", { opacity: 0, duration: 0.4, ease: "power2.out" }, 39.373);
+  tl.to("#tl1, #tpg1", { opacity: 0, duration: 0.15 }, 38.923);
+  tl.set("#tl2", { opacity: 1 }, 39.173); tl.fromTo("#tcm2", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.630, ease: "steps(14)", immediateRender: false }, 39.173);
+  tl.set("#tpg2", { opacity: 1 }, 39.953); tl.fromTo("#tbr2", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power1.inOut", immediateRender: false }, 39.953);
+  tl.fromTo("#tok2", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.25, immediateRender: false }, 40.903);
+  tl.set("#tn2", { opacity: 0 }, 40.903); tl.set("#tn3", { opacity: 1 }, 40.903);
+  tl.fromTo("#mono2", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 39.073);
+  tl.fromTo("#hd2", { x: 171.7, y: 150, scale: 1.12 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 41.423);
+  tl.fromTo("#st2", {"opacity":0,"x":-20}, {"opacity":1,"x":0,"duration":0.35,"ease":"power3.out","immediateRender":false}, 42.223);
+  tl.fromTo("#fx2_0", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 42.800);
+  tl.fromTo("#fx2_1", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 44.301);
+  tl.fromTo("#pf2", {"opacity":0,"scale":0.7}, {"opacity":1,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 44.451);
+  tl.to("#fxs2", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 45.101);
+  tl.to("#pf2", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 45.101);
+  tl.fromTo("#hws2", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 45.271);
+  tl.fromTo("#hw2_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 46.447);
+  tl.fromTo("#hw2_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 46.447);
+  tl.fromTo("#hw2_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 48.999);
+  tl.fromTo("#hw2_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 48.999);
+  tl.to("#bd2", { backgroundColor: "#BC8CFF", scale: 1, boxShadow: "0 0 14px rgba(188,140,255,0.8)", duration: 0.3 }, 39.323);
+  tl.to("#t2", { x: -60, opacity: 0, duration: 0.2, ease: "power3.in" }, 51.180);
+  tl.set("#t3", { opacity: 1 }, 51.460); tl.fromTo("#t3", { scale: 1.08 }, { scale: 1, duration: 0.22, ease: "power4.out", immediateRender: false }, 51.460);
+  tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.18, duration: 0.06, immediateRender: false }, 51.760); tl.to("#flash", { opacity: 0, duration: 0.4, ease: "power2.out" }, 51.830);
+  tl.to("#tl2, #tpg2", { opacity: 0, duration: 0.15 }, 51.380);
+  tl.set("#tl3", { opacity: 1 }, 51.630); tl.fromTo("#tcm3", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.125, ease: "steps(25)", immediateRender: false }, 51.630);
+  tl.set("#tpg3", { opacity: 1 }, 52.905); tl.fromTo("#tbr3", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power1.inOut", immediateRender: false }, 52.905);
+  tl.fromTo("#tok3", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.25, immediateRender: false }, 53.855);
+  tl.set("#tn3", { opacity: 0 }, 53.855); tl.set("#tn4", { opacity: 1 }, 53.855);
+  tl.fromTo("#mono3", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 51.530);
+  tl.fromTo("#hd3", { x: 85.1, y: 150, scale: 1.12 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 53.206);
+  tl.fromTo("#fx3_0", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 53.956);
+  tl.fromTo("#fx3_1", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 54.882);
+  tl.fromTo("#fx3_2", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 55.557);
+  tl.fromTo("#pf3", {"opacity":0,"scale":0.7}, {"opacity":1,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 57.433);
+  tl.to("#fxs3", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 58.309);
+  tl.to("#pf3", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 58.309);
+  tl.fromTo("#hws3", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 58.479);
+  tl.fromTo("#hw3_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 58.904);
+  tl.fromTo("#hw3_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 58.904);
+  tl.fromTo("#hw3_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 61.831);
+  tl.fromTo("#hw3_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 61.831);
+  tl.fromTo("#hw3_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 63.107);
+  tl.fromTo("#hw3_2 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 63.107);
+  tl.to("#bd3", { backgroundColor: "#3FB950", scale: 1, boxShadow: "0 0 14px rgba(63,185,80,0.8)", duration: 0.3 }, 51.780);
+  tl.to("#t3", { x: -60, opacity: 0, duration: 0.2, ease: "power3.in" }, 64.838);
+  tl.set("#t4", { opacity: 1 }, 65.118); tl.fromTo("#t4", { scale: 1.08 }, { scale: 1, duration: 0.22, ease: "power4.out", immediateRender: false }, 65.118);
+  tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.18, duration: 0.06, immediateRender: false }, 65.418); tl.to("#flash", { opacity: 0, duration: 0.4, ease: "power2.out" }, 65.488);
+  tl.to("#tl3, #tpg3", { opacity: 0, duration: 0.15 }, 65.038);
+  tl.set("#tl4", { opacity: 1 }, 65.288); tl.fromTo("#tcm4", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.810, ease: "steps(18)", immediateRender: false }, 65.288);
+  tl.set("#tpg4", { opacity: 1 }, 66.248); tl.fromTo("#tbr4", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power1.inOut", immediateRender: false }, 66.248);
+  tl.fromTo("#tok4", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.25, immediateRender: false }, 67.198);
+  tl.set("#tn4", { opacity: 0 }, 67.198); tl.set("#tn5", { opacity: 1 }, 67.198);
+  tl.fromTo("#mono4", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 65.188);
+  tl.fromTo("#hd4", { x: 202.7, y: 150, scale: 1.12 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 67.538);
+  tl.fromTo("#fx4_0", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 70.041);
+  tl.fromTo("#fx4_1", {"opacity":0,"x":36}, {"opacity":1,"x":0,"duration":0.45,"ease":"power4.out","immediateRender":false}, 70.716);
+  tl.fromTo("#pf4", {"opacity":0,"scale":0.7}, {"opacity":1,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 71.617);
+  tl.to("#fxs4", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 72.267);
+  tl.to("#pf4", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 72.267);
+  tl.fromTo("#hws4", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 72.437);
+  tl.fromTo("#hw4_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 73.088);
+  tl.fromTo("#hw4_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 73.088);
+  tl.fromTo("#hw4_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 76.089);
+  tl.fromTo("#hw4_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 76.089);
+  tl.to("#bd4", { backgroundColor: "#F2CC60", scale: 1, boxShadow: "0 0 14px rgba(242,204,96,0.8)", duration: 0.3 }, 65.438);
+  tl.to("#t4", { x: -60, opacity: 0, duration: 0.2, ease: "power3.in" }, 76.970);
+  tl.to("#term", { y: 60, opacity: 0, duration: 0.35, ease: "power2.in" }, 77.050);
+  tl.fromTo("#cta", {"opacity":0}, {"opacity":1,"duration":0.3,"ease":"power3.out","immediateRender":false}, 77.250);
+  tl.fromTo("#eh", {"opacity":0,"y":-20}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 77.300);
+  tl.fromTo("#ec0", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 77.400);
+  tl.fromTo("#ec1", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 77.530);
+  tl.fromTo("#ec2", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 77.660);
+  tl.fromTo("#ec3", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 77.790);
+  tl.fromTo("#ec4", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 77.920);
+  tl.to("#ctaA", {"opacity":0,"y":-40,"duration":0.3,"ease":"power2.in"}, 79.967);
+  tl.fromTo("#ctaB", {"opacity":0}, {"opacity":1,"duration":0.01,"ease":"power3.out","immediateRender":false}, 80.017);
+  tl.fromTo("#eh2", {"opacity":0,"y":-20}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 80.067);
+  tl.fromTo("#cs0", {"opacity":0,"y":50,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 80.517);
+  tl.fromTo("#cs0 .csn", { scale: 0.3 }, { scale: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, 80.517);
+  tl.fromTo("#cs1", {"opacity":0,"y":50,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 81.192);
+  tl.fromTo("#cs1 .csn", { scale: 0.3 }, { scale: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, 81.192);
+  tl.fromTo("#cs2", {"opacity":0,"y":50,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 82.618);
+  tl.fromTo("#cs2 .csn", { scale: 0.3 }, { scale: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, 82.618);
+  tl.fromTo("#ibx", {"opacity":0,"y":30}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 82.118);
+  tl.fromTo("#icar", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 10, repeatDelay: 0.44, yoyo: true, immediateRender: false }, 82.418);
+  tl.fromTo("#ikw", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.600, ease: "steps(6)", immediateRender: false }, 83.074);
+  tl.fromTo("#isend", { scale: 1 }, { scale: 0.8, duration: 0.08, yoyo: true, repeat: 1, immediateRender: false }, 83.824);
+  tl.fromTo("#isent", {"opacity":0,"y":14}, {"opacity":1,"y":0,"duration":0.35,"ease":"power3.out","immediateRender":false}, 84.024);
+  tl.fromTo("#ichip", {"opacity":0,"x":40,"scale":0.9}, {"opacity":1,"x":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 10.426);
+  tl.to("#ichip", {"opacity":0,"duration":0.3,"ease":"power2.in"}, 77.050);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 7.925); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 8.325);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 34.490); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 34.890);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 37.305); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 37.705);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 59.965); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 60.365);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 74.190); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 74.590);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 84.945); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 85.345);
+  tl.set("#cp0", { opacity: 1 }, 0.200); tl.set("#cp0", { opacity: 0 }, 1.306);
+  tl.to("#cw0", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 0.240);
+  tl.to("#cw0", { color: "#D97757", scale: 1, duration: 0.12 }, 0.690);
+  tl.to("#cw1", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 0.690);
+  tl.to("#cw1", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 0.990);
+  tl.to("#cw2", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 0.990);
+  tl.set("#cp1", { opacity: 1 }, 1.326); tl.set("#cp1", { opacity: 0 }, 2.431);
+  tl.to("#cw3", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 1.366);
+  tl.to("#cw3", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 1.666);
+  tl.to("#cw4", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 1.666);
+  tl.to("#cw4", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 2.191);
+  tl.to("#cw5", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 2.191);
+  tl.set("#cp2", { opacity: 1 }, 2.451); tl.set("#cp2", { opacity: 0 }, 3.332);
+  tl.to("#cw6", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 2.491);
+  tl.to("#cw6", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 2.642);
+  tl.to("#cw7", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 2.642);
+  tl.to("#cw7", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 3.092);
+  tl.to("#cw8", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 3.092);
+  tl.set("#cp3", { opacity: 1 }, 3.352); tl.set("#cp3", { opacity: 0 }, 4.758);
+  tl.to("#cw9", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 3.392);
+  tl.to("#cw9", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 3.767);
+  tl.to("#cw10", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 3.767);
+  tl.to("#cw10", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 4.217);
+  tl.to("#cw11", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 4.217);
+  tl.set("#cp4", { opacity: 1 }, 4.778); tl.set("#cp4", { opacity: 0 }, 5.733);
+  tl.to("#cw12", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 4.818);
+  tl.to("#cw12", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 5.343);
+  tl.to("#cw13", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 5.343);
+  tl.to("#cw13", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 5.493);
+  tl.to("#cw14", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 5.493);
+  tl.set("#cp5", { opacity: 1 }, 5.753); tl.set("#cp5", { opacity: 0 }, 6.859);
+  tl.to("#cw15", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 5.793);
+  tl.to("#cw15", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 5.943);
+  tl.to("#cw16", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 5.943);
+  tl.to("#cw16", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 6.394);
+  tl.to("#cw17", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 6.394);
+  tl.set("#cp6", { opacity: 1 }, 6.879); tl.set("#cp6", { opacity: 0 }, 7.985);
+  tl.to("#cw18", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 6.919);
+  tl.to("#cw18", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 7.594);
+  tl.to("#cw19", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 7.594);
+  tl.set("#cp7", { opacity: 1 }, 8.005); tl.set("#cp7", { opacity: 0 }, 8.810);
+  tl.to("#cw20", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 8.045);
+  tl.to("#cw20", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 8.345);
+  tl.to("#cw21", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 8.345);
+  tl.to("#cw21", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 8.645);
+  tl.to("#cw22", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 8.645);
+  tl.set("#cp8", { opacity: 1 }, 8.830); tl.set("#cp8", { opacity: 0 }, 9.786);
+  tl.to("#cw23", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 8.870);
+  tl.to("#cw23", { color: "#D97757", scale: 1, duration: 0.12 }, 9.170);
+  tl.to("#cw24", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 9.170);
+  tl.set("#cp9", { opacity: 1 }, 9.806); tl.set("#cp9", { opacity: 0 }, 11.136);
+  tl.to("#cw25", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 9.846);
+  tl.to("#cw25", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 9.996);
+  tl.to("#cw26", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 9.996);
+  tl.to("#cw26", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 10.296);
+  tl.to("#cw27", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 10.296);
+  tl.set("#cp10", { opacity: 1 }, 11.156); tl.set("#cp10", { opacity: 0 }, 12.862);
+  tl.to("#cw28", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 11.196);
+  tl.to("#cw28", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 11.722);
+  tl.to("#cw29", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 11.722);
+  tl.set("#cp11", { opacity: 1 }, 12.882); tl.set("#cp11", { opacity: 0 }, 13.688);
+  tl.to("#cw30", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 12.922);
+  tl.to("#cw30", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 13.148);
+  tl.to("#cw31", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 13.148);
+  tl.to("#cw31", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 13.523);
+  tl.to("#cw32", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 13.523);
+  tl.set("#cp12", { opacity: 1 }, 13.708); tl.set("#cp12", { opacity: 0 }, 14.889);
+  tl.to("#cw33", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 13.748);
+  tl.to("#cw33", { color: "#D97757", scale: 1, duration: 0.12 }, 14.198);
+  tl.to("#cw34", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 14.198);
+  tl.to("#cw34", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 14.648);
+  tl.to("#cw35", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 14.648);
+  tl.set("#cp13", { opacity: 1 }, 14.909); tl.set("#cp13", { opacity: 0 }, 15.939);
+  tl.to("#cw36", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 14.949);
+  tl.to("#cw36", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 15.474);
+  tl.to("#cw37", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 15.474);
+  tl.set("#cp14", { opacity: 1 }, 15.959); tl.set("#cp14", { opacity: 0 }, 16.990);
+  tl.to("#cw38", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 15.999);
+  tl.to("#cw38", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 16.375);
+  tl.to("#cw39", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 16.375);
+  tl.to("#cw39", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 16.750);
+  tl.to("#cw40", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 16.750);
+  tl.set("#cp15", { opacity: 1 }, 17.010); tl.set("#cp15", { opacity: 0 }, 17.891);
+  tl.to("#cw41", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 17.050);
+  tl.to("#cw41", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 17.575);
+  tl.to("#cw42", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 17.575);
+  tl.to("#cw42", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 17.800);
+  tl.to("#cw43", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 17.800);
+  tl.set("#cp16", { opacity: 1 }, 17.911); tl.set("#cp16", { opacity: 0 }, 18.641);
+  tl.to("#cw44", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 17.951);
+  tl.to("#cw44", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 18.176);
+  tl.to("#cw45", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 18.176);
+  tl.set("#cp17", { opacity: 1 }, 18.661); tl.set("#cp17", { opacity: 0 }, 19.616);
+  tl.to("#cw46", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 18.701);
+  tl.to("#cw46", { color: "#D97757", scale: 1, duration: 0.12 }, 19.151);
+  tl.to("#cw47", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 19.151);
+  tl.set("#cp18", { opacity: 1 }, 19.636); tl.set("#cp18", { opacity: 0 }, 20.442);
+  tl.to("#cw48", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 19.676);
+  tl.to("#cw48", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 20.052);
+  tl.to("#cw49", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 20.052);
+  tl.set("#cp19", { opacity: 1 }, 20.462); tl.set("#cp19", { opacity: 0 }, 21.643);
+  tl.to("#cw50", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 20.502);
+  tl.to("#cw50", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 21.027);
+  tl.to("#cw51", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 21.027);
+  tl.to("#cw51", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 21.327);
+  tl.to("#cw52", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 21.327);
+  tl.set("#cp20", { opacity: 1 }, 21.663); tl.set("#cp20", { opacity: 0 }, 23.444);
+  tl.to("#cw53", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 21.703);
+  tl.to("#cw53", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 22.078);
+  tl.to("#cw54", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 22.078);
+  tl.to("#cw54", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 22.378);
+  tl.to("#cw55", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 22.378);
+  tl.to("#cw55", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 22.828);
+  tl.to("#cw56", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 22.828);
+  tl.set("#cp21", { opacity: 1 }, 23.464); tl.set("#cp21", { opacity: 0 }, 24.194);
+  tl.to("#cw57", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 23.504);
+  tl.set("#cp22", { opacity: 1 }, 24.214); tl.set("#cp22", { opacity: 0 }, 25.470);
+  tl.to("#cw58", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 24.254);
+  tl.to("#cw58", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 25.155);
+  tl.to("#cw59", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 25.155);
+  tl.set("#cp23", { opacity: 1 }, 25.490); tl.set("#cp23", { opacity: 0 }, 26.295);
+  tl.to("#cw60", { opacity: 1, color: "#58A6FF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 25.530);
+  tl.set("#cp24", { opacity: 1 }, 26.315); tl.set("#cp24", { opacity: 0 }, 27.271);
+  tl.to("#cw61", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 26.355);
+  tl.to("#cw61", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 26.730);
+  tl.to("#cw62", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 26.730);
+  tl.to("#cw62", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 26.956);
+  tl.to("#cw63", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 26.956);
+  tl.set("#cp25", { opacity: 1 }, 27.291); tl.set("#cp25", { opacity: 0 }, 28.547);
+  tl.to("#cw64", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 27.331);
+  tl.to("#cw64", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 27.706);
+  tl.to("#cw65", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 27.706);
+  tl.to("#cw65", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 27.856);
+  tl.to("#cw66", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 27.856);
+  tl.set("#cp26", { opacity: 1 }, 28.567); tl.set("#cp26", { opacity: 0 }, 29.747);
+  tl.to("#cw67", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 28.607);
+  tl.to("#cw67", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 28.907);
+  tl.to("#cw68", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 28.907);
+  tl.to("#cw68", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 29.432);
+  tl.to("#cw69", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 29.432);
+  tl.set("#cp27", { opacity: 1 }, 29.767); tl.set("#cp27", { opacity: 0 }, 31.473);
+  tl.to("#cw70", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 29.807);
+  tl.to("#cw70", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 30.108);
+  tl.to("#cw71", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 30.108);
+  tl.to("#cw71", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 30.633);
+  tl.to("#cw72", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 30.633);
+  tl.to("#cw72", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 30.933);
+  tl.to("#cw73", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 30.933);
+  tl.set("#cp28", { opacity: 1 }, 31.493); tl.set("#cp28", { opacity: 0 }, 32.449);
+  tl.to("#cw74", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 31.533);
+  tl.set("#cp29", { opacity: 1 }, 32.469); tl.set("#cp29", { opacity: 0 }, 33.349);
+  tl.to("#cw75", { opacity: 1, color: "#58A6FF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 32.509);
+  tl.to("#cw75", { color: "#58A6FF", scale: 1, duration: 0.12 }, 32.959);
+  tl.to("#cw76", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 32.959);
+  tl.to("#cw76", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 33.184);
+  tl.to("#cw77", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 33.184);
+  tl.set("#cp30", { opacity: 1 }, 33.369); tl.set("#cp30", { opacity: 0 }, 34.400);
+  tl.to("#cw78", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 33.409);
+  tl.to("#cw78", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 34.010);
+  tl.to("#cw79", { opacity: 1, color: "#58A6FF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 34.010);
+  tl.set("#cp31", { opacity: 1 }, 34.420); tl.set("#cp31", { opacity: 0 }, 35.451);
+  tl.to("#cw80", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 34.460);
+  tl.to("#cw80", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 34.835);
+  tl.to("#cw81", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 34.835);
+  tl.to("#cw81", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 35.211);
+  tl.to("#cw82", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 35.211);
+  tl.set("#cp32", { opacity: 1 }, 35.471); tl.set("#cp32", { opacity: 0 }, 36.351);
+  tl.to("#cw83", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 35.511);
+  tl.to("#cw83", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 35.811);
+  tl.to("#cw84", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 35.811);
+  tl.set("#cp33", { opacity: 1 }, 36.371); tl.set("#cp33", { opacity: 0 }, 37.852);
+  tl.to("#cw85", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 36.411);
+  tl.to("#cw85", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 37.162);
+  tl.to("#cw86", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 37.162);
+  tl.set("#cp34", { opacity: 1 }, 37.872); tl.set("#cp34", { opacity: 0 }, 39.203);
+  tl.to("#cw87", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 37.912);
+  tl.to("#cw87", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 38.512);
+  tl.to("#cw88", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 38.512);
+  tl.set("#cp35", { opacity: 1 }, 39.223); tl.set("#cp35", { opacity: 0 }, 40.178);
+  tl.to("#cw89", { opacity: 1, color: "#BC8CFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 39.263);
+  tl.set("#cp36", { opacity: 1 }, 40.198); tl.set("#cp36", { opacity: 0 }, 41.079);
+  tl.to("#cw90", { opacity: 1, color: "#BC8CFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 40.238);
+  tl.to("#cw90", { color: "#BC8CFF", scale: 1, duration: 0.12 }, 40.689);
+  tl.to("#cw91", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 40.689);
+  tl.set("#cp37", { opacity: 1 }, 41.099); tl.set("#cp37", { opacity: 0 }, 42.054);
+  tl.to("#cw92", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 41.139);
+  tl.to("#cw92", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 41.739);
+  tl.to("#cw93", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 41.739);
+  tl.set("#cp38", { opacity: 1 }, 42.074); tl.set("#cp38", { opacity: 0 }, 43.105);
+  tl.to("#cw94", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 42.114);
+  tl.to("#cw94", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 42.490);
+  tl.to("#cw95", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 42.490);
+  tl.to("#cw95", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 42.790);
+  tl.to("#cw96", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 42.790);
+  tl.set("#cp39", { opacity: 1 }, 43.125); tl.set("#cp39", { opacity: 0 }, 44.231);
+  tl.to("#cw97", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 43.165);
+  tl.to("#cw97", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 43.991);
+  tl.to("#cw98", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 43.991);
+  tl.set("#cp40", { opacity: 1 }, 44.251); tl.set("#cp40", { opacity: 0 }, 45.131);
+  tl.to("#cw99", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 44.291);
+  tl.to("#cw99", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 44.516);
+  tl.to("#cw100", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 44.516);
+  tl.set("#cp41", { opacity: 1 }, 45.151); tl.set("#cp41", { opacity: 0 }, 46.407);
+  tl.to("#cw101", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 45.191);
+  tl.to("#cw101", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 45.942);
+  tl.to("#cw102", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 45.942);
+  tl.to("#cw102", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 46.167);
+  tl.to("#cw103", { opacity: 1, color: "#BC8CFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 46.167);
+  tl.set("#cp42", { opacity: 1 }, 46.427); tl.set("#cp42", { opacity: 0 }, 47.608);
+  tl.to("#cw104", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 46.467);
+  tl.to("#cw104", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 46.842);
+  tl.to("#cw105", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 46.842);
+  tl.to("#cw105", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 47.293);
+  tl.to("#cw106", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 47.293);
+  tl.set("#cp43", { opacity: 1 }, 47.628); tl.set("#cp43", { opacity: 0 }, 48.583);
+  tl.to("#cw107", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 47.668);
+  tl.to("#cw107", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 48.343);
+  tl.to("#cw108", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 48.343);
+  tl.set("#cp44", { opacity: 1 }, 48.603); tl.set("#cp44", { opacity: 0 }, 50.159);
+  tl.to("#cw109", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 48.643);
+  tl.to("#cw109", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 49.019);
+  tl.to("#cw110", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 49.019);
+  tl.to("#cw110", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 49.244);
+  tl.to("#cw111", { opacity: 1, color: "#BC8CFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 49.244);
+  tl.set("#cp45", { opacity: 1 }, 50.179); tl.set("#cp45", { opacity: 0 }, 51.660);
+  tl.to("#cw112", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 50.219);
+  tl.to("#cw112", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 50.820);
+  tl.to("#cw113", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 50.820);
+  tl.set("#cp46", { opacity: 1 }, 51.680); tl.set("#cp46", { opacity: 0 }, 53.011);
+  tl.to("#cw114", { opacity: 1, color: "#3FB950", scale: 1.06, duration: 0.1, ease: "power1.out" }, 51.720);
+  tl.to("#cw114", { color: "#3FB950", scale: 1, duration: 0.12 }, 52.471);
+  tl.to("#cw115", { opacity: 1, color: "#3FB950", scale: 1.06, duration: 0.1, ease: "power1.out" }, 52.471);
+  tl.set("#cp47", { opacity: 1 }, 53.031); tl.set("#cp47", { opacity: 0 }, 53.836);
+  tl.to("#cw116", { opacity: 1, color: "#3FB950", scale: 1.06, duration: 0.1, ease: "power1.out" }, 53.071);
+  tl.to("#cw116", { color: "#3FB950", scale: 1, duration: 0.12 }, 53.521);
+  tl.to("#cw117", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 53.521);
+  tl.set("#cp48", { opacity: 1 }, 53.856); tl.set("#cp48", { opacity: 0 }, 54.812);
+  tl.to("#cw118", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 53.896);
+  tl.to("#cw118", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 54.497);
+  tl.to("#cw119", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 54.497);
+  tl.set("#cp49", { opacity: 1 }, 54.832); tl.set("#cp49", { opacity: 0 }, 55.788);
+  tl.to("#cw120", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 54.872);
+  tl.to("#cw120", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 55.247);
+  tl.to("#cw121", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 55.247);
+  tl.to("#cw121", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 55.547);
+  tl.to("#cw122", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 55.547);
+  tl.set("#cp50", { opacity: 1 }, 55.808); tl.set("#cp50", { opacity: 0 }, 56.613);
+  tl.to("#cw123", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 55.848);
+  tl.to("#cw123", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 56.148);
+  tl.to("#cw124", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 56.148);
+  tl.to("#cw124", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 56.373);
+  tl.to("#cw125", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 56.373);
+  tl.set("#cp51", { opacity: 1 }, 56.633); tl.set("#cp51", { opacity: 0 }, 57.664);
+  tl.to("#cw126", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 56.673);
+  tl.to("#cw126", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 56.973);
+  tl.to("#cw127", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 56.973);
+  tl.to("#cw127", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 57.423);
+  tl.to("#cw128", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 57.423);
+  tl.set("#cp52", { opacity: 1 }, 57.684); tl.set("#cp52", { opacity: 0 }, 58.339);
+  tl.to("#cw129", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 57.724);
+  tl.to("#cw129", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 57.874);
+  tl.to("#cw130", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 57.874);
+  tl.set("#cp53", { opacity: 1 }, 58.359); tl.set("#cp53", { opacity: 0 }, 59.089);
+  tl.to("#cw131", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 58.399);
+  tl.to("#cw131", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 58.549);
+  tl.to("#cw132", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 58.549);
+  tl.to("#cw132", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 58.924);
+  tl.to("#cw133", { opacity: 1, color: "#3FB950", scale: 1.06, duration: 0.1, ease: "power1.out" }, 58.924);
+  tl.set("#cp54", { opacity: 1 }, 59.109); tl.set("#cp54", { opacity: 0 }, 59.915);
+  tl.to("#cw134", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 59.149);
+  tl.to("#cw134", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 59.375);
+  tl.to("#cw135", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 59.375);
+  tl.to("#cw135", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 59.750);
+  tl.to("#cw136", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 59.750);
+  tl.set("#cp55", { opacity: 1 }, 59.935); tl.set("#cp55", { opacity: 0 }, 60.966);
+  tl.to("#cw137", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 59.975);
+  tl.to("#cw137", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 60.350);
+  tl.to("#cw138", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 60.350);
+  tl.to("#cw138", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 60.725);
+  tl.to("#cw139", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 60.725);
+  tl.set("#cp56", { opacity: 1 }, 60.986); tl.set("#cp56", { opacity: 0 }, 62.241);
+  tl.to("#cw140", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 61.026);
+  tl.to("#cw140", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 61.401);
+  tl.to("#cw141", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 61.401);
+  tl.to("#cw141", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 61.851);
+  tl.to("#cw142", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 61.851);
+  tl.set("#cp57", { opacity: 1 }, 62.261); tl.set("#cp57", { opacity: 0 }, 63.067);
+  tl.to("#cw143", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 62.301);
+  tl.to("#cw143", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 62.827);
+  tl.to("#cw144", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 62.827);
+  tl.set("#cp58", { opacity: 1 }, 63.087); tl.set("#cp58", { opacity: 0 }, 64.643);
+  tl.to("#cw145", { opacity: 1, color: "#3FB950", scale: 1.06, duration: 0.1, ease: "power1.out" }, 63.127);
+  tl.to("#cw145", { color: "#3FB950", scale: 1, duration: 0.12 }, 63.727);
+  tl.to("#cw146", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 63.727);
+  tl.to("#cw146", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 64.102);
+  tl.to("#cw147", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 64.102);
+  tl.set("#cp59", { opacity: 1 }, 64.663); tl.set("#cp59", { opacity: 0 }, 66.218);
+  tl.to("#cw148", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 64.703);
+  tl.to("#cw148", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 64.853);
+  tl.to("#cw149", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 64.853);
+  tl.to("#cw149", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 65.378);
+  tl.to("#cw150", { opacity: 1, color: "#F2CC60", scale: 1.06, duration: 0.1, ease: "power1.out" }, 65.378);
+  tl.set("#cp60", { opacity: 1 }, 66.238); tl.set("#cp60", { opacity: 0 }, 67.194);
+  tl.to("#cw151", { opacity: 1, color: "#F2CC60", scale: 1.06, duration: 0.1, ease: "power1.out" }, 66.278);
+  tl.to("#cw151", { color: "#F2CC60", scale: 1, duration: 0.12 }, 66.729);
+  tl.to("#cw152", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 66.729);
+  tl.to("#cw152", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 67.029);
+  tl.to("#cw153", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 67.029);
+  tl.set("#cp61", { opacity: 1 }, 67.214); tl.set("#cp61", { opacity: 0 }, 68.170);
+  tl.to("#cw154", { opacity: 1, color: "#F2CC60", scale: 1.06, duration: 0.1, ease: "power1.out" }, 67.254);
+  tl.to("#cw154", { color: "#F2CC60", scale: 1, duration: 0.12 }, 67.554);
+  tl.to("#cw155", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 67.554);
+  tl.set("#cp62", { opacity: 1 }, 68.190); tl.set("#cp62", { opacity: 0 }, 69.370);
+  tl.to("#cw156", { opacity: 1, color: "#F2CC60", scale: 1.06, duration: 0.1, ease: "power1.out" }, 68.230);
+  tl.to("#cw156", { color: "#F2CC60", scale: 1, duration: 0.12 }, 68.755);
+  tl.to("#cw157", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 68.755);
+  tl.to("#cw157", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 68.905);
+  tl.to("#cw158", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 68.905);
+  tl.set("#cp63", { opacity: 1 }, 69.390); tl.set("#cp63", { opacity: 0 }, 70.346);
+  tl.to("#cw159", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 69.430);
+  tl.to("#cw159", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 69.881);
+  tl.to("#cw160", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 69.881);
+  tl.to("#cw160", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 70.031);
+  tl.to("#cw161", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 70.031);
+  tl.set("#cp64", { opacity: 1 }, 70.366); tl.set("#cp64", { opacity: 0 }, 71.322);
+  tl.to("#cw162", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 70.406);
+  tl.to("#cw162", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 70.706);
+  tl.to("#cw163", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 70.706);
+  tl.to("#cw163", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 71.232);
+  tl.to("#cw164", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 71.232);
+  tl.set("#cp65", { opacity: 1 }, 71.342); tl.set("#cp65", { opacity: 0 }, 72.297);
+  tl.to("#cw165", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 71.382);
+  tl.to("#cw165", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 71.682);
+  tl.to("#cw166", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 71.682);
+  tl.set("#cp66", { opacity: 1 }, 72.317); tl.set("#cp66", { opacity: 0 }, 73.273);
+  tl.to("#cw167", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 72.357);
+  tl.to("#cw167", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 73.108);
+  tl.to("#cw168", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 73.108);
+  tl.set("#cp67", { opacity: 1 }, 73.293); tl.set("#cp67", { opacity: 0 }, 74.248);
+  tl.to("#cw169", { opacity: 1, color: "#F2CC60", scale: 1.06, duration: 0.1, ease: "power1.out" }, 73.333);
+  tl.to("#cw169", { color: "#F2CC60", scale: 1, duration: 0.12 }, 73.858);
+  tl.to("#cw170", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 73.858);
+  tl.set("#cp68", { opacity: 1 }, 74.268); tl.set("#cp68", { opacity: 0 }, 75.374);
+  tl.to("#cw171", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 74.308);
+  tl.to("#cw171", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 74.608);
+  tl.to("#cw172", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 74.608);
+  tl.to("#cw172", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 75.059);
+  tl.to("#cw173", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 75.059);
+  tl.set("#cp69", { opacity: 1 }, 75.394); tl.set("#cp69", { opacity: 0 }, 76.500);
+  tl.to("#cw174", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 75.434);
+  tl.to("#cw174", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 75.809);
+  tl.to("#cw175", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 75.809);
+  tl.to("#cw175", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 76.109);
+  tl.to("#cw176", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 76.109);
+  tl.set("#cp70", { opacity: 1 }, 76.520); tl.set("#cp70", { opacity: 0 }, 77.250);
+  tl.to("#cw177", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 76.560);
+  tl.set("#cp71", { opacity: 1 }, 77.270); tl.set("#cp71", { opacity: 0 }, 78.226);
+  tl.to("#cw178", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 77.310);
+  tl.to("#cw178", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 77.835);
+  tl.to("#cw179", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 77.835);
+  tl.to("#cw179", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 78.135);
+  tl.to("#cw180", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 78.135);
+  tl.set("#cp72", { opacity: 1 }, 78.246); tl.set("#cp72", { opacity: 0 }, 79.351);
+  tl.to("#cw181", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 78.286);
+  tl.to("#cw181", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 78.736);
+  tl.to("#cw182", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 78.736);
+  tl.to("#cw182", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 79.111);
+  tl.to("#cw183", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 79.111);
+  tl.set("#cp73", { opacity: 1 }, 79.371); tl.set("#cp73", { opacity: 0 }, 80.477);
+  tl.to("#cw184", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 79.411);
+  tl.to("#cw184", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 79.862);
+  tl.to("#cw185", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 79.862);
+  tl.to("#cw185", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 80.237);
+  tl.to("#cw186", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 80.237);
+  tl.set("#cp74", { opacity: 1 }, 80.497); tl.set("#cp74", { opacity: 0 }, 81.678);
+  tl.to("#cw187", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 80.537);
+  tl.to("#cw187", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 80.837);
+  tl.to("#cw188", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 80.837);
+  tl.to("#cw188", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 81.212);
+  tl.to("#cw189", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 81.212);
+  tl.set("#cp75", { opacity: 1 }, 81.698); tl.set("#cp75", { opacity: 0 }, 82.578);
+  tl.to("#cw190", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 81.738);
+  tl.to("#cw190", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 82.038);
+  tl.to("#cw191", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 82.038);
+  tl.to("#cw191", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 82.488);
+  tl.to("#cw192", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 82.488);
+  tl.set("#cp76", { opacity: 1 }, 82.598); tl.set("#cp76", { opacity: 0 }, 83.479);
+  tl.to("#cw193", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 82.638);
+  tl.to("#cw193", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 83.014);
+  tl.to("#cw194", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 83.014);
+  tl.set("#cp77", { opacity: 1 }, 83.499); tl.set("#cp77", { opacity: 0 }, 84.454);
+  tl.to("#cw195", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 83.539);
+  tl.to("#cw195", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 83.764);
+  tl.to("#cw196", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 83.764);
+  tl.to("#cw196", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 84.064);
+  tl.to("#cw197", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 84.064);
+  tl.set("#cp78", { opacity: 1 }, 84.474); tl.set("#cp78", { opacity: 0 }, 85.770);
+  tl.to("#cw198", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 84.514);
+  tl.to("#cw198", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 85.040);
+  tl.to("#cw199", { opacity: 1, color: "#D97757", scale: 1.06, duration: 0.1, ease: "power1.out" }, 85.040);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

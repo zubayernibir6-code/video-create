@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>৫টা GitHub রিপো · পর্ব ৯: কাজ নিজে থেকে করানো</title>
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Inter"; font-weight: 100 900; src: url("assets/fonts/Inter-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "JetBrains Mono"; font-weight: 100 800; src: url("assets/fonts/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 600; src: url("assets/fonts/HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 700; src: url("assets/fonts/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Baloo Da 2"; font-weight: 400 800; src: url("assets/fonts/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+body { margin: 0; background: #0A2A66; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #0A2A66; font-family: "Inter", "Hind Siliguri", sans-serif; color: #EAF4FF; }
+#world { position: absolute; inset: 0; }
+#stage { position: absolute; left: 65px; top: 372px; width: 821px; height: 690px; transform-origin: 50% 50%; }
+.tool, #cta, .hook { position: absolute; inset: 0; opacity: 0; }
+.mono { flex: none; display: flex; align-items: center; justify-content: center; font: 900 34px/1 "Inter", "Hind Siliguri", sans-serif; color: var(--c); }
+.hd { position: relative; display: flex; align-items: center; gap: 24px; width: fit-content; max-width: 100%; align-self: flex-start; transform-origin: 0% 50%; }
+.nm { font: 900 54px/1.08 "Inter", "Hind Siliguri", sans-serif; color: #FFFFFF; text-wrap: balance; }
+.nm em { font-style: normal; color: var(--c); }
+.mk { font: 700 30px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #A9C4EE; margin-top: 6px; text-wrap: balance; }
+.st { display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; font: 700 28px/1.2 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; opacity: 0; }
+.fxs { position: relative; display: flex; flex-direction: column; }
+.fx { position: relative; display: flex; align-items: center; gap: 20px; opacity: 0; }
+.fx .fi { flex: none; display: flex; align-items: center; justify-content: center; }
+.fx .fl { font: 700 34px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; white-space: nowrap; }
+.pf { position: relative; display: inline-flex; align-items: center; gap: 14px; font: 700 32px/1.25 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; white-space: nowrap; opacity: 0; }
+/* badge */
+#badge { position: absolute; left: 65px; top: 298px; height: 52px; display: flex; align-items: center; gap: 16px; padding: 0 22px; border-radius: 999px; box-sizing: border-box; }
+#badge .bt { font: 700 26px/1 "Hind Siliguri", "Inter", sans-serif; white-space: nowrap; }
+#badge .bdots { display: flex; gap: 8px; }
+#badge .bdots i { width: 13px; height: 13px; border-radius: 50%; display: block; background: rgba(255,255,255,0.22); transform: scale(0.8); }
+/* captions */
+#caps { position: absolute; left: 65px; top: 1092px; width: 821px; height: 140px; }
+.cp { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; gap: 18px; opacity: 0; }
+.cw { position: relative; display: inline-block; font: 700 62px/1.3 "Hind Siliguri", "Inter", sans-serif; color: rgba(234,244,255,0.42); white-space: nowrap; transform-origin: 50% 60%; }
+/* the end */
+#cta { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 18px; padding-top: 6px; box-sizing: border-box; }
+#cta .eh { font: 800 40px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; opacity: 0; }
+.erow { display: flex; gap: 18px; justify-content: center; }
+.ec { width: 255px; height: 164px; box-sizing: border-box; border-radius: 24px; padding: 18px 16px 14px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px;
+  background: var(--cb); border: 3px solid var(--c); opacity: 0; }
+.ec .emono { width: 56px; height: 56px; border-radius: 50%; background: var(--c); color: #0A2A66; display: flex; align-items: center; justify-content: center; font: 900 24px/1 "Inter", "Hind Siliguri", sans-serif; flex: none; }
+.ec .enm { font: 800 28px/1.12 "Inter", "Hind Siliguri", sans-serif; color: #FFFFFF; text-align: center; text-wrap: balance; }
+#cta .cph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 18px; padding-top: 6px; box-sizing: border-box; }
+#cta #ctaB { justify-content: center; gap: 26px; padding-top: 0; opacity: 0; }
+#ctaB .eh { opacity: 0; }
+.csr { display: flex; gap: 18px; justify-content: center; }
+.cs { position: relative; width: 255px; height: 172px; box-sizing: border-box; border-radius: 24px; padding: 18px 12px 14px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px;
+  background: rgba(255,255,255,0.07); border: 3px solid rgba(127,219,255,0.75); opacity: 0; }
+.cs .csn { position: absolute; left: 14px; top: 14px; width: 42px; height: 42px; border-radius: 50%; background: #7FDBFF; color: #0A2A66; display: flex; align-items: center; justify-content: center; font: 800 28px/1 "Baloo Da 2", "Hind Siliguri", "Inter", sans-serif; }
+.cs .csi { display: flex; align-items: center; justify-content: center; height: 48px; }
+.cs .csl { font: 700 30px/1.25 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; text-align: center; text-wrap: balance; }
+.ibox { position: relative; width: 600px; height: 104px; border-radius: 999px; box-sizing: border-box; padding: 0 16px 0 44px; display: flex; align-items: center; opacity: 0;
+  background: rgba(255,255,255,0.1); border: 3px solid #7FDBFF; box-shadow: 0 0 40px rgba(127,219,255,0.35); }
+/* the promise card and the how-to steps (inside the look's own card skin) */
+.tool .bx { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: inherit; }
+.hws { position: absolute; left: 0; right: 0; top: 0; display: flex; flex-direction: column; gap: 14px; opacity: 0; }
+.hwk { display: flex; align-items: center; gap: 12px; font: 700 28px/1.3 "Hind Siliguri", "Inter", sans-serif; color: var(--c); }
+.hw { display: flex; align-items: center; gap: 18px; opacity: 0; }
+.hw .hn { flex: none; width: 54px; height: 54px; border-radius: 50%; background: var(--c); color: #0A2A66; display: flex; align-items: center; justify-content: center; font: 800 32px/1 "Baloo Da 2", "Hind Siliguri", "Inter", sans-serif; }
+.hw .hl { font: 700 32px/1.25 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; text-wrap: balance; }
+.tool.pr { justify-content: center; }
+.pr .prk { font: 700 28px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #A9C4EE; }
+.pr .prt { font: 800 72px/1.3 "Baloo Da 2", "Hind Siliguri", "Inter", sans-serif; color: var(--c); transform-origin: 0% 60%; }
+.pr .prs { font: 700 34px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; text-wrap: balance; opacity: 0; }
+.pr .prl { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.pr .prr { display: flex; align-items: center; gap: 16px; font: 700 30px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; opacity: 0; }
+.pr .prr .fi { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--cb); display: flex; align-items: center; justify-content: center; }
+/* the inbox chip, top right, opposite the badge: one top band (#top) so design-lint counts badge + chip as one zone */
+#top { position: absolute; left: 0; top: 0; width: 1080px; height: 360px; pointer-events: none; }
+#ichip { position: absolute; right: 194px; top: 298px; height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 22px 0 16px; border-radius: 999px; box-sizing: border-box;
+  background: rgba(127,219,255,0.16); border: 2px solid #7FDBFF; transform-origin: 100% 50%; opacity: 0; }
+#ichip span { font: 700 26px/1 "Hind Siliguri", "Inter", sans-serif; color: #FFFFFF; white-space: nowrap; }
+#ichip b { font: 900 26px/1 "Inter", "Hind Siliguri", sans-serif; color: #7FDBFF; white-space: nowrap; }
+.ikw { font: 900 60px/1 "Inter", "Hind Siliguri", sans-serif; color: #FFFFFF; white-space: nowrap; }
+.icar { display: block; width: 4px; height: 58px; margin-left: 6px; background: #7FDBFF; }
+.isend { margin-left: auto; width: 76px; height: 76px; border-radius: 50%; background: #7FDBFF; display: flex; align-items: center; justify-content: center; flex: none; }
+.isent { display: flex; align-items: center; gap: 10px; font: 700 28px/1.3 "Hind Siliguri", "Inter", sans-serif; color: #A9C4EE; opacity: 0; }
+#flash { position: absolute; inset: 0; background: #FFFFFF; opacity: 0; pointer-events: none; }
+
+#world .bp { position: absolute; left: -200px; top: -200px; width: 1480px; height: 2320px;
+  background-image: linear-gradient(rgba(255,255,255,0.10) 2px, rgba(0,0,0,0) 2px), linear-gradient(90deg, rgba(255,255,255,0.10) 2px, rgba(0,0,0,0) 2px),
+    linear-gradient(rgba(255,255,255,0.05) 1px, rgba(0,0,0,0) 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, rgba(0,0,0,0) 1px);
+  background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px; }
+#world .tint { position: absolute; inset: 0; background: radial-gradient(ellipse 85% 60% at 50% 38%, rgba(30,90,190,0.55), rgba(10,42,102,0) 70%), linear-gradient(180deg, #0D3277, #0A2A66 55%, #082356); mix-blend-mode: normal; }
+#world .gear { position: absolute; left: 640px; top: 1360px; width: 620px; height: 620px; opacity: 0.18; }
+#world .dim { position: absolute; }
+#badge { background: rgba(10,42,102,0.75); border: 2px solid rgba(127,219,255,0.7); }
+#badge .bt { color: #EAF4FF; }
+#nodes { position: absolute; left: 0; top: 0; width: 821px; height: 120px; overflow: visible; }
+/* hook */
+#hk .chip { position: absolute; padding: 14px 26px; border: 3px solid rgba(234,244,255,0.85); border-radius: 12px; background: rgba(10,42,102,0.85); font: 700 34px/1.25 "Hind Siliguri", "Inter", sans-serif; color: #EAF4FF; white-space: nowrap; }
+#hk .wire { position: absolute; left: 0; top: 0; width: 821px; height: 690px; overflow: visible; }
+#hk .hg { position: absolute; left: 350px; top: 470px; width: 120px; height: 120px; opacity: 0; }
+/* the panel */
+.tool { left: 0px !important; top: 130px !important; width: 821px; height: 560px; right: auto !important; bottom: auto !important; box-sizing: border-box; padding: 34px 40px 30px;
+  background: rgba(12,52,124,0.88); border: 2px solid rgba(234,244,255,0.85); border-radius: 4px; box-shadow: 0 0 0 8px rgba(127,219,255,0.08), 0 30px 70px rgba(0,0,0,0.45);
+  display: flex; flex-direction: column; gap: 18px; transform-origin: 50% 50%; }
+.tool .crn { position: absolute; width: 26px; height: 26px; border: 0 solid var(--c); }
+.tool .part { position: absolute; left: 40px; bottom: 24px; padding: 4px 12px; border: 2px solid var(--c); font: 700 24px/1.2 "JetBrains Mono", "Hind Siliguri", monospace; color: var(--c); }
+.tool .mono { width: 84px; height: 84px; border-radius: 6px; background: rgba(0,0,0,0); border: 3px solid var(--c); color: var(--c); font-size: 30px; }
+.tool .nm { font-size: 52px; }
+.tool .fxs { gap: 12px; }
+.tool .fx { height: 64px; padding: 0 20px 0 0; border-bottom: 2px dashed rgba(234,244,255,0.35); }
+.tool .fx .fi { width: 52px; height: 52px; border: 2px solid var(--c); border-radius: 6px; }
+.tool .fx .fl { font-size: 32px; }
+.tool .pf { margin-top: auto; align-self: flex-end; padding: 10px 26px 10px 16px; border: 3px solid #5CFFB0; border-radius: 6px; color: #5CFFB0; font-size: 30px; background: rgba(92,255,176,0.08); }
+.tool .pf svg { stroke: #5CFFB0; }
+.tool .pf.warn { border-color: #FFC857; color: #FFC857; background: rgba(255,200,87,0.08); }
+.tool .pf.warn svg { stroke: #FFC857; }
+.tool .hw .hn { border-radius: 8px; }
+.ec, .cs { background: rgba(12,52,124,0.9); border-radius: 6px; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-safe-profile="universal-reel" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="84.670">
+      <div id="world"><div class="bp" id="bp"></div><div class="tint"></div><svg class="gear" viewBox="0 0 620 620" data-layout-allow-overflow><g id="wgear"><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(0 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(22.5 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(45 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(67.5 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(90 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(112.5 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(135 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(157.5 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(180 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(202.5 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(225 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(247.5 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(270 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(292.5 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(315 310 310)"/><rect x="290" y="20" width="40" height="70" rx="6" fill="none" stroke="#EAF4FF" stroke-width="6" transform="rotate(337.5 310 310)"/><circle cx="310" cy="310" r="220" fill="none" stroke="#EAF4FF" stroke-width="6"/><circle cx="310" cy="310" r="70" fill="none" stroke="#EAF4FF" stroke-width="6"/></g></svg><svg class="dim" style="left:65px;top:1265px" width="420" height="30" viewBox="0 0 420 30" data-layout-allow-overflow><line x1="0" y1="15" x2="420" y2="15" stroke="rgba(234,244,255,0.35)" stroke-width="2"/><line x1="1" y1="4" x2="1" y2="26" stroke="rgba(234,244,255,0.35)" stroke-width="2"/><line x1="419" y1="4" x2="419" y2="26" stroke="rgba(234,244,255,0.35)" stroke-width="2"/></svg><svg class="dim" style="left:600px;top:240px" width="286" height="30" viewBox="0 0 286 30" data-layout-allow-overflow><line x1="0" y1="15" x2="286" y2="15" stroke="rgba(234,244,255,0.35)" stroke-width="2"/><line x1="1" y1="4" x2="1" y2="26" stroke="rgba(234,244,255,0.35)" stroke-width="2"/><line x1="285" y1="4" x2="285" y2="26" stroke="rgba(234,244,255,0.35)" stroke-width="2"/></svg></div>
+      <div id="stage">
+<svg id="nodes" width="821" height="120" viewBox="0 0 821 120"><line x1="128" y1="53" x2="173" y2="53" stroke="rgba(234,244,255,0.45)" stroke-width="4" stroke-dasharray="8 8"/><circle id="sig0" cx="128" cy="53" r="9" fill="#FFFFFF" opacity="0"/><line x1="301" y1="53" x2="346" y2="53" stroke="rgba(234,244,255,0.45)" stroke-width="4" stroke-dasharray="8 8"/><circle id="sig1" cx="301" cy="53" r="9" fill="#FFFFFF" opacity="0"/><line x1="474" y1="53" x2="519" y2="53" stroke="rgba(234,244,255,0.45)" stroke-width="4" stroke-dasharray="8 8"/><circle id="sig2" cx="474" cy="53" r="9" fill="#FFFFFF" opacity="0"/><line x1="647" y1="53" x2="692" y2="53" stroke="rgba(234,244,255,0.45)" stroke-width="4" stroke-dasharray="8 8"/><circle id="sig3" cx="647" cy="53" r="9" fill="#FFFFFF" opacity="0"/><g><rect x="0" y="18" width="128" height="70" rx="8" fill="rgba(10,42,102,0.9)" stroke="rgba(234,244,255,0.3)" stroke-width="3"/><rect id="nd0" x="0" y="18" width="128" height="70" rx="8" fill="#7FDBFF" fill-opacity="0" stroke="#7FDBFF" stroke-width="4" stroke-dasharray="396" stroke-dashoffset="396"/><text id="ndt0" x="64" y="63" text-anchor="middle" font-family="&#39;Inter&#39;, &#39;Hind Siliguri&#39;, sans-serif" font-weight="900" font-size="28" fill="#EAF4FF" opacity="0.45">N8</text></g><g><rect x="173" y="18" width="128" height="70" rx="8" fill="rgba(10,42,102,0.9)" stroke="rgba(234,244,255,0.3)" stroke-width="3"/><rect id="nd1" x="173" y="18" width="128" height="70" rx="8" fill="#FFDC5E" fill-opacity="0" stroke="#FFDC5E" stroke-width="4" stroke-dasharray="396" stroke-dashoffset="396"/><text id="ndt1" x="237" y="63" text-anchor="middle" font-family="&#39;Inter&#39;, &#39;Hind Siliguri&#39;, sans-serif" font-weight="900" font-size="28" fill="#EAF4FF" opacity="0.45">NA</text></g><g><rect x="346" y="18" width="128" height="70" rx="8" fill="rgba(10,42,102,0.9)" stroke="rgba(234,244,255,0.3)" stroke-width="3"/><rect id="nd2" x="346" y="18" width="128" height="70" rx="8" fill="#5CFFB0" fill-opacity="0" stroke="#5CFFB0" stroke-width="4" stroke-dasharray="396" stroke-dashoffset="396"/><text id="ndt2" x="410" y="63" text-anchor="middle" font-family="&#39;Inter&#39;, &#39;Hind Siliguri&#39;, sans-serif" font-weight="900" font-size="28" fill="#EAF4FF" opacity="0.45">DI</text></g><g><rect x="519" y="18" width="128" height="70" rx="8" fill="rgba(10,42,102,0.9)" stroke="rgba(234,244,255,0.3)" stroke-width="3"/><rect id="nd3" x="519" y="18" width="128" height="70" rx="8" fill="#FF9F5A" fill-opacity="0" stroke="#FF9F5A" stroke-width="4" stroke-dasharray="396" stroke-dashoffset="396"/><text id="ndt3" x="583" y="63" text-anchor="middle" font-family="&#39;Inter&#39;, &#39;Hind Siliguri&#39;, sans-serif" font-weight="900" font-size="28" fill="#EAF4FF" opacity="0.45">AC</text></g><g><rect x="692" y="18" width="128" height="70" rx="8" fill="rgba(10,42,102,0.9)" stroke="rgba(234,244,255,0.3)" stroke-width="3"/><rect id="nd4" x="692" y="18" width="128" height="70" rx="8" fill="#FF7BD5" fill-opacity="0" stroke="#FF7BD5" stroke-width="4" stroke-dasharray="396" stroke-dashoffset="396"/><text id="ndt4" x="756" y="63" text-anchor="middle" font-family="&#39;Inter&#39;, &#39;Hind Siliguri&#39;, sans-serif" font-weight="900" font-size="28" fill="#EAF4FF" opacity="0.45">LA</text></g></svg>
+<div class="hook" id="hk"><svg class="wire" viewBox="0 0 821 690"><path id="hwire" d="M60 252 H760 M190 392 H690 M410 252 V392" fill="none" stroke="#7FDBFF" stroke-width="4" stroke-dasharray="1400" stroke-dashoffset="1400"/></svg>
+  <div class="chip" id="ch0">ইমেইল</div><div class="chip" id="ch1">রিপোর্ট</div><div class="chip" id="ch2">Sheet</div><div class="chip" id="ch3">ফর্ম</div><div class="chip" id="ch4">বিল</div>
+  <svg class="hg" viewBox="0 0 120 120"><g id="hgr"><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(0 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(36 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(72 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(108 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(144 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(180 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(216 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(252 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(288 60 60)"/><rect x="54" y="4" width="12" height="22" rx="2" fill="#7FDBFF" transform="rotate(324 60 60)"/><circle cx="60" cy="60" r="34" fill="none" stroke="#7FDBFF" stroke-width="10"/></g></svg></div>
+<div class="tool pr" id="tP" style="--c:#7FDBFF;--cb:rgba(127,219,255,0.16);--cg:rgba(127,219,255,0.4)">
+  <div class="prk">এই ভিডিওতে</div><div class="prt" id="prt">৫টা ফ্রি অটোমেশন</div><div class="prs" id="prs">রোজকার কাজ নিজে নিজে করাতে</div>
+  <div class="prl"><div class="prr" id="prr0"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /> <path d="M20 2v4" /> <path d="M22 4h-4" /> <circle cx="4" cy="20" r="2" /></svg></span><span>কোনটা কী কাজ করে</span></div><div class="prr" id="prr1"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg></span><span>কীভাবে চালাবেন</span></div><div class="prr" id="prr2"><span class="fi"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg></span><span>লিংক: ইনবক্সে AUTO</span></div></div>
+</div>
+<div class="tool" id="t0" style="--c:#7FDBFF;--cb:rgba(127,219,255,0.16);--cg:rgba(127,219,255,0.4)">
+  <div class="hd" id="hd0"><div class="mono" id="mono0">N8</div><div class="nmw"><div class="nm">n8n</div><div class="mk">বাক্স জুড়ে অটোমেশন</div><div class="st" id="st0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg><span>২ লাখ স্টার</span></div></div></div>
+  <div class="bx"><div class="fxs" id="fxs0"><div class="fx" id="fx0_0"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M12 3v18" /> <rect width="18" height="18" x="3" y="3" rx="2" /> <path d="M3 9h18" /> <path d="M3 15h18" /></svg></span><span class="fl">ফর্ম থেকে Sheet</span></div><div class="fx" id="fx0_1"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /> <rect x="2" y="4" width="20" height="16" rx="2" /></svg></span><span class="fl">ইমেইলের উত্তর</span></div><div class="fx" id="fx0_2"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M18 17V9" /> <path d="M13 17V5" /> <path d="M8 17v-3" /></svg></span><span class="fl">রোজকার রিপোর্ট</span></div></div>
+  <div class="pf good" id="pf0"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>বাক্স জুড়ে বানান</span></div>
+  <div class="hws" id="hws0"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে চালাবেন</span></div><div class="hw" id="hw0_0"><span class="hn">১</span><span class="hl">Node.js বসান</span></div><div class="hw" id="hw0_1"><span class="hn">২</span><span class="hl">npx n8n লিখুন</span></div><div class="hw" id="hw0_2"><span class="hn">৩</span><span class="hl">টেমপ্লেট বাছুন</span></div></div></div>
+  <i class="crn" style="left:-2px;top:-2px;border-left-width:6px;border-top-width:6px"></i><i class="crn" style="right:-2px;top:-2px;border-right-width:6px;border-top-width:6px"></i><i class="crn" style="left:-2px;bottom:-2px;border-left-width:6px;border-bottom-width:6px"></i><i class="crn" style="right:-2px;bottom:-2px;border-right-width:6px;border-bottom-width:6px"></i><span class="part">PART ০১</span>
+</div>
+<div class="tool" id="t1" style="--c:#FFDC5E;--cb:rgba(255,220,94,0.16);--cg:rgba(255,220,94,0.4)">
+  <div class="hd" id="hd1"><div class="mono" id="mono1">NA</div><div class="nmw"><div class="nm">Nanobrowser</div><div class="mk">Chrome-এর পাশে AI এজেন্ট</div></div></div>
+  <div class="bx"><div class="fxs" id="fxs1"><div class="fx" id="fx1_0"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFDC5E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><rect width="18" height="18" x="3" y="3" rx="2" /> <path d="M15 3v18" /></svg></span><span class="fl">Chrome-এর পাশে</span></div><div class="fx" id="fx1_1"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFDC5E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M14 4.1 12 6" /> <path d="m5.1 8-2.9-.8" /> <path d="m6 12-1.9 2" /> <path d="M7.2 2.2 8 5.1" /> <path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z" /></svg></span><span class="fl">নিজেই ক্লিক করে</span></div></div>
+  <div class="pf good" id="pf1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>টেবিলে দাম সাজায়</span></div>
+  <div class="hws" id="hws1"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFDC5E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে চালাবেন</span></div><div class="hw" id="hw1_0"><span class="hn">১</span><span class="hl">Web Store থেকে</span></div><div class="hw" id="hw1_1"><span class="hn">২</span><span class="hl">AI key দিন</span></div><div class="hw" id="hw1_2"><span class="hn">৩</span><span class="hl">Ask মোড চালু</span></div></div></div>
+  <i class="crn" style="left:-2px;top:-2px;border-left-width:6px;border-top-width:6px"></i><i class="crn" style="right:-2px;top:-2px;border-right-width:6px;border-top-width:6px"></i><i class="crn" style="left:-2px;bottom:-2px;border-left-width:6px;border-bottom-width:6px"></i><i class="crn" style="right:-2px;bottom:-2px;border-right-width:6px;border-bottom-width:6px"></i><span class="part">PART ০২</span>
+</div>
+<div class="tool" id="t2" style="--c:#5CFFB0;--cb:rgba(92,255,176,0.16);--cg:rgba(92,255,176,0.4)">
+  <div class="hd" id="hd2"><div class="mono" id="mono2">DI</div><div class="nmw"><div class="nm">Dify</div><div class="mk">নিজের চ্যাটবট বানানো</div><div class="st" id="st2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg><span>১.৬ লাখ স্টার</span></div></div></div>
+  <div class="bx"><div class="fxs" id="fxs2"><div class="fx" id="fx2_0"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /></svg></span><span class="fl">দামের তালিকা দিন</span></div><div class="fx" id="fx2_1"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M12 8V4H8" /> <rect width="16" height="12" x="4" y="8" rx="2" /> <path d="M2 14h2" /> <path d="M20 14h2" /> <path d="M15 13v2" /> <path d="M9 13v2" /></svg></span><span class="fl">চ্যাটবট বানান</span></div></div>
+  <div class="pf good" id="pf2"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>ব্রাউজারেই হয়</span></div>
+  <div class="hws" id="hws2"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে চালাবেন</span></div><div class="hw" id="hw2_0"><span class="hn">১</span><span class="hl">ফ্রি Sandbox</span></div><div class="hw" id="hw2_1"><span class="hn">২</span><span class="hl">ডকুমেন্ট তুলুন</span></div><div class="hw" id="hw2_2"><span class="hn">৩</span><span class="hl">লিংক শেয়ার</span></div></div></div>
+  <i class="crn" style="left:-2px;top:-2px;border-left-width:6px;border-top-width:6px"></i><i class="crn" style="right:-2px;top:-2px;border-right-width:6px;border-top-width:6px"></i><i class="crn" style="left:-2px;bottom:-2px;border-left-width:6px;border-bottom-width:6px"></i><i class="crn" style="right:-2px;bottom:-2px;border-right-width:6px;border-bottom-width:6px"></i><span class="part">PART ০৩</span>
+</div>
+<div class="tool" id="t3" style="--c:#FF9F5A;--cb:rgba(255,159,90,0.16);--cg:rgba(255,159,90,0.4)">
+  <div class="hd" id="hd3"><div class="mono" id="mono3">AC</div><div class="nmw"><div class="nm">Activepieces</div><div class="mk">Zapier-এর মতো, আরও সহজ</div></div></div>
+  <div class="bx"><div class="fxs" id="fxs3"><div class="fx" id="fx3_0"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF9F5A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" /></svg></span><span class="fl">Zapier-এর মতো</span></div><div class="fx" id="fx3_1"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF9F5A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg></span><span class="fl">ফ্রি ক্লাউড</span></div></div>
+  <div class="pf good" id="pf3"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>ইনস্টল লাগে না</span></div>
+  <div class="hws" id="hws3"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FF9F5A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে চালাবেন</span></div><div class="hw" id="hw3_0"><span class="hn">১</span><span class="hl">Flow বানান</span></div><div class="hw" id="hw3_1"><span class="hn">২</span><span class="hl">trigger দিন</span></div><div class="hw" id="hw3_2"><span class="hn">৩</span><span class="hl">Test চাপুন</span></div></div></div>
+  <i class="crn" style="left:-2px;top:-2px;border-left-width:6px;border-top-width:6px"></i><i class="crn" style="right:-2px;top:-2px;border-right-width:6px;border-top-width:6px"></i><i class="crn" style="left:-2px;bottom:-2px;border-left-width:6px;border-bottom-width:6px"></i><i class="crn" style="right:-2px;bottom:-2px;border-right-width:6px;border-bottom-width:6px"></i><span class="part">PART ০৪</span>
+</div>
+<div class="tool" id="t4" style="--c:#FF7BD5;--cb:rgba(255,123,213,0.16);--cg:rgba(255,123,213,0.4)">
+  <div class="hd" id="hd4"><div class="mono" id="mono4">LA</div><div class="nmw"><div class="nm">Langflow</div><div class="mk">AI এজেন্ট চোখে দেখা</div><div class="st" id="st4"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF7BD5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg><span>১.৬ লাখ স্টার</span></div></div></div>
+  <div class="bx"><div class="fxs" id="fxs4"><div class="fx" id="fx4_0"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF7BD5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg></span><span class="fl">চোখে দেখা যায়</span></div><div class="fx" id="fx4_1"><span class="fi"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF7BD5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></svg></span><span class="fl">টেনে জোড়া লাগান</span></div></div>
+  <div class="pf good" id="pf4"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>প্রম্পট · মডেল · টুল</span></div>
+  <div class="hws" id="hws4"><div class="hwk"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FF7BD5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg><span>কীভাবে চালাবেন</span></div><div class="hw" id="hw4_0"><span class="hn">১</span><span class="hl">Desktop নামান</span></div><div class="hw" id="hw4_1"><span class="hn">২</span><span class="hl">starter টেমপ্লেট</span></div><div class="hw" id="hw4_2"><span class="hn">৩</span><span class="hl">Playground-এ চালান</span></div></div></div>
+  <i class="crn" style="left:-2px;top:-2px;border-left-width:6px;border-top-width:6px"></i><i class="crn" style="right:-2px;top:-2px;border-right-width:6px;border-top-width:6px"></i><i class="crn" style="left:-2px;bottom:-2px;border-left-width:6px;border-bottom-width:6px"></i><i class="crn" style="right:-2px;bottom:-2px;border-right-width:6px;border-bottom-width:6px"></i><span class="part">PART ০৫</span>
+</div>
+<div id="cta"><div class="cph" id="ctaA"><div class="eh" id="eh">৫টা টুল এক নজরে</div>
+  <div class="erow"><div class="ec" id="ec0" style="--c:#7FDBFF;--cb:rgba(127,219,255,0.16)"><div class="emono">N8</div><div class="enm">n8n</div></div><div class="ec" id="ec1" style="--c:#FFDC5E;--cb:rgba(255,220,94,0.16)"><div class="emono">NA</div><div class="enm">Nanobrowser</div></div><div class="ec" id="ec2" style="--c:#5CFFB0;--cb:rgba(92,255,176,0.16)"><div class="emono">DI</div><div class="enm">Dify</div></div></div><div class="erow"><div class="ec" id="ec3" style="--c:#FF9F5A;--cb:rgba(255,159,90,0.16)"><div class="emono">AC</div><div class="enm">Activepieces</div></div><div class="ec" id="ec4" style="--c:#FF7BD5;--cb:rgba(255,123,213,0.16)"><div class="emono">LA</div><div class="enm">Langflow</div></div></div></div>
+  <div class="cph" id="ctaB"><div class="eh" id="eh2">লিংক আর বাংলা গাইড পেতে</div>
+    <div class="csr"><div class="cs" id="cs0"><span class="csn">১</span><span class="csi"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /> <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg></span><span class="csl">পেজে যান</span></div><div class="cs" id="cs1"><span class="csn">২</span><span class="csi"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg></span><span class="csl">Message চাপুন</span></div><div class="cs" id="cs2"><span class="csn">৩</span><span class="csi"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M10 8h.01" /> <path d="M12 12h.01" /> <path d="M14 8h.01" /> <path d="M16 12h.01" /> <path d="M18 8h.01" /> <path d="M6 8h.01" /> <path d="M7 16h10" /> <path d="M8 12h.01" /> <rect width="20" height="16" x="2" y="4" rx="2" /></svg></span><span class="csl">লিখুন AUTO</span></div></div>
+    <div class="ibox" id="ibx"><span class="ikw" id="ikw">AUTO</span><i class="icar" id="icar"></i><span class="isend" id="isend"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></svg></span></div>
+    <div class="isent" id="isent"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5CFFB0" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M4 12.5l5 5L20 6.5"/></svg><span>লিংক আর বাংলা গাইড আসবে</span></div></div></div>
+
+      </div>
+      
+      <div id="top"><div id="badge"><span class="bt">৫টা GitHub রিপো · পর্ব ৯</span><span class="bdots"><i id="bd0"></i><i id="bd1"></i><i id="bd2"></i><i id="bd3"></i><i id="bd4"></i></span></div>
+      <div id="ichip"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7FDBFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:none"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg><span>ইনবক্সে</span><b>AUTO</b></div></div>
+      <div id="caps">
+<div class="cp" id="cp0"><span class="cw" id="cw0">প্রতিদিনের</span> <span class="cw" id="cw1">একই</span> <span class="cw" id="cw2">কাজ</span></div>
+<div class="cp" id="cp1"><span class="cw" id="cw3">হাতে</span> <span class="cw" id="cw4">করছেন?</span></div>
+<div class="cp" id="cp2"><span class="cw" id="cw5">এই</span> <span class="cw" id="cw6">পাঁচটা</span> <span class="cw em" id="cw7" style="--wc:#7FDBFF">ফ্রি</span></div>
+<div class="cp" id="cp3"><span class="cw" id="cw8">টুল</span> <span class="cw" id="cw9">কাজগুলো</span> <span class="cw em" id="cw10" style="--wc:#7FDBFF">নিজে</span></div>
+<div class="cp" id="cp4"><span class="cw" id="cw11">থেকেই</span> <span class="cw" id="cw12">করিয়ে</span> <span class="cw" id="cw13">নেয়।</span></div>
+<div class="cp" id="cp5"><span class="cw" id="cw14">প্রতিটা</span> <span class="cw" id="cw15">কী</span> <span class="cw" id="cw16">কাজ</span></div>
+<div class="cp" id="cp6"><span class="cw" id="cw17">করে,</span> <span class="cw" id="cw18">আর</span> <span class="cw" id="cw19">কীভাবে</span></div>
+<div class="cp" id="cp7"><span class="cw" id="cw20">চালাবেন,</span> <span class="cw" id="cw21">এখনই</span></div>
+<div class="cp" id="cp8"><span class="cw" id="cw22">দেখাচ্ছি।</span> <span class="cw" id="cw23">সব</span> <span class="cw" id="cw24">লিংক</span></div>
+<div class="cp" id="cp9"><span class="cw" id="cw25">পাবেন</span> <span class="cw" id="cw26">ইনবক্সে।</span></div>
+<div class="cp" id="cp10"><span class="cw" id="cw27">প্রথমটা</span> <span class="cw em" id="cw28" style="--wc:#7FDBFF">n8n।</span></div>
+<div class="cp" id="cp11"><span class="cw" id="cw29">ফর্ম</span> <span class="cw" id="cw30">এলে</span> <span class="cw" id="cw31">Sheet-এ</span></div>
+<div class="cp" id="cp12"><span class="cw" id="cw32">তোলা,</span> <span class="cw" id="cw33">ইমেইলের</span></div>
+<div class="cp" id="cp13"><span class="cw" id="cw34">উত্তর,</span> <span class="cw" id="cw35">প্রতিদিনের</span></div>
+<div class="cp" id="cp14"><span class="cw" id="cw36">রিপোর্ট।</span> <span class="cw" id="cw37">বাক্স</span></div>
+<div class="cp" id="cp15"><span class="cw" id="cw38">জুড়ে</span> <span class="cw" id="cw39">জুড়ে</span> <span class="cw em" id="cw40" style="--wc:#7FDBFF">অটোমেশন</span></div>
+<div class="cp" id="cp16"><span class="cw" id="cw41">বানান।</span></div>
+<div class="cp" id="cp17"><span class="cw" id="cw42">Node.js</span> <span class="cw" id="cw43">বসিয়ে</span></div>
+<div class="cp" id="cp18"><span class="cw" id="cw44">টার্মিনালে</span> <span class="cw" id="cw45">npx</span> <span class="cw em" id="cw46" style="--wc:#7FDBFF">n8n</span></div>
+<div class="cp" id="cp19"><span class="cw" id="cw47">লিখুন,</span> <span class="cw" id="cw48">ব্রাউজারে</span></div>
+<div class="cp" id="cp20"><span class="cw" id="cw49">খুলে</span> <span class="cw" id="cw50">একটা</span> <span class="cw" id="cw51">টেমপ্লেট</span></div>
+<div class="cp" id="cp21"><span class="cw" id="cw52">বাছুন।</span></div>
+<div class="cp" id="cp22"><span class="cw" id="cw53">দ্বিতীয়টা</span> <span class="cw em" id="cw54" style="--wc:#FFDC5E">Nanobrowser।</span></div>
+<div class="cp" id="cp23"><span class="cw" id="cw55">Chrome-এর</span> <span class="cw" id="cw56">পাশে</span> <span class="cw" id="cw57">বসা</span></div>
+<div class="cp" id="cp24"><span class="cw" id="cw58">AI</span> <span class="cw" id="cw59">এজেন্ট।</span></div>
+<div class="cp" id="cp25"><span class="cw" id="cw60">বলুন</span> <span class="cw" id="cw61">তিনটা</span></div>
+<div class="cp" id="cp26"><span class="cw" id="cw62">ল্যাপটপের</span> <span class="cw" id="cw63">দাম</span></div>
+<div class="cp" id="cp27"><span class="cw" id="cw64">টেবিলে</span> <span class="cw" id="cw65">সাজাও,</span> <span class="cw" id="cw66">সে</span></div>
+<div class="cp" id="cp28"><span class="cw" id="cw67">নিজেই</span> <span class="cw" id="cw68">ক্লিক</span> <span class="cw" id="cw69">করে</span></div>
+<div class="cp" id="cp29"><span class="cw" id="cw70">সাজিয়ে</span> <span class="cw" id="cw71">দেবে।</span></div>
+<div class="cp" id="cp30"><span class="cw" id="cw72">Chrome</span> <span class="cw" id="cw73">Web</span> <span class="cw" id="cw74">Store</span></div>
+<div class="cp" id="cp31"><span class="cw" id="cw75">থেকে</span> <span class="cw" id="cw76">বসান,</span> <span class="cw" id="cw77">একটা</span></div>
+<div class="cp" id="cp32"><span class="cw" id="cw78">AI</span> <span class="cw" id="cw79">key</span> <span class="cw" id="cw80">দিন,</span></div>
+<div class="cp" id="cp33"><span class="cw" id="cw81">আর</span> <span class="cw" id="cw82">Ask</span> <span class="cw" id="cw83">মোড</span></div>
+<div class="cp" id="cp34"><span class="cw" id="cw84">চালু</span> <span class="cw" id="cw85">রাখুন।</span></div>
+<div class="cp" id="cp35"><span class="cw" id="cw86">তৃতীয়টা</span> <span class="cw em" id="cw87" style="--wc:#5CFFB0">Dify।</span></div>
+<div class="cp" id="cp36"><span class="cw" id="cw88">নিজের</span> <span class="cw" id="cw89">দোকানের</span> <span class="cw" id="cw90">দামের</span></div>
+<div class="cp" id="cp37"><span class="cw" id="cw91">তালিকা</span> <span class="cw" id="cw92">দিন,</span> <span class="cw" id="cw93">সেটা</span></div>
+<div class="cp" id="cp38"><span class="cw" id="cw94">থেকে</span> <span class="cw" id="cw95">উত্তর</span> <span class="cw" id="cw96">দেওয়া</span></div>
+<div class="cp" id="cp39"><span class="cw" id="cw97">চ্যাটবট</span> <span class="cw" id="cw98">বানান।</span></div>
+<div class="cp" id="cp40"><span class="cw em" id="cw99" style="--wc:#5CFFB0">ফ্রি</span> <span class="cw" id="cw100">প্ল্যানে</span></div>
+<div class="cp" id="cp41"><span class="cw" id="cw101">ব্রাউজারেই</span> <span class="cw" id="cw102">হয়।</span></div>
+<div class="cp" id="cp42"><span class="cw em" id="cw103" style="--wc:#5CFFB0">ফ্রি</span> <span class="cw" id="cw104">Sandbox</span> <span class="cw" id="cw105">খুলুন,</span></div>
+<div class="cp" id="cp43"><span class="cw" id="cw106">Chatbot</span> <span class="cw" id="cw107">বানিয়ে</span></div>
+<div class="cp" id="cp44"><span class="cw" id="cw108">নিজের</span> <span class="cw" id="cw109">ডকুমেন্ট</span></div>
+<div class="cp" id="cp45"><span class="cw" id="cw110">তুলুন,</span> <span class="cw" id="cw111">তারপর</span> <span class="cw" id="cw112">লিংক</span></div>
+<div class="cp" id="cp46"><span class="cw" id="cw113">শেয়ার</span> <span class="cw" id="cw114">করুন।</span></div>
+<div class="cp" id="cp47"><span class="cw" id="cw115">চতুর্থটা</span> <span class="cw em" id="cw116" style="--wc:#FF9F5A">Activepieces।</span></div>
+<div class="cp" id="cp48"><span class="cw" id="cw117">Zapier-এর</span> <span class="cw" id="cw118">মতো,</span></div>
+<div class="cp" id="cp49"><span class="cw" id="cw119">কিন্তু</span> <span class="cw" id="cw120">আরও</span> <span class="cw" id="cw121">সহজ।</span></div>
+<div class="cp" id="cp50"><span class="cw em" id="cw122" style="--wc:#FF9F5A">ফ্রি</span> <span class="cw" id="cw123">ক্লাউড</span> <span class="cw" id="cw124">প্ল্যান</span></div>
+<div class="cp" id="cp51"><span class="cw" id="cw125">আছে,</span> <span class="cw" id="cw126">কিছু</span> <span class="cw" id="cw127">ইনস্টল</span></div>
+<div class="cp" id="cp52"><span class="cw" id="cw128">করতে</span> <span class="cw" id="cw129">হয়</span> <span class="cw" id="cw130">না।</span></div>
+<div class="cp" id="cp53"><span class="cw em" id="cw131" style="--wc:#FF9F5A">ফ্রি</span> <span class="cw" id="cw132">অ্যাকাউন্ট</span></div>
+<div class="cp" id="cp54"><span class="cw" id="cw133">খুলে</span> <span class="cw" id="cw134">Flow</span> <span class="cw" id="cw135">বানান,</span></div>
+<div class="cp" id="cp55"><span class="cw" id="cw136">একটা</span> <span class="cw" id="cw137">trigger</span> <span class="cw" id="cw138">দিন,</span></div>
+<div class="cp" id="cp56"><span class="cw" id="cw139">তারপর</span> <span class="cw" id="cw140">Test</span> <span class="cw" id="cw141">চাপুন।</span></div>
+<div class="cp" id="cp57"><span class="cw" id="cw142">আর</span> <span class="cw" id="cw143">পঞ্চমটা</span> <span class="cw em" id="cw144" style="--wc:#FF7BD5">Langflow।</span></div>
+<div class="cp" id="cp58"><span class="cw" id="cw145">AI</span> <span class="cw" id="cw146">এজেন্ট</span> <span class="cw" id="cw147">ভেতরে</span></div>
+<div class="cp" id="cp59"><span class="cw" id="cw148">কীভাবে</span> <span class="cw" id="cw149">কাজ</span> <span class="cw" id="cw150">করে,</span></div>
+<div class="cp" id="cp60"><span class="cw" id="cw151">চোখে</span> <span class="cw" id="cw152">দেখা</span> <span class="cw" id="cw153">যায়।</span></div>
+<div class="cp" id="cp61"><span class="cw" id="cw154">প্রম্পট,</span> <span class="cw" id="cw155">মডেল,</span> <span class="cw" id="cw156">টুল,</span></div>
+<div class="cp" id="cp62"><span class="cw" id="cw157">মেমোরি,</span> <span class="cw" id="cw158">টেনে</span> <span class="cw" id="cw159">টেনে</span></div>
+<div class="cp" id="cp63"><span class="cw" id="cw160">জোড়া</span> <span class="cw" id="cw161">লাগান।</span></div>
+<div class="cp" id="cp64"><span class="cw em" id="cw162" style="--wc:#FF7BD5">Langflow</span> <span class="cw" id="cw163">Desktop</span></div>
+<div class="cp" id="cp65"><span class="cw" id="cw164">নামিয়ে</span> <span class="cw" id="cw165">একটা</span></div>
+<div class="cp" id="cp66"><span class="cw" id="cw166">starter</span> <span class="cw" id="cw167">টেমপ্লেট</span></div>
+<div class="cp" id="cp67"><span class="cw" id="cw168">খুলুন,</span> <span class="cw" id="cw169">তারপর</span></div>
+<div class="cp" id="cp68"><span class="cw" id="cw170">Playground-এ</span> <span class="cw" id="cw171">চালান।</span></div>
+<div class="cp" id="cp69"><span class="cw" id="cw172">পাঁচটা</span> <span class="cw" id="cw173">টুলের</span> <span class="cw" id="cw174">লিংক</span></div>
+<div class="cp" id="cp70"><span class="cw" id="cw175">আর</span> <span class="cw" id="cw176">ইনস্টলের</span> <span class="cw" id="cw177">বাংলা</span></div>
+<div class="cp" id="cp71"><span class="cw" id="cw178">গাইড</span> <span class="cw" id="cw179">ফ্রিতে</span> <span class="cw" id="cw180">পেতে,</span></div>
+<div class="cp" id="cp72"><span class="cw" id="cw181">আমার</span> <span class="cw" id="cw182">পেজে</span> <span class="cw" id="cw183">গিয়ে</span></div>
+<div class="cp" id="cp73"><span class="cw" id="cw184">Message</span> <span class="cw" id="cw185">বাটন</span> <span class="cw" id="cw186">চাপুন,</span></div>
+<div class="cp" id="cp74"><span class="cw" id="cw187">আর</span> <span class="cw" id="cw188">লিখুন</span> <span class="cw em" id="cw189" style="--wc:#7FDBFF">AUTO।</span></div>
+<div class="cp" id="cp75"><span class="cw" id="cw190">আমি</span> <span class="cw em" id="cw191" style="--wc:#7FDBFF">নিজে</span> <span class="cw" id="cw192">আপনাকে</span></div>
+<div class="cp" id="cp76"><span class="cw" id="cw193">পাঠিয়ে</span> <span class="cw" id="cw194">দেব।</span></div>
+      </div>
+      <div id="flash"></div>
+      <audio id="mix" src="assets/media/mix.wav" data-start="0" data-duration="84.670" data-track-index="5" data-volume="1"></audio>
+    </div>
+    <script>
+      const bnN = (v) => String(Math.round(v)).replace(/[0-9]/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#nodes", { opacity: 0 }); gsap.set("#ch0", { x: 40, y: 120, rotation: -14 }); gsap.set("#ch1", { x: 430, y: 60, rotation: 9 }); gsap.set("#ch2", { x: 150, y: 330, rotation: 7 }); gsap.set("#ch3", { x: 520, y: 260, rotation: -10 }); gsap.set("#ch4", { x: 260, y: 520, rotation: 12 });
+      gsap.set("#ch0", { opacity: 0 });
+      gsap.set("#ch1", { opacity: 0 });
+      gsap.set("#ch2", { opacity: 0 });
+      gsap.set("#ch3", { opacity: 0 });
+      gsap.set("#ch4", { opacity: 0 });
+      gsap.set("#hk .hg", { opacity: 0 });
+      gsap.set("#tP", { opacity: 0 });
+      gsap.set("#prs", { opacity: 0 });
+      gsap.set("#prr0", { opacity: 0 });
+      gsap.set("#prr1", { opacity: 0 });
+      gsap.set("#prr2", { opacity: 0 });
+      gsap.set("#mono0", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd0", { x: 138, y: 170, scale: 1.15, transformOrigin: "0% 50%" });
+      gsap.set("#st0", { opacity: 0 });
+      gsap.set("#fx0_0", { opacity: 0 });
+      gsap.set("#fx0_1", { opacity: 0 });
+      gsap.set("#fx0_2", { opacity: 0 });
+      gsap.set("#pf0", { opacity: 0 });
+      gsap.set("#hws0", { opacity: 0 });
+      gsap.set("#hw0_0", { opacity: 0 });
+      gsap.set("#hw0_1", { opacity: 0 });
+      gsap.set("#hw0_2", { opacity: 0 });
+      gsap.set("#mono1", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd1", { x: 93.1, y: 170, scale: 1.15, transformOrigin: "0% 50%" });
+      gsap.set("#fx1_0", { opacity: 0 });
+      gsap.set("#fx1_1", { opacity: 0 });
+      gsap.set("#pf1", { opacity: 0 });
+      gsap.set("#hws1", { opacity: 0 });
+      gsap.set("#hw1_0", { opacity: 0 });
+      gsap.set("#hw1_1", { opacity: 0 });
+      gsap.set("#hw1_2", { opacity: 0 });
+      gsap.set("#mono2", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd2", { x: 129, y: 170, scale: 1.15, transformOrigin: "0% 50%" });
+      gsap.set("#st2", { opacity: 0 });
+      gsap.set("#fx2_0", { opacity: 0 });
+      gsap.set("#fx2_1", { opacity: 0 });
+      gsap.set("#pf2", { opacity: 0 });
+      gsap.set("#hws2", { opacity: 0 });
+      gsap.set("#hw2_0", { opacity: 0 });
+      gsap.set("#hw2_1", { opacity: 0 });
+      gsap.set("#hw2_2", { opacity: 0 });
+      gsap.set("#mono3", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd3", { x: 93.1, y: 170, scale: 1.15, transformOrigin: "0% 50%" });
+      gsap.set("#fx3_0", { opacity: 0 });
+      gsap.set("#fx3_1", { opacity: 0 });
+      gsap.set("#pf3", { opacity: 0 });
+      gsap.set("#hws3", { opacity: 0 });
+      gsap.set("#hw3_0", { opacity: 0 });
+      gsap.set("#hw3_1", { opacity: 0 });
+      gsap.set("#hw3_2", { opacity: 0 });
+      gsap.set("#mono4", { scale: 0.4, rotation: -25 });
+      gsap.set("#hd4", { x: 138, y: 170, scale: 1.15, transformOrigin: "0% 50%" });
+      gsap.set("#st4", { opacity: 0 });
+      gsap.set("#fx4_0", { opacity: 0 });
+      gsap.set("#fx4_1", { opacity: 0 });
+      gsap.set("#pf4", { opacity: 0 });
+      gsap.set("#hws4", { opacity: 0 });
+      gsap.set("#hw4_0", { opacity: 0 });
+      gsap.set("#hw4_1", { opacity: 0 });
+      gsap.set("#hw4_2", { opacity: 0 });
+      gsap.set("#cta", { opacity: 0 });
+      gsap.set("#eh", { opacity: 0 });
+      gsap.set("#ec0", { opacity: 0 });
+      gsap.set("#ec1", { opacity: 0 });
+      gsap.set("#ec2", { opacity: 0 });
+      gsap.set("#ec3", { opacity: 0 });
+      gsap.set("#ec4", { opacity: 0 });
+      gsap.set("#ctaB", { opacity: 0 });
+      gsap.set("#eh2", { opacity: 0 });
+      gsap.set("#cs0", { opacity: 0 });
+      gsap.set("#cs1", { opacity: 0 });
+      gsap.set("#cs2", { opacity: 0 });
+      gsap.set("#ibx", { opacity: 0 });
+      gsap.set("#ikw", { clipPath: "inset(0 100% 0 0)" });
+      gsap.set("#isent", { opacity: 0 });
+      gsap.set("#ichip", { opacity: 0 });
+  tl.fromTo("#hk", {"opacity":0}, {"opacity":1,"duration":0.01,"ease":"power3.out","immediateRender":false}, 0.000);
+  tl.fromTo("#ch0", {"opacity":0,"scale":0.6}, {"opacity":1,"scale":1,"duration":0.35,"ease":"back.out(2)","immediateRender":false}, 0.080);
+  tl.fromTo("#ch1", {"opacity":0,"scale":0.6}, {"opacity":1,"scale":1,"duration":0.35,"ease":"back.out(2)","immediateRender":false}, 0.200);
+  tl.fromTo("#ch2", {"opacity":0,"scale":0.6}, {"opacity":1,"scale":1,"duration":0.35,"ease":"back.out(2)","immediateRender":false}, 0.320);
+  tl.fromTo("#ch3", {"opacity":0,"scale":0.6}, {"opacity":1,"scale":1,"duration":0.35,"ease":"back.out(2)","immediateRender":false}, 0.440);
+  tl.fromTo("#ch4", {"opacity":0,"scale":0.6}, {"opacity":1,"scale":1,"duration":0.35,"ease":"back.out(2)","immediateRender":false}, 0.560);
+  tl.fromTo("#ch0", { x: 40, y: 120, rotation: -14 }, { x: 40, y: 220, rotation: 0, duration: 0.5, ease: "back.out(1.4)", immediateRender: false }, 3.790);
+  tl.fromTo("#ch1", { x: 430, y: 60, rotation: 9 }, { x: 300, y: 220, rotation: 0, duration: 0.5, ease: "back.out(1.4)", immediateRender: false }, 3.840);
+  tl.fromTo("#ch2", { x: 150, y: 330, rotation: 7 }, { x: 560, y: 220, rotation: 0, duration: 0.5, ease: "back.out(1.4)", immediateRender: false }, 3.890);
+  tl.fromTo("#ch3", { x: 520, y: 260, rotation: -10 }, { x: 170, y: 360, rotation: 0, duration: 0.5, ease: "back.out(1.4)", immediateRender: false }, 3.940);
+  tl.fromTo("#ch4", { x: 260, y: 520, rotation: 12 }, { x: 430, y: 360, rotation: 0, duration: 0.5, ease: "back.out(1.4)", immediateRender: false }, 3.990);
+  tl.fromTo("#hwire", { attr: { "stroke-dashoffset": 1400 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.7, ease: "power2.inOut", immediateRender: false }, 4.340);
+  tl.fromTo("#hk .hg", {"opacity":0,"scale":0.5}, {"opacity":1,"scale":1,"duration":0.4,"ease":"back.out(2)","immediateRender":false}, 4.490);
+  tl.fromTo("#hgr", { rotation: 0 }, { rotation: 180, svgOrigin: "60 60", duration: 1.646, ease: "power1.inOut", immediateRender: false }, 4.490);
+  tl.to("#hk", { scaleY: 0.04, opacity: 0, duration: 0.35, ease: "power3.in" }, 5.186);
+  tl.fromTo("#nodes", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.45, immediateRender: false }, 5.536);
+  tl.fromTo("#tP", {"opacity":0,"y":50,"scale":0.95}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.4)","immediateRender":false}, 5.636);
+  tl.fromTo("#prt", { scale: 0.6 }, { scale: 1, duration: 0.6, ease: "back.out(1.8)", immediateRender: false }, 5.636);
+  tl.fromTo("#prs", {"opacity":0,"y":16}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 5.986);
+  tl.fromTo("#prr0", {"opacity":0,"x":-36}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 6.279);
+  tl.fromTo("#prr1", {"opacity":0,"x":-36}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 7.401);
+  tl.fromTo("#prr2", {"opacity":0,"x":-36}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 9.795);
+  tl.to("#tP", { y: -80, opacity: 0, duration: 0.3, ease: "power2.in" }, 10.747);
+  tl.to("#nd0", { attr: { "stroke-dashoffset": 0 }, duration: 0.35, ease: "power2.out" }, 11.197); tl.to("#nd0", { attr: { "fill-opacity": 0.35 }, duration: 0.3 }, 11.567); tl.to("#ndt0", { opacity: 1, duration: 0.3 }, 11.497);
+  tl.fromTo("#t0", { opacity: 0, scaleY: 0.02 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 10.947);
+  tl.fromTo("#mono0", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 11.047);
+  tl.fromTo("#hd0", { x: 138, y: 170, scale: 1.15 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 11.397);
+  tl.fromTo("#st0", {"opacity":0,"x":-20}, {"opacity":1,"x":0,"duration":0.35,"ease":"power3.out","immediateRender":false}, 12.197);
+  tl.fromTo("#fx0_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 12.147);
+  tl.fromTo("#fx0_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 13.267);
+  tl.fromTo("#fx0_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 14.987);
+  tl.fromTo("#pf0", {"opacity":0,"x":40}, {"opacity":1,"x":0,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 15.585);
+  tl.to("#fxs0", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 17.879);
+  tl.to("#pf0", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 17.879);
+  tl.fromTo("#hws0", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 18.049);
+  tl.fromTo("#hw0_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 18.279);
+  tl.fromTo("#hw0_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 18.279);
+  tl.fromTo("#hw0_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 19.669);
+  tl.fromTo("#hw0_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 19.669);
+  tl.fromTo("#hw0_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 21.838);
+  tl.fromTo("#hw0_2 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 21.838);
+  tl.to("#bd0", { backgroundColor: "#7FDBFF", scale: 1, boxShadow: "0 0 14px rgba(127,219,255,0.8)", duration: 0.3 }, 11.297);
+  tl.to("#t0", { scaleX: 0.01, opacity: 0, duration: 0.3, ease: "power3.in" }, 23.393);
+  tl.fromTo("#sig0", { opacity: 1, attr: { cx: 128 } }, { attr: { cx: 173 }, duration: 0.3, ease: "power1.in", immediateRender: false }, 23.693); tl.to("#sig0", { opacity: 0, duration: 0.1 }, 23.993);
+  tl.to("#nd1", { attr: { "stroke-dashoffset": 0 }, duration: 0.35, ease: "power2.out" }, 23.913); tl.to("#nd1", { attr: { "fill-opacity": 0.35 }, duration: 0.3 }, 24.283); tl.to("#ndt1", { opacity: 1, duration: 0.3 }, 24.213);
+  tl.fromTo("#t1", { opacity: 0, scaleY: 0.02 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 23.663);
+  tl.fromTo("#mono1", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 23.763);
+  tl.fromTo("#hd1", { x: 93.1, y: 170, scale: 1.15 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 24.460);
+  tl.fromTo("#fx1_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 25.210);
+  tl.fromTo("#fx1_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 30.022);
+  tl.fromTo("#pf1", {"opacity":0,"x":40}, {"opacity":1,"x":0,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 30.620);
+  tl.to("#fxs1", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 31.718);
+  tl.to("#pf1", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 31.718);
+  tl.fromTo("#hws1", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 31.888);
+  tl.fromTo("#hw1_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 32.236);
+  tl.fromTo("#hw1_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 32.236);
+  tl.fromTo("#hw1_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 33.957);
+  tl.fromTo("#hw1_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 33.957);
+  tl.fromTo("#hw1_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 34.630);
+  tl.fromTo("#hw1_2 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 34.630);
+  tl.to("#bd1", { backgroundColor: "#FFDC5E", scale: 1, boxShadow: "0 0 14px rgba(255,220,94,0.8)", duration: 0.3 }, 24.013);
+  tl.to("#t1", { scaleX: 0.01, opacity: 0, duration: 0.3, ease: "power3.in" }, 36.185);
+  tl.fromTo("#sig1", { opacity: 1, attr: { cx: 301 } }, { attr: { cx: 346 }, duration: 0.3, ease: "power1.in", immediateRender: false }, 36.485); tl.to("#sig1", { opacity: 0, duration: 0.1 }, 36.785);
+  tl.to("#nd2", { attr: { "stroke-dashoffset": 0 }, duration: 0.35, ease: "power2.out" }, 36.705); tl.to("#nd2", { attr: { "fill-opacity": 0.35 }, duration: 0.3 }, 37.075); tl.to("#ndt2", { opacity: 1, duration: 0.3 }, 37.005);
+  tl.fromTo("#t2", { opacity: 0, scaleY: 0.02 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 36.455);
+  tl.fromTo("#mono2", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 36.555);
+  tl.fromTo("#hd2", { x: 129, y: 170, scale: 1.15 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 37.626);
+  tl.fromTo("#st2", {"opacity":0,"x":-20}, {"opacity":1,"x":0,"duration":0.35,"ease":"power3.out","immediateRender":false}, 38.426);
+  tl.fromTo("#fx2_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 38.376);
+  tl.fromTo("#fx2_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 40.869);
+  tl.fromTo("#pf2", {"opacity":0,"x":40}, {"opacity":1,"x":0,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 42.739);
+  tl.to("#fxs2", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 43.986);
+  tl.to("#pf2", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 43.986);
+  tl.fromTo("#hws2", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 44.156);
+  tl.fromTo("#hw2_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 44.386);
+  tl.fromTo("#hw2_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 44.386);
+  tl.fromTo("#hw2_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 46.748);
+  tl.fromTo("#hw2_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 46.748);
+  tl.fromTo("#hw2_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 48.169);
+  tl.fromTo("#hw2_2 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 48.169);
+  tl.to("#bd2", { backgroundColor: "#5CFFB0", scale: 1, boxShadow: "0 0 14px rgba(92,255,176,0.8)", duration: 0.3 }, 36.805);
+  tl.to("#t2", { scaleX: 0.01, opacity: 0, duration: 0.3, ease: "power3.in" }, 49.649);
+  tl.fromTo("#sig2", { opacity: 1, attr: { cx: 474 } }, { attr: { cx: 519 }, duration: 0.3, ease: "power1.in", immediateRender: false }, 49.949); tl.to("#sig2", { opacity: 0, duration: 0.1 }, 50.249);
+  tl.to("#nd3", { attr: { "stroke-dashoffset": 0 }, duration: 0.35, ease: "power2.out" }, 50.169); tl.to("#nd3", { attr: { "fill-opacity": 0.35 }, duration: 0.3 }, 50.539); tl.to("#ndt3", { opacity: 1, duration: 0.3 }, 50.469);
+  tl.fromTo("#t3", { opacity: 0, scaleY: 0.02 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 49.919);
+  tl.fromTo("#mono3", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 50.019);
+  tl.fromTo("#hd3", { x: 93.1, y: 170, scale: 1.15 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 50.791);
+  tl.fromTo("#fx3_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 51.541);
+  tl.fromTo("#fx3_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 53.735);
+  tl.fromTo("#pf3", {"opacity":0,"x":40}, {"opacity":1,"x":0,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 55.305);
+  tl.to("#fxs3", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 56.702);
+  tl.to("#pf3", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 56.702);
+  tl.fromTo("#hws3", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 56.872);
+  tl.fromTo("#hw3_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 58.118);
+  tl.fromTo("#hw3_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 58.118);
+  tl.fromTo("#hw3_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 59.165);
+  tl.fromTo("#hw3_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 59.165);
+  tl.fromTo("#hw3_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 60.361);
+  tl.fromTo("#hw3_2 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 60.361);
+  tl.to("#bd3", { backgroundColor: "#FF9F5A", scale: 1, boxShadow: "0 0 14px rgba(255,159,90,0.8)", duration: 0.3 }, 50.269);
+  tl.to("#t3", { scaleX: 0.01, opacity: 0, duration: 0.3, ease: "power3.in" }, 61.543);
+  tl.fromTo("#sig3", { opacity: 1, attr: { cx: 647 } }, { attr: { cx: 692 }, duration: 0.3, ease: "power1.in", immediateRender: false }, 61.843); tl.to("#sig3", { opacity: 0, duration: 0.1 }, 62.143);
+  tl.to("#nd4", { attr: { "stroke-dashoffset": 0 }, duration: 0.35, ease: "power2.out" }, 62.063); tl.to("#nd4", { attr: { "fill-opacity": 0.35 }, duration: 0.3 }, 62.433); tl.to("#ndt4", { opacity: 1, duration: 0.3 }, 62.363);
+  tl.fromTo("#t4", { opacity: 0, scaleY: 0.02 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 61.813);
+  tl.fromTo("#mono4", { scale: 0.4, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2)", immediateRender: false }, 61.913);
+  tl.fromTo("#hd4", { x: 138, y: 170, scale: 1.15 }, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 64.263);
+  tl.fromTo("#st4", {"opacity":0,"x":-20}, {"opacity":1,"x":0,"duration":0.35,"ease":"power3.out","immediateRender":false}, 65.063);
+  tl.fromTo("#fx4_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 65.030);
+  tl.fromTo("#fx4_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.45,"ease":"power3.out","immediateRender":false}, 67.797);
+  tl.fromTo("#pf4", {"opacity":0,"x":40}, {"opacity":1,"x":0,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 66.003);
+  tl.to("#fxs4", {"opacity":0,"y":-20,"duration":0.25,"ease":"power2.in"}, 69.418);
+  tl.to("#pf4", {"opacity":0,"y":-10,"duration":0.25,"ease":"power2.in"}, 69.418);
+  tl.fromTo("#hws4", {"opacity":0,"y":24}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 69.588);
+  tl.fromTo("#hw4_0", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 70.087);
+  tl.fromTo("#hw4_0 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 70.087);
+  tl.fromTo("#hw4_1", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 71.433);
+  tl.fromTo("#hw4_1 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 71.433);
+  tl.fromTo("#hw4_2", {"opacity":0,"x":-40}, {"opacity":1,"x":0,"duration":0.4,"ease":"back.out(1.6)","immediateRender":false}, 73.377);
+  tl.fromTo("#hw4_2 .hn", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)", immediateRender: false }, 73.377);
+  tl.to("#bd4", { backgroundColor: "#FF7BD5", scale: 1, boxShadow: "0 0 14px rgba(255,123,213,0.8)", duration: 0.3 }, 62.163);
+  tl.to("#t4", { scaleX: 0.01, opacity: 0, duration: 0.3, ease: "power3.in" }, 74.683);
+  tl.to("#nodes", { y: -20, opacity: 0, duration: 0.4, ease: "power2.in" }, 74.733);
+  tl.fromTo("#cta", {"opacity":0}, {"opacity":1,"duration":0.3,"ease":"power3.out","immediateRender":false}, 74.983);
+  tl.fromTo("#eh", {"opacity":0,"y":-20}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 75.033);
+  tl.fromTo("#ec0", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 75.133);
+  tl.fromTo("#ec1", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 75.263);
+  tl.fromTo("#ec2", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 75.393);
+  tl.fromTo("#ec3", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 75.523);
+  tl.fromTo("#ec4", {"opacity":0,"y":70,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.5,"ease":"back.out(1.6)","immediateRender":false}, 75.653);
+  tl.to("#ctaA", {"opacity":0,"y":-40,"duration":0.3,"ease":"power2.in"}, 78.138);
+  tl.fromTo("#ctaB", {"opacity":0}, {"opacity":1,"duration":0.01,"ease":"power3.out","immediateRender":false}, 78.188);
+  tl.fromTo("#eh2", {"opacity":0,"y":-20}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 78.238);
+  tl.fromTo("#cs0", {"opacity":0,"y":50,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 78.688);
+  tl.fromTo("#cs0 .csn", { scale: 0.3 }, { scale: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, 78.688);
+  tl.fromTo("#cs1", {"opacity":0,"y":50,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 79.361);
+  tl.fromTo("#cs1 .csn", { scale: 0.3 }, { scale: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, 79.361);
+  tl.fromTo("#cs2", {"opacity":0,"y":50,"scale":0.85}, {"opacity":1,"y":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 80.783);
+  tl.fromTo("#cs2 .csn", { scale: 0.3 }, { scale: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: false }, 80.783);
+  tl.fromTo("#ibx", {"opacity":0,"y":30}, {"opacity":1,"y":0,"duration":0.4,"ease":"power3.out","immediateRender":false}, 80.283);
+  tl.fromTo("#icar", { opacity: 1 }, { opacity: 0, duration: 0.01, repeat: 9, repeatDelay: 0.44, yoyo: true, immediateRender: false }, 80.583);
+  tl.fromTo("#ikw", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.500, ease: "steps(4)", immediateRender: false }, 81.236);
+  tl.fromTo("#isend", { scale: 1 }, { scale: 0.8, duration: 0.08, yoyo: true, repeat: 1, immediateRender: false }, 81.986);
+  tl.fromTo("#isent", {"opacity":0,"y":14}, {"opacity":1,"y":0,"duration":0.35,"ease":"power3.out","immediateRender":false}, 82.186);
+  tl.fromTo("#ichip", {"opacity":0,"x":40,"scale":0.9}, {"opacity":1,"x":0,"scale":1,"duration":0.45,"ease":"back.out(1.7)","immediateRender":false}, 9.945);
+  tl.to("#ichip", {"opacity":0,"duration":0.3,"ease":"power2.in"}, 74.783);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 1.825); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 2.225);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 27.010); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 27.410);
+  tl.fromTo("#stage", { scale: 1 }, { scale: 0.975, duration: 0.38, ease: "sine.inOut", immediateRender: false }, 28.315); tl.fromTo("#stage", { scale: 0.975 }, { scale: 1, duration: 0.8, ease: "power2.out", immediateRender: false }, 28.715);
+  tl.set("#cp0", { opacity: 1 }, 0.200); tl.set("#cp0", { opacity: 0 }, 1.377);
+  tl.to("#cw0", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 0.240);
+  tl.to("#cw0", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 0.988);
+  tl.to("#cw1", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 0.988);
+  tl.to("#cw1", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 1.212);
+  tl.to("#cw2", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 1.212);
+  tl.set("#cp1", { opacity: 1 }, 1.397); tl.set("#cp1", { opacity: 0 }, 2.124);
+  tl.to("#cw3", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 1.437);
+  tl.to("#cw3", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 1.736);
+  tl.to("#cw4", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 1.736);
+  tl.set("#cp2", { opacity: 1 }, 2.144); tl.set("#cp2", { opacity: 0 }, 3.022);
+  tl.to("#cw5", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 2.184);
+  tl.to("#cw5", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 2.334);
+  tl.to("#cw6", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 2.334);
+  tl.to("#cw6", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 2.783);
+  tl.to("#cw7", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 2.783);
+  tl.set("#cp3", { opacity: 1 }, 3.042); tl.set("#cp3", { opacity: 0 }, 4.069);
+  tl.to("#cw8", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 3.082);
+  tl.to("#cw8", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 3.307);
+  tl.to("#cw9", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 3.307);
+  tl.to("#cw9", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 3.830);
+  tl.to("#cw10", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 3.830);
+  tl.set("#cp4", { opacity: 1 }, 4.089); tl.set("#cp4", { opacity: 0 }, 5.566);
+  tl.to("#cw11", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 4.129);
+  tl.to("#cw11", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 4.503);
+  tl.to("#cw12", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 4.503);
+  tl.to("#cw12", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 4.952);
+  tl.to("#cw13", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 4.952);
+  tl.set("#cp5", { opacity: 1 }, 5.586); tl.set("#cp5", { opacity: 0 }, 6.464);
+  tl.to("#cw14", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 5.626);
+  tl.to("#cw14", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 6.149);
+  tl.to("#cw15", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 6.149);
+  tl.to("#cw15", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 6.299);
+  tl.to("#cw16", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 6.299);
+  tl.set("#cp6", { opacity: 1 }, 6.484); tl.set("#cp6", { opacity: 0 }, 7.361);
+  tl.to("#cw17", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 6.524);
+  tl.to("#cw17", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 6.823);
+  tl.to("#cw18", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 6.823);
+  tl.to("#cw18", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 6.973);
+  tl.to("#cw19", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 6.973);
+  tl.set("#cp7", { opacity: 1 }, 7.381); tl.set("#cp7", { opacity: 0 }, 8.259);
+  tl.to("#cw20", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 7.421);
+  tl.to("#cw20", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 8.020);
+  tl.to("#cw21", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 8.020);
+  tl.set("#cp8", { opacity: 1 }, 8.279); tl.set("#cp8", { opacity: 0 }, 9.381);
+  tl.to("#cw22", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 8.319);
+  tl.to("#cw22", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 8.992);
+  tl.to("#cw23", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 8.992);
+  tl.to("#cw23", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 9.142);
+  tl.to("#cw24", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 9.142);
+  tl.set("#cp9", { opacity: 1 }, 9.401); tl.set("#cp9", { opacity: 0 }, 10.653);
+  tl.to("#cw25", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 9.441);
+  tl.to("#cw25", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 9.815);
+  tl.to("#cw26", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 9.815);
+  tl.set("#cp10", { opacity: 1 }, 10.673); tl.set("#cp10", { opacity: 0 }, 11.776);
+  tl.to("#cw27", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 10.713);
+  tl.to("#cw27", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 11.237);
+  tl.to("#cw28", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 11.237);
+  tl.set("#cp11", { opacity: 1 }, 11.796); tl.set("#cp11", { opacity: 0 }, 12.823);
+  tl.to("#cw29", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 11.836);
+  tl.to("#cw29", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 12.135);
+  tl.to("#cw30", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 12.135);
+  tl.to("#cw30", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 12.359);
+  tl.to("#cw31", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 12.359);
+  tl.set("#cp12", { opacity: 1 }, 12.843); tl.set("#cp12", { opacity: 0 }, 13.720);
+  tl.to("#cw32", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 12.883);
+  tl.to("#cw32", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 13.257);
+  tl.to("#cw33", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 13.257);
+  tl.set("#cp13", { opacity: 1 }, 13.740); tl.set("#cp13", { opacity: 0 }, 14.917);
+  tl.to("#cw34", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 13.780);
+  tl.to("#cw34", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 14.229);
+  tl.to("#cw35", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 14.229);
+  tl.set("#cp14", { opacity: 1 }, 14.937); tl.set("#cp14", { opacity: 0 }, 15.889);
+  tl.to("#cw36", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 14.977);
+  tl.to("#cw36", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 15.575);
+  tl.to("#cw37", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 15.575);
+  tl.set("#cp15", { opacity: 1 }, 15.909); tl.set("#cp15", { opacity: 0 }, 17.160);
+  tl.to("#cw38", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 15.949);
+  tl.to("#cw38", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 16.323);
+  tl.to("#cw39", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 16.323);
+  tl.to("#cw39", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 16.697);
+  tl.to("#cw40", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 16.697);
+  tl.set("#cp16", { opacity: 1 }, 17.180); tl.set("#cp16", { opacity: 0 }, 17.909);
+  tl.to("#cw41", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 17.220);
+  tl.set("#cp17", { opacity: 1 }, 17.929); tl.set("#cp17", { opacity: 0 }, 18.881);
+  tl.to("#cw42", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 17.969);
+  tl.to("#cw42", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 18.493);
+  tl.to("#cw43", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 18.493);
+  tl.set("#cp18", { opacity: 1 }, 18.901); tl.set("#cp18", { opacity: 0 }, 20.078);
+  tl.to("#cw44", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 18.941);
+  tl.to("#cw44", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 19.689);
+  tl.to("#cw45", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 19.689);
+  tl.to("#cw45", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 19.913);
+  tl.to("#cw46", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 19.913);
+  tl.set("#cp19", { opacity: 1 }, 20.098); tl.set("#cp19", { opacity: 0 }, 21.200);
+  tl.to("#cw47", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 20.138);
+  tl.to("#cw47", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 20.587);
+  tl.to("#cw48", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 20.587);
+  tl.set("#cp20", { opacity: 1 }, 21.220); tl.set("#cp20", { opacity: 0 }, 22.396);
+  tl.to("#cw49", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 21.260);
+  tl.to("#cw49", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 21.559);
+  tl.to("#cw50", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 21.559);
+  tl.to("#cw50", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 21.858);
+  tl.to("#cw51", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 21.858);
+  tl.set("#cp21", { opacity: 1 }, 22.416); tl.set("#cp21", { opacity: 0 }, 23.145);
+  tl.to("#cw52", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 22.456);
+  tl.set("#cp22", { opacity: 1 }, 23.165); tl.set("#cp22", { opacity: 0 }, 25.090);
+  tl.to("#cw53", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 23.205);
+  tl.to("#cw53", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 23.953);
+  tl.to("#cw54", { opacity: 1, color: "#FFDC5E", scale: 1.06, duration: 0.1, ease: "power1.out" }, 23.953);
+  tl.set("#cp23", { opacity: 1 }, 25.110); tl.set("#cp23", { opacity: 0 }, 26.287);
+  tl.to("#cw55", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 25.150);
+  tl.to("#cw55", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 25.823);
+  tl.to("#cw56", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 25.823);
+  tl.to("#cw56", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 26.122);
+  tl.to("#cw57", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 26.122);
+  tl.set("#cp24", { opacity: 1 }, 26.307); tl.set("#cp24", { opacity: 0 }, 26.960);
+  tl.to("#cw58", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 26.347);
+  tl.to("#cw58", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 26.497);
+  tl.to("#cw59", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 26.497);
+  tl.set("#cp25", { opacity: 1 }, 26.980); tl.set("#cp25", { opacity: 0 }, 27.633);
+  tl.to("#cw60", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 27.020);
+  tl.to("#cw60", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 27.319);
+  tl.to("#cw61", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 27.319);
+  tl.set("#cp26", { opacity: 1 }, 27.653); tl.set("#cp26", { opacity: 0 }, 28.531);
+  tl.to("#cw62", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 27.693);
+  tl.to("#cw62", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 28.366);
+  tl.to("#cw63", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 28.366);
+  tl.set("#cp27", { opacity: 1 }, 28.551); tl.set("#cp27", { opacity: 0 }, 29.578);
+  tl.to("#cw64", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 28.591);
+  tl.to("#cw64", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 29.039);
+  tl.to("#cw65", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 29.039);
+  tl.to("#cw65", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 29.488);
+  tl.to("#cw66", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 29.488);
+  tl.set("#cp28", { opacity: 1 }, 29.598); tl.set("#cp28", { opacity: 0 }, 30.550);
+  tl.to("#cw67", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 29.638);
+  tl.to("#cw67", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 30.012);
+  tl.to("#cw68", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 30.012);
+  tl.to("#cw68", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 30.386);
+  tl.to("#cw69", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 30.386);
+  tl.set("#cp29", { opacity: 1 }, 30.570); tl.set("#cp29", { opacity: 0 }, 31.748);
+  tl.to("#cw70", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 30.610);
+  tl.to("#cw70", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 31.134);
+  tl.to("#cw71", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 31.134);
+  tl.set("#cp30", { opacity: 1 }, 31.768); tl.set("#cp30", { opacity: 0 }, 32.795);
+  tl.to("#cw72", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 31.808);
+  tl.to("#cw72", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 32.256);
+  tl.to("#cw73", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 32.256);
+  tl.to("#cw73", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 32.481);
+  tl.to("#cw74", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 32.481);
+  tl.set("#cp31", { opacity: 1 }, 32.815); tl.set("#cp31", { opacity: 0 }, 33.767);
+  tl.to("#cw75", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 32.855);
+  tl.to("#cw75", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 33.154);
+  tl.to("#cw76", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 33.154);
+  tl.to("#cw76", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 33.528);
+  tl.to("#cw77", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 33.528);
+  tl.set("#cp32", { opacity: 1 }, 33.787); tl.set("#cp32", { opacity: 0 }, 34.440);
+  tl.to("#cw78", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 33.827);
+  tl.to("#cw78", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 33.977);
+  tl.to("#cw79", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 33.977);
+  tl.to("#cw79", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 34.201);
+  tl.to("#cw80", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 34.201);
+  tl.set("#cp33", { opacity: 1 }, 34.460); tl.set("#cp33", { opacity: 0 }, 35.039);
+  tl.to("#cw81", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 34.500);
+  tl.to("#cw81", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 34.650);
+  tl.to("#cw82", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 34.650);
+  tl.to("#cw82", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 34.875);
+  tl.to("#cw83", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 34.875);
+  tl.set("#cp34", { opacity: 1 }, 35.059); tl.set("#cp34", { opacity: 0 }, 36.087);
+  tl.to("#cw84", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 35.099);
+  tl.to("#cw84", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 35.398);
+  tl.to("#cw85", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 35.398);
+  tl.set("#cp35", { opacity: 1 }, 36.107); tl.set("#cp35", { opacity: 0 }, 37.359);
+  tl.to("#cw86", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 36.147);
+  tl.to("#cw86", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 36.745);
+  tl.to("#cw87", { opacity: 1, color: "#5CFFB0", scale: 1.06, duration: 0.1, ease: "power1.out" }, 36.745);
+  tl.set("#cp36", { opacity: 1 }, 37.379); tl.set("#cp36", { opacity: 0 }, 38.630);
+  tl.to("#cw88", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 37.419);
+  tl.to("#cw88", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 37.793);
+  tl.to("#cw89", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 37.793);
+  tl.to("#cw89", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 38.316);
+  tl.to("#cw90", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 38.316);
+  tl.set("#cp37", { opacity: 1 }, 38.650); tl.set("#cp37", { opacity: 0 }, 39.677);
+  tl.to("#cw91", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 38.690);
+  tl.to("#cw91", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 39.139);
+  tl.to("#cw92", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 39.139);
+  tl.to("#cw92", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 39.438);
+  tl.to("#cw93", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 39.438);
+  tl.set("#cp38", { opacity: 1 }, 39.697); tl.set("#cp38", { opacity: 0 }, 40.799);
+  tl.to("#cw94", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 39.737);
+  tl.to("#cw94", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 40.036);
+  tl.to("#cw95", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 40.036);
+  tl.to("#cw95", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 40.410);
+  tl.to("#cw96", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 40.410);
+  tl.set("#cp39", { opacity: 1 }, 40.819); tl.set("#cp39", { opacity: 0 }, 41.771);
+  tl.to("#cw97", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 40.859);
+  tl.to("#cw97", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 41.383);
+  tl.to("#cw98", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 41.383);
+  tl.set("#cp40", { opacity: 1 }, 41.791); tl.set("#cp40", { opacity: 0 }, 42.669);
+  tl.to("#cw99", { opacity: 1, color: "#5CFFB0", scale: 1.06, duration: 0.1, ease: "power1.out" }, 41.831);
+  tl.to("#cw99", { color: "#5CFFB0", scale: 1, duration: 0.12 }, 42.130);
+  tl.to("#cw100", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 42.130);
+  tl.set("#cp41", { opacity: 1 }, 42.689); tl.set("#cp41", { opacity: 0 }, 44.016);
+  tl.to("#cw101", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 42.729);
+  tl.to("#cw101", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 43.477);
+  tl.to("#cw102", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 43.477);
+  tl.set("#cp42", { opacity: 1 }, 44.036); tl.set("#cp42", { opacity: 0 }, 45.287);
+  tl.to("#cw103", { opacity: 1, color: "#5CFFB0", scale: 1.06, duration: 0.1, ease: "power1.out" }, 44.076);
+  tl.to("#cw103", { color: "#5CFFB0", scale: 1, duration: 0.12 }, 44.375);
+  tl.to("#cw104", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 44.375);
+  tl.to("#cw104", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 44.898);
+  tl.to("#cw105", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 44.898);
+  tl.set("#cp43", { opacity: 1 }, 45.307); tl.set("#cp43", { opacity: 0 }, 46.334);
+  tl.to("#cw106", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 45.347);
+  tl.to("#cw106", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 45.870);
+  tl.to("#cw107", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 45.870);
+  tl.set("#cp44", { opacity: 1 }, 46.354); tl.set("#cp44", { opacity: 0 }, 47.306);
+  tl.to("#cw108", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 46.394);
+  tl.to("#cw108", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 46.768);
+  tl.to("#cw109", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 46.768);
+  tl.set("#cp45", { opacity: 1 }, 47.326); tl.set("#cp45", { opacity: 0 }, 48.428);
+  tl.to("#cw110", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 47.366);
+  tl.to("#cw110", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 47.815);
+  tl.to("#cw111", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 47.815);
+  tl.to("#cw111", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 48.189);
+  tl.to("#cw112", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 48.189);
+  tl.set("#cp46", { opacity: 1 }, 48.448); tl.set("#cp46", { opacity: 0 }, 49.551);
+  tl.to("#cw113", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 48.488);
+  tl.to("#cw113", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 48.937);
+  tl.to("#cw114", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 48.937);
+  tl.set("#cp47", { opacity: 1 }, 49.571); tl.set("#cp47", { opacity: 0 }, 51.421);
+  tl.to("#cw115", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 49.611);
+  tl.to("#cw115", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 50.209);
+  tl.to("#cw116", { opacity: 1, color: "#FF9F5A", scale: 1.06, duration: 0.1, ease: "power1.out" }, 50.209);
+  tl.set("#cp48", { opacity: 1 }, 51.441); tl.set("#cp48", { opacity: 0 }, 52.393);
+  tl.to("#cw117", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 51.481);
+  tl.to("#cw117", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 52.154);
+  tl.to("#cw118", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 52.154);
+  tl.set("#cp49", { opacity: 1 }, 52.413); tl.set("#cp49", { opacity: 0 }, 53.365);
+  tl.to("#cw119", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 52.453);
+  tl.to("#cw119", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 52.902);
+  tl.to("#cw120", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 52.902);
+  tl.to("#cw120", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 53.126);
+  tl.to("#cw121", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 53.126);
+  tl.set("#cp50", { opacity: 1 }, 53.385); tl.set("#cp50", { opacity: 0 }, 54.637);
+  tl.to("#cw122", { opacity: 1, color: "#FF9F5A", scale: 1.06, duration: 0.1, ease: "power1.out" }, 53.425);
+  tl.to("#cw122", { color: "#FF9F5A", scale: 1, duration: 0.12 }, 53.725);
+  tl.to("#cw123", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 53.725);
+  tl.to("#cw123", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 54.173);
+  tl.to("#cw124", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 54.173);
+  tl.set("#cp51", { opacity: 1 }, 54.657); tl.set("#cp51", { opacity: 0 }, 55.684);
+  tl.to("#cw125", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 54.697);
+  tl.to("#cw125", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 54.996);
+  tl.to("#cw126", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 54.996);
+  tl.to("#cw126", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 55.295);
+  tl.to("#cw127", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 55.295);
+  tl.set("#cp52", { opacity: 1 }, 55.704); tl.set("#cp52", { opacity: 0 }, 56.732);
+  tl.to("#cw128", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 55.744);
+  tl.to("#cw128", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 56.043);
+  tl.to("#cw129", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 56.043);
+  tl.to("#cw129", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 56.267);
+  tl.to("#cw130", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 56.267);
+  tl.set("#cp53", { opacity: 1 }, 56.752); tl.set("#cp53", { opacity: 0 }, 57.779);
+  tl.to("#cw131", { opacity: 1, color: "#FF9F5A", scale: 1.06, duration: 0.1, ease: "power1.out" }, 56.792);
+  tl.to("#cw131", { color: "#FF9F5A", scale: 1, duration: 0.12 }, 57.091);
+  tl.to("#cw132", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 57.091);
+  tl.set("#cp54", { opacity: 1 }, 57.799); tl.set("#cp54", { opacity: 0 }, 58.826);
+  tl.to("#cw133", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 57.839);
+  tl.to("#cw133", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 58.138);
+  tl.to("#cw134", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 58.138);
+  tl.to("#cw134", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 58.437);
+  tl.to("#cw135", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 58.437);
+  tl.set("#cp55", { opacity: 1 }, 58.846); tl.set("#cp55", { opacity: 0 }, 59.947);
+  tl.to("#cw136", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 58.886);
+  tl.to("#cw136", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 59.185);
+  tl.to("#cw137", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 59.185);
+  tl.to("#cw137", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 59.708);
+  tl.to("#cw138", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 59.708);
+  tl.set("#cp56", { opacity: 1 }, 59.967); tl.set("#cp56", { opacity: 0 }, 61.369);
+  tl.to("#cw139", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 60.007);
+  tl.to("#cw139", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 60.381);
+  tl.to("#cw140", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 60.381);
+  tl.to("#cw140", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 60.680);
+  tl.to("#cw141", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 60.680);
+  tl.set("#cp57", { opacity: 1 }, 61.389); tl.set("#cp57", { opacity: 0 }, 63.016);
+  tl.to("#cw142", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 61.429);
+  tl.to("#cw142", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 61.579);
+  tl.to("#cw143", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 61.579);
+  tl.to("#cw143", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 62.103);
+  tl.to("#cw144", { opacity: 1, color: "#FF7BD5", scale: 1.06, duration: 0.1, ease: "power1.out" }, 62.103);
+  tl.set("#cp58", { opacity: 1 }, 63.036); tl.set("#cp58", { opacity: 0 }, 63.988);
+  tl.to("#cw145", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 63.076);
+  tl.to("#cw145", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 63.226);
+  tl.to("#cw146", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 63.226);
+  tl.to("#cw146", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 63.674);
+  tl.to("#cw147", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 63.674);
+  tl.set("#cp59", { opacity: 1 }, 64.008); tl.set("#cp59", { opacity: 0 }, 64.960);
+  tl.to("#cw148", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 64.048);
+  tl.to("#cw148", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 64.497);
+  tl.to("#cw149", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 64.497);
+  tl.to("#cw149", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 64.721);
+  tl.to("#cw150", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 64.721);
+  tl.set("#cp60", { opacity: 1 }, 64.980); tl.set("#cp60", { opacity: 0 }, 65.933);
+  tl.to("#cw151", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 65.020);
+  tl.to("#cw151", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 65.320);
+  tl.to("#cw152", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 65.320);
+  tl.to("#cw152", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 65.619);
+  tl.to("#cw153", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 65.619);
+  tl.set("#cp61", { opacity: 1 }, 65.953); tl.set("#cp61", { opacity: 0 }, 67.204);
+  tl.to("#cw154", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 65.993);
+  tl.to("#cw154", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 66.591);
+  tl.to("#cw155", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 66.591);
+  tl.to("#cw155", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 66.965);
+  tl.to("#cw156", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 66.965);
+  tl.set("#cp62", { opacity: 1 }, 67.224); tl.set("#cp62", { opacity: 0 }, 68.326);
+  tl.to("#cw157", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 67.264);
+  tl.to("#cw157", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 67.787);
+  tl.to("#cw158", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 67.787);
+  tl.to("#cw158", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 68.087);
+  tl.to("#cw159", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 68.087);
+  tl.set("#cp63", { opacity: 1 }, 68.346); tl.set("#cp63", { opacity: 0 }, 69.448);
+  tl.to("#cw160", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 68.386);
+  tl.to("#cw160", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 68.760);
+  tl.to("#cw161", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 68.760);
+  tl.set("#cp64", { opacity: 1 }, 69.468); tl.set("#cp64", { opacity: 0 }, 70.570);
+  tl.to("#cw162", { opacity: 1, color: "#FF7BD5", scale: 1.06, duration: 0.1, ease: "power1.out" }, 69.508);
+  tl.to("#cw162", { color: "#FF7BD5", scale: 1, duration: 0.12 }, 70.107);
+  tl.to("#cw163", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 70.107);
+  tl.set("#cp65", { opacity: 1 }, 70.590); tl.set("#cp65", { opacity: 0 }, 71.393);
+  tl.to("#cw164", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 70.630);
+  tl.to("#cw164", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 71.154);
+  tl.to("#cw165", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 71.154);
+  tl.set("#cp66", { opacity: 1 }, 71.413); tl.set("#cp66", { opacity: 0 }, 72.515);
+  tl.to("#cw166", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 71.453);
+  tl.to("#cw166", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 71.976);
+  tl.to("#cw167", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 71.976);
+  tl.set("#cp67", { opacity: 1 }, 72.535); tl.set("#cp67", { opacity: 0 }, 73.337);
+  tl.to("#cw168", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 72.575);
+  tl.to("#cw168", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 73.023);
+  tl.to("#cw169", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 73.023);
+  tl.set("#cp68", { opacity: 1 }, 73.357); tl.set("#cp68", { opacity: 0 }, 74.983);
+  tl.to("#cw170", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 73.397);
+  tl.to("#cw170", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 74.295);
+  tl.to("#cw171", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 74.295);
+  tl.set("#cp69", { opacity: 1 }, 75.003); tl.set("#cp69", { opacity: 0 }, 76.105);
+  tl.to("#cw172", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 75.043);
+  tl.to("#cw172", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 75.492);
+  tl.to("#cw173", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 75.492);
+  tl.to("#cw173", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 75.866);
+  tl.to("#cw174", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 75.866);
+  tl.set("#cp70", { opacity: 1 }, 76.125); tl.set("#cp70", { opacity: 0 }, 77.227);
+  tl.to("#cw175", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 76.165);
+  tl.to("#cw175", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 76.315);
+  tl.to("#cw176", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 76.315);
+  tl.to("#cw176", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 76.913);
+  tl.to("#cw177", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 76.913);
+  tl.set("#cp71", { opacity: 1 }, 77.247); tl.set("#cp71", { opacity: 0 }, 78.349);
+  tl.to("#cw178", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 77.287);
+  tl.to("#cw178", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 77.586);
+  tl.to("#cw179", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 77.586);
+  tl.to("#cw179", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 78.035);
+  tl.to("#cw180", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 78.035);
+  tl.set("#cp72", { opacity: 1 }, 78.369); tl.set("#cp72", { opacity: 0 }, 79.321);
+  tl.to("#cw181", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 78.409);
+  tl.to("#cw181", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 78.708);
+  tl.to("#cw182", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 78.708);
+  tl.to("#cw182", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 79.007);
+  tl.to("#cw183", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 79.007);
+  tl.set("#cp73", { opacity: 1 }, 79.341); tl.set("#cp73", { opacity: 0 }, 80.593);
+  tl.to("#cw184", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 79.381);
+  tl.to("#cw184", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 79.905);
+  tl.to("#cw185", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 79.905);
+  tl.to("#cw185", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 80.204);
+  tl.to("#cw186", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 80.204);
+  tl.set("#cp74", { opacity: 1 }, 80.613); tl.set("#cp74", { opacity: 0 }, 81.490);
+  tl.to("#cw187", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 80.653);
+  tl.to("#cw187", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 80.803);
+  tl.to("#cw188", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 80.803);
+  tl.to("#cw188", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 81.176);
+  tl.to("#cw189", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 81.176);
+  tl.set("#cp75", { opacity: 1 }, 81.510); tl.set("#cp75", { opacity: 0 }, 82.463);
+  tl.to("#cw190", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 81.550);
+  tl.to("#cw190", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 81.775);
+  tl.to("#cw191", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 81.775);
+  tl.to("#cw191", { color: "#7FDBFF", scale: 1, duration: 0.12 }, 82.074);
+  tl.to("#cw192", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 82.074);
+  tl.set("#cp76", { opacity: 1 }, 82.483); tl.set("#cp76", { opacity: 0 }, 83.775);
+  tl.to("#cw193", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 82.523);
+  tl.to("#cw193", { color: "#FFFFFF", scale: 1, duration: 0.12 }, 83.046);
+  tl.to("#cw194", { opacity: 1, color: "#7FDBFF", scale: 1.06, duration: 0.1, ease: "power1.out" }, 83.046);
+  tl.fromTo("#bp", { x: 0, y: 0 }, { x: -80, y: -160, duration: 84.670, ease: "none", immediateRender: false }, 0);
+  tl.fromTo("#wgear", { rotation: 0 }, { rotation: 90, svgOrigin: "310 310", duration: 84.670, ease: "none", immediateRender: false }, 0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

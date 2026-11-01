@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep04-creator/assets/voice/clone-b/voice.raw.wav",
+ "before_s": 79.72,
+ "after_pauses_s": 79.19,
+ "tempo": 1,
+ "after_s": 79.19,
+ "gap": 0.3,
+ "max": 80
+}

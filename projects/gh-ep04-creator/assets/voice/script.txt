@@ -1,0 +1,18 @@
+[natural Bangladeshi Bengali (standard Dhaka cholito), a confident tech creator talking to a friend on Facebook Reels, fast and clear, English tool names said clearly in English with a small lift in energy, no filler words, not a news announcer; warm and confident, like a video editor sharing their real workflow] Reels বানাতে দামি সফটওয়্যার লাগে না। রেকর্ড থেকে আপলোড পর্যন্ত, পাঁচটা ফ্রি টুলেই হয়ে যায়।
+[pause 0.2]
+প্রথমটা OBS Studio।
+স্ক্রিন, ক্যামেরা আর মাইক একসাথে রেকর্ড করে, কোনো watermark ছাড়া। টিউটোরিয়াল আর Reels দুটোতেই চলে।
+[pause 0.2]
+দ্বিতীয়টা auto-editor।
+এক কমান্ডে ভিডিওর চুপ থাকা অংশগুলো কেটে ফেলে। লম্বা কাঁচা রেকর্ডিং মুহূর্তেই টানটান।
+[pause 0.2]
+তৃতীয়টা Subtitle Edit।
+কথা শুনে নিজেই সাবটাইটেল লেখে, বাংলাতেও। শুধু একবার চোখ বুলিয়ে ভুলগুলো ঠিক করে নেবেন।
+[pause 0.2]
+চতুর্থটা LosslessCut।
+বড় ভিডিও কাটে কয়েক সেকেন্ডে, কারণ নতুন করে রেন্ডার করে না। দুর্বল ল্যাপটপেও দিব্যি চলে।
+[pause 0.2]
+আর পঞ্চমটা HandBrake।
+বড় ভিডিওকে ছোট করে, দেখতে প্রায় একই রেখে। মোবাইল ডেটায় আপলোড অনেক সহজ হয়।
+[pause 0.2]
+পাঁচটার লিংক আর ইনস্টলের বাংলা গাইড চাইলে, পেজের ইনবক্সে লিখুন CREATOR।

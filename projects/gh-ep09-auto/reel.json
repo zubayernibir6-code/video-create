@@ -1,0 +1,323 @@
+{
+ "engine": "series",
+ "style": "REEL10",
+ "series": "৫টা GitHub রিপো",
+ "episode": 9,
+ "title": "৫টা GitHub রিপো · পর্ব ৯: কাজ নিজে থেকে করানো",
+ "lang": "bn",
+ "voice": "assets/voice/clone-b/voice.wav",
+ "voiceLabel": "আপনার ক্লোন করা গলা খ (Gemini, talha-b)",
+ "music": {
+  "file": "assets/music/bgm.mp3",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে"
+ },
+ "keyword": "AUTO",
+ "minMatch": 0.75,
+ "goal": "দর্শক পরিষ্কার জানবে ভিডিওটা কী নিয়ে (রোজকার কাজ অটোমেট করার ৫টা ফ্রি টুল), প্রতিটা কী করে আর কীভাবে চালাতে হয়, আর লিংক ও বাংলা গাইড পেতে পেজের ইনবক্সে AUTO লিখবে।",
+ "hook": {
+  "line": "প্রতিদিনের একই কাজ হাতে করছেন? এই পাঁচটা ফ্রি টুল কাজগুলো নিজে থেকেই করিয়ে নেয়।",
+  "on": "নিজে",
+  "chips": [
+   "ইমেইল",
+   "রিপোর্ট",
+   "Sheet",
+   "ফর্ম",
+   "বিল"
+  ]
+ },
+ "promise": {
+  "line": "প্রতিটা কী কাজ করে, আর কীভাবে চালাবেন, এখনই দেখাচ্ছি। সব লিংক পাবেন ইনবক্সে।",
+  "kicker": "এই ভিডিওতে",
+  "title": "৫টা ফ্রি অটোমেশন",
+  "sub": "রোজকার কাজ নিজে নিজে করাতে",
+  "rows": [
+   {
+    "label": "কোনটা কী কাজ করে",
+    "on": "কাজ",
+    "icon": "sparkles"
+   },
+   {
+    "label": "কীভাবে চালাবেন",
+    "on": "চালাবেন",
+    "icon": "list-checks"
+   },
+   {
+    "label": "লিংক: ইনবক্সে AUTO",
+    "on": "ইনবক্সে",
+    "icon": "message-circle"
+   }
+  ]
+ },
+ "tools": [
+  {
+   "name": "n8n",
+   "maker": "বাক্স জুড়ে অটোমেশন",
+   "intro": "প্রথমটা n8n।",
+   "body": "ফর্ম এলে Sheet-এ তোলা, ইমেইলের উত্তর, প্রতিদিনের রিপোর্ট। বাক্স জুড়ে জুড়ে অটোমেশন বানান।",
+   "stat": {
+    "text": "২ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "ফর্ম থেকে Sheet",
+     "on": "ফর্ম",
+     "icon": "table"
+    },
+    {
+     "label": "ইমেইলের উত্তর",
+     "on": "ইমেইলের",
+     "icon": "mail"
+    },
+    {
+     "label": "রোজকার রিপোর্ট",
+     "on": "রিপোর্ট",
+     "icon": "chart-column"
+    }
+   ],
+   "proof": {
+    "text": "বাক্স জুড়ে বানান",
+    "on": "বাক্স"
+   },
+   "how": {
+    "line": "Node.js বসিয়ে টার্মিনালে npx n8n লিখুন, ব্রাউজারে খুলে একটা টেমপ্লেট বাছুন।",
+    "steps": [
+     {
+      "label": "Node.js বসান",
+      "on": "Node.js"
+     },
+     {
+      "label": "npx n8n লিখুন",
+      "on": "npx"
+     },
+     {
+      "label": "টেমপ্লেট বাছুন",
+      "on": "টেমপ্লেট"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Nanobrowser",
+   "maker": "Chrome-এর পাশে AI এজেন্ট",
+   "intro": "দ্বিতীয়টা Nanobrowser।",
+   "body": "Chrome-এর পাশে বসা AI এজেন্ট। বলুন তিনটা ল্যাপটপের দাম টেবিলে সাজাও, সে নিজেই ক্লিক করে সাজিয়ে দেবে।",
+   "features": [
+    {
+     "label": "Chrome-এর পাশে",
+     "on": "Chrome-এর",
+     "icon": "panel-right"
+    },
+    {
+     "label": "নিজেই ক্লিক করে",
+     "on": "ক্লিক",
+     "icon": "mouse-pointer-click"
+    }
+   ],
+   "proof": {
+    "text": "টেবিলে দাম সাজায়",
+    "on": "সাজিয়ে"
+   },
+   "how": {
+    "line": "Chrome Web Store থেকে বসান, একটা AI key দিন, আর Ask মোড চালু রাখুন।",
+    "steps": [
+     {
+      "label": "Web Store থেকে",
+      "on": "Web"
+     },
+     {
+      "label": "AI key দিন",
+      "on": "key"
+     },
+     {
+      "label": "Ask মোড চালু",
+      "on": "Ask"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Dify",
+   "maker": "নিজের চ্যাটবট বানানো",
+   "intro": "তৃতীয়টা Dify।",
+   "body": "নিজের দোকানের দামের তালিকা দিন, সেটা থেকে উত্তর দেওয়া চ্যাটবট বানান। ফ্রি প্ল্যানে ব্রাউজারেই হয়।",
+   "stat": {
+    "text": "১.৬ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "দামের তালিকা দিন",
+     "on": "দামের",
+     "icon": "file-text"
+    },
+    {
+     "label": "চ্যাটবট বানান",
+     "on": "চ্যাটবট",
+     "icon": "bot"
+    }
+   ],
+   "proof": {
+    "text": "ব্রাউজারেই হয়",
+    "on": "ব্রাউজারেই"
+   },
+   "how": {
+    "line": "ফ্রি Sandbox খুলুন, Chatbot বানিয়ে নিজের ডকুমেন্ট তুলুন, তারপর লিংক শেয়ার করুন।",
+    "steps": [
+     {
+      "label": "ফ্রি Sandbox",
+      "on": "Sandbox"
+     },
+     {
+      "label": "ডকুমেন্ট তুলুন",
+      "on": "ডকুমেন্ট"
+     },
+     {
+      "label": "লিংক শেয়ার",
+      "on": "লিংক"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Activepieces",
+   "maker": "Zapier-এর মতো, আরও সহজ",
+   "intro": "চতুর্থটা Activepieces।",
+   "body": "Zapier-এর মতো, কিন্তু আরও সহজ। ফ্রি ক্লাউড প্ল্যান আছে, কিছু ইনস্টল করতে হয় না।",
+   "features": [
+    {
+     "label": "Zapier-এর মতো",
+     "on": "Zapier-এর",
+     "icon": "zap"
+    },
+    {
+     "label": "ফ্রি ক্লাউড",
+     "on": "ক্লাউড",
+     "icon": "cloud"
+    }
+   ],
+   "proof": {
+    "text": "ইনস্টল লাগে না",
+    "on": "ইনস্টল"
+   },
+   "how": {
+    "line": "ফ্রি অ্যাকাউন্ট খুলে Flow বানান, একটা trigger দিন, তারপর Test চাপুন।",
+    "steps": [
+     {
+      "label": "Flow বানান",
+      "on": "Flow"
+     },
+     {
+      "label": "trigger দিন",
+      "on": "trigger"
+     },
+     {
+      "label": "Test চাপুন",
+      "on": "Test"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Langflow",
+   "maker": "AI এজেন্ট চোখে দেখা",
+   "intro": "আর পঞ্চমটা Langflow।",
+   "body": "AI এজেন্ট ভেতরে কীভাবে কাজ করে, চোখে দেখা যায়। প্রম্পট, মডেল, টুল, মেমোরি, টেনে টেনে জোড়া লাগান।",
+   "stat": {
+    "text": "১.৬ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "চোখে দেখা যায়",
+     "on": "চোখে",
+     "icon": "eye"
+    },
+    {
+     "label": "টেনে জোড়া লাগান",
+     "on": "টেনে",
+     "icon": "workflow"
+    }
+   ],
+   "proof": {
+    "text": "প্রম্পট · মডেল · টুল",
+    "on": "প্রম্পট"
+   },
+   "how": {
+    "line": "Langflow Desktop নামিয়ে একটা starter টেমপ্লেট খুলুন, তারপর Playground-এ চালান।",
+    "steps": [
+     {
+      "label": "Desktop নামান",
+      "on": "Desktop"
+     },
+     {
+      "label": "starter টেমপ্লেট",
+      "on": "starter"
+     },
+     {
+      "label": "Playground-এ চালান",
+      "on": "Playground-এ"
+     }
+    ]
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটা টুলের লিংক আর ইনস্টলের বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন AUTO। আমি নিজে আপনাকে পাঠিয়ে দেব।",
+  "heading": "৫টা টুল এক নজরে",
+  "ask": "লিংক আর বাংলা গাইড পেতে",
+  "steps": [
+   {
+    "label": "পেজে যান",
+    "on": "পেজে",
+    "icon": "house"
+   },
+   {
+    "label": "Message চাপুন",
+    "on": "Message",
+    "icon": "message-circle"
+   },
+   {
+    "label": "লিখুন AUTO",
+    "on": "লিখুন",
+    "icon": "keyboard"
+   }
+  ],
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "নিজে",
+  "ফ্রি",
+  "অটোমেশন"
+ ],
+ "facts": [
+  {
+   "claim": "n8n has about 209.1k GitHub stars (fair-code: say ফ্রি, not open source)",
+   "value": "২ লাখ",
+   "source": "https://github.com/n8n-io/n8n",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Nanobrowser is a Chrome/Edge side-panel agent with an Ask mode",
+   "source": "https://github.com/nanobrowser/nanobrowser",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Dify has about 160.0k GitHub stars; free Sandbox plan (licence with conditions: say ফ্রি)",
+   "value": "১.৬ লাখ",
+   "source": "https://github.com/langgenius/dify",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Activepieces has a free cloud plan",
+   "source": "https://www.activepieces.com",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Langflow has about 156.2k GitHub stars",
+   "value": "১.৬ লাখ",
+   "source": "https://github.com/langflow-ai/langflow",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": []
+}

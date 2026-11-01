@@ -1,0 +1,8 @@
+{
+ "model": "gemini-3.8-flash-tts",
+ "voice": "talha-a",
+ "blocks": 13,
+ "new_audio_s": 84.3,
+ "usd_estimate": 0.0197,
+ "at": "2026-11-01T03:46:16.921Z"
+}

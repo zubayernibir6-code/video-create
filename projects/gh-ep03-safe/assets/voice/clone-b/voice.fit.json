@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep03-safe/assets/voice/clone-b/voice.raw.wav",
+ "before_s": 82.52,
+ "after_pauses_s": 81.56,
+ "tempo": 1.0196,
+ "after_s": 79.98,
+ "gap": 0.3,
+ "max": 80
+}

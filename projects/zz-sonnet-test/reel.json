@@ -1,0 +1,46 @@
+{
+  "title": "3 MCP servers for Claude Code (skill test)",
+  "lang": "en",
+  "platform": "Claude Code",
+  "voice": "assets/voice/voice.wav",
+  "voiceLabel": "পরীক্ষার ভয়েস: Kokoro am_michael, ১.৩৫ গুণ গতি",
+  "music": { "file": "assets/music/test-bed-128bpm.mp3", "from": 0 },
+  "project": "my-app",
+  "handle": "@testhandle",
+  "keyword": "TOOLS",
+  "goal": "আসল অ্যাপ ছাড়ার আগে Claude Code-এ যোগ করার মতো ৩টা MCP সার্ভারের (Supabase, Sentry, Linear) ছোট রিল। এটা স্কিল-পরীক্ষা।",
+  "hook": {
+    "line": "Don't ship with Claude Code until you've installed these three MCP servers.",
+    "banner": ["Don't ship yet", "0 of 3 tools installed"],
+    "on": "until"
+  },
+  "tools": [
+    {
+      "name": "Supabase MCP",
+      "maker": "your backend, by prompt",
+      "result": "supabase · tables, SQL, logs",
+      "intro": "The first is Supabase MCP.",
+      "body": "It lets Claude create tables, run SQL and read logs in your Supabase project, so your backend gets built while you talk.",
+      "scene": { "type": "hub", "nodes": [{ "label": "Tables", "on": "tables", "icon": "table" }, { "label": "SQL", "on": "SQL", "icon": "database" }, { "label": "Logs", "on": "logs", "icon": "scroll-text" }], "chip": { "text": "Supabase project", "on": "project" }, "proof": { "text": "Backend built by chat", "on": "built" } }
+    },
+    {
+      "name": "Sentry MCP",
+      "maker": "your real production errors",
+      "result": "sentry · errors and traces",
+      "intro": "The second is Sentry MCP.",
+      "body": "It lets Claude read your real production errors and stack traces, so it fixes the actual bug, not a guess.",
+      "scene": { "type": "trace", "inputs": [{ "label": "Errors", "on": "errors" }, { "label": "Traces", "on": "traces" }], "rows": [{ "label": "TypeError", "to": 12, "unit": "events" }, { "label": "Checkout", "to": 7, "unit": "events" }], "linkOn": "fixes", "result": "Bug found: cart.ts", "proof": { "text": "Actual bug, fixed", "on": "actual" } }
+    },
+    {
+      "name": "Linear MCP",
+      "maker": "issues without leaving the terminal",
+      "result": "linear · issues, from the terminal",
+      "intro": "And the third is Linear MCP.",
+      "body": "It lets Claude create, update and close issues without leaving the terminal, so your board stays honest while you ship.",
+      "scene": { "type": "pipeline", "steps": [{ "label": "create", "on": "create" }, { "label": "update", "on": "update" }, { "label": "close", "on": "close" }], "proof": { "text": "Your board stays honest", "on": "honest" } }
+    }
+  ],
+  "cta": { "line": "Comment TOOLS, and I'll send you one link with all three.", "dm": "All 3 tools in one link:" },
+  "facts": [],
+  "questions": []
+}

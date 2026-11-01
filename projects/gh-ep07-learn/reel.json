@@ -1,0 +1,318 @@
+{
+ "engine": "series",
+ "style": "REEL8",
+ "series": "৫টা GitHub রিপো",
+ "episode": 7,
+ "title": "৫টা GitHub রিপো · পর্ব ৭: ফ্রিতে শেখা আর ক্যারিয়ার",
+ "lang": "bn",
+ "voice": "assets/voice/clone-b/voice.wav",
+ "voiceLabel": "আপনার ক্লোন করা গলা খ (Gemini, talha-b)",
+ "music": {
+  "file": "assets/music/bgm.mp3",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে"
+ },
+ "keyword": "LEARN",
+ "minMatch": 0.75,
+ "goal": "দর্শক পরিষ্কার জানবে ভিডিওটা কী নিয়ে (GitHub-এর ৫টা ফ্রি স্কুল), প্রতিটা কী শেখায় আর কোথা থেকে শুরু করতে হয়, আর লিংক ও শুরু করার বাংলা গাইড পেতে পেজের ইনবক্সে LEARN লিখবে।",
+ "howTitle": "কীভাবে শুরু করবেন",
+ "hook": {
+  "line": "GitHub-এর সবচেয়ে বেশি স্টার পাওয়া রিপোগুলোর অনেকগুলোই আসলে ফ্রি স্কুল। পাঁচটা দেখাই।",
+  "on": "স্কুল",
+  "cover": "লেভেল ০",
+  "title": "GitHub-এ ফ্রি স্কুল"
+ },
+ "promise": {
+  "line": "প্রতিটা কী শেখায়, আর কোথা থেকে শুরু করবেন, দেখাচ্ছি। সব লিংক পাবেন ইনবক্সে।",
+  "kicker": "এই ভিডিওতে",
+  "title": "৫টা ফ্রি স্কুল",
+  "sub": "কোডিং আর ক্যারিয়ার শুরু করতে",
+  "rows": [
+   {
+    "label": "কোনটা কী শেখায়",
+    "on": "শেখায়",
+    "icon": "sparkles"
+   },
+   {
+    "label": "কোথা থেকে শুরু করবেন",
+    "on": "শুরু",
+    "icon": "list-checks"
+   },
+   {
+    "label": "লিংক: ইনবক্সে LEARN",
+    "on": "ইনবক্সে",
+    "icon": "message-circle"
+   }
+  ]
+ },
+ "tools": [
+  {
+   "name": "free-programming-books",
+   "short": "Programming Books",
+   "maker": "ফ্রি বই আর কোর্সের তালিকা",
+   "intro": "প্রথমটা free-programming-books।",
+   "body": "ফ্রি বই আর কোর্সের বিশাল তালিকা। এখানে সাতাশটা বাংলা বইও আছে, তামিম শাহরিয়ার সুবিনের বইসহ।",
+   "stat": {
+    "text": "৪ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "ফ্রি বই আর কোর্স",
+     "on": "বই",
+     "icon": "book-open"
+    },
+    {
+     "label": "২৭টা বাংলা বই",
+     "on": "সাতাশটা",
+     "icon": "languages"
+    }
+   ],
+   "proof": {
+    "text": "সুবিনের বইও আছে",
+    "on": "সুবিনের"
+   },
+   "how": {
+    "line": "বাংলা বইয়ের তালিকাটা খুলুন, একটা বই বেছে আজ শুধু প্রথম অধ্যায় পড়ুন।",
+    "steps": [
+     {
+      "label": "বাংলা তালিকা খুলুন",
+      "on": "বাংলা"
+     },
+     {
+      "label": "একটা বই বাছুন",
+      "on": "বই"
+     },
+     {
+      "label": "আজ শুধু প্রথম অধ্যায়",
+      "on": "প্রথম"
+     }
+    ]
+   }
+  },
+  {
+   "name": "freeCodeCamp",
+   "maker": "ব্রাউজারে কোডিং শেখা",
+   "intro": "দ্বিতীয়টা freeCodeCamp।",
+   "body": "ব্রাউজারেই কোডিং শিখুন, শেষে ফ্রি সার্টিফিকেট। ওদের হিসাবে এক লাখের বেশি মানুষ এখান থেকে চাকরি পেয়েছে।",
+   "stat": {
+    "text": "৪.৬ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "ব্রাউজারেই শিখুন",
+     "on": "ব্রাউজারেই",
+     "icon": "monitor"
+    },
+    {
+     "label": "ফ্রি সার্টিফিকেট",
+     "on": "সার্টিফিকেট",
+     "icon": "award"
+    }
+   ],
+   "proof": {
+    "text": "১ লাখ+ মানুষের চাকরি",
+    "on": "চাকরি"
+   },
+   "how": {
+    "line": "ফ্রি অ্যাকাউন্ট খুলে Responsive Web Design দিয়ে শুরু করুন।",
+    "steps": [
+     {
+      "label": "ফ্রি অ্যাকাউন্ট খুলুন",
+      "on": "অ্যাকাউন্ট"
+     },
+     {
+      "label": "Responsive Web Design",
+      "on": "Responsive"
+     }
+    ]
+   }
+  },
+  {
+   "name": "GenAI for Beginners",
+   "short": "GenAI for Beginners",
+   "maker": "Microsoft-এর AI কোর্স",
+   "intro": "তৃতীয়টা Microsoft-এর Generative AI for Beginners।",
+   "body": "একুশটা লেসনে AI অ্যাপ বানানো শেখায়। শুরুর পাতা বাংলাতেও আছে, AI দিয়ে অনুবাদ করা।",
+   "stat": {
+    "text": "১.২ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "২১টা লেসন",
+     "on": "একুশটা",
+     "icon": "list-ordered"
+    },
+    {
+     "label": "AI অ্যাপ বানানো",
+     "on": "অ্যাপ",
+     "icon": "bot"
+    }
+   ],
+   "proof": {
+    "text": "বাংলা পাতাও আছে",
+    "on": "বাংলাতেও"
+   },
+   "how": {
+    "line": "বাংলা শুরুর পাতাটা খুলুন, তারপর course setup, তারপর প্রথম লেসন।",
+    "steps": [
+     {
+      "label": "বাংলা পাতা খুলুন",
+      "on": "বাংলা"
+     },
+     {
+      "label": "course setup",
+      "on": "course"
+     },
+     {
+      "label": "প্রথম লেসন",
+      "on": "প্রথম"
+     }
+    ]
+   }
+  },
+  {
+   "name": "first-contributions",
+   "short": "First Contributions",
+   "maker": "জীবনের প্রথম pull request",
+   "intro": "চতুর্থটা first-contributions।",
+   "body": "জীবনের প্রথম pull request, আধা ঘণ্টায়। Git হাতে-কলমে শেখা হয়ে যায়।",
+   "features": [
+    {
+     "label": "প্রথম PR",
+     "on": "pull",
+     "icon": "git-pull-request"
+    },
+    {
+     "label": "আধা ঘণ্টায়",
+     "on": "আধা",
+     "icon": "timer"
+    }
+   ],
+   "proof": {
+    "text": "হাতে-কলমে Git",
+    "on": "হাতে-কলমে"
+   },
+   "how": {
+    "line": "Fork করুন, Contributors ফাইলে নিজের নাম লিখুন, তারপর Pull request পাঠান।",
+    "steps": [
+     {
+      "label": "Fork করুন",
+      "on": "Fork"
+     },
+     {
+      "label": "নিজের নাম লিখুন",
+      "on": "নিজের"
+     },
+     {
+      "label": "Pull request পাঠান",
+      "on": "Pull"
+     }
+    ]
+   }
+  },
+  {
+   "name": "build-your-own-x",
+   "short": "Build Your Own X",
+   "maker": "নিজের হাতে বানিয়ে শেখা",
+   "intro": "আর পঞ্চমটা build-your-own-x।",
+   "body": "নিজের হাতে বট বা ডাটাবেস বানানোর টিউটোরিয়াল। শুধু দেখা থেকে নিজের পোর্টফোলিওর প্রজেক্টে নিয়ে যায়।",
+   "stat": {
+    "text": "৫.৬ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "বট বানান",
+     "on": "বট",
+     "icon": "bot"
+    },
+    {
+     "label": "ডাটাবেস বানান",
+     "on": "ডাটাবেস",
+     "icon": "database"
+    }
+   ],
+   "proof": {
+    "text": "পোর্টফোলিওর প্রজেক্ট",
+    "on": "পোর্টফোলিওর"
+   },
+   "how": {
+    "line": "Build your own Bot অংশে একটা Python টিউটোরিয়াল বেছে, চালু হওয়া পর্যন্ত করুন।",
+    "steps": [
+     {
+      "label": "Bot অংশে যান",
+      "on": "Bot"
+     },
+     {
+      "label": "Python টিউটোরিয়াল",
+      "on": "Python"
+     },
+     {
+      "label": "চালু হওয়া পর্যন্ত",
+      "on": "চালু"
+     }
+    ]
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটা স্কুলের লিংক আর শুরু করার বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন LEARN। আমি নিজে আপনাকে পাঠিয়ে দেব।",
+  "heading": "৫টা স্কুল এক নজরে",
+  "ask": "লিংক আর বাংলা গাইড পেতে",
+  "steps": [
+   {
+    "label": "পেজে যান",
+    "on": "পেজে",
+    "icon": "house"
+   },
+   {
+    "label": "Message চাপুন",
+    "on": "Message",
+    "icon": "message-circle"
+   },
+   {
+    "label": "লিখুন LEARN",
+    "on": "লিখুন",
+    "icon": "keyboard"
+   }
+  ],
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "ফ্রি",
+  "বাংলা",
+  "চাকরি"
+ ],
+ "facts": [
+  {
+   "claim": "free-programming-books has about 400.5k GitHub stars and a Bengali list with 27 books incl. Tamim Shahriar Subeen's",
+   "value": "৪ লাখ",
+   "source": "https://github.com/EbookFoundation/free-programming-books",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "freeCodeCamp has about 458.2k GitHub stars; freeCodeCamp says 100,000+ people got first developer jobs",
+   "value": "৪.৬ লাখ",
+   "source": "https://github.com/freeCodeCamp/freeCodeCamp",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "GenAI for Beginners (Generative AI for Beginners) has about 122.5k GitHub stars, 21 lessons, an AI-translated Bengali start page",
+   "value": "১.২ লাখ",
+   "source": "https://github.com/microsoft/generative-ai-for-beginners",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "first-contributions walks a first pull request (Bengali guide in docs/translations)",
+   "source": "https://github.com/firstcontributions/first-contributions",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "build-your-own-x has about 557.5k GitHub stars",
+   "value": "৫.৬ লাখ",
+   "source": "https://github.com/codecrafters-io/build-your-own-x",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": []
+}

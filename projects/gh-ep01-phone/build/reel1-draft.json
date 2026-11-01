@@ -1,0 +1,207 @@
+{
+  "title": "৫টা GitHub রিপো · পর্ব ১: ফোনের জন্য ফ্রি অ্যাপ",
+  "lang": "bn",
+  "platform": "Android",
+  "voice": "assets/voice/voice.wav",
+  "voiceLabel": "AI Studio TTS (Sadaltager), Bengali",
+  "music": {
+    "file": "assets/music/bgm.mp3",
+    "from": 0
+  },
+  "project": "phone-apps",
+  "handle": "@yourhandle",
+  "keyword": "PHONE",
+  "goal": "দর্শক জানবে ফোনের ডেটা আর স্টোরেজ বাঁচানোর পাঁচটা ফ্রি অ্যাপ, আর বাংলা গাইড পেতে পেজের ইনবক্সে PHONE লিখবে।",
+  "hook": {
+    "line": "ফোনে এই পাঁচটা ফ্রি অ্যাপ না থাকলে, প্রতিদিন ডেটা আর স্টোরেজ দুটোই নষ্ট করছেন।",
+    "banner": [
+      "Storage full",
+      "০ / ৫ অ্যাপ বসানো"
+    ],
+    "on": "নষ্ট"
+  },
+  "tools": [
+    {
+      "name": "LocalSend",
+      "maker": "ফোন ↔ ল্যাপটপ, নেট ছাড়া",
+      "stat": "৯৭ হাজার স্টার",
+      "result": "LocalSend · ফাইল পাঠানো চালু",
+      "intro": "প্রথমটা LocalSend।",
+      "body": "ফোন থেকে ল্যাপটপে ভিডিও পাঠান, একই Wi-Fi-তে, ইন্টারনেট ছাড়াই। কোয়ালিটিও কমে না। GitHub-এ প্রায় সাতানব্বই হাজার স্টার।",
+      "scene": {
+        "type": "pipeline",
+        "steps": [
+          {
+            "label": "ভিডিও",
+            "on": "ভিডিও"
+          },
+          {
+            "label": "একই Wi-Fi",
+            "on": "Wi-Fi-তে"
+          },
+          {
+            "label": "নেট লাগে না",
+            "on": "ইন্টারনেট"
+          }
+        ],
+        "proof": {
+          "text": "কোয়ালিটি একই থাকে",
+          "on": "কোয়ালিটিও"
+        }
+      }
+    },
+    {
+      "name": "Fossify Gallery",
+      "maker": "বিজ্ঞাপন ছাড়া গ্যালারি",
+      "result": "Fossify Gallery · ad-free",
+      "intro": "দ্বিতীয়টা Fossify Gallery।",
+      "body": "বিজ্ঞাপন ছাড়া গ্যালারি। ছবি লক করে রাখা যায়, আর শেয়ার করার আগে ছবির লোকেশন মুছে দেয়।",
+      "scene": {
+        "type": "hub",
+        "nodes": [
+          {
+            "label": "বিজ্ঞাপন নেই",
+            "on": "গ্যালারি",
+            "icon": "ban"
+          },
+          {
+            "label": "ছবি লক",
+            "on": "লক",
+            "icon": "lock"
+          },
+          {
+            "label": "শেয়ার",
+            "on": "শেয়ার",
+            "icon": "share-2"
+          },
+          {
+            "label": "লোকেশন মোছা",
+            "on": "লোকেশন",
+            "icon": "map-pin-off"
+          }
+        ],
+        "proof": {
+          "text": "GPS তথ্য মুছে যায়",
+          "on": "মুছে",
+          "tone": "good"
+        }
+      }
+    },
+    {
+      "name": "Canta + Shizuku",
+      "mono": "CA",
+      "maker": "রুট ছাড়া অ্যাপ সরানো",
+      "result": "Canta · bloatware সরানো",
+      "intro": "তৃতীয়টা Canta, সাথে Shizuku।",
+      "body": "রুট ছাড়াই ফোনে আগে থেকে বসানো অ্যাপ সরায়। শুধু যেগুলো নিরাপদ লেখা আছে, সেগুলোই সরাবেন।",
+      "scene": {
+        "type": "counter",
+        "from": 0,
+        "to": 12,
+        "max": 12,
+        "pre": "",
+        "post": "টা",
+        "label": "আগে থেকে বসানো অ্যাপ সরানো",
+        "countOn": "সরায়",
+        "proof": {
+          "text": "শুধু নিরাপদগুলো"
+        }
+      }
+    },
+    {
+      "name": "scrcpy",
+      "maker": "ফোনের স্ক্রিন ল্যাপটপে",
+      "stat": "১.৫ লাখের বেশি স্টার",
+      "install": "winget install --exact Genymobile.scrcpy",
+      "result": "scrcpy · ফোন এখন ল্যাপটপে",
+      "intro": "চতুর্থটা scrcpy।",
+      "body": "ফোনের পুরো স্ক্রিন ল্যাপটপে আসে, মাউস দিয়েই চালানো যায়। স্ক্রিন ভাঙা থাকলেও কাজ আটকাবে না।",
+      "scene": {
+        "type": "trace",
+        "inputs": [
+          {
+            "label": "স্ক্রিন",
+            "on": "স্ক্রিন"
+          },
+          {
+            "label": "মাউস",
+            "on": "মাউস"
+          }
+        ],
+        "rows": [
+          {
+            "label": "দেরি",
+            "to": 35,
+            "unit": "ms"
+          },
+          {
+            "label": "রুট",
+            "to": 0,
+            "unit": "লাগে"
+          }
+        ],
+        "linkOn": "চালানো",
+        "result": "ল্যাপটপে ফোন চলছে",
+        "proof": {
+          "text": "ভাঙা স্ক্রিনেও চলে",
+          "on": "ভাঙা"
+        }
+      }
+    },
+    {
+      "name": "Obtainium",
+      "maker": "GitHub-এর অ্যাপ আপডেট",
+      "result": "Obtainium · সব আপডেট",
+      "intro": "আর পঞ্চমটা Obtainium।",
+      "body": "GitHub থেকে নামানো অ্যাপগুলো নিজে থেকেই আপডেট রাখে। ভুয়া ওয়েবসাইট থেকে আর APK খুঁজতে হয় না।",
+      "scene": {
+        "type": "dial",
+        "url": "github.com/releases",
+        "app": "আমার অ্যাপ",
+        "errors": [
+          "পুরোনো ভার্সন",
+          "ভুয়া APK সাইট"
+        ],
+        "from": 40,
+        "to": 100,
+        "label": "আপ-টু-ডেট",
+        "fixOn": "আপডেট",
+        "proof": {
+          "text": "সব অ্যাপ নতুন ভার্সনে",
+          "on": "খুঁজতে"
+        }
+      }
+    }
+  ],
+  "cta": {
+    "line": "পাঁচটার লিংক আর ইনস্টলের বাংলা গাইড চাইলে, পেজের ইনবক্সে লিখুন PHONE।",
+    "dm": "পাঁচটা অ্যাপের লিংক:"
+  },
+  "emphasis": [
+    "ইন্টারনেট",
+    "রুট",
+    "নিরাপদ",
+    "ভুয়া"
+  ],
+  "facts": [
+    {
+      "claim": "LocalSend has about 96.6k GitHub stars",
+      "value": "৯৭ হাজার",
+      "source": "https://github.com/localsend/localsend",
+      "checked": "2026-10-30"
+    },
+    {
+      "claim": "scrcpy has about 153.6k GitHub stars",
+      "value": "১.৫ লাখ",
+      "source": "https://github.com/Genymobile/scrcpy",
+      "checked": "2026-10-30"
+    },
+    {
+      "claim": "scrcpy latency is 35-70 ms",
+      "value": "35 ms",
+      "source": "https://github.com/Genymobile/scrcpy",
+      "checked": "2026-10-30"
+    }
+  ],
+  "questions": []
+}

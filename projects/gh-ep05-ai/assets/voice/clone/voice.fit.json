@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep05-ai/assets/voice/clone/voice.raw.wav",
+ "before_s": 88.12,
+ "after_pauses_s": 86.77,
+ "tempo": 1.0846,
+ "after_s": 79.98,
+ "gap": 0.3,
+ "max": 80
+}

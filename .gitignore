@@ -59,3 +59,23 @@ projects/zz-sonnet-test/build/mix.graph.txt
 
 # preflight.mjs reports and snapshots (rebuilt before each render)
 .preflight/
+!projects/gh-ep01-phone/build/
+projects/gh-ep01-phone/build/mix.graph.txt
+!projects/gh-ep02-pc/build/
+projects/gh-ep02-pc/build/mix.graph.txt
+!projects/gh-ep03-safe/build/
+projects/gh-ep03-safe/build/mix.graph.txt
+!projects/gh-ep04-creator/build/
+projects/gh-ep04-creator/build/mix.graph.txt
+!projects/gh-ep05-ai/build/
+projects/gh-ep05-ai/build/mix.graph.txt
+!projects/gh-ep06-office/build/
+projects/gh-ep06-office/build/mix.graph.txt
+!projects/gh-ep07-learn/build/
+projects/gh-ep07-learn/build/mix.graph.txt
+!projects/gh-ep08-bangla/build/
+projects/gh-ep08-bangla/build/mix.graph.txt
+!projects/gh-ep09-auto/build/
+projects/gh-ep09-auto/build/mix.graph.txt
+!projects/gh-ep10-claude/build/
+projects/gh-ep10-claude/build/mix.graph.txt

@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep07-learn/assets/voice/clone-b/voice.raw.wav",
+ "before_s": 86.24,
+ "after_pauses_s": 84.5,
+ "tempo": 1.0563,
+ "after_s": 79.98,
+ "gap": 0.3,
+ "max": 80
+}

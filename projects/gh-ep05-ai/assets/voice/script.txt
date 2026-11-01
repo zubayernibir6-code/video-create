@@ -1,0 +1,18 @@
+[natural Bangladeshi Bengali (standard Dhaka cholito), a confident tech creator talking to a friend on Facebook Reels, fast and clear, English tool names said clearly in English with a small lift in energy, no filler words, not a news announcer; calm and warm with quiet wonder, slightly slower than usual but still clear] ইন্টারনেট বন্ধ, তবু ল্যাপটপে AI উত্তর দিচ্ছে। মাসে একটা টাকাও না দিয়ে।
+[pause 0.2]
+প্রথমটা Ollama।
+নিজের ল্যাপটপেই AI মডেল চালায়। একবার নামালে আর ইন্টারনেট লাগে না। আট GB RAM হলে ছোট মডেলই নেবেন।
+[pause 0.2]
+দ্বিতীয়টা Jan।
+দেখতে ChatGPT-এর মতো, কিন্তু পুরোটা চলে আপনার কম্পিউটারে। টার্মিনাল লাগে না, শুধু ক্লিক।
+[pause 0.2]
+তৃতীয়টা Buzz।
+অডিও বা ভিডিও থেকে লেখা বানায়, ইন্টারনেট ছাড়াই। ক্লাসের রেকর্ডিং থেকে নোট, ভিডিওর জন্য সাবটাইটেল।
+[pause 0.2]
+চতুর্থটা AnythingLLM।
+লম্বা একটা PDF দিন, তারপর প্রশ্ন করুন। ফাইল আপনার ল্যাপটপের বাইরে যায় না।
+[pause 0.2]
+আর পঞ্চমটা FastSD CPU।
+গ্রাফিক্স কার্ড ছাড়াই লেখা থেকে ছবি বানায়। থাম্বনেইলের আইডিয়ার জন্য যথেষ্ট।
+[pause 0.2]
+পাঁচটার লিংক আর ইনস্টলের বাংলা গাইড চাইলে, পেজের ইনবক্সে লিখুন AI।

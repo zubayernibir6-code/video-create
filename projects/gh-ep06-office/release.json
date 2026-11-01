@@ -1,0 +1,32 @@
+{
+  "note": "Release list of one GitHub-series episode (tools/release/pack.mjs, skill release-kit). The Reel IS the main video (universal-reel); the LinkedIn cut is a 4:5 crop of it (tools/release/li-crop.mjs).",
+  "series": "gh-ep06-office",
+  "voice": "clone",
+  "out": "D:/Video Create/renders/gh-ep06-office/release",
+  "copy": "RELEASE-COPY.md",
+  "notes": [
+    "Invoice Ninja, n8n-এর মতো কিছু টুল পুরোপুরি ওপেন সোর্স নয়, তাই ভিডিও আর লেখায় শুধু \"ফ্রি\" বলা।",
+    "শুরুর বিলের টাকাগুলো উদাহরণ (লেখা আছে \"উদাহরণ\")।",
+    "ব্যাকগ্রাউন্ড মিউজিক Lyria-তে বানানো। পেইড বিজ্ঞাপনে লাগানোর আগে Google-এর শর্ত একবার দেখে নেবেন।",
+    "কিওয়ার্ডের অটো-রিপ্লাই (ইনবক্সের মেসেজ) Facebook আর Instagram-এ চালু রাখবেন। মেসেজের লেখা series/github-repos/INBOX-AND-COMMUNITY.md-এ আছে।"
+  ],
+  "items": [
+    {
+      "id": "reel",
+      "bn": "পর্ব ৬ (অফিস আর ফ্রিল্যান্সিং)",
+      "profile": "universal-reel",
+      "project": ".",
+      "cover": "cover.jpg",
+      "file": "D:/Video Create/renders/gh-ep06-office/2026-11-01_1618/gh-ep06-office.mp4",
+      "copy": "পর্ব ৬"
+    },
+    {
+      "id": "linkedin",
+      "bn": "LinkedIn ৪:৫ কাট",
+      "profile": "linkedin-clip",
+      "file": "D:/Video Create/renders/gh-ep06-office/2026-11-01_1618/gh-ep06-office-li.mp4",
+      "copy": "LinkedIn",
+      "make": "node tools/release/li-crop.mjs \"D:/Video Create/renders/gh-ep06-office/2026-11-01_1618/gh-ep06-office.mp4\" \"D:/Video Create/renders/gh-ep06-office/2026-11-01_1618/gh-ep06-office-li.mp4\""
+    }
+  ]
+}

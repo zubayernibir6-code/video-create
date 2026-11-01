@@ -1,0 +1,190 @@
+{
+ "engine": "series",
+ "style": "REEL6",
+ "series": "৫টা GitHub রিপো",
+ "episode": 5,
+ "title": "৫টা GitHub রিপো · পর্ব ৫: ইন্টারনেট ছাড়া ল্যাপটপে AI",
+ "lang": "bn",
+ "voice": "assets/voice/voice.wav",
+ "voiceLabel": "Gemini TTS (Sadaltager, gemini-3.8-flash-tts)",
+ "music": {
+  "file": "assets/music/bgm.mp3",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে"
+ },
+ "keyword": "AI",
+ "goal": "দর্শক জানবে ইন্টারনেট ছাড়া নিজের ল্যাপটপে AI চালানোর পাঁচটা ফ্রি টুল আর তাদের সীমা, আর লিংক ও বাংলা গাইড পেতে পেজের ইনবক্সে AI লিখবে।",
+ "hook": {
+  "line": "ইন্টারনেট বন্ধ, তবু ল্যাপটপে AI উত্তর দিচ্ছে। মাসে একটা টাকাও না দিয়ে।",
+  "off": "বন্ধ",
+  "reply": "উত্তর",
+  "money": "টাকাও",
+  "ask": "একটা ছুটির দরখাস্ত লিখে দাও",
+  "answer": "অবশ্যই! এই নিন খসড়া:",
+  "cost": "মাসে খরচ: ০ টাকা"
+ },
+ "tools": [
+  {
+   "name": "Ollama",
+   "mono": "OL",
+   "maker": "ল্যাপটপেই AI মডেল",
+   "intro": "প্রথমটা Ollama।",
+   "body": "নিজের ল্যাপটপেই AI মডেল চালায়। একবার নামালে আর ইন্টারনেট লাগে না। আট GB RAM হলে ছোট মডেলই নেবেন।",
+   "features": [
+    {
+     "label": "নিজের ল্যাপটপে",
+     "on": "ল্যাপটপেই",
+     "icon": "laptop"
+    },
+    {
+     "label": "নেট লাগে না",
+     "on": "ইন্টারনেট",
+     "icon": "wifi-off"
+    }
+   ],
+   "proof": {
+    "text": "৮ GB RAM: ছোট মডেল",
+    "on": "আট",
+    "tone": "warn"
+   }
+  },
+  {
+   "name": "Jan",
+   "mono": "JA",
+   "maker": "ChatGPT-এর মতো, অফলাইনে",
+   "intro": "দ্বিতীয়টা Jan।",
+   "body": "দেখতে ChatGPT-এর মতো, কিন্তু পুরোটা চলে আপনার কম্পিউটারে। টার্মিনাল লাগে না, শুধু ক্লিক।",
+   "features": [
+    {
+     "label": "চ্যাটের মতো",
+     "on": "ChatGPT-এর",
+     "icon": "messages-square"
+    },
+    {
+     "label": "নিজের কম্পিউটারে",
+     "on": "কম্পিউটারে",
+     "icon": "monitor"
+    }
+   ],
+   "proof": {
+    "text": "টার্মিনাল লাগে না",
+    "on": "টার্মিনাল"
+   }
+  },
+  {
+   "name": "Buzz",
+   "mono": "BZ",
+   "maker": "কথা থেকে লেখা, অফলাইনে",
+   "intro": "তৃতীয়টা Buzz।",
+   "body": "অডিও বা ভিডিও থেকে লেখা বানায়, ইন্টারনেট ছাড়াই। ক্লাসের রেকর্ডিং থেকে নোট, ভিডিওর জন্য সাবটাইটেল।",
+   "features": [
+    {
+     "label": "অডিও থেকে লেখা",
+     "on": "অডিও",
+     "icon": "audio-lines"
+    },
+    {
+     "label": "নেট ছাড়াই",
+     "on": "ইন্টারনেট",
+     "icon": "wifi-off"
+    },
+    {
+     "label": "ক্লাসের নোট",
+     "on": "ক্লাসের",
+     "icon": "notebook-pen"
+    }
+   ],
+   "proof": {
+    "text": "ভিডিওর সাবটাইটেলও",
+    "on": "সাবটাইটেল"
+   }
+  },
+  {
+   "name": "AnythingLLM",
+   "mono": "AL",
+   "maker": "নিজের ফাইলে প্রশ্ন করুন",
+   "intro": "চতুর্থটা AnythingLLM।",
+   "body": "লম্বা একটা PDF দিন, তারপর প্রশ্ন করুন। ফাইল আপনার ল্যাপটপের বাইরে যায় না।",
+   "features": [
+    {
+     "label": "PDF দিন",
+     "on": "PDF",
+     "icon": "file-text"
+    },
+    {
+     "label": "প্রশ্ন করুন",
+     "on": "প্রশ্ন",
+     "icon": "circle-question-mark"
+    }
+   ],
+   "proof": {
+    "text": "ফাইল বাইরে যায় না",
+    "on": "বাইরে"
+   }
+  },
+  {
+   "name": "FastSD CPU",
+   "mono": "FS",
+   "maker": "গ্রাফিক্স কার্ড ছাড়া ছবি",
+   "intro": "আর পঞ্চমটা FastSD CPU।",
+   "body": "গ্রাফিক্স কার্ড ছাড়াই লেখা থেকে ছবি বানায়। থাম্বনেইলের আইডিয়ার জন্য যথেষ্ট।",
+   "features": [
+    {
+     "label": "GPU লাগে না",
+     "on": "গ্রাফিক্স",
+     "icon": "cpu"
+    },
+    {
+     "label": "লেখা থেকে ছবি",
+     "on": "লেখা",
+     "icon": "image"
+    }
+   ],
+   "proof": {
+    "text": "থাম্বনেইলের আইডিয়া",
+    "on": "থাম্বনেইলের"
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটার লিংক আর ইনস্টলের বাংলা গাইড চাইলে, পেজের ইনবক্সে লিখুন AI।",
+  "heading": "৫টা টুল এক নজরে",
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "বন্ধ",
+  "টাকাও",
+  "ইন্টারনেট"
+ ],
+ "facts": [
+  {
+   "claim": "Ollama runs models locally; small (1-4B) models suit 8 GB RAM",
+   "source": "https://github.com/ollama/ollama",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Jan is an offline ChatGPT-like desktop app",
+   "source": "https://github.com/janhq/jan",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Buzz transcribes audio offline with Whisper",
+   "source": "https://github.com/chidiwilliams/buzz",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "AnythingLLM chats with local documents privately",
+   "source": "https://github.com/Mintplex-Labs/anything-llm",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "FastSD CPU generates images on CPU without a GPU",
+   "source": "https://github.com/rupeshs/fastsdcpu",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": [],
+ "minMatch": 0.75,
+ "why_minMatch": "Gemini TTS + Bengali ASR: English repo names come back transliterated (Win11Debloat → উইন ইলেভেন ডিব্লোট); the TTS blocks were each checked to transcribe back"
+}

@@ -1,0 +1,9 @@
+{
+ "in": "projects/gh-ep02-pc/assets/voice/clone-b/voice.raw.wav",
+ "before_s": 87.24,
+ "after_pauses_s": 85.94,
+ "tempo": 1.0743,
+ "after_s": 79.98,
+ "gap": 0.3,
+ "max": 80
+}

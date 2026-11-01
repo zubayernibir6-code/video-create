@@ -1,0 +1,194 @@
+{
+ "engine": "series",
+ "style": "REEL5",
+ "series": "৫টা GitHub রিপো",
+ "episode": 4,
+ "title": "৫টা GitHub রিপো · পর্ব ৪: ক্রিয়েটরদের ফ্রি টুল",
+ "lang": "bn",
+ "voice": "assets/voice/voice.wav",
+ "voiceLabel": "Gemini TTS (Sadaltager, gemini-3.8-flash-tts)",
+ "music": {
+  "file": "assets/music/bgm.mp3",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে"
+ },
+ "keyword": "CREATOR",
+ "goal": "দর্শক জানবে রেকর্ড থেকে আপলোড পর্যন্ত Reels বানানোর পাঁচটা ফ্রি টুল, আর লিংক ও বাংলা গাইড পেতে পেজের ইনবক্সে CREATOR লিখবে।",
+ "hook": {
+  "line": "Reels বানাতে দামি সফটওয়্যার লাগে না। রেকর্ড থেকে আপলোড পর্যন্ত, পাঁচটা ফ্রি টুলেই হয়ে যায়।",
+  "on": "রেকর্ড",
+  "strike": "দামি সফটওয়্যার",
+  "free": "৫টা ফ্রি টুলেই হয়",
+  "neg": "না।"
+ },
+ "tools": [
+  {
+   "name": "OBS Studio",
+   "mono": "OB",
+   "step": "রেকর্ড",
+   "maker": "স্ক্রিন আর ক্যামেরা রেকর্ড",
+   "intro": "প্রথমটা OBS Studio।",
+   "body": "স্ক্রিন, ক্যামেরা আর মাইক একসাথে রেকর্ড করে, কোনো watermark ছাড়া। টিউটোরিয়াল আর Reels দুটোতেই চলে।",
+   "features": [
+    {
+     "label": "স্ক্রিন",
+     "on": "স্ক্রিন,",
+     "icon": "monitor"
+    },
+    {
+     "label": "ক্যামেরা",
+     "on": "ক্যামেরা",
+     "icon": "camera"
+    },
+    {
+     "label": "মাইক",
+     "on": "মাইক",
+     "icon": "mic"
+    }
+   ],
+   "proof": {
+    "text": "কোনো watermark নেই",
+    "on": "watermark"
+   }
+  },
+  {
+   "name": "auto-editor",
+   "mono": "AE",
+   "step": "কাট",
+   "maker": "চুপ থাকা অংশ কাটে",
+   "intro": "দ্বিতীয়টা auto-editor।",
+   "body": "এক কমান্ডে ভিডিওর চুপ থাকা অংশগুলো কেটে ফেলে। লম্বা কাঁচা রেকর্ডিং মুহূর্তেই টানটান।",
+   "features": [
+    {
+     "label": "এক কমান্ড",
+     "on": "কমান্ডে",
+     "icon": "terminal"
+    },
+    {
+     "label": "চুপ অংশ বাদ",
+     "on": "চুপ",
+     "icon": "scissors"
+    }
+   ],
+   "proof": {
+    "text": "রেকর্ডিং টানটান",
+    "on": "টানটান"
+   }
+  },
+  {
+   "name": "Subtitle Edit",
+   "mono": "SE",
+   "step": "সাবটাইটেল",
+   "maker": "কথা শুনে সাবটাইটেল",
+   "intro": "তৃতীয়টা Subtitle Edit।",
+   "body": "কথা শুনে নিজেই সাবটাইটেল লেখে, বাংলাতেও। শুধু একবার চোখ বুলিয়ে ভুলগুলো ঠিক করে নেবেন।",
+   "features": [
+    {
+     "label": "নিজেই সাবটাইটেল",
+     "on": "সাবটাইটেল",
+     "icon": "captions"
+    },
+    {
+     "label": "বাংলাতেও",
+     "on": "বাংলাতেও",
+     "icon": "languages"
+    }
+   ],
+   "proof": {
+    "text": "একবার চোখ বুলিয়ে নিন",
+    "on": "চোখ",
+    "tone": "warn"
+   }
+  },
+  {
+   "name": "LosslessCut",
+   "mono": "LC",
+   "step": "ট্রিম",
+   "maker": "রেন্ডার ছাড়া ভিডিও কাটা",
+   "intro": "চতুর্থটা LosslessCut।",
+   "body": "বড় ভিডিও কাটে কয়েক সেকেন্ডে, কারণ নতুন করে রেন্ডার করে না। দুর্বল ল্যাপটপেও দিব্যি চলে।",
+   "features": [
+    {
+     "label": "সেকেন্ডে কাট",
+     "on": "সেকেন্ডে",
+     "icon": "timer"
+    },
+    {
+     "label": "রেন্ডার নেই",
+     "on": "রেন্ডার",
+     "icon": "zap"
+    }
+   ],
+   "proof": {
+    "text": "দুর্বল ল্যাপটপেও চলে",
+    "on": "দুর্বল"
+   }
+  },
+  {
+   "name": "HandBrake",
+   "mono": "HB",
+   "step": "ছোট করা",
+   "maker": "বড় ভিডিও ছোট করে",
+   "intro": "আর পঞ্চমটা HandBrake।",
+   "body": "বড় ভিডিওকে ছোট করে, দেখতে প্রায় একই রেখে। মোবাইল ডেটায় আপলোড অনেক সহজ হয়।",
+   "features": [
+    {
+     "label": "ফাইল ছোট",
+     "on": "ছোট",
+     "icon": "minimize-2"
+    },
+    {
+     "label": "দেখতে প্রায় একই",
+     "on": "দেখতে",
+     "icon": "eye"
+    }
+   ],
+   "proof": {
+    "text": "মোবাইল ডেটায় আপলোড",
+    "on": "মোবাইল"
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটার লিংক আর ইনস্টলের বাংলা গাইড চাইলে, পেজের ইনবক্সে লিখুন CREATOR।",
+  "heading": "৫টা টুল এক নজরে",
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "watermark",
+  "চুপ",
+  "রেন্ডার",
+  "দুর্বল"
+ ],
+ "facts": [
+  {
+   "claim": "OBS Studio records screen, camera and mic with no watermark",
+   "source": "https://github.com/obsproject/obs-studio",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "auto-editor cuts silent parts automatically",
+   "source": "https://github.com/WyattBlue/auto-editor",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Subtitle Edit can auto-transcribe (Whisper), incl. Bengali",
+   "source": "https://github.com/SubtitleEdit/subtitleedit",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "LosslessCut cuts without re-encoding",
+   "source": "https://github.com/mifi/lossless-cut",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "HandBrake compresses video",
+   "source": "https://github.com/HandBrake/HandBrake",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": [],
+ "minMatch": 0.75,
+ "why_minMatch": "Gemini TTS + Bengali ASR: English repo names come back transliterated (Win11Debloat → উইন ইলেভেন ডিব্লোট); the TTS blocks were each checked to transcribe back"
+}

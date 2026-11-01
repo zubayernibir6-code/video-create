@@ -1,0 +1,314 @@
+{
+ "engine": "series",
+ "style": "REEL4",
+ "series": "৫টা GitHub রিপো",
+ "episode": 3,
+ "title": "৫টা GitHub রিপো · পর্ব ৩: অ্যাকাউন্ট আর ফাইলের নিরাপত্তা",
+ "lang": "bn",
+ "voice": "assets/voice/clone/voice.wav",
+ "voiceLabel": "আপনার ক্লোন করা গলা (Gemini, talha-a)",
+ "music": {
+  "file": "assets/music/bgm-90.wav",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে (জোড়া দিয়ে লম্বা)"
+ },
+ "keyword": "SAFE",
+ "goal": "দর্শক জানবে পাসওয়ার্ড ফাঁস হলে অ্যাকাউন্ট বাঁচানোর পাঁচটা ফ্রি টুল, আর লিংক ও বাংলা গাইড পেতে পেজের ইনবক্সে SAFE লিখবে। ভিডিওটা কী নিয়ে, প্রতিটা টুল কীভাবে চালাতে হয়, আর কীভাবে মেসেজ করতে হয়, তিনটাই পর্দায় পরিষ্কার।",
+ "hook": {
+  "line": "একটা পাসওয়ার্ড ফাঁস হলেই Facebook, Gmail সব একসাথে হাতছাড়া। এই পাঁচটা ফ্রি টুল সেটা আটকায়।",
+  "secret": "123456",
+  "accounts": [
+   "Facebook",
+   "Gmail"
+  ],
+  "crack": "ফাঁস",
+  "lose": "হাতছাড়া",
+  "lostText": "সব হাতছাড়া"
+ },
+ "tools": [
+  {
+   "name": "Bitwarden",
+   "mono": "BW",
+   "maker": "পাসওয়ার্ড ম্যানেজার",
+   "intro": "প্রথমটা Bitwarden।",
+   "body": "প্রতিটা সাইটের জন্য আলাদা কঠিন পাসওয়ার্ড বানায়, আর নিজেই মনে রাখে। ফ্রি প্ল্যানেই যত খুশি ডিভাইস।",
+   "features": [
+    {
+     "label": "আলাদা পাসওয়ার্ড",
+     "on": "আলাদা",
+     "icon": "key-round"
+    },
+    {
+     "label": "নিজেই মনে রাখে",
+     "on": "মনে",
+     "icon": "brain"
+    }
+   ],
+   "proof": {
+    "text": "ফ্রিতে যত খুশি ডিভাইস",
+    "on": "ফ্রি"
+   },
+   "how": {
+    "line": "অ্যাপ আর ব্রাউজার এক্সটেনশন নামান, একটা শক্ত master password দিন, আর সেটা কাগজে লিখে রাখুন।",
+    "steps": [
+     {
+      "label": "অ্যাপ নামান",
+      "on": "অ্যাপ"
+     },
+     {
+      "label": "master password দিন",
+      "on": "master"
+     },
+     {
+      "label": "কাগজে লিখে রাখুন",
+      "on": "কাগজে"
+     }
+    ]
+   }
+  },
+  {
+   "name": "uBlock Origin",
+   "mono": "UB",
+   "maker": "স্ক্যাম আর বিজ্ঞাপন আটকায়",
+   "intro": "দ্বিতীয়টা uBlock Origin।",
+   "body": "ভুয়া ডাউনলোড বাটন আর স্ক্যামের পপ-আপ আটকায়। Chrome চালালে নামাবেন uBO Lite।",
+   "stat": {
+    "text": "৬৯ হাজার স্টার"
+   },
+   "features": [
+    {
+     "label": "ভুয়া বাটন বন্ধ",
+     "on": "ভুয়া",
+     "icon": "ban"
+    },
+    {
+     "label": "স্ক্যাম পপ-আপ",
+     "on": "স্ক্যামের",
+     "icon": "shield-alert"
+    }
+   ],
+   "proof": {
+    "text": "Chrome-এ: uBO Lite",
+    "on": "Chrome",
+    "tone": "warn"
+   },
+   "how": {
+    "line": "ব্রাউজারের এক্সটেনশন স্টোরে নামটা লিখে Add চাপুন, ব্যস।",
+    "steps": [
+     {
+      "label": "এক্সটেনশন স্টোরে",
+      "on": "এক্সটেনশন"
+     },
+     {
+      "label": "Add চাপুন",
+      "on": "Add"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Ente Auth",
+   "mono": "EA",
+   "maker": "লগইনের দ্বিতীয় তালা",
+   "intro": "তৃতীয়টা Ente Auth।",
+   "body": "লগইনের সময় ছয় অঙ্কের কোড দেয়। পাসওয়ার্ড চুরি হলেও কোড ছাড়া কেউ ঢুকতে পারবে না।",
+   "features": [
+    {
+     "label": "৬ অঙ্কের কোড",
+     "on": "ছয়",
+     "icon": "smartphone"
+    },
+    {
+     "label": "চুরি হলেও নিরাপদ",
+     "on": "চুরি",
+     "icon": "shield-check"
+    }
+   ],
+   "proof": {
+    "text": "কোড ছাড়া ঢোকা বন্ধ",
+    "on": "ঢুকতে"
+   },
+   "how": {
+    "line": "Facebook-এর Security সেটিংসে Authenticator app বেছে, QR কোড স্ক্যান করুন।",
+    "steps": [
+     {
+      "label": "Security সেটিংসে",
+      "on": "Security"
+     },
+     {
+      "label": "Authenticator app",
+      "on": "Authenticator"
+     },
+     {
+      "label": "QR কোড স্ক্যান",
+      "on": "QR"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Cryptomator",
+   "mono": "CR",
+   "maker": "ক্লাউডে তালা দেওয়া ফোল্ডার",
+   "intro": "চতুর্থটা Cryptomator।",
+   "body": "Google Drive-এর ভেতরে তালা দেওয়া ফোল্ডার। NID-এর স্ক্যান রাখুন, অ্যাকাউন্ট হ্যাক হলেও কেউ পড়তে পারবে না।",
+   "features": [
+    {
+     "label": "Drive-এ তালা",
+     "on": "Drive-এর",
+     "icon": "lock"
+    },
+    {
+     "label": "NID-এর স্ক্যান",
+     "on": "NID-এর",
+     "icon": "id-card"
+    }
+   ],
+   "proof": {
+    "text": "হ্যাকেও পড়া যায় না",
+    "on": "হ্যাক"
+   },
+   "how": {
+    "line": "Add vault চেপে Drive ফোল্ডারে ভল্ট বানান, পাসওয়ার্ড দিন, আর রিকভারি কী লিখে রাখুন।",
+    "steps": [
+     {
+      "label": "Add vault চাপুন",
+      "on": "Add"
+     },
+     {
+      "label": "পাসওয়ার্ড দিন",
+      "on": "পাসওয়ার্ড"
+     },
+     {
+      "label": "রিকভারি কী লিখুন",
+      "on": "রিকভারি"
+     }
+    ]
+   }
+  },
+  {
+   "name": "PrivateBin",
+   "mono": "PB",
+   "maker": "নিজে মুছে যাওয়া লিংক",
+   "intro": "আর পঞ্চমটা PrivateBin।",
+   "body": "পাসওয়ার্ড পাঠাতে হলে Messenger-এ নয়। এর লিংক একবার খুললেই মেসেজটা নিজে থেকে মুছে যায়।",
+   "features": [
+    {
+     "label": "Messenger-এ নয়",
+     "on": "Messenger-এ",
+     "icon": "message-circle-x"
+    },
+    {
+     "label": "একবার খুললেই",
+     "on": "একবার",
+     "icon": "eye"
+    }
+   ],
+   "proof": {
+    "text": "নিজে থেকে মুছে যায়",
+    "on": "মুছে"
+   },
+   "how": {
+    "line": "privatebin.net খুলে লেখা পেস্ট করুন, Burn after reading বেছে লিংকটা পাঠান।",
+    "steps": [
+     {
+      "label": "লেখা পেস্ট করুন",
+      "on": "পেস্ট"
+     },
+     {
+      "label": "Burn after reading",
+      "on": "Burn"
+     },
+     {
+      "label": "লিংকটা পাঠান",
+      "on": "লিংকটা"
+     }
+    ]
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটা টুলের লিংক আর ইনস্টলের বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন SAFE। আমি নিজে আপনাকে পাঠিয়ে দেব।",
+  "heading": "৫টা তালা এক নজরে",
+  "ask": "লিংক আর বাংলা গাইড পেতে",
+  "steps": [
+   {
+    "label": "পেজে যান",
+    "on": "পেজে",
+    "icon": "house"
+   },
+   {
+    "label": "Message চাপুন",
+    "on": "Message",
+    "icon": "message-circle"
+   },
+   {
+    "label": "লিখুন SAFE",
+    "on": "লিখুন",
+    "icon": "keyboard"
+   }
+  ],
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "ফাঁস",
+  "হাতছাড়া",
+  "চুরি",
+  "হ্যাক"
+ ],
+ "facts": [
+  {
+   "claim": "Bitwarden free plan: unlimited passwords and devices",
+   "source": "https://github.com/bitwarden/clients",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "uBlock Origin has about 68.9k GitHub stars; on Chrome only uBO Lite remains",
+   "value": "৬৯ হাজার",
+   "source": "https://github.com/gorhill/uBlock",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Ente Auth gives 6-digit TOTP codes",
+   "source": "https://github.com/ente/ente",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Cryptomator encrypts folders inside cloud drives; keep the recovery key",
+   "source": "https://github.com/cryptomator/cryptomator",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "PrivateBin pastes can burn after reading",
+   "source": "https://github.com/PrivateBin/PrivateBin",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": [],
+ "minMatch": 0.75,
+ "why_minMatch": "Gemini TTS + Bengali ASR: English repo names come back transliterated (Win11Debloat → উইন ইলেভেন ডিব্লোট); the TTS blocks were each checked to transcribe back",
+ "promise": {
+  "line": "প্রতিটা কী কাজ করে, আর কীভাবে চালাবেন, এখনই দেখাচ্ছি। সব লিংক পাবেন ইনবক্সে।",
+  "kicker": "এই ভিডিওতে",
+  "title": "৫টা ফ্রি টুল",
+  "sub": "পাসওয়ার্ড আর অ্যাকাউন্ট বাঁচাতে",
+  "rows": [
+   {
+    "label": "কোনটা কী কাজ করে",
+    "on": "কাজ",
+    "icon": "sparkles"
+   },
+   {
+    "label": "কীভাবে চালাবেন",
+    "on": "চালাবেন",
+    "icon": "list-checks"
+   },
+   {
+    "label": "লিংক: ইনবক্সে SAFE",
+    "on": "ইনবক্সে",
+    "icon": "message-circle"
+   }
+  ]
+ }
+}

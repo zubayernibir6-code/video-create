@@ -1,0 +1,331 @@
+{
+ "engine": "series",
+ "style": "REEL3",
+ "series": "৫টা GitHub রিপো",
+ "episode": 2,
+ "title": "৫টা GitHub রিপো · পর্ব ২: পুরোনো ল্যাপটপ দ্রুত করা",
+ "lang": "bn",
+ "voice": "assets/voice/clone-b/voice.wav",
+ "voiceLabel": "আপনার ক্লোন করা গলা খ (Gemini, talha-b)",
+ "music": {
+  "file": "assets/music/bgm-90.wav",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে (জোড়া দিয়ে লম্বা)"
+ },
+ "keyword": "PC",
+ "goal": "দর্শক জানবে নতুন ল্যাপটপ কেনার আগে পুরোনোটা দ্রুত করার পাঁচটা ফ্রি টুল, আর লিংক ও বাংলা গাইড পেতে পেজের ইনবক্সে PC লিখবে। ভিডিওটা কী নিয়ে, প্রতিটা টুল কীভাবে চালাতে হয়, আর কীভাবে মেসেজ করতে হয়, তিনটাই পর্দায় পরিষ্কার।",
+ "hook": {
+  "line": "ল্যাপটপ স্লো বলে নতুন কেনার আগে, এই পাঁচটা ফ্রি টুল একবার চালিয়ে দেখুন।",
+  "title": "আমার ল্যাপটপ",
+  "sub": "লোড হচ্ছে… ১২%",
+  "on": "স্লো"
+ },
+ "tools": [
+  {
+   "name": "Win11Debloat",
+   "mono": "WD",
+   "maker": "Windows-এর বাড়তি জিনিস সরায়",
+   "intro": "প্রথমটা Win11Debloat।",
+   "body": "এক লাইনের কমান্ডে Windows-এর আগে থেকে বসানো অ্যাপ আর বিজ্ঞাপন সরায়। চালানোর আগে অবশ্যই restore point বানিয়ে নেবেন।",
+   "stat": {
+    "text": "৬১ হাজার স্টার"
+   },
+   "features": [
+    {
+     "label": "এক লাইনের কমান্ড",
+     "on": "কমান্ডে",
+     "icon": "terminal"
+    },
+    {
+     "label": "বাড়তি অ্যাপ বাদ",
+     "on": "বসানো",
+     "icon": "package"
+    },
+    {
+     "label": "বিজ্ঞাপন বন্ধ",
+     "on": "বিজ্ঞাপন",
+     "icon": "ban"
+    }
+   ],
+   "proof": {
+    "text": "আগে restore point",
+    "on": "অবশ্যই",
+    "tone": "warn"
+   },
+   "how": {
+    "line": "PowerShell-টা Run as administrator দিয়ে খুলুন, তারপর ইনবক্সে দেওয়া এক লাইন পেস্ট করুন।",
+    "steps": [
+     {
+      "label": "PowerShell খুলুন",
+      "on": "PowerShell-টা"
+     },
+     {
+      "label": "Admin হিসেবে চালান",
+      "on": "Run"
+     },
+     {
+      "label": "এক লাইন পেস্ট",
+      "on": "পেস্ট"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Bulk Crap Uninstaller",
+   "mono": "BC",
+   "maker": "অনেক সফটওয়্যার একসাথে মোছে",
+   "intro": "দ্বিতীয়টা Bulk Crap Uninstaller।",
+   "body": "অনেকগুলো সফটওয়্যার একসাথে মুছে দেয়, পেছনে পড়ে থাকা ফাইলসহ। একটা একটা করে আনইনস্টলের দিন শেষ।",
+   "features": [
+    {
+     "label": "অনেক সফটওয়্যার",
+     "on": "অনেকগুলো",
+     "icon": "layers"
+    },
+    {
+     "label": "একসাথে মোছে",
+     "on": "একসাথে",
+     "icon": "trash"
+    },
+    {
+     "label": "পড়ে থাকা ফাইলসহ",
+     "on": "পেছনে",
+     "icon": "folder-x"
+    }
+   ],
+   "proof": {
+    "text": "একটা একটা করে নয়",
+    "on": "একটা"
+   },
+   "how": {
+    "line": "Releases পাতা থেকে setup নামান, তালিকায় টিক দিন, তারপর Uninstall চাপুন।",
+    "steps": [
+     {
+      "label": "setup নামান",
+      "on": "Releases"
+     },
+     {
+      "label": "তালিকায় টিক দিন",
+      "on": "তালিকায়"
+     },
+     {
+      "label": "Uninstall চাপুন",
+      "on": "Uninstall"
+     }
+    ]
+   }
+  },
+  {
+   "name": "WinDirStat",
+   "mono": "WS",
+   "maker": "C ড্রাইভ কে ভরাল, দেখায়",
+   "intro": "তৃতীয়টা WinDirStat।",
+   "body": "C ড্রাইভ লাল হয়ে গেলে এটা চালান। রঙিন ম্যাপে দেখাবে কোন বড় ফাইলটা জায়গা খাচ্ছে।",
+   "features": [
+    {
+     "label": "C ড্রাইভ ভর্তি?",
+     "on": "লাল",
+     "icon": "hard-drive"
+    },
+    {
+     "label": "রঙিন ম্যাপ",
+     "on": "রঙিন",
+     "icon": "layout-grid"
+    }
+   ],
+   "proof": {
+    "text": "বড় ফাইল ধরা পড়ে",
+    "on": "বড়"
+   },
+   "how": {
+    "line": "Microsoft Store থেকে নামিয়ে C ড্রাইভ স্ক্যান করুন। শুধু নিজের ফাইল মুছবেন।",
+    "steps": [
+     {
+      "label": "Store থেকে নামান",
+      "on": "Microsoft"
+     },
+     {
+      "label": "C ড্রাইভ স্ক্যান",
+      "on": "স্ক্যান"
+     },
+     {
+      "label": "শুধু নিজের ফাইল",
+      "on": "নিজের"
+     }
+    ]
+   }
+  },
+  {
+   "name": "PowerToys",
+   "mono": "PT",
+   "maker": "Microsoft-এর নিজের টুল",
+   "intro": "চতুর্থটা Microsoft-এর নিজের PowerToys।",
+   "body": "Win, Shift আর T একসাথে চাপুন। স্ক্রিনের ছবি বা ভিডিও থেকেও ইংরেজি লেখা কপি হয়ে যাবে।",
+   "stat": {
+    "text": "১.৪ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "Win + Shift + T",
+     "on": "Win",
+     "icon": "keyboard"
+    },
+    {
+     "label": "স্ক্রিনের লেখা",
+     "on": "স্ক্রিনের",
+     "icon": "scan-text"
+    },
+    {
+     "label": "ভিডিও থেকেও",
+     "on": "ভিডিও",
+     "icon": "video"
+    }
+   ],
+   "proof": {
+    "text": "ইংরেজি লেখা কপি",
+    "on": "কপি"
+   },
+   "how": {
+    "line": "Store থেকে নামিয়ে খুলুন, Text Extractor চালু রাখুন, তারপর লেখার উপর বক্স টানুন।",
+    "steps": [
+     {
+      "label": "Store থেকে নামান",
+      "on": "Store"
+     },
+     {
+      "label": "Text Extractor চালু",
+      "on": "Text"
+     },
+     {
+      "label": "লেখার উপর বক্স",
+      "on": "বক্স"
+     }
+    ]
+   }
+  },
+  {
+   "name": "NanaZip",
+   "mono": "NZ",
+   "maker": "ফ্রি জিপ খোলার অ্যাপ",
+   "intro": "আর পঞ্চমটা NanaZip।",
+   "body": "WinRAR-এর trial শেষের সেই মেসেজ আর আসবে না। Microsoft Store থেকে এক ক্লিকেই বসে যায়।",
+   "features": [
+    {
+     "label": "trial মেসেজ নেই",
+     "on": "মেসেজ",
+     "icon": "message-square-off"
+    },
+    {
+     "label": "Store থেকে নিন",
+     "on": "Store",
+     "icon": "store"
+    }
+   ],
+   "proof": {
+    "text": "এক ক্লিকেই বসে যায়",
+    "on": "ক্লিকেই"
+   },
+   "how": {
+    "line": "যেকোনো zip ফাইলে রাইট ক্লিক করে NanaZip, তারপর Extract।",
+    "steps": [
+     {
+      "label": "রাইট ক্লিক",
+      "on": "রাইট"
+     },
+     {
+      "label": "NanaZip বাছুন",
+      "on": "NanaZip"
+     },
+     {
+      "label": "Extract চাপুন",
+      "on": "Extract"
+     }
+    ]
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটা টুলের লিংক আর ইনস্টলের বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন PC। আমি নিজে আপনাকে পাঠিয়ে দেব।",
+  "heading": "৫টা টুল এক নজরে",
+  "ask": "লিংক আর বাংলা গাইড পেতে",
+  "steps": [
+   {
+    "label": "পেজে যান",
+    "on": "পেজে",
+    "icon": "house"
+   },
+   {
+    "label": "Message চাপুন",
+    "on": "Message",
+    "icon": "message-circle"
+   },
+   {
+    "label": "লিখুন PC",
+    "on": "লিখুন",
+    "icon": "keyboard"
+   }
+  ],
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "restore",
+  "লাল",
+  "trial"
+ ],
+ "facts": [
+  {
+   "claim": "Win11Debloat has about 61.3k GitHub stars; removes preinstalled apps and ads; restore point advised",
+   "value": "৬১ হাজার",
+   "source": "https://github.com/Raphire/Win11Debloat",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Bulk Crap Uninstaller removes many programs at once incl. leftovers",
+   "source": "https://github.com/Klocman/Bulk-Crap-Uninstaller",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "WinDirStat shows disk usage as a coloured treemap",
+   "source": "https://github.com/windirstat/windirstat",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "PowerToys has about 140.3k GitHub stars; Text Extractor is Win+Shift+T",
+   "value": "১.৪ লাখ",
+   "source": "https://github.com/microsoft/PowerToys",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "NanaZip is a free 7-Zip based archiver on the Microsoft Store",
+   "source": "https://github.com/M2Team/NanaZip",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": [],
+ "minMatch": 0.75,
+ "why_minMatch": "Gemini TTS + Bengali ASR: English repo names come back transliterated (Win11Debloat → উইন ইলেভেন ডিব্লোট); the TTS blocks were each checked to transcribe back",
+ "promise": {
+  "line": "প্রতিটা কী কাজ করে, আর কীভাবে চালাবেন, এখনই দেখাচ্ছি। সব লিংক পাবেন ইনবক্সে।",
+  "kicker": "এই ভিডিওতে",
+  "title": "৫টা ফ্রি টুল",
+  "sub": "পুরোনো ল্যাপটপ দ্রুত করতে",
+  "rows": [
+   {
+    "label": "কোনটা কী কাজ করে",
+    "on": "কাজ",
+    "icon": "sparkles"
+   },
+   {
+    "label": "কীভাবে চালাবেন",
+    "on": "চালাবেন",
+    "icon": "list-checks"
+   },
+   {
+    "label": "লিংক: ইনবক্সে PC",
+    "on": "ইনবক্সে",
+    "icon": "message-circle"
+   }
+  ]
+ }
+}
