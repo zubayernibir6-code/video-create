@@ -10,7 +10,7 @@
 | | Facebook | Instagram | X | YouTube Shorts | LinkedIn |
 | --- | --- | --- | --- | --- | --- |
 | ফাইল | ইউনিভার্সাল Reel | একই ফাইল | একই ফাইল | একই ফাইল | আলাদা ৪:৫ কাট |
-| লেখা | নিচের একটাই ক্যাপশন | একই ক্যাপশন | একই ক্যাপশন | টাইটেল + একই ক্যাপশন বিবরণে | LinkedIn পোস্ট |
+| লেখা | নিজস্ব Facebook ক্যাপশন | নিজস্ব Instagram ক্যাপশন | একটাই ক্যাপশন (নিচের প্রথমটা) | টাইটেল + নিজস্ব বিবরণ + Tags | LinkedIn পোস্ট |
 | কিওয়ার্ডের উত্তর | পেজের ইনবক্স (অটো-রিপ্লাই) | DM | নিচের উত্তরে পেজের লিংক | — | মেসেজ |
 
 হ্যাশট্যাগ ৩টা করে: Facebook (৩–৪), Instagram (সর্বোচ্চ ৫) আর Shorts (৩), তিনটাতেই চলে।
@@ -50,6 +50,63 @@ YouTube Shorts টাইটেল:
 ```
 বাংলা ভাষার ৫টা ওপেন সোর্স কাজ | Common Voice, IndicTrans2 #Shorts
 ```
+
+<!-- platform-copy start -->
+Facebook Reel-এর ক্যাপশন (Facebook-এর জন্য আলাদা; লিংক থাকবে প্রথম কমেন্টে):
+
+<!-- copy: facebook-reel -->
+```
+বাংলা ভাষার AI এমনি এমনি তৈরি হবে না। কেউ না কেউ কোড লিখছে।
+
+Common Voice, OpenBangla Keyboard, Indic Parler-TTS, IndicTrans2 আর bnlp। দুটো সবার জন্য, তিনটা ডেভেলপারদের। Common Voice-এ ফোন দিয়েই সাহায্য করা যায়।
+
+লিংক আর সাহায্য করার বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন BANGLA, আমি নিজে পাঠিয়ে দেব।
+
+#OpenSource #বাংলা_ভাষা #বাংলা_টেক #GitHubBangla
+```
+
+Instagram Reel-এর ক্যাপশন (প্রথম লাইনটাই ফিডে দেখা যায়; লিংক Bio-তে বা প্রোফাইলের Message বাটনে):
+
+<!-- copy: instagram-reel -->
+```
+বাংলা ভাষার ৫টা ওপেন সোর্স কাজ, দুটো সবার জন্য, তিনটা ডেভেলপারদের
+
+১. Common Voice: ফোনে বাংলা বাক্য পড়ে রেকর্ড, অন্যদেরটা শুনে মেলান
+২. OpenBangla Keyboard: Linux-এ Avro-র মতো করেই বাংলা লেখা
+৩. Indic Parler-TTS: ইংরেজি বর্ণনা থেকে বাংলা কণ্ঠ (Python লাগে)
+৪. IndicTrans2: ইংরেজি থেকে বাংলা অনুবাদ, MIT লাইসেন্স
+৫. bnlp: বাংলা লেখা নিয়ে কাজের Python টুলকিট
+
+লিংক আর সাহায্য করার বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন BANGLA।
+
+#OpenSource #GitHub #বাংলা_ভাষা #বাংলা_টেক #GitHubBangla
+```
+
+YouTube Shorts-এর বিবরণ (Shorts-এর বিবরণে লিংকে ক্লিক হয় না, তাই পেজের নাম আর চ্যানেলের প্রোফাইল-লিংক):
+
+<!-- copy: shorts-description -->
+```
+বাংলা ভাষার ৫টা ওপেন সোর্স কাজ: দুটো সবার জন্য, তিনটা ডেভেলপারদের। কোনটা কী করে আর কীভাবে কাজে লাগাবেন, ভিডিওতে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. Common Voice
+২. OpenBangla Keyboard
+৩. Indic Parler-TTS
+৪. IndicTrans2
+৫. bnlp
+
+লিংক আর সাহায্য করার বাংলা গাইড: Facebook-এ আমার পেজের ইনবক্সে BANGLA লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#OpenSource #বাংলা_ভাষা #বাংলা_টেক
+```
+
+YouTube Studio-র Tags বক্স (কমা দিয়ে, পুরোটা পেস্ট করুন):
+
+<!-- copy: youtube-tags -->
+```
+Bangla AI, Bengali NLP, Common Voice Bengali, OpenBangla Keyboard, Indic Parler-TTS, IndicTrans2, bnlp, বাংলা ভাষা, ওপেন সোর্স, বাংলা টেক
+```
+<!-- platform-copy end -->
 
 ## LinkedIn
 

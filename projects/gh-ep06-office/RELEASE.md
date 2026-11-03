@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep06-office
 
-তৈরি: 2026-11-01 16:33 · `node tools/release/pack.mjs projects/gh-ep06-office` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep06-office/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep06-office` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep06-office/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,51 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ৬ (অফিস আর ফ্রিল্যান্সিং)** — ফাইল `D:/Video Create/renders/gh-ep06-office/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ৬ (অফিস আর ফ্রিল্যান্সিং)** — ফাইল `D:/Video Create/renders/gh-ep06-office/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+ফ্রিল্যান্সারদের ৫টা ফ্রি টুল | Stirling-PDF, Excalidraw, Joplin #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+ফ্রিল্যান্সিং আর অফিসের কাজের ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. Stirling-PDF
+২. Excalidraw
+৩. Invoice Ninja
+৪. Documenso
+৫. Joplin
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে OFFICE লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#Freelancing #GitHub #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+freelancer tools, free PDF editor, Stirling-PDF, Excalidraw, Invoice Ninja, Documenso, Joplin, ফ্রিল্যান্সিং, অফিসের কাজ, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ৬ (অফিস আর ফ্রিল্যান্সিং)** — ফাইল `D:/Video Create/renders/gh-ep06-office/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-প্রতিটা অফিস-কাজের জন্য আলাদা সাবস্ক্রিপশন লাগে না।
+প্রতিটা অফিস-কাজের জন্য আলাদা সাবস্ক্রিপশন লাগে না। ফ্রিল্যান্সারদের ৫টা ফ্রি টুল।
 
-Stirling-PDF, Excalidraw, Invoice Ninja, Documenso আর Joplin। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতেই দেখিয়েছি।
+Stirling-PDF, Excalidraw, Invoice Ninja, Documenso আর Joplin। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন OFFICE।
+Invoice Ninja-র ফ্রি প্ল্যানে ৫ জন ক্লায়েন্ট, Documenso-তে মাসে ৫টা ডকুমেন্ট।
 
-#GitHub #Freelancing #বাংলা_টেক
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন OFFICE, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #Freelancing #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +78,20 @@ Stirling-PDF, Excalidraw, Invoice Ninja, Documenso আর Joplin। প্রত
 
 **পর্ব ৬ (অফিস আর ফ্রিল্যান্সিং)** — ফাইল `D:/Video Create/renders/gh-ep06-office/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep06-office/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-প্রতিটা অফিস-কাজের জন্য আলাদা সাবস্ক্রিপশন লাগে না।
+ফ্রিল্যান্সিং আর অফিসের কাজের ৫টা ফ্রি টুল, আলাদা সাবস্ক্রিপশন ছাড়া
 
-Stirling-PDF, Excalidraw, Invoice Ninja, Documenso আর Joplin। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতেই দেখিয়েছি।
+১. Stirling-PDF: PDF জোড়া, ছোট করা, সই, সব অফলাইনে
+২. Excalidraw: ব্রাউজারে হোয়াইটবোর্ড, ক্লায়েন্টের সাথে একসাথে আঁকুন
+৩. Invoice Ninja: বিদেশি ক্লায়েন্টের জন্য পেশাদার ইনভয়েস
+৪. Documenso: ক্লায়েন্ট অনলাইনেই কন্ট্রাক্টে সই করে
+৫. Joplin: ব্রিফ আর কাজের তালিকা, নিজের OneDrive-এ সিঙ্ক
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন OFFICE।
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন OFFICE।
 
-#GitHub #Freelancing #বাংলা_টেক
+#GitHub #Freelancing #Productivity #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X
@@ -109,7 +146,7 @@ _(লেখা পাওয়া যায়নি: RELEASE-COPY.md দেখ�
 
 ## মনে রাখবেন
 
-- **AI গলা:** এই ভিডিওর ভয়েস আপনার গলার ক্লোন। YouTube Studio → Details → "Altered or synthetic content" = **Yes**; Facebook/Instagram-এ পোস্ট করার সময় "AI info / Made with AI" লেবেল দিন; X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লিখুন। না দিলে ভিডিও সরানো বা চ্যানেলে শাস্তির ঝুঁকি।
+- **AI গলা:** এই ভিডিওর ভয়েস আপনার নিজের গলার ক্লোন। Facebook/Instagram-এ পোস্ট করার সময় "AI info" (AI দিয়ে বানানো) লেবেল চালু করুন — Meta-র নিয়মে বাস্তব-শোনানো AI অডিওতে এটা বাধ্যতামূলক। YouTube-এ লাগবে না: YouTube-এর নিয়মে নিজের গলার ক্লোন দিয়ে ভয়েস-ওভার জানানোর তালিকায় নেই (চালু করলেও আয়ে প্রভাব নেই)। X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লেখা ভালো।
 - Invoice Ninja, n8n-এর মতো কিছু টুল পুরোপুরি ওপেন সোর্স নয়, তাই ভিডিও আর লেখায় শুধু "ফ্রি" বলা।
 - শুরুর বিলের টাকাগুলো উদাহরণ (লেখা আছে "উদাহরণ")।
 - ব্যাকগ্রাউন্ড মিউজিক Lyria-তে বানানো। পেইড বিজ্ঞাপনে লাগানোর আগে Google-এর শর্ত একবার দেখে নেবেন।

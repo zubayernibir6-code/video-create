@@ -10,7 +10,7 @@
 | | Facebook | Instagram | X | YouTube Shorts | LinkedIn |
 | --- | --- | --- | --- | --- | --- |
 | ফাইল | ইউনিভার্সাল Reel | একই ফাইল | একই ফাইল | একই ফাইল | আলাদা ৪:৫ কাট |
-| লেখা | নিচের একটাই ক্যাপশন | একই ক্যাপশন | একই ক্যাপশন | টাইটেল + একই ক্যাপশন বিবরণে | LinkedIn পোস্ট |
+| লেখা | নিজস্ব Facebook ক্যাপশন | নিজস্ব Instagram ক্যাপশন | একটাই ক্যাপশন (নিচের প্রথমটা) | টাইটেল + নিজস্ব বিবরণ + Tags | LinkedIn পোস্ট |
 | কিওয়ার্ডের উত্তর | পেজের ইনবক্স (অটো-রিপ্লাই) | DM | নিচের উত্তরে পেজের লিংক | — | মেসেজ |
 
 হ্যাশট্যাগ ৩টা করে: Facebook (৩–৪), Instagram (সর্বোচ্চ ৫) আর Shorts (৩), তিনটাতেই চলে। হ্যাশট্যাগ সামান্য সাহায্য করে, আসল রিচ আসে হুক, পুরোটা দেখা আর শেয়ার থেকে।
@@ -50,6 +50,65 @@ YouTube Shorts টাইটেল:
 ```
 ফোনের জন্য ৫টা ফ্রি GitHub অ্যাপ | LocalSend, scrcpy, Obtainium #Shorts
 ```
+
+<!-- platform-copy start -->
+Facebook Reel-এর ক্যাপশন (Facebook-এর জন্য আলাদা; লিংক থাকবে প্রথম কমেন্টে):
+
+<!-- copy: facebook-reel -->
+```
+ফোনের ডেটা আর স্টোরেজ বাঁচানোর ৫টা ফ্রি অ্যাপ, সবগুলো GitHub-এ।
+
+LocalSend, Fossify Gallery, Canta, scrcpy আর Obtainium। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+Canta দিয়ে শুধু "নিরাপদ" লেখা অ্যাপগুলোই সরাবেন।
+
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন PHONE, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #AndroidTips #বাংলা_টেক #GitHubBangla
+```
+
+Instagram Reel-এর ক্যাপশন (প্রথম লাইনটাই ফিডে দেখা যায়; লিংক Bio-তে বা প্রোফাইলের Message বাটনে):
+
+<!-- copy: instagram-reel -->
+```
+ফোনের ডেটা আর স্টোরেজ বাঁচানোর ৫টা ফ্রি অ্যাপ, GitHub থেকে
+
+১. LocalSend: ইন্টারনেট ছাড়াই ফোন থেকে ল্যাপটপে ভিডিও
+২. Fossify Gallery: বিজ্ঞাপন ছাড়া গ্যালারি, শেয়ারের আগে ছবির লোকেশন মোছে
+৩. Canta + Shizuku: রুট ছাড়া বাড়তি অ্যাপ সরায় (শুধু নিরাপদগুলো)
+৪. scrcpy: ফোনের পুরো স্ক্রিন ল্যাপটপে, মাউস দিয়েই চালান
+৫. Obtainium: GitHub-এর অ্যাপ নিজে থেকে আপডেট রাখে
+
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন PHONE।
+
+#GitHub #AndroidTips #FreeApps #বাংলা_টেক #GitHubBangla
+```
+
+YouTube Shorts-এর বিবরণ (Shorts-এর বিবরণে লিংকে ক্লিক হয় না, তাই পেজের নাম আর চ্যানেলের প্রোফাইল-লিংক):
+
+<!-- copy: shorts-description -->
+```
+ফোনের ডেটা আর স্টোরেজ বাঁচানোর ৫টা ফ্রি অ্যাপ। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. LocalSend
+২. Fossify Gallery
+৩. Canta + Shizuku
+৪. scrcpy
+৫. Obtainium
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে PHONE লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#GitHub #AndroidTips #বাংলা_টেক
+```
+
+YouTube Studio-র Tags বক্স (কমা দিয়ে, পুরোটা পেস্ট করুন):
+
+<!-- copy: youtube-tags -->
+```
+GitHub, free Android apps, ফ্রি অ্যাপ, LocalSend, Fossify Gallery, Canta, Shizuku, scrcpy, Obtainium, Android tips Bangla, বাংলা টেক
+```
+<!-- platform-copy end -->
 
 ## LinkedIn
 

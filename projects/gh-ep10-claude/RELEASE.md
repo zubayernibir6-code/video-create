@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep10-claude
 
-তৈরি: 2026-11-01 17:55 · `node tools/release/pack.mjs projects/gh-ep10-claude` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep10-claude/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 17:00 · `node tools/release/pack.mjs projects/gh-ep10-claude` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep10-claude/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,49 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ১০ (Claude Code-এর শক্তি)** — ফাইল `D:/Video Create/renders/gh-ep10-claude/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ১০ (Claude Code-এর শক্তি)** — ফাইল `D:/Video Create/renders/gh-ep10-claude/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+Claude Code-এর ৫টা ফ্রি পাওয়ার-আপ | Superpowers, Context7 #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+Claude Code-এর শক্তি বাড়ানোর ৫টা ফ্রি জিনিস। কোনটা কী করে আর কীভাবে বসাবেন, ভিডিওতে দেখিয়েছি। Claude Code নিজে চলে পেইড প্ল্যানে।
+
+এই ভিডিওতে:
+১. Superpowers
+২. Anthropic Skills
+৩. Context7
+৪. Playwright MCP
+৫. ccusage
+
+লিংক আর বসানোর বাংলা গাইড: Facebook-এ আমার পেজের ইনবক্সে CLAUDE লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#ClaudeCode #GitHub #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+Claude Code, Claude Code plugins, Superpowers, Anthropic Skills, Context7, Playwright MCP, ccusage, AI coding, Claude Code Bangla, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ১০ (Claude Code-এর শক্তি)** — ফাইল `D:/Video Create/renders/gh-ep10-claude/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-Claude Code দিয়ে কিছু বানানোর আগে এই পাঁচটা ফ্রি জিনিস বসিয়ে নিন।
+Claude Code দিয়ে কিছু বানানোর আগে এই ৫টা ফ্রি জিনিস বসিয়ে নিন।
 
-Superpowers, Skills, Context7, Playwright MCP আর ccusage। Claude Code নিজে চলে পেইড প্ল্যানে।
+Superpowers, Anthropic Skills, Context7, Playwright MCP আর ccusage। কোনটা কী করে আর কীভাবে বসাবেন, ভিডিওতে দেখিয়েছি। Claude Code নিজে চলে পেইড প্ল্যানে।
 
-লিংক আর বসানোর বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন CLAUDE।
+লিংক আর বসানোর বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন CLAUDE, আমি নিজে পাঠিয়ে দেব।
 
-#ClaudeCode #GitHub #বাংলা_টেক
+#ClaudeCode #GitHub #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +76,20 @@ Superpowers, Skills, Context7, Playwright MCP আর ccusage। Claude Code ন�
 
 **পর্ব ১০ (Claude Code-এর শক্তি)** — ফাইল `D:/Video Create/renders/gh-ep10-claude/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep10-claude/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-Claude Code দিয়ে কিছু বানানোর আগে এই পাঁচটা ফ্রি জিনিস বসিয়ে নিন।
+Claude Code-এর শক্তি বাড়ানোর ৫টা ফ্রি পাওয়ার-আপ
 
-Superpowers, Skills, Context7, Playwright MCP আর ccusage। Claude Code নিজে চলে পেইড প্ল্যানে।
+১. Superpowers: কোডের আগে প্রশ্ন, প্ল্যান, তারপর টেস্ট
+২. Anthropic Skills: বললেই আসল Word, Excel আর PowerPoint ফাইল
+৩. Context7: আজকের ডকুমেন্টেশন পড়ে কোড লেখে
+৪. Playwright MCP: Claude নিজেই ব্রাউজারে ফর্ম পরীক্ষা করে
+৫. ccusage: কত টোকেন গেল, লিমিটের কত কাছে
 
-লিংক আর বসানোর বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন CLAUDE।
+Claude Code চলে পেইড প্ল্যানে। লিংক আর বসানোর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন CLAUDE।
 
-#ClaudeCode #GitHub #বাংলা_টেক
+#ClaudeCode #GitHub #AITools #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

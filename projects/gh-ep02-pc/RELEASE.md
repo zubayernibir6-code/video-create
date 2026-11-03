@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep02-pc
 
-তৈরি: 2026-11-01 18:13 · `node tools/release/pack.mjs projects/gh-ep02-pc` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep02-pc/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep02-pc` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep02-pc/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,51 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ২ (পুরোনো ল্যাপটপ দ্রুত)** — ফাইল `D:/Video Create/renders/gh-ep02-pc/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ২ (পুরোনো ল্যাপটপ দ্রুত)** — ফাইল `D:/Video Create/renders/gh-ep02-pc/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+স্লো ল্যাপটপ দ্রুত করার ৫টা ফ্রি টুল | Win11Debloat, PowerToys #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+পুরোনো ল্যাপটপ দ্রুত করার ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি। Win11Debloat-এর আগে restore point বানিয়ে নেবেন।
+
+এই ভিডিওতে:
+১. Win11Debloat
+২. Bulk Crap Uninstaller
+৩. WinDirStat
+৪. PowerToys
+৫. NanaZip
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে PC লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#GitHub #WindowsTips #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+GitHub, Windows 11 tips, laptop slow fix, ল্যাপটপ দ্রুত করা, Win11Debloat, Bulk Crap Uninstaller, WinDirStat, PowerToys, NanaZip, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ২ (পুরোনো ল্যাপটপ দ্রুত)** — ফাইল `D:/Video Create/renders/gh-ep02-pc/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-ল্যাপটপ স্লো? নতুন কেনার আগে এই পাঁচটা ফ্রি টুল চালিয়ে দেখুন।
+পুরোনো ল্যাপটপ স্লো? নতুন কেনার আগে এই ৫টা ফ্রি টুল চালিয়ে দেখুন।
 
-Win11Debloat, Bulk Crap Uninstaller, WinDirStat, PowerToys আর NanaZip। Win11Debloat-এর আগে restore point বানিয়ে নেবেন।
+Win11Debloat, Bulk Crap Uninstaller, WinDirStat, PowerToys আর NanaZip। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন PC।
+Win11Debloat চালানোর আগে অবশ্যই restore point বানিয়ে নেবেন।
 
-#GitHub #WindowsTips #বাংলা_টেক
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন PC, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #WindowsTips #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +78,20 @@ Win11Debloat, Bulk Crap Uninstaller, WinDirStat, PowerToys আর NanaZip। Win
 
 **পর্ব ২ (পুরোনো ল্যাপটপ দ্রুত)** — ফাইল `D:/Video Create/renders/gh-ep02-pc/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep02-pc/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-ল্যাপটপ স্লো? নতুন কেনার আগে এই পাঁচটা ফ্রি টুল চালিয়ে দেখুন।
+পুরোনো ল্যাপটপ দ্রুত করার ৫টা ফ্রি টুল, নতুন কেনার আগে একবার দেখুন
 
-Win11Debloat, Bulk Crap Uninstaller, WinDirStat, PowerToys আর NanaZip। Win11Debloat-এর আগে restore point বানিয়ে নেবেন।
+১. Win11Debloat: Windows-এর বাড়তি অ্যাপ আর বিজ্ঞাপন সরায় (আগে restore point)
+২. Bulk Crap Uninstaller: অনেক সফটওয়্যার একসাথে মোছে
+৩. WinDirStat: C ড্রাইভ কে ভরাল, রঙিন ম্যাপে দেখায়
+৪. PowerToys: Win + Shift + T চাপলে স্ক্রিনের ইংরেজি লেখা কপি
+৫. NanaZip: trial মেসেজ ছাড়া zip আর rar খোলা
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন PC।
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন PC।
 
-#GitHub #WindowsTips #বাংলা_টেক
+#GitHub #WindowsTips #PCTips #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

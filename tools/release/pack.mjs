@@ -90,6 +90,11 @@ const lis = items.filter((it) => kindOf(it) === "linkedin-clip");
 const pend = items.filter((it) => !it.ready);
 const say = { PASS: "✓ পাস", WARN: "✓ পাস (সতর্কতাসহ)", FAIL: "✗ আটকাবে", PENDING: "⏳ রেন্ডার বাকি" };
 // every text to paste sits in its own ``` fence (one tap to copy in the app)
+// a Reel's caption for one platform: its own block (facebook-reel, instagram-reel, shorts-description) when the copy
+// file has one, else the universal Reel caption (2026-11-03: separate Facebook / Instagram / YouTube copy per platform)
+const pick = (title, kind) => { const own = copyFor(title, kind); return own.length ? own : copyFor(title, "universal-reel"); };
+const has = (title, kind) => copyFor(title, kind).length > 0;
+const shortsCopy = (r) => `\n\nটাইটেল:\n\n${one(copyFor(r.copy, "youtube-title"))}\n\nডেসক্রিপশন:\n\n${one(pick(r.copy, "shorts-description"))}\n${has(r.copy, "youtube-tags") ? `\nTags বক্স:\n\n${one(copyFor(r.copy, "youtube-tags"))}\n` : ""}`;
 const one = (arr) => (arr.length ? arr.map((t) => "```\n" + t + "\n```").join("\n\n") : "_(লেখা পাওয়া যায়নি: RELEASE-COPY.md দেখুন)_");
 let R = `# রিলিজ চেকলিস্ট: ${rel.series}
 
@@ -111,12 +116,13 @@ ${main ? `১. **দিন ১:** পুরো ভিডিও YouTube-এ (ল�
 `;
 if (main) {
   R += `\n## ১. YouTube\n\n**পুরো ভিডিও** — ফাইল ${fileLine(main, "youtube")}${main.srt ? `, সাবটাইটেল ${fileLine(main, "youtube", "srt.bn")} (Studio → Subtitles → Upload file → With timing)` : ""}, থাম্বনেইল ${fileLine(main, "youtube", "thumb")}।\n\nটাইটেল:\n\n${one(copyFor(main.copy, "youtube-title"))}\n\nডেসক্রিপশন:\n\n${one(copyFor(main.copy, "youtube-description"))}\n\nTags বক্স:\n\n${one(copyFor(main.copy, "youtube-tags"))}\n\nপিন করা কমেন্ট:\n\n${one(copyFor(main.copy, "youtube-pinned"))}\n`;
-  for (const r of reels) R += `\n**Shorts: ${r.bn}** — ফাইল ${fileLine(r, "youtube")}। আপলোডের সময় **Related video**-তে পুরো ভিডিওটা বেছে দিন।\n\nটাইটেল:\n\n${one(copyFor(r.copy, "youtube-title"))}\n\nডেসক্রিপশন:\n\n${one(copyFor(r.copy, "universal-reel"))}\n`;
+  for (const r of reels) R += `\n**Shorts: ${r.bn}** — ফাইল ${fileLine(r, "youtube")}। আপলোডের সময় **Related video**-তে পুরো ভিডিওটা বেছে দিন।${shortsCopy(r)}`;
   R += `\n## ২. Facebook পেজ\n\n**পুরো ভিডিও** — ফাইল ${fileLine(main, "facebook")}${main.srt ? `, সাবটাইটেল ${fileLine(main, "facebook", "srt.fb")} (ভিডিও এডিট → Subtitles & captions → Upload SRT; নামটাই ভাষা বলে দেয়)` : ""}।\n\nপোস্ট:\n\n${one(copyFor(main.copy, "facebook-post"))}\n\nনিজের প্রথম কমেন্ট (লিংক):\n\n${one(copyFor(main.copy, "first-comment"))}\n`;
 } else R += `\n## ১–২. YouTube আর Facebook\n\n_(release.json-এ পুরো ভিডিও নেই)_\n`;
-for (const r of reels) R += `\n**Reel: ${r.bn}** — ফাইল ${fileLine(r, "facebook")}।\n\nক্যাপশন:\n\n${one(copyFor(r.copy, "universal-reel"))}\n\nনিজের প্রথম কমেন্ট:\n\n${one(copyFor(r.copy, "first-comment"))}\n`;
+// a Reel-only series has no main video: its Shorts get their words here, next to the Facebook Reel
+for (const r of reels) R += `${main ? "" : `\n**YouTube Shorts: ${r.bn}** — ফাইল ${fileLine(r, "youtube")}।${shortsCopy(r)}`}\n**Facebook Reel: ${r.bn}** — ফাইল ${fileLine(r, "facebook")}।\n\nক্যাপশন:\n\n${one(pick(r.copy, "facebook-reel"))}\n\nনিজের প্রথম কমেন্ট:\n\n${one(copyFor(r.copy, "first-comment"))}\n`;
 R += `\n## ৩. Instagram\n\nপুরো ভিডিওর লিংক থাকবে Bio-তে (একবার বসিয়ে রাখুন)। প্রতিটা Reel-এর কভার: কভার ছবি আপলোড করুন বা ভিডিওর প্রথম ফ্রেম রাখুন।\n`;
-for (const r of reels) R += `\n**${r.bn}** — ফাইল ${fileLine(r, "instagram")}, কভার ${fileLine(r, "instagram", "cover")}।\n\nক্যাপশন (Facebook-এর হুবহু):\n\n${one(copyFor(r.copy, "universal-reel"))}\n`;
+for (const r of reels) R += `\n**${r.bn}** — ফাইল ${fileLine(r, "instagram")}, কভার ${fileLine(r, "instagram", "cover")}।\n\nক্যাপশন${has(r.copy, "instagram-reel") ? "" : " (Facebook-এর হুবহু)"}:\n\n${one(pick(r.copy, "instagram-reel"))}\n`;
 R += `\n## ৪. X\n\nফ্রি অ্যাকাউন্টে ভিডিও ১৪০ সেকেন্ড পর্যন্ত: Reel-গুলো সরাসরি যাবে, পুরো ভিডিও ${main && xNative(main) ? "ও সরাসরি যাবে (এটা ১৪০ সেকেন্ডের কম)" : "যাবে লেখা + লিংকে"}।\n`;
 for (const r of reels) R += `\n**${r.bn}** — ফাইল ${fileLine(r, "x")}।\n\nপোস্ট (Facebook-এর হুবহু):\n\n${one(copyFor(r.copy, "universal-reel"))}\n\nনিজের পোস্টের নিচে উত্তর (লিংক):\n\n${one(copyFor(r.copy, "x-reply"))}\n`;
 if (rel.xMain) R += `\n**পুরো ভিডিও ${main && xNative(main) ? `(সরাসরি)** — ফাইল ${fileLine(main, "x")}` : "(লেখা + লিংক)**"}\n\nপোস্ট:\n\n${one(copyFor(rel.xMain, "x-post"))}\n\nউত্তর:\n\n${one(copyFor(rel.xMain, "x-reply"))}\n`;
@@ -136,10 +142,28 @@ mkdirSync(OUT, { recursive: true });
 // the project's own copy only when packing the project's own release.json (a trial --release=… writes to --out only)
 if (!opt.release || path.resolve(opt.release) === path.join(P, "release.json")) writeFileSync(path.join(P, "RELEASE.md"), R);
 writeFileSync(path.join(OUT, "RELEASE.md"), R);
+// each Reel's words as plain text next to its file in every platform folder: open on the phone, copy, paste
+const capFiles = [];
+const txt = (pf, name, parts) => {
+  const body = parts.filter(([, t]) => t.length).map(([h, t]) => `${h}\n\n${t.join("\n\n")}`).join("\n\n----------\n\n");
+  if (!body) return;
+  const to = path.join(OUT, DEST[pf], name);
+  mkdirSync(path.dirname(to), { recursive: true });
+  writeFileSync(to, body + "\n");
+  capFiles.push(to);
+};
+for (const r of reels) {
+  txt("youtube", `${r.id}-shorts.txt`, [["টাইটেল:", copyFor(r.copy, "youtube-title")], ["ডেসক্রিপশন:", pick(r.copy, "shorts-description")], ["Tags বক্স:", copyFor(r.copy, "youtube-tags")]]);
+  txt("facebook", `${r.id}-caption.txt`, [["ক্যাপশন:", pick(r.copy, "facebook-reel")], ["নিজের প্রথম কমেন্ট:", copyFor(r.copy, "first-comment")]]);
+  txt("instagram", `${r.id}-caption.txt`, [["ক্যাপশন:", pick(r.copy, "instagram-reel")]]);
+  txt("x", `${r.id}-post.txt`, [["পোস্ট:", copyFor(r.copy, "universal-reel")], ["নিজের পোস্টের নিচে উত্তর:", copyFor(r.copy, "x-reply")]]);
+}
+for (const l of lis) txt("linkedin", `${l.id}-post.txt`, [["পোস্ট:", copyFor(l.copy, "linkedin-post")], ["প্রথম কমেন্ট (চাইলে):", copyFor(l.copy, "first-comment")]]);
 writeFileSync(path.join(OUT, "release.result.json"), JSON.stringify({ made: new Date().toISOString(), items: items.map(({ res, ...it }) => ({ ...it, checks: res?.groups.map((g) => ({ target: g.target, verdict: g.verdict })) })), copyErrors: copyErrs.map((r) => ({ line: r.b.line, kind: r.b.kind, errs: r.errs })), placed }, null, 2));
 
 console.log(`pack: ${rel.series} → ${OUT}`);
 for (const it of items) console.log(`  ${it.verdict.padEnd(7)} ${it.id.padEnd(12)} ${it.bn}${it.ready ? `  ${MB(it.file)}` : ""}`);
 console.log(`  copy: ${copyErrs.length ? `✗ ${copyErrs.length} block(s) with errors — fix RELEASE-COPY.md (node tools/release/copy-check.mjs …)` : `✓ ${bs.filter((b) => b.kind).length} blocks`}`);
+if (capFiles.length) console.log(`  captions: ${capFiles.length} text file(s) next to the videos (…-caption.txt, …-shorts.txt, …-post.txt)`);
 console.log(`  placed ${placed.length} file(s) (${placed.filter((p) => p.how === "link").length} hard links, ${placed.filter((p) => p.how === "copy").length} copies); checklist: ${path.join(OUT, "RELEASE.md")}`);
 process.exit(copyErrs.length || items.some((it) => it.verdict === "FAIL") ? 1 : 0);

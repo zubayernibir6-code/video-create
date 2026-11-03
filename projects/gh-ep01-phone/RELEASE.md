@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep01-phone
 
-তৈরি: 2026-11-01 18:13 · `node tools/release/pack.mjs projects/gh-ep01-phone` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep01-phone/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:58 · `node tools/release/pack.mjs projects/gh-ep01-phone` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep01-phone/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,51 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ১ (ফোনের ফ্রি অ্যাপ)** — ফাইল `D:/Video Create/renders/gh-ep01-phone/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ১ (ফোনের ফ্রি অ্যাপ)** — ফাইল `D:/Video Create/renders/gh-ep01-phone/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+ফোনের জন্য ৫টা ফ্রি GitHub অ্যাপ | LocalSend, scrcpy, Obtainium #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+ফোনের ডেটা আর স্টোরেজ বাঁচানোর ৫টা ফ্রি অ্যাপ। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. LocalSend
+২. Fossify Gallery
+৩. Canta + Shizuku
+৪. scrcpy
+৫. Obtainium
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে PHONE লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#GitHub #AndroidTips #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+GitHub, free Android apps, ফ্রি অ্যাপ, LocalSend, Fossify Gallery, Canta, Shizuku, scrcpy, Obtainium, Android tips Bangla, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ১ (ফোনের ফ্রি অ্যাপ)** — ফাইল `D:/Video Create/renders/gh-ep01-phone/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-ফোনে এই পাঁচটা ফ্রি অ্যাপ না থাকলে ডেটা আর স্টোরেজ দুটোই নষ্ট হয়।
+ফোনের ডেটা আর স্টোরেজ বাঁচানোর ৫টা ফ্রি অ্যাপ, সবগুলো GitHub-এ।
 
-LocalSend, Fossify Gallery, Canta, scrcpy আর Obtainium। কীভাবে চালাবেন, ভিডিওতেই আছে।
+LocalSend, Fossify Gallery, Canta, scrcpy আর Obtainium। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন PHONE।
+Canta দিয়ে শুধু "নিরাপদ" লেখা অ্যাপগুলোই সরাবেন।
 
-#GitHub #AndroidTips #বাংলা_টেক
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন PHONE, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #AndroidTips #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +78,20 @@ LocalSend, Fossify Gallery, Canta, scrcpy আর Obtainium। কীভাবে
 
 **পর্ব ১ (ফোনের ফ্রি অ্যাপ)** — ফাইল `D:/Video Create/renders/gh-ep01-phone/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep01-phone/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-ফোনে এই পাঁচটা ফ্রি অ্যাপ না থাকলে ডেটা আর স্টোরেজ দুটোই নষ্ট হয়।
+ফোনের ডেটা আর স্টোরেজ বাঁচানোর ৫টা ফ্রি অ্যাপ, GitHub থেকে
 
-LocalSend, Fossify Gallery, Canta, scrcpy আর Obtainium। কীভাবে চালাবেন, ভিডিওতেই আছে।
+১. LocalSend: ইন্টারনেট ছাড়াই ফোন থেকে ল্যাপটপে ভিডিও
+২. Fossify Gallery: বিজ্ঞাপন ছাড়া গ্যালারি, শেয়ারের আগে ছবির লোকেশন মোছে
+৩. Canta + Shizuku: রুট ছাড়া বাড়তি অ্যাপ সরায় (শুধু নিরাপদগুলো)
+৪. scrcpy: ফোনের পুরো স্ক্রিন ল্যাপটপে, মাউস দিয়েই চালান
+৫. Obtainium: GitHub-এর অ্যাপ নিজে থেকে আপডেট রাখে
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন PHONE।
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন PHONE।
 
-#GitHub #AndroidTips #বাংলা_টেক
+#GitHub #AndroidTips #FreeApps #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

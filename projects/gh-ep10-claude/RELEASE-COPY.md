@@ -10,7 +10,7 @@
 | | Facebook | Instagram | X | YouTube Shorts | LinkedIn |
 | --- | --- | --- | --- | --- | --- |
 | ফাইল | ইউনিভার্সাল Reel | একই ফাইল | একই ফাইল | একই ফাইল | আলাদা ৪:৫ কাট |
-| লেখা | নিচের একটাই ক্যাপশন | একই ক্যাপশন | একই ক্যাপশন | টাইটেল + একই ক্যাপশন বিবরণে | LinkedIn পোস্ট |
+| লেখা | নিজস্ব Facebook ক্যাপশন | নিজস্ব Instagram ক্যাপশন | একটাই ক্যাপশন (নিচের প্রথমটা) | টাইটেল + নিজস্ব বিবরণ + Tags | LinkedIn পোস্ট |
 | কিওয়ার্ডের উত্তর | পেজের ইনবক্স (অটো-রিপ্লাই) | DM | নিচের উত্তরে পেজের লিংক | — | মেসেজ |
 
 হ্যাশট্যাগ ৩টা করে: Facebook (৩–৪), Instagram (সর্বোচ্চ ৫) আর Shorts (৩), তিনটাতেই চলে।
@@ -50,6 +50,63 @@ YouTube Shorts টাইটেল:
 ```
 Claude Code-এর ৫টা ফ্রি পাওয়ার-আপ | Superpowers, Context7 #Shorts
 ```
+
+<!-- platform-copy start -->
+Facebook Reel-এর ক্যাপশন (Facebook-এর জন্য আলাদা; লিংক থাকবে প্রথম কমেন্টে):
+
+<!-- copy: facebook-reel -->
+```
+Claude Code দিয়ে কিছু বানানোর আগে এই ৫টা ফ্রি জিনিস বসিয়ে নিন।
+
+Superpowers, Anthropic Skills, Context7, Playwright MCP আর ccusage। কোনটা কী করে আর কীভাবে বসাবেন, ভিডিওতে দেখিয়েছি। Claude Code নিজে চলে পেইড প্ল্যানে।
+
+লিংক আর বসানোর বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন CLAUDE, আমি নিজে পাঠিয়ে দেব।
+
+#ClaudeCode #GitHub #বাংলা_টেক #GitHubBangla
+```
+
+Instagram Reel-এর ক্যাপশন (প্রথম লাইনটাই ফিডে দেখা যায়; লিংক Bio-তে বা প্রোফাইলের Message বাটনে):
+
+<!-- copy: instagram-reel -->
+```
+Claude Code-এর শক্তি বাড়ানোর ৫টা ফ্রি পাওয়ার-আপ
+
+১. Superpowers: কোডের আগে প্রশ্ন, প্ল্যান, তারপর টেস্ট
+২. Anthropic Skills: বললেই আসল Word, Excel আর PowerPoint ফাইল
+৩. Context7: আজকের ডকুমেন্টেশন পড়ে কোড লেখে
+৪. Playwright MCP: Claude নিজেই ব্রাউজারে ফর্ম পরীক্ষা করে
+৫. ccusage: কত টোকেন গেল, লিমিটের কত কাছে
+
+Claude Code চলে পেইড প্ল্যানে। লিংক আর বসানোর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন CLAUDE।
+
+#ClaudeCode #GitHub #AITools #বাংলা_টেক #GitHubBangla
+```
+
+YouTube Shorts-এর বিবরণ (Shorts-এর বিবরণে লিংকে ক্লিক হয় না, তাই পেজের নাম আর চ্যানেলের প্রোফাইল-লিংক):
+
+<!-- copy: shorts-description -->
+```
+Claude Code-এর শক্তি বাড়ানোর ৫টা ফ্রি জিনিস। কোনটা কী করে আর কীভাবে বসাবেন, ভিডিওতে দেখিয়েছি। Claude Code নিজে চলে পেইড প্ল্যানে।
+
+এই ভিডিওতে:
+১. Superpowers
+২. Anthropic Skills
+৩. Context7
+৪. Playwright MCP
+৫. ccusage
+
+লিংক আর বসানোর বাংলা গাইড: Facebook-এ আমার পেজের ইনবক্সে CLAUDE লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#ClaudeCode #GitHub #বাংলা_টেক
+```
+
+YouTube Studio-র Tags বক্স (কমা দিয়ে, পুরোটা পেস্ট করুন):
+
+<!-- copy: youtube-tags -->
+```
+Claude Code, Claude Code plugins, Superpowers, Anthropic Skills, Context7, Playwright MCP, ccusage, AI coding, Claude Code Bangla, বাংলা টেক
+```
+<!-- platform-copy end -->
 
 ## LinkedIn
 

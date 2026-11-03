@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep05-ai
 
-তৈরি: 2026-11-01 18:14 · `node tools/release/pack.mjs projects/gh-ep05-ai` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep05-ai/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep05-ai` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep05-ai/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,51 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ৫ (ল্যাপটপে অফলাইন AI)** — ফাইল `D:/Video Create/renders/gh-ep05-ai/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ৫ (ল্যাপটপে অফলাইন AI)** — ফাইল `D:/Video Create/renders/gh-ep05-ai/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+ইন্টারনেট ছাড়া ল্যাপটপে AI চালানোর ৫টা ফ্রি টুল | Ollama, Jan #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+ইন্টারনেট ছাড়া নিজের ল্যাপটপে AI চালানোর ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি। ৮ GB RAM-এ ছোট মডেলই চলবে।
+
+এই ভিডিওতে:
+১. Ollama
+২. Jan
+৩. Buzz
+৪. AnythingLLM
+৫. FastSD CPU
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে AI লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#LocalAI #GitHub #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+offline AI, local AI, Ollama, Jan AI, Buzz transcription, AnythingLLM, FastSD CPU, ইন্টারনেট ছাড়া AI, ফ্রি AI টুল, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ৫ (ল্যাপটপে অফলাইন AI)** — ফাইল `D:/Video Create/renders/gh-ep05-ai/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-ইন্টারনেট বন্ধ, তবু ল্যাপটপে AI উত্তর দিচ্ছে। মাসে একটা টাকাও খরচ নেই।
+ইন্টারনেট বন্ধ, তবু ল্যাপটপে AI উত্তর দিচ্ছে, মাসে একটা টাকাও না দিয়ে।
 
-Ollama, Jan, Buzz, AnythingLLM আর FastSD CPU। ৮ GB RAM-এ ছোট মডেলই নেবেন, উত্তরও তাই সাধারণ মানের।
+Ollama, Jan, Buzz, AnythingLLM আর FastSD CPU। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন AI।
+৮ GB RAM-এ ছোট মডেলই চলবে, উত্তর ChatGPT-এর চেয়ে দুর্বল হবে।
 
-#GitHub #OfflineAI #বাংলা_টেক
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন AI, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #LocalAI #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +78,20 @@ Ollama, Jan, Buzz, AnythingLLM আর FastSD CPU। ৮ GB RAM-এ ছোট ম
 
 **পর্ব ৫ (ল্যাপটপে অফলাইন AI)** — ফাইল `D:/Video Create/renders/gh-ep05-ai/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep05-ai/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-ইন্টারনেট বন্ধ, তবু ল্যাপটপে AI উত্তর দিচ্ছে। মাসে একটা টাকাও খরচ নেই।
+ইন্টারনেট ছাড়া নিজের ল্যাপটপে AI চালানোর ৫টা ফ্রি টুল
 
-Ollama, Jan, Buzz, AnythingLLM আর FastSD CPU। ৮ GB RAM-এ ছোট মডেলই নেবেন, উত্তরও তাই সাধারণ মানের।
+১. Ollama: ল্যাপটপেই AI মডেল, একবার নামালে নেট লাগে না
+২. Jan: দেখতে ChatGPT-এর মতো, চলে আপনার কম্পিউটারে
+৩. Buzz: অডিও বা ভিডিও থেকে লেখা, ইন্টারনেট ছাড়া
+৪. AnythingLLM: নিজের PDF বা Word ফাইলে প্রশ্ন করুন
+৫. FastSD CPU: গ্রাফিক্স কার্ড ছাড়া লেখা থেকে ছবি
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন AI।
+৮ GB RAM-এ ছোট মডেলই চলবে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন AI।
 
-#GitHub #OfflineAI #বাংলা_টেক
+#GitHub #LocalAI #AITools #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

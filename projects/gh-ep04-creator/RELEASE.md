@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep04-creator
 
-তৈরি: 2026-11-01 18:13 · `node tools/release/pack.mjs projects/gh-ep04-creator` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep04-creator/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep04-creator` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep04-creator/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,51 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ৪ (ক্রিয়েটরদের ফ্রি টুল)** — ফাইল `D:/Video Create/renders/gh-ep04-creator/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ৪ (ক্রিয়েটরদের ফ্রি টুল)** — ফাইল `D:/Video Create/renders/gh-ep04-creator/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+Reels বানানোর ৫টা ফ্রি টুল | OBS, LosslessCut, HandBrake #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+রেকর্ড থেকে আপলোড পর্যন্ত, Reels বানানোর ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. OBS Studio
+২. auto-editor
+৩. Subtitle Edit
+৪. LosslessCut
+৫. HandBrake
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে CREATOR লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#VideoEditing #GitHub #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+free video editing software, OBS Studio, auto-editor, Subtitle Edit, LosslessCut, HandBrake, Reels editing, content creator tools, ভিডিও এডিটিং, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ৪ (ক্রিয়েটরদের ফ্রি টুল)** — ফাইল `D:/Video Create/renders/gh-ep04-creator/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-Reels বানাতে দামি সফটওয়্যার লাগে না। রেকর্ড থেকে আপলোড পর্যন্ত পাঁচটা ফ্রি টুলেই হয়ে যায়।
+Reels বানাতে দামি সফটওয়্যার লাগে না। রেকর্ড থেকে আপলোড পর্যন্ত ৫টা ফ্রি টুলেই হয়।
 
-OBS Studio, auto-editor, Subtitle Edit, LosslessCut আর HandBrake।
+OBS Studio, auto-editor, Subtitle Edit, LosslessCut আর HandBrake। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন CREATOR।
+Subtitle Edit-এর বাংলা সাবটাইটেল একবার চোখ বুলিয়ে ঠিক করে নেবেন।
 
-#GitHub #ContentCreator #বাংলা_টেক
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন CREATOR, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #VideoEditing #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +78,20 @@ OBS Studio, auto-editor, Subtitle Edit, LosslessCut আর HandBrake।
 
 **পর্ব ৪ (ক্রিয়েটরদের ফ্রি টুল)** — ফাইল `D:/Video Create/renders/gh-ep04-creator/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep04-creator/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-Reels বানাতে দামি সফটওয়্যার লাগে না। রেকর্ড থেকে আপলোড পর্যন্ত পাঁচটা ফ্রি টুলেই হয়ে যায়।
+রেকর্ড থেকে আপলোড পর্যন্ত, Reels বানানোর ৫টা ফ্রি টুল
 
-OBS Studio, auto-editor, Subtitle Edit, LosslessCut আর HandBrake।
+১. OBS Studio: স্ক্রিন, ক্যামেরা আর মাইক একসাথে রেকর্ড, watermark ছাড়া
+২. auto-editor: এক কমান্ডে চুপ থাকা অংশ কেটে ফেলে
+৩. Subtitle Edit: কথা শুনে সাবটাইটেল লেখে, বাংলাতেও
+৪. LosslessCut: রেন্ডার ছাড়া কয়েক সেকেন্ডে ভিডিও কাটা
+৫. HandBrake: বড় ভিডিও ছোট করে, দেখতে প্রায় একই
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন CREATOR।
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন CREATOR।
 
-#GitHub #ContentCreator #বাংলা_টেক
+#GitHub #VideoEditing #ContentCreator #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

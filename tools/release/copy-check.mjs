@@ -57,6 +57,8 @@ export function checkBlock(b) {
   if (inBody.length) errs.push(`hashtags inside the text (${inBody.join(" ")}): put them on the last line`);
   if (rule.xLength) { const n = xLength(t); if (n > rule.xLength) errs.push(`X length ${n} > ${rule.xLength}`); else info.push(`X length ${n}/${rule.xLength}`); }
   if (rule.maxChars && [...t].length > rule.maxChars) errs.push(`${[...t].length} characters > ${rule.maxChars}`);
+  // the feed shows only the start of a caption before "more": the first line must carry the hook and the keyword
+  if (rule.firstLineChars) { const n = [...t.split("\n")[0]].length; if (n > rule.firstLineChars) errs.push(`first line ${n} characters > ${rule.firstLineChars} (the feed cuts it before "more")`); }
   if (rule.maxWords) { const w = t.split(/\s+/).length; if (w > rule.maxWords) errs.push(`${w} words > ${rule.maxWords}`); else info.push(`${w} words`); }
   if (rule.noLink && t.match(URL)) errs.push(`a link in the text (${t.match(URL)[0]}): ${b.kind === "linkedin-post" ? "first comment or nowhere" : "first comment / reply / Bio, never the post itself"}`);
   for (const w of rule.banned ?? []) if (t.toLowerCase().includes(w.toLowerCase())) errs.push(`"${w}" is not allowed in ${b.kind}${rule.why ? ` (${rule.why})` : ""}`);

@@ -10,7 +10,7 @@
 | | Facebook | Instagram | X | YouTube Shorts | LinkedIn |
 | --- | --- | --- | --- | --- | --- |
 | ফাইল | ইউনিভার্সাল Reel | একই ফাইল | একই ফাইল | একই ফাইল | আলাদা ৪:৫ কাট |
-| লেখা | নিচের একটাই ক্যাপশন | একই ক্যাপশন | একই ক্যাপশন | টাইটেল + একই ক্যাপশন বিবরণে | LinkedIn পোস্ট |
+| লেখা | নিজস্ব Facebook ক্যাপশন | নিজস্ব Instagram ক্যাপশন | একটাই ক্যাপশন (নিচের প্রথমটা) | টাইটেল + নিজস্ব বিবরণ + Tags | LinkedIn পোস্ট |
 | কিওয়ার্ডের উত্তর | পেজের ইনবক্স (অটো-রিপ্লাই) | DM | নিচের উত্তরে পেজের লিংক | — | মেসেজ |
 
 হ্যাশট্যাগ ৩টা করে: Facebook (৩–৪), Instagram (সর্বোচ্চ ৫) আর Shorts (৩), তিনটাতেই চলে।
@@ -50,6 +50,65 @@ YouTube Shorts টাইটেল:
 ```
 ফ্রিল্যান্সারদের ৫টা ফ্রি টুল | Stirling-PDF, Excalidraw, Joplin #Shorts
 ```
+
+<!-- platform-copy start -->
+Facebook Reel-এর ক্যাপশন (Facebook-এর জন্য আলাদা; লিংক থাকবে প্রথম কমেন্টে):
+
+<!-- copy: facebook-reel -->
+```
+প্রতিটা অফিস-কাজের জন্য আলাদা সাবস্ক্রিপশন লাগে না। ফ্রিল্যান্সারদের ৫টা ফ্রি টুল।
+
+Stirling-PDF, Excalidraw, Invoice Ninja, Documenso আর Joplin। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+Invoice Ninja-র ফ্রি প্ল্যানে ৫ জন ক্লায়েন্ট, Documenso-তে মাসে ৫টা ডকুমেন্ট।
+
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন OFFICE, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #Freelancing #বাংলা_টেক #GitHubBangla
+```
+
+Instagram Reel-এর ক্যাপশন (প্রথম লাইনটাই ফিডে দেখা যায়; লিংক Bio-তে বা প্রোফাইলের Message বাটনে):
+
+<!-- copy: instagram-reel -->
+```
+ফ্রিল্যান্সিং আর অফিসের কাজের ৫টা ফ্রি টুল, আলাদা সাবস্ক্রিপশন ছাড়া
+
+১. Stirling-PDF: PDF জোড়া, ছোট করা, সই, সব অফলাইনে
+২. Excalidraw: ব্রাউজারে হোয়াইটবোর্ড, ক্লায়েন্টের সাথে একসাথে আঁকুন
+৩. Invoice Ninja: বিদেশি ক্লায়েন্টের জন্য পেশাদার ইনভয়েস
+৪. Documenso: ক্লায়েন্ট অনলাইনেই কন্ট্রাক্টে সই করে
+৫. Joplin: ব্রিফ আর কাজের তালিকা, নিজের OneDrive-এ সিঙ্ক
+
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন OFFICE।
+
+#GitHub #Freelancing #Productivity #বাংলা_টেক #GitHubBangla
+```
+
+YouTube Shorts-এর বিবরণ (Shorts-এর বিবরণে লিংকে ক্লিক হয় না, তাই পেজের নাম আর চ্যানেলের প্রোফাইল-লিংক):
+
+<!-- copy: shorts-description -->
+```
+ফ্রিল্যান্সিং আর অফিসের কাজের ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. Stirling-PDF
+২. Excalidraw
+৩. Invoice Ninja
+৪. Documenso
+৫. Joplin
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে OFFICE লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#Freelancing #GitHub #বাংলা_টেক
+```
+
+YouTube Studio-র Tags বক্স (কমা দিয়ে, পুরোটা পেস্ট করুন):
+
+<!-- copy: youtube-tags -->
+```
+freelancer tools, free PDF editor, Stirling-PDF, Excalidraw, Invoice Ninja, Documenso, Joplin, ফ্রিল্যান্সিং, অফিসের কাজ, বাংলা টেক
+```
+<!-- platform-copy end -->
 
 ## LinkedIn
 

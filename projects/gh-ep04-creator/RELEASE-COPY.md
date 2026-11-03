@@ -10,7 +10,7 @@
 | | Facebook | Instagram | X | YouTube Shorts | LinkedIn |
 | --- | --- | --- | --- | --- | --- |
 | ফাইল | ইউনিভার্সাল Reel | একই ফাইল | একই ফাইল | একই ফাইল | আলাদা ৪:৫ কাট |
-| লেখা | নিচের একটাই ক্যাপশন | একই ক্যাপশন | একই ক্যাপশন | টাইটেল + একই ক্যাপশন বিবরণে | LinkedIn পোস্ট |
+| লেখা | নিজস্ব Facebook ক্যাপশন | নিজস্ব Instagram ক্যাপশন | একটাই ক্যাপশন (নিচের প্রথমটা) | টাইটেল + নিজস্ব বিবরণ + Tags | LinkedIn পোস্ট |
 | কিওয়ার্ডের উত্তর | পেজের ইনবক্স (অটো-রিপ্লাই) | DM | নিচের উত্তরে পেজের লিংক | — | মেসেজ |
 
 হ্যাশট্যাগ ৩টা করে: Facebook (৩–৪), Instagram (সর্বোচ্চ ৫) আর Shorts (৩), তিনটাতেই চলে। হ্যাশট্যাগ সামান্য সাহায্য করে, আসল রিচ আসে হুক, পুরোটা দেখা আর শেয়ার থেকে।
@@ -50,6 +50,65 @@ YouTube Shorts টাইটেল:
 ```
 Reels বানানোর ৫টা ফ্রি টুল | OBS, LosslessCut, HandBrake #Shorts
 ```
+
+<!-- platform-copy start -->
+Facebook Reel-এর ক্যাপশন (Facebook-এর জন্য আলাদা; লিংক থাকবে প্রথম কমেন্টে):
+
+<!-- copy: facebook-reel -->
+```
+Reels বানাতে দামি সফটওয়্যার লাগে না। রেকর্ড থেকে আপলোড পর্যন্ত ৫টা ফ্রি টুলেই হয়।
+
+OBS Studio, auto-editor, Subtitle Edit, LosslessCut আর HandBrake। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+Subtitle Edit-এর বাংলা সাবটাইটেল একবার চোখ বুলিয়ে ঠিক করে নেবেন।
+
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন CREATOR, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #VideoEditing #বাংলা_টেক #GitHubBangla
+```
+
+Instagram Reel-এর ক্যাপশন (প্রথম লাইনটাই ফিডে দেখা যায়; লিংক Bio-তে বা প্রোফাইলের Message বাটনে):
+
+<!-- copy: instagram-reel -->
+```
+রেকর্ড থেকে আপলোড পর্যন্ত, Reels বানানোর ৫টা ফ্রি টুল
+
+১. OBS Studio: স্ক্রিন, ক্যামেরা আর মাইক একসাথে রেকর্ড, watermark ছাড়া
+২. auto-editor: এক কমান্ডে চুপ থাকা অংশ কেটে ফেলে
+৩. Subtitle Edit: কথা শুনে সাবটাইটেল লেখে, বাংলাতেও
+৪. LosslessCut: রেন্ডার ছাড়া কয়েক সেকেন্ডে ভিডিও কাটা
+৫. HandBrake: বড় ভিডিও ছোট করে, দেখতে প্রায় একই
+
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন CREATOR।
+
+#GitHub #VideoEditing #ContentCreator #বাংলা_টেক #GitHubBangla
+```
+
+YouTube Shorts-এর বিবরণ (Shorts-এর বিবরণে লিংকে ক্লিক হয় না, তাই পেজের নাম আর চ্যানেলের প্রোফাইল-লিংক):
+
+<!-- copy: shorts-description -->
+```
+রেকর্ড থেকে আপলোড পর্যন্ত, Reels বানানোর ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. OBS Studio
+২. auto-editor
+৩. Subtitle Edit
+৪. LosslessCut
+৫. HandBrake
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে CREATOR লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#VideoEditing #GitHub #বাংলা_টেক
+```
+
+YouTube Studio-র Tags বক্স (কমা দিয়ে, পুরোটা পেস্ট করুন):
+
+<!-- copy: youtube-tags -->
+```
+free video editing software, OBS Studio, auto-editor, Subtitle Edit, LosslessCut, HandBrake, Reels editing, content creator tools, ভিডিও এডিটিং, বাংলা টেক
+```
+<!-- platform-copy end -->
 
 ## LinkedIn
 

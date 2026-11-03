@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep09-auto
 
-তৈরি: 2026-11-01 17:37 · `node tools/release/pack.mjs projects/gh-ep09-auto` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep09-auto/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep09-auto` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep09-auto/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,51 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ৯ (কাজ নিজে থেকে করানো)** — ফাইল `D:/Video Create/renders/gh-ep09-auto/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ৯ (কাজ নিজে থেকে করানো)** — ফাইল `D:/Video Create/renders/gh-ep09-auto/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+কাজ নিজে থেকে করানোর ৫টা ফ্রি টুল | n8n, Dify, Langflow #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+রোজকার কাজ নিজে নিজে করানোর ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি। AI ধাপের জন্য সাধারণত একটা API key লাগে।
+
+এই ভিডিওতে:
+১. n8n
+২. Nanobrowser
+৩. Dify
+৪. Activepieces
+৫. Langflow
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে AUTO লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#Automation #NoCode #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+automation tools, n8n, Nanobrowser, Dify, Activepieces, Langflow, no code automation, AI agent, অটোমেশন, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ৯ (কাজ নিজে থেকে করানো)** — ফাইল `D:/Video Create/renders/gh-ep09-auto/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-প্রতিদিনের একই কাজ এখনো হাতে করছেন?
+প্রতিদিনের একই কাজ এখনো হাতে করছেন? এই ৫টা ফ্রি টুল কাজগুলো নিজে থেকেই করিয়ে নেয়।
 
-n8n, Nanobrowser, Dify, Activepieces আর Langflow। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতেই দেখিয়েছি।
+n8n, Nanobrowser, Dify, Activepieces আর Langflow। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন AUTO।
+AI-এর ধাপগুলোর জন্য সাধারণত একটা API key লাগে।
 
-#GitHub #Automation #বাংলা_টেক
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন AUTO, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #Automation #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +78,20 @@ n8n, Nanobrowser, Dify, Activepieces আর Langflow। প্রতিটা �
 
 **পর্ব ৯ (কাজ নিজে থেকে করানো)** — ফাইল `D:/Video Create/renders/gh-ep09-auto/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep09-auto/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-প্রতিদিনের একই কাজ এখনো হাতে করছেন?
+রোজকার কাজ নিজে নিজে করানোর ৫টা ফ্রি অটোমেশন টুল
 
-n8n, Nanobrowser, Dify, Activepieces আর Langflow। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতেই দেখিয়েছি।
+১. n8n: ফর্ম থেকে Sheet, ইমেইলের উত্তর, রোজকার রিপোর্ট
+২. Nanobrowser: Chrome-এর পাশে AI এজেন্ট, নিজেই ক্লিক করে
+৩. Dify: নিজের দামের তালিকা থেকে উত্তর দেওয়া চ্যাটবট
+৪. Activepieces: Zapier-এর মতো, ফ্রি ক্লাউড প্ল্যান
+৫. Langflow: AI এজেন্টের ভেতরটা টেনে জোড়া লাগিয়ে বানান
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন AUTO।
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন AUTO।
 
-#GitHub #Automation #বাংলা_টেক
+#GitHub #Automation #NoCode #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

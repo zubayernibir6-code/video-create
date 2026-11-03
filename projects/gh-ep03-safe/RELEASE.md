@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep03-safe
 
-তৈরি: 2026-11-01 18:04 · `node tools/release/pack.mjs projects/gh-ep03-safe` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep03-safe/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep03-safe` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep03-safe/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,51 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ৩ (অ্যাকাউন্টের নিরাপত্তা)** — ফাইল `D:/Video Create/renders/gh-ep03-safe/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ৩ (অ্যাকাউন্টের নিরাপত্তা)** — ফাইল `D:/Video Create/renders/gh-ep03-safe/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+অ্যাকাউন্ট হ্যাক আটকানোর ৫টা ফ্রি টুল | Bitwarden, Ente Auth #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+পাসওয়ার্ড আর অ্যাকাউন্ট বাঁচানোর ৫টা ফ্রি টুল। প্রতিটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি। Chrome-এ uBO Lite নামাবেন।
+
+এই ভিডিওতে:
+১. Bitwarden
+২. uBlock Origin
+৩. Ente Auth
+৪. Cryptomator
+৫. PrivateBin
+
+লিংক আর বাংলা ইনস্টল-গাইড: Facebook-এ আমার পেজের ইনবক্সে SAFE লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#CyberSecurity #GitHub #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+password manager, Bitwarden, uBlock Origin, uBO Lite, Ente Auth, 2FA, Cryptomator, PrivateBin, অনলাইন নিরাপত্তা, পাসওয়ার্ড, GitHub, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ৩ (অ্যাকাউন্টের নিরাপত্তা)** — ফাইল `D:/Video Create/renders/gh-ep03-safe/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-একটা পাসওয়ার্ড ফাঁস হলেই Facebook, Gmail সব একসাথে হাতছাড়া। এই পাঁচটা ফ্রি টুল সেটা আটকায়।
+একটা পাসওয়ার্ড ফাঁস হলেই Facebook, Gmail সব হাতছাড়া। এই ৫টা ফ্রি টুল সেটা আটকায়।
 
-Bitwarden, uBlock Origin, Ente Auth, Cryptomator, PrivateBin। Chrome-এ নামাবেন uBO Lite।
+Bitwarden, uBlock Origin, Ente Auth, Cryptomator আর PrivateBin। কোনটা কী করে আর কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে দেখিয়েছি।
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন SAFE।
+Chrome-এ নামাবেন uBO Lite, আর Cryptomator-এর রিকভারি কী লিখে রাখবেন।
 
-#GitHub #CyberSecurity #বাংলা_টেক
+লিংক আর বাংলা ইনস্টল-গাইড চাইলে পেজের ইনবক্সে লিখুন SAFE, আমি নিজে পাঠিয়ে দেব।
+
+#GitHub #CyberSecurity #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +78,20 @@ Bitwarden, uBlock Origin, Ente Auth, Cryptomator, PrivateBin। Chrome-এ ন�
 
 **পর্ব ৩ (অ্যাকাউন্টের নিরাপত্তা)** — ফাইল `D:/Video Create/renders/gh-ep03-safe/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep03-safe/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-একটা পাসওয়ার্ড ফাঁস হলেই Facebook, Gmail সব একসাথে হাতছাড়া। এই পাঁচটা ফ্রি টুল সেটা আটকায়।
+পাসওয়ার্ড আর অ্যাকাউন্ট বাঁচানোর ৫টা ফ্রি টুল, একটা ফাঁসেই সব হাতছাড়া হওয়ার আগে
 
-Bitwarden, uBlock Origin, Ente Auth, Cryptomator, PrivateBin। Chrome-এ নামাবেন uBO Lite।
+১. Bitwarden: প্রতিটা সাইটে আলাদা কঠিন পাসওয়ার্ড, নিজেই মনে রাখে
+২. uBlock Origin: ভুয়া বাটন আর স্ক্যাম পপ-আপ আটকায় (Chrome-এ uBO Lite)
+৩. Ente Auth: লগইনের ৬ অঙ্কের কোড, পাসওয়ার্ড চুরি হলেও নিরাপদ
+৪. Cryptomator: Google Drive-এর ভেতরে তালা দেওয়া ফোল্ডার
+৫. PrivateBin: একবার খুললেই মুছে যাওয়া মেসেজের লিংক
 
-লিংক আর ইনস্টলের বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন SAFE।
+কীভাবে চালাবেন, ভিডিওতে ধাপে ধাপে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন SAFE।
 
-#GitHub #CyberSecurity #বাংলা_টেক
+#GitHub #CyberSecurity #OnlineSafety #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

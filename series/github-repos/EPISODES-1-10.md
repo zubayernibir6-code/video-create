@@ -28,7 +28,8 @@
 ## আপলোডের ক্রম
 
 - দিনে একটা পর্ব, ১ থেকে ১০। একই দিনে Facebook, Instagram, X আর Shorts-এ। LinkedIn-এর ৪:৫ ভার্সন একই দিনে বা পরদিন।
-- প্রতিটা `RELEASE.md`-এর একদম শুরুতে নিয়ম লেখা আছে, গলাটা ক্লোন বলে। YouTube-এ "Altered or synthetic content = Yes" দেবেন। Facebook/Instagram-এ "AI info" লেবেল দেবেন।
+- প্রতিটা `RELEASE.md`-এর একদম শুরুতে AI গলার নিয়ম লেখা আছে: Facebook/Instagram-এ "AI info" লেবেল দেবেন (গলাটা আপনার ক্লোন)।
+- Facebook, Instagram আর YouTube-এর আলাদা ক্যাপশন আর হ্যাশট্যাগ: `POSTING-GUIDE.md` আর প্রতিটা রিলিজ ফোল্ডারে ভিডিওর পাশে লেখার ফাইল।
 - পোস্ট করার আগে Facebook আর Instagram-এ কিওয়ার্ডের অটো-রিপ্লাই চালু রাখবেন। মেসেজের লেখা `INBOX-AND-COMMUNITY.md`-এ আছে।
 
 ## যা আপনার হাতে বাকি

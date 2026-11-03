@@ -184,7 +184,10 @@
       "youtube-pinned": { "bn": "YouTube-এ নিজের পিন করা কমেন্ট", "hashtags": [0, 0] },
       "youtube-description": { "bn": "YouTube ডেসক্রিপশন (চ্যাপ্টারসহ)", "hashtags": [3, 3], "maxChars": 5000, "why": "the first three hashtags show above the title; over 15 are all ignored (PC)" },
       "youtube-tags": { "bn": "YouTube Studio-র Tags বক্স (কমা দিয়ে)", "hashtags": [0, 0], "maxChars": 500 },
-      "facebook-post": { "bn": "Facebook পেজের পোস্ট (পুরো ভিডিও)", "hashtags": [3, 4], "noLink": true }
+      "facebook-post": { "bn": "Facebook পেজের পোস্ট (পুরো ভিডিও)", "hashtags": [3, 4], "noLink": true },
+      "facebook-reel": { "bn": "Facebook Reel-এর নিজস্ব ক্যাপশন", "hashtags": [3, 4], "noLink": true, "maxWords": 90, "firstLineChars": 125, "banned": ["Bio", "বায়ো", "link in bio"], "why": "checked 2026-11-03 (web: Socialinsider caption-length data, ContentStudio, Lilach Bullock): Reel captions of 30-60 words engage best, a few relevant hashtags beat many, the first line carries the keyword because Facebook search reads captions; the link goes in the first comment" },
+      "instagram-reel": { "bn": "Instagram Reel-এর নিজস্ব ক্যাপশন", "hashtags": [3, 5], "noLink": true, "maxChars": 2200, "firstLineChars": 125, "banned": ["লিংক কমেন্টে", "কমেন্টে লিংক"], "why": "checked 2026-11-03 (web: Later, digitalapplied, InstantDM): Instagram caps hashtags at 5 per post since Dec 2025 (comment hashtags count too), only the first ~125 characters show before 'more', caption keywords feed Instagram search, links in captions do not click" },
+      "shorts-description": { "bn": "YouTube Shorts-এর বিবরণ", "hashtags": [3, 3], "noLink": true, "maxChars": 5000, "why": "checked 2026-11-03 (web: hashtagtools.io, vidIQ, touhfa): the first three hashtags show above the title, over 15 are all ignored, the description should add what the title does not say; links in Shorts descriptions and comments do not click (YouTube 2023), so the Facebook page goes in the channel's links and the text names it" }
     }
   },
 

@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep08-bangla
 
-তৈরি: 2026-11-01 18:13 · `node tools/release/pack.mjs projects/gh-ep08-bangla` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep08-bangla/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep08-bangla` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep08-bangla/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,49 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ৮ (বাংলা ভাষার ওপেন সোর্স)** — ফাইল `D:/Video Create/renders/gh-ep08-bangla/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ৮ (বাংলা ভাষার ওপেন সোর্স)** — ফাইল `D:/Video Create/renders/gh-ep08-bangla/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+বাংলা ভাষার ৫টা ওপেন সোর্স কাজ | Common Voice, IndicTrans2 #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+বাংলা ভাষার ৫টা ওপেন সোর্স কাজ: দুটো সবার জন্য, তিনটা ডেভেলপারদের। কোনটা কী করে আর কীভাবে কাজে লাগাবেন, ভিডিওতে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. Common Voice
+২. OpenBangla Keyboard
+৩. Indic Parler-TTS
+৪. IndicTrans2
+৫. bnlp
+
+লিংক আর সাহায্য করার বাংলা গাইড: Facebook-এ আমার পেজের ইনবক্সে BANGLA লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#OpenSource #বাংলা_ভাষা #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+Bangla AI, Bengali NLP, Common Voice Bengali, OpenBangla Keyboard, Indic Parler-TTS, IndicTrans2, bnlp, বাংলা ভাষা, ওপেন সোর্স, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ৮ (বাংলা ভাষার ওপেন সোর্স)** — ফাইল `D:/Video Create/renders/gh-ep08-bangla/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
 বাংলা ভাষার AI এমনি এমনি তৈরি হবে না। কেউ না কেউ কোড লিখছে।
 
-Common Voice, OpenBangla Keyboard, Indic Parler-TTS, IndicTrans2 আর bnlp। দুটো সবার জন্য, তিনটা ডেভেলপারদের।
+Common Voice, OpenBangla Keyboard, Indic Parler-TTS, IndicTrans2 আর bnlp। দুটো সবার জন্য, তিনটা ডেভেলপারদের। Common Voice-এ ফোন দিয়েই সাহায্য করা যায়।
 
-লিংক আর সাহায্য করার বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন BANGLA।
+লিংক আর সাহায্য করার বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন BANGLA, আমি নিজে পাঠিয়ে দেব।
 
-#GitHub #OpenSource #বাংলা_ভাষা
+#OpenSource #বাংলা_ভাষা #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +76,20 @@ Common Voice, OpenBangla Keyboard, Indic Parler-TTS, IndicTrans2 আর bnlp। 
 
 **পর্ব ৮ (বাংলা ভাষার ওপেন সোর্স)** — ফাইল `D:/Video Create/renders/gh-ep08-bangla/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep08-bangla/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-বাংলা ভাষার AI এমনি এমনি তৈরি হবে না। কেউ না কেউ কোড লিখছে।
+বাংলা ভাষার ৫টা ওপেন সোর্স কাজ, দুটো সবার জন্য, তিনটা ডেভেলপারদের
 
-Common Voice, OpenBangla Keyboard, Indic Parler-TTS, IndicTrans2 আর bnlp। দুটো সবার জন্য, তিনটা ডেভেলপারদের।
+১. Common Voice: ফোনে বাংলা বাক্য পড়ে রেকর্ড, অন্যদেরটা শুনে মেলান
+২. OpenBangla Keyboard: Linux-এ Avro-র মতো করেই বাংলা লেখা
+৩. Indic Parler-TTS: ইংরেজি বর্ণনা থেকে বাংলা কণ্ঠ (Python লাগে)
+৪. IndicTrans2: ইংরেজি থেকে বাংলা অনুবাদ, MIT লাইসেন্স
+৫. bnlp: বাংলা লেখা নিয়ে কাজের Python টুলকিট
 
-লিংক আর সাহায্য করার বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন BANGLA।
+লিংক আর সাহায্য করার বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন BANGLA।
 
-#GitHub #OpenSource #বাংলা_ভাষা
+#OpenSource #GitHub #বাংলা_ভাষা #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X

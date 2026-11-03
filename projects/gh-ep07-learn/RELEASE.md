@@ -1,7 +1,7 @@
 # রিলিজ চেকলিস্ট: gh-ep07-learn
 
-তৈরি: 2026-11-01 16:45 · `node tools/release/pack.mjs projects/gh-ep07-learn` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep07-learn/release`
-লেখা পরীক্ষা: ✓ 5টা বক্স পাস · ফাইল তৈরি: 2/2
+তৈরি: 2026-11-03 16:59 · `node tools/release/pack.mjs projects/gh-ep07-learn` · ফাইলের ফোল্ডার: `D:/Video Create/renders/gh-ep07-learn/release`
+লেখা পরীক্ষা: ✓ 9টা বক্স পাস · ফাইল তৈরি: 2/2
 
 ## পরীক্ষার ফল
 
@@ -19,18 +19,49 @@
 
 _(release.json-এ পুরো ভিডিও নেই)_
 
-**Reel: পর্ব ৭ (ফ্রিতে শেখা)** — ফাইল `D:/Video Create/renders/gh-ep07-learn/release/2-Facebook/reel.mp4`।
+**YouTube Shorts: পর্ব ৭ (ফ্রিতে শেখা)** — ফাইল `D:/Video Create/renders/gh-ep07-learn/release/1-YouTube/reel.mp4`।
+
+টাইটেল:
+
+```
+GitHub-এর ৫টা ফ্রি স্কুল | freeCodeCamp, build-your-own-x #Shorts
+```
+
+ডেসক্রিপশন:
+
+```
+কোডিং আর ক্যারিয়ার শুরুর ৫টা ফ্রি স্কুল। কোনটা কী শেখায় আর কোথা থেকে শুরু করবেন, ভিডিওতে দেখিয়েছি।
+
+এই ভিডিওতে:
+১. free-programming-books
+২. freeCodeCamp
+৩. Generative AI for Beginners
+৪. first-contributions
+৫. build-your-own-x
+
+লিংক আর শুরু করার বাংলা গাইড: Facebook-এ আমার পেজের ইনবক্সে LEARN লিখুন। পেজের লিংক চ্যানেলের প্রোফাইলে আছে।
+
+#LearnToCode #GitHub #বাংলা_টেক
+```
+
+Tags বক্স:
+
+```
+learn coding free, free programming books Bangla, freeCodeCamp, Generative AI for Beginners, first contributions, build your own x, কোডিং শেখা, ফ্রি কোর্স, ক্যারিয়ার, বাংলা টেক
+```
+
+**Facebook Reel: পর্ব ৭ (ফ্রিতে শেখা)** — ফাইল `D:/Video Create/renders/gh-ep07-learn/release/2-Facebook/reel.mp4`।
 
 ক্যাপশন:
 
 ```
-GitHub-এর সবচেয়ে বেশি স্টারের অনেক রিপো আসলে ফ্রি স্কুল।
+GitHub-এর সবচেয়ে বেশি স্টারের অনেক রিপো আসলে ফ্রি স্কুল। ৫টা দেখিয়েছি।
 
-কোনটা কী শেখায় আর কোথা থেকে শুরু করবেন, ভিডিওতেই আছে।
+free-programming-books, freeCodeCamp, Generative AI for Beginners, first-contributions আর build-your-own-x। কোনটা কী শেখায় আর কোথা থেকে শুরু করবেন, ভিডিওতে আছে।
 
-লিংক আর শুরু করার বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন LEARN।
+লিংক আর শুরু করার বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন LEARN, আমি নিজে পাঠিয়ে দেব।
 
-#GitHub #LearnToCode #বাংলা_টেক
+#GitHub #LearnToCode #বাংলা_টেক #GitHubBangla
 ```
 
 নিজের প্রথম কমেন্ট:
@@ -45,16 +76,20 @@ GitHub-এর সবচেয়ে বেশি স্টারের অনে
 
 **পর্ব ৭ (ফ্রিতে শেখা)** — ফাইল `D:/Video Create/renders/gh-ep07-learn/release/3-Instagram/reel.mp4`, কভার `D:/Video Create/renders/gh-ep07-learn/release/3-Instagram/reel-cover.jpg`।
 
-ক্যাপশন (Facebook-এর হুবহু):
+ক্যাপশন:
 
 ```
-GitHub-এর সবচেয়ে বেশি স্টারের অনেক রিপো আসলে ফ্রি স্কুল।
+কোডিং আর ক্যারিয়ার শুরুর ৫টা ফ্রি স্কুল, সবগুলো GitHub-এ
 
-কোনটা কী শেখায় আর কোথা থেকে শুরু করবেন, ভিডিওতেই আছে।
+১. free-programming-books: ফ্রি বইয়ের তালিকা, ২৭টা বাংলা বইসহ
+২. freeCodeCamp: ব্রাউজারেই কোডিং, শেষে ফ্রি সার্টিফিকেট
+৩. Generative AI for Beginners: Microsoft-এর ২১ লেসনের AI কোর্স
+৪. first-contributions: জীবনের প্রথম pull request, আধা ঘণ্টায়
+৫. build-your-own-x: নিজের হাতে বট বা ডাটাবেস বানিয়ে শেখা
 
-লিংক আর শুরু করার বাংলা গাইড চাইলে পেজের ইনবক্সে লিখুন LEARN।
+কোথা থেকে শুরু করবেন, ভিডিওতে আছে। লিংক আর বাংলা গাইড পেতে আমার প্রোফাইলে Message চাপুন, লিখুন LEARN।
 
-#GitHub #LearnToCode #বাংলা_টেক
+#GitHub #LearnToCode #FreeCourses #বাংলা_টেক #GitHubBangla
 ```
 
 ## ৪. X
@@ -109,7 +144,7 @@ _(লেখা পাওয়া যায়নি: RELEASE-COPY.md দেখ�
 
 ## মনে রাখবেন
 
-- **AI গলা:** এই ভিডিওর ভয়েস আপনার গলার ক্লোন। YouTube Studio → Details → "Altered or synthetic content" = **Yes**; Facebook/Instagram-এ পোস্ট করার সময় "AI info / Made with AI" লেবেল দিন; X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লিখুন। না দিলে ভিডিও সরানো বা চ্যানেলে শাস্তির ঝুঁকি।
+- **AI গলা:** এই ভিডিওর ভয়েস আপনার নিজের গলার ক্লোন। Facebook/Instagram-এ পোস্ট করার সময় "AI info" (AI দিয়ে বানানো) লেবেল চালু করুন — Meta-র নিয়মে বাস্তব-শোনানো AI অডিওতে এটা বাধ্যতামূলক। YouTube-এ লাগবে না: YouTube-এর নিয়মে নিজের গলার ক্লোন দিয়ে ভয়েস-ওভার জানানোর তালিকায় নেই (চালু করলেও আয়ে প্রভাব নেই)। X আর LinkedIn-এ পোস্টের লেখায় "AI দিয়ে বানানো গলা" লেখা ভালো।
 - Microsoft-এর কোর্সের বাংলা পাতা AI দিয়ে অনুবাদ করা, ভিডিওতেও বলা আছে।
 - freeCodeCamp-এর "এক লাখের বেশি মানুষ চাকরি পেয়েছে" ওদের নিজেদের হিসাব (ভিডিওতে "ওদের হিসাবে" বলা)।
 - ব্যাকগ্রাউন্ড মিউজিক Lyria-তে বানানো। পেইড বিজ্ঞাপনে লাগানোর আগে Google-এর শর্ত একবার দেখে নেবেন।
