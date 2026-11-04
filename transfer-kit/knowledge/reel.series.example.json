@@ -1,0 +1,318 @@
+{
+ "engine": "series",
+ "style": "REEL1",
+ "series": "৫টা GitHub রিপো",
+ "episode": 10,
+ "title": "৫টা GitHub রিপো · পর্ব ১০: Claude Code-এর শক্তি বাড়ানো",
+ "lang": "bn",
+ "voice": "assets/voice/clone-b/voice.wav",
+ "voiceLabel": "আপনার ক্লোন করা গলা খ (Gemini, talha-b)",
+ "music": {
+  "file": "assets/music/bgm.mp3",
+  "from": 0,
+  "label": "Lyria 3.5 দিয়ে বানানো, সিরিজের BGM প্রম্পটে"
+ },
+ "keyword": "CLAUDE",
+ "minMatch": 0.75,
+ "goal": "দর্শক পরিষ্কার জানবে ভিডিওটা কী নিয়ে (Claude Code-এর ৫টা ফ্রি পাওয়ার-আপ; Claude Code নিজে পেইড প্ল্যানে চলে), প্রতিটা কী করে আর কীভাবে বসাতে হয়, আর লিংক ও বসানোর বাংলা গাইড পেতে পেজের ইনবক্সে CLAUDE লিখবে।",
+ "howTitle": "কীভাবে বসাবেন",
+ "hook": {
+  "line": "Claude Code দিয়ে কিছু বানানোর আগে, এই পাঁচটা ফ্রি জিনিস বসিয়ে নিন।",
+  "on": "পাঁচটা",
+  "cmd": "claude",
+  "welcome": "Claude Code"
+ },
+ "promise": {
+  "line": "প্রতিটা কী করে, আর কীভাবে বসাবেন, দেখাচ্ছি। Claude Code নিজে চলে পেইড প্ল্যানে। সব লিংক ইনবক্সে।",
+  "kicker": "এই ভিডিওতে",
+  "title": "৫টা পাওয়ার-আপ",
+  "sub": "Claude Code-এর শক্তি বাড়াতে",
+  "rows": [
+   {
+    "label": "কোনটা কী করে",
+    "on": "করে",
+    "icon": "sparkles"
+   },
+   {
+    "label": "কীভাবে বসাবেন",
+    "on": "বসাবেন",
+    "icon": "list-checks"
+   },
+   {
+    "label": "লিংক: ইনবক্সে CLAUDE",
+    "on": "ইনবক্সে",
+    "icon": "message-circle"
+   }
+  ]
+ },
+ "tools": [
+  {
+   "name": "Superpowers",
+   "cmd": "/plugin install superpowers",
+   "maker": "আগে প্ল্যান, তারপর কোড",
+   "intro": "প্রথমটা Superpowers।",
+   "body": "কোড লেখার আগে Claude প্রশ্ন করে, প্ল্যান বানায়, তারপর টেস্ট করে। এলোমেলো কোড আর হয় না।",
+   "stat": {
+    "text": "৩ লাখ স্টার"
+   },
+   "features": [
+    {
+     "label": "আগে প্রশ্ন",
+     "on": "প্রশ্ন",
+     "icon": "circle-question-mark"
+    },
+    {
+     "label": "প্ল্যান বানায়",
+     "on": "প্ল্যান",
+     "icon": "list-checks"
+    },
+    {
+     "label": "টেস্ট করে",
+     "on": "টেস্ট",
+     "icon": "flask-conical"
+    }
+   ],
+   "proof": {
+    "text": "এলোমেলো কোড নয়",
+    "on": "এলোমেলো"
+   },
+   "how": {
+    "line": "Claude Code-এর ভেতরে plugin install লিখে বসান, তারপর কিছু বানাতে বলুন।",
+    "steps": [
+     {
+      "label": "plugin install",
+      "on": "plugin"
+     },
+     {
+      "label": "কিছু বানাতে বলুন",
+      "on": "বানাতে"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Anthropic Skills",
+   "cmd": "/plugin install document-skills",
+   "maker": "আসল Word, Excel ফাইল",
+   "intro": "দ্বিতীয়টা Anthropic-এর নিজের Skills।",
+   "body": "বললেই আসল Word, Excel আর PowerPoint ফাইল বানিয়ে দেয়, শুধু চ্যাটের লেখা নয়।",
+   "features": [
+    {
+     "label": "Word",
+     "on": "Word",
+     "icon": "file-text"
+    },
+    {
+     "label": "Excel",
+     "on": "Excel",
+     "icon": "sheet"
+    },
+    {
+     "label": "PowerPoint",
+     "on": "PowerPoint",
+     "icon": "presentation"
+    }
+   ],
+   "proof": {
+    "text": "আসল ফাইল, লেখা নয়",
+    "on": "চ্যাটের"
+   },
+   "how": {
+    "line": "marketplace-এ skills যোগ করে document skills বসান, তারপর বলুন পাঁচ স্লাইডের PowerPoint বানাও।",
+    "steps": [
+     {
+      "label": "marketplace-এ যোগ",
+      "on": "marketplace-এ"
+     },
+     {
+      "label": "document skills",
+      "on": "document"
+     },
+     {
+      "label": "PowerPoint বানাও",
+      "on": "PowerPoint"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Context7",
+   "cmd": "npx ctx7 setup",
+   "maker": "আজকের ডকুমেন্টেশন",
+   "intro": "তৃতীয়টা Upstash-এর Context7।",
+   "body": "Claude পুরোনো মনে-রাখা জিনিস দিয়ে নয়, আজকের ডকুমেন্টেশন পড়ে কোড লেখে।",
+   "stat": {
+    "text": "৬৪ হাজার স্টার"
+   },
+   "features": [
+    {
+     "label": "আজকের ডক",
+     "on": "আজকের",
+     "icon": "book-open"
+    },
+    {
+     "label": "ঠিক কোড",
+     "on": "কোড",
+     "icon": "code"
+    }
+   ],
+   "proof": {
+    "text": "নতুন ডক পড়ে লেখে",
+    "on": "লেখে"
+   },
+   "how": {
+    "line": "টার্মিনালে npx ctx7 setup চালান, তারপর প্রম্পটের শেষে লিখুন use context7।",
+    "steps": [
+     {
+      "label": "setup চালান",
+      "on": "setup"
+     },
+     {
+      "label": "use context7 লিখুন",
+      "on": "use"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Playwright MCP",
+   "cmd": "claude mcp add playwright",
+   "maker": "Claude-এর হাতে ব্রাউজার",
+   "intro": "চতুর্থটা Microsoft-এর Playwright MCP।",
+   "body": "Claude নিজেই ব্রাউজার খোলে, ক্লিক করে, ফর্ম পূরণ করে দেখে সাইট ঠিকমতো চলছে কি না।",
+   "features": [
+    {
+     "label": "ব্রাউজার খোলে",
+     "on": "ব্রাউজার",
+     "icon": "globe"
+    },
+    {
+     "label": "ক্লিক করে",
+     "on": "ক্লিক",
+     "icon": "mouse-pointer-click"
+    },
+    {
+     "label": "ফর্ম পূরণ",
+     "on": "ফর্ম",
+     "icon": "text-cursor-input"
+    }
+   ],
+   "proof": {
+    "text": "সাইট টেস্ট নিজেই",
+    "on": "চলছে"
+   },
+   "how": {
+    "line": "এক লাইনে mcp add দিয়ে যোগ করুন, তারপর বলুন নিজের সাইটের ফর্মটা পরীক্ষা করো। ব্যাংকের সাইটে নয়।",
+    "steps": [
+     {
+      "label": "mcp add দিন",
+      "on": "mcp"
+     },
+     {
+      "label": "ফর্ম পরীক্ষা করো",
+      "on": "ফর্মটা"
+     },
+     {
+      "label": "ব্যাংকের সাইটে নয়",
+      "on": "ব্যাংকের"
+     }
+    ]
+   }
+  },
+  {
+   "name": "ccusage",
+   "cmd": "npx ccusage@latest",
+   "maker": "কত টোকেন গেল",
+   "intro": "আর পঞ্চমটা ccusage।",
+   "body": "Claude Code চলে পেইড প্ল্যানে। ccusage এক কমান্ডে দেখায় কত টোকেন গেল, লিমিটের কত কাছে আছেন।",
+   "features": [
+    {
+     "label": "কত টোকেন গেল",
+     "on": "টোকেন",
+     "icon": "coins"
+    },
+    {
+     "label": "লিমিট কত কাছে",
+     "on": "লিমিটের",
+     "icon": "gauge"
+    }
+   ],
+   "proof": {
+    "text": "লিমিটের হিসাব এক নজরে",
+    "on": "আছেন"
+   },
+   "how": {
+    "line": "টার্মিনালে npx ccusage লিখুন। পাঁচ ঘণ্টার হিসাব দেখতে শেষে blocks লিখুন।",
+    "steps": [
+     {
+      "label": "npx ccusage",
+      "on": "npx"
+     },
+     {
+      "label": "শেষে blocks",
+      "on": "blocks"
+     }
+    ]
+   }
+  }
+ ],
+ "cta": {
+  "line": "পাঁচটার লিংক আর বসানোর বাংলা গাইড ফ্রিতে পেতে, আমার পেজে গিয়ে Message বাটন চাপুন, আর লিখুন CLAUDE। আমি নিজে আপনাকে পাঠিয়ে দেব।",
+  "heading": "৫টা পাওয়ার-আপ এক নজরে",
+  "ask": "লিংক আর বাংলা গাইড পেতে",
+  "steps": [
+   {
+    "label": "পেজে যান",
+    "on": "পেজে",
+    "icon": "house"
+   },
+   {
+    "label": "Message চাপুন",
+    "on": "Message",
+    "icon": "message-circle"
+   },
+   {
+    "label": "লিখুন CLAUDE",
+    "on": "লিখুন",
+    "icon": "keyboard"
+   }
+  ],
+  "label": "পেজের ইনবক্সে লিখুন",
+  "sent": "লিংক আর বাংলা গাইড আসবে"
+ },
+ "emphasis": [
+  "পেইড",
+  "ফ্রি",
+  "ব্যাংকের"
+ ],
+ "facts": [
+  {
+   "claim": "Superpowers (obra/superpowers) has about 309.1k GitHub stars",
+   "value": "৩ লাখ",
+   "source": "https://github.com/obra/superpowers",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "anthropics/skills includes document skills for Word, Excel, PowerPoint, PDF (source-available)",
+   "source": "https://github.com/anthropics/skills",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Context7 has about 64.0k GitHub stars; setup with npx ctx7 setup",
+   "value": "৬৪ হাজার",
+   "source": "https://github.com/upstash/context7",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "Playwright MCP lets the agent drive a real browser",
+   "source": "https://github.com/microsoft/playwright-mcp",
+   "checked": "2026-10-30"
+  },
+  {
+   "claim": "ccusage reports tokens and API-equivalent cost; Claude Code needs a paid plan (Pro or above)",
+   "source": "https://github.com/ccusage/ccusage",
+   "checked": "2026-10-30"
+  }
+ ],
+ "questions": []
+}

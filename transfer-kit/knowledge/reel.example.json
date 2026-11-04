@@ -1,0 +1,68 @@
+{
+  "title": "5 free tools for Claude Code (engine test)",
+  "lang": "en",
+  "platform": "Claude Code",
+  "voice": "assets/voice/voice.wav",
+  "voiceLabel": "পরীক্ষার ভয়েস: Kokoro am_michael, ১.৩৫ গুণ গতি",
+  "music": { "file": "assets/music/test-bed-128bpm.mp3", "from": 0 },
+  "project": "my-app",
+  "handle": "@yourhandle",
+  "keyword": "TOOLS",
+  "goal": "ইঞ্জিনের পরীক্ষা: পাঁচটা ছাঁচ (fix, hub, pipeline, trace, dial) একটা ভিডিওতে ঠিকমতো চলে কিনা।",
+  "hook": {
+    "line": "Don't build with Claude Code until you've installed these five free tools.",
+    "banner": ["Don't build yet", "0 of 5 tools installed"],
+    "on": "until"
+  },
+  "tools": [
+    {
+      "name": "Context7",
+      "maker": "from Upstash",
+      "install": "claude mcp add context7",
+      "result": "context7 · docs on demand",
+      "intro": "The first is Context7, from Upstash.",
+      "body": "It pulls the current docs for any library you use, so Claude stops writing code that broke two versions ago. Fresh docs, every time.",
+      "scene": { "type": "fix", "sources": ["React", "Next.js", "Tailwind"], "file": "app.tsx", "bad": ["componentWillMount()", "ReactDOM.render(app)", "getInitialProps()"], "fixOn": "stops", "proof": { "text": "0 deprecated" } }
+    },
+    {
+      "name": "Firecrawl",
+      "maker": "web pages as clean text",
+      "install": "claude mcp add firecrawl",
+      "result": "firecrawl · web reader ready",
+      "intro": "The second is Firecrawl.",
+      "body": "It lets Claude read any website, docs, blogs and pricing pages as clean text, so research takes seconds, not hours.",
+      "scene": { "type": "hub", "nodes": [{ "label": "Websites", "on": "website", "icon": "globe" }, { "label": "Docs", "on": "docs", "icon": "book-open" }, { "label": "Blogs", "on": "blogs", "icon": "newspaper" }, { "label": "Pricing", "on": "pricing", "icon": "dollar-sign" }], "chip": { "text": "clean text", "on": "clean" }, "proof": { "text": "Seconds, not hours", "on": "seconds" } }
+    },
+    {
+      "name": "GitHub MCP",
+      "mono": "GH",
+      "maker": "the official GitHub server",
+      "install": "claude mcp add github",
+      "result": "github · issues and PRs",
+      "intro": "The third is the GitHub MCP server.",
+      "body": "It lets Claude open issues, write the fix, review the pull request and merge it, so one prompt ships the whole change.",
+      "scene": { "type": "pipeline", "steps": [{ "label": "issue", "on": "issues" }, { "label": "fix", "on": "fix" }, { "label": "review", "on": "review" }, { "label": "merge", "on": "merge" }], "proof": { "text": "One prompt, one change", "on": "ships" } }
+    },
+    {
+      "name": "Playwright MCP",
+      "maker": "from Microsoft",
+      "install": "claude mcp add playwright",
+      "result": "playwright · browser tests",
+      "intro": "The fourth is Playwright MCP, from Microsoft.",
+      "body": "It clicks through your login, checkout and search like a real user, so every flow is tested before you ship.",
+      "scene": { "type": "trace", "inputs": [{ "label": "Login", "on": "login" }, { "label": "Checkout", "on": "checkout" }, { "label": "Search", "on": "search" }], "rows": [{ "label": "Login", "to": 6, "unit": "steps" }, { "label": "Checkout", "to": 9, "unit": "steps" }, { "label": "Search", "to": 4, "unit": "steps" }], "linkOn": "user", "result": "19 steps passed", "proof": { "text": "0 broken flows", "on": "tested" } }
+    },
+    {
+      "name": "Chrome DevTools MCP",
+      "maker": "from the Chrome team at Google",
+      "install": "claude mcp add chrome-devtools",
+      "result": "chrome-devtools · real browser",
+      "intro": "And the fifth is Chrome DevTools MCP, from the Chrome team at Google.",
+      "body": "It opens your app in a real Chrome, reads the red errors in the console and fixes them itself.",
+      "scene": { "type": "dial", "url": "localhost:3000", "app": "My app", "errors": ["TypeError: user is undefined", "404 /api/cart"], "from": 62, "to": 100, "label": "quality score", "fixOn": "fixes", "proof": { "text": "0 errors, ready to ship", "on": "itself" } }
+    }
+  ],
+  "cta": { "line": "Comment TOOLS, and I'll send you one link with all five.", "dm": "All 5 tools in one link:" },
+  "facts": [],
+  "questions": []
+}
