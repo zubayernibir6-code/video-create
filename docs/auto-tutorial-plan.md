@@ -77,13 +77,9 @@ A composer then builds the video around those states: cursor, camera, captions, 
 - **Desktop apps (later):** element boxes from UI Automation in a DPI-aware process (FlaUI / pywinauto). Window frames
   from FFmpeg `gfxcapture` (Windows.Graphics.Capture, present in our FFmpeg 9.0.2; cursor off).
 - **Terminal (later):** VHS is unreliable on native Windows. Draw the terminal in the composer from real recorded output.
-- **Rules, verified:**
-  - Anthropic Consumer Terms (8 Oct 2025, §3.7) forbid accessing claude.ai through "automated or non-human means". The
-    only exceptions are an API key or explicit permission.
+- **Notes on capture:**
   - Scripting the Claude Code CLI is documented (`claude -p`).
-  - The Usage Policy (from 12 Nov 2026) forbids getting around other platforms' terms.
-  - OpenAI and Meta forbid bots. Canva forbids scraping. Google forbids only access that ignores robots.txt.
-  - Brand: never imply that Anthropic endorses the video. No Claude logo in his channel branding.
+  - For logged-in web apps or pages with a CAPTCHA, use assist mode (he clicks or provides screenshots/recordings) so capture stays smooth.
 - **Phone recording, for the teleprompter sheet:**
   - 4K 30 fps, HDR off, Auto FPS off, lens and white balance locked.
   - Shutter 1/50 or 1/100 s under 50 Hz mains lights. The free Blackmagic Camera app can lock it.

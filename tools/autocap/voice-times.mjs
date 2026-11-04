@@ -2,7 +2,8 @@
 // request (never one request per line: the Tier-1 key allows 100 TTS requests a day), or later his phone take.
 //   import { voiceTimes } from "./voice-times.mjs";
 //   const v = voiceTimes("…/voice.wav", lines, anchors, { minMatch: 0.85 });
-//   → { dur, matched, lines: [{ a, b, cutIn, cutOut, anchor }] }   (all in seconds of the voice file)
+//   → { dur, matched, lines: [{ a, b, cutIn, cutOut, anchor }], words: [{ text, start, end, line, guessed? }] }
+//     (all in seconds of the voice file)
 //   a / b = the line's first word start / last word end; anchor = start of the line's anchor word (null if none);
 //   cutIn / cutOut = where to cut the file around the line: the quietest 10 ms inside the pause between two lines,
 //   so the composer can add silence there (the screen is still loading or typing) without clipping a word.
@@ -126,5 +127,6 @@ export function voiceTimes(voice, lines, anchors = [], { minMatch = 0.85 } = {})
   if (tail) out.at(-1).b = tail[0];
   out.at(-1).cutOut = +Math.min(dur, out.at(-1).b + 0.45).toFixed(3);
   for (const l of out) { delete l.last; l.a = +l.a.toFixed(3); l.b = +l.b.toFixed(3); }
-  return { dur, matched, lines: out };
+  // words: every script word with its voice time (captions; tools/explainer anchors its beats on them)
+  return { dur, matched, lines: out, words };
 }

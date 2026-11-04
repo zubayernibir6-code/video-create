@@ -121,7 +121,7 @@ node tools/contact-sheet.mjs "<render>.mp4" --every=1                      # rea
 - Changing tools/cutdown/page.mjs: rebuild claude-reel-1..4 and claude-ig-1..2 and `cmp` their index.html + sfx.json
   with a backup — old pages must stay byte-identical.
 - Film grain is off (`grain` opts in): on this dark design it vanished after a platform-like encode.
-- A raw ASR stretch can hide a claim he would not make ("Claude Max-এর আনলিমিটেড পাওয়ার") or a sentence longer than
+- A raw ASR stretch can have a sentence longer than
   the PLAN's summary (his closing CTA is 11 s, not 3.5 s): cut on the WORDS in master.words.json, never on the PLAN's
   paraphrase.
 - Known render WARNs (fix in the finish encode when rendering for release): an AAC edit list (`-use_editlist 0`),

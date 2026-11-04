@@ -66,10 +66,10 @@ any filter on it floods the chat. Instead wait for the process in a background B
 90 s took ~7 min of capture at ~6.5 frames/s (screenshot mode, see the 3D note). Then: contact sheets
 (`--every=0.5`), the click moment frame by frame, and a null/lag test of the master audio against mix.wav.
 
-## 4b. Meta / Facebook ads: privacy blur and brand-free end card (version 2, 2026-10-26)
+## 4b. Meta / Facebook ads: privacy blur and custom masks (version 2, 2026-10-26)
 
-Meta's review flags personal data on screen. Blur his name (the greeting "Good evening / Up late, <name>"), the
-sidebar profile row, and the account popup (email, org, personal rows), then PROVE nothing is readable:
+Blur his personal data on screen: his name (the greeting "Good evening / Up late, <name>"), the
+sidebar profile row, and the account popup (email, org, personal rows), plus any specific UI area he asks to hide or mask (such as Fast mode toggles/status bars), then PROVE nothing is readable:
 1. `node tools/screen/text-scan.mjs <clip> --band=y0,y1 --at=…` → the name's word boxes per layout
    (no sidebar / sidebar open move it ~216 px; "Good evening" vs "Up late" differ).
 2. `… --find=A:a-b,B:c-d,…` → frame runs per layout. Gaps are menus covering it — no blur there, or the menu
@@ -78,12 +78,7 @@ sidebar profile row, and the account popup (email, org, personal rows), then PRO
    Add a union box for ±0.1 s around each layout change.
 4. `… --find=… --leaks` on the blurred clip for EVERY private spot (greeting, profile row, email, org) → must be 0.
    A sharp-frame report is a real leak until a frame AT THAT TIME proves otherwise.
-Logos too (he asked 2026-10-26): the app's logo beside the greeting (moves with the layout like the name, but stays
-visible while menus are open), its taskbar icon (whole clip), the Code page mascot. Prove them with colour, not words:
-`ffmpeg -i clip -vf "crop=w:h:x:y,signalstats,metadata=print:key=lavfi.signalstats.SATMAX"` per box — the orange logo
-reads SATMAX 58–70 sharp, ≤ 44 blurred; list frames still > 35 and look (a sliding blue bar also scored 70).
-End card: no trademark ("UNLOCK 5X ENTERPRISE AI POWER — SEND MESSAGE NOW"). The recording itself still shows
-the app's own UI and model names; say so to him — blur does not make an ad "100 % compliant", Meta also judges claims.
+If he explicitly asks to blur logos in a specific video: blur the app's logo beside the greeting, its taskbar icon, and the Code page mascot, and prove with `signalstats.SATMAX`. Otherwise, keep the UI badges, connectors, skills, and end-card text exactly as specified in his brief.
 
 ## 4c. Whole-video treatments (CLAUDE.md §0h, 2026-10-28)
 

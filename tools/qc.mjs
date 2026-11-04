@@ -56,6 +56,8 @@ export function probe(file) {
     fps: fd ? +(fn / fd).toFixed(3) : null,
     duration: +(+p.format.duration).toFixed(3),
     vduration: v?.duration ? +(+v.duration).toFixed(3) : null,
+    vstart: v?.start_time != null ? +(+v.start_time).toFixed(4) : null,
+    astart: a?.start_time != null ? +(+a.start_time).toFixed(4) : null,
     rotation: Number(v?.side_data_list?.find((d) => d.rotation !== undefined)?.rotation ?? v?.tags?.rotate ?? 0),
     vcodec: v?.codec_name ?? null,
     pix_fmt: v?.pix_fmt ?? null,
@@ -134,6 +136,12 @@ export function qc(file, expect = {}) {
   if (expect.dur) add(Math.abs(spec.duration - expect.dur) <= 0.15 ? "PASS" : "FAIL", "duration", `${spec.duration} s`, `expected ${expect.dur} s`);
   else add("PASS", "duration", `${spec.duration} s`);
   add(spec.faststart ? "PASS" : "FAIL", "faststart", spec.faststart, "starts playing before it fully downloads");
+  // picture and sound must START together: a player shows the first frame at the video's start_time; an MP4 without an
+  // edit list and with B-frames put it 83 ms after the sound (finish.mjs --release before 2026-11-04)
+  if (spec.vstart != null && spec.astart != null) {
+    const gap = Math.round((spec.vstart - spec.astart) * 1000);
+    add(Math.abs(gap) <= (spec.fps ? 500 / spec.fps : 20) ? "PASS" : "FAIL", "a/v start", `video ${spec.vstart} s, audio ${spec.astart} s`, gap ? `picture ${gap > 0 ? "behind" : "ahead of"} sound by ${Math.abs(gap)} ms` : "picture and sound start together");
+  }
   add((spec.color ?? "").split("bt709").length - 1 >= 3 ? "PASS" : "WARN", "colour tags", spec.color, "matrix/transfer/primaries all bt709");
   const strips = edgeStrips(file, spec);
   add(strips.length ? "FAIL" : "PASS", "edges", strips.length ? `black strip: ${strips.join(", ")}` : "clean",

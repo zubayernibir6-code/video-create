@@ -146,8 +146,11 @@ function normaliseAudio(input, output, target, videoArgs, videoDur, mux = ["-mov
   const norm =
     `loudnorm=I=${target}:TP=${TP_TARGET}:LRA=${lra}:linear=true:measured_I=${m.input_i}:measured_TP=${m.input_tp}` +
     `:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset},aresample=48000`;
+  // no edit list (--release): AAC's 1024 priming samples would play first and push the sound 21.3 ms late; trim the
+  // same 1024 samples (48 kHz) off the start so the decoded sound lands on its original time
+  const prime = mux.includes("-use_editlist") ? ",aresample=48000,atrim=start_sample=1024,asetpts=PTS-STARTPTS" : "";
   const encode = (af) =>
-    ffmpeg(["-i", input, ...videoArgs, "-af", af + cut, "-c:a", "aac", "-b:a", "256k", "-ac", "2", ...mux, output]);
+    ffmpeg(["-i", input, ...videoArgs, "-af", af + prime + cut, "-c:a", "aac", "-b:a", "256k", "-ac", "2", ...mux, output]);
   const before = ebur(input);
   encode(norm);
   let after = ebur(output);
@@ -206,13 +209,20 @@ const quality = flags.quality ?? "high";
 const reframe = flags.reframe === "crop" ? "crop" : "fit";
 const release = !!flags.release;
 const formats = flags.formats == null && release ? [] : String(flags.formats ?? "16x9,9x16,1x1,4x5").split(",").map((f) => f.trim()).filter(Boolean);
-// --release: the upload encode (ABR at YouTube's rate, 2 s keyframes) and the MP4 mux without an edit list
+// --release: the upload encode (ABR at YouTube's rate, 2 s keyframes) and the MP4 mux without an edit list.
+// Without an edit list nothing lines the tracks up, so (2026-11-04, mohona-promo-01, measured by tools/promo/sync_check.py)
+// B-frames started the PICTURE 2 frames late (video start_time 0.083 s) and AAC's 1024-sample encoder delay started the
+// SOUND 21.3 ms late: picture 62 ms behind sound in every --release file. Now: no B-frames (the first frame is at 0), the
+// encoder delay trimmed off the audio before encoding (normaliseAudio) and no timestamp shift (mux): every frame on the
+// exact n/fps grid and the sound on its original time (strict test: 0.00 ms off the grid, voice at 300.00 ms of 300).
 const releaseVideo = (fps) => {
   const mb = fps > 30.5 ? 14 : 10, g = Math.round(2 * fps);
   return ["-c:v", "libx264", "-preset", "medium", "-b:v", `${mb}M`, "-maxrate", `${Math.round(mb * 1.4)}M`, "-bufsize", `${mb * 2}M`,
-    "-g", String(g), "-keyint_min", String(Math.round(fps)), "-pix_fmt", "yuv420p", ...COLOUR];
+    "-g", String(g), "-keyint_min", String(Math.round(fps)), "-bf", "0", "-pix_fmt", "yuv420p", ...COLOUR];
 };
-const mux = ["-movflags", "+faststart", ...(release ? ["-use_editlist", "0"] : [])];
+// -avoid_negative_ts disabled: AAC's first packet sits at -1024 samples; FFmpeg's default shifted EVERY track by that
+// 21.3 ms to make it non-negative, which put every video frame after the first 21 ms late (avg fps 23.987, 2026-11-04)
+const mux = ["-movflags", "+faststart", ...(release ? ["-use_editlist", "0", "-avoid_negative_ts", "disabled"] : [])];
 let releaseEncoded = false;
 for (const f of formats) if (!FORMATS[f]) fail(`Unknown format "${f}". Use: ${Object.keys(FORMATS).join(", ")}`);
 const d = new Date();

@@ -13,6 +13,17 @@
       "proof": "projects/claude-video-tutorial (8:30, 2026-10-29)"
     },
     {
+      "id": "CP1",
+      "bn": "ক্লায়েন্ট প্রোমো",
+      "en": "Client Promo",
+      "status": "ready",
+      "needs": "a client's numbered AI clips (1.mp4, 2.mp4 …, no speech), their voice-over and BGM",
+      "builds": "brand-kit promo: cuts and texts on the spoken words, baked AI text cropped or covered, gold leak / whip / dissolve, chips and drawn icon rows, loudness-aware ducked mix; 16:9 master + designed 9:16 Reel from one timeline",
+      "engine": "tools/promo/build.mjs",
+      "skill": "client-promo",
+      "proof": "projects/mohona-promo-01 (2026-11-04, cloud)"
+    },
+    {
       "id": "PROMO1",
       "bn": "গোল্ড কমার্শিয়াল",
       "en": "Gold Commercial",
@@ -220,6 +231,17 @@
       "engine": "tools/abroll",
       "skill": "abroll",
       "proof": "projects/abroll-variants-demo (2026-10-30): demo render renders/abroll-variants-demo/2026-10-30_0429 (78.4 s, QC 9/9 PASS, -14 LUFS, preflight 0 errors); a Sonnet run of skill abroll built its own 3-section page"
+    },
+    {
+      "id": "EXP1",
+      "bn": "ব্যাখ্যা বোর্ড",
+      "en": "Explainer Board",
+      "status": "beta",
+      "needs": "a topic (a concept, or an app that cannot be recorded or botted, e.g. claude.ai); his cloned voice (Gemini talha-g); BGM (Lyria)",
+      "builds": "16:9 drawn tutorial, no footage: simplified app windows, chat mock-ups, folder trees, code files, desk-and-shelf diagram, toggles, cards, terminal; every beat on its spoken word; chapter bar; phrase captions with the spoken word in gold; inbox-keyword end card",
+      "engine": "tools/explainer/build.mjs (+ scenes.mjs, icons.mjs; voice-times.mjs for line and word times)",
+      "skill": "explainer",
+      "proof": "projects/claude-skills-tutorial (5:06, 22 scenes, 2026-11-02)"
     },
     {
       "id": "MG1",

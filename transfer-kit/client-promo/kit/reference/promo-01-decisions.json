@@ -1,0 +1,53 @@
+{
+  "title": "মোহনা অ্যাগ্রো ফুড — প্রোমো",
+  "fps": 24,
+  "brand": { "name": "মোহনা অ্যাগ্রো ফুড" },
+  "clips": {
+    "1.mp4": { "file": "assets/media/1.mp4", "baked": [
+      { "id": "brand", "text": "মোহনা অ্যাগ্রো ফুড (3D, রোদে)", "box": [150, 300, 980, 220], "from": 4.6, "to": 8.0, "ok": true } ] },
+    "2.mp4": { "file": "assets/media/2.mp4", "baked": [
+      { "id": "list", "text": "আটা • ময়দা • সুজি • গম", "box": [270, 38, 740, 88], "from": 0, "to": 8.0, "ok": false, "why": "still for 8 s and out of step with the voice; replaced by chips on each spoken word" } ] },
+    "3.mp4": { "file": "assets/media/3.mp4", "baked": [
+      { "id": "band", "text": "উৎপাদন • আমন্দনি-রপ্তানি • সরবরাহ", "box": [0, 600, 1280, 98], "pad": 2, "from": 0, "to": 8.0, "ok": false, "why": "misspelt: আমন্দনি for আমদানি" } ] },
+    "4.mp4": { "file": "assets/media/4.mp4", "baked": [
+      { "id": "line", "text": "মানসম্মত পণ্য ও গ্রাহক সন্তুষ্টি", "box": [270, 620, 720, 65], "from": 0, "to": 8.0, "ok": false, "why": "AI lettering over the table; replaced by the goals row" } ] },
+    "5.mp4": { "file": "assets/media/5.mp4", "baked": [
+      { "id": "card", "text": "মোহনা অ্যাগ্রো ফুড / রাজবাঁধ, কইয়া বাজার, বটিয়াঘাটা, খুলনা", "box": [80, 190, 1120, 280], "from": 0, "to": 8.0, "ok": true } ] }
+  },
+  "voice": { "file": "assets/media/Voice over.wav", "at": 0.3, "words": "build/words.json" },
+  "music": { "file": "assets/media/BGM.mp3", "underVoiceDb": -16, "openDb": -11, "gapDb": -13, "endDb": -10, "fadeOut": 1.0, "xfade": 1.5,
+    "beds": [ { "at": 0, "from": 0.6 }, { "at": 25.0, "from": 21.6 } ] },
+  "shots": [
+    { "id": "s1", "clip": "1.mp4", "in": 0, "out": 8.0, "hold": 1.65, "move": [1.05, 1], "what": "সোনালি গমক্ষেতের উপর দিয়ে উড়ে কারখানা, রোদে সোনালি নাম", "to": { "type": "leak", "d": 0.5 } },
+    { "id": "s2a", "clip": "2.mp4", "in": 0.85, "out": 2.64, "crop": [121, 136, 1038, 584], "what": "আটা/ময়দা: বাটিতে আটা, গুঁড়ো উড়ছে" },
+    { "id": "s2b", "clip": "2.mp4", "in": 3.05, "out": 3.57, "crop": [121, 136, 1038, 584], "what": "সুজি" },
+    { "id": "s2c", "clip": "2.mp4", "in": 0.05, "out": 0.47, "crop": [121, 136, 1038, 584], "what": "গম" },
+    { "id": "s2d", "clip": "2.mp4", "in": 4.15, "out": 5.23, "crop": [121, 136, 1038, 584], "what": "গমের ভূষি" },
+    { "id": "s2e", "clip": "2.mp4", "in": 5.4, "out": 8.0, "crop": [121, 136, 1038, 584], "what": "মেইস ফ্লাওয়ার (হলুদ আটা)", "to": { "type": "whip", "d": 0.45 } },
+    { "id": "s3a", "clip": "3.mp4", "in": 0.2, "out": 4.6, "speed": 2.0, "crop": [111, 0, 1059, 596], "what": "কারখানার ভেতর দিয়ে দ্রুত এগিয়ে দরজা পেরিয়ে বাইরে" },
+    { "id": "s3b", "clip": "3.mp4", "in": 4.6, "out": 7.24, "crop": [111, 0, 1059, 596], "what": "ট্রাকে বস্তা তোলা", "to": { "type": "dissolve", "d": 0.5 } },
+    { "id": "s4", "clip": "4.mp4", "in": 0, "out": 8.0, "cover": { "box": [0, 603, 1280, 117] }, "what": "মান যাচাই → হাসিমুখে হাত মেলানো", "to": { "type": "leak", "d": 0.7 } },
+    { "id": "s5", "clip": "5.mp4", "in": 0, "out": 8.0, "speed": 0.8, "hold": 2.2, "move": [1.04, 1], "what": "শেষ কার্ড: গমের ফাঁক দিয়ে নাম আর ঠিকানা স্পষ্ট হয়" }
+  ],
+  "texts": [
+    { "type": "kicker", "pos": "bl", "text": "খাদ্য ও কৃষি পণ্যের জগতে", "at": "খাদ্য", "out": "মানসম্মত" },
+    { "type": "kicker", "pos": "bl", "at": "মানসম্মত+0.25", "out": 6.2,
+      "parts": [ { "text": "মানসম্মত পণ্য", "at": "মানসম্মত+0.25" }, { "text": "নির্ভরযোগ্য সরবরাহ", "at": "নির্ভরযোগ্য" } ] },
+    { "type": "chips", "pos": "bc", "label": "আমাদের পণ্য", "at": "আটা-0.15", "out": 15.15,
+      "items": [ { "text": "আটা", "at": "আটা" }, { "text": "ময়দা", "at": "ময়দা" }, { "text": "সুজি", "at": "সুজি" },
+                 { "text": "গম", "at": "গম" }, { "text": "গমের ভূষি", "at": "গমের" }, { "text": "মেইস ফ্লাওয়ার", "at": "মেইস" } ] },
+    { "type": "icons", "pos": "bc", "label": "আমাদের কার্যক্রম", "at": "উৎপাদন-0.1", "out": 19.6,
+      "items": [ { "icon": "factory", "text": "উৎপাদন", "at": "উৎপাদন" }, { "icon": "ship", "text": "আমদানি-রপ্তানি", "at": "আমদানি" },
+                 { "icon": "truck", "text": "সরবরাহ", "at": "সরবরাহে" } ] },
+    { "type": "icons", "pos": "bc", "my": 56, "inline": true, "scrim": false, "label": "আমাদের লক্ষ্য", "at": "আমাদের#2", "out": 26.9,
+      "items": [ { "icon": "badge", "text": "মানসম্মত পণ্য", "at": "মানসম্মত#2" }, { "icon": "star", "text": "গ্রাহক সন্তুষ্টি", "at": "গ্রাহক" },
+                 { "icon": "handshake", "text": "দীর্ঘমেয়াদি সম্পর্ক", "at": "দীর্ঘমেয়াদী" } ] },
+    { "type": "kicker", "pos": "bc", "at": "মানসম্মত#3", "out": "end", "span": true,
+      "parts": [ { "text": "মানসম্মত পণ্যে আস্থা", "at": "মানসম্মত#3" }, { "text": "ব্যবসায় এগিয়ে চলার প্রত্যয়", "at": "ব্যবসায়" } ] }
+  ],
+  "bug": { "text": "মোহনা অ্যাগ্রো ফুড", "pos": "tr", "spans": [ [9.7, 26.75] ] },
+  "sfx": [
+    { "t": 4.9, "file": "sparkle", "vol": 0.32 },
+    { "t": "মোহনা#2", "file": "sparkle", "vol": 0.28 }
+  ]
+}

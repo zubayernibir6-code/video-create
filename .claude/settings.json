@@ -6,6 +6,12 @@
         "hooks": [
           {
             "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/tools/cloud/autostart.mjs\" 2>/dev/null || true",
+            "timeout": 20,
+            "statusMessage": "Cloud: getting the studio ready"
+          },
+          {
+            "type": "command",
             "command": "node \"$CLAUDE_PROJECT_DIR/tools/session-status.mjs\" 2>/dev/null || true",
             "timeout": 20,
             "statusMessage": "Checking disk, RAM and git"

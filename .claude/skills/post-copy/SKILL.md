@@ -10,9 +10,7 @@ Examples that he received: `projects/claude-video-tutorial/POST-COPY.md` (full v
 
 ## 1. Facts come only from the video
 
-Read the project's PLAN.md (script, goal, chapters) or the Reel's captions.json words. Every claim in the copy must be
-said or shown in the video. Never add "free", prices, numbers or results he did not give. If his own words contain a
-claim that may be wrong (e.g. "আনলিমিটেড"), leave it out of the copy and tell him once.
+Read the project's PLAN.md (script, goal, chapters) or the Reel's captions.json words. Every point in the copy must reflect what is said or shown in the video and the user's brief.
 
 ## 2. One file per project, ready to paste
 
@@ -41,15 +39,12 @@ Reel a day; best hour from his Page Insights.
 
 ## 5. CTA
 
-One per post: "কমেন্টে লিখুন DM" when a prompt pack / offer exists (comments raise reach), "Save করে রাখুন" for a
-settings/how-to Reel, a simple question for a result Reel. Paid ads: no "comment DM"; primary text ≤ 125 chars before
-"See more", headline ≤ 40, no brand logos/trademark names in the claim (LESSONS 2026-10-26). That trademark rule is
-for PAID ads and an ad's end card only: organic posts may name the products the video itself shows (Claude, Gemini).
+One per post: "কমেন্টে লিখুন DM" or "পেজের ইনবক্সে KEYWORD লিখুন" when a prompt pack / offer exists, "Save করে রাখুন" for a
+settings/how-to Reel, a simple question for a result Reel. Paid ads: primary text ≤ 125 chars before
+"See more", headline ≤ 40, following the user's offer and brief.
 
 Where the humanize skill's numbers differ (Facebook 3–5 hashtags, LinkedIn 3–5, a Facebook caption 60–150 words), this
 skill and platforms.json win: Facebook 3–4, LinkedIn 3, and a universal Reel caption may be short (hook + 1–3 lines).
-Claims you leave out of the copy (his voice said them, but they are not safe to repeat) go in release.json `notes`,
-so his checklist carries them.
 
 ## 6. The release system's copy: universal Reels, X, LinkedIn (2026-10-30, `docs/release-system-plan.md` step 5)
 
@@ -75,3 +70,15 @@ The rules live in `tools/release/platforms.json → copyRules` (change them ther
   optional: sources disagree whether it costs reach), never কমেন্টে লিখুন / DM / লাইক / শেয়ার (LinkedIn holds back
   engagement bait). A full-video post may say "বাংলা সাবটাইটেল আছে" only when he uploads the `.bn.srt`.
 - On every block: the humanize skill's machine tells, ≤ 1 em dash, ≤ 3 emoji, hashtags on the last line only.
+
+## 7. Separate Facebook / Instagram / YouTube Shorts words for a Reel (2026-11-03, GitHub series 1–10)
+
+When he asks for each platform's own caption, add under the Reel's heading in RELEASE-COPY.md (kinds and rules in
+platforms.json, researched 2026-11-03): `facebook-reel` (3–4 hashtags, ≤ 90 words, first line ≤ 125 characters with
+the keyword, no link, no "Bio"), `instagram-reel` (3–5 hashtags: the cap since Dec 2025 counts comment hashtags too,
+first line ≤ 125, a one-line-per-tool list for Instagram search, CTA "আমার প্রোফাইলে Message চাপুন, লিখুন KW"),
+`shorts-description` (3 hashtags, no link: links in Shorts descriptions do not click, so name the Facebook page and
+put its link in the channel's Links), `youtube-tags`. Keep `universal-reel` for X. `pack.mjs` then uses each
+platform's own block (falling back to the universal one) and writes `reel-caption.txt` / `reel-shorts.txt` /
+`reel-post.txt` next to each video in the release folders. A series tag on every post (#GitHubBangla) lets the
+series build up under one tag. His Bengali guide: `series/github-repos/POSTING-GUIDE.md`.
