@@ -12,8 +12,9 @@ folder to it WITHOUT changing any file on disk. Reply to me in simple Bengali; s
 1. `git remote -v`. If `origin` already exists and points elsewhere, STOP and show me.
    Otherwise: `git remote add origin https://github.com/zubayernibir6-code/video-create.git`
 2. `git fetch origin`
-3. Check that `d490bca` (this folder's last commit) is in origin's history: `git merge-base --is-ancestor HEAD origin/master`
-   must succeed. If not, STOP.
+3. `git merge-base --is-ancestor HEAD origin/master`: it succeeds when this folder's last commit (`d490bca`) is already
+   in GitHub's history (the normal case). If it FAILS, a commit was made here after 2026-11-04 10:15: then do NOT reset;
+   run `git merge origin/master` instead, show me any conflict, and skip step 4.
 4. `git reset --mixed origin/master` (moves only the history pointer and the index; files on disk stay exactly as
    they are), then `git branch --set-upstream-to=origin/master master`.
 5. Two files the cloud could not write into `.claude`: `git checkout origin/master -- .claude/settings.json .claude/skills/client-promo`
