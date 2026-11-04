@@ -12,8 +12,9 @@
    studio setup in the background (≈3–5 min on a fresh machine, 2 s when ready). Do not wait for it: read the brief,
    route, write PLAN.md. Run `bash tools/cloud/ready.sh` right before the first build/render. Cloud differences
    (detached renders with `setsid`, delivery back to the PC): `CLOUD.md`.
-   No workspace on the cloud machine? Attach his private GitHub repo to the session (fast), else copy through the
-   desktop link (`CLOUD.md` §2, slow).
+   No workspace on the cloud machine? His private repo **`zubayernibir6-code/video-create`** (set up 2026-11-05) holds
+   the whole workspace: start the session with it attached (or `add_repo` + clone, seconds); copying through the
+   desktop link (`CLOUD.md` §2) is the slow fallback.
 2. **Route in one step.** His folder → `node tools/route.mjs <folder>` → a code → load ONE skill → its engine:
 
    | He brings / says | Code | Skill | Engine |
@@ -36,9 +37,11 @@
    contact sheets as always (§0d, §0i). Nothing in §0–§0i is skipped for speed.
 5. **Model:** a job on a READY style (engine + skill exist) runs well on Sonnet; a new style or engine, a hard bug,
    or a system change → Opus.
-6. **End of every job:** §0f loop, then commit — and push to his private GitHub repo once it is set up, so the next
-   cloud chat starts from the newest tools (a cloud machine and everything only on it is deleted when idle; the
-   client-promo skill was lost that way on 2026-11-04 and rebuilt).
+6. **End of every job:** §0f loop, then commit (with his OK) and `git push` to `zubayernibir6-code/video-create`, so
+   the next cloud chat starts from the newest tools (a cloud machine and everything only on it is deleted when idle;
+   the client-promo skill was lost that way on 2026-11-04 and rebuilt). Cloud and laptop share this one repo: on the
+   laptop run `git pull` before working and `git push` after; never force-push. Renders and media never go to git
+   (.gitignore): deliver them with SendUserFile / the desktop link.
 
 ---
 

@@ -33,8 +33,8 @@ Nothing to type. The SessionStart hook in `.claude/settings.json` runs `node too
 - workspace cloned somewhere else (a GitHub repo attached to the session) → links `/home/claude/video-create` to it.
 Before the first build/render: `bash tools/cloud/ready.sh` (waits, then `--check`; exit 0 = ready).
 By hand, if ever needed: `bash tools/cloud/setup.sh --check` (report) · `bash tools/cloud/setup.sh` (repair).
-- **No workspace at all** (fresh machine, no repo attached): attach his private GitHub repo `video-create` (seconds;
-  set up per `PUSH-TO-GITHUB.md`), else copy `D:\Video Create` through the desktop link (`device_stage_files`,
+- **No workspace at all** (fresh machine, no repo attached): attach his private GitHub repo
+  `zubayernibir6-code/video-create` (`add_repo`, then clone to `/home/claude/video-create`; seconds), else copy `D:\Video Create` through the desktop link (`device_stage_files`,
   50 files per call, paths in `tools/cloud/MANIFEST.txt`, plus `.env.local`), then run the hook by hand:
   `node tools/cloud/autostart.mjs`.
 - A command shell is a snapshot taken when the session starts. In the FIRST session on a fresh machine, start commands
@@ -112,8 +112,8 @@ By hand, if ever needed: `bash tools/cloud/setup.sh --check` (report) · `bash t
 ## 6. Running all the time (honest limits)
 
 The cloud machine is not a server that runs forever: it is reclaimed after a period of inactivity, and a session works
-while a task is running. What makes it feel always-on: (1) `setup.sh` rebuilds the whole studio from scratch in ~10 min,
-(2) scheduled tasks can start a session at set times, (3) several sub-agents can work in parallel inside one session.
-The workspace copy still depends on the PC (the desktop app must be open to copy files). A **private GitHub repo** of
-the workspace sources (no keys, no media; `.gitignore` already excludes them) would let any new cloud session start
-without the PC: it needs his OK first (CLAUDE.md §0: never publish without his OK).
+while a task is running. What makes it feel always-on: (1) the whole workspace lives in his private GitHub repo
+`zubayernibir6-code/video-create` (since 2026-11-05: the laptop's full history + the cloud work), so a new session gets
+it in seconds without the laptop; (2) the SessionStart hook rebuilds the tools in ~3 min in the background; (3) scheduled
+tasks can start a session at set times. His raw footage and finished renders are NOT in git: footage comes from chat
+uploads or the desktop link, renders go back by SendUserFile / the desktop link.
