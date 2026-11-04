@@ -97,6 +97,8 @@ By hand, if ever needed: `bash tools/cloud/setup.sh --check` (report) · `bash t
 | Parallel `setup.sh` from nothing (FFmpeg, HyperFrames + Chrome, skills, venv + 774 MB model, Piper, DeepFilterNet, whisper.cpp build, Lucide) | **17/17 ✓ in 165 s** (installs 157 s; the old one-by-one setup: ~8–12 min) |
 | Hook / `ready.sh` on the ready machine | 2.6 s each, "studio READY" |
 | `finish.mjs` on a 4 s Bengali 16:9 page (`projects/zz-fast-smoke`) | 48 s for everything: render, −13.9 LUFS, all 10 QC PASS, 9:16 / 1:1 / 4:5, thumb, GIF; frame read: ক্ষ ত্র স্ত্র প্র অ্যাগ্রো রপ্তানি joined |
+| **From GitHub** (2026-11-05): `git clone --depth 1` of `zubayernibir6-code/video-create` | **4 s**, 268 MB, 5,955 files; hook → repair (Piper voice) → `ready.sh` ✓ 17/17 in **16 s** (heavy tools already in /opt/vc; on a brand-new machine add the 165 s above) |
+| Same smoke render from that clone | 56 s, all 10 QC PASS, frame read: Bengali correct; `git status` clean after setup (overlay files are skip-worktree) |
 | Stopping a test job | `kill <pid>` from `ps` worked; a `grep`/`pgrep` pattern in a loop killed the calling shell again (exit 144): §3.1 is right |
 
 ## 5b. Render numbers (cloud, 2 CPUs, software GL)

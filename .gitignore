@@ -84,5 +84,3 @@ projects/gh-ep10-claude/build/mix.graph.txt
 # Claude Code machine-local files (worktrees, personal settings)
 .claude/worktrees/
 .claude/settings.local.json
-# cloud machine: setup.sh downloads the 1,866 Lucide icons (the list stays in transfer-kit/knowledge/lucide-icons.txt)
-assets/icons/lucide/icons/
