@@ -1,0 +1,9 @@
+{
+ "note": "Caption words from the master's own word list (tools/explainer build/master.words.json): no new ASR.",
+ "extra": [
+  {
+   "asr": "D:/Video Create/projects/claude-skills-tutorial/build/master.words.json",
+   "at": 0
+  }
+ ]
+}

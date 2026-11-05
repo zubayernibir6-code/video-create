@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <title>Claude Skills থাম্বনেইল</title>
+    <script src="assets/js/gsap/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Inter"; font-weight: 100 900; src: url("assets/fonts/Inter-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Baloo Da 2"; font-weight: 400 800; src: url("assets/fonts/BalooDa2-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-weight: 700; src: url("assets/fonts/HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "JetBrains Mono"; font-weight: 100 800; src: url("assets/fonts/JetBrainsMono-Variable.ttf") format("truetype"); font-display: block; }
+body { margin: 0; background: #0E0C0A; }
+#root { position: relative; width: 1280px; height: 720px; overflow: hidden; background: radial-gradient(900px 600px at 70% 45%, #2A1A12 0%, #140F0C 55%, #0B0908 100%); }
+#grid { position: absolute; inset: 0; opacity: 0.55; background-image: radial-gradient(rgba(255,230,200,0.08) 1.5px, transparent 1.6px); background-size: 34px 34px; }
+#glow { position: absolute; left: 640px; top: 80px; width: 700px; height: 600px; border-radius: 50%; background: radial-gradient(closest-side, rgba(224,122,85,0.35), transparent); }
+.kick { position: absolute; left: 60px; top: 70px; display: inline-flex; align-items: center; gap: 12px; padding: 8px 22px 10px; border-radius: 999px; background: #E07A55; color: #1B0F0A; font: 700 34px/1.2 "Hind Siliguri", sans-serif; }
+.t1 { position: absolute; left: 56px; top: 150px; font: 800 112px/1 "Inter", sans-serif; color: #F3EDE4; letter-spacing: -0.03em; }
+.t2 { position: absolute; left: 60px; top: 285px; font: 800 94px/1.1 "Baloo Da 2", "Hind Siliguri", sans-serif; color: #F2B84B; }
+.t3 { position: absolute; left: 62px; top: 430px; font: 700 46px/1.35 "Hind Siliguri", sans-serif; color: #F3EDE4; width: 640px; text-wrap: balance; }
+.card { position: absolute; left: 812px; top: 160px; width: 410px; height: 420px; border-radius: 26px; background: #1A1714; box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 0 2px rgba(242,184,75,0.55), 0 0 70px rgba(242,184,75,0.25); transform: rotate(4deg); overflow: hidden; }
+.bar { height: 50px; background: #221E1A; display: flex; align-items: center; gap: 9px; padding: 0 20px; }
+.bar i { width: 13px; height: 13px; border-radius: 50%; background: #3A332D; display: block; }
+.bar span { margin-left: 10px; font: 700 24px/1 "JetBrains Mono", monospace; color: #F2B84B; }
+.code { padding: 22px 26px; font: 600 25px/1.75 "JetBrains Mono", "Hind Siliguri", monospace; color: #E9E1D6; }
+.k { color: #E07A55; } .c { color: #8E857B; } .s { color: #9FE3BB; }
+.hl { background: rgba(242,184,75,0.16); box-shadow: inset 0 0 0 2px rgba(242,184,75,0.6); border-radius: 8px; margin: 0 -10px; padding: 0 10px; }
+.badge { position: absolute; left: 1120px; top: 108px; width: 118px; height: 118px; border-radius: 50%; background: #E07A55; display: flex; align-items: center; justify-content: center; box-shadow: 0 16px 40px rgba(0,0,0,0.5); transform: rotate(-8deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1280" data-height="720" data-duration="1">
+      <div id="grid"></div><div id="glow"></div>
+      <div class="kick">৫ মিনিটে বাংলায়</div>
+      <div class="t1">Claude Skills</div>
+      <div class="t2">কী, কেন, কীভাবে</div>
+      <div class="t3">একবার শেখান, প্রতিবার একই মানের কাজ</div>
+      <div class="card">
+        <div class="bar"><i></i><i></i><i></i><span>SKILL.md</span></div>
+        <div class="code">
+          <div class="c">---</div>
+          <div><span class="k">name:</span> monthly-report</div>
+          <div class="hl"><span class="k">description:</span></div>
+          <div class="s">মাসিক রিপোর্ট বানায়</div>
+          <div class="c">---</div>
+          <div>১. শিরোনাম</div>
+          <div>২. টাকা ৳ চিহ্নসহ</div>
+        </div>
+      </div>
+      <div class="badge"><svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#1B0F0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 14.5A2 2 0 0 0 8.5 13.06L2.36 11.5a.5.5 0 0 1 0-.96L8.5 8.97A2 2 0 0 0 9.94 7.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 7.5A2 2 0 0 0 15.5 8.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 13.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.to({}, { duration: 1 });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

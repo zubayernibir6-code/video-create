@@ -1,0 +1,18 @@
+{
+ "name": "claude-skills-ureel-3",
+ "note": "Universal Reel cut from claude-skills-tutorial (EXP1), lines 33–37: written by tools/explainer/reels.mjs",
+ "master": "D:/Video Create/renders/claude-skills-tutorial/2026-11-02_0154/claude-skills-tutorial.mp4",
+ "bed": "C:/Users/Zubayer Nibir/VideoWork/claude-skills-tutorial/media/bed.wav",
+ "faces": [],
+ "fps": 30,
+ "bedDb": 12,
+ "faceMode": "window",
+ "work": "C:/Users/Zubayer Nibir/VideoWork/claude-skills-ureel-3",
+ "segments": [
+  {
+   "from": 207.11,
+   "to": 250.325
+  }
+ ],
+ "tail": 5.5
+}
