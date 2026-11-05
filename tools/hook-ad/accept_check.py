@@ -20,6 +20,7 @@ for line in open(sys.argv[1], encoding="utf-8"):
     if not line.startswith("Dialogue:"): continue
     p = line.split(",", 9)
     if "\\p1" in p[9]: continue  # vector drawings (route line, dots)
+    if "\\alpha&HFF&" in p[9]: continue  # a typing step (build.py "type"): shown briefly on purpose
     st, en, style, txt = t(p[1]), t(p[2]), p[3], p[9].strip()
     pos = re.search(r"\\pos\((\d+),(\d+)\)", txt)
     fs = re.search(r"\\fs(\d+)", txt)

@@ -20,3 +20,4 @@ llvmlite==0.50.0
 requests==2.34.2
 pyyaml==6.0.3
 tqdm==4.70.1
+opencv-python-headless  # hook-ad faces.py (YuNet), added 2026-11-05

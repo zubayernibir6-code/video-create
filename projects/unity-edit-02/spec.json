@@ -1,0 +1,254 @@
+{
+ "src": "/home/claude/VideoWork/unity-edit-02/src2.mp4",
+ "words": "/home/claude/VideoWork/unity-edit-02/asr.words.json",
+ "faces": "/home/claude/VideoWork/unity-edit-02/faces.json",
+ "out": "/home/claude/VideoWork/unity-edit-02/unity_v2_C",
+ "look": "C",
+ "music": {
+  "file": "/home/claude/VideoWork/unity-edit-02/music.wav",
+  "gain": 0.35
+ },
+ "fix": {
+  "ঝুটপোটি": "ঝুটপট্টি",
+  "চারালি": "চারআলী",
+  "বারোমারি": "বারোমারী",
+  "ইউনিটি": "UNITY",
+  "সাতটা": "৭টা",
+  "দশ": "১০",
+  "মিনিটেই": "মিনিটে"
+ },
+ "cut": [
+  [
+   31.0,
+   34.6
+  ],
+  [
+   39.98,
+   42.0
+  ]
+ ],
+ "cards": [
+  {
+   "text": "নালিতাবাড়ী যাবেন?",
+   "at": 0.0,
+   "until": 2.7,
+   "style": "Hook",
+   "fs": 145
+  },
+  {
+   "text": "বিশ্বস্ত সঙ্গী",
+   "at": 3.04,
+   "until": 4.25,
+   "style": "Gold",
+   "fs": 175
+  },
+  {
+   "text": "UNITY পরিবহন",
+   "at": 4.28,
+   "until": 5.96,
+   "style": "Hook",
+   "fs": 150
+  },
+  {
+   "text": "UNITY পরিবহন",
+   "at": 12.94,
+   "until": 14.5,
+   "style": "Hook",
+   "fs": 145
+  },
+  {
+   "text": "প্রতিদিন",
+   "at": 14.56,
+   "until": 16.3,
+   "style": "Box",
+   "fs": 96
+  },
+  {
+   "text": "সন্ধ্যা ৭:১০",
+   "at": 16.34,
+   "until": 19.86,
+   "style": "Gold",
+   "fs": 175
+  },
+  {
+   "text": "টিকিট ও বিস্তারিত",
+   "at": 19.9,
+   "until": 22.85,
+   "style": "Box",
+   "fs": 96
+  },
+  {
+   "text": "মিরপুর ঝুটপট্টি কাউন্টার",
+   "at": 22.88,
+   "until": 26.0,
+   "style": "Box",
+   "fs": 88
+  },
+  {
+   "text": "কল করুন",
+   "at": 26.1,
+   "until": 31.0,
+   "style": "Box",
+   "fs": 100,
+   "y": 470
+  },
+  {
+   "text": "০১৬৭৭-২৭৮৩২৭",
+   "at": 26.4,
+   "until": 31.0,
+   "style": "Gold",
+   "fs": 165,
+   "y": 680,
+   "type": 1.2
+  },
+  {
+   "text": "০১৭১৪-৩৪৪৮৬২",
+   "at": 27.9,
+   "until": 31.0,
+   "style": "Gold",
+   "fs": 165,
+   "y": 900,
+   "type": 1.2
+  },
+  {
+   "text": "UNITY পরিবহন",
+   "at": 35.58,
+   "until": 37.7,
+   "style": "Hook",
+   "fs": 88
+  },
+  {
+   "text": "নির্ভরতার সঙ্গী",
+   "at": 37.72,
+   "until": 39.95,
+   "style": "Gold",
+   "fs": 88
+  }
+ ],
+ "route": {
+  "stops": [
+   [
+    "মিরপুর",
+    6.52
+   ],
+   [
+    "নালিতাবাড়ী",
+    8.06
+   ],
+   [
+    "নয়াবিল",
+    8.82
+   ],
+   [
+    "চারআলী",
+    9.4
+   ],
+   [
+    "বারোমারী",
+    9.96
+   ],
+   [
+    "নন্নী",
+    10.9
+   ]
+  ],
+  "until": 12.9,
+  "fs": 86
+ },
+ "hits": [
+  [
+   0.0,
+   "impact-bass-1.mp3"
+  ],
+  [
+   4.28,
+   "impact-bass-2.mp3"
+  ],
+  [
+   6.0,
+   "whoosh-cinematic.mp3"
+  ],
+  [
+   14.0,
+   "whoosh-short.mp3"
+  ],
+  [
+   16.34,
+   "impact-bass-1.mp3"
+  ],
+  [
+   20.0,
+   "whoosh.mp3"
+  ],
+  [
+   26.0,
+   "whoosh-cinematic.mp3"
+  ],
+  [
+   35.58,
+   "impact-bass-2.mp3"
+  ]
+ ],
+ "whip": [
+  6.0,
+  14.0,
+  20.0,
+  26.0,
+  36.0
+ ],
+ "phone": null,
+ "breaks": [
+  5.9,
+  14.5,
+  19.8
+ ],
+ "end": {
+  "bg": 9.5,
+  "dur": 3.0,
+  "cards": [
+   {
+    "text": "UNITY পরিবহন",
+    "at": 0.0,
+    "style": "Hook",
+    "fs": 130,
+    "y": 365
+   },
+   {
+    "text": "মিরপুর — নালিতাবাড়ী — নন্নী",
+    "at": 0.15,
+    "style": "Box",
+    "fs": 74,
+    "y": 505
+   },
+   {
+    "text": "প্রতিদিন সন্ধ্যা ৭:১০",
+    "at": 0.3,
+    "style": "Gold",
+    "fs": 105,
+    "y": 630
+   },
+   {
+    "text": "টিকিট ও যোগাযোগ",
+    "at": 0.45,
+    "style": "Box",
+    "fs": 78,
+    "y": 760
+   },
+   {
+    "text": "০১৬৭৭-২৭৮৩২৭",
+    "at": 0.6,
+    "style": "Gold",
+    "fs": 130,
+    "y": 900
+   },
+   {
+    "text": "০১৭১৪-৩৪৪৮৬২",
+    "at": 0.75,
+    "style": "Gold",
+    "fs": 130,
+    "y": 1080
+   }
+  ],
+  "dim": -0.22
+ }
+}
