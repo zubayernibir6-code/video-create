@@ -39,10 +39,38 @@ for i, a in enumerate(cards):
         if a["st"] < b["en"] and b["st"] < a["en"] and abs(a["y"] - b["y"]) < (a["fs"] + b["fs"]) * 0.65 and abs(a["x"] - b["x"]) < 500:
             fails.append(f"'{a['text']}' and '{b['text']}' overlap on screen ({max(a['st'], b['st']):.2f}s)")
 if "brand" in args and "words" in args:
-    W = json.load(open(args["words"], encoding="utf-8"))
+    W = [w for part in args["words"].split(",") for w in json.load(open(part.partition("@")[0], encoding="utf-8"))]
     said = [w["start"] for w in W if args["brand"] in w["text"]]
     shown = [e["st"] for e in cards if args["brand"] in e["text"]]
     if said and (not shown or min(shown) > said[0] + 3): fails.append(f"brand '{args['brand']}' spoken at {said[0]:.2f}s but not on screen within 3 s")
+if "words" in args:  # every phone number the VOICE says must be on screen, complete, while it is said (2026-11-05)
+    WW = []
+    for part in args["words"].split(","):
+        f_, _, off = part.partition("@")
+        WW += [dict(w, start=w["start"] + float(off or 0)) for w in json.load(open(f_, encoding="utf-8"))]
+    WW.sort(key=lambda w: w["start"])
+    DIG = {"জিরো": 0, "শূন্য": 0, "ওয়ান": 1, "এক": 1, "টু": 2, "দুই": 2, "থ্রি": 3, "তিন": 3, "ফোর": 4, "চার": 4, "ফাইভ": 5,
+           "পাঁচ": 5, "সিক্স": 6, "ছয়": 6, "সেভেন": 7, "সাত": 7, "এইট": 8, "আট": 8, "নাইন": 9, "নয়": 9, "ডাবল": "x2", "ট্রিপল": "x3"}
+    runs, cur, mult = [], [], 1
+    for w in WW:
+        v = DIG.get(w["text"])
+        if v is None: cur and runs.append(cur); cur, mult = [], 1; continue
+        if isinstance(v, str): mult = int(v[1]); continue
+        cur += [(str(v), w["start"])] * mult; mult = 1
+        if len(cur) == 11 and cur[0][0] == "0": runs.append(cur); cur = []
+    cur and runs.append(cur)
+    def o(t):  # --shift=a:b,... = cuts (source seconds) made before this render
+        for sh in filter(None, args.get("shift", "").split(",")):
+            a_, b_ = map(float, sh.split(":")[:2])
+            if t >= b_: t -= b_ - a_
+        return t
+    norm = lambda x: re.sub(r"\D", "", x.translate(str.maketrans("০১২৩৪৫৬৭৮৯", "0123456789")))
+    for r in runs:
+        if len(r) < 10: continue
+        num = "".join(d for d, _ in r); a_, b_ = o(r[0][1]), o(r[-1][1])
+        full = [e for e in cards if norm(e["text"]) == num and e["st"] <= b_ + 0.05 and e["en"] >= b_ + 0.3]
+        if not re.fullmatch(r"01[3-9]\d{8}", num): fails.append(f"the voice says '{num}' ({len(num)} digits) at {a_:.2f}s: not a valid number. Cut it on a shot change and ask him.")
+        elif not full: fails.append(f"the voice says {num} at {a_:.2f}-{b_:.2f}s but the full number is not on screen then")
 if "faces" in args:  # faces measured on the RENDERED video (output time): no card may touch a head
     F = json.load(open(args["faces"]))
     for e in cards:

@@ -1,8 +1,14 @@
 {
  "src": "/home/claude/VideoWork/unity-edit-02/src2.mp4",
- "words": "/home/claude/VideoWork/unity-edit-02/asr.words.json",
+ "words": [
+  "/home/claude/VideoWork/unity-edit-02/asr.words.json",
+  {
+   "file": "/home/claude/VideoWork/unity-edit-02/num_asr.words.json",
+   "offset": 24.0
+  }
+ ],
  "faces": "/home/claude/VideoWork/unity-edit-02/faces.json",
- "out": "/home/claude/VideoWork/unity-edit-02/unity_v2_C",
+ "out": "/home/claude/VideoWork/unity-edit-02/unity_v4_C",
  "look": "C",
  "music": {
   "file": "/home/claude/VideoWork/unity-edit-02/music.wav",
@@ -18,10 +24,6 @@
   "মিনিটেই": "মিনিটে"
  },
  "cut": [
-  [
-   31.0,
-   34.6
-  ],
   [
    39.98,
    42.0
@@ -80,14 +82,14 @@
   {
    "text": "মিরপুর ঝুটপট্টি কাউন্টার",
    "at": 22.88,
-   "until": 26.0,
+   "until": 25.55,
    "style": "Box",
    "fs": 88
   },
   {
    "text": "কল করুন",
-   "at": 26.1,
-   "until": 31.0,
+   "at": 25.6,
+   "until": 35.99,
    "style": "Box",
    "fs": 100,
    "y": 470
@@ -95,24 +97,30 @@
   {
    "text": "০১৬৭৭-২৭৮৩২৭",
    "at": 26.4,
-   "until": 31.0,
+   "until": 35.99,
    "style": "Gold",
    "fs": 165,
    "y": 680,
-   "type": 1.2
+   "spoken": [
+    25.5,
+    31.0
+   ]
   },
   {
    "text": "০১৭১৪-৩৪৪৮৬২",
    "at": 27.9,
-   "until": 31.0,
+   "until": 35.99,
    "style": "Gold",
    "fs": 165,
    "y": 900,
-   "type": 1.2
+   "spoken": [
+    31.0,
+    35.7
+   ]
   },
   {
    "text": "UNITY পরিবহন",
-   "at": 35.58,
+   "at": 36.3,
    "until": 37.7,
    "style": "Hook",
    "fs": 88
@@ -181,11 +189,7 @@
    "whoosh.mp3"
   ],
   [
-   26.0,
-   "whoosh-cinematic.mp3"
-  ],
-  [
-   35.58,
+   36.0,
    "impact-bass-2.mp3"
   ]
  ],
@@ -250,5 +254,17 @@
    }
   ],
   "dim": -0.22
- }
+ },
+ "hold": [
+  [
+   35.9,
+   1.5
+  ]
+ ],
+ "retime": [
+  [
+   35.58,
+   36.47
+  ]
+ ]
 }

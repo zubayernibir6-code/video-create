@@ -10,12 +10,43 @@ YuNet face, grown to hair and chin. Made 2026-11-04 (unity-hook-01 v3)."""
 import json, subprocess, sys, os
 S = json.load(open(sys.argv[1], encoding="utf-8")); D = os.path.dirname(os.path.abspath(sys.argv[1]))
 P = lambda p: p if os.path.isabs(p) else os.path.join(D, p)
-W = json.load(open(P(S["words"]), encoding="utf-8")); F = json.load(open(P(S["faces"])))
+def load_words(spec):  # "words": file or [file, {"file", "offset"}] (a stretch re-transcribed on its own)
+    out_ = []
+    for it in (spec if isinstance(spec, list) else [spec]):
+        f_, off = (it, 0) if isinstance(it, str) else (it["file"], it.get("offset", 0))
+        for w in json.load(open(P(f_), encoding="utf-8")): out_.append(dict(w, start=w["start"] + off, end=w["end"] + off))
+    return sorted(out_, key=lambda w: w["start"])
+W = load_words(S["words"]); F = json.load(open(P(S["faces"])))
+# --- speech guards (2026-11-05, unity-edit-02: ASR skipped the spoken phone numbers, a cut then removed them) ---
+import re as _re
+def voiced(src):  # non-silent spans of the source audio (-35 dB, 0.3 s)
+    r = subprocess.run(["ffmpeg", "-i", src, "-af", "silencedetect=n=-35dB:d=0.3", "-f", "null", "-"], capture_output=True, text=True).stderr
+    st = [float(x) for x in _re.findall(r"silence_start: ([\d.]+)", r)]; en = [float(x) for x in _re.findall(r"silence_end: ([\d.]+)", r)]
+    d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src], capture_output=True, text=True).stdout)
+    sil = list(zip(st, en + [d] * (len(st) - len(en)))); spans, t = [], 0.0
+    for a, b in sil:
+        if a > t: spans.append((t, a))
+        t = b
+    if t < d: spans.append((t, d))
+    return spans
+VOICED = voiced(P(S["src"]))
+for a, b in VOICED:  # sound with no ASR word in it = speech the ASR skipped (it calls it a "phantom")
+    if b - a >= 0.8 and not any(w["start"] < b and w["end"] > a for w in W) and not any(x0 <= a and b <= x1 for x0, x1 in S.get("not_speech", [])):
+        raise SystemExit(f"UNHEARD SOUND {a:.2f}-{b:.2f}s: ASR has no words there. Re-transcribe that stretch alone "
+                         f"(ffmpeg -ss {a:.2f} -to {b:.2f} ... then transcribe.mjs) and add it to \"words\" with its offset, "
+                         f"or list it in \"not_speech\" if it is music/noise you have listened to.")
+for ca, cb in S.get("cut", []):
+    hit = [w["text"] for w in W if w["start"] < cb and w["end"] > ca]
+    if hit: raise SystemExit(f"CUT {ca}-{cb} removes spoken words: {' '.join(hit)}. Never cut speech.")
 for w in W: w["text"] = S.get("fix", {}).get(w["text"], w["text"])
+for o_, n_ in S.get("retime", []):  # [[asr start, measured start]]: a word the ASR placed too early (checked with silencedetect)
+    for w in W:
+        if abs(w["start"] - o_) < 0.02: w["end"] = max(w["end"], n_ + 0.3); w["start"] = n_
 CUT = sorted(S.get("cut", []))
 def keep(t): return all(not (a <= t < b) for a, b in CUT)
-def out(t):  # source time -> output time
-    return t - sum(min(b, t) - a for a, b in CUT if t > a)
+HOLD = sorted(S.get("hold", []))  # [[source t, seconds]]: freeze that frame, silent (e.g. let a full number be read)
+def out(t):  # source time -> output time (cuts removed, holds inserted)
+    return t - sum(min(b, t) - a for a, b in CUT if t > a) + sum(d for h, d in HOLD if t > h)
 TOP, CAPY, LOW = 269, 1190, 1240
 BELOW = []  # (a,b) source-time spans where a card sits below the head: captions step aside
 def heads(st, en):
@@ -64,7 +95,9 @@ Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour,
 {styles}[Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
-DEF = {"Box": 72, "Hook": 130, "Gold": 130}; TYPED = []
+DEF = {"Box": 72, "Hook": 130, "Gold": 130}; TYPED = []; TYPED_SPANS = []
+DIG = {"জিরো": 0, "শূন্য": 0, "ওয়ান": 1, "এক": 1, "টু": 2, "দুই": 2, "থ্রি": 3, "তিন": 3, "ফোর": 4, "চার": 4, "ফাইভ": 5, "পাঁচ": 5,
+       "সিক্স": 6, "ছয়": 6, "সেভেন": 7, "সাত": 7, "এইট": 8, "আট": 8, "নাইন": 9, "নয়": 9, "ডাবল": "x2", "ট্রিপল": "x3"}
 hdr = hdr.replace("{styles}", "\n".join("Style: " + x for x in LOOKS[LOOK]) + "\n")
 ev, plan = [], []
 SDUR = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", P(S["src"])], capture_output=True, text=True).stdout)
@@ -74,12 +107,32 @@ def add(a, b, style, text, layer=1):
 POP = r"{\fscx40\fscy40\t(0,140,\fscx110\fscy110)\t(140,240,\fscx100\fscy100)}"
 for c in S["cards"]:
     fs = c.get("fs", DEF[c["style"]]); y = c["y"] if "y" in c else place(fs, c["at"], c["until"], c.get("lines", 1))
-    if c.get("type"):  # typed character by character over c["type"] seconds (phone numbers: one digit at a time)
-        tx, n = c["text"], len(c["text"]); dt = c["type"] / n
+    if c.get("type") or c.get("spoken"):  # typed char by char; "spoken": each digit appears ON its spoken word
+        tx, n = c["text"], len(c["text"])
+        if c.get("spoken"):  # times of the spoken digits, from the words ("ডাবল সেভেন" = two 7s on the same word)
+            seq, mult = [], 1
+            for w in W:
+                if not (c["spoken"][0] - 0.05 <= w["start"] < c["spoken"][1]) or w["text"] not in DIG: continue
+                v = DIG[w["text"]]
+                if isinstance(v, str): mult = int(v[1]); continue
+                seq += [(str(v), w["start"])] * mult; mult = 1
+            digits = _re.sub(r"\D", "", tx.translate(str.maketrans("০১২৩৪৫৬৭৮৯", "0123456789")))
+            if "".join(d for d, _ in seq) != digits:
+                raise SystemExit(f"SPOKEN NUMBER {''.join(d for d, _ in seq)} != CARD {digits}: listen again, never show a number the voice does not say")
+            times, j = [], 0
+            for ch in tx:  # a hyphen appears with the digit before it
+                if ch.isdigit() or ch in "০১২৩৪৫৬৭৮৯": times.append(seq[j][1]); j += 1
+                else: times.append(times[-1] if times else seq[0][1])
+            c["at"] = times[0]
+        else:
+            times = [c["at"] + k * c["type"] / n for k in range(n)]
         for k in range(1, n + 1):  # full string kept invisible after the cursor so the centre never jumps
+            if k < n and times[k] == times[k - 1]: continue
+            nxt = next((times[m] for m in range(k, n) if times[m] > times[k - 1]), c["until"]) if k < n else c["until"]
             vis = tx[:k] + (r"{\alpha&HFF&}" + tx[k:] if k < n else "")
-            add(c["at"] + (k - 1) * dt, c["at"] + k * dt if k < n else c["until"], c["style"], r"{\pos(540,%d)\fs%d%s}" % (y, fs, r"\fad(0,150)" if k == n else "") + vis)
-        TYPED.append((c["at"], c["type"]))
+            add(times[k - 1], nxt, c["style"], r"{\pos(540,%d)\fs%d%s}" % (y, fs, r"\fad(0,150)" if k == n else "") + vis)
+        if not c.get("spoken"): TYPED.append((times[0], times[-1] - times[0] + 0.3))  # spoken: the voice is the sound
+        TYPED_SPANS.append((times[0], c["until"]))
     else:
         add(c["at"], c["until"], c["style"], r"{\pos(540,%d)\fs%d\fad(0,150)}" % (y, fs) + POP + c["text"])
     plan.append(f"{out(c['at']):6.2f}-{out(c['until']):6.2f}  y={y:4.0f}  {c['text']}")
@@ -108,7 +161,7 @@ if R:  # route line with dots that fill as each stop is spoken + the current sto
     plan.append(f"{out(st0):6.2f}-{out(en0):6.2f}  y={y:4.0f}  ROUTE {' > '.join(s for s, _ in R['stops'])}")
 # word captions, 2-4 words, the spoken word gold; words inside a cut are dropped
 phr, cur = [], []
-for w in [w for w in W if keep(w["start"])]:
+for w in [w for w in W if keep(w["start"]) and not (w["text"] in DIG and any(x0 - 0.3 <= w["start"] <= x1 for x0, x1 in TYPED_SPANS))]:
     brk = any(cur and cur[-1]["start"] < b_ <= w["start"] for b_ in S.get("breaks", []))
     if cur and (len(cur) == 4 or w["start"] - cur[-1]["end"] > 0.5 or brk): phr.append(cur); cur = []
     cur.append(w)
@@ -134,6 +187,11 @@ segs, t = [], 0.0
 for a, b in CUT + [[dur, dur]]:
     if a > t: segs.append((t, a))
     t = b
+pieces = []  # ("src", a, b) | ("still", t, seconds, blur, dim)
+for a, b in segs:
+    for h, d in HOLD:
+        if a < h < b: pieces += [("src", a, h), ("still", h - 1 / 24, d, 0, 0)]; a = h
+    pieces.append(("src", a, b))
 HN = {}  # output time -> sfx name ("hits": [t] or [[t, "sfx.mp3"]])
 for h in S["hits"]:
     t_, nm = (h, None) if not isinstance(h, list) else h
@@ -143,17 +201,22 @@ for a, _ in CUT:
 if END: HN[round(END0, 3)] = "impact-bass-2.mp3"
 H = sorted(HN)
 WH = sorted(set(round(out(t_), 3) for t_ in S.get("whip", []) if keep(t_)) | set(round(out(a), 3) for a, _ in CUT))
-z = "+".join(f"0.12*exp(-7*(t-{h}))*gte(t,{h})" for h in H) or "0"
-fl = "+".join(f"0.30*exp(-18*(t-{h}))*gte(t,{h})" for h in H) or "0"
+# max(t-h,0): exp of a big positive number is inf and inf*0 = NaN = a BLACK frame (2026-11-05: the first 2 s went black)
+z = "+".join(f"0.12*exp(-7*max(t-{h},0))*gte(t,{h})" for h in H) or "0"
+fl = "+".join(f"0.30*exp(-18*max(t-{h},0))*gte(t,{h})" for h in H) or "0"
 SFX = os.path.join(os.path.dirname(__file__), "..", "..", "assets", "sfx")
-fc = "".join(f"[0:v]trim={a}:{b},setpts=PTS-STARTPTS[v{i}];[0:a]atrim={a}:{b},asetpts=PTS-STARTPTS,afade=t=in:d=0.04,afade=t=out:st={b-a-0.04}:d=0.04[a{i}];" for i, (a, b) in enumerate(segs))
-NS = len(segs)
-if END:  # a still of the source at end.bg, blurred + darkened, held for end.dur, silent (music carries it)
-    bg, ed = END["bg"], END["dur"]
-    fc += (f"[0:v]trim=start={bg}:duration=0.05,setpts=PTS-STARTPTS,fps=24,trim=end_frame=1,loop=loop={int(ed*24)+2}:size=1:start=0,"
-           f"setpts=N/24/TB,trim=duration={ed},gblur=sigma=22,eq=brightness={END.get('dim', -0.16)}:saturation=0.9,setsar=1[v{NS}];"
-           f"aevalsrc=0:d={ed}:s=48000:c=stereo[a{NS}];")
-    NS += 1
+if END: pieces.append(("still", END["bg"], END["dur"], 22, END.get("dim", -0.16)))  # end card: blurred still, silent
+fc = ""
+for i, pc in enumerate(pieces):
+    if pc[0] == "src":
+        a, b = pc[1], pc[2]
+        fc += f"[0:v]trim={a}:{b},setpts=PTS-STARTPTS[v{i}];[0:a]atrim={a}:{b},asetpts=PTS-STARTPTS,afade=t=in:d=0.04,afade=t=out:st={b-a-0.04}:d=0.04[a{i}];"
+    else:  # a still of the source frame at t, held, silent (music carries it)
+        _, bg, ed, bl, dm = pc
+        fc += (f"[0:v]trim=start={bg}:duration=0.05,setpts=PTS-STARTPTS,fps=24,trim=end_frame=1,loop=loop={int(ed*24)+2}:size=1:start=0,"
+               f"setpts=N/24/TB,trim=duration={ed}" + (f",gblur=sigma={bl},eq=brightness={dm}:saturation=0.9" if bl else "") + f",setsar=1[v{i}];"
+               f"aevalsrc=0:d={ed}:s=48000:c=stereo[a{i}];")
+NS = len(pieces)
 fc += "".join(f"[v{i}][a{i}]" for i in range(NS)) + f"concat=n={NS}:v=1:a=1[cv][ca];"
 fc += (f"[cv]scale=1080:1920:flags=lanczos:out_color_matrix=bt709,scale=w='trunc(1080*(1+{z})/2)*2':h='trunc(1920*(1+{z})/2)*2':eval=frame,crop=1080:1920,"
        f"eq=brightness='{fl}':contrast=1.06:saturation=1.12:eval=frame,unsharp=5:5:0.5,"
@@ -177,3 +240,8 @@ fc += ("[cav]" if M else "[ca]") + "".join(mixin) + f"amix=inputs={len(mixin)+1}
 cmd += ["-filter_complex", fc, "-map", "[v]", "-map", "[a]", "-r", "24", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
         "-pix_fmt", "yuv420p", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv", "-g", "24", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", P(S["out"]) + ".mp4"]
 subprocess.run(cmd, check=True); print("wrote", P(S["out"]) + ".mp4")
+# guard: no black stretch the source does not have (blackdetect on the render vs the source)
+def blacks(f): return [tuple(map(float, m)) for m in __import__("re").findall(r"black_start:([\d.]+) black_end:([\d.]+)",
+    subprocess.run(["ffmpeg", "-i", f, "-vf", "blackdetect=d=0.08:pix_th=0.12", "-an", "-f", "null", "-"], capture_output=True, text=True).stderr)]
+if not blacks(P(S["src"])) and blacks(P(S["out"]) + ".mp4"):
+    raise SystemExit(f"BLACK FRAMES in the render {blacks(P(S['out']) + '.mp4')} that the source does not have: check the eq/zoom expressions")
