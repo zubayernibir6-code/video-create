@@ -22,6 +22,7 @@
    | screen recording (+ facecam) + voice + BGM, "tutorial" | TUT1 | screen-tutorial | tools/tutorial/build.mjs |
    | screen recording → ad / promo | PROMO1 | screen-promo | tools/screen/promo-core.mjs |
    | client's numbered AI clips + voice + BGM | CP1 | client-promo | tools/promo/build.mjs |
+   | one finished vertical ad clip → hook Reel (captions, punch zooms, face-aware cards) | — | hook-ad | tools/hook-ad/build.py |
    | "N tools" Reel from a topic + voice + BGM | REEL1–10 | tools-reel | tools/reel/build.mjs, series.mjs |
    | concept / app with no recording, "X কী, কেন" | EXP1 | explainer | tools/explainer/build.mjs |
    | his talking head + B-roll | AB1–AB5 | abroll | tools/abroll/build.mjs |
@@ -288,7 +289,7 @@ styles AB1–AB5; demo `projects/abroll-variants-demo`), `tools-reel` ("N tools"
 context + voice + BGM; reference `assets/refs/ref-01.mp4`; his Bengali pack is `PROMPT-PACK-tools-reel.md`). `reel-cutdown` (9:16 Reels cut from a FINISHED 16:9 video; reference
 `projects/claude-reel-1..4`), `post-copy` (FB/IG/YouTube post copy + hashtags after EVERY video, unasked), `release-kit` (after EVERY main video,
 unasked: .srt, universal Reels UREEL1 for FB/IG/X/Shorts, the LinkedIn cut, RELEASE-COPY.md, the release folder +
-RELEASE.md checklist), `linkedin-kit` (the separate LinkedIn version, style LI1). `motion-broll` (generated 4K60 motion-graphics B-roll, styles MG1…; kit `tools/broll`). `explainer` (a drawn, voiced 16:9 tutorial with NO footage, style EXP1, for concepts and apps that cannot be recorded; reference `projects/claude-skills-tutorial`). `client-promo` (CP1, a client's AI clips + voice + BGM → 16:9 + 9:16; reference `projects/mohona-promo-01`). `voice-clone` (his cloned voice). The
+RELEASE.md checklist), `linkedin-kit` (the separate LinkedIn version, style LI1). `motion-broll` (generated 4K60 motion-graphics B-roll, styles MG1…; kit `tools/broll`). `explainer` (a drawn, voiced 16:9 tutorial with NO footage, style EXP1, for concepts and apps that cannot be recorded; reference `projects/claude-skills-tutorial`). `client-promo` (CP1, a client's AI clips + voice + BGM → 16:9 + 9:16; reference `projects/mohona-promo-01`). `hook-ad` (one finished vertical ad clip → hook Reel with a face-aware acceptance gate; reference `projects/unity-hook-01`). `voice-clone` (his cloned voice). The
 HyperFrames skills (pinned v0.8.134) live in `~/.claude/skills`. **Start a new video with**
 `node tools/new-video.mjs <name> --kind=<screen-promo|screen-tutorial|episode|abroll|tools-reel|blank>`.
 **Every style has a NAME and a code** (TUT1, PROMO1, EP1, REEL1, EDIT1, AB1–AB5 …): his guide `VARIANTS.md`, the
