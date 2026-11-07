@@ -58,7 +58,14 @@ if (snd.music && snd.music.track) {
     const pts = [{ t: 0, v: 0 }, { t: r3(fi), v: 1 }];
     for (const [a, b, lvl] of m.duck || []) {
       const ta = a - start, tb = b - start;
-      pts.push({ t: r3(Math.max(fi, ta - 0.15)), v: 1 }, { t: r3(ta), v: lvl }, { t: r3(tb), v: lvl }, { t: r3(tb + 0.25), v: 1 });
+      if (ta <= fi + 0.15) {
+        // a duck that starts inside (or right after) the fade-in: fade in straight TO the duck level — no swell up to 1
+        // and no points out of order (builder A4's note, 2026-11-08)
+        pts[1].v = lvl;
+        pts.push({ t: r3(Math.max(fi, tb)), v: lvl }, { t: r3(Math.max(fi, tb) + 0.25), v: 1 });
+      } else {
+        pts.push({ t: r3(Math.max(fi, ta - 0.15)), v: 1 }, { t: r3(ta), v: lvl }, { t: r3(tb), v: lvl }, { t: r3(tb + 0.25), v: 1 });
+      }
     }
     pts.push({ t: r3(Math.max(fi, playable - fo)), v: 1 }, { t: r3(playable), v: 0 });
     pts.sort((a, b) => a.t - b.t);
@@ -102,7 +109,11 @@ cues.forEach((c, i) => {
   lanes[lane] = start + len;
   const src = path.join(WS, "assets", "sfx", meta.file);
   copyFileSync(src, path.join(dir, "assets", "sfx", meta.file));
-  const fadeOut = c.len ? `,{"t":${r3(Math.max(0, len - 0.08))},"v":1},{"t":${r3(len)},"v":0}` : "";
+  // A sound cut short gets a fade: 80 ms when "len" trims it on purpose; when the VIDEO END cuts it, min(0.8 s, len/3)
+  // — a sustained bass hit stopping dead on the last frame was a hard cut (the CD1 critic, 2026-11-08).
+  const cutByEnd = !c.len && start + (meta.duration - skip) > DUR + 0.005;
+  const fadeDur = c.len ? 0.08 : cutByEnd ? Math.min(0.8, len / 3) : 0;
+  const fadeOut = fadeDur ? `,{"t":${r3(Math.max(0, len - fadeDur))},"v":1},{"t":${r3(len)},"v":0}` : "";
   const auto = fadeOut ? ` data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1}${fadeOut}]}]}'` : "";
   const ms = skip > 0.0005 ? ` data-media-start="${r3(skip)}"` : "";
   tags.push(`<audio id="sfx-${String(i + 1).padStart(2, "0")}-${c.sfx}" src="assets/sfx/${meta.file}" data-start="${r3(start)}" data-duration="${r3(len)}"${ms} data-track-index="${20 + lane}" data-volume="${c.gain ?? 0.5}"${auto}></audio>`);

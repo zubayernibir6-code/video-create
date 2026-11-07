@@ -9,14 +9,27 @@
 // render, −14 LUFS, QC, thumbnail, GIF) through tools/studio/slot.mjs "render" 1 → copy the master to
 // renders/portfolio/<CODE>_<Brand>.mp4 (+ -thumb.jpg) → append the result to renders/portfolio/queue.json.
 // A project whose newest render is newer than its index.html + piece.json is skipped unless --force.
-// Start it detached for a batch (Bash run_in_background / Start-Process); read queue.json once at the end.
+// For a batch add --detach: the queue runs as its own process (survives a session restart) and logs to
+// renders/queue-<stamp>.log; read queue.json once at the end.
 
-import { spawnSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { spawn, spawnSync } from "node:child_process";
+import { copyFileSync, existsSync, mkdirSync, openSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 const WS = path.resolve(import.meta.dirname, "..", "..");
 const args = process.argv.slice(2);
+// --detach: re-start this queue as its own process with a log file and return at once, so a batch is not tied to
+// the shell/session that started it (a session restart killed the 2026-11-08 00:44 queue mid-batch).
+if (args.includes("--detach")) {
+  const ws = path.resolve(import.meta.dirname, "..", "..");
+  mkdirSync(path.join(ws, "renders"), { recursive: true });
+  const log = path.join(ws, "renders", `queue-${new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "")}.log`);
+  const fd = openSync(log, "a");
+  const child = spawn(process.execPath, [import.meta.filename, ...args.filter((a) => a !== "--detach")], { cwd: ws, detached: true, stdio: ["ignore", fd, fd], windowsHide: true });
+  child.unref();
+  console.log(`▶ render queue started in the background (PID ${child.pid}) — log: ${log}\n  results: renders/portfolio/queue.json`);
+  process.exit(0);
+}
 const opt = (k, d) => { const a = args.find((x) => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : d; };
 const catalog = JSON.parse(readFileSync(path.join(import.meta.dirname, "catalog.json"), "utf8"));
 let projects = args.filter((a) => !a.startsWith("--"));
@@ -40,7 +53,8 @@ for (const p of projects) {
   const piece = existsSync(path.join(dir, "piece.json")) ? JSON.parse(readFileSync(path.join(dir, "piece.json"), "utf8")) : { code: p, brand: p };
   const rdir = path.join(WS, "renders", p);
   const newest = existsSync(rdir) ? readdirSync(rdir).filter((d) => /^\d{4}-\d\d-\d\d_\d{4}$/.test(d)).sort().pop() : null;
-  const srcTime = Math.max(mtime(path.join(dir, "index.html")), mtime(path.join(dir, "piece.json")));
+  // the piece's own runtime copies count as sources too (the houseSpring fix changed only assets/js/studio.js in IA1)
+  const srcTime = Math.max(...["index.html", "piece.json", "assets/js/studio.js", "assets/css/studio.css"].map((f) => mtime(path.join(dir, f))));
   if (newest && !args.includes("--force") && mtime(path.join(rdir, newest, `${p}.mp4`)) > srcTime) { console.log(`= ${p}: render ${newest} is newer than the sources — skipped (--force to redo)`); continue; }
   const t0 = Date.now();
   console.log(`▶ ${p} (${piece.code} ${piece.brand}) — ${new Date().toTimeString().slice(0, 5)}`);

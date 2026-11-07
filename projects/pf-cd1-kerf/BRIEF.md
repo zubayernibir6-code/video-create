@@ -1,10 +1,10 @@
 # BRIEF — CD1 · Dev-Tool Launch (3D code)
 
-**Brand:** Kernel — a command-line tool that deploys any app in one command (fictional)  
+**Brand:** Kerf — a command-line tool that deploys any app in one command (fictional)  
 **Length / format:** 14 s, 16:9
 
 ## Concept
-"One command. Live everywhere." A developer types `kernel deploy` in a terminal; the code slab behind it turns in 3D
+"One command. Live everywhere." A developer types `kerf deploy` in a terminal; the code slab behind it turns in 3D
 to a readable rest, the deploy runs (progress lines tick), and a world of edge nodes lights up with a live URL.
 
 ## Look (palette, type, finish)
@@ -16,10 +16,11 @@ the few headlines. Syntax colours muted (#9cdcfe, #c586c0, #ce9178) with the acc
 
 ## Beats (fit the timing to data-glitch's strong beats; every text stays up long enough to read)
 - 0–2.5 hook: headline "One command." (mask lines) over a dim code slab tilted in 3D
-- 2.5–6 terminal window slides up; `$ kernel deploy` types (S.type, cps 18) with key-press ticks; Enter
+- 2.5–6 terminal window slides up; `$ kerf deploy` types (S.type, cps 18) with key-press ticks; Enter
 - 6–9.5 progress: four lines tick from spinner to done ("Building · 2.1 s", "Optimising images", "Uploading to 32 regions", "Live ✓" — draw the tick as SVG); the code slab behind turns and settles flat
-- 9.5–12 a dot globe/grid of 32 edge nodes lights up in a wave; the URL `https://my-app.kernel.example` appears with a copy chip
-- 12–14 lockup: Kernel wordmark (monospace k in a rounded square) + "One command. Live everywhere." + `npm i -g kernel` + "Concept work · fictional brand"
+- 9.5–12 a dot globe/grid of 32 edge nodes lights up in a wave; the URL `https://my-app.kerf.example` appears with a copy chip
+- 12–14 lockup: Kerf wordmark (monospace k in a rounded square) + "One command. Live everywhere." + `curl -fsSL kerf.example/install | sh` + "Concept work · fictional brand"
+  (the brand was "Kernel" until 2026-11-08: `npm i -g kernel` names a real npm package and Kernel (onkernel.com) is a real developer company whose CLI command is `kernel deploy` — renamed to the made-up "Kerf"; copyable commands use the reserved `.example` domain)
 
 ## Craft notes
 Spinners and progress = per-frame (S.everyFrame), never infinite tweens. Typing with S.type + caret. Keep the
@@ -30,5 +31,5 @@ data-glitch; key-press ticks under typing (or `typing`), click on Enter, pop on 
 the nodes, impact-bass-2 (.35) on the lockup.
 
 ## Done means
-- `node tools/studio/check.mjs projects/pf-cd1-kernel` ends with ✓; plan-check 0 ERROR; you looked at every held moment.
+- `node tools/studio/check.mjs projects/pf-cd1-kerf` ends with ✓; plan-check 0 ERROR; you looked at every held moment.
 - Small "Concept work · fictional brand" label on the end card; piece.json brief + reel filled.

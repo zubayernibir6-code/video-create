@@ -410,23 +410,23 @@
       "id": "CL1",
       "bn": "রিলিজ নোটের ভিডিও",
       "en": "Changelog / Release Reel",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "\"What's new in v3.0\" — 4–6 updates in quick cuts: version stamp, icon + one line + a tiny UI snippet per update, a closing lockup.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/CL1_Forge.mp4 (portfolio sample, concept work for the fictional brand Forge; project projects/pf-cl1-forge; finish.mjs QC in renders/pf-cl1-forge/)"
     },
     {
       "id": "IH1",
       "bn": "ইন্টিগ্রেশন দেখানো",
       "en": "Integrations Hub",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "The product as a glowing hub; app icons orbit in, beams connect them, data packets travel, a count of integrations lands.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/IH1_Nimbus.mp4 (portfolio sample, concept work for the fictional brand Nimbus; project projects/pf-ih1-nimbus; finish.mjs QC in renders/pf-ih1-nimbus/)"
     },
     {
       "id": "AI1",
@@ -443,23 +443,23 @@
       "id": "HX1",
       "bn": "কীভাবে কাজ করে — ব্যাখ্যা",
       "en": "How-It-Works Explainer",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed; a voice-over (AI or the client's)",
       "builds": "A voiced 45–90 s explainer: the problem, the turn, three simple steps with friendly flat illustration and icons, proof, CTA. Script, voice-over and music included.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/HX1_KindredHealth.mp4 (portfolio sample, concept work for the fictional brand Kindred Health; project projects/pf-hx1-kindred; finish.mjs QC in renders/pf-hx1-kindred/)"
     },
     {
       "id": "WF1",
       "bn": "কাজের ধাপের ডায়াগ্রাম",
       "en": "Workflow Diagram in Motion",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "A process as a living diagram: nodes draw in, packets travel the paths, a branch splits on a condition, failures retry, success lights up the end.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/WF1_Ledgerly.mp4 (portfolio sample, concept work for the fictional brand Ledgerly; project projects/pf-wf1-ledgerly; finish.mjs QC in renders/pf-wf1-ledgerly/)"
     },
     {
       "id": "IA1",
@@ -487,23 +487,23 @@
       "id": "KP1",
       "bn": "বিনিয়োগকারীর জন্য মেট্রিক্স",
       "en": "Investor Metrics Reel",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "A funding or milestone announcement: big KPI count-ups (ARR, growth, customers, countries), a growth curve, a donut, a lockup — confident and exact.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/KP1_Northwind.mp4 (portfolio sample, concept work for the fictional brand Northwind; project projects/pf-kp1-northwind; finish.mjs QC in renders/pf-kp1-northwind/)"
     },
     {
       "id": "MP1",
       "bn": "ম্যাপের গল্প",
       "en": "Map Story",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "A world map: hubs light up, routes draw as arcs, a counter runs, the camera pushes into a region — for reach, logistics and expansion stories.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/MP1_Cargoline.mp4 (portfolio sample, concept work for the fictional brand Cargoline; project projects/pf-mp1-cargoline; finish.mjs QC in renders/pf-mp1-cargoline/)"
     },
     {
       "id": "NW1",
@@ -542,34 +542,34 @@
       "id": "BS1",
       "bn": "ব্র্যান্ড-গাইডলাইনের অ্যানিমেশন",
       "en": "Brand System in Motion",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "The identity animated: logo construction, palette swatches, type specimen, pattern and real applications (cards, app icon, signage) — a living brand book.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/BS1_Solace.mp4 (portfolio sample, concept work for the fictional brand Solace; project projects/pf-bs1-solace; finish.mjs QC in renders/pf-bs1-solace/)"
     },
     {
       "id": "SA1",
       "bn": "খাড়া সোশ্যাল বিজ্ঞাপন",
       "en": "Vertical Social Ad",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed; a voice-over (AI or the client's)",
       "builds": "A 15 s vertical ad built for the feed: the hook in the first second, three benefit beats, a big CTA, voice-over and captions inside the platform safe zones.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/SA1_Pocket.mp4 (portfolio sample, concept work for the fictional brand Pocket; project projects/pf-sa1-pocket; finish.mjs QC in renders/pf-sa1-pocket/)"
     },
     {
       "id": "EV1",
       "bn": "ইভেন্ট বা ওয়েবিনারের প্রোমো",
       "en": "Event / Webinar Promo",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "Date, venue or link, speakers as clean monogram cards (no faces needed), the agenda in three beats, a countdown and a register button.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/EV1_BuildersSummit.mp4 (portfolio sample, concept work for the fictional brand Builders Summit; project projects/pf-ev1-builders; finish.mjs QC in renders/pf-ev1-builders/)"
     },
     {
       "id": "GH1",

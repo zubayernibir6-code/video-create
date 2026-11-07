@@ -52,6 +52,44 @@ for (const name of ["spring", "hold", "wiggle", "custom"]) {
   const code = scripts.split("\n").filter((l) => !/^\s*\/\//.test(l)).join("\n");
   if (re.test(code)) errors.push(`ease name "${name}" is taken by the HyperFrames runtime (it plays the runtime's curve, "spring" = linear) — use "houseSpring" / springSoft / springPop or pass a function`);
 }
+// Honesty (docs/studio/QUALITY.md, B): text a viewer could copy must not point at something real. CD1 showed
+// `npm i -g kernel` (a real npm package) and its hero typed `kernel deploy`, the CLI command of Kernel, a real
+// developer company (critic + builder, 2026-11-08). Portfolio pieces (pf-* or a "fictional" client line):
+//   - an on-screen address with a real top-level domain → error (use <name>.example, reserved by RFC 2606);
+//   - an install command that names a package → error, unless piece.json "honesty.checked" lists the name (you made it
+//     up AND looked it up: `npm view <name>` 404, PyPI/Homebrew have none) — the reserved form is
+//     `curl -fsSL <brand>.example/install | sh`;
+//   - a fictional brand (piece.json concept: true) without "nameCheck" → warning: search "<brand> <industry>" and write what you found (a famous product of
+//     the same kind with the same name is a rename, e.g. Kernel → Kerf).
+// Client pieces get warnings only (their real domain is correct there).
+{
+  const portfolio = path.basename(dir).startsWith("pf-") || /fictional/i.test(String(piece?.brief?.client || ""));
+  const flag = (msg) => (portfolio ? errors : warns).push(msg);
+  const checked = new Set((piece?.honesty?.checked || []).map((s) => String(s).toLowerCase()));
+  // what can reach the screen: the page's text nodes + string literals in its scripts (comments removed first, so an
+  // apostrophe pair in a comment is not read as a string; literals that look like code — ( ) { } ; = — are skipped)
+  const code = scripts.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/(^|[^:"'`\\])\/\/[^\n]*/g, "$1");
+  const shown = [
+    noComments.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, " ").replace(/<[^>]+>/g, " "),
+    ...[...code.matchAll(/(["'`])((?:(?!\1)[^\\\n]|\\.){3,240})\1/g)].map((m) => m[2].replace(/\$\{[^}]*\}/g, " ")).filter((s) => !/[(){};=]/.test(s)),
+  ].join("\n");
+  const seen = new Set();
+  for (const m of shown.matchAll(/(?<![\w.@/-])((?:[a-z0-9-]+\.)+(?:com|io|dev|app|ai|co|net|org|sh|so|xyz|tech|cloud|gg|me|ly|to|fm|tv|us|uk|in|bd))(?![\w-]|\.[a-z])/gi)) {
+    const d = m[1].toLowerCase();
+    if (seen.has(d) || /(^|\.)w3\.org$|hyperframes\.heygen\.com$/.test(d)) continue;
+    if (/^(power\d|back|elastic|bounce|circ|expo|sine|quad|cubic|quart|quint|strong|linear|none)\.(in|out|inout)$/.test(d)) continue; // GSAP ease names
+    seen.add(d);
+    flag(`on-screen address "${m[1]}" is a real domain — a viewer could visit it; use ${d.replace(/\.[a-z]+$/, "")}.example`);
+  }
+  const inst = /\b(?:npm (?:i|install)(?:\s+-[gD])?|npx|pnpm (?:add|dlx)|yarn (?:global )?add|bun (?:add|x)|pipx? install|pip3 install|brew install|cargo install|go install|gem install)\s+(@?[\w./@-]+)/g;
+  for (const m of shown.matchAll(inst)) {
+    const name = m[1].toLowerCase();
+    if (seen.has("pkg:" + name) || checked.has(name)) continue;
+    seen.add("pkg:" + name);
+    flag(`on-screen install command "${m[0]}" names a package — use \`curl -fsSL <brand>.example/install | sh\`, or make one up, look it up (npm view ${m[1]} → 404) and list it in piece.json honesty.checked`);
+  }
+  if (piece?.concept === true && !String(piece.nameCheck || "").trim()) warns.push(`brand "${piece.brand}" has no piece.json "nameCheck" — search "<brand> <industry>" and note what you found (a famous product of the same kind with this name → rename it)`);
+}
 if (/<(h1|h2|h3|p|span|div)[^>]*>[^<]*<br\s*\/?>/i.test(noComments)) warns.push("<br> inside text — let it wrap with max-width (§ determinism layout rules)");
 const root = html.match(/<div[^>]*data-composition-id="main"[^>]*>/);
 if (!root) errors.push('no root <div data-composition-id="main">');
@@ -86,6 +124,11 @@ for (const m of styles.matchAll(/font-family\s*:\s*([^;}{]+)/g)) {
 }
 for (const e of errors) console.error("✗ " + e);
 for (const w of warns) console.warn("⚠ " + w);
+// --static: only the rules above (no Chrome, ~0.2 s) — a quick pass while editing; the full check still gates a render.
+if (args.includes("--static")) {
+  console.log(errors.length ? `✗ static rules: ${errors.length} error(s), ${warns.length} warning(s)` : `✓ static rules passed${warns.length ? ` with ${warns.length} warning(s)` : ""}`);
+  process.exitCode = errors.length ? 1 : 0;
+} else {
 
 // ---------- 2. hyperframes check (through the chrome slot)
 const node = process.execPath;
@@ -130,5 +173,7 @@ if (!args.includes("--no-snap")) {
 }
 
 const fail = errors.length > 0 || hfFail;
-console.log(fail ? `✗ studio check FAILED (${errors.length} static error(s)${hfFail ? ", hyperframes check/snapshot failed" : ""})` : `✓ studio check passed${warns.length ? ` with ${warns.length} warning(s)` : ""}`);
+// the count is the studio's own warnings (listed with ⚠ above); hyperframes' own warning lines are shown in its section
+console.log(fail ? `✗ studio check FAILED (${errors.length} static error(s)${hfFail ? ", hyperframes check/snapshot failed" : ""})` : `✓ studio check passed${warns.length ? ` with ${warns.length} studio warning(s) (⚠ lines above)` : ""}`);
 process.exitCode = fail ? 1 : 0; // not process.exit(): on Windows a piped stdout could lose the last warning lines (AI1/FD1 report)
+} // end of the full check (not --static)

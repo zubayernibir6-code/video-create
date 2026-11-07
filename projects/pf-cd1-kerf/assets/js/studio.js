@@ -124,8 +124,10 @@
 
     // ---- Typing: the visible substring is a function of t (deterministic), with a blinking caret.
     // S.type("#prompt", 1.2, "Summarise this thread", { cps: 26, caret: true })
+    // o.preroll: how long the caret blinks BEFORE typing starts (0 when lines type one after another, or the caret
+    // sits on a placeholder — two carets at once / content_overlap, found on AI1 2026-11-07).
     S.type = (sel, t, text, o) => {
-      o = Object.assign({ cps: 24, caret: true, hold: 99 }, o);
+      o = Object.assign({ cps: 24, caret: true, hold: 99, preroll: 0.6 }, o);
       const el = need(S.$(sel), "type " + sel);
       el.textContent = "";
       const caret = o.caret ? document.createElement("span") : null;
@@ -139,7 +141,7 @@
         if (caret) {
           const typing = now >= t && now < end;
           const blinkOn = Math.floor(now * 2.2) % 2 === 0;
-          caret.style.opacity = now < t - 0.6 || now > end + o.hold ? 0 : typing || blinkOn ? 1 : 0;
+          caret.style.opacity = now < t - o.preroll || now > end + o.hold ? 0 : typing || blinkOn ? 1 : 0;
         }
       });
       return end; // when the last character lands (chain the next beat on it)
@@ -157,13 +159,16 @@
         return (v < 0 ? "−" : "") + o.prefix + ii + (d ? "." + d : "") + o.suffix;
       };
       el.style.fontVariantNumeric = "tabular-nums";
+      // the number lives in its own span, so a sweep/burst child on the same element survives (SA1 report)
+      let num = el.querySelector(":scope > .st-num");
+      if (!num) { num = document.createElement("span"); num.className = "st-num"; el.textContent = ""; el.appendChild(num); }
       S.everyFrame((now) => {
         const u = clamp((now - t) / o.dur, 0, 1);
         const v = from + (to - from) * ease(u);
         const txt = fmt(u >= 1 ? to : v);
-        if (el.textContent !== txt) el.textContent = txt;
+        if (num.textContent !== txt) num.textContent = txt;
       });
-      el.textContent = fmt(from);
+      num.textContent = fmt(from);
       return t + o.dur;
     };
 
@@ -185,13 +190,29 @@
 
     // ---- Light sweep: a soft diagonal highlight band crossing an element once (needs .sweep child, see studio.css)
     // Per-frame like burst(): invisible outside its window, so seeking backwards never leaves a band on screen.
-    // The host needs overflow:hidden (cards, glass and buttons have it; add it to plain text hosts).
+    // The band lives in its OWN clipping wrapper (inset 0, overflow hidden, the host's radius), so the host needs no
+    // overflow:hidden and its text is never "clipped" (hyperframes clipped_text on a button, found on AI1 2026-11-07).
+    // o.color: the band's light — default white in overlay blend (dark looks); on light looks pass e.g.
+    // { color: "rgba(47,107,255,.28)", blend: "normal" }. The host must be position:relative/absolute.
     S.sweep = (sel, t, o) => {
-      o = Object.assign({ dur: 1.1, ease: "move" }, o);
+      o = Object.assign({ dur: 1.1, ease: "move", color: null, blend: null }, o);
       const ease = g.parseEase(o.ease);
       S.$$(sel).forEach((host) => {
-        let band = host.querySelector(":scope > .sweep");
-        if (!band) { band = document.createElement("i"); band.className = "sweep"; band.setAttribute("data-layout-ignore", ""); band.setAttribute("data-design-ignore", ""); host.appendChild(band); }
+        let clip = host.querySelector(":scope > .sweep-clip");
+        if (!clip) {
+          clip = document.createElement("span");
+          clip.className = "sweep-clip";
+          clip.setAttribute("data-layout-ignore", ""); clip.setAttribute("data-design-ignore", "");
+          Object.assign(clip.style, { position: "absolute", inset: "0", overflow: "hidden", borderRadius: "inherit", pointerEvents: "none", display: "block" });
+          host.appendChild(clip);
+        }
+        let band = clip.querySelector(":scope > .sweep");
+        if (!band) {
+          band = document.createElement("i"); band.className = "sweep";
+          if (o.color) band.style.background = `linear-gradient(100deg, transparent 0%, transparent 22%, ${o.color} 50%, transparent 78%, transparent 100%)`;
+          if (o.blend) band.style.mixBlendMode = o.blend;
+          clip.appendChild(band);
+        }
         S.everyFrame((now) => {
           const u = (now - t) / o.dur;
           if (u < 0 || u > 1) { band.style.opacity = 0; return; }

@@ -3,7 +3,7 @@
 // cut on the strong beats of the showreel music, every clip labelled with its catalog CODE so a client can say
 // "I want PL1" (Motion Studio kit v1, 2026-11-07).
 //
-//   node tools/studio/showreel.mjs [--project=pf-showreel] [--order=GH1,PL1,…] [--name="Talha Zubayer"]
+//   node tools/studio/showreel.mjs [--project=pf-showreel] [--order=GH1,PL1,…] [--avg=2.3] [--outro=4.5] [--name="Talha Zubayer"]
 //        [--tagline="Motion design for SaaS, AI & data"] [--contact="Pick a code. Get the video."]
 //   then: node tools/studio/render-queue.mjs pf-showreel
 //
@@ -57,7 +57,9 @@ const from = Math.max(0, bigDrop - TITLE); // the drop lands on the first cut
 // cut on the real kick drum when beats.mjs found it (the detector's "strong" beats can sit off the downbeat)
 const strong = (beats.kicks && beats.kicks.length ? beats.kicks : beats.strong).map((t) => +(t - from).toFixed(3)).filter((t) => t > TITLE + 1);
 const all = beats.beats.map((t) => +(t - from).toFixed(3)).filter((t) => t > TITLE + 1);
-const AVG = 2.3, OUTRO = 4.5;
+// --avg: seconds per clip (cuts snap to the nearest kick); --outro: the end card. Keep the reel ≤ 60 s: finish.mjs
+// asks for a preflight above that (23 clips × 2.2 + 3 + 4.2 ≈ 57.8 s).
+const AVG = +opt("avg", 2.3), OUTRO = +opt("outro", 4.5);
 const cuts = [TITLE];
 for (let i = 1; i <= clips.length; i++) {
   const target = TITLE + i * AVG;
@@ -128,6 +130,8 @@ const html = `<!doctype html>
     .outro h2 { font-family: var(--font-display); font-size: 110px; font-weight: 660; letter-spacing: -0.045em; margin: 0; color: #f5f7fb; text-wrap: balance; text-align: center; }
     .outro .codes { font-family: var(--font-mono); font-size: 28px; color: var(--accent); max-width: 1500px; text-align: center; line-height: 1.6; }
     .outro .who { font-size: 34px; color: rgba(245, 247, 251, 0.78); }
+    /* furniture, the whole reel (CLAUDE.md §0h): every brand in the clips is fictional — portfolio honesty (QUALITY.md B) */
+    .concept { position: absolute; right: 56px; bottom: 58px; z-index: 50; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245, 247, 251, 0.62); padding: 6px 10px; border-radius: 8px; background: rgba(5, 5, 7, 0.45); }
   </style>
   <script src="assets/js/gsap/gsap.min.js"></script>
   <script src="assets/js/gsap/CustomEase.min.js"></script>
@@ -148,6 +152,7 @@ ${scenes}    <section id="outro" class="outro clip" data-start="${r3(reelEnd)}" 
       <div id="o-codes" class="codes">${clips.map((c) => c.code).join(" · ")}</div>
       <div id="o-who" class="who">${NAME} · Motion Design</div>
     </section>
+    <div id="concept" class="concept" data-design-ignore data-layout-ignore>Concept work · all brands fictional</div>
     <!-- studio:audio:start -->
     <!-- studio:audio:end -->
   </div>

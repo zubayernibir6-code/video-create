@@ -64,7 +64,12 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
   carries the hierarchy.
 - **Honesty**: every brand is fictional (concept work). No real company logos or names, no real people, no AI faces,
   no fake testimonials with names. Put a small "Concept work · fictional brand" furniture label on the end card
-  (15 px mono, ≥ 0.6 alpha). Any fact stated as true about the real world must BE true.
+  (15 px mono, ≥ 0.6 alpha). Any fact stated as true about the real world must BE true. Install commands, URLs and
+  handles use reserved names (`*.example`); never a real package or domain a viewer could copy and run —
+  `check.mjs` now FAILS a portfolio page that shows a real domain or an install command naming a package (allow a
+  made-up name you looked up with piece.json `honesty.checked`). **Name check first:** search "<brand> <industry>"
+  and write the result into piece.json `nameCheck`; a famous product of the same kind with the same name is a
+  rename (CD1 "Kernel" typed `kernel deploy` — the real CLI command of Kernel, a developer company → "Kerf").
 - **Bengali** (if any): no letter-spacing, split by words or lines only, Hind Siliguri / Baloo Da 2.
 - **Kit notes from the first batch (2026-11-07):** stack tightly-leaded display lines in ONE flex column (absolutely
   placed slam lines trip `content_overlap` on Anton/Baloo's tall line boxes); `S.type(…, { preroll: 0 })` when lines
@@ -82,3 +87,7 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
   render, or several checks at once. Snapshots: ≤ 14 times per call.
 - Work only inside your own project folders. Do not edit `tools/studio/*` — if the kit has a bug, describe it in your
   final reply (the lead fixes the kit for everyone). Do not commit.
+- **More kit notes (2026-11-08):** text stacked inside a ROTATED card needs extra line spacing for `content_overlap`
+  (it measures unrotated boxes; Playfair's box is 1.333 em → line-height ≥ 1.34); avoid large `filter: blur()` on
+  big panels as an entrance (snapshots can show a stale blur — use size/position), blur only small text reveals;
+  ASR word files can drop a whole sentence — check vo.words.json against script.txt before syncing.

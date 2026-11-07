@@ -1,68 +1,68 @@
 # NW1 · Editorial Explainer — The Brief (concept)
 
-<!--
-  Claude: copy this to projects/<name>/PLAN.md, fill every section, then run
-    node tools/plan-check.mjs projects/<name>
-  until it reports no ERROR. Show the user the goal, hook, shot table, "যা লাগবে", any WARN (in Bengali)
-  and the questions, and build nothing until the user says OK. Example: tools/plan/EXAMPLE.md.
-
-  Header: ফরম্যাট and দৈর্ঘ্য are required. Write নেই on its own for no voice or no music.
-  Voice: STYLE.md §৮ puts the user's own voice first; if unsure, plan Piper and ask.
-
-  Shot table rules (the checker reads them):
-  - সময় is seconds on the finished video: "0–2.5", "2.5–5". Over a minute, "1:05–1:08" works too.
-    Rows run back to back from 0 and the last one ends at দৈর্ঘ্য. No blank line inside the table, and no
-    | inside a cell (write \| if you must).
-  - One row per change on screen (cut, zoom, new graphic). On a Reel something changes every 2–3 s
-    (STYLE.md §৫). For a deliberate still beat, write the word দম in the পর্দায় কী cell; a still over
-    1.5 s still needs sound (a voice line, `room-tone` or music).
-  - ক্যাপশন / লেখা holds only extra on-screen text, written exactly as it will appear (Bengali digits; no ✓
-    or arrows: draw those and say so in পর্দায় কী). Voice captions follow the voice by themselves; write —
-    when there is no extra text.
-  - Sounds go in backticks with the file name from assets/sfx (or the project's own assets/sfx), with
-    ×N for repeats: `whoosh-short`, `click` ×৩. A whoosh at every new scene (STYLE.md §৭). Write
-    ভয়েস ১, ভয়েস ২ … for the script lines that start in that shot.
-
-  Questions: only what STYLE.md and the request do not answer, plus any number or claim the user did not
-  give you (a time saved, a price) and how any extra formats in আউটপুট are made (a quick blurred "fit" or
-  a separate layout, STYLE.md §৬).
--->
-
-ফরম্যাট: 9:16
-দৈর্ঘ্য: 30 সেকেন্ড
-প্ল্যাটফর্ম: Facebook Reels
-ধরন: অফার বা প্রোমো
-ভয়েস: নিজের গলা (না হলে Piper, পুরুষ, speaker 5)
-মিউজিক: নেই
-আউটপুট: 9:16, সাথে 1:1
-পুরো ভিডিও জুড়ে: (যেমন: কার্সরের আভা, নাম-ইমেইল ঝাপসা, লোগো ঝাপসা, ক্যাপশন — CLAUDE.md §0h; না থাকলে "নেই")
+ফরম্যাট: 16:9
+দৈর্ঘ্য: 27 সেকেন্ড
+প্ল্যাটফর্ম: YouTube, LinkedIn, X (স্টুডিওর পোর্টফোলিও নমুনা)
+ধরন: সংবাদ-ধাঁচের ব্যাখ্যা (NW1)
+ভয়েস: Gemini AI ভয়েস (Charon, ইংরেজি), assets/voice/vo.wav, ভিডিওর ০.৩ সেকেন্ডে শুরু
+মিউজিক: data-glitch (ট্র্যাকের শুরু থেকে, গেইন ০.৩, ভয়েসের নিচে অর্ধেক; থামা-আর-স্ল্যাম পড়ে "sea" ৬.৬ আর "The internet" ১৯.৬৫ সে.-এ)
+আউটপুট: 16:9
+পুরো ভিডিও জুড়ে: কাগজের আঁশ আর দানা (multiply), উষ্ণ ভিনিয়েট, টেপ লাগানো কাগজ-কাটা কার্ড
 
 ## লক্ষ্য
 
-<!-- One line: what the viewer will know or do after watching. -->
+দর্শক ২৫ সেকেন্ডে একটা সত্য, অবাক-করা তথ্য জানবেন — মহাদেশের মধ্যে প্রায় সব ডেটা চলে সমুদ্রের তলার তারে, স্যাটেলাইটে নয় — আর শেষে The Brief-এর নাম মনে রেখে সাবস্ক্রাইব করবেন।
 
 ## হুক (প্রথম ২ সেকেন্ড)
 
-<!-- What is on screen and in the ear in the first 2 seconds: the result or the most striking line, never a greeting. -->
+০.২ সেকেন্ডে টেপ লাগানো কাগজের কার্ডে প্রশ্ন: "Where does your message go?" (৫ শব্দ); ০.৬ সেকেন্ডে ভয়েস শুরু, বার্তার বাবল আসে, উপরে কাগজের স্যাটেলাইট। প্রশ্নের উত্তর ভিডিওর শেষ লাইন।
 
 ## স্ক্রিপ্ট
 
-<!-- The voice lines, numbered (১. … ২. …). With no voice, write: ভয়েস নেই। -->
+ভয়েস আগেই রেকর্ড করা; বন্ধনীতে লাইনের মাপা শুরু (ভিডিওর সময় = ভয়েসের সময় + ০.৩ সে.; vo.words.json আর শব্দের শক্তি মেপে)।
+
+1. (0:00.6) When you send a message across the world, it doesn’t go to space.
+2. (0:05.0) It goes under the sea.
+3. (0:07.5) Almost all the data between continents travels through cables on the ocean floor.
+4. (0:12.9) Some are no thicker than a garden hose.
+5. (0:15.7) Hundreds of them, stretching more than a million kilometers.
+6. (0:19.6) The internet isn’t in the cloud.
+7. (0:21.9) It’s in the ocean.
 
 ## শট টেবিল
 
 | সময় | পর্দায় কী | ক্যাপশন / লেখা | শব্দ |
 | --- | --- | --- | --- |
-| 0–2 |  |  |  |
+| 0–2.4 | উষ্ণ কাগজের পটভূমি; টেপ লাগানো কার্ডে প্রশ্ন; নিচে কাগজ-কাটা সমুদ্র; বার্তার বাবল আসে, উপরে কাগজের স্যাটেলাইট দোলে | THE BRIEF · EXPLAINED · Where does your message go? · To: Mum · Landed. Call you tonight? | `page-turn` ×২, `pop`, `whoosh-short`, ভয়েস 1 |
+| 2.4–4.8 | বাবল লাল ড্যাশ-পথে স্যাটেলাইটের দিকে ওঠে কিন্তু পৌঁছায় না; "doesn’t"-এ লাল মার্কারের ক্রস স্যাটেলাইটের উপর; বাবল আলোর বিন্দু হয়ে সমুদ্রে পড়ে | — | `click-soft` ×২, `whoosh-short` |
+| 4.8–7.2 | ক্যামেরা বিন্দুর পিছনে ডুব দেয়: আকাশ, সমুদ্রের স্তর, তলদেশ (স্তরগুলো আলাদা গতিতে); আলোর রেখা, কাগজের মাছ; বিন্দু তারে ঢোকে, লাল সংকেত তার ধরে ছোটে | — | `whoosh`, `whoosh-short`, `pop`, ভয়েস 2 |
+| 7.2–9.9 | পাতা ওল্টায়: টেপ লাগানো কাগজের বিশ্ব মানচিত্র; "Almost all"-এর পেছনে হলুদ হাইলাইটার; নিচে উপশিরোনাম শব্দে শব্দে | Almost all · of the data between continents | `page-turn`, `click-soft`, ভয়েস 3 |
+| 9.9–12.8 | "cables"-এ নিউ ইয়র্ক থেকে কর্নওয়াল তার আঁকা হয়, লাল সংকেত চলে, দুই প্রান্তে লাল বিন্দু; ট্যাগ আর লাল তীর (আঁকা) | ON THE OCEAN FLOOR | `whoosh-short`, `pop`, `click-soft` |
+| 12.8–15.4 | কাটা-অংশ কার্ড: তারের প্রস্থচ্ছেদ (বলয় একে একে), পাশে বাগানের পাইপ আর তার কুণ্ডলী; লাল ড্যাশ রেখায় দুটোর সমান মাপ, লাল সমান-চিহ্ন (আঁকা) | Some are no thicker than a garden hose · Undersea cable · Garden hose | `page-turn`, `pop` ×২, `click-soft` ×২, ভয়েস 4 |
+| 15.4–17.6 | কার্ড সরে যায়; "hundreds"-এ প্রায় ৫০টা তার একসাথে আঁকা হয়ে মানচিত্র ভরে, প্রান্তে বিন্দু | — | `page-turn`, `whoosh`, ভয়েস 5 |
+| 17.6–19.4 | লাল হাতের-লেখা ধাঁচে "1,000,000+ km" বাঁ থেকে ডানে লেখা হয়, নিচে মার্কারের দাগ, তীর আটলান্টিকের তারের গুচ্ছে | 1,000,000+ km | `click-soft` ×২ |
+| 19.4–21.8 | পাতা ওল্টায়; ভয়েসের সাথে শব্দে শব্দে প্রথম লাইন; "cloud"-এর উপরে কাগজের মেঘ, তার উপর লাল ক্রস | The internet isn’t in the cloud. | `page-turn`, `pop`, `click-soft` ×২, ভয়েস 6 |
+| 21.8–23.3 | দ্বিতীয় লাইন, "ocean"-এর পেছনে হলুদ হাইলাইটার; নিচ থেকে কাগজের ঢেউ ওঠে | It’s in the ocean. | `click-soft`, `whoosh-short`, ভয়েস 7 |
+| 23.3–25 | মাস্টহেড: দুই রেখা আঁকা হয়, কিকার, "The Brief", সাবস্ক্রাইব বোতাম | THE WORLD, EXPLAINED · The Brief · Subscribe free | `page-turn`, `pop`, `sparkle` |
+| 25–27 | দম: শেষ পর্দা স্থির, বোতামে আলোর রেখা, মিউজিকের শেষ আঘাত আর মিলিয়ে যাওয়া | Concept work · fictional brand | মিউজিক |
 
 ## যা লাগবে
 
-<!-- Voice, sounds, music, footage or photos, credits, extra formats: what is ready, what is free, what must come from the user. -->
+- ভয়েস: তৈরি আছে (assets/voice/vo.wav, ২৩.৬৪ সে.)।
+- মিউজিক: data-glitch (studio-music, sound.mjs কপি করে), ভয়েসের নিচে নামানো।
+- শব্দ: সব assets/sfx-এ আছে।
+- ফন্ট: Playfair Display + Inter (প্যাকে আছে); "1,000,000+ km"-এর জন্য Instrument Serif Italic (SIL OFL, assets/fonts-এ কপি করা, লাইসেন্স সাথে)।
+- মানচিত্র: কোনো ডাউনলোড নয় — মহাদেশগুলো হাতে-কাটা সরল রেখা (দ্রাঘিমা/অক্ষাংশ থেকে), তারের পথ সমুদ্রের ভেতর দিয়ে বাঁকা রেখা (চিত্রের জন্য, জরিপ নয়)।
+- তথ্য সত্য, আর পর্দায় শুধু ভয়েসের কথাই (বাড়তি সংখ্যা নেই): আন্তঃমহাদেশীয় ডেটার প্রায় সবই (≈৯৯%) সমুদ্রের তলার তারে; গভীর সমুদ্রের তার প্রায় ১৭–২১ মিমি মোটা, বাগানের পাইপের মতো; তার কয়েকশো (≈৫০০+); মোট দৈর্ঘ্য ১০ লাখ কিমির বেশি (≈১৪ লাখ কিমি; উৎস: TeleGeography)।
 
 ## STYLE.md আর LESSONS.md থেকে যা মানছি
 
-<!-- The STYLE.md rules and LESSONS.md lessons this video follows, each in one line with its section. -->
+- লেখা ২৪ px-এর বেশি (কিকার ২৪, শিরোনাম ৮৪–১৭০); প্রতিটা লেখা কমপক্ষে max(1.5 সে., 0.3 সে. × শব্দ) দেখা যায় (CLAUDE.md §0d.5)।
+- তীর, ক্রস, সমান-চিহ্ন SVG-তে আঁকা (§0d.11); প্রতিটা ফন্টের নাম উদ্ধৃতিতে (§0d.10); শিরোনামে text-wrap: balance।
+- প্রতিটা দৃশ্য বদলে শব্দ (page-turn / whoosh), মার্কারে click-soft; ১.৫ সে.-এর বেশি নীরব স্থির ছবি নেই (§0d.7–8)।
+- একটাই অ্যাকসেন্ট — লাল মার্কার; হলুদ শুধু হাইলাইটার।
+- রেন্ডারের আগে check.mjs আর প্রতিটা স্থির মুহূর্তের ছবি দেখা (§0d.9, §0i)।
 
 ## আপনার কাছে প্রশ্ন
 
-<!-- Only what STYLE.md and the request do not answer. plan-check lists STYLE.md's open questions. -->
+- নেই — পোর্টফোলিও নমুনা, ব্রিফ সম্পূর্ণ।

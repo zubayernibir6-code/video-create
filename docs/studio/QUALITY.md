@@ -42,6 +42,11 @@ Numbers: docs/business/research/R3-trends-craft.md §8 (Material 3, Carbon, Flue
   the music fades out by the end (no hard stop); voice (if any) is clear over the music.
 **Honesty**
 - No real brand logos or names, no real or AI faces, no fake named testimonials; real-world facts are true.
+- Commands, URLs and handles a viewer could copy use reserved names (`*.example` domains, made-up packages checked
+  to NOT exist): `npm i -g kernel` on CD1 named a real, unrelated npm package (critic, 2026-11-08). Machine-checked
+  since 2026-11-08: check.mjs fails a real on-screen domain or an install command naming a package on portfolio pieces.
+- The brand name is not a famous product of the same kind (piece.json `nameCheck` records the search): CD1's
+  "Kernel" typed `kernel deploy`, the real CLI of Kernel (onkernel.com) → renamed "Kerf".
 
 ## C. Verdict
 - **ship** — all A pass, no B item fails.

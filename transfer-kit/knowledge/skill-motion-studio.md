@@ -24,7 +24,7 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 5. Sound: `piece.json` → `sound` (music from `C:/Users/Zubayer Nibir/VideoWork/studio-music/*.mp3` with its
    `.beats.json`; voice; cues at visual-hit times) → `node tools/studio/sound.mjs projects/<name>`.
 6. `node tools/studio/check.mjs projects/<name> --at=<held moments>` → ✓, then LOOK at every contact sheet.
-7. `node tools/studio/render-queue.mjs <name> [more…]` (detached for batches) → `renders/portfolio/<CODE>_<Brand>.mp4`
+7. `node tools/studio/render-queue.mjs <name> [more…] --detach` (own process: survives a session restart) → `renders/portfolio/<CODE>_<Brand>.mp4`
    (+ `renders/<name>/<stamp>/` with qc.json, thumbnail, GIF). Then `node tools/contact-sheet.mjs <mp4> --every=1`
    and read it (§0d.9). Other aspect ratios: a separate composition per aspect for designed layouts (the default);
    `finish.mjs --formats=…` "fit" only in a hurry.
@@ -63,6 +63,34 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 - Long build-up SFX: land the PEAK on the hit (manifest `peak_s`: whoosh-cinematic 2.5 s, riser 3.0 s).
 - `hyperframes snapshot --describe` uses the paid Gemini key unless `--describe false` (check.mjs passes it).
 - Render speed here: PL1 (30 s, CSS 3D, 30 fps) took 312 s ≈ 10 s per second of video. One render at a time.
+- Custom agent types (`.claude/agents/*.md`) and named workflows are loaded when a session STARTS. In the session
+  that created or edited them: run the workflow by path, `Workflow({scriptPath: "D:\\Video Create\\.claude\\workflows\\studio-batch.js", args: …})`
+  — the name resolves to the old cached copy, and `agentType: 'studio-builder'` throws "not found" (the workflow now
+  falls back to a default subagent that reads the role file).
+- Several render queues may run at once (each waits for the render slot); queue.json is appended, never overwritten.
+- 3D (three.js) pieces: copy the pattern of `projects/pf-gh1-prism` / `pf-lg1-orbit` / `pf-ia1-vaultline` — a `<head>`
+  script registers `window.__hf.buildReady`, the scene module resolves it after frame 0 is drawn; the scene renders
+  inside `S.everyFrame(t => …)` (no requestAnimationFrame); an `hf-seek` listener redraws; `tl.set({}, {}, DUR)` pins
+  the length; registry blocks are ported into index.html and their CDN imports removed. `hyperframes check` may say
+  "did not become render-ready within 3000 ms" (shader compile on the UHD 620) and still pass. Measured: GH1 10 s in
+  918 s, LG1 6 s in 177 s.
+- **Never name the ease "spring"** (or hold / wiggle / custom): the HyperFrames runtime registers its own eases with
+  those names after load, so "spring" played LINEAR in every render of the first batch (found by builder A3; 14 pages
+  fixed and 11 pieces re-rendered). Use `houseSpring` (same k170/c14 curve), springSoft, springPop or pass
+  `Studio.springFn(…)`. check.mjs now stops on those names (proved on the old page).
+- Furniture labels ("Concept work · fictional brand") use class `concept` (or carry data-design-ignore): check.mjs
+  exempts them from the ≥ 24 px rule.
+- **Honesty guard (2026-11-08):** check.mjs fails a portfolio page (pf-* or a "fictional" client line) that shows a
+  real domain (use `<name>.example`) or an install command naming a package (`curl -fsSL <brand>.example/install | sh`,
+  or a made-up name listed in piece.json `honesty.checked` after `npm view` 404s); client pieces only warn. It warns
+  when piece.json has no `nameCheck`: search "<brand> <industry>" BEFORE building — CD1 "Kernel" typed
+  `kernel deploy`, the real CLI of Kernel (onkernel.com), and was renamed "Kerf" (folder pf-cd1-kerf). Known
+  same-kind overlaps in the first batch, left for Talha to decide: AI1 Operator (OpenAI Operator), CL1 Forge
+  (Laravel Forge), HX1 Kindred Health (Kindred Healthcare; its voice-over says the name), MP1 Cargoline (CargoLine).
+- `check.mjs --static` runs only the static rules (no Chrome, under a second) — use it while editing.
+- 3D render time varies a lot: GH1 (10 s, three.js glass) took 918 s on 2026-11-07 while six agents shared the
+  laptop, and 109 s on 2026-11-08 with only the render queue running (hyperframes reported `browserGpuMode →
+  hardware`, ANGLE on the UHD 620). Cause not proven — render 3D pieces when the machine is quiet.
 
 ## 4. After every client job
 LESSONS.md row per feedback; new reusable code into tools/studio (with a header + proof); this skill updated;

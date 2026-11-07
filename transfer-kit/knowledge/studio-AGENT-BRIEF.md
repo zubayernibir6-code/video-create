@@ -29,8 +29,8 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
 3. Author `index.html`: scenes as `<section class="scene clip" data-start data-duration data-track-index>`, all motion
    on the ONE timeline from `Studio.init`, ending with `window.__timelines["main"] = S.done().tl;`.
 4. Sound: fill `piece.json` → `sound.music` (track from `C:/Users/Zubayer Nibir/VideoWork/studio-music/*.mp3`; read its
-   `.beats.json` for `strong` beats and `drops` and put your hero moments ON them — set `music.from` so a drop lands on
-   your reveal) and `sound.cues` (`t` = the VISUAL hit; the tool subtracts each file's lead-in / lands build-ups on their
+   `.beats.json`: `kicks` (the real kick drum, every `kickInterval` s) for cuts and slams, `drops` for the hero reveal
+   — set `music.from` so a drop lands on your reveal; `strong` is the detector's guess and can sit off the downbeat) and `sound.cues` (`t` = the VISUAL hit; the tool subtracts each file's lead-in / lands build-ups on their
    peak). Then `node tools/studio/sound.mjs projects/<p>`. Every scene change gets a whoosh, UI events quiet ticks
    (click 0.28–0.35), reveals a pop/ping/sparkle, hero lands an impact. No 1.5 s stretch without any sound.
 5. `node tools/studio/check.mjs projects/<p> --at=<the held moment of EVERY shot + mid-moves>` → must end
@@ -55,7 +55,7 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
   1:1: 6 % margin). Decorative layers carry `data-design-ignore data-layout-ignore`; intentional text-over-text layering
   gets `data-layout-allow-overlap` on the specific text element.
 - **Motion design**: vary eases by role (studio.js names: `settle` hero moves, `enter` entrances, `move` between places,
-  `exit` exits ≤ 0.7× the entrance, `glide` drifts, `snap` whips; springs `spring` / `springSoft` / `springPop` —
+  `exit` exits ≤ 0.7× the entrance, `glide` drifts, `snap` whips; springs `houseSpring` / `springSoft` / `springPop` —
   ONE springPop per scene at most). Stagger 3–8 frames (`S.f(n)`), total stagger ≤ 0.6 s. Start the first move 0.1–0.3 s
   in. The element that moves first is the most important. Build / breathe / resolve inside every scene; something
   changes every 2–3 s; no still picture + silence ≥ 1.5 s. ≤ 3 flashes per second.
@@ -64,11 +64,30 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
   carries the hierarchy.
 - **Honesty**: every brand is fictional (concept work). No real company logos or names, no real people, no AI faces,
   no fake testimonials with names. Put a small "Concept work · fictional brand" furniture label on the end card
-  (15 px mono, ≥ 0.6 alpha). Any fact stated as true about the real world must BE true.
+  (15 px mono, ≥ 0.6 alpha). Any fact stated as true about the real world must BE true. Install commands, URLs and
+  handles use reserved names (`*.example`); never a real package or domain a viewer could copy and run —
+  `check.mjs` now FAILS a portfolio page that shows a real domain or an install command naming a package (allow a
+  made-up name you looked up with piece.json `honesty.checked`). **Name check first:** search "<brand> <industry>"
+  and write the result into piece.json `nameCheck`; a famous product of the same kind with the same name is a
+  rename (CD1 "Kernel" typed `kernel deploy` — the real CLI command of Kernel, a developer company → "Kerf").
 - **Bengali** (if any): no letter-spacing, split by words or lines only, Hind Siliguri / Baloo Da 2.
+- **Kit notes from the first batch (2026-11-07):** stack tightly-leaded display lines in ONE flex column (absolutely
+  placed slam lines trip `content_overlap` on Anton/Baloo's tall line boxes); `S.type(…, { preroll: 0 })` when lines
+  type one after another; `S.sweep(…, { color, blend })` for light looks (it clips itself — no overflow on the host);
+  `S.count` writes into its own `.st-num` span; 3D pieces follow `projects/pf-gh1-prism` (buildReady + per-frame render).
+- **Reserved class names** (studio.css styles them — do not reuse them for your own elements): `scene layer center
+  stage3d cam plane display h1 h2 h3 body small kicker mono tnum accent grad-text card raised glass chip dot btn
+  hairline icon bg-grid bg-dots glow browser bar url view phone screen island sweep burst flash` (a swatch named
+  `.chip` became a 40 px pill on BS1).
+- **Contrast is sampled at five moments** — 1 s, the end − 1 s and three evenly between (e.g. 1/5/9/13/17 s for 18 s):
+  a text mid-fade at one of them fails WCAG; move the fade a little.
 
 ## 4. Machine etiquette (several agents share one laptop)
 - Heavy steps already queue through `tools/studio/slot.mjs` (max 2 Chromes). Never start `hyperframes preview`, a
   render, or several checks at once. Snapshots: ≤ 14 times per call.
 - Work only inside your own project folders. Do not edit `tools/studio/*` — if the kit has a bug, describe it in your
   final reply (the lead fixes the kit for everyone). Do not commit.
+- **More kit notes (2026-11-08):** text stacked inside a ROTATED card needs extra line spacing for `content_overlap`
+  (it measures unrotated boxes; Playfair's box is 1.333 em → line-height ≥ 1.34); avoid large `filter: blur()` on
+  big panels as an entrance (snapshots can show a stale blur — use size/position), blur only small text reveals;
+  ASR word files can drop a whole sentence — check vo.words.json against script.txt before syncing.

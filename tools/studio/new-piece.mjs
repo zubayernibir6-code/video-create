@@ -150,6 +150,9 @@ writeFileSync(path.join(dir, "index.html"), html);
 const piece = {
   code, name: title, brand, project: name, aspect, width: W, height: H, duration: DUR, fps: FPS,
   concept: true,
+  // portfolio honesty (check.mjs): search "<brand> <industry>" before building and write what you found here — a famous
+  // product of the same kind with this name means a rename (CD1 Kernel → Kerf, 2026-11-08)
+  nameCheck: "",
   brief: { client: brand + " (fictional — concept work)", goal: "", audience: "", message: "", cta: "", tone: "", references: entry.references || [] },
   sound: { music: music ? { track: music, from: 0, gain: 0.55, fadeIn: 0.3, fadeOut: 1.5 } : { track: "" }, cues: [] },
   reel: { from: 0, to: Math.min(DUR, 4) },
@@ -170,6 +173,7 @@ writeFileSync(path.join(dir, "PLAN.md"), plan);
 
 console.log(`✓ projects/${name}  ${code} ${W}×${H} ${DUR}s @${FPS}  fonts ${families.join(", ")}  music ${music}${three ? "  three.js" : ""}
 Next:
+  0. Name check: search "${brand} <industry>" → piece.json nameCheck (a famous same-kind product with this name → rename)
   1. Fill PLAN.md (shot table) → node tools/plan-check.mjs projects/${name}
   2. Author index.html (scenes + timeline) and piece.json "sound.cues"
   3. node tools/studio/sound.mjs projects/${name}

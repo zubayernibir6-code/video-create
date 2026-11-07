@@ -942,8 +942,8 @@
         "GitHub Universe"
       ],
       "sample": {
-        "project": "pf-cd1-kernel",
-        "brand": "Kernel",
+        "project": "pf-cd1-kerf",
+        "brand": "Kerf",
         "status": "optional"
       }
     },

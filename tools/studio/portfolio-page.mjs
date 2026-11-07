@@ -9,9 +9,9 @@
 // The masters stay in renders/portfolio/. The folder is self-contained: open index.html in a browser, zip it, or
 // deploy it as a static site (Vercel, Netlify, GitHub Pages) — deploying is Talha's decision (CLAUDE.md §0).
 // Skips pieces that are not rendered and lists them. Re-run after new renders (existing web copies are reused when
-// newer than the master).
+// newer than the master). The showreel (renders/portfolio/SR1_*.mp4, from showreel.mjs) leads the page when rendered.
 
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
@@ -45,6 +45,17 @@ for (const s of cat.services) {
   shown.push({ s, nice, mb: (statSync(web).size / 1e6).toFixed(1) });
 }
 
+// the showreel (showreel.mjs → render-queue → renders/portfolio/SR1_<Name>.mp4) leads the page when it exists
+const PF = path.join(WS, "renders", "portfolio");
+const srMaster = readdirSync(PF).filter((x) => /^SR1_.*.mp4$/.test(x)).map((x) => path.join(PF, x)).sort((a, b) => mt(b) - mt(a))[0];
+let reel = "";
+if (srMaster) {
+  const web = path.join(MEDIA, "showreel.mp4"), poster = path.join(MEDIA, "showreel.jpg");
+  if (mt(web) < mt(srMaster)) ff(["-i", srMaster, "-vf", "scale='min(1280,iw)':-2:flags=lanczos", "-c:v", "libx264", "-preset", "slow", "-crf", "24", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-c:a", "aac", "-b:a", "160k", web]);
+  if (mt(poster) < mt(srMaster)) ff(["-ss", "1.2", "-i", srMaster, "-frames:v", "1", "-vf", "scale='min(1280,iw)':-2", "-q:v", "3", poster]);
+  if (existsSync(web)) reel = `<section class="reel"><video controls preload="metadata" playsinline poster="media/showreel.jpg" src="media/showreel.mp4"></video></section>`;
+}
+
 const fams = cat.families.map((f) => ({ f, items: shown.filter((x) => x.s.family === f.id) })).filter((x) => x.items.length);
 const price = (p) => (p ? `from $${p.starter.toLocaleString("en-US")}` : "");
 const card = ({ s, nice }) => `
@@ -75,6 +86,8 @@ const html = `<!doctype html>
   section { max-width: 1240px; margin: 0 auto; padding: 32px 16px; }
   section h2 { font-size: 22px; letter-spacing: -0.01em; margin: 0 0 16px; border-top: 1px solid var(--line); padding-top: 24px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 20px; }
+  .reel { padding-top: 8px; }
+  .reel video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; background: #000; border: 1px solid var(--line); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
   .card video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #000; }
   .meta { padding: 16px 18px 18px; }
@@ -93,6 +106,7 @@ const html = `<!doctype html>
   <p>Launch films, product demos, explainers, data stories and brand motion for SaaS, AI and fintech teams. Every format and captions included, first draft in 3–7 working days.</p>
   <div class="how">Pick a <b>code</b> below, send your brief, get a fixed price.</div>
 </header>
+${reel}
 ${fams.map(({ f, items }) => `<section>
   <h2>${esc(f.name)}</h2>
   <div class="grid">${items.map(card).join("")}
@@ -104,4 +118,4 @@ ${fams.map(({ f, items }) => `<section>
 `;
 writeFileSync(path.join(OUT, "index.html"), html);
 const total = shown.reduce((a, x) => a + +x.mb, 0).toFixed(1);
-console.log(`✓ ${path.join(OUT, "index.html")} — ${shown.length} pieces in ${fams.length} families, web copies ${total} MB${missing.length ? `\n⚠ not rendered yet: ${missing.join(", ")}` : ""}`);
+console.log(`✓ ${path.join(OUT, "index.html")} — ${reel ? "showreel + " : ""}${shown.length} pieces in ${fams.length} families, web copies ${total} MB${missing.length ? `\n⚠ not rendered yet: ${missing.join(", ")}` : ""}`);

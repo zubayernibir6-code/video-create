@@ -45,18 +45,18 @@
     /* ---------- S1/S2 column (sky → sea → seabed) */
     #col { position: absolute; left: 0; top: 0; width: 1920px; height: 2160px; }
     .q { left: 110px; top: 116px; padding: 26px 44px 34px; width: 760px; }
-    .q .hd { font-size: 84px; line-height: 1.26; margin-top: 14px; text-wrap: balance; }
+    .q .hd { font-size: 84px; line-height: 1.26; margin-top: 30px; text-wrap: balance; }
     .sat { position: absolute; left: 1330px; top: 150px; width: 340px; height: 230px; filter: drop-shadow(0 10px 14px rgba(60, 40, 10, 0.3)); }
     .bub { position: absolute; left: -240px; top: -62px; width: 480px; padding: 26px 34px; border-radius: 34px; background: #fbf8f1; box-shadow: var(--paper-sh); font-family: var(--font-body); font-size: 32px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
     .bub::after { content: ""; position: absolute; left: 46px; bottom: -22px; border-left: 0 solid transparent; border-right: 34px solid transparent; border-top: 26px solid #fbf8f1; }
-    .bub small { display: block; font-family: var(--font-body); font-size: 24px; font-weight: 600; color: var(--ink-3); margin-bottom: 6px; letter-spacing: 0.02em; }
+    .bub small { display: block; font-family: var(--font-body); font-size: 26px; font-weight: 600; color: var(--ink-3); margin-bottom: 6px; letter-spacing: 0.02em; }
     .dot { position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%; background: #fff6d6; box-shadow: 0 0 0 4px rgba(230, 59, 46, 0.35), 0 0 26px 8px rgba(255, 225, 77, 0.85); opacity: 0; }
     #bw { position: absolute; left: 0; top: 0; }
 
     /* ---------- page 2: map */
-    .aa { left: 104px; top: 80px; padding: 10px 44px 26px; }
+    .aa { left: 104px; top: 72px; padding: 10px 44px 24px; }
     .aa .hd { font-size: 120px; line-height: 1.36; }
-    .aa .sub { margin: 2px 0 0; font-family: var(--font-body); font-size: 38px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-2); }
+    .aa .sub { margin: 18px 0 0; font-family: var(--font-body); font-size: 38px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-2); }
     .mapc { left: 168px; top: 392px; width: 1584px; height: 604px; padding: 22px; }
     .mapc svg { display: block; width: 1540px; height: 560px; }
     .tag { position: absolute; left: 600px; top: 588px; padding: 10px 20px; background: #fbf8f1; box-shadow: var(--paper-sh); font-family: var(--font-body); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
@@ -68,10 +68,10 @@
     .milt { font-family: "Instrument Serif", "Playfair Display", serif; font-style: italic; font-size: 170px; line-height: 1.12; color: var(--red); white-space: nowrap; letter-spacing: -0.01em; padding: 0 18px; }
 
     /* ---------- page 3: payoff + masthead */
-    .l1 { position: absolute; left: 0; right: 0; top: 136px; margin: 0; text-align: center; font-family: var(--font-display); font-size: 84px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.34; color: var(--ink-2); }
-    .l2 { position: absolute; left: 0; right: 0; top: 256px; margin: 0; text-align: center; font-family: var(--font-display); font-size: 120px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.34; }
+    .l1 { position: absolute; left: 0; right: 0; top: 172px; margin: 0; text-align: center; font-family: var(--font-display); font-size: 84px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.34; color: var(--ink-2); }
+    .l2 { position: absolute; left: 0; right: 0; top: 290px; margin: 0; text-align: center; font-family: var(--font-display); font-size: 120px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.34; }
     .cloud { position: absolute; left: 1556px; top: 70px; width: 250px; height: 150px; filter: drop-shadow(0 8px 12px rgba(60, 40, 10, 0.28)); }
-    .mast { position: absolute; left: 0; right: 0; top: 496px; display: flex; flex-direction: column; align-items: center; }
+    .mast { position: absolute; left: 0; right: 0; top: 522px; display: flex; flex-direction: column; align-items: center; }
     .rule { width: 760px; height: 6px; border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); }
     .mast .kick { margin-top: 16px; }
     .mname { font-family: var(--font-display); font-size: 104px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.34; margin: 0; }
@@ -100,6 +100,8 @@
       <div id="col">
         <svg id="sea" width="1920" height="2160" viewBox="0 0 1920 2160" style="position: absolute; left: 0; top: 0" data-design-ignore data-layout-ignore>
           <g id="bands"></g>
+          <defs><linearGradient id="shaft" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0.26"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient></defs>
+          <g id="shafts" fill="url(#shaft)"><polygon points="300,900 430,900 640,1640 360,1640"/><polygon points="820,900 905,900 1090,1520 890,1520"/><polygon points="1290,900 1420,900 1610,1680 1330,1680"/><polygon points="1660,900 1730,900 1880,1460 1720,1460"/></g>
           <g id="kelp" fill="none" stroke="#5f7d4e" stroke-width="9" stroke-linecap="round"></g>
           <path id="seacable" d="M-30 2034 C 300 2012 620 2050 960 2030 S 1620 2010 1960 2036" fill="none" stroke="#1a1a1a" stroke-width="9" stroke-linecap="round"/>
           <path id="seapulse" d="M-30 2034 C 300 2012 620 2050 960 2030 S 1620 2010 1960 2036" fill="none" stroke="#e63b2e" stroke-width="9" stroke-linecap="round"/>
@@ -129,6 +131,11 @@
             <path id="x1" d="M1408 176 C 1460 236 1526 306 1588 360" fill="none" stroke="#e63b2e" stroke-width="14" stroke-linecap="round"/>
             <path id="x2" d="M1596 184 C 1540 238 1470 300 1404 362" fill="none" stroke="#e63b2e" stroke-width="14" stroke-linecap="round"/>
           </svg>
+        </div>
+        <div id="fishL" class="layer" style="height: 2160px" data-design-ignore data-layout-ignore>
+          <div id="fw1" style="position: absolute; left: 1480px; top: 1230px"><svg width="120" height="60" viewBox="0 0 120 60"><path d="M10 30 C 30 6 78 6 96 30 C 78 54 30 54 10 30 Z" fill="#4d6b77"/><path d="M92 30 L118 12 L112 30 L118 48 Z" fill="#4d6b77"/><circle cx="28" cy="27" r="3.5" fill="#e9f1ee"/></svg></div>
+          <div id="fw2" style="position: absolute; left: 380px; top: 1400px"><svg width="84" height="42" viewBox="0 0 120 60" style="transform: scaleX(-1)"><path d="M10 30 C 30 6 78 6 96 30 C 78 54 30 54 10 30 Z" fill="#46636e"/><path d="M92 30 L118 12 L112 30 L118 48 Z" fill="#46636e"/><circle cx="28" cy="27" r="3.5" fill="#e9f1ee"/></svg></div>
+          <div id="fw3" style="position: absolute; left: 1120px; top: 1690px"><svg width="150" height="75" viewBox="0 0 120 60"><path d="M10 30 C 30 6 78 6 96 30 C 78 54 30 54 10 30 Z" fill="#3e5a65"/><path d="M92 30 L118 12 L112 30 L118 48 Z" fill="#3e5a65"/><circle cx="28" cy="27" r="3.5" fill="#e9f1ee"/></svg></div>
         </div>
         <div id="parts2" class="layer" style="height: 2160px" data-design-ignore data-layout-ignore></div>
         <div id="bw"><div id="bub" class="bub"><small>To: Mum</small>Landed. Call you tonight?</div><i id="dot" class="dot"></i></div>
@@ -170,7 +177,7 @@
           <svg viewBox="0 0 1060 640" aria-hidden="true">
             <defs><mask id="eqMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1060" height="640"><path id="eqm1" d="M120 160 H 950" stroke="#fff" stroke-width="12"/><path id="eqm2" d="M120 460 H 950" stroke="#fff" stroke-width="12"/></mask></defs>
             <g id="ringsC" transform="translate(290 310)"></g>
-            <path id="coil" d="M912 360 C 1000 410 1036 500 990 566 C 950 620 880 610 884 552" fill="none" stroke="#4f9a5a" stroke-width="44" stroke-linecap="round"/>
+            <path id="coil" d="M912 360 C 990 398 1022 476 990 532 C 962 580 898 584 894 534" fill="none" stroke="#4f9a5a" stroke-width="44" stroke-linecap="round"/>
             <g id="hose" transform="translate(770 310)"><circle r="150" fill="#4f9a5a"/><circle r="150" fill="none" stroke="#3c7a46" stroke-width="5"/><circle r="104" fill="#2b5532"/><path d="M-118 -60 A132 132 0 0 1 -40 -126" fill="none" stroke="#86c18f" stroke-width="10" stroke-linecap="round"/></g>
             <g mask="url(#eqMask)" stroke="#e63b2e" stroke-width="4" stroke-dasharray="12 10"><path d="M120 160 H 950"/><path d="M120 460 H 950"/></g>
             <path id="eq1" d="M508 292 H 552" stroke="#e63b2e" stroke-width="9" stroke-linecap="round"/>
@@ -194,7 +201,7 @@
       <div id="page3" class="page">
         <svg id="waves3" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0" data-design-ignore data-layout-ignore></svg>
         <h2 id="l1" class="l1">The internet isn’t in the cloud.</h2>
-        <svg id="cloud" class="cloud" style="left: 1604px; top: 40px" viewBox="0 0 250 150" aria-hidden="true">
+        <svg id="cloud" class="cloud" style="left: 1342px; top: 56px; width: 200px; height: 120px" viewBox="0 0 250 150" aria-hidden="true">
           <path d="M52 128 C 18 128 8 96 30 80 C 22 50 54 32 78 46 C 90 16 140 10 156 40 C 180 26 218 40 214 72 C 242 80 240 128 204 128 Z" fill="#fbf8f1" stroke="rgba(80,62,34,0.35)" stroke-width="2"/>
           <path id="cx1" d="M44 34 C 96 74 154 108 214 140" fill="none" stroke="#e63b2e" stroke-width="13" stroke-linecap="round"/>
           <path id="cx2" d="M210 26 C 160 70 98 108 40 140" fill="none" stroke="#e63b2e" stroke-width="13" stroke-linecap="round"/>
@@ -289,6 +296,7 @@
       const parts = (host, n, sz, col) => { for (let i = 0; i < n; i++) { const e = document.createElement("i"); const s = sz * (0.5 + S.rnd()); e.style.cssText = `position:absolute;left:${(S.rnd() * 1920).toFixed(0)}px;top:${(1000 + S.rnd() * 1050).toFixed(0)}px;width:${s.toFixed(1)}px;height:${s.toFixed(1)}px;border-radius:50%;background:${col}`; host.appendChild(e); } };
       parts(S.$("#parts1"), 26, 7, "rgba(233,241,238,0.35)");
       parts(S.$("#parts2"), 16, 12, "rgba(233,241,238,0.45)");
+      S.drift("#fw1", { ax: -46, ay: 6, period: 5 }); S.drift("#fw2", { ax: 38, ay: -5, period: 6.5, phase: 1 }); S.drift("#fw3", { ax: -30, ay: 8, period: 7, phase: 2 });
 
       // 0.25 hook card · 0.62 "When you send a message" · 1.25 launch toward space · 3.3 "it doesn't" → red X · 3.8 fall
       paperIn("#q", 0.22, { y: -40, r0: -7, r1: -2 });
@@ -296,7 +304,7 @@
       tl.fromTo("#bub", { opacity: 0, scale: 0.6, y: 40, rotation: -9 }, { opacity: 1, scale: 1, y: 0, rotation: -3, duration: 0.6, ease: "springSoft" }, 0.62);
       tl.fromTo("#sat", { opacity: 0, y: -50, rotation: 14, scale: 0.9 }, { opacity: 1, y: 0, rotation: 5, scale: 1, duration: 0.8, ease: "springSoft" }, 0.92);
       S.drift("#satw", { ax: 6, ay: 9, period: 5.5, t0: 0, t1: 7.7 });
-      tl.fromTo("#arcm", { drawSVG: "0% 0%" }, { drawSVG: "0% 72%", duration: 1.5, ease: "move" }, 1.25);
+      tl.fromTo("#arcm", { drawSVG: "0% 0%" }, { drawSVG: "0% 60%", duration: 1.5, ease: "move" }, 1.25);
       tl.to("#bub", { scale: 0.8, duration: 1.5, ease: "move" }, 1.25);
       S.draw("#x1", 3.28, { dur: 0.24, ease: "move" });
       S.draw("#x2", 3.46, { dur: 0.24, ease: "move" });
@@ -306,12 +314,12 @@
       tl.fromTo("#dot", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "enter" }, 4.3);
       // the bubble's path (per frame on a wrapper's `translate`, GSAP keeps the inner transforms)
       const arc = S.$("#arc"), arcL = arc.getTotalLength(), mv = g.parseEase("move");
-      const P = (u) => arc.getPointAtLength(arcL * u), stop = P(0.72), start = P(0), seaPt = { x: 1060, y: 905 }, cablePt = { x: 1060, y: 2028 };
+      const P = (u) => arc.getPointAtLength(arcL * u), stop = P(0.6), start = P(0), seaPt = { x: 1060, y: 905 }, cablePt = { x: 1060, y: 2028 };
       const bw = S.$("#bw");
       S.everyFrame((t) => {
         let x, y;
         if (t < 1.25) ({ x, y } = start);
-        else if (t < 2.75) ({ x, y } = P(0.72 * mv((t - 1.25) / 1.5)));
+        else if (t < 2.75) ({ x, y } = P(0.6 * mv((t - 1.25) / 1.5)));
         else if (t < 3.8) { x = stop.x; y = stop.y + Math.sin((t - 2.75) * 5) * 3; }
         else if (t < 4.75) { const u = (t - 3.8) / 0.95, e = u * u, c = { x: stop.x + 40, y: stop.y - 70 }; x = (1 - e) * (1 - e) * stop.x + 2 * (1 - e) * e * c.x + e * e * seaPt.x; y = (1 - e) * (1 - e) * stop.y + 2 * (1 - e) * e * c.y + e * e * seaPt.y; }
         else if (t < 6.4) { const u = mv(Math.min(1, (t - 4.75) / 1.65)); x = seaPt.x; y = seaPt.y + (cablePt.y - seaPt.y) * u; }
@@ -324,6 +332,7 @@
       tl.fromTo("#sky", { y: 0 }, { y: -320, duration: 1.6, ease: "move" }, 4.85);
       tl.fromTo("#parts2", { y: 0 }, { y: -260, duration: 1.6, ease: "move" }, 4.85);
       tl.fromTo("#parts1", { y: 0 }, { y: 140, duration: 1.6, ease: "move" }, 4.85);
+      tl.fromTo("#fishL", { y: 0 }, { y: -90, duration: 1.6, ease: "move" }, 4.85);
       // 6.45 on the seabed: the signal runs along the cable (the music's slam is at 6.6)
       g.set("#seapulse", { drawSVG: "0% 0%" });
       tl.fromTo("#seapulse", { drawSVG: "55% 57%" }, { drawSVG: "92% 100%", duration: 0.85, ease: "move", immediateRender: false }, 6.45);
@@ -463,6 +472,7 @@
       const w3 = S.$("#waves3");
       const wv = [[930, 16, 0.006, 0.4, "#a9c3c3"], [976, 18, 0.008, 1.6, "#8eabb0"], [1020, 14, 0.01, 2.5, "#6f8d97"]].map(([y, a, k, p, c]) => mk("path", { d: wave(y, a, k, p, 1100), fill: c }, w3));
       wv.forEach((w, i) => tl.fromTo(w, { y: 200 }, { y: 0, duration: 0.85, ease: "springSoft" }, 22.24 + i * S.f(4)));
+      wv.forEach((w, i) => S.drift(w, { ax: 14 - i * 6, ay: 5 + i * 2, period: 4.6 + i * 1.3, phase: i * 1.1, t0: 23.1, t1: 27 })); // the sea keeps breathing on the end card
       tl.fromTo("#rule1, #rule2", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "settle", stagger: S.f(4) }, 23.36);
       S.words("#mkick", 23.48, { stagger: S.f(3), blur: 6, y: 12 });
       S.lines("#mname", 23.52, { dur: 0.8 });

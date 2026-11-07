@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=1920, height=1080" />
-  <title>CD1 · Ship faster from your terminal — Kernel (concept)</title>
+  <title>CD1 · Ship faster from your terminal — Kerf (concept)</title>
   <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <link rel="stylesheet" href="assets/css/studio.css" />
   <style>
     :root {
-      /* Kernel: "One command. Live everywhere." Pure black, ONE electric-green accent (cursor, success, links). */
+      /* Kerf: "One command. Live everywhere." Pure black, ONE electric-green accent (cursor, success, links). */
       --bg: #050505;
       --bg-2: #0c0c0c;
       --bg-3: #141414;
@@ -55,8 +55,9 @@
     .i { color: var(--syn-id); }
     .p { color: #8a8a8a; }
     .slab-fog { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5, 5, 5, 0.92) 0%, rgba(5, 5, 5, 0.45) 45%, rgba(5, 5, 5, 0) 78%); }
-    /* at rest the lower half (behind the terminal) falls out of focus, so no cut-off fragments compete with it */
-    .slab-dof { position: absolute; left: 0; right: 0; bottom: 0; height: 64%; background: linear-gradient(180deg, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.8) 42%, rgba(11, 11, 11, 0.94) 100%); }
+    /* at rest the lower half (behind the terminal) falls out of focus, so no cut-off fragments compete with it:
+       near-opaque from line 7 down, so no "creat / con / res" stubs poke out left of the window (critic 2026-11-08) */
+    .slab-dof { position: absolute; left: 0; right: 0; bottom: 0; height: 64%; background: linear-gradient(180deg, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.97) 38%, rgba(11, 11, 11, 0.98) 100%); }
     .scan { position: absolute; left: 0; right: 0; top: 0; height: 170px; background: linear-gradient(180deg, rgba(54, 242, 139, 0) 0%, rgba(54, 242, 139, 0.16) 55%, rgba(54, 242, 139, 0) 100%); mix-blend-mode: screen; }
     .edge { position: absolute; background: linear-gradient(180deg, #1c1c1c, #070707); }
     .e-b { left: 22px; top: 100%; width: calc(100% - 44px); height: 34px; transform-origin: 50% 0; transform: rotateX(-90deg); }
@@ -69,12 +70,15 @@
     .mask { display: inline-block; overflow: hidden; padding: 0.04em 0.05em 0.12em; margin: -0.04em -0.05em -0.12em; }
     .hw { display: inline-block; }
     .gap { display: inline-block; width: 0.26em; }
-    .hcur { display: inline-block; width: 18px; height: 128px; margin-left: 22px; border-radius: 3px; background: var(--accent); box-shadow: 0 0 28px rgba(54, 242, 139, 0.55); }
+    /* the cursor hangs past the line (margin-right cancels its 40 px), so the words stay centred while it blinks off */
+    .hcur { display: inline-block; width: 18px; height: 128px; margin-left: 22px; margin-right: -40px; border-radius: 3px; background: var(--accent); box-shadow: 0 0 28px rgba(54, 242, 139, 0.55); }
 
     /* ---------- S2/S3 terminal */
-    /* the window grows with its output: .term-bg (frame, glass, shadow) animates its height, the rows sit in place */
+    /* the window grows with its output: .term-bg (frame, fill, shadow) animates its height, the rows sit in place.
+       The fill is OPAQUE: the entrance leaves filter:blur(0px) on #term, which cuts a backdrop blur off from the slab,
+       so a 95 % fill let the code read through the window (critic 2026-11-08). */
     .term { position: absolute; left: 480px; top: 446px; width: 960px; height: 456px; }
-    .term-bg { position: absolute; left: 0; top: 0; width: 960px; height: 186px; border-radius: 20px; background: rgba(12, 12, 12, 0.95); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 2px 4px rgba(0, 0, 0, 0.45), 0 30px 80px -20px rgba(0, 0, 0, 0.85), 0 70px 160px -40px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(18px) saturate(120%); backdrop-filter: blur(18px) saturate(120%); }
+    .term-bg { position: absolute; left: 0; top: 0; width: 960px; height: 186px; border-radius: 20px; background: #0c0c0c; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 2px 4px rgba(0, 0, 0, 0.45), 0 30px 80px -20px rgba(0, 0, 0, 0.85), 0 70px 160px -40px rgba(0, 0, 0, 0.9); }
     .term-fx { position: absolute; inset: 0; border-radius: 20px; overflow: hidden; pointer-events: none; }
     .term-halo { position: absolute; left: 480px; top: 446px; width: 960px; height: 456px; border-radius: 20px; box-shadow: 0 0 90px 10px rgba(54, 242, 139, 0.28); }
     .term-bar { position: relative; height: 58px; display: flex; align-items: center; gap: 10px; padding: 0 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); border-radius: 20px 20px 0 0; background: rgba(255, 255, 255, 0.025); }
@@ -121,14 +125,16 @@
     .lock-row { display: flex; align-items: center; gap: 44px; }
     .kmark { position: relative; overflow: hidden; width: 160px; height: 160px; border-radius: 40px; display: grid; place-items: center; background: linear-gradient(180deg, #ffffff 0%, #dedede 100%); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 2px 4px rgba(0, 0, 0, 0.4), 0 24px 60px -16px rgba(0, 0, 0, 0.9); }
     .kmark span { font-family: var(--font-mono); font-weight: 700; font-size: 112px; line-height: 1; color: #050505; margin-top: -12px; }
-    .word-wrap { display: flex; align-items: center; gap: 16px; }
+    /* the cursor sits OUTSIDE the flow (absolute, past the right edge), so "k kerf" is centred whether it is on or off */
+    .word-wrap { position: relative; display: flex; align-items: center; }
     .wordmark { position: relative; overflow: hidden; font-family: var(--font-display); font-weight: 700; font-size: 176px; line-height: 1.1; letter-spacing: -0.05em; color: var(--ink); padding: 0 0.03em 0.04em 0; }
-    .wcur { display: block; width: 22px; height: 132px; margin-top: 10px; border-radius: 3px; background: var(--accent); box-shadow: 0 0 28px rgba(54, 242, 139, 0.55); }
+    .wcur { position: absolute; left: 100%; top: 10px; bottom: 0; width: 22px; height: 132px; margin: auto 0 auto 16px; border-radius: 3px; background: var(--accent); box-shadow: 0 0 28px rgba(54, 242, 139, 0.55); }
     .tagline { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 60px; line-height: 1.15; letter-spacing: -0.03em; text-align: center; text-wrap: balance; }
     .tagline .t1 { color: var(--ink-2); }
     .tagline .t2 { color: var(--ink); }
-    .npm { display: inline-flex; align-items: center; gap: 18px; padding: 18px 34px; border-radius: 16px; background: rgba(255, 255, 255, 0.045); border: 1px solid rgba(255, 255, 255, 0.13); box-shadow: var(--shadow-1); font-family: var(--font-mono); font-size: 34px; line-height: 1; color: var(--ink); }
-    .npm .ps { color: var(--ink-3); }
+    /* the install line uses the reserved .example domain (a made-up package name could be a real one: critic 2026-11-08) */
+    .install { display: inline-flex; align-items: center; gap: 18px; padding: 18px 34px; border-radius: 16px; background: rgba(255, 255, 255, 0.045); border: 1px solid rgba(255, 255, 255, 0.13); box-shadow: var(--shadow-1); font-family: var(--font-mono); font-size: 32px; line-height: 1; color: var(--ink); white-space: nowrap; }
+    .install .ps { color: var(--ink-3); }
     .concept { position: absolute; right: 96px; bottom: 54px; font-family: var(--font-mono); font-size: 15px; line-height: 1; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242, 242, 242, 0.62); }
   </style>
   <script src="assets/js/gsap/gsap.min.js"></script>
@@ -149,8 +155,8 @@
       <div class="bg-dots"></div>
     </section>
 
-    <!-- the 3D code slab, behind S1–S3: dim and tilted, then it turns and lands flat on the 6.6 slam -->
-    <section id="slabsec" class="scene clip" data-start="0" data-duration="9.8" data-track-index="1" data-design-ignore data-layout-ignore>
+    <!-- the 3D code slab, behind S1–S3: dim and tilted, then it turns and lands flat on the 6.6 slam; the 9.24 pan carries it up -->
+    <section id="slabsec" class="scene clip" data-start="0" data-duration="9.86" data-track-index="1" data-design-ignore data-layout-ignore>
       <div class="stage3d" id="slab-stage">
         <div class="slab" id="slab">
           <div class="slab-face">
@@ -185,8 +191,8 @@
       </div>
     </section>
 
-    <!-- S2/S3 2.1–9.8: the terminal — type, Enter, the deploy runs -->
-    <section id="s2" class="scene clip" data-start="2.1" data-duration="7.7" data-track-index="3">
+    <!-- S2/S3 2.1–9.86: the terminal — type, Enter, the deploy runs; the 9.24 pan carries it up and out -->
+    <section id="s2" class="scene clip" data-start="2.1" data-duration="7.76" data-track-index="3">
       <div id="term-halo" class="term-halo" data-design-ignore data-layout-ignore></div>
       <div class="term" id="term">
         <div class="term-bg" id="term-bg" data-design-ignore data-layout-ignore></div>
@@ -223,7 +229,7 @@
       <div class="url-row">
         <div class="urlpill" id="urlpill">
           <span class="live-badge"><i class="ldot"></i>Live</span>
-          <span class="url">https://my-app.kernel.example</span>
+          <span class="url">https://my-app.kerf.example</span>
           <span class="copy" id="copy" data-design-ignore>
             <svg class="icon ic-copy" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
             <svg class="ic-check" viewBox="0 0 24 24" aria-hidden="true"><path id="ck" d="M20 6 9 17l-5-5" /></svg>
@@ -238,10 +244,10 @@
         <div class="lock">
           <div class="lock-row">
             <div class="kmark" id="kmark"><span>k</span></div>
-            <div class="word-wrap"><div class="wordmark" id="word">kernel</div><i class="wcur" id="wcur" data-design-ignore data-layout-ignore></i></div>
+            <div class="word-wrap"><div class="wordmark" id="word">kerf</div><i class="wcur" id="wcur" data-design-ignore data-layout-ignore></i></div>
           </div>
           <p class="tagline" id="tag"><span class="t1" id="tag1">One command.</span> <span class="t2" id="tag2">Live everywhere.</span></p>
-          <div class="npm" id="npm"><span class="ps">$</span><span>npm i -g kernel</span></div>
+          <div class="install" id="install"><span class="ps">$</span><span>curl -fsSL kerf.example/install | sh</span></div>
         </div>
       </div>
       <div class="concept" id="concept" data-design-ignore>Concept work · fictional brand</div>
@@ -249,7 +255,7 @@
 
     <!-- studio:audio:start -->
     <audio id="bgm" src="assets/music/data-glitch.mp3" data-start="0" data-duration="14" data-media-start="0" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":12.5,"v":1},{"t":14,"v":0}]}]}'></audio>
-    <audio id="sfx-01-glitch-3" src="assets/sfx/glitch-3.mp3" data-start="0" data-duration="2.977" data-media-start="0.123" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-01-glitch-3" src="assets/sfx/glitch-3.mp3" data-start="0" data-duration="2.857" data-media-start="0.243" data-track-index="20" data-volume="0.16"></audio>
     <audio id="sfx-02-whoosh" src="assets/sfx/whoosh.mp3" data-start="2.124" data-duration="0.57" data-track-index="21" data-volume="0.34"></audio>
     <audio id="sfx-03-key-press" src="assets/sfx/key-press.mp3" data-start="3.083" data-duration="0.2" data-track-index="20" data-volume="0.24" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.12,"v":1},{"t":0.2,"v":0}]}]}'></audio>
     <audio id="sfx-04-key-press" src="assets/sfx/key-press.mp3" data-start="3.138" data-duration="0.2" data-track-index="21" data-volume="0.2" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.12,"v":1},{"t":0.2,"v":0}]}]}'></audio>
@@ -262,28 +268,26 @@
     <audio id="sfx-11-key-press" src="assets/sfx/key-press.mp3" data-start="3.527" data-duration="0.2" data-track-index="20" data-volume="0.2" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.12,"v":1},{"t":0.2,"v":0}]}]}'></audio>
     <audio id="sfx-12-key-press" src="assets/sfx/key-press.mp3" data-start="3.583" data-duration="0.2" data-track-index="21" data-volume="0.26" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.12,"v":1},{"t":0.2,"v":0}]}]}'></audio>
     <audio id="sfx-13-key-press" src="assets/sfx/key-press.mp3" data-start="3.638" data-duration="0.2" data-track-index="22" data-volume="0.22" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.12,"v":1},{"t":0.2,"v":0}]}]}'></audio>
-    <audio id="sfx-14-key-press" src="assets/sfx/key-press.mp3" data-start="3.694" data-duration="0.2" data-track-index="23" data-volume="0.21" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.12,"v":1},{"t":0.2,"v":0}]}]}'></audio>
-    <audio id="sfx-15-key-press" src="assets/sfx/key-press.mp3" data-start="3.749" data-duration="0.2" data-track-index="20" data-volume="0.25" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.12,"v":1},{"t":0.2,"v":0}]}]}'></audio>
-    <audio id="sfx-16-click" src="assets/sfx/click.mp3" data-start="4.402" data-duration="0.37" data-track-index="20" data-volume="0.36"></audio>
-    <audio id="sfx-17-riser" src="assets/sfx/riser.mp3" data-start="4.45" data-duration="2.2" data-media-start="0.85" data-track-index="21" data-volume="0.26" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":2.12,"v":1},{"t":2.2,"v":0}]}]}'></audio>
-    <audio id="sfx-18-pop" src="assets/sfx/pop.mp3" data-start="6.484" data-duration="0.72" data-track-index="20" data-volume="0.28"></audio>
-    <audio id="sfx-19-pop" src="assets/sfx/pop.mp3" data-start="6.854" data-duration="0.72" data-track-index="21" data-volume="0.22"></audio>
-    <audio id="sfx-20-pop" src="assets/sfx/pop.mp3" data-start="7.354" data-duration="0.72" data-track-index="20" data-volume="0.24"></audio>
-    <audio id="sfx-21-ping" src="assets/sfx/ping.mp3" data-start="7.318" data-duration="1.32" data-track-index="22" data-volume="0.3"></audio>
-    <audio id="sfx-22-sparkle" src="assets/sfx/sparkle.mp3" data-start="8.815" data-duration="1.8" data-track-index="20" data-volume="0.2"></audio>
-    <audio id="sfx-23-whoosh" src="assets/sfx/whoosh.mp3" data-start="9.194" data-duration="0.57" data-track-index="21" data-volume="0.34"></audio>
-    <audio id="sfx-24-ping" src="assets/sfx/ping.mp3" data-start="9.338" data-duration="1.32" data-track-index="22" data-volume="0.2"></audio>
-    <audio id="sfx-25-pop" src="assets/sfx/pop.mp3" data-start="9.784" data-duration="0.72" data-track-index="21" data-volume="0.22"></audio>
-    <audio id="sfx-26-ping" src="assets/sfx/ping.mp3" data-start="9.628" data-duration="1.32" data-track-index="23" data-volume="0.13"></audio>
-    <audio id="sfx-27-ping" src="assets/sfx/ping.mp3" data-start="9.828" data-duration="1.32" data-track-index="24" data-volume="0.12"></audio>
-    <audio id="sfx-28-ping" src="assets/sfx/ping.mp3" data-start="10.028" data-duration="1.32" data-track-index="25" data-volume="0.12"></audio>
-    <audio id="sfx-29-ping" src="assets/sfx/ping.mp3" data-start="10.228" data-duration="1.32" data-track-index="26" data-volume="0.11"></audio>
-    <audio id="sfx-30-click-soft" src="assets/sfx/click-soft.mp3" data-start="10.95" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
-    <audio id="sfx-31-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="11.149" data-duration="0.49" data-track-index="21" data-volume="0.14"></audio>
-    <audio id="sfx-32-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="11.529" data-duration="0.49" data-track-index="20" data-volume="0.26"></audio>
-    <audio id="sfx-33-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="11.737" data-duration="2.263" data-track-index="21" data-volume="0.35"></audio>
-    <audio id="sfx-34-pop" src="assets/sfx/pop.mp3" data-start="12.104" data-duration="0.72" data-track-index="20" data-volume="0.2"></audio>
-    <audio id="sfx-35-sparkle" src="assets/sfx/sparkle.mp3" data-start="12.575" data-duration="1.425" data-track-index="22" data-volume="0.16"></audio>
+    <audio id="sfx-14-click" src="assets/sfx/click.mp3" data-start="4.402" data-duration="0.37" data-track-index="20" data-volume="0.36"></audio>
+    <audio id="sfx-15-riser" src="assets/sfx/riser.mp3" data-start="4.45" data-duration="2.2" data-media-start="0.85" data-track-index="21" data-volume="0.26" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":2.12,"v":1},{"t":2.2,"v":0}]}]}'></audio>
+    <audio id="sfx-16-pop" src="assets/sfx/pop.mp3" data-start="6.484" data-duration="0.72" data-track-index="20" data-volume="0.28"></audio>
+    <audio id="sfx-17-pop" src="assets/sfx/pop.mp3" data-start="6.854" data-duration="0.72" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-18-pop" src="assets/sfx/pop.mp3" data-start="7.354" data-duration="0.72" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-19-ping" src="assets/sfx/ping.mp3" data-start="7.318" data-duration="1.32" data-track-index="22" data-volume="0.3"></audio>
+    <audio id="sfx-20-sparkle" src="assets/sfx/sparkle.mp3" data-start="8.815" data-duration="1.8" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-21-whoosh" src="assets/sfx/whoosh.mp3" data-start="9.194" data-duration="0.57" data-track-index="21" data-volume="0.34"></audio>
+    <audio id="sfx-22-ping" src="assets/sfx/ping.mp3" data-start="9.338" data-duration="1.32" data-track-index="22" data-volume="0.2"></audio>
+    <audio id="sfx-23-pop" src="assets/sfx/pop.mp3" data-start="9.784" data-duration="0.72" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-24-ping" src="assets/sfx/ping.mp3" data-start="9.628" data-duration="1.32" data-track-index="23" data-volume="0.13"></audio>
+    <audio id="sfx-25-ping" src="assets/sfx/ping.mp3" data-start="9.828" data-duration="1.32" data-track-index="24" data-volume="0.12"></audio>
+    <audio id="sfx-26-ping" src="assets/sfx/ping.mp3" data-start="10.028" data-duration="1.32" data-track-index="25" data-volume="0.12"></audio>
+    <audio id="sfx-27-ping" src="assets/sfx/ping.mp3" data-start="10.228" data-duration="1.32" data-track-index="26" data-volume="0.11"></audio>
+    <audio id="sfx-28-click-soft" src="assets/sfx/click-soft.mp3" data-start="10.95" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-29-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="11.149" data-duration="0.49" data-track-index="21" data-volume="0.14"></audio>
+    <audio id="sfx-30-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="11.529" data-duration="0.49" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-31-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="11.737" data-duration="2.263" data-track-index="21" data-volume="0.35" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.509,"v":1},{"t":2.263,"v":0}]}]}'></audio>
+    <audio id="sfx-32-pop" src="assets/sfx/pop.mp3" data-start="12.104" data-duration="0.72" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-33-sparkle" src="assets/sfx/sparkle.mp3" data-start="12.575" data-duration="1.425" data-track-index="22" data-volume="0.16" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.95,"v":1},{"t":1.425,"v":0}]}]}'></audio>
     <!-- studio:audio:end -->
   </div>
   <script>
@@ -297,7 +301,8 @@
       const blinkCursor = (sel, a, b) => { const el = S.$(sel); S.everyFrame((t) => { let o = 0; if (t >= a && t < b) { const k = t - a; o = k < 0.5 ? 1 : Math.floor((k - 0.5) * 2.4) % 2 === 0 ? 0 : 1; } el.style.opacity = o; }); };
 
       // ---- background: the green glow follows the focal point of each scene (never linear)
-      tl.fromTo("#glow", { opacity: 0, scale: 0.9, y: 30 }, { opacity: 0.85, scale: 1, y: 30, duration: 1.4, ease: "glide" }, 0);
+      // frame 0 is never empty black (it is the thumbnail on most players): glow, slab and the first word are already there
+      tl.fromTo("#glow", { opacity: 0.5, scale: 0.9, y: 30 }, { opacity: 0.85, scale: 1, y: 30, duration: 1.4, ease: "glide" }, 0);
       tl.to("#glow", { y: 170, scale: 1.04, duration: 1.2, ease: "move" }, 2.15);
       tl.to("#glow", { opacity: 1, scale: 1.14, duration: 0.5, ease: "settle" }, 7.6);
       tl.to("#glow", { opacity: 0.85, scale: 1, duration: 1.1, ease: "glide" }, 8.25);
@@ -306,7 +311,7 @@
       tl.fromTo("#glow2", { opacity: 0.5 }, { opacity: 1, duration: 9, ease: "glide" }, 0);
 
       // ---- the code slab: dim, tilted and drifting under the hook and the typing; on Enter it turns and lands flat on the 6.6 slam
-      tl.fromTo("#slab-stage", { opacity: 0 }, { opacity: 0.5, duration: 1.2, ease: "glide" }, 0.3);
+      tl.fromTo("#slab-stage", { opacity: 0.35 }, { opacity: 0.5, duration: 1.2, ease: "glide" }, 0);
       S.camera("#slab", [
         [0, { x: 20, y: 150, z: -300, rx: 56, rz: -20, scale: 1.18 }],
         [4.45, { x: -10, y: 110, z: -240, rx: 52, rz: -16, scale: 1.14 }, "glide"],
@@ -314,17 +319,18 @@
       ], { perspective: 1500 });
       tl.to("#slab-stage", { opacity: 1, duration: 1.9, ease: "move" }, 4.55);
       tl.fromTo("#slab-fog", { opacity: 1 }, { opacity: 0, duration: 1.8, ease: "move" }, 4.7);
-      tl.fromTo("#slab-dof", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "glide" }, 5.6);
+      // the lower half goes out of focus as soon as the window grows over it (5.6 left code reading through until 6.4)
+      tl.fromTo("#slab-dof", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "glide" }, 4.55);
 
       // ---- S1 0–2.45 · hook: two words on the music's first two stabs, the green cursor on the third
-      tl.fromTo("#h-a", { yPercent: 108 }, { yPercent: 0, duration: 0.85, ease: "settle" }, 0.14);
+      tl.fromTo("#h-a", { yPercent: 65 }, { yPercent: 0, duration: 0.85, ease: "settle" }, 0); // already rising on frame 0
       tl.fromTo("#h-b", { yPercent: 108 }, { yPercent: 0, duration: 0.85, ease: "settle" }, 0.4);
       blinkCursor("#hcur", 0.9, 2.12);
-      tl.to("#h-a, #h-b", { yPercent: -108, duration: 0.24, ease: "exit", stagger: S.f(1) }, 2.1);
+      tl.to("#h-a, #h-b", { yPercent: -108, duration: 0.24, ease: "exit", stagger: S.f(3) }, 2.1);
 
-      // ---- S2 2.2–4.45 · the terminal lands on the slam; `kernel deploy` types on the strong beat; Enter on the stab
+      // ---- S2 2.2–4.45 · the terminal lands on the slam; `kerf deploy` types on the strong beat; Enter on the stab
       tl.fromTo("#term", { y: 170, scale: 0.94, opacity: 0, filter: "blur(12px)" }, { y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.85, ease: "settle" }, 2.2);
-      S.type("#cmd", 3.1, "kernel deploy", { cps: 18, caret: true, hold: 0.63 });
+      S.type("#cmd", 3.1, "kerf deploy", { cps: 18, caret: true, hold: 0.74 }); // 11 chars land by 3.71; caret holds to the Enter
       S.$("#cmd .st-caret").textContent = ""; // the caret is a drawn block (no glyph → no fallback font)
 
       // ---- S3 4.45–9.27 · the deploy: spinner → drawn tick per line; the build timer counts for real (2.1 s)
@@ -358,7 +364,7 @@
       tl.fromTo("#r4 .ic, #r4 .lab", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.34, ease: "enter" }, 7.6);
       showIn("#r4 .tick", 7.64, 99);
       S.draw("#r4 .tick path", 7.64, { dur: 0.36, ease: "settle" });
-      S.burst("#lburst", 7.68, { dur: 0.7, s0: 0.4, s1: 2.2, o0: 0.85 });
+      S.burst("#lburst", 7.68, { dur: 0.7, s0: 0.4, s1: 1.5, o0: 0.85 }); // s1 1.5: the ring stays inside the window
       // the 8.8 hit: a green scan runs over the code, light sweeps the terminal, the frame glows
       tl.fromTo("#scan", { y: -180 }, { y: 690, duration: 0.75, ease: "move" }, 8.82);
       tl.fromTo("#term-glow", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "enter" }, 8.82);
@@ -366,12 +372,14 @@
       tl.fromTo("#term-halo", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "enter" }, 8.82);
       tl.to("#term-halo", { opacity: 0.35, duration: 0.6, ease: "glide" }, 9.0);
       S.sweep("#term-fx", 8.84, { dur: 0.9 });
-      // the pan down to the world (strong beat 9.27): terminal + slab leave upwards
-      tl.to("#term, #term-halo", { y: -560, opacity: 0, duration: 0.5, ease: "exit" }, 9.24);
-      tl.to("#slab-stage", { y: -560, opacity: 0, duration: 0.5, ease: "exit" }, 9.24);
+      // the camera pans down to the world (strong beat 9.27): ONE rigid move — the terminal and the slab go up a full
+      // frame while the globe comes up from a frame below, same ease, same time, nothing fades (a cross-fade read as a
+      // muddy double exposure, critic 2026-11-08). The dot grid drifts a third of the way: parallax sells the camera.
+      tl.to("#term, #term-halo, #slab-stage", { y: -1080, duration: 0.6, ease: "move" }, 9.24);
+      tl.fromTo("#bg .bg-dots", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px -320px", duration: 0.6, ease: "move" }, 9.24);
 
-      // ---- S4 9.27–11.6 · the dot globe rises; 32 edge nodes light in a wave from the origin; the live URL
-      tl.fromTo("#globe-wrap", { y: 420, scale: 0.9, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.95, ease: "settle" }, 9.27);
+      // ---- S4 9.24–11.6 · the dot globe rises; 32 edge nodes light in a wave from the origin; the live URL
+      tl.fromTo("#globe-wrap", { y: 1080 }, { y: 0, duration: 0.6, ease: "move" }, 9.24);
       // springs overshoot past 1, so blur rides a non-overshooting ease (a negative blur is invalid CSS → stale frame)
       tl.fromTo("#urlpill", { y: 40, scale: 0.95 }, { y: 0, scale: 1, duration: 0.75, ease: "springSoft" }, 9.85);
       tl.fromTo("#urlpill", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "enter" }, 9.85);
@@ -429,13 +437,14 @@
         for (let j = 0; j < i; j++) { const dd = Math.acos(S.clamp(dot3(n.v, order[j].v), -1, 1)); if (dd < bd) { bd = dd; best = order[j]; } }
         n.from = best;
         n.a0 = Math.max(best.t, n.t - 0.3); // the hop leaves its parent only after the parent has lit
-        n.h = 0.03 + 0.14 * Math.min(1, bd / 0.8);
+        n.h = 0.02 + 0.08 * Math.min(1, bd / 0.8); // low arcs: high ones curled into loops near the limb
       });
       const ring = (x, y, r, a, w) => { cx.strokeStyle = `rgba(54,242,139,${a.toFixed(3)})`; cx.lineWidth = w; cx.beginPath(); cx.arc(x, y, r, 0, 6.2832); cx.stroke(); };
       const disc = (x, y, r, style) => { cx.fillStyle = style; cx.beginPath(); cx.arc(x, y, r, 0, 6.2832); cx.fill(); };
       S.everyFrame((t) => {
         if (t < 9.15 || t > 11.95) return;
-        const yaw = yawAt(t), fade = S.clamp((t - 9.27) / 0.55, 0, 1);
+        // the world already exists when the camera reaches it: drawn in 0.25 s while it is still below the frame edge
+        const yaw = yawAt(t), fade = S.clamp((t - 9.2) / 0.25, 0, 1);
         cx.clearRect(0, 0, GWW, GWH);
         // volume + atmosphere
         const gv = cx.createRadialGradient(GX - GR * 0.35, GY - GR * 0.45, GR * 0.1, GX, GY, GR);
@@ -458,8 +467,12 @@
           if (n.origin || t < n.a0) continue;
           const head = mv(S.clamp((t - n.a0) / Math.max(0.05, n.t - n.a0), 0, 1));
           const after = Math.max(0, t - n.t), a = after > 0 ? Math.max(0.24, 0.72 - after * 0.8) : 0.72;
+          // near the limb a lifted arc projects outwards and curls: the lift fades to 0 as either end turns away
+          // (depth z ≤ 0.3 → flat on the surface; full lift from z 0.5; a ramp, so nothing pops as the globe turns)
+          const zEnd = Math.min(projV(n.v, yaw, 1)[2], projV(n.from.v, yaw, 1)[2]);
+          const lift = n.h * S.clamp((zEnd - 0.3) / 0.2, 0, 1);
           const N = 16, pts = [];
-          for (let k = 0; k <= N; k++) { const s = (k / N) * head; pts.push(projV(slerp(n.from.v, n.v, s), yaw, 1 + n.h * Math.sin(Math.PI * s))); }
+          for (let k = 0; k <= N; k++) { const s = (k / N) * head; pts.push(projV(slerp(n.from.v, n.v, s), yaw, 1 + lift * Math.sin(Math.PI * s))); }
           cx.strokeStyle = `rgba(54,242,139,${a.toFixed(3)})`; cx.lineWidth = 2;
           cx.beginPath();
           let pen = false;
@@ -492,11 +505,11 @@
 
       // ---- S5 11.6–14 · lockup (the only springPop of the scene is the mark)
       tl.fromTo("#kmark", { scale: 0.5, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.75, ease: "springPop" }, 11.7);
-      S.chars("#word", 11.78, { stagger: S.f(1.5), dur: 0.6, ease: "settle" });
-      blinkCursor("#wcur", 12.05, 99);
+      S.chars("#word", 11.78, { stagger: S.f(3), dur: 0.55, ease: "settle" }); // 4 letters × 3 frames = 0.3 s group
+      blinkCursor("#wcur", 12.16, 99); // after the last letter starts (11.78 + 3 × 3 f), never floating past a gap
       S.words("#tag1", 11.98, { stagger: S.f(3), blur: 8, y: 26 });
       S.words("#tag2", 12.12, { stagger: S.f(3), blur: 8, y: 26 });
-      tl.fromTo("#npm", { opacity: 0, y: 22, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "enter" }, 12.22);
+      tl.fromTo("#install", { opacity: 0, y: 22, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "enter" }, 12.22);
       tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 12.4);
       S.sweep("#kmark", 12.6, { dur: 0.8 });
 

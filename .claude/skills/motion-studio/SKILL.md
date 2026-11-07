@@ -24,7 +24,7 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 5. Sound: `piece.json` → `sound` (music from `C:/Users/Zubayer Nibir/VideoWork/studio-music/*.mp3` with its
    `.beats.json`; voice; cues at visual-hit times) → `node tools/studio/sound.mjs projects/<name>`.
 6. `node tools/studio/check.mjs projects/<name> --at=<held moments>` → ✓, then LOOK at every contact sheet.
-7. `node tools/studio/render-queue.mjs <name> [more…]` (detached for batches) → `renders/portfolio/<CODE>_<Brand>.mp4`
+7. `node tools/studio/render-queue.mjs <name> [more…] --detach` (own process: survives a session restart) → `renders/portfolio/<CODE>_<Brand>.mp4`
    (+ `renders/<name>/<stamp>/` with qc.json, thumbnail, GIF). Then `node tools/contact-sheet.mjs <mp4> --every=1`
    and read it (§0d.9). Other aspect ratios: a separate composition per aspect for designed layouts (the default);
    `finish.mjs --formats=…` "fit" only in a hurry.
@@ -80,6 +80,17 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
   `Studio.springFn(…)`. check.mjs now stops on those names (proved on the old page).
 - Furniture labels ("Concept work · fictional brand") use class `concept` (or carry data-design-ignore): check.mjs
   exempts them from the ≥ 24 px rule.
+- **Honesty guard (2026-11-08):** check.mjs fails a portfolio page (pf-* or a "fictional" client line) that shows a
+  real domain (use `<name>.example`) or an install command naming a package (`curl -fsSL <brand>.example/install | sh`,
+  or a made-up name listed in piece.json `honesty.checked` after `npm view` 404s); client pieces only warn. It warns
+  when piece.json has no `nameCheck`: search "<brand> <industry>" BEFORE building — CD1 "Kernel" typed
+  `kernel deploy`, the real CLI of Kernel (onkernel.com), and was renamed "Kerf" (folder pf-cd1-kerf). Known
+  same-kind overlaps in the first batch, left for Talha to decide: AI1 Operator (OpenAI Operator), CL1 Forge
+  (Laravel Forge), HX1 Kindred Health (Kindred Healthcare; its voice-over says the name), MP1 Cargoline (CargoLine).
+- `check.mjs --static` runs only the static rules (no Chrome, under a second) — use it while editing.
+- 3D render time varies a lot: GH1 (10 s, three.js glass) took 918 s on 2026-11-07 while six agents shared the
+  laptop, and 109 s on 2026-11-08 with only the render queue running (hyperframes reported `browserGpuMode →
+  hardware`, ANGLE on the UHD 620). Cause not proven — render 3D pieces when the machine is quiet.
 
 ## 4. After every client job
 LESSONS.md row per feedback; new reusable code into tools/studio (with a header + proof); this skill updated;

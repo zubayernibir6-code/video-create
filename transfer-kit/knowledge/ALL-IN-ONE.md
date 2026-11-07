@@ -1,6 +1,6 @@
 # Video Create knowledge pack (all files in one)
 
-Made 2026-11-07 from commit 4743f1e 2026-11-05. Each file starts at a "<<<<< FILE: name >>>>>" line. Read 00-STUDIO-RULES.md first.
+Made 2026-11-07 from commit 59a7af2 2026-11-08. Each file starts at a "<<<<< FILE: name >>>>>" line. Read 00-STUDIO-RULES.md first.
 
 <<<<< FILE: 00-STUDIO-RULES.md >>>>>
 
@@ -936,6 +936,37 @@ claude.ai, ChatGPT, Facebook-এর মতো সাইট নিয়মে �
 | MG1 | সিগন্যাল কোর | কিছুই না | ৬ সেকেন্ড, 4K ৬০ fps: আলোর রেখা সোনালি সর্পিল বেয়ে আসে, ৩৪টা বিন্দু সূর্যমুখীর নকশায় স্প্রিংয়ে ফোটে, শক্তি কেন্দ্রে জমে, ষড়ভুজ খোলস খট করে বসে যায়। শব্দসহ আর শব্দ ছাড়া, দুটোই আছে | বেটা |
 | MG2 | উন্নতির রেখা | কিছুই না | ৬ সেকেন্ড, 4K ৬০ fps: উজ্জ্বল রেখা নিচে থেকে উঠতে থাকে, ৯টা বিন্দুর উচ্চতা ফিবোনাচি সংখ্যা (১, ২, ৩, ৫ … ৫৫), গতি বাড়তে বাড়তে রেখা চূড়ায় পৌঁছায়। ক্যামেরা রেখার মাথার পিছু নেয়, তারপর পিছিয়ে পুরো ছবি দেখায়। চূড়ায় ঝলক আর ষড়ভুজ চিহ্ন, নিচের বিন্দুগুলো ঢেউয়ের মতো একবার লাফায়। ডান দিক ফাঁকা থাকে, সেখানে শিরোনাম বসানো যায়। শব্দসহ আর শব্দ ছাড়া, দুটোই আছে | বেটা |
 
+<!-- studio:start -->
+### মোশন স্টুডিও: ক্লায়েন্টের জন্য, কোডে আঁকা (২০২৬-১১-০৭ থেকে)
+
+ক্লায়েন্ট বা আপনি শুধু কোড বলবেন। দাম আর বিস্তারিত: `docs/business/CATALOG.md`। স্কিল: `motion-studio`।
+
+| কোড | নাম | দেখতে কেমন | কার জন্য | অবস্থা |
+| --- | --- | --- | --- | --- |
+| PL1 | প্রোডাক্ট লঞ্চ ফিল্ম | The hero video for a launch day: a big kinetic-type promise, the product UI floating in 3D space with a slow camera, three benefit beats, a light sweep and a logo lockup. Keynote-style. | Funded SaaS / AI startups launching or relaunching; Product Hunt and X launch posts; the landing-page hero. | বেটা (নমুনা: `renders/portfolio/PL1_Lumen.mp4`) |
+| FD1 | নতুন ফিচারের ঘোষণা | One new feature in 15 seconds: a hook line, the cursor walks to the feature, a smooth punch-in on the UI moment, the result, a CTA. | SaaS teams that ship every week and post updates on X / LinkedIn; changelog emails. | বেটা (নমুনা: `renders/portfolio/FD1_Relay.mp4`) |
+| UT1 | থ্রিডি অ্যাপ-ভ্রমণ | The app's screens as glass-edged panels in 3D space; the camera dollies from panel to panel (dashboard → pipeline → report) with parallax and depth of field. | Product pages, sales decks, investor demos — when the product has 3–5 key screens. | বেটা (নমুনা: `renders/portfolio/UT1_AtlasCRM.mp4`) |
+| AP1 | অ্যাপ স্টোরের প্রিভিউ | A vertical phone-first preview: taps, swipes and screen changes inside a phone, short benefit captions, made to the App Store / Play Store preview limits (15–30 s). | Mobile app makers — App Store and Google Play listings, Reels and TikTok ads. | বেটা (নমুনা: `renders/portfolio/AP1_Habitly.mp4`) |
+| CL1 | রিলিজ নোটের ভিডিও | "What's new in v3.0" — 4–6 updates in quick cuts: version stamp, icon + one line + a tiny UI snippet per update, a closing lockup. | Dev tools and SaaS with monthly releases; community and newsletter posts. | বেটা (নমুনা: `renders/portfolio/CL1_Forge.mp4`) |
+| IH1 | ইন্টিগ্রেশন দেখানো | The product as a glowing hub; app icons orbit in, beams connect them, data packets travel, a count of integrations lands. | Automation, API and platform companies announcing integrations or a marketplace. | বেটা (নমুনা: `renders/portfolio/IH1_Nimbus.mp4`) |
+| AI1 | এআই এজেন্টের ডেমো | An AI agent at work: a prompt is typed, a labelled agent cursor clicks through a clean UI, status chips tick from 'working' to 'done', the result lands. The 2026 launch format for AI products. | AI startups showing an agent or copilot doing a real task; launch posts on X. | বেটা (নমুনা: `renders/portfolio/AI1_Operator.mp4`) |
+| HX1 | কীভাবে কাজ করে — ব্যাখ্যা | A voiced 45–90 s explainer: the problem, the turn, three simple steps with friendly flat illustration and icons, proof, CTA. Script, voice-over and music included. | Landing pages, onboarding, sales calls — health, fintech, B2B services that need clarity. | বেটা (নমুনা: `renders/portfolio/HX1_KindredHealth.mp4`) |
+| WF1 | কাজের ধাপের ডায়াগ্রাম | A process as a living diagram: nodes draw in, packets travel the paths, a branch splits on a condition, failures retry, success lights up the end. | Automation, fintech ops, logistics and B2B tools whose value is the workflow. | বেটা (নমুনা: `renders/portfolio/WF1_Ledgerly.mp4`) |
+| IA1 | থ্রিডি স্তর-ভাগ ডায়াগ্রাম | Real 3D: the system's layers (edge, API, compute, data, encryption) float apart in an isometric stack with labels, data runs through them, they lock back together. | Infrastructure, security and developer platforms explaining 'how it is built'. | বেটা (নমুনা: `renders/portfolio/IA1_Vaultline.mp4`) |
+| DS1 | ডেটার গল্প | Bloomberg / FT-style: a line chart draws itself, the key point is annotated, numbers count up, a comparison resolves — calm editorial type, one accent colour. | Research firms, fintech, reports, investor letters, LinkedIn thought leadership. | বেটা (নমুনা: `renders/portfolio/DS1_MeridianResearch.mp4`) |
+| KP1 | বিনিয়োগকারীর জন্য মেট্রিক্স | A funding or milestone announcement: big KPI count-ups (ARR, growth, customers, countries), a growth curve, a donut, a lockup — confident and exact. | Startups announcing a round or a milestone; annual reviews; investor updates. | বেটা (নমুনা: `renders/portfolio/KP1_Northwind.mp4`) |
+| MP1 | ম্যাপের গল্প | A world map: hubs light up, routes draw as arcs, a counter runs, the camera pushes into a region — for reach, logistics and expansion stories. | Logistics, travel, global SaaS expansion, NGOs showing reach. | বেটা (নমুনা: `renders/portfolio/MP1_Cargoline.mp4`) |
+| NW1 | সংবাদ-ধাঁচের ব্যাখ্যা | Vox-style: paper textures, headline cards, highlighter strokes over key lines, a document zoom, a hand-drawn arrow, a voiced narration on a real topic. | Media brands, newsletters, YouTube explainer channels, think tanks. | পরিকল্পনা |
+| LG1 | থ্রিডি লোগো স্টিং | A 5–7 s logo reveal in real 3D: beveled letters flip up, light runs across the bevels, one sub-bass hit and a sparkle on the lock. | Every brand: video intros/outros, YouTube channels, event openers, ads. | বেটা (নমুনা: `renders/portfolio/LG1_Orbit.mp4`) |
+| KT1 | নাচন্ত লেখার ম্যানিফেস্টো | A brand belief told in big moving type cut to the beat: words slam, split, swap and morph; colour blocks wipe; it ends on the brand line. | Brand campaigns, hiring videos, event openers, social posts with no footage. | বেটা (নমুনা: `renders/portfolio/KT1_Driftwood.mp4`) |
+| BS1 | ব্র্যান্ড-গাইডলাইনের অ্যানিমেশন | The identity animated: logo construction, palette swatches, type specimen, pattern and real applications (cards, app icon, signage) — a living brand book. | Branding agencies presenting work; companies launching a rebrand. | বেটা (নমুনা: `renders/portfolio/BS1_Solace.mp4`) |
+| SA1 | খাড়া সোশ্যাল বিজ্ঞাপন | A 15 s vertical ad built for the feed: the hook in the first second, three benefit beats, a big CTA, voice-over and captions inside the platform safe zones. | Performance marketers and DTC / app brands running Meta, TikTok and YouTube Shorts ads. | বেটা (নমুনা: `renders/portfolio/SA1_Pocket.mp4`) |
+| EV1 | ইভেন্ট বা ওয়েবিনারের প্রোমো | Date, venue or link, speakers as clean monogram cards (no faces needed), the agenda in three beats, a countdown and a register button. | Conferences, webinars, launches, community meetups, workshops. | বেটা (নমুনা: `renders/portfolio/EV1_BuildersSummit.mp4`) |
+| GH1 | থ্রিডি কাচের হিরো টাইটেল | Real 3D glass: a refracting glass form turns in front of a giant headline so the type bends through it, then the tagline lands — the most premium 8–10 seconds a brand can open with. | Landing-page heroes, keynote openers, premium product teasers. | বেটা (নমুনা: `renders/portfolio/GH1_Prism.mp4`) |
+| CD1 | ডেভেলপার টুলের লঞ্চ | Syntax-highlighted code on a lit 3D slab rotating into a readable rest, a terminal run, the result — for developer products. | Dev tools, APIs, SDKs, open-source launches. | পরিকল্পনা |
+| LT1 | লোয়ার-থার্ড ও টাইটেল প্যাক | A matched set of name bars, section titles, callouts and end cards on a transparent background, in the client's brand, ready to drop on any edit. | YouTubers, podcasts, corporate video teams, event streams. | পরিকল্পনা |
+<!-- studio:end -->
+
 ### তৈরি ভিডিও থেকে, সব প্ল্যাটফর্মের জন্য (রিলিজ)
 
 | কোড | নাম | কী লাগে | দেখতে কেমন | অবস্থা |
@@ -1164,7 +1195,7 @@ full rights to the final video transfer to you on final payment.
 
 | বাধা | কেন হয় | সমাধান |
 | --- | --- | --- |
-| কোনো রিভিউ নেই | নতুন | প্রথম ৩টা কাজ কম দামে, বদলে নামসহ রিভিউ। ২০টা কনসেপ্ট নমুনা (আজ রাতের কাজ)। Upwork আর Contra থেকে প্ল্যাটফর্মের রিভিউ |
+| কোনো রিভিউ নেই | নতুন | প্রথম ৩টা কাজ কম দামে, বদলে নামসহ রিভিউ। ২৩টা কনসেপ্ট নমুনা (৭–৮ নভেম্বর রাতের কাজ)। Upwork আর Contra থেকে প্ল্যাটফর্মের রিভিউ |
 | **চাকরির চুক্তি** | শাহীন স্কুলে চাকরি করছেন | চুক্তিতে বাইরের কাজ নিষেধ আছে কি না পড়ে নেবেন। দরকারে লিখিত অনুমতি |
 | ইংরেজিতে কথা | মাতৃভাষা নয় | Claude প্রস্তাব, মেইল আর উত্তর লেখে। Loom-এ ভিডিও মেসেজ। কল কম, লিখিত যোগাযোগ বেশি |
 | সময়ের পার্থক্য | আমেরিকা ১০–১২ ঘণ্টা পিছিয়ে | দিনে দুটো নির্দিষ্ট সময়ে উত্তর (সকাল আর রাত)। বেশিরভাগ যোগাযোগ লিখিত |
@@ -3312,7 +3343,7 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 5. Sound: `piece.json` → `sound` (music from `C:/Users/Zubayer Nibir/VideoWork/studio-music/*.mp3` with its
    `.beats.json`; voice; cues at visual-hit times) → `node tools/studio/sound.mjs projects/<name>`.
 6. `node tools/studio/check.mjs projects/<name> --at=<held moments>` → ✓, then LOOK at every contact sheet.
-7. `node tools/studio/render-queue.mjs <name> [more…]` (detached for batches) → `renders/portfolio/<CODE>_<Brand>.mp4`
+7. `node tools/studio/render-queue.mjs <name> [more…] --detach` (own process: survives a session restart) → `renders/portfolio/<CODE>_<Brand>.mp4`
    (+ `renders/<name>/<stamp>/` with qc.json, thumbnail, GIF). Then `node tools/contact-sheet.mjs <mp4> --every=1`
    and read it (§0d.9). Other aspect ratios: a separate composition per aspect for designed layouts (the default);
    `finish.mjs --formats=…` "fit" only in a hurry.
@@ -3351,6 +3382,34 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 - Long build-up SFX: land the PEAK on the hit (manifest `peak_s`: whoosh-cinematic 2.5 s, riser 3.0 s).
 - `hyperframes snapshot --describe` uses the paid Gemini key unless `--describe false` (check.mjs passes it).
 - Render speed here: PL1 (30 s, CSS 3D, 30 fps) took 312 s ≈ 10 s per second of video. One render at a time.
+- Custom agent types (`.claude/agents/*.md`) and named workflows are loaded when a session STARTS. In the session
+  that created or edited them: run the workflow by path, `Workflow({scriptPath: "D:\\Video Create\\.claude\\workflows\\studio-batch.js", args: …})`
+  — the name resolves to the old cached copy, and `agentType: 'studio-builder'` throws "not found" (the workflow now
+  falls back to a default subagent that reads the role file).
+- Several render queues may run at once (each waits for the render slot); queue.json is appended, never overwritten.
+- 3D (three.js) pieces: copy the pattern of `projects/pf-gh1-prism` / `pf-lg1-orbit` / `pf-ia1-vaultline` — a `<head>`
+  script registers `window.__hf.buildReady`, the scene module resolves it after frame 0 is drawn; the scene renders
+  inside `S.everyFrame(t => …)` (no requestAnimationFrame); an `hf-seek` listener redraws; `tl.set({}, {}, DUR)` pins
+  the length; registry blocks are ported into index.html and their CDN imports removed. `hyperframes check` may say
+  "did not become render-ready within 3000 ms" (shader compile on the UHD 620) and still pass. Measured: GH1 10 s in
+  918 s, LG1 6 s in 177 s.
+- **Never name the ease "spring"** (or hold / wiggle / custom): the HyperFrames runtime registers its own eases with
+  those names after load, so "spring" played LINEAR in every render of the first batch (found by builder A3; 14 pages
+  fixed and 11 pieces re-rendered). Use `houseSpring` (same k170/c14 curve), springSoft, springPop or pass
+  `Studio.springFn(…)`. check.mjs now stops on those names (proved on the old page).
+- Furniture labels ("Concept work · fictional brand") use class `concept` (or carry data-design-ignore): check.mjs
+  exempts them from the ≥ 24 px rule.
+- **Honesty guard (2026-11-08):** check.mjs fails a portfolio page (pf-* or a "fictional" client line) that shows a
+  real domain (use `<name>.example`) or an install command naming a package (`curl -fsSL <brand>.example/install | sh`,
+  or a made-up name listed in piece.json `honesty.checked` after `npm view` 404s); client pieces only warn. It warns
+  when piece.json has no `nameCheck`: search "<brand> <industry>" BEFORE building — CD1 "Kernel" typed
+  `kernel deploy`, the real CLI of Kernel (onkernel.com), and was renamed "Kerf" (folder pf-cd1-kerf). Known
+  same-kind overlaps in the first batch, left for Talha to decide: AI1 Operator (OpenAI Operator), CL1 Forge
+  (Laravel Forge), HX1 Kindred Health (Kindred Healthcare; its voice-over says the name), MP1 Cargoline (CargoLine).
+- `check.mjs --static` runs only the static rules (no Chrome, under a second) — use it while editing.
+- 3D render time varies a lot: GH1 (10 s, three.js glass) took 918 s on 2026-11-07 while six agents shared the
+  laptop, and 109 s on 2026-11-08 with only the render queue running (hyperframes reported `browserGpuMode →
+  hardware`, ANGLE on the UHD 620). Cause not proven — render 3D pieces when the machine is quiet.
 
 ## 4. After every client job
 LESSONS.md row per feedback; new reusable code into tools/studio (with a header + proof); this skill updated;
@@ -3805,8 +3864,8 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
 3. Author `index.html`: scenes as `<section class="scene clip" data-start data-duration data-track-index>`, all motion
    on the ONE timeline from `Studio.init`, ending with `window.__timelines["main"] = S.done().tl;`.
 4. Sound: fill `piece.json` → `sound.music` (track from `C:/Users/Zubayer Nibir/VideoWork/studio-music/*.mp3`; read its
-   `.beats.json` for `strong` beats and `drops` and put your hero moments ON them — set `music.from` so a drop lands on
-   your reveal) and `sound.cues` (`t` = the VISUAL hit; the tool subtracts each file's lead-in / lands build-ups on their
+   `.beats.json`: `kicks` (the real kick drum, every `kickInterval` s) for cuts and slams, `drops` for the hero reveal
+   — set `music.from` so a drop lands on your reveal; `strong` is the detector's guess and can sit off the downbeat) and `sound.cues` (`t` = the VISUAL hit; the tool subtracts each file's lead-in / lands build-ups on their
    peak). Then `node tools/studio/sound.mjs projects/<p>`. Every scene change gets a whoosh, UI events quiet ticks
    (click 0.28–0.35), reveals a pop/ping/sparkle, hero lands an impact. No 1.5 s stretch without any sound.
 5. `node tools/studio/check.mjs projects/<p> --at=<the held moment of EVERY shot + mid-moves>` → must end
@@ -3831,7 +3890,7 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
   1:1: 6 % margin). Decorative layers carry `data-design-ignore data-layout-ignore`; intentional text-over-text layering
   gets `data-layout-allow-overlap` on the specific text element.
 - **Motion design**: vary eases by role (studio.js names: `settle` hero moves, `enter` entrances, `move` between places,
-  `exit` exits ≤ 0.7× the entrance, `glide` drifts, `snap` whips; springs `spring` / `springSoft` / `springPop` —
+  `exit` exits ≤ 0.7× the entrance, `glide` drifts, `snap` whips; springs `houseSpring` / `springSoft` / `springPop` —
   ONE springPop per scene at most). Stagger 3–8 frames (`S.f(n)`), total stagger ≤ 0.6 s. Start the first move 0.1–0.3 s
   in. The element that moves first is the most important. Build / breathe / resolve inside every scene; something
   changes every 2–3 s; no still picture + silence ≥ 1.5 s. ≤ 3 flashes per second.
@@ -3840,14 +3899,33 @@ Workspace: `D:\Video Create` (Windows, Git Bash). Always start every Bash comman
   carries the hierarchy.
 - **Honesty**: every brand is fictional (concept work). No real company logos or names, no real people, no AI faces,
   no fake testimonials with names. Put a small "Concept work · fictional brand" furniture label on the end card
-  (15 px mono, ≥ 0.6 alpha). Any fact stated as true about the real world must BE true.
+  (15 px mono, ≥ 0.6 alpha). Any fact stated as true about the real world must BE true. Install commands, URLs and
+  handles use reserved names (`*.example`); never a real package or domain a viewer could copy and run —
+  `check.mjs` now FAILS a portfolio page that shows a real domain or an install command naming a package (allow a
+  made-up name you looked up with piece.json `honesty.checked`). **Name check first:** search "<brand> <industry>"
+  and write the result into piece.json `nameCheck`; a famous product of the same kind with the same name is a
+  rename (CD1 "Kernel" typed `kernel deploy` — the real CLI command of Kernel, a developer company → "Kerf").
 - **Bengali** (if any): no letter-spacing, split by words or lines only, Hind Siliguri / Baloo Da 2.
+- **Kit notes from the first batch (2026-11-07):** stack tightly-leaded display lines in ONE flex column (absolutely
+  placed slam lines trip `content_overlap` on Anton/Baloo's tall line boxes); `S.type(…, { preroll: 0 })` when lines
+  type one after another; `S.sweep(…, { color, blend })` for light looks (it clips itself — no overflow on the host);
+  `S.count` writes into its own `.st-num` span; 3D pieces follow `projects/pf-gh1-prism` (buildReady + per-frame render).
+- **Reserved class names** (studio.css styles them — do not reuse them for your own elements): `scene layer center
+  stage3d cam plane display h1 h2 h3 body small kicker mono tnum accent grad-text card raised glass chip dot btn
+  hairline icon bg-grid bg-dots glow browser bar url view phone screen island sweep burst flash` (a swatch named
+  `.chip` became a 40 px pill on BS1).
+- **Contrast is sampled at five moments** — 1 s, the end − 1 s and three evenly between (e.g. 1/5/9/13/17 s for 18 s):
+  a text mid-fade at one of them fails WCAG; move the fade a little.
 
 ## 4. Machine etiquette (several agents share one laptop)
 - Heavy steps already queue through `tools/studio/slot.mjs` (max 2 Chromes). Never start `hyperframes preview`, a
   render, or several checks at once. Snapshots: ≤ 14 times per call.
 - Work only inside your own project folders. Do not edit `tools/studio/*` — if the kit has a bug, describe it in your
   final reply (the lead fixes the kit for everyone). Do not commit.
+- **More kit notes (2026-11-08):** text stacked inside a ROTATED card needs extra line spacing for `content_overlap`
+  (it measures unrotated boxes; Playfair's box is 1.333 em → line-height ≥ 1.34); avoid large `filter: blur()` on
+  big panels as an entrance (snapshots can show a stale blur — use size/position), blur only small text reveals;
+  ASR word files can drop a whole sentence — check vo.words.json against script.txt before syncing.
 
 <<<<< END OF FILE: studio-AGENT-BRIEF.md >>>>>
 
@@ -3897,6 +3975,11 @@ Numbers: docs/business/research/R3-trends-craft.md §8 (Material 3, Carbon, Flue
   the music fades out by the end (no hard stop); voice (if any) is clear over the music.
 **Honesty**
 - No real brand logos or names, no real or AI faces, no fake named testimonials; real-world facts are true.
+- Commands, URLs and handles a viewer could copy use reserved names (`*.example` domains, made-up packages checked
+  to NOT exist): `npm i -g kernel` on CD1 named a real, unrelated npm package (critic, 2026-11-08). Machine-checked
+  since 2026-11-08: check.mjs fails a real on-screen domain or an install command naming a package on portfolio pieces.
+- The brand name is not a famous product of the same kind (piece.json `nameCheck` records the search): CD1's
+  "Kernel" typed `kernel deploy`, the real CLI of Kernel (onkernel.com) → renamed "Kerf".
 
 ## C. Verdict
 - **ship** — all A pass, no B item fails.
@@ -3945,268 +4028,1255 @@ studio-pulse; summary reveal (≈5 s) on a strong beat; click on the button, pop
   "updated": "2026-11-07",
   "note": "The Motion Studio service catalog. A client (or Talha) names a CODE; tools/studio/new-piece.mjs takes its defaults from here; the portfolio page and the Bengali guide (docs/business/CATALOG.md) are made from this file. Prices: USD for international clients, BDT for local ones — research basis in docs/business/research/R1-market-pricing.md and R2-clients-payments-bd.md (2026-11-07). Every sample is CONCEPT work for a fictional brand and must be labelled so.",
   "families": [
-    { "id": "product", "name": "Product & SaaS", "bn": "প্রোডাক্ট ও SaaS" },
-    { "id": "explain", "name": "Explainers", "bn": "ব্যাখ্যা ভিডিও" },
-    { "id": "data", "name": "Data & Editorial", "bn": "ডেটা ও সংবাদ-ধাঁচ" },
-    { "id": "brand", "name": "Brand", "bn": "ব্র্যান্ড" },
-    { "id": "social", "name": "Social & Ads", "bn": "সোশ্যাল ও বিজ্ঞাপন" },
-    { "id": "premium3d", "name": "3D & Premium", "bn": "থ্রিডি ও প্রিমিয়াম" },
-    { "id": "footage", "name": "Footage Editing", "bn": "ফুটেজ এডিটিং" },
-    { "id": "packs", "name": "Packages & Retainers", "bn": "প্যাকেজ ও মাসিক চুক্তি" }
+    {
+      "id": "product",
+      "name": "Product & SaaS",
+      "bn": "প্রোডাক্ট ও SaaS"
+    },
+    {
+      "id": "explain",
+      "name": "Explainers",
+      "bn": "ব্যাখ্যা ভিডিও"
+    },
+    {
+      "id": "data",
+      "name": "Data & Editorial",
+      "bn": "ডেটা ও সংবাদ-ধাঁচ"
+    },
+    {
+      "id": "brand",
+      "name": "Brand",
+      "bn": "ব্র্যান্ড"
+    },
+    {
+      "id": "social",
+      "name": "Social & Ads",
+      "bn": "সোশ্যাল ও বিজ্ঞাপন"
+    },
+    {
+      "id": "premium3d",
+      "name": "3D & Premium",
+      "bn": "থ্রিডি ও প্রিমিয়াম"
+    },
+    {
+      "id": "footage",
+      "name": "Footage Editing",
+      "bn": "ফুটেজ এডিটিং"
+    },
+    {
+      "id": "packs",
+      "name": "Packages & Retainers",
+      "bn": "প্যাকেজ ও মাসিক চুক্তি"
+    }
   ],
   "services": [
     {
-      "code": "PL1", "family": "product", "name": "Product Launch Film", "bn": "প্রোডাক্ট লঞ্চ ফিল্ম",
+      "code": "PL1",
+      "family": "product",
+      "name": "Product Launch Film",
+      "bn": "প্রোডাক্ট লঞ্চ ফিল্ম",
       "what": "The hero video for a launch day: a big kinetic-type promise, the product UI floating in 3D space with a slow camera, three benefit beats, a light sweep and a logo lockup. Keynote-style.",
       "bestFor": "Funded SaaS / AI startups launching or relaunching; Product Hunt and X launch posts; the landing-page hero.",
-      "aspects": ["16x9", "1x1", "9x16"], "defaultDuration": 30, "durationRange": [30, 60],
-      "music": "cinematic-reveal", "fonts": ["Geist", "GeistMono"],
-      "price": { "starter": 1200, "standard": 2500, "premium": 4500, "bdt": "৳1,20,000–3,50,000" },
-      "turnaround": "5–7 working days", "includes": ["16:9 master", "1:1 + 9:16 cut-downs", "15 s teaser", "captions file", "2 revision rounds"],
-      "references": ["Apple product reveal films", "Linear and Vercel launch videos", "Stripe Sessions openers"],
-      "sample": { "project": "pf-pl1-lumen", "brand": "Lumen", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1",
+        "9x16"
+      ],
+      "defaultDuration": 30,
+      "durationRange": [
+        30,
+        60
+      ],
+      "music": "cinematic-reveal",
+      "fonts": [
+        "Geist",
+        "GeistMono"
+      ],
+      "price": {
+        "starter": 1200,
+        "standard": 2500,
+        "premium": 4500,
+        "bdt": "৳1,20,000–3,50,000"
+      },
+      "turnaround": "5–7 working days",
+      "includes": [
+        "16:9 master",
+        "1:1 + 9:16 cut-downs",
+        "15 s teaser",
+        "captions file",
+        "2 revision rounds"
+      ],
+      "references": [
+        "Apple product reveal films",
+        "Linear and Vercel launch videos",
+        "Stripe Sessions openers"
+      ],
+      "sample": {
+        "project": "pf-pl1-lumen",
+        "brand": "Lumen",
+        "status": "planned"
+      }
     },
     {
-      "code": "FD1", "family": "product", "name": "Feature Drop", "bn": "নতুন ফিচারের ঘোষণা",
+      "code": "FD1",
+      "family": "product",
+      "name": "Feature Drop",
+      "bn": "নতুন ফিচারের ঘোষণা",
       "what": "One new feature in 15 seconds: a hook line, the cursor walks to the feature, a smooth punch-in on the UI moment, the result, a CTA.",
       "bestFor": "SaaS teams that ship every week and post updates on X / LinkedIn; changelog emails.",
-      "aspects": ["16x9", "1x1"], "defaultDuration": 15, "durationRange": [10, 20],
-      "music": "studio-pulse", "fonts": ["Inter", "JetBrainsMono"],
-      "price": { "starter": 450, "standard": 900, "premium": 1500, "bdt": "৳40,000–90,000" },
-      "turnaround": "2–3 working days", "includes": ["16:9 + 1:1", "captions", "1 revision round"],
-      "references": ["Linear changelog videos", "Raycast feature clips", "Notion release clips"],
-      "sample": { "project": "pf-fd1-relay", "brand": "Relay", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1"
+      ],
+      "defaultDuration": 15,
+      "durationRange": [
+        10,
+        20
+      ],
+      "music": "studio-pulse",
+      "fonts": [
+        "Inter",
+        "JetBrainsMono"
+      ],
+      "price": {
+        "starter": 450,
+        "standard": 900,
+        "premium": 1500,
+        "bdt": "৳40,000–90,000"
+      },
+      "turnaround": "2–3 working days",
+      "includes": [
+        "16:9 + 1:1",
+        "captions",
+        "1 revision round"
+      ],
+      "references": [
+        "Linear changelog videos",
+        "Raycast feature clips",
+        "Notion release clips"
+      ],
+      "sample": {
+        "project": "pf-fd1-relay",
+        "brand": "Relay",
+        "status": "planned"
+      }
     },
     {
-      "code": "UT1", "family": "product", "name": "3D UI Tour", "bn": "থ্রিডি অ্যাপ-ভ্রমণ",
+      "code": "UT1",
+      "family": "product",
+      "name": "3D UI Tour",
+      "bn": "থ্রিডি অ্যাপ-ভ্রমণ",
       "what": "The app's screens as glass-edged panels in 3D space; the camera dollies from panel to panel (dashboard → pipeline → report) with parallax and depth of field.",
       "bestFor": "Product pages, sales decks, investor demos — when the product has 3–5 key screens.",
-      "aspects": ["16x9"], "defaultDuration": 25, "durationRange": [20, 45],
-      "music": "bright-future", "fonts": ["Manrope", "JetBrainsMono"],
-      "price": { "starter": 900, "standard": 1800, "premium": 3200, "bdt": "৳90,000–2,50,000" },
-      "turnaround": "4–6 working days", "includes": ["16:9 master", "1:1 cut-down", "2 revision rounds"],
-      "references": ["Apple macOS feature films", "Framer site intros", "Arc browser launch"],
-      "sample": { "project": "pf-ut1-atlas", "brand": "Atlas CRM", "status": "planned" }
+      "aspects": [
+        "16x9"
+      ],
+      "defaultDuration": 25,
+      "durationRange": [
+        20,
+        45
+      ],
+      "music": "bright-future",
+      "fonts": [
+        "Manrope",
+        "JetBrainsMono"
+      ],
+      "price": {
+        "starter": 900,
+        "standard": 1800,
+        "premium": 3200,
+        "bdt": "৳90,000–2,50,000"
+      },
+      "turnaround": "4–6 working days",
+      "includes": [
+        "16:9 master",
+        "1:1 cut-down",
+        "2 revision rounds"
+      ],
+      "references": [
+        "Apple macOS feature films",
+        "Framer site intros",
+        "Arc browser launch"
+      ],
+      "sample": {
+        "project": "pf-ut1-atlas",
+        "brand": "Atlas CRM",
+        "status": "planned"
+      }
     },
     {
-      "code": "AP1", "family": "product", "name": "App Store Preview", "bn": "অ্যাপ স্টোরের প্রিভিউ",
+      "code": "AP1",
+      "family": "product",
+      "name": "App Store Preview",
+      "bn": "অ্যাপ স্টোরের প্রিভিউ",
       "what": "A vertical phone-first preview: taps, swipes and screen changes inside a phone, short benefit captions, made to the App Store / Play Store preview limits (15–30 s).",
       "bestFor": "Mobile app makers — App Store and Google Play listings, Reels and TikTok ads.",
-      "aspects": ["9x16"], "defaultDuration": 20, "durationRange": [15, 30],
-      "music": "bright-future", "fonts": ["SpaceGrotesk", "Inter"],
-      "price": { "starter": 600, "standard": 1200, "premium": 2500, "bdt": "৳50,000–1,50,000" },
-      "turnaround": "3–5 working days", "includes": ["9:16 store spec", "a 6 s bumper", "2 revision rounds"],
-      "references": ["Apple App Store featured app previews", "Duolingo and Headspace store videos"],
-      "sample": { "project": "pf-ap1-habitly", "brand": "Habitly", "status": "planned" }
+      "aspects": [
+        "9x16"
+      ],
+      "defaultDuration": 20,
+      "durationRange": [
+        15,
+        30
+      ],
+      "music": "bright-future",
+      "fonts": [
+        "SpaceGrotesk",
+        "Inter"
+      ],
+      "price": {
+        "starter": 600,
+        "standard": 1200,
+        "premium": 2500,
+        "bdt": "৳50,000–1,50,000"
+      },
+      "turnaround": "3–5 working days",
+      "includes": [
+        "9:16 store spec",
+        "a 6 s bumper",
+        "2 revision rounds"
+      ],
+      "references": [
+        "Apple App Store featured app previews",
+        "Duolingo and Headspace store videos"
+      ],
+      "sample": {
+        "project": "pf-ap1-habitly",
+        "brand": "Habitly",
+        "status": "planned"
+      }
     },
     {
-      "code": "CL1", "family": "product", "name": "Changelog / Release Reel", "bn": "রিলিজ নোটের ভিডিও",
+      "code": "CL1",
+      "family": "product",
+      "name": "Changelog / Release Reel",
+      "bn": "রিলিজ নোটের ভিডিও",
       "what": "\"What's new in v3.0\" — 4–6 updates in quick cuts: version stamp, icon + one line + a tiny UI snippet per update, a closing lockup.",
       "bestFor": "Dev tools and SaaS with monthly releases; community and newsletter posts.",
-      "aspects": ["16x9", "1x1"], "defaultDuration": 18, "durationRange": [15, 30],
-      "music": "data-glitch", "fonts": ["SpaceGrotesk", "JetBrainsMono"],
-      "price": { "starter": 500, "standard": 1000, "premium": 1800, "bdt": "৳40,000–1,00,000" },
-      "turnaround": "2–4 working days", "includes": ["16:9 + 1:1", "a reusable template for next releases"],
-      "references": ["Vercel Ship recaps", "GitHub Universe feature reels"],
-      "sample": { "project": "pf-cl1-forge", "brand": "Forge", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1"
+      ],
+      "defaultDuration": 18,
+      "durationRange": [
+        15,
+        30
+      ],
+      "music": "data-glitch",
+      "fonts": [
+        "SpaceGrotesk",
+        "JetBrainsMono"
+      ],
+      "price": {
+        "starter": 500,
+        "standard": 1000,
+        "premium": 1800,
+        "bdt": "৳40,000–1,00,000"
+      },
+      "turnaround": "2–4 working days",
+      "includes": [
+        "16:9 + 1:1",
+        "a reusable template for next releases"
+      ],
+      "references": [
+        "Vercel Ship recaps",
+        "GitHub Universe feature reels"
+      ],
+      "sample": {
+        "project": "pf-cl1-forge",
+        "brand": "Forge",
+        "status": "planned"
+      }
     },
     {
-      "code": "IH1", "family": "product", "name": "Integrations Hub", "bn": "ইন্টিগ্রেশন দেখানো",
+      "code": "IH1",
+      "family": "product",
+      "name": "Integrations Hub",
+      "bn": "ইন্টিগ্রেশন দেখানো",
       "what": "The product as a glowing hub; app icons orbit in, beams connect them, data packets travel, a count of integrations lands.",
       "bestFor": "Automation, API and platform companies announcing integrations or a marketplace.",
-      "aspects": ["1x1", "16x9"], "defaultDuration": 12, "durationRange": [8, 20],
-      "music": "studio-pulse", "fonts": ["Geist", "GeistMono"],
-      "price": { "starter": 400, "standard": 800, "premium": 1400, "bdt": "৳35,000–80,000" },
-      "turnaround": "2–3 working days", "includes": ["1:1 + 16:9", "loopable version"],
-      "references": ["Zapier and Make integration visuals", "Stripe ecosystem graphics"],
-      "sample": { "project": "pf-ih1-nimbus", "brand": "Nimbus", "status": "planned" }
+      "aspects": [
+        "1x1",
+        "16x9"
+      ],
+      "defaultDuration": 12,
+      "durationRange": [
+        8,
+        20
+      ],
+      "music": "studio-pulse",
+      "fonts": [
+        "Geist",
+        "GeistMono"
+      ],
+      "price": {
+        "starter": 400,
+        "standard": 800,
+        "premium": 1400,
+        "bdt": "৳35,000–80,000"
+      },
+      "turnaround": "2–3 working days",
+      "includes": [
+        "1:1 + 16:9",
+        "loopable version"
+      ],
+      "references": [
+        "Zapier and Make integration visuals",
+        "Stripe ecosystem graphics"
+      ],
+      "sample": {
+        "project": "pf-ih1-nimbus",
+        "brand": "Nimbus",
+        "status": "planned"
+      }
     },
     {
-      "code": "AI1", "family": "product", "name": "AI Agent Demo", "bn": "এআই এজেন্টের ডেমো",
+      "code": "AI1",
+      "family": "product",
+      "name": "AI Agent Demo",
+      "bn": "এআই এজেন্টের ডেমো",
       "what": "An AI agent at work: a prompt is typed, a labelled agent cursor clicks through a clean UI, status chips tick from 'working' to 'done', the result lands. The 2026 launch format for AI products.",
       "bestFor": "AI startups showing an agent or copilot doing a real task; launch posts on X.",
-      "aspects": ["16x9", "1x1"], "defaultDuration": 20, "durationRange": [15, 40],
-      "music": "studio-pulse", "fonts": ["Geist", "GeistMono"],
-      "price": { "starter": 800, "standard": 1600, "premium": 3000, "bdt": "৳80,000–2,00,000" },
-      "turnaround": "3–5 working days", "includes": ["16:9 + 1:1", "captions", "2 revision rounds"],
-      "references": ["AI computer-use launch demos", "Cursor and Devin style agent clips"],
-      "sample": { "project": "pf-ai1-operator", "brand": "Operator", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1"
+      ],
+      "defaultDuration": 20,
+      "durationRange": [
+        15,
+        40
+      ],
+      "music": "studio-pulse",
+      "fonts": [
+        "Geist",
+        "GeistMono"
+      ],
+      "price": {
+        "starter": 800,
+        "standard": 1600,
+        "premium": 3000,
+        "bdt": "৳80,000–2,00,000"
+      },
+      "turnaround": "3–5 working days",
+      "includes": [
+        "16:9 + 1:1",
+        "captions",
+        "2 revision rounds"
+      ],
+      "references": [
+        "AI computer-use launch demos",
+        "Cursor and Devin style agent clips"
+      ],
+      "sample": {
+        "project": "pf-ai1-operator",
+        "brand": "Operator",
+        "status": "planned"
+      }
     },
     {
-      "code": "HX1", "family": "explain", "name": "How-It-Works Explainer", "bn": "কীভাবে কাজ করে — ব্যাখ্যা",
+      "code": "HX1",
+      "family": "explain",
+      "name": "How-It-Works Explainer",
+      "bn": "কীভাবে কাজ করে — ব্যাখ্যা",
       "what": "A voiced 45–90 s explainer: the problem, the turn, three simple steps with friendly flat illustration and icons, proof, CTA. Script, voice-over and music included.",
       "bestFor": "Landing pages, onboarding, sales calls — health, fintech, B2B services that need clarity.",
-      "aspects": ["16x9", "1x1"], "defaultDuration": 45, "durationRange": [45, 120],
-      "music": "bright-future", "fonts": ["Manrope"], "voice": "English AI voice (Gemini) or client's own",
-      "price": { "starter": 1500, "standard": 3000, "premium": 5500, "bdt": "৳1,00,000–3,00,000" },
-      "turnaround": "7–10 working days", "includes": ["script", "voice-over", "16:9 + 1:1", "captions .srt", "2 revision rounds"],
-      "references": ["Kurzgesagt clarity", "Headspace / Stripe explainers"],
-      "sample": { "project": "pf-hx1-kindred", "brand": "Kindred Health", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1"
+      ],
+      "defaultDuration": 45,
+      "durationRange": [
+        45,
+        120
+      ],
+      "music": "bright-future",
+      "fonts": [
+        "Manrope"
+      ],
+      "voice": "English AI voice (Gemini) or client's own",
+      "price": {
+        "starter": 1500,
+        "standard": 3000,
+        "premium": 5500,
+        "bdt": "৳1,00,000–3,00,000"
+      },
+      "turnaround": "7–10 working days",
+      "includes": [
+        "script",
+        "voice-over",
+        "16:9 + 1:1",
+        "captions .srt",
+        "2 revision rounds"
+      ],
+      "references": [
+        "Kurzgesagt clarity",
+        "Headspace / Stripe explainers"
+      ],
+      "sample": {
+        "project": "pf-hx1-kindred",
+        "brand": "Kindred Health",
+        "status": "planned"
+      }
     },
     {
-      "code": "WF1", "family": "explain", "name": "Workflow Diagram in Motion", "bn": "কাজের ধাপের ডায়াগ্রাম",
+      "code": "WF1",
+      "family": "explain",
+      "name": "Workflow Diagram in Motion",
+      "bn": "কাজের ধাপের ডায়াগ্রাম",
       "what": "A process as a living diagram: nodes draw in, packets travel the paths, a branch splits on a condition, failures retry, success lights up the end.",
       "bestFor": "Automation, fintech ops, logistics and B2B tools whose value is the workflow.",
-      "aspects": ["16x9"], "defaultDuration": 20, "durationRange": [15, 40],
-      "music": "data-glitch", "fonts": ["Inter", "JetBrainsMono"],
-      "price": { "starter": 600, "standard": 1200, "premium": 2200, "bdt": "৳50,000–1,20,000" },
-      "turnaround": "3–4 working days", "includes": ["16:9", "transparent overlay version on request"],
-      "references": ["Stripe docs animations", "Temporal / n8n workflow visuals"],
-      "sample": { "project": "pf-wf1-ledgerly", "brand": "Ledgerly", "status": "planned" }
+      "aspects": [
+        "16x9"
+      ],
+      "defaultDuration": 20,
+      "durationRange": [
+        15,
+        40
+      ],
+      "music": "data-glitch",
+      "fonts": [
+        "Inter",
+        "JetBrainsMono"
+      ],
+      "price": {
+        "starter": 600,
+        "standard": 1200,
+        "premium": 2200,
+        "bdt": "৳50,000–1,20,000"
+      },
+      "turnaround": "3–4 working days",
+      "includes": [
+        "16:9",
+        "transparent overlay version on request"
+      ],
+      "references": [
+        "Stripe docs animations",
+        "Temporal / n8n workflow visuals"
+      ],
+      "sample": {
+        "project": "pf-wf1-ledgerly",
+        "brand": "Ledgerly",
+        "status": "planned"
+      }
     },
     {
-      "code": "IA1", "family": "explain", "name": "3D Architecture Stack", "bn": "থ্রিডি স্তর-ভাগ ডায়াগ্রাম",
+      "code": "IA1",
+      "family": "explain",
+      "name": "3D Architecture Stack",
+      "bn": "থ্রিডি স্তর-ভাগ ডায়াগ্রাম",
       "what": "Real 3D: the system's layers (edge, API, compute, data, encryption) float apart in an isometric stack with labels, data runs through them, they lock back together.",
       "bestFor": "Infrastructure, security and developer platforms explaining 'how it is built'.",
-      "aspects": ["16x9"], "defaultDuration": 16, "durationRange": [12, 30],
-      "music": "cinematic-reveal", "fonts": ["SpaceGrotesk", "JetBrainsMono"], "three": true,
-      "price": { "starter": 900, "standard": 1800, "premium": 3500, "bdt": "৳90,000–2,50,000" },
-      "turnaround": "4–6 working days", "includes": ["16:9", "2 revision rounds"],
-      "references": ["Cloudflare and Vercel infra visuals", "Apple chip architecture films"],
-      "sample": { "project": "pf-ia1-vaultline", "brand": "Vaultline", "status": "planned" }
+      "aspects": [
+        "16x9"
+      ],
+      "defaultDuration": 16,
+      "durationRange": [
+        12,
+        30
+      ],
+      "music": "cinematic-reveal",
+      "fonts": [
+        "SpaceGrotesk",
+        "JetBrainsMono"
+      ],
+      "three": true,
+      "price": {
+        "starter": 900,
+        "standard": 1800,
+        "premium": 3500,
+        "bdt": "৳90,000–2,50,000"
+      },
+      "turnaround": "4–6 working days",
+      "includes": [
+        "16:9",
+        "2 revision rounds"
+      ],
+      "references": [
+        "Cloudflare and Vercel infra visuals",
+        "Apple chip architecture films"
+      ],
+      "sample": {
+        "project": "pf-ia1-vaultline",
+        "brand": "Vaultline",
+        "status": "planned"
+      }
     },
     {
-      "code": "DS1", "family": "data", "name": "Data Story", "bn": "ডেটার গল্প",
+      "code": "DS1",
+      "family": "data",
+      "name": "Data Story",
+      "bn": "ডেটার গল্প",
       "what": "Bloomberg / FT-style: a line chart draws itself, the key point is annotated, numbers count up, a comparison resolves — calm editorial type, one accent colour.",
       "bestFor": "Research firms, fintech, reports, investor letters, LinkedIn thought leadership.",
-      "aspects": ["16x9", "1x1"], "defaultDuration": 20, "durationRange": [15, 45],
-      "music": "elegant-premium", "fonts": ["InstrumentSerif", "Inter"],
-      "price": { "starter": 500, "standard": 1100, "premium": 2000, "bdt": "৳45,000–1,20,000" },
-      "turnaround": "2–4 working days", "includes": ["16:9 + 1:1", "data checked against the client's source"],
-      "references": ["Bloomberg Originals graphics", "Financial Times data videos", "The Economist charts"],
-      "sample": { "project": "pf-ds1-meridian", "brand": "Meridian Research", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1"
+      ],
+      "defaultDuration": 20,
+      "durationRange": [
+        15,
+        45
+      ],
+      "music": "elegant-premium",
+      "fonts": [
+        "InstrumentSerif",
+        "Inter"
+      ],
+      "price": {
+        "starter": 500,
+        "standard": 1100,
+        "premium": 2000,
+        "bdt": "৳45,000–1,20,000"
+      },
+      "turnaround": "2–4 working days",
+      "includes": [
+        "16:9 + 1:1",
+        "data checked against the client's source"
+      ],
+      "references": [
+        "Bloomberg Originals graphics",
+        "Financial Times data videos",
+        "The Economist charts"
+      ],
+      "sample": {
+        "project": "pf-ds1-meridian",
+        "brand": "Meridian Research",
+        "status": "planned"
+      }
     },
     {
-      "code": "KP1", "family": "data", "name": "Investor Metrics Reel", "bn": "বিনিয়োগকারীর জন্য মেট্রিক্স",
+      "code": "KP1",
+      "family": "data",
+      "name": "Investor Metrics Reel",
+      "bn": "বিনিয়োগকারীর জন্য মেট্রিক্স",
       "what": "A funding or milestone announcement: big KPI count-ups (ARR, growth, customers, countries), a growth curve, a donut, a lockup — confident and exact.",
       "bestFor": "Startups announcing a round or a milestone; annual reviews; investor updates.",
-      "aspects": ["16x9", "1x1", "9x16"], "defaultDuration": 15, "durationRange": [12, 30],
-      "music": "studio-pulse", "fonts": ["Geist", "GeistMono"],
-      "price": { "starter": 500, "standard": 1000, "premium": 1800, "bdt": "৳45,000–1,00,000" },
-      "turnaround": "2–3 working days", "includes": ["3 aspect ratios", "numbers verified with the client"],
-      "references": ["Apple keynote stat slides", "Stripe annual letter graphics"],
-      "sample": { "project": "pf-kp1-northwind", "brand": "Northwind", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1",
+        "9x16"
+      ],
+      "defaultDuration": 15,
+      "durationRange": [
+        12,
+        30
+      ],
+      "music": "studio-pulse",
+      "fonts": [
+        "Geist",
+        "GeistMono"
+      ],
+      "price": {
+        "starter": 500,
+        "standard": 1000,
+        "premium": 1800,
+        "bdt": "৳45,000–1,00,000"
+      },
+      "turnaround": "2–3 working days",
+      "includes": [
+        "3 aspect ratios",
+        "numbers verified with the client"
+      ],
+      "references": [
+        "Apple keynote stat slides",
+        "Stripe annual letter graphics"
+      ],
+      "sample": {
+        "project": "pf-kp1-northwind",
+        "brand": "Northwind",
+        "status": "planned"
+      }
     },
     {
-      "code": "MP1", "family": "data", "name": "Map Story", "bn": "ম্যাপের গল্প",
+      "code": "MP1",
+      "family": "data",
+      "name": "Map Story",
+      "bn": "ম্যাপের গল্প",
       "what": "A world map: hubs light up, routes draw as arcs, a counter runs, the camera pushes into a region — for reach, logistics and expansion stories.",
       "bestFor": "Logistics, travel, global SaaS expansion, NGOs showing reach.",
-      "aspects": ["16x9"], "defaultDuration": 16, "durationRange": [12, 30],
-      "music": "cinematic-reveal", "fonts": ["Inter", "JetBrainsMono"],
-      "price": { "starter": 600, "standard": 1200, "premium": 2200, "bdt": "৳50,000–1,20,000" },
-      "turnaround": "3–4 working days", "includes": ["16:9", "2 revision rounds"],
-      "references": ["Johnny Harris map style", "Apple-style flight maps"],
-      "sample": { "project": "pf-mp1-cargoline", "brand": "Cargoline", "status": "planned" }
+      "aspects": [
+        "16x9"
+      ],
+      "defaultDuration": 16,
+      "durationRange": [
+        12,
+        30
+      ],
+      "music": "cinematic-reveal",
+      "fonts": [
+        "Inter",
+        "JetBrainsMono"
+      ],
+      "price": {
+        "starter": 600,
+        "standard": 1200,
+        "premium": 2200,
+        "bdt": "৳50,000–1,20,000"
+      },
+      "turnaround": "3–4 working days",
+      "includes": [
+        "16:9",
+        "2 revision rounds"
+      ],
+      "references": [
+        "Johnny Harris map style",
+        "Apple-style flight maps"
+      ],
+      "sample": {
+        "project": "pf-mp1-cargoline",
+        "brand": "Cargoline",
+        "status": "planned"
+      }
     },
     {
-      "code": "NW1", "family": "data", "name": "Editorial Explainer", "bn": "সংবাদ-ধাঁচের ব্যাখ্যা",
+      "code": "NW1",
+      "family": "data",
+      "name": "Editorial Explainer",
+      "bn": "সংবাদ-ধাঁচের ব্যাখ্যা",
       "what": "Vox-style: paper textures, headline cards, highlighter strokes over key lines, a document zoom, a hand-drawn arrow, a voiced narration on a real topic.",
       "bestFor": "Media brands, newsletters, YouTube explainer channels, think tanks.",
-      "aspects": ["16x9", "9x16"], "defaultDuration": 24, "durationRange": [20, 90],
-      "music": "data-glitch", "fonts": ["Playfair", "Inter"], "voice": "English AI voice (Gemini)",
-      "price": { "starter": 700, "standard": 1500, "premium": 3000, "bdt": "৳60,000–1,50,000" },
-      "turnaround": "4–6 working days", "includes": ["script research with sources", "voice-over", "captions"],
-      "references": ["Vox explainers", "Johnny Harris", "Bloomberg Quicktake"],
-      "sample": { "project": "pf-nw1-thebrief", "brand": "The Brief", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "defaultDuration": 24,
+      "durationRange": [
+        20,
+        90
+      ],
+      "music": "data-glitch",
+      "fonts": [
+        "Playfair",
+        "Inter"
+      ],
+      "voice": "English AI voice (Gemini)",
+      "price": {
+        "starter": 700,
+        "standard": 1500,
+        "premium": 3000,
+        "bdt": "৳60,000–1,50,000"
+      },
+      "turnaround": "4–6 working days",
+      "includes": [
+        "script research with sources",
+        "voice-over",
+        "captions"
+      ],
+      "references": [
+        "Vox explainers",
+        "Johnny Harris",
+        "Bloomberg Quicktake"
+      ],
+      "sample": {
+        "project": "pf-nw1-thebrief",
+        "brand": "The Brief",
+        "status": "planned"
+      }
     },
     {
-      "code": "LG1", "family": "brand", "name": "3D Logo Sting", "bn": "থ্রিডি লোগো স্টিং",
+      "code": "LG1",
+      "family": "brand",
+      "name": "3D Logo Sting",
+      "bn": "থ্রিডি লোগো স্টিং",
       "what": "A 5–7 s logo reveal in real 3D: beveled letters flip up, light runs across the bevels, one sub-bass hit and a sparkle on the lock.",
       "bestFor": "Every brand: video intros/outros, YouTube channels, event openers, ads.",
-      "aspects": ["16x9", "1x1", "9x16"], "defaultDuration": 6, "durationRange": [4, 8],
-      "music": "", "fonts": ["Geist"], "three": true,
-      "price": { "starter": 250, "standard": 500, "premium": 900, "bdt": "৳15,000–50,000" },
-      "turnaround": "1–2 working days", "includes": ["3 aspect ratios", "with and without sound", "transparent version"],
-      "references": ["Netflix / HBO idents", "tech brand idents"],
-      "sample": { "project": "pf-lg1-orbit", "brand": "Orbit", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "1x1",
+        "9x16"
+      ],
+      "defaultDuration": 6,
+      "durationRange": [
+        4,
+        8
+      ],
+      "music": "",
+      "fonts": [
+        "Geist"
+      ],
+      "three": true,
+      "price": {
+        "starter": 250,
+        "standard": 500,
+        "premium": 900,
+        "bdt": "৳15,000–50,000"
+      },
+      "turnaround": "1–2 working days",
+      "includes": [
+        "3 aspect ratios",
+        "with and without sound",
+        "transparent version"
+      ],
+      "references": [
+        "Netflix / HBO idents",
+        "tech brand idents"
+      ],
+      "sample": {
+        "project": "pf-lg1-orbit",
+        "brand": "Orbit",
+        "status": "planned"
+      }
     },
     {
-      "code": "KT1", "family": "brand", "name": "Kinetic Type Manifesto", "bn": "নাচন্ত লেখার ম্যানিফেস্টো",
+      "code": "KT1",
+      "family": "brand",
+      "name": "Kinetic Type Manifesto",
+      "bn": "নাচন্ত লেখার ম্যানিফেস্টো",
       "what": "A brand belief told in big moving type cut to the beat: words slam, split, swap and morph; colour blocks wipe; it ends on the brand line.",
       "bestFor": "Brand campaigns, hiring videos, event openers, social posts with no footage.",
-      "aspects": ["16x9", "9x16", "1x1"], "defaultDuration": 20, "durationRange": [15, 40],
-      "music": "social-punch", "fonts": ["Anton", "Inter"],
-      "price": { "starter": 500, "standard": 1000, "premium": 2000, "bdt": "৳40,000–1,00,000" },
-      "turnaround": "2–4 working days", "includes": ["3 aspect ratios", "2 revision rounds"],
-      "references": ["Apple 'Shot on iPhone' type spots", "Nike kinetic type"],
-      "sample": { "project": "pf-kt1-driftwood", "brand": "Driftwood", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "9x16",
+        "1x1"
+      ],
+      "defaultDuration": 20,
+      "durationRange": [
+        15,
+        40
+      ],
+      "music": "social-punch",
+      "fonts": [
+        "Anton",
+        "Inter"
+      ],
+      "price": {
+        "starter": 500,
+        "standard": 1000,
+        "premium": 2000,
+        "bdt": "৳40,000–1,00,000"
+      },
+      "turnaround": "2–4 working days",
+      "includes": [
+        "3 aspect ratios",
+        "2 revision rounds"
+      ],
+      "references": [
+        "Apple 'Shot on iPhone' type spots",
+        "Nike kinetic type"
+      ],
+      "sample": {
+        "project": "pf-kt1-driftwood",
+        "brand": "Driftwood",
+        "status": "planned"
+      }
     },
     {
-      "code": "BS1", "family": "brand", "name": "Brand System in Motion", "bn": "ব্র্যান্ড-গাইডলাইনের অ্যানিমেশন",
+      "code": "BS1",
+      "family": "brand",
+      "name": "Brand System in Motion",
+      "bn": "ব্র্যান্ড-গাইডলাইনের অ্যানিমেশন",
       "what": "The identity animated: logo construction, palette swatches, type specimen, pattern and real applications (cards, app icon, signage) — a living brand book.",
       "bestFor": "Branding agencies presenting work; companies launching a rebrand.",
-      "aspects": ["16x9"], "defaultDuration": 18, "durationRange": [15, 45],
-      "music": "elegant-premium", "fonts": ["InstrumentSerif", "Manrope"],
-      "price": { "starter": 700, "standard": 1400, "premium": 2600, "bdt": "৳60,000–1,50,000" },
-      "turnaround": "3–5 working days", "includes": ["16:9", "motion tokens file (eases, durations) for the brand"],
-      "references": ["Pentagram and Collins case-study films", "Behance brand reels"],
-      "sample": { "project": "pf-bs1-solace", "brand": "Solace", "status": "planned" }
+      "aspects": [
+        "16x9"
+      ],
+      "defaultDuration": 18,
+      "durationRange": [
+        15,
+        45
+      ],
+      "music": "elegant-premium",
+      "fonts": [
+        "InstrumentSerif",
+        "Manrope"
+      ],
+      "price": {
+        "starter": 700,
+        "standard": 1400,
+        "premium": 2600,
+        "bdt": "৳60,000–1,50,000"
+      },
+      "turnaround": "3–5 working days",
+      "includes": [
+        "16:9",
+        "motion tokens file (eases, durations) for the brand"
+      ],
+      "references": [
+        "Pentagram and Collins case-study films",
+        "Behance brand reels"
+      ],
+      "sample": {
+        "project": "pf-bs1-solace",
+        "brand": "Solace",
+        "status": "planned"
+      }
     },
     {
-      "code": "SA1", "family": "social", "name": "Vertical Social Ad", "bn": "খাড়া সোশ্যাল বিজ্ঞাপন",
+      "code": "SA1",
+      "family": "social",
+      "name": "Vertical Social Ad",
+      "bn": "খাড়া সোশ্যাল বিজ্ঞাপন",
       "what": "A 15 s vertical ad built for the feed: the hook in the first second, three benefit beats, a big CTA, voice-over and captions inside the platform safe zones.",
       "bestFor": "Performance marketers and DTC / app brands running Meta, TikTok and YouTube Shorts ads.",
-      "aspects": ["9x16", "4x5", "1x1"], "defaultDuration": 15, "durationRange": [6, 30],
-      "music": "social-punch", "fonts": ["SpaceGrotesk", "Inter"], "voice": "English AI voice (Gemini)",
-      "price": { "starter": 250, "standard": 450, "premium": 800, "bdt": "৳15,000–40,000" },
-      "turnaround": "1–3 working days", "includes": ["9:16 + 4:5 + 1:1", "3 hook variants", "captions"],
-      "references": ["Top-performing Meta ad creatives", "Duolingo / Notion TikTok ads"],
-      "sample": { "project": "pf-sa1-pocket", "brand": "Pocket", "status": "planned" }
+      "aspects": [
+        "9x16",
+        "4x5",
+        "1x1"
+      ],
+      "defaultDuration": 15,
+      "durationRange": [
+        6,
+        30
+      ],
+      "music": "social-punch",
+      "fonts": [
+        "SpaceGrotesk",
+        "Inter"
+      ],
+      "voice": "English AI voice (Gemini)",
+      "price": {
+        "starter": 250,
+        "standard": 450,
+        "premium": 800,
+        "bdt": "৳15,000–40,000"
+      },
+      "turnaround": "1–3 working days",
+      "includes": [
+        "9:16 + 4:5 + 1:1",
+        "3 hook variants",
+        "captions"
+      ],
+      "references": [
+        "Top-performing Meta ad creatives",
+        "Duolingo / Notion TikTok ads"
+      ],
+      "sample": {
+        "project": "pf-sa1-pocket",
+        "brand": "Pocket",
+        "status": "planned"
+      }
     },
     {
-      "code": "EV1", "family": "social", "name": "Event / Webinar Promo", "bn": "ইভেন্ট বা ওয়েবিনারের প্রোমো",
+      "code": "EV1",
+      "family": "social",
+      "name": "Event / Webinar Promo",
+      "bn": "ইভেন্ট বা ওয়েবিনারের প্রোমো",
       "what": "Date, venue or link, speakers as clean monogram cards (no faces needed), the agenda in three beats, a countdown and a register button.",
       "bestFor": "Conferences, webinars, launches, community meetups, workshops.",
-      "aspects": ["1x1", "9x16", "16x9"], "defaultDuration": 12, "durationRange": [10, 20],
-      "music": "studio-pulse", "fonts": ["Anton", "Inter"],
-      "price": { "starter": 300, "standard": 600, "premium": 1000, "bdt": "৳20,000–60,000" },
-      "turnaround": "1–2 working days", "includes": ["3 aspect ratios", "a countdown version"],
-      "references": ["Figma Config promos", "Web Summit promos"],
-      "sample": { "project": "pf-ev1-builders", "brand": "Builders Summit", "status": "planned" }
+      "aspects": [
+        "1x1",
+        "9x16",
+        "16x9"
+      ],
+      "defaultDuration": 12,
+      "durationRange": [
+        10,
+        20
+      ],
+      "music": "studio-pulse",
+      "fonts": [
+        "Anton",
+        "Inter"
+      ],
+      "price": {
+        "starter": 300,
+        "standard": 600,
+        "premium": 1000,
+        "bdt": "৳20,000–60,000"
+      },
+      "turnaround": "1–2 working days",
+      "includes": [
+        "3 aspect ratios",
+        "a countdown version"
+      ],
+      "references": [
+        "Figma Config promos",
+        "Web Summit promos"
+      ],
+      "sample": {
+        "project": "pf-ev1-builders",
+        "brand": "Builders Summit",
+        "status": "planned"
+      }
     },
     {
-      "code": "GH1", "family": "premium3d", "name": "3D Glass Hero Title", "bn": "থ্রিডি কাচের হিরো টাইটেল",
+      "code": "GH1",
+      "family": "premium3d",
+      "name": "3D Glass Hero Title",
+      "bn": "থ্রিডি কাচের হিরো টাইটেল",
       "what": "Real 3D glass: a refracting glass form turns in front of a giant headline so the type bends through it, then the tagline lands — the most premium 8–10 seconds a brand can open with.",
       "bestFor": "Landing-page heroes, keynote openers, premium product teasers.",
-      "aspects": ["16x9", "9x16"], "defaultDuration": 10, "durationRange": [6, 15],
-      "music": "cinematic-reveal", "fonts": ["Inter"], "three": true,
-      "price": { "starter": 600, "standard": 1200, "premium": 2400, "bdt": "৳60,000–1,50,000" },
-      "turnaround": "2–4 working days", "includes": ["16:9 + 9:16", "a seamless loop version"],
-      "references": ["Apple Liquid Glass reveal", "Spline / Rive hero scenes"],
-      "sample": { "project": "pf-gh1-prism", "brand": "Prism", "status": "planned" }
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "defaultDuration": 10,
+      "durationRange": [
+        6,
+        15
+      ],
+      "music": "cinematic-reveal",
+      "fonts": [
+        "Inter"
+      ],
+      "three": true,
+      "price": {
+        "starter": 600,
+        "standard": 1200,
+        "premium": 2400,
+        "bdt": "৳60,000–1,50,000"
+      },
+      "turnaround": "2–4 working days",
+      "includes": [
+        "16:9 + 9:16",
+        "a seamless loop version"
+      ],
+      "references": [
+        "Apple Liquid Glass reveal",
+        "Spline / Rive hero scenes"
+      ],
+      "sample": {
+        "project": "pf-gh1-prism",
+        "brand": "Prism",
+        "status": "planned"
+      }
     },
     {
-      "code": "CD1", "family": "premium3d", "name": "Dev-Tool Launch (3D code)", "bn": "ডেভেলপার টুলের লঞ্চ",
+      "code": "CD1",
+      "family": "premium3d",
+      "name": "Dev-Tool Launch (3D code)",
+      "bn": "ডেভেলপার টুলের লঞ্চ",
       "what": "Syntax-highlighted code on a lit 3D slab rotating into a readable rest, a terminal run, the result — for developer products.",
       "bestFor": "Dev tools, APIs, SDKs, open-source launches.",
-      "aspects": ["16x9"], "defaultDuration": 14, "durationRange": [10, 30],
-      "music": "data-glitch", "fonts": ["GeistMono", "Geist"], "three": true,
-      "price": { "starter": 600, "standard": 1200, "premium": 2200, "bdt": "৳50,000–1,20,000" },
-      "turnaround": "3–4 working days", "includes": ["16:9 + 1:1"],
-      "references": ["Vercel / Supabase launch weeks", "GitHub Universe"],
-      "sample": { "project": "pf-cd1-kernel", "brand": "Kernel", "status": "optional" }
+      "aspects": [
+        "16x9"
+      ],
+      "defaultDuration": 14,
+      "durationRange": [
+        10,
+        30
+      ],
+      "music": "data-glitch",
+      "fonts": [
+        "GeistMono",
+        "Geist"
+      ],
+      "three": true,
+      "price": {
+        "starter": 600,
+        "standard": 1200,
+        "premium": 2200,
+        "bdt": "৳50,000–1,20,000"
+      },
+      "turnaround": "3–4 working days",
+      "includes": [
+        "16:9 + 1:1"
+      ],
+      "references": [
+        "Vercel / Supabase launch weeks",
+        "GitHub Universe"
+      ],
+      "sample": {
+        "project": "pf-cd1-kerf",
+        "brand": "Kerf",
+        "status": "optional"
+      }
     },
     {
-      "code": "LT1", "family": "premium3d", "name": "Lower-Thirds & Titles Pack", "bn": "লোয়ার-থার্ড ও টাইটেল প্যাক",
+      "code": "LT1",
+      "family": "premium3d",
+      "name": "Lower-Thirds & Titles Pack",
+      "bn": "লোয়ার-থার্ড ও টাইটেল প্যাক",
       "what": "A matched set of name bars, section titles, callouts and end cards on a transparent background, in the client's brand, ready to drop on any edit.",
       "bestFor": "YouTubers, podcasts, corporate video teams, event streams.",
-      "aspects": ["16x9", "9x16"], "defaultDuration": 12, "durationRange": [8, 20],
-      "music": "", "fonts": ["Inter"],
-      "price": { "starter": 300, "standard": 600, "premium": 1200, "bdt": "৳20,000–60,000" },
-      "turnaround": "2–3 working days", "includes": ["transparent .mov/.webm", "8–12 elements"],
-      "references": ["broadcast graphics packages"],
-      "sample": { "project": "", "brand": "", "status": "optional" }
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "defaultDuration": 12,
+      "durationRange": [
+        8,
+        20
+      ],
+      "music": "",
+      "fonts": [
+        "Inter"
+      ],
+      "price": {
+        "starter": 300,
+        "standard": 600,
+        "premium": 1200,
+        "bdt": "৳20,000–60,000"
+      },
+      "turnaround": "2–3 working days",
+      "includes": [
+        "transparent .mov/.webm",
+        "8–12 elements"
+      ],
+      "references": [
+        "broadcast graphics packages"
+      ],
+      "sample": {
+        "project": "",
+        "brand": "",
+        "status": "optional"
+      }
     },
-    { "code": "AB1-AB5", "family": "footage", "name": "Talking Head + B-roll (5 styles)", "bn": "কথা বলার ভিডিও + বি-রোল (৫ ধরন)", "what": "Your talking-head recording edited in one of five named styles: Glass Split, Bubble Cut, Punch Type, Card Fan, Data Stage.", "bestFor": "Creators, coaches, founders on camera.", "aspects": ["16x9", "9x16"], "engine": "tools/abroll", "price": { "starter": 150, "standard": 400, "premium": 900, "bdt": "৳8,000–40,000" }, "sample": { "project": "abroll-variants-demo", "status": "ready" } },
-    { "code": "EP1", "family": "footage", "name": "Long Episode + Reels", "bn": "লম্বা পর্ব + রিলস", "what": "A long talking-head episode with motion-graphics cards and word-by-word captions, plus vertical Reels cut from it.", "bestFor": "YouTube channels, podcasts, courses.", "aspects": ["16x9", "9x16"], "engine": "tools/episode", "price": { "starter": 300, "standard": 700, "premium": 1500, "bdt": "৳15,000–60,000" }, "sample": { "project": "zubayer-ep01", "status": "ready" } },
-    { "code": "TUT1", "family": "footage", "name": "Screen Tutorial", "bn": "স্ক্রিন টিউটোরিয়াল", "what": "A long screen recording + voice turned into a clean 16:9 tutorial with zooms, cursor glow, chapter cards and captions.", "bestFor": "SaaS onboarding, course creators, software trainers.", "aspects": ["16x9"], "engine": "tools/tutorial", "price": { "starter": 250, "standard": 600, "premium": 1200, "bdt": "৳12,000–50,000" }, "sample": { "project": "claude-video-tutorial", "status": "ready" } },
-    { "code": "PROMO1", "family": "footage", "name": "Screen-Recording Commercial", "bn": "স্ক্রিন রেকর্ডিং থেকে বিজ্ঞাপন", "what": "A screen recording of an app turned into a commercial: zooms onto UI moments, cursor glow, 3D tilt, click boom, end card.", "bestFor": "SaaS and app makers who already have the product running.", "aspects": ["16x9", "9x16"], "engine": "tools/screen/promo-core.mjs", "price": { "starter": 400, "standard": 900, "premium": 1800, "bdt": "৳25,000–80,000" }, "sample": { "project": "claude-decision-ad", "status": "ready" } },
-    { "code": "CP1", "family": "footage", "name": "AI-Clip Client Promo", "bn": "এআই ক্লিপ থেকে ক্লায়েন্ট প্রোমো", "what": "A client's AI-generated clips + voice + music cut into a production-ready promo, 16:9 and a designed 9:16.", "bestFor": "Local businesses with AI clips — food, retail, real estate.", "aspects": ["16x9", "9x16"], "engine": "tools/promo", "price": { "starter": 200, "standard": 450, "premium": 900, "bdt": "৳10,000–40,000" }, "sample": { "project": "mohona-promo-01", "status": "ready" } },
-    { "code": "UREEL1", "family": "footage", "name": "Universal Reels Cut-downs", "bn": "সব প্ল্যাটফর্মের রিলস", "what": "Vertical Reels cut from a finished video that upload unchanged to Facebook, Instagram, X and YouTube Shorts.", "bestFor": "Anyone with a long video who needs short-form reach.", "aspects": ["9x16"], "engine": "tools/cutdown", "price": { "starter": 60, "standard": 150, "premium": 300, "bdt": "৳3,000–12,000 per reel" }, "sample": { "project": "claude-ureel-1", "status": "ready" } },
-    { "code": "EXP1", "family": "footage", "name": "Bengali Explainer Board", "bn": "বাংলা ব্যাখ্যা বোর্ড", "what": "A voiced Bengali tutorial with no footage: drawn app windows, chats, folders, code, diagrams; captions with the spoken word in gold.", "bestFor": "Bangladeshi edtech, NGOs, local SaaS, course creators.", "aspects": ["16x9"], "engine": "tools/explainer", "price": { "starter": 200, "standard": 500, "premium": 1000, "bdt": "৳15,000–60,000" }, "sample": { "project": "claude-skills-tutorial", "status": "ready" } },
-    { "code": "LK1", "family": "packs", "name": "Launch Kit", "bn": "লঞ্চ কিট", "what": "PL1 launch film + FD1 feature drops ×2 + KP1 metrics + 9:16 / 1:1 cut-downs + LG1 sting — everything for one launch week.", "bestFor": "Startups with a launch date.", "price": { "starter": 2500, "standard": 4500, "premium": 8000, "bdt": "৳2,50,000–6,00,000" } },
-    { "code": "AD10", "family": "packs", "name": "Ad Pack ×10", "bn": "১০টা বিজ্ঞাপনের প্যাক", "what": "Ten vertical SA1 ads from one brief: 3 hooks × 3 angles + 1 offer, all aspect ratios, captions — built to A/B test.", "bestFor": "DTC and app brands spending on Meta / TikTok ads.", "price": { "starter": 1000, "standard": 2000, "premium": 3500, "bdt": "৳35,000–1,20,000" } },
-    { "code": "RET1", "family": "packs", "name": "Monthly Motion Retainer", "bn": "মাসিক মোশন চুক্তি", "what": "A set number of pieces every month (e.g. 4 feature drops + 8 social ads + 1 data story), one request queue, 48-hour turnaround on small pieces.", "bestFor": "SaaS marketing teams and agencies that ship constantly.", "price": { "starter": 1500, "standard": 3000, "premium": 6000, "bdt": "৳1,00,000–4,00,000 / month" } }
+    {
+      "code": "FM1",
+      "family": "footage",
+      "name": "Footage + Motion Promo",
+      "bn": "ফুটেজ + মোশন প্রোমো",
+      "what": "Real footage (the client's own or licensed stock) cut on the beat, warm cinematic grade and letterbox, kinetic titles, tracked-style callouts on the footage, a lower third and a brand end card.",
+      "bestFor": "Cafés, restaurants, retail, real estate, travel and DTC brands that have product or place footage.",
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "defaultDuration": 21,
+      "durationRange": [
+        15,
+        45
+      ],
+      "music": "elegant-premium",
+      "fonts": [
+        "InstrumentSerif",
+        "Manrope"
+      ],
+      "price": {
+        "starter": 400,
+        "standard": 900,
+        "premium": 1800,
+        "bdt": "৳25,000–90,000"
+      },
+      "turnaround": "2–4 working days",
+      "includes": [
+        "16:9 + 9:16",
+        "colour grade",
+        "captions if voiced",
+        "2 revision rounds"
+      ],
+      "references": [
+        "premium café and DTC brand spots",
+        "Apple 'Shot on iPhone' type over footage"
+      ],
+      "sample": {
+        "project": "pf-fm1-emberoak",
+        "brand": "Ember & Oak",
+        "status": "planned"
+      }
+    },
+    {
+      "code": "AB1-AB5",
+      "family": "footage",
+      "name": "Talking Head + B-roll (5 styles)",
+      "bn": "কথা বলার ভিডিও + বি-রোল (৫ ধরন)",
+      "what": "Your talking-head recording edited in one of five named styles: Glass Split, Bubble Cut, Punch Type, Card Fan, Data Stage.",
+      "bestFor": "Creators, coaches, founders on camera.",
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "engine": "tools/abroll",
+      "price": {
+        "starter": 150,
+        "standard": 400,
+        "premium": 900,
+        "bdt": "৳8,000–40,000"
+      },
+      "sample": {
+        "project": "abroll-variants-demo",
+        "status": "ready"
+      }
+    },
+    {
+      "code": "EP1",
+      "family": "footage",
+      "name": "Long Episode + Reels",
+      "bn": "লম্বা পর্ব + রিলস",
+      "what": "A long talking-head episode with motion-graphics cards and word-by-word captions, plus vertical Reels cut from it.",
+      "bestFor": "YouTube channels, podcasts, courses.",
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "engine": "tools/episode",
+      "price": {
+        "starter": 300,
+        "standard": 700,
+        "premium": 1500,
+        "bdt": "৳15,000–60,000"
+      },
+      "sample": {
+        "project": "zubayer-ep01",
+        "status": "ready"
+      }
+    },
+    {
+      "code": "TUT1",
+      "family": "footage",
+      "name": "Screen Tutorial",
+      "bn": "স্ক্রিন টিউটোরিয়াল",
+      "what": "A long screen recording + voice turned into a clean 16:9 tutorial with zooms, cursor glow, chapter cards and captions.",
+      "bestFor": "SaaS onboarding, course creators, software trainers.",
+      "aspects": [
+        "16x9"
+      ],
+      "engine": "tools/tutorial",
+      "price": {
+        "starter": 250,
+        "standard": 600,
+        "premium": 1200,
+        "bdt": "৳12,000–50,000"
+      },
+      "sample": {
+        "project": "claude-video-tutorial",
+        "status": "ready"
+      }
+    },
+    {
+      "code": "PROMO1",
+      "family": "footage",
+      "name": "Screen-Recording Commercial",
+      "bn": "স্ক্রিন রেকর্ডিং থেকে বিজ্ঞাপন",
+      "what": "A screen recording of an app turned into a commercial: zooms onto UI moments, cursor glow, 3D tilt, click boom, end card.",
+      "bestFor": "SaaS and app makers who already have the product running.",
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "engine": "tools/screen/promo-core.mjs",
+      "price": {
+        "starter": 400,
+        "standard": 900,
+        "premium": 1800,
+        "bdt": "৳25,000–80,000"
+      },
+      "sample": {
+        "project": "claude-decision-ad",
+        "status": "ready"
+      }
+    },
+    {
+      "code": "CP1",
+      "family": "footage",
+      "name": "AI-Clip Client Promo",
+      "bn": "এআই ক্লিপ থেকে ক্লায়েন্ট প্রোমো",
+      "what": "A client's AI-generated clips + voice + music cut into a production-ready promo, 16:9 and a designed 9:16.",
+      "bestFor": "Local businesses with AI clips — food, retail, real estate.",
+      "aspects": [
+        "16x9",
+        "9x16"
+      ],
+      "engine": "tools/promo",
+      "price": {
+        "starter": 200,
+        "standard": 450,
+        "premium": 900,
+        "bdt": "৳10,000–40,000"
+      },
+      "sample": {
+        "project": "mohona-promo-01",
+        "status": "ready"
+      }
+    },
+    {
+      "code": "UREEL1",
+      "family": "footage",
+      "name": "Universal Reels Cut-downs",
+      "bn": "সব প্ল্যাটফর্মের রিলস",
+      "what": "Vertical Reels cut from a finished video that upload unchanged to Facebook, Instagram, X and YouTube Shorts.",
+      "bestFor": "Anyone with a long video who needs short-form reach.",
+      "aspects": [
+        "9x16"
+      ],
+      "engine": "tools/cutdown",
+      "price": {
+        "starter": 60,
+        "standard": 150,
+        "premium": 300,
+        "bdt": "৳3,000–12,000 per reel"
+      },
+      "sample": {
+        "project": "claude-ureel-1",
+        "status": "ready"
+      }
+    },
+    {
+      "code": "EXP1",
+      "family": "footage",
+      "name": "Bengali Explainer Board",
+      "bn": "বাংলা ব্যাখ্যা বোর্ড",
+      "what": "A voiced Bengali tutorial with no footage: drawn app windows, chats, folders, code, diagrams; captions with the spoken word in gold.",
+      "bestFor": "Bangladeshi edtech, NGOs, local SaaS, course creators.",
+      "aspects": [
+        "16x9"
+      ],
+      "engine": "tools/explainer",
+      "price": {
+        "starter": 200,
+        "standard": 500,
+        "premium": 1000,
+        "bdt": "৳15,000–60,000"
+      },
+      "sample": {
+        "project": "claude-skills-tutorial",
+        "status": "ready"
+      }
+    },
+    {
+      "code": "LK1",
+      "family": "packs",
+      "name": "Launch Kit",
+      "bn": "লঞ্চ কিট",
+      "what": "PL1 launch film + FD1 feature drops ×2 + KP1 metrics + 9:16 / 1:1 cut-downs + LG1 sting — everything for one launch week.",
+      "bestFor": "Startups with a launch date.",
+      "price": {
+        "starter": 2500,
+        "standard": 4500,
+        "premium": 8000,
+        "bdt": "৳2,50,000–6,00,000"
+      }
+    },
+    {
+      "code": "AD10",
+      "family": "packs",
+      "name": "Ad Pack ×10",
+      "bn": "১০টা বিজ্ঞাপনের প্যাক",
+      "what": "Ten vertical SA1 ads from one brief: 3 hooks × 3 angles + 1 offer, all aspect ratios, captions — built to A/B test.",
+      "bestFor": "DTC and app brands spending on Meta / TikTok ads.",
+      "price": {
+        "starter": 1000,
+        "standard": 2000,
+        "premium": 3500,
+        "bdt": "৳35,000–1,20,000"
+      },
+      "sample": {
+        "project": "pf-ad10-bazarghor",
+        "brand": "BazarGhor",
+        "status": "planned",
+        "note": "one Bengali ad from the pack (local market)"
+      },
+      "aspects": [
+        "9x16",
+        "4x5",
+        "1x1"
+      ],
+      "defaultDuration": 15,
+      "durationRange": [
+        6,
+        30
+      ],
+      "music": "social-punch",
+      "fonts": [
+        "BalooDa2",
+        "HindSiliguri"
+      ]
+    },
+    {
+      "code": "RET1",
+      "family": "packs",
+      "name": "Monthly Motion Retainer",
+      "bn": "মাসিক মোশন চুক্তি",
+      "what": "A set number of pieces every month (e.g. 4 feature drops + 8 social ads + 1 data story), one request queue, 48-hour turnaround on small pieces.",
+      "bestFor": "SaaS marketing teams and agencies that ship constantly.",
+      "price": {
+        "starter": 1500,
+        "standard": 3000,
+        "premium": 6000,
+        "bdt": "৳1,00,000–4,00,000 / month"
+      }
+    }
   ]
 }
 ```

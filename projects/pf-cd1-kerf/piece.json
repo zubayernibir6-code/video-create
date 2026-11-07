@@ -1,8 +1,8 @@
 {
   "code": "CD1",
   "name": "Ship faster from your terminal",
-  "brand": "Kernel",
-  "project": "pf-cd1-kernel",
+  "brand": "Kerf",
+  "project": "pf-cd1-kerf",
   "aspect": "16x9",
   "width": 1920,
   "height": 1080,
@@ -10,11 +10,11 @@
   "fps": 30,
   "concept": true,
   "brief": {
-    "client": "Kernel (fictional — concept work): a command-line tool that deploys any app to 32 edge regions in one command",
+    "client": "Kerf (fictional — concept work): a command-line tool that deploys any app to 32 edge regions in one command",
     "goal": "Launch film for the landing-page hero, X and Product Hunt: make a developer feel \"I can ship this in one command\" in 14 s",
     "audience": "Full-stack and front-end developers, indie hackers and small product teams who deploy web apps",
     "message": "Type one command: the app builds, spreads to 32 regions and goes live with a URL",
-    "cta": "npm i -g kernel",
+    "cta": "curl -fsSL kerf.example/install | sh",
     "tone": "Terminal-precise and fast; pure black, one electric-green accent, a glitchy electronic beat",
     "references": [
       "Vercel / Supabase launch weeks",
@@ -31,7 +31,7 @@
     },
     "cues": [
       {
-        "t": 0.12,
+        "t": 0,
         "sfx": "glitch-3",
         "gain": 0.16
       },
@@ -104,18 +104,6 @@
         "t": 3.711,
         "sfx": "key-press",
         "gain": 0.22,
-        "len": 0.2
-      },
-      {
-        "t": 3.767,
-        "sfx": "key-press",
-        "gain": 0.21,
-        "len": 0.2
-      },
-      {
-        "t": 3.822,
-        "sfx": "key-press",
-        "gain": 0.25,
         "len": 0.2
       },
       {
@@ -226,5 +214,6 @@
     "from": 7.4,
     "to": 11.4
   },
-  "made": "2026-11-07"
+  "made": "2026-11-07",
+  "nameCheck": "2026-11-08 web search \"kerf developer tool CLI deploy platform\": no deploy / dev-infra product named Kerf (only Kerf Pro, a design tool, and a small LLM-workflow CLI with init/run/serve). Renamed from Kernel: onkernel.com is a real developer company whose CLI command is `kernel deploy`, and `kernel` is a real npm package."
 }
