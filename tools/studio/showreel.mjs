@@ -13,7 +13,7 @@
 // Layout: 16:9 clips full frame; 9:16 and 1:1 clips centred on a blurred, darkened copy of themselves.
 // Clips are muted (the reel's sound is the music); the first big drop lands on the cut from the title to clip 1.
 
-import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
@@ -87,14 +87,26 @@ writeFileSync(path.join(dir, "assets", "fonts", "fonts.css"), `@font-face { font
 @font-face { font-family: "Hind Siliguri"; font-weight: 400; src: url("HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
 `);
 writeFileSync(path.join(dir, "hyperframes.json"), JSON.stringify({ paths: { blocks: "compositions", components: "compositions/components", assets: "assets" }, media: { autoProxy: true } }, null, 1) + "\n");
-for (const c of clips) copyFileSync(c.file, path.join(dir, "assets", "clips", `${c.nice}.mp4`));
-
 const r3 = (v) => Math.round(v * 1000) / 1000;
+// Each clip is CUT to its window (frame-accurate re-encode, CRF 12, no audio) instead of copying the whole master:
+// 23 full masters were 506 MB and the page check failed with "Failed to load assets/clips/MP1_Cargoline.mp4:
+// net::ERR_CONNECTION_RESET" while Chrome opened them all (2026-11-08). The cuts are ~2.5 s each.
+for (const old of readdirSync(path.join(dir, "assets", "clips"))) rmSync(path.join(dir, "assets", "clips", old), { force: true });
+clips.forEach((c, i) => {
+  const d = cuts[i + 1] - cuts[i];
+  c.mediaStart = r3(Math.max(0, Math.min(c.reel.from, (c.d || 10) - d - 0.05)));
+  const out = path.join(dir, "assets", "clips", `${c.nice}.mp4`);
+  const r = spawnSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-ss", String(c.mediaStart), "-i", c.file, "-t", String(r3(d + 0.25)), "-an", "-c:v", "libx264", "-preset", "fast", "-crf", "12", "-pix_fmt", "yuv420p", "-r", "30", "-movflags", "+faststart", out], { encoding: "utf8" });
+  if (r.status !== 0) { console.error(`✗ cutting ${c.nice}: ${(r.stderr || "").slice(-300)}`); process.exit(1); }
+});
 let scenes = "", js = "";
 clips.forEach((c, i) => {
   const t0 = cuts[i], t1 = cuts[i + 1], d = r3(t1 - t0);
-  const mediaStart = r3(Math.max(0, Math.min(c.reel.from, (c.d || 10) - d - 0.05)));
+  const mediaStart = 0; // the clip file is already cut to its window (c.mediaStart into the master)
   const wide = c.w / c.h > 1.5;
+  const side = ["top-left", "top-right", "bottom-left"].includes(c.reel.label) ? c.reel.label : "bottom-left";
+  const margin = wide ? 0 : Math.round(960 - (1000 * c.w / c.h) / 2) - 56 - 28; // room left of a framed clip
+  const lbStyle = side === "top-left" ? "left: 56px; top: 48px; bottom: auto;" : side === "top-right" ? "left: auto; right: 56px; top: 48px; bottom: auto;" : "";
   const src = `assets/clips/${c.nice}.mp4`;
   if (wide) {
     scenes += `    <video id="v${i}" class="full" src="${src}" data-start="${r3(t0)}" data-duration="${d}" data-media-start="${mediaStart}" data-track-index="${2 + (i % 2)}" muted playsinline></video>\n`;
@@ -103,7 +115,7 @@ clips.forEach((c, i) => {
     scenes += `    <video id="b${i}" class="blur" src="${src}" data-start="${r3(t0)}" data-duration="${d}" data-media-start="${mediaStart}" data-track-index="${4 + (i % 2)}" muted playsinline data-design-ignore data-layout-ignore></video>\n`;
     scenes += `    <video id="v${i}" class="framed" style="width: ${ww}px; height: ${hh}px; left: ${960 - ww / 2}px; top: 40px" src="${src}" data-start="${r3(t0)}" data-duration="${d}" data-media-start="${mediaStart}" data-track-index="${2 + (i % 2)}" muted playsinline></video>\n`;
   }
-  scenes += `    <div id="lb${i}" class="label clip" data-start="${r3(t0)}" data-duration="${d}" data-track-index="8"><span class="code">${c.code}</span><span class="nm">${c.name}</span></div>\n`;
+  scenes += `    <div id="lb${i}" class="label clip" style="${lbStyle}${margin > 0 ? ` max-width: ${margin}px; flex-wrap: wrap; row-gap: 2px;` : ""}" data-start="${r3(t0)}" data-duration="${d}" data-track-index="8"><span class="code">${c.code}</span><span class="nm">${c.name}</span></div>\n`;
   js += `      tl.fromTo("#lb${i} .code, #lb${i} .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, ${r3(t0 + 0.08)});\n`;
 });
 const html = `<!doctype html>

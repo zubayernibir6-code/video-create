@@ -1,0 +1,175 @@
+{
+  "code": "SR1",
+  "name": "Studio Showreel",
+  "brand": "Talha Zubayer",
+  "project": "pf-showreel",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 57.93,
+  "fps": 30,
+  "sound": {
+    "music": {
+      "track": "showreel-drive",
+      "from": 6.4,
+      "gain": 0.8,
+      "fadeIn": 0.1,
+      "fadeOut": 2
+    },
+    "cues": [
+      {
+        "t": 3,
+        "sfx": "whoosh",
+        "gain": 0.3
+      },
+      {
+        "t": 53.73,
+        "sfx": "impact-bass-2",
+        "gain": 0.35,
+        "len": 2.2
+      }
+    ]
+  },
+  "clips": [
+    {
+      "code": "GH1",
+      "start": 3,
+      "end": 5.132,
+      "mediaStart": 2.2
+    },
+    {
+      "code": "PL1",
+      "start": 5.132,
+      "end": 7.476,
+      "mediaStart": 9
+    },
+    {
+      "code": "FM1",
+      "start": 7.476,
+      "end": 9.585,
+      "mediaStart": 9.43
+    },
+    {
+      "code": "AI1",
+      "start": 9.585,
+      "end": 11.82,
+      "mediaStart": 5.4
+    },
+    {
+      "code": "UT1",
+      "start": 11.82,
+      "end": 14.12,
+      "mediaStart": 2.4
+    },
+    {
+      "code": "SA1",
+      "start": 14.12,
+      "end": 16.23,
+      "mediaStart": 0
+    },
+    {
+      "code": "DS1",
+      "start": 16.23,
+      "end": 18.36,
+      "mediaStart": 3.7
+    },
+    {
+      "code": "LG1",
+      "start": 18.36,
+      "end": 20.68,
+      "mediaStart": 0.5
+    },
+    {
+      "code": "CD1",
+      "start": 20.68,
+      "end": 22.8,
+      "mediaStart": 7.4
+    },
+    {
+      "code": "FD1",
+      "start": 22.8,
+      "end": 25.02,
+      "mediaStart": 4
+    },
+    {
+      "code": "IA1",
+      "start": 25.02,
+      "end": 27.163,
+      "mediaStart": 6.4
+    },
+    {
+      "code": "AD10",
+      "start": 27.163,
+      "end": 29.39,
+      "mediaStart": 3.7
+    },
+    {
+      "code": "MP1",
+      "start": 29.39,
+      "end": 31.49,
+      "mediaStart": 8.6
+    },
+    {
+      "code": "KT1",
+      "start": 31.49,
+      "end": 33.6,
+      "mediaStart": 0
+    },
+    {
+      "code": "HX1",
+      "start": 33.6,
+      "end": 36.21,
+      "mediaStart": 12.5
+    },
+    {
+      "code": "CL1",
+      "start": 36.21,
+      "end": 38.1,
+      "mediaStart": 0
+    },
+    {
+      "code": "KP1",
+      "start": 38.1,
+      "end": 40.42,
+      "mediaStart": 5.8
+    },
+    {
+      "code": "AP1",
+      "start": 40.42,
+      "end": 42.55,
+      "mediaStart": 8.6
+    },
+    {
+      "code": "WF1",
+      "start": 42.55,
+      "end": 45.06,
+      "mediaStart": 9.3
+    },
+    {
+      "code": "BS1",
+      "start": 45.06,
+      "end": 47.01,
+      "mediaStart": 0.2
+    },
+    {
+      "code": "IH1",
+      "start": 47.01,
+      "end": 49.13,
+      "mediaStart": 5.4
+    },
+    {
+      "code": "NW1",
+      "start": 49.13,
+      "end": 51.46,
+      "mediaStart": 15.4
+    },
+    {
+      "code": "EV1",
+      "start": 51.46,
+      "end": 53.73,
+      "mediaStart": 0
+    }
+  ],
+  "missing": [],
+  "made": "2026-11-07"
+}

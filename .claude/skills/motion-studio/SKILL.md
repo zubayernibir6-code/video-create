@@ -42,7 +42,7 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 | `slot.mjs` | machine-wide limit on heavy jobs (chrome 2, render 1) for parallel agents |
 | `render-queue.mjs` | serial renders via finish.mjs --release → renders/portfolio, queue.json |
 | `icon.mjs` | Lucide icons as inline SVG (`--find word`) |
-| `showreel.mjs` | the studio showreel from rendered pieces, cut on strong beats, each clip labelled with its code |
+| `showreel.mjs` | the studio showreel from rendered pieces, cut on the kick drum, each clip labelled with its code; clips are CUT to their windows (23 full masters = 506 MB made the page check fail with ERR_CONNECTION_RESET); piece.json `reel.label` = top-left / top-right moves a label off the piece's own text (DS1); `--avg`/`--outro` keep it ≤ 60 s (no preflight needed); a whole-reel "Concept work · all brands fictional" label |
 | `portfolio-page.mjs` | static portfolio site (web copies + posters) in renders/portfolio/site |
 | `catalog-doc.mjs` | docs/business/CATALOG.md from catalog.json |
 

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>Showreel — Talha Zubayer · Motion Design</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root { --bg: #050507; --accent: #ffb547; --font-display: "Geist", "Hind Siliguri", sans-serif; --font-body: "Geist", "Hind Siliguri", sans-serif; --font-mono: "Geist Mono", "Hind Siliguri", monospace; }
+    video { position: absolute; display: block; object-fit: cover; }
+    video.full { left: 0; top: 0; width: 1920px; height: 1080px; }
+    video.blur { left: -60px; top: -60px; width: 2040px; height: 1200px; filter: blur(40px) brightness(0.45) saturate(1.2); }
+    video.framed { border-radius: 28px; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12); }
+    .label { position: absolute; left: 56px; bottom: 48px; display: flex; align-items: baseline; gap: 18px; padding: 14px 22px; border-radius: 16px; background: rgba(5, 5, 7, 0.62); border: 1px solid rgba(255, 255, 255, 0.12); }
+    .label .code { font-family: var(--font-mono); font-size: 30px; font-weight: 600; color: var(--accent); }
+    .label .nm { font-family: var(--font-display); font-size: 30px; font-weight: 560; color: #f5f7fb; letter-spacing: -0.01em; }
+    .title { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; background: radial-gradient(70% 70% at 50% 45%, #15161d 0%, #050507 70%); }
+    .title h1 { font-family: var(--font-display); font-size: 150px; font-weight: 680; letter-spacing: -0.05em; margin: 0; color: #f5f7fb; }
+    .title .kicker { font-size: 30px; color: rgba(245, 247, 251, 0.75); }
+    .outro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; background: radial-gradient(70% 70% at 50% 45%, #16171f 0%, #050507 70%); }
+    .outro h2 { font-family: var(--font-display); font-size: 110px; font-weight: 660; letter-spacing: -0.045em; margin: 0; color: #f5f7fb; text-wrap: balance; text-align: center; }
+    .outro .codes { font-family: var(--font-mono); font-size: 28px; color: var(--accent); max-width: 1500px; text-align: center; line-height: 1.6; }
+    .outro .who { font-size: 34px; color: rgba(245, 247, 251, 0.78); }
+    /* furniture, the whole reel (CLAUDE.md §0h): every brand in the clips is fictional — portfolio honesty (QUALITY.md B) */
+    .concept { position: absolute; right: 56px; bottom: 58px; z-index: 50; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245, 247, 251, 0.62); padding: 6px 10px; border-radius: 8px; background: rgba(5, 5, 7, 0.45); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="57.93" data-fps="30">
+    <section id="title" class="title clip" data-start="0" data-duration="3" data-track-index="1">
+      <h1 id="t-name">Talha Zubayer</h1>
+      <div id="t-tag" class="kicker">Motion design for SaaS, AI & data</div>
+    </section>
+    <video id="v0" class="full" src="assets/clips/GH1_Prism.mp4" data-start="3" data-duration="2.132" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb0" class="label clip" style="" data-start="3" data-duration="2.132" data-track-index="8"><span class="code">GH1</span><span class="nm">3D Glass Hero Title</span></div>
+    <video id="v1" class="full" src="assets/clips/PL1_Lumen.mp4" data-start="5.132" data-duration="2.344" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb1" class="label clip" style="" data-start="5.132" data-duration="2.344" data-track-index="8"><span class="code">PL1</span><span class="nm">Product Launch Film</span></div>
+    <video id="v2" class="full" src="assets/clips/FM1_EmberOak.mp4" data-start="7.476" data-duration="2.109" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb2" class="label clip" style="" data-start="7.476" data-duration="2.109" data-track-index="8"><span class="code">FM1</span><span class="nm">Footage + Motion Promo</span></div>
+    <video id="v3" class="full" src="assets/clips/AI1_Operator.mp4" data-start="9.585" data-duration="2.235" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb3" class="label clip" style="" data-start="9.585" data-duration="2.235" data-track-index="8"><span class="code">AI1</span><span class="nm">AI Agent Demo</span></div>
+    <video id="v4" class="full" src="assets/clips/UT1_AtlasCRM.mp4" data-start="11.82" data-duration="2.3" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb4" class="label clip" style="" data-start="11.82" data-duration="2.3" data-track-index="8"><span class="code">UT1</span><span class="nm">3D UI Tour</span></div>
+    <video id="b5" class="blur" src="assets/clips/SA1_Pocket.mp4" data-start="14.12" data-duration="2.11" data-media-start="0" data-track-index="5" muted playsinline data-design-ignore data-layout-ignore></video>
+    <video id="v5" class="framed" style="width: 563px; height: 1000px; left: 678.5px; top: 40px" src="assets/clips/SA1_Pocket.mp4" data-start="14.12" data-duration="2.11" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb5" class="label clip" style=" max-width: 595px; flex-wrap: wrap; row-gap: 2px;" data-start="14.12" data-duration="2.11" data-track-index="8"><span class="code">SA1</span><span class="nm">Vertical Social Ad</span></div>
+    <video id="v6" class="full" src="assets/clips/DS1_MeridianResearch.mp4" data-start="16.23" data-duration="2.13" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb6" class="label clip" style="left: auto; right: 56px; top: 48px; bottom: auto;" data-start="16.23" data-duration="2.13" data-track-index="8"><span class="code">DS1</span><span class="nm">Data Story</span></div>
+    <video id="v7" class="full" src="assets/clips/LG1_Orbit.mp4" data-start="18.36" data-duration="2.32" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb7" class="label clip" style="" data-start="18.36" data-duration="2.32" data-track-index="8"><span class="code">LG1</span><span class="nm">3D Logo Sting</span></div>
+    <video id="v8" class="full" src="assets/clips/CD1_Kerf.mp4" data-start="20.68" data-duration="2.12" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb8" class="label clip" style="" data-start="20.68" data-duration="2.12" data-track-index="8"><span class="code">CD1</span><span class="nm">Dev-Tool Launch (3D code)</span></div>
+    <video id="v9" class="full" src="assets/clips/FD1_Relay.mp4" data-start="22.8" data-duration="2.22" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb9" class="label clip" style="" data-start="22.8" data-duration="2.22" data-track-index="8"><span class="code">FD1</span><span class="nm">Feature Drop</span></div>
+    <video id="v10" class="full" src="assets/clips/IA1_Vaultline.mp4" data-start="25.02" data-duration="2.143" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb10" class="label clip" style="" data-start="25.02" data-duration="2.143" data-track-index="8"><span class="code">IA1</span><span class="nm">3D Architecture Stack</span></div>
+    <video id="b11" class="blur" src="assets/clips/AD10_BazarGhor.mp4" data-start="27.163" data-duration="2.227" data-media-start="0" data-track-index="5" muted playsinline data-design-ignore data-layout-ignore></video>
+    <video id="v11" class="framed" style="width: 563px; height: 1000px; left: 678.5px; top: 40px" src="assets/clips/AD10_BazarGhor.mp4" data-start="27.163" data-duration="2.227" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb11" class="label clip" style=" max-width: 595px; flex-wrap: wrap; row-gap: 2px;" data-start="27.163" data-duration="2.227" data-track-index="8"><span class="code">AD10</span><span class="nm">Ad Pack ×10</span></div>
+    <video id="v12" class="full" src="assets/clips/MP1_Cargoline.mp4" data-start="29.39" data-duration="2.1" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb12" class="label clip" style="" data-start="29.39" data-duration="2.1" data-track-index="8"><span class="code">MP1</span><span class="nm">Map Story</span></div>
+    <video id="v13" class="full" src="assets/clips/KT1_Driftwood.mp4" data-start="31.49" data-duration="2.11" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb13" class="label clip" style="" data-start="31.49" data-duration="2.11" data-track-index="8"><span class="code">KT1</span><span class="nm">Kinetic Type Manifesto</span></div>
+    <video id="v14" class="full" src="assets/clips/HX1_KindredHealth.mp4" data-start="33.6" data-duration="2.61" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb14" class="label clip" style="" data-start="33.6" data-duration="2.61" data-track-index="8"><span class="code">HX1</span><span class="nm">How-It-Works Explainer</span></div>
+    <video id="v15" class="full" src="assets/clips/CL1_Forge.mp4" data-start="36.21" data-duration="1.89" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb15" class="label clip" style="" data-start="36.21" data-duration="1.89" data-track-index="8"><span class="code">CL1</span><span class="nm">Changelog / Release Reel</span></div>
+    <video id="v16" class="full" src="assets/clips/KP1_Northwind.mp4" data-start="38.1" data-duration="2.32" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb16" class="label clip" style="" data-start="38.1" data-duration="2.32" data-track-index="8"><span class="code">KP1</span><span class="nm">Investor Metrics Reel</span></div>
+    <video id="b17" class="blur" src="assets/clips/AP1_Habitly.mp4" data-start="40.42" data-duration="2.13" data-media-start="0" data-track-index="5" muted playsinline data-design-ignore data-layout-ignore></video>
+    <video id="v17" class="framed" style="width: 563px; height: 1000px; left: 678.5px; top: 40px" src="assets/clips/AP1_Habitly.mp4" data-start="40.42" data-duration="2.13" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb17" class="label clip" style=" max-width: 595px; flex-wrap: wrap; row-gap: 2px;" data-start="40.42" data-duration="2.13" data-track-index="8"><span class="code">AP1</span><span class="nm">App Store Preview</span></div>
+    <video id="v18" class="full" src="assets/clips/WF1_Ledgerly.mp4" data-start="42.55" data-duration="2.51" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb18" class="label clip" style="" data-start="42.55" data-duration="2.51" data-track-index="8"><span class="code">WF1</span><span class="nm">Workflow Diagram in Motion</span></div>
+    <video id="v19" class="full" src="assets/clips/BS1_Solace.mp4" data-start="45.06" data-duration="1.95" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb19" class="label clip" style="" data-start="45.06" data-duration="1.95" data-track-index="8"><span class="code">BS1</span><span class="nm">Brand System in Motion</span></div>
+    <video id="b20" class="blur" src="assets/clips/IH1_Nimbus.mp4" data-start="47.01" data-duration="2.12" data-media-start="0" data-track-index="4" muted playsinline data-design-ignore data-layout-ignore></video>
+    <video id="v20" class="framed" style="width: 1000px; height: 1000px; left: 460px; top: 40px" src="assets/clips/IH1_Nimbus.mp4" data-start="47.01" data-duration="2.12" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb20" class="label clip" style=" max-width: 376px; flex-wrap: wrap; row-gap: 2px;" data-start="47.01" data-duration="2.12" data-track-index="8"><span class="code">IH1</span><span class="nm">Integrations Hub</span></div>
+    <video id="v21" class="full" src="assets/clips/NW1_TheBrief.mp4" data-start="49.13" data-duration="2.33" data-media-start="0" data-track-index="3" muted playsinline></video>
+    <div id="lb21" class="label clip" style="" data-start="49.13" data-duration="2.33" data-track-index="8"><span class="code">NW1</span><span class="nm">Editorial Explainer</span></div>
+    <video id="b22" class="blur" src="assets/clips/EV1_BuildersSummit.mp4" data-start="51.46" data-duration="2.27" data-media-start="0" data-track-index="4" muted playsinline data-design-ignore data-layout-ignore></video>
+    <video id="v22" class="framed" style="width: 1000px; height: 1000px; left: 460px; top: 40px" src="assets/clips/EV1_BuildersSummit.mp4" data-start="51.46" data-duration="2.27" data-media-start="0" data-track-index="2" muted playsinline></video>
+    <div id="lb22" class="label clip" style=" max-width: 376px; flex-wrap: wrap; row-gap: 2px;" data-start="51.46" data-duration="2.27" data-track-index="8"><span class="code">EV1</span><span class="nm">Event / Webinar Promo</span></div>
+    <section id="outro" class="outro clip" data-start="53.73" data-duration="4.2" data-track-index="1">
+      <h2 id="o-head">Pick a code. Get the video.</h2>
+      <div id="o-codes" class="codes">GH1 · PL1 · FM1 · AI1 · UT1 · SA1 · DS1 · LG1 · CD1 · FD1 · IA1 · AD10 · MP1 · KT1 · HX1 · CL1 · KP1 · AP1 · WF1 · BS1 · IH1 · NW1 · EV1</div>
+      <div id="o-who" class="who">Talha Zubayer · Motion Design</div>
+    </section>
+    <div id="concept" class="concept" data-design-ignore data-layout-ignore>Concept work · all brands fictional</div>
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/showreel-drive.mp3" data-start="0" data-duration="57.93" data-media-start="6.4" data-track-index="10" data-volume="0.8" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.1,"v":1},{"t":55.93,"v":1},{"t":57.93,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh" src="assets/sfx/whoosh.mp3" data-start="2.924" data-duration="0.57" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-02-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="53.707" data-duration="2.2" data-track-index="20" data-volume="0.35" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":2.12,"v":1},{"t":2.2,"v":0}]}]}'></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl;
+      S.lines("#t-name", 0.2, { dur: 0.9 });
+      S.words("#t-tag", 0.75, { stagger: S.f(2) });
+      tl.fromTo("#lb0 .code, #lb0 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 3.08);
+      tl.fromTo("#lb1 .code, #lb1 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 5.212);
+      tl.fromTo("#lb2 .code, #lb2 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 7.556);
+      tl.fromTo("#lb3 .code, #lb3 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 9.665);
+      tl.fromTo("#lb4 .code, #lb4 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 11.9);
+      tl.fromTo("#lb5 .code, #lb5 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 14.2);
+      tl.fromTo("#lb6 .code, #lb6 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 16.31);
+      tl.fromTo("#lb7 .code, #lb7 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 18.44);
+      tl.fromTo("#lb8 .code, #lb8 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 20.76);
+      tl.fromTo("#lb9 .code, #lb9 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 22.88);
+      tl.fromTo("#lb10 .code, #lb10 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 25.1);
+      tl.fromTo("#lb11 .code, #lb11 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 27.243);
+      tl.fromTo("#lb12 .code, #lb12 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 29.47);
+      tl.fromTo("#lb13 .code, #lb13 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 31.57);
+      tl.fromTo("#lb14 .code, #lb14 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 33.68);
+      tl.fromTo("#lb15 .code, #lb15 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 36.29);
+      tl.fromTo("#lb16 .code, #lb16 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 38.18);
+      tl.fromTo("#lb17 .code, #lb17 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 40.5);
+      tl.fromTo("#lb18 .code, #lb18 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 42.63);
+      tl.fromTo("#lb19 .code, #lb19 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 45.14);
+      tl.fromTo("#lb20 .code, #lb20 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 47.09);
+      tl.fromTo("#lb21 .code, #lb21 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 49.21);
+      tl.fromTo("#lb22 .code, #lb22 .nm", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.32, ease: "enter", stagger: S.f(2) }, 51.54);
+      S.lines("#o-head", 53.88, { dur: 0.8 });
+      tl.fromTo("#o-codes", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "enter" }, 54.43);
+      tl.fromTo("#o-who", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "enter" }, 54.73);
+      S.grain({ opacity: 0.04 });
+      window.__timelines["main"] = S.done().tl;
+    });
+  </script>
+</body>
+</html>
