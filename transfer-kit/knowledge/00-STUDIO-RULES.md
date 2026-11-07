@@ -346,6 +346,22 @@ commas). File and project names in Latin letters, lowercase, with dashes.
 
 ---
 
+## 10b. Client motion-graphics jobs by catalog CODE (Motion Studio, added 2026-11-07)
+
+- Files: `studio-catalog.json` (32 services: code, what, best-for, aspects, durations, music mood, fonts, prices in
+  USD and BDT), `skill-motion-studio.md` (the job in seven commands), `studio-AGENT-BRIEF.md` (how a piece is
+  built), `studio-QUALITY.md` (the bar), `studio-brief.example.md` (a filled BRIEF.md), `studio-piece.example.json`
+  (a filled piece.json with the sound cues), `business-PLAYBOOK.md` (prices, clients, payments, in Bengali),
+  `business-CLIENT-BRIEF.md` (the English intake form for clients).
+- Your part when he brings a client: pick the CODE, fill the client brief from what he pasted, write the piece's
+  BRIEF.md in the same shape as the example (concept, look with hex colours and fonts, timed beats, craft notes,
+  sound), write PLAN.md, and list the open questions (logo files, numbers the client must confirm, voice).
+- Every client video shows only numbers and claims the client confirmed in writing; no real-brand logos the client
+  does not own; no AI-generated people unless the client asks. Portfolio samples are always labelled concept work.
+- The building, checking and rendering happen in his Claude Code workspace (`tools/studio`), not by you.
+
+---
+
 ## 11. Your checklist before you show him anything
 
 - [ ] Replied in simple Bengali, technical words explained.

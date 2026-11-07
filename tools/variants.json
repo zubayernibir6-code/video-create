@@ -361,6 +361,248 @@
       "engine": "tools/cutdown/page.mjs (profile linkedin-clip)",
       "skill": "linkedin-kit",
       "proof": "projects/claude-li-1 (layout + PLAN 2026-10-30; first render: release step 7)"
+    },
+    {
+      "id": "PL1",
+      "bn": "প্রোডাক্ট লঞ্চ ফিল্ম",
+      "en": "Product Launch Film",
+      "status": "beta",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "The hero video for a launch day: a big kinetic-type promise, the product UI floating in 3D space with a slow camera, three benefit beats, a light sweep and a logo lockup. Keynote-style.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "renders/portfolio/PL1_Lumen.mp4 (portfolio sample, concept work for the fictional brand Lumen; project projects/pf-pl1-lumen; finish.mjs QC in renders/pf-pl1-lumen/)"
+    },
+    {
+      "id": "FD1",
+      "bn": "নতুন ফিচারের ঘোষণা",
+      "en": "Feature Drop",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "One new feature in 15 seconds: a hook line, the cursor walks to the feature, a smooth punch-in on the UI moment, the result, a CTA.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "UT1",
+      "bn": "থ্রিডি অ্যাপ-ভ্রমণ",
+      "en": "3D UI Tour",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "The app's screens as glass-edged panels in 3D space; the camera dollies from panel to panel (dashboard → pipeline → report) with parallax and depth of field.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "AP1",
+      "bn": "অ্যাপ স্টোরের প্রিভিউ",
+      "en": "App Store Preview",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "A vertical phone-first preview: taps, swipes and screen changes inside a phone, short benefit captions, made to the App Store / Play Store preview limits (15–30 s).",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "CL1",
+      "bn": "রিলিজ নোটের ভিডিও",
+      "en": "Changelog / Release Reel",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "\"What's new in v3.0\" — 4–6 updates in quick cuts: version stamp, icon + one line + a tiny UI snippet per update, a closing lockup.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "IH1",
+      "bn": "ইন্টিগ্রেশন দেখানো",
+      "en": "Integrations Hub",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "The product as a glowing hub; app icons orbit in, beams connect them, data packets travel, a count of integrations lands.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "AI1",
+      "bn": "এআই এজেন্টের ডেমো",
+      "en": "AI Agent Demo",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "An AI agent at work: a prompt is typed, a labelled agent cursor clicks through a clean UI, status chips tick from 'working' to 'done', the result lands. The 2026 launch format for AI products.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "HX1",
+      "bn": "কীভাবে কাজ করে — ব্যাখ্যা",
+      "en": "How-It-Works Explainer",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed; a voice-over (AI or the client's)",
+      "builds": "A voiced 45–90 s explainer: the problem, the turn, three simple steps with friendly flat illustration and icons, proof, CTA. Script, voice-over and music included.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "WF1",
+      "bn": "কাজের ধাপের ডায়াগ্রাম",
+      "en": "Workflow Diagram in Motion",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "A process as a living diagram: nodes draw in, packets travel the paths, a branch splits on a condition, failures retry, success lights up the end.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "IA1",
+      "bn": "থ্রিডি স্তর-ভাগ ডায়াগ্রাম",
+      "en": "3D Architecture Stack",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "Real 3D: the system's layers (edge, API, compute, data, encryption) float apart in an isometric stack with labels, data runs through them, they lock back together.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "DS1",
+      "bn": "ডেটার গল্প",
+      "en": "Data Story",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "Bloomberg / FT-style: a line chart draws itself, the key point is annotated, numbers count up, a comparison resolves — calm editorial type, one accent colour.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "KP1",
+      "bn": "বিনিয়োগকারীর জন্য মেট্রিক্স",
+      "en": "Investor Metrics Reel",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "A funding or milestone announcement: big KPI count-ups (ARR, growth, customers, countries), a growth curve, a donut, a lockup — confident and exact.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "MP1",
+      "bn": "ম্যাপের গল্প",
+      "en": "Map Story",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "A world map: hubs light up, routes draw as arcs, a counter runs, the camera pushes into a region — for reach, logistics and expansion stories.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "NW1",
+      "bn": "সংবাদ-ধাঁচের ব্যাখ্যা",
+      "en": "Editorial Explainer",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed; a voice-over (AI or the client's)",
+      "builds": "Vox-style: paper textures, headline cards, highlighter strokes over key lines, a document zoom, a hand-drawn arrow, a voiced narration on a real topic.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "LG1",
+      "bn": "থ্রিডি লোগো স্টিং",
+      "en": "3D Logo Sting",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "A 5–7 s logo reveal in real 3D: beveled letters flip up, light runs across the bevels, one sub-bass hit and a sparkle on the lock.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "KT1",
+      "bn": "নাচন্ত লেখার ম্যানিফেস্টো",
+      "en": "Kinetic Type Manifesto",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "A brand belief told in big moving type cut to the beat: words slam, split, swap and morph; colour blocks wipe; it ends on the brand line.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "BS1",
+      "bn": "ব্র্যান্ড-গাইডলাইনের অ্যানিমেশন",
+      "en": "Brand System in Motion",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "The identity animated: logo construction, palette swatches, type specimen, pattern and real applications (cards, app icon, signage) — a living brand book.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "SA1",
+      "bn": "খাড়া সোশ্যাল বিজ্ঞাপন",
+      "en": "Vertical Social Ad",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed; a voice-over (AI or the client's)",
+      "builds": "A 15 s vertical ad built for the feed: the hook in the first second, three benefit beats, a big CTA, voice-over and captions inside the platform safe zones.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "EV1",
+      "bn": "ইভেন্ট বা ওয়েবিনারের প্রোমো",
+      "en": "Event / Webinar Promo",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "Date, venue or link, speakers as clean monogram cards (no faces needed), the agenda in three beats, a countdown and a register button.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "GH1",
+      "bn": "থ্রিডি কাচের হিরো টাইটেল",
+      "en": "3D Glass Hero Title",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "Real 3D glass: a refracting glass form turns in front of a giant headline so the type bends through it, then the tagline lands — the most premium 8–10 seconds a brand can open with.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "CD1",
+      "bn": "ডেভেলপার টুলের লঞ্চ",
+      "en": "Dev-Tool Launch (3D code)",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "Syntax-highlighted code on a lit 3D slab rotating into a readable rest, a terminal run, the result — for developer products.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
+    },
+    {
+      "id": "LT1",
+      "bn": "লোয়ার-থার্ড ও টাইটেল প্যাক",
+      "en": "Lower-Thirds & Titles Pack",
+      "status": "planned",
+      "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
+      "builds": "A matched set of name bars, section titles, callouts and end cards on a transparent background, in the client's brand, ready to drop on any edit.",
+      "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
+      "skill": "motion-studio",
+      "proof": "not rendered yet"
     }
   ]
 }

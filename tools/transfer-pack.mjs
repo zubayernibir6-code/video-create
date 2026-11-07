@@ -31,6 +31,15 @@ const COPIES = [
   ["skill-post-copy.md", ".claude/skills/post-copy/SKILL.md"],
   ["skill-privacy-blur.md", ".claude/skills/privacy-blur/SKILL.md"],
   ["PROMPT-PACK-tools-reel.md", "PROMPT-PACK-tools-reel.md"],
+  // Motion Studio (2026-11-07): another model can plan a client piece by CODE from these
+  ["skill-motion-studio.md", ".claude/skills/motion-studio/SKILL.md"],
+  ["studio-catalog.json", "tools/studio/catalog.json"],
+  ["studio-AGENT-BRIEF.md", "docs/studio/AGENT-BRIEF.md"],
+  ["studio-QUALITY.md", "docs/studio/QUALITY.md"],
+  ["studio-brief.example.md", "projects/pf-fd1-relay/BRIEF.md"],
+  ["studio-piece.example.json", "projects/pf-pl1-lumen/piece.json"],
+  ["business-PLAYBOOK.md", "docs/business/PLAYBOOK.md"],
+  ["business-CLIENT-BRIEF.md", "docs/business/client-kit/CLIENT-BRIEF.md"],
 ];
 
 mkdirSync(OUT, { recursive: true });

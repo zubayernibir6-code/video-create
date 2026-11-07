@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>PL1 · Product Launch Film — Lumen (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Lumen: "light on your data". Near-black navy, warm-white ink, ONE amber accent; violet only as ambient glow. */
+      --bg: #05060a;
+      --bg-2: #0c0e15;
+      --bg-3: #131622;
+      --ink: #f5f7fb;
+      --ink-2: rgba(245, 247, 251, 0.7);
+      --ink-3: rgba(245, 247, 251, 0.42);
+      --accent: #ffb547;
+      --accent-2: #8b7bff;
+      --font-display: "Geist", "Hind Siliguri", sans-serif;
+      --font-body: "Geist", "Hind Siliguri", sans-serif;
+      --font-mono: "Geist Mono", "Hind Siliguri", monospace;
+    }
+    .warm { background: linear-gradient(180deg, #fff3db 0%, #ffc56b 70%, #ffb547 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .dim { color: var(--ink-3); }
+
+    /* persistent background */
+    #bg .g1 { width: 1100px; height: 1100px; left: 980px; top: -260px; background: radial-gradient(circle, rgba(255, 181, 71, 0.55), rgba(255, 181, 71, 0) 65%); }
+    #bg .g2 { width: 1300px; height: 1300px; left: -380px; top: 380px; background: radial-gradient(circle, rgba(139, 123, 255, 0.4), rgba(139, 123, 255, 0) 65%); }
+
+    /* s1 — the promise */
+    .s1-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+    .s1-head { font-size: 136px; font-weight: 640; letter-spacing: -0.048em; line-height: 1.02; text-align: center; }
+    .s1-head .row { display: block; }
+    .s1-line { position: absolute; left: 50%; bottom: -70px; width: 960px; height: 2px; margin-left: -480px; background: linear-gradient(90deg, rgba(255, 181, 71, 0), #ffd28a 50%, rgba(255, 181, 71, 0)); box-shadow: 0 0 24px rgba(255, 181, 71, 0.8); }
+
+    /* s2 — the problem: dashboard fragments fly past */
+    .frag { position: absolute; width: 420px; height: 260px; }
+    .frag-in { position: absolute; inset: 0; padding: 26px 28px; border-radius: 22px; background: linear-gradient(180deg, #151826, #0d0f17); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: var(--shadow-2); overflow: hidden; }
+    .frag .t { font-size: 24px; color: var(--ink-3); font-family: var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+    .frag .v { font-size: 64px; font-weight: 600; letter-spacing: -0.03em; margin-top: 10px; }
+    .frag .v.bad { color: #ff7a7a; }
+    .frag svg { position: absolute; left: 28px; right: 28px; bottom: 24px; width: 364px; height: 120px; }
+    #s2 .stage3d { perspective: 1300px; }
+    #s2 .cam { transform-style: preserve-3d; }
+    .s2-text { position: relative; text-align: center; isolation: isolate; }
+    .s2-text::before { content: ""; position: absolute; left: -260px; right: -260px; top: -120px; bottom: -120px; background: radial-gradient(closest-side, rgba(5, 6, 10, 0.92), rgba(5, 6, 10, 0)); z-index: -1; }
+    .s2-text .h1 { font-size: 112px; font-weight: 640; letter-spacing: -0.045em; }
+
+    /* s3 — meet Lumen */
+    .lockup { display: flex; align-items: center; gap: 40px; }
+    .mark { position: relative; width: 176px; height: 176px; }
+    .mark svg { position: absolute; inset: 0; width: 176px; height: 176px; overflow: visible; }
+    .core-glow { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 150, 0.95) 0%, rgba(255, 181, 71, 0.45) 22%, rgba(255, 181, 71, 0) 60%); }
+    .wordmark { font-family: var(--font-display); font-size: 184px; font-weight: 600; letter-spacing: -0.06em; line-height: 1; padding-bottom: 14px; }
+    .s3-col { display: flex; flex-direction: column; align-items: center; gap: 44px; }
+    .s3-tag { font-size: 28px; }
+
+    /* s4 — the product */
+    .app { position: absolute; left: 180px; top: 90px; width: 1560px; height: 900px; }
+    .app .view { display: flex; }
+    .side { width: 108px; border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; gap: 30px; padding-top: 34px; color: var(--ink-3); font-size: 34px; }
+    .side .on { color: var(--accent); }
+    .main { position: relative; flex: 1; padding: 40px 48px; display: flex; flex-direction: column; gap: 30px; }
+    .sugg { position: absolute; left: 48px; right: 48px; top: 196px; display: flex; flex-direction: column; gap: 22px; }
+    .sugg .srow { display: flex; gap: 16px; }
+    .sugg .chip { font-size: 28px; color: var(--ink-2); }
+    .sugg .skel { display: flex; flex-direction: column; gap: 18px; margin-top: 26px; }
+    .sugg .skel i { display: block; height: 22px; border-radius: 11px; background: rgba(255, 255, 255, 0.05); }
+    .ask { position: relative; height: 96px; border-radius: 22px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line-2); display: flex; align-items: center; gap: 22px; padding: 0 22px 0 30px; }
+    .ask > .icon { font-size: 36px; color: var(--accent); flex: none; }
+    .ask-text { flex: 1; font-size: 36px; color: var(--ink); white-space: nowrap; overflow: hidden; }
+    .ask-btn { height: 62px; padding: 0 30px; border-radius: 16px; background: var(--accent); color: #1a1205; font-weight: 650; font-size: 30px; display: flex; align-items: center; }
+    .answer { flex: 1; padding: 34px 40px; background: linear-gradient(180deg, #11131c, #0b0d14); }
+    .ans-head { display: flex; align-items: baseline; justify-content: space-between; }
+    .ans-title { font-size: 52px; font-weight: 620; letter-spacing: -0.03em; margin-top: 10px; }
+    .ans-meta { font-family: var(--font-mono); font-size: 24px; color: var(--ink-3); }
+    .chart { position: relative; height: 330px; margin-top: 18px; }
+    .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .marker-label { position: absolute; left: 662px; top: -6px; padding: 8px 16px; border-radius: 12px; background: rgba(255, 181, 71, 0.14); border: 1px solid rgba(255, 181, 71, 0.5); color: #ffd28a; font-size: 26px; white-space: nowrap; }
+    .chips { display: flex; gap: 16px; margin-top: 22px; }
+    .chip.insight { background: rgba(255, 181, 71, 0.12); border-color: rgba(255, 181, 71, 0.45); color: #ffe2b0; font-size: 28px; }
+    .chip.src { font-family: var(--font-mono); font-size: 24px; color: var(--ink-2); }
+    .floor { position: absolute; left: -600px; top: 560px; width: 3120px; height: 2400px; background-image: linear-gradient(rgba(255, 181, 71, 0.18) 2px, transparent 2px), linear-gradient(90deg, rgba(255, 181, 71, 0.18) 2px, transparent 2px); background-size: 120px 120px; -webkit-mask-image: radial-gradient(50% 50% at 50% 0%, #000 0%, transparent 100%); mask-image: radial-gradient(50% 50% at 50% 0%, #000 0%, transparent 100%); transform-origin: 50% 0%; transform: rotateX(90deg); }
+
+    /* s5 — three benefits */
+    .bento { position: absolute; left: 140px; top: 200px; display: grid; grid-template-columns: repeat(3, 520px); gap: 40px; }
+    .ben { position: relative; height: 680px; padding: 40px; border-radius: 32px; background: linear-gradient(180deg, #141724, #0c0e15); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: var(--shadow-3); overflow: hidden; }
+    .ben .ico { width: 76px; height: 76px; border-radius: 22px; display: grid; place-items: center; background: rgba(255, 181, 71, 0.12); color: var(--accent); font-size: 40px; border: 1px solid rgba(255, 181, 71, 0.3); }
+    .ben h3 { font-size: 50px; font-weight: 620; letter-spacing: -0.03em; line-height: 1.06; margin: 34px 0 0; }
+    .ben .vis { position: absolute; left: 40px; right: 40px; bottom: 40px; }
+    .bubble { padding: 22px 26px; border-radius: 22px 22px 22px 8px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line-2); font-size: 30px; line-height: 1.3; min-height: 120px; }
+    .pill { display: flex; justify-content: space-between; margin-top: 14px; padding: 14px 20px; border-radius: 14px; background: rgba(255, 181, 71, 0.1); border: 1px solid rgba(255, 181, 71, 0.35); font-size: 28px; }
+    .pill b { color: var(--accent); font-weight: 600; }
+    .bars { display: flex; align-items: flex-end; gap: 18px; height: 210px; }
+    .bars i { display: block; flex: 1; border-radius: 10px 10px 4px 4px; background: linear-gradient(180deg, #ffcf85, #ffb547); }
+    .bars i.lo { background: rgba(255, 255, 255, 0.16); }
+    .cite { display: flex; gap: 12px; margin-top: 18px; }
+    .cite .chip { font-family: var(--font-mono); font-size: 24px; }
+    .note { position: relative; display: flex; gap: 20px; align-items: flex-start; padding: 24px; border-radius: 22px; background: rgba(255, 255, 255, 0.07); border: 1px solid var(--line-2); box-shadow: var(--shadow-2); }
+    .note .icon { font-size: 40px; color: var(--accent); flex: none; margin-top: 4px; }
+    .note .nt { font-size: 28px; line-height: 1.3; }
+    .note .nt small { display: block; font-size: 24px; color: var(--ink-3); margin-top: 6px; font-family: var(--font-mono); }
+    .focus { position: absolute; left: 140px; top: 200px; width: 520px; height: 680px; border-radius: 32px; border: 2px solid rgba(255, 181, 71, 0.85); box-shadow: 0 0 40px rgba(255, 181, 71, 0.35), inset 0 0 30px rgba(255, 181, 71, 0.12); pointer-events: none; }
+
+    /* s6 — connect */
+    .s6-title { position: absolute; left: 0; right: 0; top: 110px; text-align: center; font-size: 84px; font-weight: 630; letter-spacing: -0.04em; }
+    .node { position: absolute; width: 270px; height: 92px; margin: -46px 0 0 -135px; display: flex; align-items: center; gap: 16px; padding: 0 22px; border-radius: 22px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.16); box-shadow: var(--shadow-2); font-size: 28px; }
+    .node .icon { font-size: 36px; color: var(--accent); flex: none; }
+    .hub { position: absolute; left: 960px; top: 610px; width: 200px; height: 200px; margin: -100px 0 0 -100px; border-radius: 50%; background: radial-gradient(circle, #1b1d2a, #0b0c12); border: 1px solid rgba(255, 181, 71, 0.4); box-shadow: 0 0 80px rgba(255, 181, 71, 0.25); display: grid; place-items: center; }
+    .hub svg { width: 120px; height: 120px; overflow: visible; }
+    .pkt { position: absolute; left: 0; top: 0; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: #ffe2b0; box-shadow: 0 0 18px 4px rgba(255, 181, 71, 0.8); opacity: 0; }
+
+    /* s7 — end card */
+    .s7-col { display: flex; flex-direction: column; align-items: center; gap: 38px; }
+    .s7-tag { font-size: 54px; font-weight: 560; letter-spacing: -0.03em; color: var(--ink-2); }
+    .s7 .wordmark { overflow: hidden; position: relative; }
+    .cta .icon { font-size: 30px; stroke-width: 2.5; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; color: rgba(245, 247, 251, 0.62); text-transform: uppercase; }
+    .app .bar .url { color: rgba(245, 247, 251, 0.6); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="30" data-fps="30">
+
+    <!-- persistent ambient background -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="30" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div id="bg-g1" class="glow g1" data-layout-allow-overflow></div>
+      <div id="bg-g2" class="glow g2" data-layout-allow-overflow></div>
+      <div class="bg-dots"></div>
+    </section>
+
+    <!-- S1 0–3.2: the promise -->
+    <section id="s1" class="scene clip" data-start="0" data-duration="3.2" data-track-index="1">
+      <div class="layer center">
+        <div class="s1-wrap">
+          <h1 class="display s1-head"><span id="s1-r1" class="row">Your data has</span><span id="s1-r2" class="row" style="color: #ffc56b">something to say.</span></h1>
+          <div id="s1-line" class="s1-line" data-design-ignore></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 3.0–6.4: the problem -->
+    <section id="s2" class="scene clip" data-start="3.0" data-duration="3.4" data-track-index="2">
+      <div class="stage3d"><div class="cam" id="s2-cam" data-design-ignore data-layout-ignore>
+        <div class="frag" id="f1" style="left: -180px; top: -40px"><div class="frag-in"><div class="t">Revenue</div><div class="v">$1.84M</div><svg viewBox="0 0 364 120"><path d="M0 100 L60 82 L120 90 L180 50 L240 64 L300 30 L364 44" stroke="#8b7bff" stroke-width="5" fill="none"/></svg></div></div>
+        <div class="frag" id="f2" style="left: 500px; top: -130px"><div class="frag-in"><div class="t">NPS</div><div class="v">31</div></div></div>
+        <div class="frag" id="f3" style="left: 1200px; top: -110px"><div class="frag-in"><div class="t">Churn</div><div class="v bad">4.2%</div><svg viewBox="0 0 364 120"><path d="M0 40 L60 52 L120 46 L180 70 L240 66 L300 92 L364 100" stroke="#ff7a7a" stroke-width="5" fill="none"/></svg></div></div>
+        <div class="frag" id="f4" style="left: 1820px; top: -30px"><div class="frag-in"><div class="t">CAC</div><div class="v">$318</div></div></div>
+        <div class="frag" id="f5" style="left: -1240px; top: 400px"><div class="frag-in"><div class="t">Pipeline</div><div class="v">$412K</div><svg viewBox="0 0 364 120"><g fill="rgba(255,255,255,.22)"><rect x="0" y="60" width="40" height="60" rx="6"/><rect x="54" y="40" width="40" height="80" rx="6"/><rect x="108" y="70" width="40" height="50" rx="6"/><rect x="162" y="30" width="40" height="90" rx="6"/><rect x="216" y="50" width="40" height="70" rx="6"/><rect x="270" y="20" width="40" height="100" rx="6"/><rect x="324" y="44" width="40" height="76" rx="6"/></g></svg></div></div>
+        <div class="frag" id="f6" style="left: 2360px; top: 380px"><div class="frag-in"><div class="t">Sessions</div><div class="v">−12%</div><svg viewBox="0 0 364 120"><circle cx="300" cy="40" r="56" stroke="rgba(255,255,255,.2)" stroke-width="16" fill="none"/><circle cx="300" cy="40" r="56" stroke="#8b7bff" stroke-width="16" fill="none" stroke-dasharray="120 400"/></svg></div></div>
+        <div class="frag" id="f7" style="left: -220px; top: 900px"><div class="frag-in"><div class="t">Active users</div><div class="v">18,204</div><svg viewBox="0 0 364 120"><g fill="rgba(255,255,255,.22)"><rect x="0" y="60" width="40" height="60" rx="6"/><rect x="54" y="40" width="40" height="80" rx="6"/><rect x="108" y="70" width="40" height="50" rx="6"/><rect x="162" y="30" width="40" height="90" rx="6"/><rect x="216" y="50" width="40" height="70" rx="6"/><rect x="270" y="20" width="40" height="100" rx="6"/><rect x="324" y="44" width="40" height="76" rx="6"/></g></svg></div></div>
+        <div class="frag" id="f8" style="left: 480px; top: 990px"><div class="frag-in"><div class="t">Tickets</div><div class="v bad">+64</div></div></div>
+        <div class="frag" id="f9" style="left: 1180px; top: 970px"><div class="frag-in"><div class="t">MRR</div><div class="v">$96.2K</div><svg viewBox="0 0 364 120"><path d="M0 90 L60 86 L120 70 L180 74 L240 52 L300 48 L364 30" stroke="#8b7bff" stroke-width="5" fill="none"/></svg></div></div>
+        <div class="frag" id="f10" style="left: 1860px; top: 880px"><div class="frag-in"><div class="t">Conversion</div><div class="v">2.8%</div></div></div>
+      </div></div>
+      <div class="layer center">
+        <div class="s2-text">
+          <h2 id="s2-a" class="h1" data-layout-allow-overlap>Dashboards everywhere.</h2>
+          <h2 id="s2-b" class="h1 dim" data-layout-allow-overlap>Answers nowhere.</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 5.9–9.3: meet Lumen -->
+    <section id="s3" class="scene clip" data-start="5.9" data-duration="3.4" data-track-index="3">
+      <div class="layer center">
+        <div id="s3-col" class="s3-col">
+          <div class="lockup">
+            <div class="mark">
+              <div id="s3-core" class="core-glow" data-design-ignore></div>
+              <div id="s3-burst" class="burst" style="left: 88px; top: 88px; border-color: #ffb547" data-design-ignore></div>
+              <svg viewBox="0 0 176 176"><circle id="s3-ring" cx="88" cy="88" r="70" stroke="#ffb547" stroke-width="12" fill="none" stroke-linecap="round" transform="rotate(-90 88 88)"/><circle id="s3-dot" cx="88" cy="88" r="21" fill="#ffd28a"/></svg>
+            </div>
+            <div id="s3-word" class="wordmark">lumen</div>
+          </div>
+          <div id="s3-tag" class="kicker s3-tag">The AI analyst for your whole company</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 9.0–16.15: the product -->
+    <section id="s4" class="scene clip" data-start="9.0" data-duration="7.15" data-track-index="4">
+      <div class="stage3d"><div class="cam" id="s4-cam">
+        <div id="s4-floor" class="floor" data-design-ignore></div>
+        <div class="browser app" id="s4-app">
+          <div class="bar" data-design-ignore><i></i><i></i><i></i><div class="url">app.lumen · Workspace</div></div>
+          <div class="view">
+            <aside class="side" data-design-ignore>
+              <svg class="icon on" viewBox="0 0 24 24"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+              <svg class="icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+            </aside>
+            <div class="main">
+              <div class="ask" id="ask">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>
+                <span id="ask-text" class="ask-text"></span>
+                <div class="ask-btn" id="ask-btn">Ask</div>
+              </div>
+              <div class="sugg" id="sugg">
+                <div class="kicker">Try asking</div>
+                <div class="srow"><div class="chip" id="sg1">Top accounts by revenue</div><div class="chip" id="sg2">Why did sign-ups dip?</div><div class="chip" id="sg3">Forecast Q3 revenue</div></div>
+                <div class="skel" data-design-ignore><i style="width: 86%"></i><i style="width: 72%"></i><i style="width: 80%"></i><i style="width: 54%"></i></div>
+              </div>
+              <div class="answer card" id="answer">
+                <div class="ans-head"><span class="kicker">Answer</span><span class="ans-meta">1.8 s · 3 sources</span></div>
+                <h3 id="ans-title" class="ans-title">Churn rose 2.1 points in March</h3>
+                <div class="chart">
+                  <svg viewBox="0 0 1300 330" preserveAspectRatio="none">
+                    <g stroke="rgba(255,255,255,.08)" stroke-width="2"><line x1="0" y1="80" x2="1300" y2="80"/><line x1="0" y1="170" x2="1300" y2="170"/><line x1="0" y1="260" x2="1300" y2="260"/></g>
+                    <path id="ans-area" d="M0 250 L130 240 L260 246 L390 232 L520 236 L650 150 L780 120 L910 128 L1040 112 L1170 118 L1300 106 L1300 330 L0 330 Z" fill="url(#amb)" opacity="0"/>
+                    <defs><linearGradient id="amb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb547" stop-opacity=".32"/><stop offset="1" stop-color="#ffb547" stop-opacity="0"/></linearGradient></defs>
+                    <path id="ans-line" d="M0 250 L130 240 L260 246 L390 232 L520 236 L650 150 L780 120 L910 128 L1040 112 L1170 118 L1300 106" stroke="#ffb547" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+                    <line id="ans-mark" x1="650" y1="20" x2="650" y2="330" stroke="#ffd28a" stroke-width="3" stroke-dasharray="10 10"/>
+                    <circle id="ans-dot" cx="650" cy="150" r="13" fill="#ffd28a" stroke="#05060a" stroke-width="5"/>
+                  </svg>
+                  <div id="ans-label" class="marker-label">v2.3 onboarding change</div>
+                </div>
+                <div class="chips">
+                  <div class="chip insight" id="ins"><span class="dot"></span>Drop-off +18% at onboarding step 3</div>
+                  <div class="chip src" id="src1">events.onboarding</div>
+                  <div class="chip src" id="src2">billing.subs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- S5 16.0–22.6: three benefits on the drop -->
+    <section id="s5" class="scene clip" data-start="16.0" data-duration="6.6" data-track-index="5">
+      <div class="bento">
+        <div class="ben" id="b1">
+          <div class="ico"><svg class="icon" viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Ask in plain English.</h3>
+          <div class="vis">
+            <div class="bubble" id="b1-q"></div>
+            <div class="pill" id="b1-p1"><span>Acme Corp</span><b>82% risk</b></div>
+            <div class="pill" id="b1-p2"><span>Northstar</span><b>64% risk</b></div>
+          </div>
+        </div>
+        <div class="ben" id="b2">
+          <div class="ico"><svg class="icon" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+          <h3>Answers you can check.</h3>
+          <div class="vis">
+            <div class="bars"><i class="lo" id="bb1" style="height: 45%"></i><i class="lo" id="bb2" style="height: 62%"></i><i class="lo" id="bb3" style="height: 50%"></i><i id="bb4" style="height: 96%"></i><i class="lo" id="bb5" style="height: 58%"></i></div>
+            <div class="cite"><div class="chip" id="c1">billing.invoices</div><div class="chip" id="c2">crm.deals</div></div>
+          </div>
+        </div>
+        <div class="ben" id="b3">
+          <div class="ico"><svg class="icon" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></div>
+          <h3>Alerts before it hurts.</h3>
+          <div class="vis">
+            <div class="note" id="b3-n"><div id="b3-burst" class="burst" style="left: 44px; top: 48px; border-color: #ffb547" data-design-ignore></div><svg class="icon" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg><div class="nt">Usage at Acme fell 32% this week<small>Lumen · just now</small></div></div>
+          </div>
+        </div>
+      </div>
+      <div id="focus" class="focus" data-design-ignore></div>
+      <div id="flash" class="flash" data-design-ignore></div>
+    </section>
+
+    <!-- S6 22.45–26.6: plugs into your stack -->
+    <section id="s6" class="scene clip" data-start="22.45" data-duration="4.15" data-track-index="6">
+      <h2 id="s6-title" class="s6-title">Plugs into your stack in minutes.</h2>
+      <svg id="s6-lines" class="layer" viewBox="0 0 1920 1080" data-design-ignore>
+        <g stroke="rgba(255,181,71,.55)" stroke-width="3" fill="none">
+          <path id="L1" d="M420 420 Q690 420 960 610"/>
+          <path id="L2" d="M420 800 Q690 800 960 610"/>
+          <path id="L3" d="M960 330 Q960 470 960 610"/>
+          <path id="L4" d="M1500 420 Q1230 420 960 610"/>
+          <path id="L5" d="M1500 800 Q1230 800 960 610"/>
+          <path id="L6" d="M960 930 Q960 770 960 610"/>
+        </g>
+      </svg>
+      <div class="node" id="n1" style="left: 420px; top: 420px"><svg class="icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>Warehouse</div>
+      <div class="node" id="n2" style="left: 420px; top: 800px"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><path d="M6 14h2"/></svg>Billing</div>
+      <div class="node" id="n3" style="left: 960px; top: 330px"><svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>CRM</div>
+      <div class="node" id="n4" style="left: 1500px; top: 420px"><svg class="icon" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>Events</div>
+      <div class="node" id="n5" style="left: 1500px; top: 800px"><svg class="icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="3" x2="21" y1="15" y2="15"/><line x1="9" x2="9" y1="9" y2="21"/><line x1="15" x2="15" y1="9" y2="21"/></svg>Sheets</div>
+      <div class="node" id="n6" style="left: 960px; top: 930px"><svg class="icon" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>Product</div>
+      <div class="hub" id="hub"><svg viewBox="0 0 176 176"><circle cx="88" cy="88" r="70" stroke="#ffb547" stroke-width="12" fill="none"/><circle cx="88" cy="88" r="21" fill="#ffd28a"/></svg></div>
+      <div id="hub-burst" class="burst" style="left: 960px; top: 610px; border-color: #ffb547"></div>
+      <div class="pkt" id="p1"></div><div class="pkt" id="p2"></div><div class="pkt" id="p3"></div><div class="pkt" id="p4"></div><div class="pkt" id="p5"></div><div class="pkt" id="p6"></div>
+    </section>
+
+    <!-- S7 26.45–30: end card -->
+    <section id="s7" class="scene clip s7" data-start="26.45" data-duration="3.55" data-track-index="7">
+      <div class="layer center">
+        <div class="s7-col">
+          <div class="lockup">
+            <div class="mark"><svg viewBox="0 0 176 176"><circle id="s7-ring" cx="88" cy="88" r="70" stroke="#ffb547" stroke-width="12" fill="none" stroke-linecap="round" transform="rotate(-90 88 88)"/><circle id="s7-dot" cx="88" cy="88" r="21" fill="#ffd28a"/></svg></div>
+            <div id="s7-word" class="wordmark">lumen</div>
+          </div>
+          <div id="s7-tag" class="s7-tag">See what your data is saying.</div>
+          <div id="s7-cta" class="btn cta" style="color: #1a1205">Start free<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+        </div>
+      </div>
+      <div class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/cinematic-reveal.mp3" data-start="0" data-duration="30" data-media-start="0" data-track-index="10" data-volume="0.5" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.2,"v":1},{"t":27.8,"v":1},{"t":30,"v":0}]}]}'></audio>
+    <audio id="sfx-01-sparkle" src="assets/sfx/sparkle.mp3" data-start="0.425" data-duration="1.8" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-02-whoosh-cinematic" src="assets/sfx/whoosh-cinematic.mp3" data-start="0.5" data-duration="5.54" data-track-index="21" data-volume="0.36"></audio>
+    <audio id="sfx-03-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="4.339" data-duration="0.49" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-04-riser" src="assets/sfx/riser.mp3" data-start="3.62" data-duration="3.4" data-track-index="22" data-volume="0.26" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":3.32,"v":1},{"t":3.4,"v":0}]}]}'></audio>
+    <audio id="sfx-05-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="6.597" data-duration="1.9" data-track-index="20" data-volume="0.5" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.82,"v":1},{"t":1.9,"v":0}]}]}'></audio>
+    <audio id="sfx-06-sparkle" src="assets/sfx/sparkle.mp3" data-start="6.775" data-duration="1.8" data-track-index="21" data-volume="0.28"></audio>
+    <audio id="sfx-07-whoosh-cinematic" src="assets/sfx/whoosh-cinematic.mp3" data-start="7.1" data-duration="5.54" data-track-index="22" data-volume="0.4"></audio>
+    <audio id="sfx-08-click" src="assets/sfx/click.mp3" data-start="10.932" data-duration="0.37" data-track-index="20" data-volume="0.32"></audio>
+    <audio id="sfx-09-typing" src="assets/sfx/typing.mp3" data-start="10.623" data-duration="1.3" data-track-index="21" data-volume="0.2" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.22,"v":1},{"t":1.3,"v":0}]}]}'></audio>
+    <audio id="sfx-10-click" src="assets/sfx/click.mp3" data-start="12.712" data-duration="0.37" data-track-index="20" data-volume="0.4"></audio>
+    <audio id="sfx-11-pop" src="assets/sfx/pop.mp3" data-start="12.864" data-duration="0.72" data-track-index="21" data-volume="0.26"></audio>
+    <audio id="sfx-12-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="13.209" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-13-ping" src="assets/sfx/ping.mp3" data-start="13.858" data-duration="1.32" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-14-pop" src="assets/sfx/pop.mp3" data-start="14.504" data-duration="0.72" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-15-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="16" data-duration="1.7" data-track-index="20" data-volume="0.6" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.62,"v":1},{"t":1.7,"v":0}]}]}'></audio>
+    <audio id="sfx-16-whoosh" src="assets/sfx/whoosh.mp3" data-start="15.974" data-duration="0.57" data-track-index="21" data-volume="0.32"></audio>
+    <audio id="sfx-17-typing" src="assets/sfx/typing.mp3" data-start="16.613" data-duration="1.25" data-track-index="21" data-volume="0.16" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.17,"v":1},{"t":1.25,"v":0}]}]}'></audio>
+    <audio id="sfx-18-pop" src="assets/sfx/pop.mp3" data-start="18.304" data-duration="0.72" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-19-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="18.839" data-duration="0.49" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-20-click-soft" src="assets/sfx/click-soft.mp3" data-start="19" data-duration="0.24" data-track-index="22" data-volume="0.3"></audio>
+    <audio id="sfx-21-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="20.339" data-duration="0.49" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-22-notification" src="assets/sfx/notification.mp3" data-start="20.464" data-duration="1.4" data-track-index="21" data-volume="0.3" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.32,"v":1},{"t":1.4,"v":0}]}]}'></audio>
+    <audio id="sfx-23-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="22.289" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-24-pop" src="assets/sfx/pop.mp3" data-start="22.504" data-duration="0.72" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-25-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="23.239" data-duration="0.49" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-26-click-soft" src="assets/sfx/click-soft.mp3" data-start="24.7" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-27-click-soft" src="assets/sfx/click-soft.mp3" data-start="25.65" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-28-whoosh-cinematic" src="assets/sfx/whoosh-cinematic.mp3" data-start="24.2" data-duration="5.54" data-track-index="21" data-volume="0.34"></audio>
+    <audio id="sfx-29-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="26.797" data-duration="2" data-track-index="20" data-volume="0.42" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.92,"v":1},{"t":2,"v":0}]}]}'></audio>
+    <audio id="sfx-30-sparkle" src="assets/sfx/sparkle.mp3" data-start="26.975" data-duration="1.8" data-track-index="22" data-volume="0.28"></audio>
+    <audio id="sfx-31-pop" src="assets/sfx/pop.mp3" data-start="28.034" data-duration="0.72" data-track-index="23" data-volume="0.3"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+
+      // ---- ambient background: the light breathes with the story (one slow move per scene, never linear)
+      tl.fromTo("#bg-g1", { opacity: 0.25, scale: 0.85 }, { opacity: 0.55, scale: 1, duration: 6, ease: "glide" }, 0);
+      tl.to("#bg-g1", { opacity: 0.9, scale: 1.12, duration: 1.2, ease: "settle" }, 15.9);
+      tl.to("#bg-g1", { opacity: 0.6, scale: 1, duration: 3, ease: "glide" }, 22.4);
+      tl.fromTo("#bg-g2", { opacity: 0.2 }, { opacity: 0.5, duration: 8, ease: "glide" }, 0);
+
+      // ---- S1 0–3.2 · the promise (hook inside 1 s)
+      tl.fromTo("#s1-line", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 1.1, ease: "settle" }, 0.15);
+      S.lines("#s1-r1", 0.4, { dur: 0.95 });
+      S.lines("#s1-r2", 0.62, { dur: 1.0 }).lines.forEach((l) => l.classList.add("warm"));
+      tl.to("#s1-r1 .st-line, #s1-r2 .st-line", { yPercent: -105, opacity: 0, duration: 0.34, ease: "exit", stagger: S.f(3) }, 2.78);
+      tl.to("#s1-line", { scaleX: 0, opacity: 0, duration: 0.34, ease: "exit" }, 2.8);
+
+      // ---- S2 3.0–6.4 · the problem: fragments rush past in depth
+      const frags = ["#f1", "#f2", "#f3", "#f4", "#f5", "#f6", "#f7", "#f8", "#f9", "#f10"];
+      frags.forEach((f, i) => {
+        const z0 = -1300 + ((i * 37) % 5) * 90;           // a little depth jitter, deterministic
+        tl.fromTo(f, { z: z0, rotationY: i % 2 ? -12 : 12, rotationX: i < 4 ? 8 : -8 }, { z: 380, rotationY: i % 2 ? -22 : 22, rotationX: 0, duration: 3.25, ease: "power1.in" }, 2.95);
+        tl.fromTo(f + " .frag-in", { opacity: 0, filter: "blur(8px)" }, { opacity: 0.66, filter: "blur(0.5px)", duration: 0.5, ease: "enter" }, 3.0 + i * 0.05);
+        tl.to(f + " .frag-in", { opacity: 0, filter: "blur(12px)", duration: 0.4, ease: "exit" }, 5.7);
+      });
+      S.words("#s2-a", 3.25, { stagger: S.f(4) });
+      S.words("#s2-b", 4.35, { stagger: S.f(4) });
+      tl.to("#s2-a, #s2-b", { opacity: 0, scale: 0.96, filter: "blur(8px)", duration: 0.35, ease: "exit" }, 5.75);
+
+      // ---- S3 5.9–9.3 · meet Lumen: the noise collapses into a point of light, the ring draws, the name lands
+      tl.fromTo("#s3-core", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: "settle" }, 5.95);
+      tl.to("#s3-core", { scale: 0.55, opacity: 0.55, duration: 1.4, ease: "glide" }, 6.7);
+      S.draw("#s3-ring", 6.0, { dur: 0.62, ease: "power2.in" });
+      S.burst("#s3-burst", 6.62, { dur: 0.9, s0: 0.6, s1: 3.6, o0: 0.9 });
+      tl.fromTo("#s3-dot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.6, ease: "springPop" }, 6.66);
+      S.chars("#s3-word", 6.78, { stagger: S.f(1.6) });
+      S.words("#s3-tag", 7.45, { stagger: S.f(2), blur: 6, y: 20 });
+      tl.to("#s3-col", { opacity: 0, y: -60, scale: 0.94, duration: 0.32, ease: "exit" }, 8.98);
+      tl.to("#s3-core", { opacity: 0, duration: 0.3, ease: "exit" }, 8.98);
+
+      // ---- S4 9.0–16.15 · the product: the app rises out of the floor and settles flat (camera ends at rest)
+      S.camera("#s4-cam", [[9.0, { z: -1100, rx: 34, ry: -16, y: 220 }], [10.75, {}, "settle"]], { perspective: 1800 });
+      tl.fromTo("#s4-app", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "enter" }, 9.02);
+      tl.fromTo("#s4-floor", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "enter" }, 9.0);
+      tl.to("#s4-floor", { opacity: 0, duration: 0.6, ease: "exit" }, 10.3);
+      S.sweep("#s4-app", 10.05, { dur: 1.3 });
+      S.cursor({ path: [[10.45, 1520, 1010], [10.95, 560, 236], [12.32, 560, 236], [12.72, 1608, 238], [15.6, 1608, 238], [16.05, 1700, 1120]], clicks: [10.98, 12.76], visible: [10.4, 16.1], ring: "#ffb547" });
+      tl.fromTo("#sugg .kicker", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter" }, 10.2);
+      tl.fromTo("#sg1, #sg2, #sg3", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(4) }, 10.3);
+      tl.fromTo("#sugg .skel i", { opacity: 0, scaleX: 0.6, transformOrigin: "0% 50%" }, { opacity: 1, scaleX: 1, duration: 0.6, ease: "settle", stagger: S.f(3) }, 10.45);
+      tl.to("#sugg", { opacity: 0, y: -10, duration: 0.25, ease: "exit" }, 12.78);
+      const typed = S.type("#ask-text", 11.06, "Why did churn rise in March?", { cps: 22 });
+      tl.fromTo("#ask", { borderColor: "rgba(255,255,255,0.16)" }, { borderColor: "rgba(255,181,71,0.7)", duration: 0.3, ease: "enter" }, 10.98);
+      tl.fromTo("#ask-btn", { scale: 1 }, { scale: 0.93, duration: 0.1, ease: "exit", yoyo: true, repeat: 1 }, 12.74);
+      tl.fromTo("#answer", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.8, ease: "springSoft" }, 12.98);
+      tl.fromTo("#ans-title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "enter" }, 13.1);
+      S.draw("#ans-line", 13.22, { dur: 1.15, ease: "settle" });
+      tl.fromTo("#ans-area", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "enter" }, 13.7);
+      tl.fromTo("#ans-mark", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.45, ease: "settle" }, 14.15);
+      tl.fromTo("#ans-dot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "spring" }, 14.18);
+      tl.fromTo("#ans-label", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "enter" }, 14.25);
+      tl.fromTo("#ins", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.55, ease: "enter" }, 14.62);
+      tl.fromTo("#src1, #src2", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter", stagger: S.f(5) }, 14.95);
+
+      // ---- S5 16.0–22.6 · three benefits on the music's drop (16.05)
+      S.flash("#flash", 16.05, { dur: 0.24, peak: 0.55 });
+      ["#b1", "#b2", "#b3"].forEach((b, i) => {
+        tl.fromTo(b, { opacity: 0, rotationY: -62, z: -420, x: -60, transformPerspective: 1500, transformOrigin: "0% 50%" }, { opacity: 1, rotationY: 0, z: 0, x: 0, duration: 1.05, ease: "springSoft" }, 16.05 + i * S.f(6));
+      });
+      tl.fromTo("#focus", { opacity: 0, x: 0 }, { opacity: 1, x: 0, duration: 0.4, ease: "enter" }, 16.95);
+      S.type("#b1-q", 17.05, "Which accounts might churn next month?", { cps: 30, caret: true, hold: 0.6 });
+      tl.fromTo("#b1-p1, #b1-p2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(5) }, 18.42);
+      tl.to("#focus", { x: 560, duration: 0.55, ease: "move" }, 18.85);
+      ["#bb1", "#bb2", "#bb3", "#bb4", "#bb5"].forEach((b, i) => tl.fromTo(b, { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.7, ease: i === 3 ? "spring" : "settle" }, 19.0 + i * S.f(3)));
+      tl.fromTo("#c1, #c2", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter", stagger: S.f(5) }, 19.85);
+      tl.to("#focus", { x: 1120, duration: 0.55, ease: "move" }, 20.35);
+      tl.fromTo("#b3-n", { opacity: 0, y: -80, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.75, ease: "springSoft" }, 20.5);
+      S.burst("#b3-burst", 20.62, { dur: 0.8, s0: 0.5, s1: 2.6, o0: 0.8 });
+      tl.to("#b1, #b2, #b3", { opacity: 0, y: 50, duration: 0.32, ease: "exit", stagger: S.f(3) }, 22.25);
+      tl.to("#focus", { opacity: 0, duration: 0.25, ease: "exit" }, 22.25);
+
+      // ---- S6 22.45–26.6 · plugs into your stack
+      S.words("#s6-title", 22.5, { stagger: S.f(3) });
+      tl.fromTo("#hub", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: "springPop" }, 22.62);
+      tl.fromTo(".node", { opacity: 0, scale: 0.86, y: 16 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "enter", stagger: S.f(4) }, 22.85);
+      S.draw("#L1, #L2, #L3, #L4, #L5, #L6", 23.25, { dur: 0.8, ease: "settle", stagger: S.f(3) });
+      // packets: positions computed per frame from the paths (seek-safe), two runs each, staggered
+      const paths = ["#L1", "#L2", "#L3", "#L4", "#L5", "#L6"].map((s) => document.querySelector(s));
+      const pkts = ["#p1", "#p2", "#p3", "#p4", "#p5", "#p6"].map((s) => document.querySelector(s));
+      const runs = [];
+      for (let k = 0; k < 2; k++) for (let i = 0; i < 6; i++) runs.push({ i, t: 24.05 + k * 0.95 + i * 0.11, d: 0.62 });
+      const ease = g.parseEase("move");
+      S.everyFrame((now) => {
+        pkts.forEach((p) => (p.style.opacity = 0));
+        for (const r of runs) {
+          const u = (now - r.t) / r.d;
+          if (u < 0 || u > 1) continue;
+          const path = paths[r.i], L = path.getTotalLength(), pt = path.getPointAtLength(L * ease(u));
+          const p = pkts[r.i];
+          p.style.transform = `translate(${pt.x.toFixed(1)}px, ${pt.y.toFixed(1)}px)`;
+          p.style.opacity = String(Math.min(1, u * 5, (1 - u) * 6));
+        }
+      });
+      S.burst("#hub-burst", 24.7, { dur: 0.7, s0: 0.8, s1: 2.4, o0: 0.7 });
+      S.burst("#hub-burst", 25.65, { dur: 0.7, s0: 0.8, s1: 2.4, o0: 0.7 });
+      tl.to("#s6-title, .node, #hub", { opacity: 0, duration: 0.3, ease: "exit" }, 26.3);
+      tl.to("#s6-lines", { opacity: 0, duration: 0.3, ease: "exit" }, 26.3);
+
+      // ---- S7 26.45–30 · end card (hold ≥ 1.4 s for reading)
+      S.draw("#s7-ring", 26.5, { dur: 0.6, ease: "settle" });
+      tl.fromTo("#s7-dot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.6, ease: "springPop" }, 26.8);
+      S.chars("#s7-word", 26.62, { stagger: S.f(1.4) });
+      S.sweep("#s7-word", 27.55, { dur: 1.0 });
+      S.words("#s7-tag", 27.25, { stagger: S.f(3) });
+      tl.fromTo("#s7-cta", { opacity: 0, scale: 0.8, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "springPop" }, 28.15);
+
+      S.grain({ opacity: 0.055 });
+      S.vignette({ strength: 0.55 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

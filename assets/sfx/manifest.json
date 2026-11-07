@@ -83,7 +83,9 @@
     "file": "riser.mp3",
     "duration": 10.03,
     "description": "Long cinematic riser (~10s build, peak at the end). Trigger at (climax_time − 10.03s) so it crests exactly on the reveal.",
-    "lead_s": 1.488
+    "lead_s": 1.488,
+    "peak_s": 3,
+    "peak_note": "loudest 0.1 s window at 3.0 s, measured 2026-11-07 (the long tail after it is decay)"
   },
   "sparkle": {
     "file": "sparkle.mp3",
@@ -101,7 +103,9 @@
     "file": "whoosh-cinematic.mp3",
     "duration": 5.54,
     "description": "Cinematic whoosh build (~5.5s) — sweeping scene transition. Align so the swell peaks on the cut.",
-    "lead_s": 1.291
+    "lead_s": 1.291,
+    "peak_s": 2.5,
+    "peak_note": "loudest 0.1 s window, measured 2026-11-07 (tools/studio/sound.mjs lands this on the cue time)"
   },
   "whoosh-short": {
     "file": "whoosh-short.mp3",

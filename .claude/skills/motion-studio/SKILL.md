@@ -1,0 +1,69 @@
+---
+name: motion-studio
+description: Make a client-grade motion-graphics video from the Motion Studio catalog (tools/studio) in the D:\Video Create workspace - a client or Talha names a CODE (PL1 launch film, FD1 feature drop, UT1 3D UI tour, AP1 app store preview, CL1 release reel, IH1 integrations, AI1 AI agent demo, HX1 explainer, WF1 workflow, IA1 3D architecture, DS1 data story, KP1 metrics, MP1 map, NW1 editorial, LG1 3D logo, KT1 kinetic type, BS1 brand system, SA1 vertical ad, EV1 event, GH1 3D glass title, CD1, LT1, packs LK1/AD10/RET1) and the brand; the kit scaffolds the project, the brief and plan gate run, builder agents author the HyperFrames page on studio.js (springs, expo settles, camera that lands at rest, cursor, typing, counters, grain), sound.mjs writes the beat-synced soundtrack, check.mjs + a critic gate it, render-queue renders one at a time. Also the portfolio, showreel and the business side (prices, outreach, payments). Use when he says motion graphics, a catalog code, "client video", "SaaS/launch/explainer/ad video for a client", portfolio, showreel, or pastes a client brief.
+---
+
+# Motion Studio (built 2026-11-07; reference piece projects/pf-pl1-lumen; 20 portfolio samples projects/pf-*)
+
+CLAUDE.md rules all apply (simple Bengali to him, plan gate §0e, craft §0d, whole-video §0h, five elements §0i).
+Business side (prices, where clients come from, getting paid in Bangladesh, blockers): `docs/business/PLAYBOOK.md`.
+Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node tools/studio/catalog-doc.mjs`).
+
+## 1. A job in seven commands
+1. Brief: the client fills `docs/business/client-kit/CLIENT-BRIEF.md` (or you extract it from their message).
+2. `node tools/studio/new-piece.mjs <name> --code=<CODE> --brand="<Brand>" [--aspect=… --dur=… --fonts=… --music=… --three]`
+   (defaults per code from catalog.json). Write `projects/<name>/BRIEF.md` in the shape of the portfolio briefs
+   (concept · look with hex + fonts · timed beats · craft notes · sound).
+3. PLAN.md + `node tools/plan-check.mjs projects/<name>` → show him (and the client) the plan; build after the OK.
+   Exception: he gives a complete multi-video brief and says build/render (CLAUDE.md §0 last rule) or a portfolio
+   batch he asked for.
+4. Build: one `studio-builder` agent per piece (`.claude/agents/studio-builder.md`; it follows
+   `docs/studio/AGENT-BRIEF.md`). Two or more pieces → run the saved workflow
+   `Workflow({name: "studio-batch", args: {projects: ["<name>", …]}})` (builder → independent `studio-critic`
+   against `docs/studio/QUALITY.md` → fix pass). This skill authorises that workflow.
+5. Sound: `piece.json` → `sound` (music from `C:/Users/Zubayer Nibir/VideoWork/studio-music/*.mp3` with its
+   `.beats.json`; voice; cues at visual-hit times) → `node tools/studio/sound.mjs projects/<name>`.
+6. `node tools/studio/check.mjs projects/<name> --at=<held moments>` → ✓, then LOOK at every contact sheet.
+7. `node tools/studio/render-queue.mjs <name> [more…]` (detached for batches) → `renders/portfolio/<CODE>_<Brand>.mp4`
+   (+ `renders/<name>/<stamp>/` with qc.json, thumbnail, GIF). Then `node tools/contact-sheet.mjs <mp4> --every=1`
+   and read it (§0d.9). Other aspect ratios: a separate composition per aspect for designed layouts (the default);
+   `finish.mjs --formats=…` "fit" only in a hurry.
+
+## 2. The kit (tools/studio) — decisions live in code, the model writes data + scenes
+| File | What it does |
+| --- | --- |
+| `catalog.json` | every service: code, family, what, best-for, aspects, durations, music, fonts, prices (USD/BDT), sample |
+| `new-piece.mjs` | scaffolds a piece: template index.html, piece.json, PLAN.md, chosen fonts + Hind Siliguri, GSAP + plugins, studio.js/css, three.js (import map) |
+| `runtime/studio.js` | the motion API: eases (settle/enter/move/exit/glide/snap), springs (spring/springSoft/springPop), lines/words/chars reveals, type, count, burst, sweep, draw, camera (guards rest), drift, cursor, grain, vignette, flash (≤3/s guard), done() |
+| `runtime/studio.css` | tokens, type scale, card/glass/chip/btn, browser + phone frames, backgrounds |
+| `sound.mjs` | piece.json → `<audio>` tags: lead-in / peak alignment, lanes, music lane with fades + ducks, dead-air check |
+| `beats.mjs` | beat map of a track (HyperFrames detector + music-drops): bpm, beats, strong, drops, energy |
+| `check.mjs` | static studio rules + hyperframes check + design-lint + snapshots/contact sheets (through the Chrome slot) |
+| `slot.mjs` | machine-wide limit on heavy jobs (chrome 2, render 1) for parallel agents |
+| `render-queue.mjs` | serial renders via finish.mjs --release → renders/portfolio, queue.json |
+| `icon.mjs` | Lucide icons as inline SVG (`--find word`) |
+| `showreel.mjs` | the studio showreel from rendered pieces, cut on strong beats, each clip labelled with its code |
+| `portfolio-page.mjs` | static portfolio site (web copies + posters) in renders/portfolio/site |
+| `catalog-doc.mjs` | docs/business/CATALOG.md from catalog.json |
+
+## 3. Traps that cost a run on 2026-11-07 (each is now handled — keep it that way)
+- A bare `cd` in Bash moves the whole session (it even jumped into another session's worktree). Always
+  `cd "/d/Video Create" && …` and `( cd sub && … )`.
+- `hyperframes check` needs the timeline registration IN the page: end with `window.__timelines["main"] = S.done().tl;`.
+- Registry blocks load GSAP/three/fonts from a CDN → rewrite to local files (check.mjs fails network URLs).
+- Snapshots with > 9 times write `contact-sheet-1.jpg, -2 …`, not `contact-sheet.jpg` (check.mjs reads both).
+- `data-layout-allow-overlap` is per text element and NOT inherited; for decorative groups use `data-layout-ignore`
+  (inherited via closest). studio.js marks its own layers (grain, vignette, cursor, bursts, sweeps, flash).
+- `background-clip: text` gradients do not follow SplitText's transformed lines: put the gradient class on the lines.
+- A light sweep or ping tweened with fromTo leaves its from-state on screen after a backward seek → per-frame helpers.
+- 3D fly-through: with perspective P a card at depth z shows at scale P/(P−z); `power2.in` keeps cards far until the
+  last moment, so they never "rush past" — use `power1.in`, start nearer (z ≈ −1300 at P 1300), and place cards
+  in a ring OUTSIDE the headline band (they spread outward as they approach).
+- slot.mjs on Windows: an executable path with spaces must not go through the shell; bare names (npx) must.
+- Long build-up SFX: land the PEAK on the hit (manifest `peak_s`: whoosh-cinematic 2.5 s, riser 3.0 s).
+- `hyperframes snapshot --describe` uses the paid Gemini key unless `--describe false` (check.mjs passes it).
+- Render speed here: PL1 (30 s, CSS 3D, 30 fps) took 312 s ≈ 10 s per second of video. One render at a time.
+
+## 4. After every client job
+LESSONS.md row per feedback; new reusable code into tools/studio (with a header + proof); this skill updated;
+catalog.json sample/status; `node tools/studio/catalog-doc.mjs`; commit with his OK + push (CLAUDE.md §0f/§00.6).
