@@ -63,8 +63,26 @@ for (const track of tracks) {
       for (const e of line.matchAll(/(\d+(?:\.\d+)?):\s*(-?\d+(?:\.\d+)?)/g)) energy.push([+e[1], +e[2]]);
     }
   }
-  const out = { track: path.basename(abs), duration: +dur.toFixed(3), bpm, beats, strong, drops, energy, made: new Date().toISOString().slice(0, 10), tool: "tools/studio/beats.mjs" };
+  // kicks: the detector's beats run at double time on these tracks and "strong" can miss the real downbeats (A2's
+  // measurement on bright-future / social-punch / studio-pulse, 2026-11-07). A low-band onset pass finds the kick drum:
+  // RMS of the < 150 Hz band every 10 ms → rise over the previous 80 ms → local peaks ≥ 0.2 s apart above 2.5× median.
+  const lp = spawnSync("ffmpeg", ["-hide_banner", "-v", "error", "-i", abs, "-af", "lowpass=f=150,aresample=22050,asetnsamples=220,astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level:file=-", "-f", "null", "-"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const rms = [];
+  for (const line of (lp.stdout || "").split(/\r?\n/)) { const m = line.match(/RMS_level=(-?[\d.]+|-inf)/); if (m) rms.push(m[1] === "-inf" ? 0 : Math.pow(10, +m[1] / 20)); }
+  const rise = rms.map((v, i) => { let s = 0, n = 0; for (let j = Math.max(0, i - 8); j < i; j++) { s += rms[j]; n++; } return Math.max(0, v - (n ? s / n : v)); });
+  const med = rise.filter((x) => x > 0).sort((a, b) => a - b)[Math.floor(rise.filter((x) => x > 0).length / 2)] || 0;
+  const kicks = [];
+  for (let i = 1; i < rise.length - 1; i++) {
+    if (rise[i] < med * 2.5) continue;
+    let peak = true;
+    for (let j = Math.max(0, i - 12); j <= Math.min(rise.length - 1, i + 12); j++) if (rise[j] > rise[i]) { peak = false; break; }
+    const t = +(i * 0.01).toFixed(2);
+    if (peak && (!kicks.length || t - kicks[kicks.length - 1] >= 0.2)) kicks.push(t);
+  }
+  const kd = kicks.slice(1).map((t, i) => t - kicks[i]).filter((d) => d >= 0.3 && d <= 1.0).sort((a, b) => a - b);
+  const kickInterval = kd.length ? +kd[Math.floor(kd.length / 2)].toFixed(3) : null;
+  const out = { track: path.basename(abs), duration: +dur.toFixed(3), bpm, beats, strong, kicks, kickInterval, kickBpm: kickInterval ? Math.round(60 / kickInterval) : null, drops, energy, made: new Date().toISOString().slice(0, 10), tool: "tools/studio/beats.mjs" };
   const file = abs.replace(/\.[^.]+$/, "") + ".beats.json";
   writeFileSync(file, JSON.stringify(out, null, 1));
-  console.log(`✓ ${path.basename(abs)}  ${dur.toFixed(1)} s  ~${bpm} BPM  ${beats.length} beats, ${strong.length} strong, drops at ${drops.map((x) => x.t + "s").join(", ") || "—"}`);
+  console.log(`✓ ${path.basename(abs)}  ${dur.toFixed(1)} s  detector ~${bpm} BPM, kicks every ${out.kickInterval ?? "?"} s (~${out.kickBpm ?? "?"} BPM, ${kicks.length})  ${beats.length} beats, ${strong.length} strong, drops at ${drops.map((x) => x.t + "s").join(", ") || "—"}`);
 }

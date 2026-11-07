@@ -1,68 +1,60 @@
-# PL1 · See what your data is saying — Lumen (concept)
+# PL1 · Product Launch Film — Lumen (concept)
 
-<!--
-  Claude: copy this to projects/<name>/PLAN.md, fill every section, then run
-    node tools/plan-check.mjs projects/<name>
-  until it reports no ERROR. Show the user the goal, hook, shot table, "যা লাগবে", any WARN (in Bengali)
-  and the questions, and build nothing until the user says OK. Example: tools/plan/EXAMPLE.md.
-
-  Header: ফরম্যাট and দৈর্ঘ্য are required. Write নেই on its own for no voice or no music.
-  Voice: STYLE.md §৮ puts the user's own voice first; if unsure, plan Piper and ask.
-
-  Shot table rules (the checker reads them):
-  - সময় is seconds on the finished video: "0–2.5", "2.5–5". Over a minute, "1:05–1:08" works too.
-    Rows run back to back from 0 and the last one ends at দৈর্ঘ্য. No blank line inside the table, and no
-    | inside a cell (write \| if you must).
-  - One row per change on screen (cut, zoom, new graphic). On a Reel something changes every 2–3 s
-    (STYLE.md §৫). For a deliberate still beat, write the word দম in the পর্দায় কী cell; a still over
-    1.5 s still needs sound (a voice line, `room-tone` or music).
-  - ক্যাপশন / লেখা holds only extra on-screen text, written exactly as it will appear (Bengali digits; no ✓
-    or arrows: draw those and say so in পর্দায় কী). Voice captions follow the voice by themselves; write —
-    when there is no extra text.
-  - Sounds go in backticks with the file name from assets/sfx (or the project's own assets/sfx), with
-    ×N for repeats: `whoosh-short`, `click` ×৩. A whoosh at every new scene (STYLE.md §৭). Write
-    ভয়েস ১, ভয়েস ২ … for the script lines that start in that shot.
-
-  Questions: only what STYLE.md and the request do not answer, plus any number or claim the user did not
-  give you (a time saved, a price) and how any extra formats in আউটপুট are made (a quick blurred "fit" or
-  a separate layout, STYLE.md §৬).
--->
-
-ফরম্যাট: 9:16
+ফরম্যাট: 16:9
 দৈর্ঘ্য: 30 সেকেন্ড
-প্ল্যাটফর্ম: Facebook Reels
-ধরন: অফার বা প্রোমো
-ভয়েস: নিজের গলা (না হলে Piper, পুরুষ, speaker 5)
-মিউজিক: নেই
-আউটপুট: 9:16, সাথে 1:1
-পুরো ভিডিও জুড়ে: (যেমন: কার্সরের আভা, নাম-ইমেইল ঝাপসা, লোগো ঝাপসা, ক্যাপশন — CLAUDE.md §0h; না থাকলে "নেই")
+প্ল্যাটফর্ম: ল্যান্ডিং পেজের হিরো ভিডিও, Product Hunt, X আর LinkedIn
+ধরন: প্রোডাক্ট লঞ্চ ফিল্ম (PL1), পোর্টফোলিওর নমুনা (কাল্পনিক ব্র্যান্ড)
+ভয়েস: নেই
+মিউজিক: cinematic-reveal (Lyria), ১৬ সেকেন্ডের ড্রপে মূল মুহূর্ত
+আউটপুট: 16:9 (পরে 1:1 আর 9:16 আলাদা লেআউটে)
+পুরো ভিডিও জুড়ে: দানা (grain ০.০৫৫), ভিনেট, ধীরে শ্বাস নেওয়া সোনালি আলো
 
 ## লক্ষ্য
 
-<!-- One line: what the viewer will know or do after watching. -->
+একজন ব্যস্ত SaaS ফাউন্ডার ৩০ সেকেন্ডে বুঝবেন: Lumen-কে সাধারণ ইংরেজিতে প্রশ্ন করলেই উৎসসহ উত্তর আসে, আর সমস্যা বড় হওয়ার আগেই সতর্ক করে। ড্যাশবোর্ড খোঁজাখুঁজি শেষ। দেখার পর "Start free" চাপবেন।
 
 ## হুক (প্রথম ২ সেকেন্ড)
 
-<!-- What is on screen and in the ear in the first 2 seconds: the result or the most striking line, never a greeting. -->
+কালো পর্দায় সোনালি আলোর রেখা টানা হয়, আর ০.৪ সেকেন্ডেই বড় লেখা উঠে আসে: "Your data has / something to say." প্রথম সেকেন্ডেই প্রতিশ্রুতি, কোনো লোগো-ভূমিকা নেই।
 
 ## স্ক্রিপ্ট
 
-<!-- The voice lines, numbered (১. … ২. …). With no voice, write: ভয়েস নেই। -->
+ভয়েস নেই। পর্দার লেখাই গল্প বলে।
 
 ## শট টেবিল
 
 | সময় | পর্দায় কী | ক্যাপশন / লেখা | শব্দ |
 | --- | --- | --- | --- |
-| 0–2 |  |  |  |
+| 0–1.5 | কালো পর্দায় সোনালি আলোর রেখা টানা হয়, প্রথম লাইন মুখোশ থেকে উঠে আসে | Your data has | `sparkle`, মিউজিক |
+| 1.5–3 | দ্বিতীয় লাইন উষ্ণ সোনালি রঙে বসে, তারপর দুই লাইন উপরে উঠে যায় | something to say. | মিউজিক |
+| 3–4.5 | চারপাশ থেকে দশটা ড্যাশবোর্ড-কার্ড গভীরতা থেকে ক্যামেরার দিকে ছুটে আসে, মাঝে লেখা | Dashboards everywhere. | `whoosh-cinematic` |
+| 4.5–6 | দ্বিতীয় লাইন ঝাপসা থেকে স্পষ্ট হয়, কার্ডগুলো ফ্রেমের বাইরে ছড়িয়ে যায় | Answers nowhere. | `whoosh-short` |
+| 6–7.5 | সব মিলিয়ে একটা আলোর বিন্দু, সোনালি রিং টানা হয়, ঢেউয়ের মতো রিং ছড়ায়, মাঝে বিন্দু বসে | — | `riser`, `impact-bass-2` |
+| 7.5–9 | "lumen" নামের অক্ষরগুলো এক এক করে ওঠে, নিচে ট্যাগলাইন | The AI analyst for your whole company | `sparkle` |
+| 9–10.8 | অ্যাপের জানালা মেঝে থেকে থ্রিডি কোণে উঠে সোজা হয়ে বসে (ক্যামেরা ঠিক ১ গুণে থামে), আলোর রেখা বয়ে যায়, প্রশ্নের পরামর্শ আসে | Try asking · Top accounts by revenue · Why did sign-ups dip? · Forecast Q3 revenue | `whoosh-cinematic` |
+| 10.8–12.8 | কার্সর প্রশ্নের ঘরে ক্লিক করে, প্রশ্ন টাইপ হয় | Why did churn rise in March? | `click`, `typing` |
+| 12.8–14.2 | Ask চাপা হয়, উত্তরের কার্ড ওঠে, লাইন-চার্ট নিজে আঁকা হয় | Churn rose 2.1 points in March | `click`, `pop`, `whoosh-short` |
+| 14.2–16 | চার্টে কারণের দাগ আর লেবেল, তারপর অন্তর্দৃষ্টির চিপ আর উৎসের চিপ | v2.3 onboarding change · Drop-off +18% at onboarding step 3 | `ping`, `pop` |
+| 16–18.8 | মিউজিকের ড্রপে সাদা ঝলক, তিনটা কার্ড থ্রিডিতে ঘুরে আসে, প্রথম কার্ডে প্রশ্ন টাইপ হয় | Ask in plain English. | `impact-bass-1`, `whoosh`, `typing` |
+| 18.8–20.3 | সোনালি ফোকাস-ফ্রেম দ্বিতীয় কার্ডে সরে, বার চার্ট ওঠে, উৎসের চিপ আসে | Answers you can check. | `whoosh-short`, `click-soft` |
+| 20.3–22.4 | ফোকাস তৃতীয় কার্ডে, সতর্কবার্তা উপর থেকে নামে, পিং ছড়ায় | Alerts before it hurts. | `whoosh-short`, `notification` |
+| 22.4–24.5 | শিরোনাম আসে, মাঝে Lumen-এর হাব, চারপাশে ছয়টা উৎস, লাইন টানা হয় | Plugs into your stack in minutes. | `whoosh-short`, `pop` |
+| 24.5–26.4 | আলোর কণা লাইন বেয়ে হাবে ঢোকে, হাব দুবার স্পন্দিত হয় | Warehouse · Billing · CRM · Events · Sheets · Product | `click-soft` ×২ |
+| 26.4–28.1 | শেষ পর্দা: রিং টানা হয়, নাম ওঠে, নামের উপর আলো বয়ে যায়, ট্যাগলাইন | See what your data is saying. | `whoosh-cinematic`, `impact-bass-2`, `sparkle` |
+| 28.1–30 | "Start free" বোতাম লাফিয়ে আসে, স্থির দম (মিউজিক আস্তে থামে) | Start free · Concept work · fictional brand | `pop`, মিউজিক |
 
 ## যা লাগবে
 
-<!-- Voice, sounds, music, footage or photos, credits, extra formats: what is ready, what is free, what must come from the user. -->
+- মিউজিক: cinematic-reveal (Lyria, আগেই তৈরি, $০.০৮), ১৬.০৫ সেকেন্ডে ড্রপ।
+- শব্দ: সব `assets/sfx`-এ আছে (piece.json-এ ৩১টা সময়মতো বসানো)।
+- ছবি বা ফুটেজ: লাগবে না। সব কোডে আঁকা (অ্যাপের জানালা, চার্ট, আইকন Lucide)।
 
 ## STYLE.md আর LESSONS.md থেকে যা মানছি
 
-<!-- The STYLE.md rules and LESSONS.md lessons this video follows, each in one line with its section. -->
+- ক্যামেরা আর জুম ঠিক ১ গুণে এসে থামে (§০d.১)। লেখা কার্ডের ভেতরে, পড়ার লেখা ২৮ px-এর বেশি।
+- প্রতিটা দৃশ্য বদলে শব্দ, ছোট ঘটনায় হালকা click, স্থির ছবি আর নীরবতা একসাথে কখনো নয়।
+- ভুয়া রিভিউ বা মানুষের মুখ নেই। শেষ পর্দায় "Concept work · fictional brand" লেখা।
 
-## আপনার কাছে প্রশ্ন
+## প্রশ্ন
 
-<!-- Only what STYLE.md and the request do not answer. plan-check lists STYLE.md's open questions. -->
+- নেই। পোর্টফোলিওর নমুনা, আপনার রাতের নির্দেশে বানানো। সকালে মতামত দিলে বদলাব।

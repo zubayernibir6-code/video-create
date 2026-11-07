@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>HX1 · How-It-Works Explainer — Kindred Health (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Kindred Health: friendly clinical. Soft mint stage, white panels, ONE green accent; warm only in tiny touches.
+         --deep is the text-safe version of the accent (4.9:1 on mint); the bright accent is for fills and strokes. */
+      --bg: #eef7f3;
+      --bg-2: #ffffff;
+      --bg-3: #f4faf7;
+      --ink: #0f2e25;
+      --ink-2: #5d746c;
+      --ink-3: rgba(15, 46, 37, 0.45);
+      --line: rgba(15, 46, 37, 0.08);
+      --line-2: rgba(15, 46, 37, 0.14);
+      --accent: #1fb07a;
+      --accent-2: #0c7a52;
+      --deep: #0c7a52;
+      --pale: #e3f4ec;
+      --warm: #ffb86b;
+      --font-display: "Manrope", "Hind Siliguri", sans-serif;
+      --font-body: "Manrope", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+      --sh-1: 0 1px 2px rgba(15, 46, 37, 0.06), 0 6px 16px -8px rgba(15, 46, 37, 0.18);
+      --sh-2: 0 1px 2px rgba(15, 46, 37, 0.05), 0 4px 10px -2px rgba(15, 46, 37, 0.06), 0 22px 50px -18px rgba(15, 46, 37, 0.24);
+      --sh-3: 0 2px 4px rgba(15, 46, 37, 0.04), 0 12px 26px -8px rgba(15, 46, 37, 0.09), 0 44px 96px -30px rgba(15, 46, 37, 0.32);
+    }
+    body { color: var(--ink); }
+    #root { background: var(--bg); }
+    .kk { font-family: var(--font-display); font-size: 26px; font-weight: 750; letter-spacing: 0.16em; text-transform: uppercase; color: var(--deep); white-space: nowrap; }
+    .icon { stroke-width: 2.2; }
+
+    /* ---------- background (decorative) */
+    .bg-base { position: absolute; inset: 0; background: radial-gradient(120% 90% at 28% 18%, #f6fcf9 0%, #eef7f3 46%, #e4f1ea 100%); }
+    #bg .g1 { width: 1400px; height: 1400px; left: -420px; top: -700px; background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 62%); filter: blur(10px); opacity: 1; }
+    #bg .g2 { width: 1300px; height: 1300px; left: 1100px; top: 380px; background: radial-gradient(circle, rgba(31, 176, 122, 0.2), rgba(31, 176, 122, 0) 64%); filter: blur(20px); opacity: 1; }
+    .blob { position: absolute; border-radius: 50%; }
+    .b1 { width: 460px; height: 460px; left: 1540px; top: -170px; background: radial-gradient(circle at 38% 38%, rgba(31, 176, 122, 0.12), rgba(31, 176, 122, 0.02) 72%); }
+    .b2 { width: 320px; height: 320px; left: -110px; top: 830px; background: radial-gradient(circle at 40% 40%, rgba(255, 184, 107, 0.16), rgba(255, 184, 107, 0.02) 72%); }
+    .k-dots { background-image: radial-gradient(rgba(15, 46, 37, 0.1) 1.3px, transparent 1.4px); background-size: 34px 34px; }
+    .k-vig { position: absolute; inset: 0; background: radial-gradient(125% 95% at 50% 45%, transparent 58%, rgba(15, 46, 37, 0.1) 100%); }
+
+    /* ---------- shared surfaces */
+    .win { position: absolute; background: #fff; border-radius: 38px; border: 1px solid rgba(15, 46, 37, 0.06); box-shadow: var(--sh-3); overflow: hidden; }
+    .ava { position: relative; border-radius: 50%; overflow: hidden; flex: none; }
+    .ava .hd { position: absolute; left: 50%; border-radius: 50%; }
+    .ava .bd { position: absolute; left: 50%; border-radius: 999px 999px 0 0; }
+    .ava .v { position: absolute; left: 50%; width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 26px solid #2c8f6b; }
+    .mk { display: block; }
+
+    /* ---------- S1 problem */
+    .s1-head { position: absolute; left: 0; right: 0; top: 232px; margin: 0; text-align: center; font-size: 66px; font-weight: 760; letter-spacing: -0.035em; line-height: 1.12; text-wrap: balance; }
+    .s1-head .wk { color: var(--deep); }
+    .cal { position: absolute; left: 310px; top: 364px; width: 1300px; padding: 32px 40px 40px; border-radius: 40px; background: #fff; box-shadow: var(--sh-3); border: 1px solid rgba(15, 46, 37, 0.05); }
+    .cal-top { display: flex; align-items: center; justify-content: space-between; }
+    .cal-title { display: flex; align-items: center; gap: 16px; font-size: 36px; font-weight: 760; letter-spacing: -0.02em; }
+    .cal-title .icon { font-size: 40px; color: var(--deep); }
+    .cal-meta { display: flex; align-items: center; gap: 12px; font-size: 28px; color: var(--ink-2); font-weight: 650; }
+    .cal-meta i { width: 14px; height: 14px; border-radius: 50%; background: var(--warm); display: block; }
+    .cal-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 26px; }
+    .day { height: 310px; border-radius: 26px; background: var(--bg-3); padding: 14px 10px; }
+    .day-h { font-size: 24px; font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); text-align: center; padding: 6px 0 16px; }
+    .call { display: flex; align-items: center; gap: 10px; height: 64px; padding: 0 12px; margin-bottom: 12px; border-radius: 18px; background: #fff; border: 1px solid var(--line-2); box-shadow: var(--sh-1); font-size: 26px; font-weight: 680; white-space: nowrap; color: var(--ink); }
+    .call b { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #ffe9d2; color: #7a4a17; display: grid; place-items: center; }
+    .call b .icon { width: 20px; height: 20px; stroke-width: 2.4; }
+
+    /* ---------- S2 reveal */
+    .lock { display: flex; align-items: center; gap: 34px; }
+    .mark-wrap { position: relative; width: 158px; height: 158px; flex: none; }
+    .mark-wrap svg { width: 158px; height: 158px; overflow: visible; }
+    .word { font-family: var(--font-display); font-size: 156px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; padding-bottom: 14px; color: var(--ink); }
+    .kphone { position: absolute; left: 1120px; top: 140px; width: 390px; height: 800px; border-radius: 64px; background: #fbfdfc; border: 1px solid rgba(15, 46, 37, 0.1); box-shadow: 0 0 0 9px #ffffff, 0 0 0 10px rgba(15, 46, 37, 0.1), var(--sh-3); }
+    .kphone .scr { position: absolute; inset: 12px; border-radius: 52px; overflow: hidden; background: linear-gradient(180deg, #f3faf6 0%, #e8f5ef 100%); }
+    .kphone .isl { position: absolute; top: 24px; left: 50%; width: 96px; height: 28px; margin-left: -48px; border-radius: 14px; background: #1d3d33; z-index: 3; }
+    .ph-top { position: absolute; left: 26px; right: 26px; top: 84px; display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 800; letter-spacing: -0.03em; }
+    .ph-card { position: absolute; left: 20px; right: 20px; top: 156px; padding: 30px 24px 34px; border-radius: 34px; background: #fff; box-shadow: var(--sh-2); display: flex; flex-direction: column; align-items: center; }
+    .ph-card .lbl { font-size: 24px; font-weight: 700; color: var(--ink-2); letter-spacing: 0.08em; text-transform: uppercase; }
+    .ph-ring { position: relative; margin-top: 20px; width: 172px; height: 172px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(from 210deg, rgba(31, 176, 122, 0.0), rgba(31, 176, 122, 0.55)); }
+    .ph-ring::after { content: ""; position: absolute; inset: 8px; border-radius: 50%; background: #fff; }
+    .ph-ring .ava { z-index: 1; }
+    .ph-on { position: absolute; z-index: 2; right: 16px; bottom: 16px; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); border: 5px solid #fff; }
+    .ph-status { margin-top: 20px; display: flex; flex-direction: column; align-items: center; }
+    .ph-status .a { font-size: 28px; font-weight: 650; color: var(--ink-2); }
+    .ph-status .b { font-size: 76px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; margin-top: 4px; white-space: nowrap; }
+    .ph-bar { margin-top: 22px; width: 250px; height: 12px; border-radius: 6px; background: var(--pale); overflow: hidden; }
+    .ph-bar i { display: block; height: 100%; width: 20%; border-radius: 6px; background: var(--accent); }
+    .ph-btn { position: absolute; left: 20px; right: 20px; bottom: 34px; height: 84px; border-radius: 26px; background: var(--accent); color: var(--ink); font-size: 30px; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .ph-btn .icon { font-size: 30px; }
+    .loc { position: absolute; display: flex; align-items: center; gap: 14px; padding: 12px 26px 12px 12px; border-radius: 999px; background: #fff; box-shadow: var(--sh-2); font-size: 30px; font-weight: 720; letter-spacing: -0.01em; white-space: nowrap; }
+    .loc b { width: 52px; height: 52px; border-radius: 50%; background: var(--pale); color: var(--deep); display: grid; place-items: center; }
+    .loc b .icon { font-size: 26px; }
+
+    /* ---------- steps: left column */
+    .tile { position: absolute; top: 390px; width: 230px; height: 270px; border-radius: 46px; background: #fff; box-shadow: var(--sh-2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+    .tile .n { font-size: 120px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--deep); font-variant-numeric: tabular-nums; }
+    .tile .icon { font-size: 56px; color: var(--accent); }
+    .tile .ghost { visibility: hidden; }
+    .numwrap { position: absolute; left: 144px; top: 222px; width: 168px; height: 330px; overflow: hidden; }
+    .dg { position: absolute; left: 0; top: 0; width: 168px; height: 330px; font-size: 240px; line-height: 330px; font-weight: 800; letter-spacing: -0.05em; color: var(--deep); font-variant-numeric: tabular-nums; text-align: center; }
+    .ttl { position: absolute; left: 150px; top: 562px; margin: 0; font-size: 80px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; white-space: nowrap; }
+    .sub { position: absolute; left: 152px; top: 668px; width: 540px; margin: 0; font-size: 34px; font-weight: 620; line-height: 1.32; color: var(--ink-2); text-wrap: balance; }
+    .l3 { position: absolute; left: 150px; top: 672px; display: flex; flex-direction: column; gap: 18px; }
+    .l3 .row { display: flex; align-items: center; gap: 18px; font-size: 32px; font-weight: 700; color: var(--ink); }
+    .l3 .row b { width: 54px; height: 54px; border-radius: 16px; background: #fff; box-shadow: var(--sh-1); color: var(--deep); display: grid; place-items: center; }
+    .l3 .row b .icon { font-size: 28px; }
+    .pager { position: absolute; left: 152px; top: 916px; display: flex; gap: 12px; }
+    .pager i { display: block; width: 14px; height: 14px; border-radius: 7px; background: rgba(15, 46, 37, 0.16); }
+
+    /* ---------- step 1: chat */
+    .chat { left: 830px; top: 196px; width: 900px; height: 690px; }
+    .win-h { display: flex; align-items: center; gap: 18px; height: 108px; padding: 0 34px; border-bottom: 1px solid var(--line); }
+    .win-t { font-size: 34px; font-weight: 780; letter-spacing: -0.02em; }
+    .win-s { margin-left: auto; display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 650; color: var(--ink-2); }
+    .win-s i { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(31, 176, 122, 0.18); }
+    .thread { position: absolute; left: 34px; right: 34px; top: 136px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+    .bub { max-width: 560px; padding: 20px 28px; border-radius: 30px; font-size: 32px; font-weight: 620; line-height: 1.32; }
+    .bub.k { background: var(--bg); border-bottom-left-radius: 10px; }
+    .bub.me { align-self: flex-end; background: var(--accent); color: var(--ink); border-bottom-right-radius: 10px; }
+    .bub.dotsb { padding: 26px 30px; }
+    .dots { display: flex; gap: 10px; }
+    .dots i { display: block; width: 14px; height: 14px; border-radius: 50%; background: var(--deep); opacity: 0.5; }
+    .composer { position: absolute; left: 34px; right: 34px; bottom: 30px; display: flex; align-items: center; gap: 18px; }
+    .field { flex: 1; height: 88px; border-radius: 44px; background: var(--bg-3); border: 1.5px solid var(--line-2); display: flex; align-items: center; padding: 0 32px; font-size: 32px; font-weight: 600; white-space: nowrap; overflow: hidden; }
+    .field .ph { color: var(--ink-2); }
+    .send { width: 88px; height: 88px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; flex: none; }
+    .send .icon { font-size: 36px; }
+
+    /* ---------- step 2: clinicians */
+    .doc { position: absolute; top: 200px; width: 290px; height: 404px; border-radius: 34px; background: #fff; box-shadow: var(--sh-2); border: 1px solid rgba(15, 46, 37, 0.05); display: flex; flex-direction: column; align-items: center; padding-top: 34px; }
+    .doc .ava { width: 140px; height: 140px; }
+    .doc .nm { display: block; margin-top: 26px; width: 168px; height: 18px; border-radius: 9px; background: #e2ece7; }
+    .doc .nm2 { display: block; margin-top: 12px; width: 104px; height: 14px; border-radius: 7px; background: #edf3f0; }
+    .doc .spec { margin-top: 24px; padding: 8px 18px; border-radius: 999px; background: var(--pale); color: var(--deep); font-size: 26px; font-weight: 720; white-space: nowrap; }
+    .doc .avl { margin-top: 18px; display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 650; color: var(--ink-2); }
+    .doc .avl i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .ring2 { position: absolute; left: -14px; top: -14px; width: 318px; height: 432px; overflow: visible; pointer-events: none; }
+    .badge-wrap { position: absolute; left: 0; right: 0; bottom: 26px; display: flex; justify-content: center; }
+    .badge { display: flex; align-items: center; gap: 8px; padding: 10px 20px 10px 14px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 26px; font-weight: 750; box-shadow: var(--sh-2); white-space: nowrap; }
+    .badge b { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; }
+    .badge b .icon { width: 20px; height: 20px; stroke-width: 3; }
+    .timer { position: absolute; left: 1086px; top: 652px; display: flex; align-items: center; gap: 24px; padding: 20px 34px 20px 20px; border-radius: 34px; background: #fff; box-shadow: var(--sh-2); }
+    .timer svg { width: 100px; height: 100px; overflow: visible; flex: none; }
+    .timer .big { font-size: 52px; font-weight: 800; letter-spacing: -0.035em; line-height: 1; white-space: nowrap; }
+    .timer .lab { margin-top: 8px; font-size: 26px; font-weight: 650; color: var(--ink-2); white-space: nowrap; }
+
+    /* ---------- step 3: video, prescription, pharmacy, follow-up */
+    .vid { left: 830px; top: 196px; width: 700px; height: 456px; border-radius: 36px; background: linear-gradient(160deg, #e2f4eb 0%, #c3e6d5 100%); }
+    #vid-ava { position: absolute; left: 50%; top: 66px; width: 330px; height: 330px; margin-left: -165px; border-radius: 0; overflow: visible; }
+    .live { position: absolute; left: 22px; top: 22px; display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-radius: 999px; background: #fff; font-size: 24px; font-weight: 750; box-shadow: var(--sh-1); }
+    .eq { display: flex; align-items: center; gap: 4px; height: 24px; }
+    .eq i { display: block; width: 5px; height: 12px; border-radius: 3px; background: var(--accent); }
+    .clock { position: absolute; right: 22px; top: 22px; padding: 10px 18px; border-radius: 999px; background: #fff; font-family: var(--font-mono); font-size: 24px; font-weight: 600; box-shadow: var(--sh-1); font-variant-numeric: tabular-nums; }
+    .self { position: absolute; right: 22px; bottom: 104px; width: 150px; height: 112px; border-radius: 18px; background: #fff1e2; border: 3px solid #fff; box-shadow: var(--sh-1); overflow: hidden; }
+    .ctrls { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; justify-content: center; gap: 18px; }
+    .ctrls b { width: 64px; height: 64px; border-radius: 50%; background: #fff; color: var(--ink); display: grid; place-items: center; box-shadow: var(--sh-1); }
+    .ctrls b.end { background: var(--warm); }
+    .ctrls b .icon { font-size: 28px; }
+    .map { left: 1572px; top: 196px; width: 236px; height: 316px; border-radius: 34px; background: #f4f9f6; }
+    .map svg.st { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .pin { position: absolute; left: 86px; top: 70px; width: 64px; height: 72px; }
+    .pin svg { width: 64px; height: 72px; overflow: visible; display: block; }
+    .pin-ok { position: absolute; left: 40px; top: -16px; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; border: 4px solid #fff; box-shadow: var(--sh-1); }
+    .pin-ok .icon { width: 24px; height: 24px; stroke-width: 3.2; }
+    .map-lbl { position: absolute; left: 0; right: 0; bottom: 26px; display: flex; justify-content: center; }
+    .map-lbl span { padding: 8px 18px; border-radius: 999px; background: #fff; box-shadow: var(--sh-1); font-size: 26px; font-weight: 750; }
+    .rx { position: absolute; left: 1388px; top: 520px; width: 280px; padding: 22px 24px; border-radius: 26px; background: #fff; box-shadow: var(--sh-2); border: 1px solid rgba(15, 46, 37, 0.06); }
+    .rx-top { display: flex; align-items: center; gap: 16px; }
+    .rx-top b { width: 58px; height: 58px; border-radius: 50%; background: var(--pale); color: var(--deep); display: grid; place-items: center; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; flex: none; }
+    .rx-top span { font-size: 28px; font-weight: 760; letter-spacing: -0.01em; }
+    .rx i { display: block; height: 12px; border-radius: 6px; background: #e8efeb; margin-top: 16px; }
+    .fu { position: absolute; padding: 20px 28px; border-radius: 30px; font-size: 32px; font-weight: 640; line-height: 1.3; white-space: nowrap; box-shadow: var(--sh-2); }
+    .fu.k { left: 870px; top: 700px; background: #fff; border-bottom-left-radius: 10px; display: flex; align-items: center; gap: 16px; }
+    .fu.k .ava { width: 52px; height: 52px; }
+    .fu.me { right: 390px; top: 812px; background: var(--accent); color: var(--ink); border-bottom-right-radius: 10px; }
+
+    /* ---------- privacy */
+    .pv { position: absolute; left: 150px; margin: 0; font-size: 74px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; white-space: nowrap; }
+    .rec { left: 1000px; top: 196px; width: 660px; padding: 32px 32px 34px; border-radius: 40px; }
+    .rec-h { display: flex; align-items: center; gap: 18px; padding-bottom: 24px; }
+    .rec-h .ava { width: 74px; height: 74px; }
+    .rec-h .t { font-size: 36px; font-weight: 780; letter-spacing: -0.02em; }
+    .rec-h .s { font-size: 24px; font-weight: 650; color: var(--ink-2); margin-top: 2px; }
+    .rrow { display: flex; align-items: center; gap: 20px; height: 104px; padding: 0 22px; margin-top: 14px; border-radius: 26px; background: var(--bg-3); }
+    .rrow b { width: 62px; height: 62px; border-radius: 18px; background: var(--pale); color: var(--deep); display: grid; place-items: center; flex: none; }
+    .rrow b .icon { font-size: 30px; }
+    .rrow .lab { font-size: 31px; font-weight: 740; letter-spacing: -0.01em; }
+    .rrow .bar { display: block; flex: 1; height: 12px; border-radius: 6px; background: #e3ece7; margin: 0 6px; }
+    .rrow .ok { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; flex: none; }
+    .rrow .ok .icon { width: 24px; height: 24px; stroke-width: 3; }
+    .shield { position: absolute; left: 1186px; top: 318px; width: 288px; height: 336px; }
+    .shield svg { width: 288px; height: 336px; overflow: visible; display: block; filter: drop-shadow(0 26px 40px rgba(15, 46, 37, 0.28)); }
+
+    /* ---------- end card */
+    .end-col { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+    .tag { font-size: 58px; font-weight: 650; letter-spacing: -0.03em; color: var(--ink-2); }
+    .cta { position: relative; display: inline-flex; align-items: center; gap: 18px; margin-top: 18px; padding: 16px 18px 16px 40px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 34px; font-weight: 760; letter-spacing: -0.015em; box-shadow: 0 2px 4px rgba(15, 46, 37, 0.1), 0 22px 44px -16px rgba(15, 46, 37, 0.5); overflow: hidden; }
+    .cta b { width: 58px; height: 58px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; }
+    .cta b .icon { font-size: 30px; stroke-width: 2.6; }
+    .endglow { position: absolute; left: 460px; top: 40px; width: 1000px; height: 1000px; border-radius: 50%; background: radial-gradient(circle, rgba(31, 176, 122, 0.22), rgba(31, 176, 122, 0) 62%); }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; color: rgba(15, 46, 37, 0.8); text-transform: uppercase; }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="33" data-fps="30">
+
+    <!-- persistent mint stage -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="33" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div class="bg-base"></div>
+      <div id="bg-g1" class="glow g1" data-layout-allow-overflow></div>
+      <div id="bg-g2" class="glow g2" data-layout-allow-overflow></div>
+      <div id="blob1" class="blob b1" data-layout-allow-overflow></div>
+      <div id="blob2" class="blob b2" data-layout-allow-overflow></div>
+      <div class="bg-dots k-dots"></div>
+      <div class="k-vig"></div>
+    </section>
+
+    <!-- S1 0–4.15 · the problem: a week of phone calls piles up, then gets struck out -->
+    <section id="s1" class="scene clip" data-start="0" data-duration="4.15" data-track-index="1">
+      <h1 id="s1-head" class="s1-head">Booking a doctor shouldn’t take <span class="wk">a week.</span></h1>
+      <div id="cal" class="cal">
+        <div class="cal-top">
+          <div class="cal-title"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>This week</div>
+          <div class="cal-meta"><i></i>No appointment yet</div>
+        </div>
+        <div class="cal-grid">
+          <div class="day"><div class="day-h">Mon</div>
+            <div class="call" id="c1"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>On hold</div>
+            <div class="call" id="c6"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Call back</div>
+            <div class="call" id="c11"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Voicemail</div>
+          </div>
+          <div class="day"><div class="day-h">Tue</div>
+            <div class="call" id="c2"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Busy</div>
+            <div class="call" id="c8"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>No slots</div>
+            <div class="call" id="c13"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>On hold</div>
+          </div>
+          <div class="day"><div class="day-h">Wed</div>
+            <div class="call" id="c3"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>On hold</div>
+            <div class="call" id="c7"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Call back</div>
+            <div class="call" id="c12"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Try again</div>
+          </div>
+          <div class="day"><div class="day-h">Thu</div>
+            <div class="call" id="c4"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Voicemail</div>
+            <div class="call" id="c10"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>On hold</div>
+            <div class="call" id="c15"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Busy</div>
+          </div>
+          <div class="day"><div class="day-h">Fri</div>
+            <div class="call" id="c5"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>No slots</div>
+            <div class="call" id="c9"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Busy</div>
+            <div class="call" id="c14"><b><svg class="icon" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></b>Call back</div>
+          </div>
+        </div>
+      </div>
+      <svg id="s1-strike" class="layer" viewBox="0 0 1920 1080" data-design-ignore data-layout-ignore><path id="strike" d="M404 446 C 760 540 1150 690 1550 800" stroke="#0f2e25" stroke-width="18" stroke-linecap="round" fill="none"/></svg>
+    </section>
+
+    <!-- S2 3.75–8.35 · Kindred: the mark lands, a phone shows a doctor in minutes, from anywhere -->
+    <section id="s2" class="scene clip" data-start="3.75" data-duration="4.6" data-track-index="2">
+      <div class="layer center">
+        <div id="s2-lock" class="lock">
+          <div class="mark-wrap">
+            <div id="s2-burst" class="burst" style="left: 79px; top: 72px; border-color: #1fb07a; border-width: 3px" data-design-ignore></div>
+            <svg id="s2-mark" viewBox="0 0 160 160" aria-hidden="true"><rect x="10" y="10" width="140" height="120" rx="42" fill="#1fb07a"/><path d="M40 108 L28 152 L86 124 Z" fill="#1fb07a"/><rect x="70" y="39" width="20" height="62" rx="10" fill="#fff"/><rect x="49" y="60" width="62" height="20" rx="10" fill="#fff"/></svg>
+          </div>
+          <div id="s2-word" class="word">Kindred</div>
+        </div>
+      </div>
+      <div id="phone" class="kphone">
+        <div class="isl" data-design-ignore></div>
+        <div class="scr">
+          <div class="ph-top"><svg class="mk" width="44" height="44" viewBox="0 0 160 160" aria-hidden="true"><rect x="10" y="10" width="140" height="120" rx="42" fill="#1fb07a"/><path d="M40 108 L28 152 L86 124 Z" fill="#1fb07a"/><rect x="70" y="39" width="20" height="62" rx="10" fill="#fff"/><rect x="49" y="60" width="62" height="20" rx="10" fill="#fff"/></svg>Kindred</div>
+          <div class="ph-card">
+            <div id="ph-lbl" class="lbl">Your visit</div>
+            <div id="ph-ring" class="ph-ring">
+              <div class="ava" style="width: 152px; height: 152px; background: #dff3ea">
+                <i class="hd" style="width: 52px; height: 52px; margin-left: -26px; top: 30px; background: #a4704c"></i>
+                <i class="bd" style="width: 112px; height: 62px; margin-left: -56px; top: 90px; background: #fff"></i>
+                <i class="v" style="margin-left: -14px; top: 90px"></i>
+              </div>
+              <i class="ph-on"></i>
+            </div>
+            <div id="ph-status" class="ph-status"><span class="a">Doctor in</span><span class="b">8 min</span></div>
+            <div id="ph-bar" class="ph-bar"><i id="ph-fill"></i></div>
+          </div>
+          <div id="ph-btn" class="ph-btn"><svg class="icon" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>Join visit</div>
+        </div>
+      </div>
+      <div id="loc1" class="loc" style="left: 1566px; top: 330px"><b><svg class="icon" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></b>At home</div>
+      <div id="loc2" class="loc" style="left: 1566px; top: 500px"><b><svg class="icon" viewBox="0 0 24 24"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></b>At work</div>
+      <div id="loc3" class="loc" style="left: 1566px; top: 670px"><b><svg class="icon" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></b>On the go</div>
+    </section>
+
+    <!-- STEPS 8.0–23.95 · how it works: overview tiles, then 1 · 2 · 3 with an odometer numeral -->
+    <section id="steps" class="scene clip" data-start="8.0" data-duration="15.95" data-track-index="3">
+      <div id="kick" class="kk" style="position: absolute; left: 150px; top: 178px">How it works</div>
+      <div id="tile1" class="tile" style="left: 575px"><span class="n ghost">1</span><svg class="icon" viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></div>
+      <div id="tile2" class="tile" style="left: 845px"><span class="n">2</span><svg class="icon" viewBox="0 0 24 24"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg></div>
+      <div id="tile3" class="tile" style="left: 1115px"><span class="n">3</span><svg class="icon" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></div>
+      <div id="numwrap" class="numwrap"><span id="n1" class="dg">1</span><span id="n2" class="dg">2</span><span id="n3" class="dg">3</span></div>
+      <h2 id="ttl1" class="ttl">Tell us</h2>
+      <h2 id="ttl2" class="ttl">Get matched</h2>
+      <h2 id="ttl3" class="ttl">Get care</h2>
+      <p id="sub1" class="sub">what’s going on, in your own words.</p>
+      <p id="sub2" class="sub">with the right clinician.</p>
+      <div id="l3" class="l3">
+        <div class="row" id="l3a"><b><svg class="icon" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></b>Video visit</div>
+        <div class="row" id="l3b"><b><svg class="icon" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></b>Prescription sent</div>
+        <div class="row" id="l3c"><b><svg class="icon" viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></b>Follow-up in chat</div>
+      </div>
+      <div id="pager" class="pager" data-design-ignore><i id="pg1"></i><i id="pg2"></i><i id="pg3"></i></div>
+
+      <!-- step 1 · chat -->
+      <div id="chat" class="win chat">
+        <div class="win-h">
+          <svg class="mk" width="54" height="54" viewBox="0 0 160 160" aria-hidden="true"><rect x="10" y="10" width="140" height="120" rx="42" fill="#1fb07a"/><path d="M40 108 L28 152 L86 124 Z" fill="#1fb07a"/><rect x="70" y="39" width="20" height="62" rx="10" fill="#fff"/><rect x="49" y="60" width="62" height="20" rx="10" fill="#fff"/></svg>
+          <div class="win-t">New visit</div>
+          <div class="win-s"><i></i>Care team online</div>
+        </div>
+        <div class="thread">
+          <div id="bk1" class="bub k">Hi! What’s going on today?</div>
+          <div id="bme" class="bub me">Sore throat and a fever since Tuesday.</div>
+          <div id="bk2" class="bub k dotsb"><div class="dots"><i id="d1"></i><i id="d2"></i><i id="d3"></i></div></div>
+        </div>
+        <div class="composer">
+          <div class="field"><span id="cmp" class="cmp"></span></div>
+          <div id="send" class="send"><svg class="icon" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></div>
+        </div>
+      </div>
+
+      <!-- step 2 · clinicians shuffle, one locks -->
+      <div id="dc1" class="doc" style="left: 830px">
+        <div class="ava" style="background: #dff3ea"><i class="hd" style="width: 48px; height: 48px; margin-left: -24px; top: 28px; background: #a4704c"></i><i class="bd" style="width: 104px; height: 56px; margin-left: -52px; top: 84px; background: #fff"></i><i class="v" style="margin-left: -14px; top: 84px"></i></div>
+        <b class="nm"></b><b class="nm2"></b><div class="spec">General practice</div><div id="avl1" class="avl"><i></i>Available now</div>
+        <svg id="ring2" class="ring2" viewBox="0 0 318 432" data-design-ignore data-layout-ignore><rect id="ring2p" x="2.5" y="2.5" width="313" height="427" rx="46" fill="none" stroke="#1fb07a" stroke-width="5"/></svg>
+        <div class="badge-wrap"><div id="badge" class="badge"><b><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></b>Matched</div></div>
+      </div>
+      <div id="dc2" class="doc" style="left: 1146px">
+        <div class="ava" style="background: #ffeedd"><i class="hd" style="width: 48px; height: 48px; margin-left: -24px; top: 28px; background: #e2b089"></i><i class="bd" style="width: 104px; height: 56px; margin-left: -52px; top: 84px; background: #fff"></i><i class="v" style="margin-left: -14px; top: 84px; border-top-color: #c7843f"></i></div>
+        <b class="nm"></b><b class="nm2"></b><div class="spec">Dermatology</div><div class="avl"><i></i>Available now</div>
+      </div>
+      <div id="dc3" class="doc" style="left: 1462px">
+        <div class="ava" style="background: #e2eef4"><i class="hd" style="width: 48px; height: 48px; margin-left: -24px; top: 28px; background: #6b4630"></i><i class="bd" style="width: 104px; height: 56px; margin-left: -52px; top: 84px; background: #fff"></i><i class="v" style="margin-left: -14px; top: 84px; border-top-color: #4b7d99"></i></div>
+        <b class="nm"></b><b class="nm2"></b><div class="spec">Pediatrics</div><div class="avl"><i></i>Available now</div>
+      </div>
+      <div id="timer" class="timer">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" fill="none" stroke="#e3f4ec" stroke-width="9"/><circle id="tring" cx="50" cy="50" r="42" fill="none" stroke="#1fb07a" stroke-width="9" stroke-linecap="round" transform="rotate(-90 50 50)"/><line id="thand" x1="50" y1="50" x2="50" y2="24" stroke="#0f2e25" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="6" fill="#0f2e25"/></svg>
+        <div><div class="big">&lt; 10 min</div><div class="lab">typical wait</div></div>
+      </div>
+
+      <!-- step 3 · video visit → prescription to the pharmacy → follow-up chat -->
+      <div id="vid" class="win vid">
+        <div id="vid-ava" class="ava">
+          <i class="hd" style="width: 124px; height: 124px; margin-left: -62px; top: 22px; background: #a4704c"></i>
+          <i class="bd" style="width: 300px; height: 270px; margin-left: -150px; top: 166px; background: #fff"></i>
+          <i class="v" style="margin-left: -30px; top: 166px; border-left-width: 30px; border-right-width: 30px; border-top-width: 54px"></i>
+        </div>
+        <div class="live"><span class="eq"><i id="eq1"></i><i id="eq2"></i><i id="eq3"></i><i id="eq4"></i></span>Live</div>
+        <div id="clock" class="clock">00:42</div>
+        <div class="self">
+          <div class="ava" style="position: absolute; inset: 0; border-radius: 0; background: transparent"><i class="hd" style="width: 38px; height: 38px; margin-left: -19px; top: 16px; background: #c98b5e"></i><i class="bd" style="width: 84px; height: 48px; margin-left: -42px; top: 58px; background: #ffb86b"></i></div>
+        </div>
+        <div class="ctrls">
+          <b><svg class="icon" viewBox="0 0 24 24"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></svg></b>
+          <b><svg class="icon" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></b>
+          <b class="end"><svg class="icon" viewBox="0 0 24 24"><path d="M10.1 13.9a14 14 0 0 0 3.732 2.668 1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2 18 18 0 0 1-12.728-5.272"/><path d="M22 2 2 22"/><path d="M4.76 13.582A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 .244.473"/></svg></b>
+        </div>
+      </div>
+      <div id="map" class="win map">
+        <svg class="st" viewBox="0 0 236 316" aria-hidden="true" data-design-ignore>
+          <ellipse cx="190" cy="250" rx="70" ry="52" fill="#dcefe5"/>
+          <g fill="none" stroke-linecap="round">
+            <path d="M-10 196 C 60 184 140 150 250 162" stroke="#e3ebe7" stroke-width="26"/>
+            <path d="M74 -10 L 118 330" stroke="#e3ebe7" stroke-width="22"/>
+            <path d="M188 -10 C 176 90 206 180 196 330" stroke="#e3ebe7" stroke-width="18"/>
+            <path d="M-10 196 C 60 184 140 150 250 162" stroke="#fff" stroke-width="18"/>
+            <path d="M74 -10 L 118 330" stroke="#fff" stroke-width="15"/>
+            <path d="M188 -10 C 176 90 206 180 196 330" stroke="#fff" stroke-width="11"/>
+          </g>
+        </svg>
+        <div id="pin" class="pin">
+          <div id="pin-burst" class="burst" style="left: 32px; top: 30px; border-color: #1fb07a; border-width: 3px" data-design-ignore></div>
+          <svg viewBox="0 0 64 72" aria-hidden="true"><path d="M32 2 C16 2 4 14 4 29 C4 48 32 70 32 70 C32 70 60 48 60 29 C60 14 48 2 32 2 Z" fill="#1fb07a"/><circle cx="32" cy="29" r="15" fill="#fff"/><rect x="29" y="20" width="6" height="18" rx="3" fill="#0c7a52"/><rect x="23" y="26" width="18" height="6" rx="3" fill="#0c7a52"/></svg>
+          <div id="pin-ok" class="pin-ok"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+        </div>
+        <div class="map-lbl"><span>Pharmacy</span></div>
+      </div>
+      <div id="rx" class="rx">
+        <div class="rx-top"><b>Rx</b><span>Prescription</span></div>
+        <i style="width: 82%"></i><i style="width: 56%"></i>
+      </div>
+      <div id="fu1" class="fu k">
+        <div class="ava" style="background: #dff3ea"><i class="hd" style="width: 20px; height: 20px; margin-left: -10px; top: 10px; background: #a4704c"></i><i class="bd" style="width: 40px; height: 20px; margin-left: -20px; top: 32px; background: #fff"></i></div>
+        How are you feeling today?
+      </div>
+      <div id="fu2" class="fu me">Much better, thanks!</div>
+    </section>
+
+    <!-- PRIVACY 23.65–27.6 · a shield folds over the records card, then everything lands in one place -->
+    <section id="priv" class="scene clip" data-start="23.65" data-duration="3.95" data-track-index="4">
+      <h2 id="pv1" class="pv" style="top: 380px">Private by design.</h2>
+      <h2 id="pv2" class="pv" style="top: 474px; color: var(--deep)">All in one place.</h2>
+      <div id="rec" class="win rec">
+        <div class="rec-h">
+          <div class="ava" style="background: #fff1e2"><i class="hd" style="width: 26px; height: 26px; margin-left: -13px; top: 13px; background: #c98b5e"></i><i class="bd" style="width: 54px; height: 30px; margin-left: -27px; top: 44px; background: #ffb86b"></i></div>
+          <div><div class="t">Your records</div><div class="s">Updated today</div></div>
+        </div>
+        <div class="rrow" id="r1"><b><svg class="icon" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></b><span class="lab">Visit notes</span><i class="bar"></i><span id="ok1" class="ok"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+        <div class="rrow" id="r2"><b><svg class="icon" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></b><span class="lab">Prescriptions</span><i class="bar"></i><span id="ok2" class="ok"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+        <div class="rrow" id="r3"><b><svg class="icon" viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></b><span class="lab">Messages</span><i class="bar"></i><span id="ok3" class="ok"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+        <div class="rrow" id="r4"><b><svg class="icon" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></b><span class="lab">Video visits</span><i class="bar"></i><span id="ok4" class="ok"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+      </div>
+      <div id="shield" class="shield">
+        <svg viewBox="0 0 288 336" aria-hidden="true">
+          <defs><linearGradient id="shg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2cc58b"/><stop offset="1" stop-color="#14996a"/></linearGradient></defs>
+          <path d="M144 8 C 178 34 222 50 270 52 C 274 170 236 272 144 328 C 52 272 14 170 18 52 C 66 50 110 34 144 8 Z" fill="url(#shg)"/>
+          <path d="M144 30 C 174 52 210 66 250 70 C 250 168 218 252 144 302" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="6" stroke-linecap="round"/>
+          <path id="shackle" d="M116 164 V 136 a28 28 0 0 1 56 0 V 164" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+          <rect x="98" y="158" width="92" height="76" rx="18" fill="#fff"/>
+          <circle cx="144" cy="190" r="10" fill="#14996a"/><rect x="140" y="194" width="8" height="20" rx="4" fill="#14996a"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- END 27.2–33 · Kindred. Care that comes to you. Get the app -->
+    <section id="end" class="scene clip" data-start="27.2" data-duration="5.8" data-track-index="5">
+      <div id="endglow" class="endglow" data-design-ignore data-layout-ignore></div>
+      <div class="layer center">
+        <div class="end-col">
+          <div class="lock">
+            <div class="mark-wrap">
+              <div id="e-burst" class="burst" style="left: 79px; top: 72px; border-color: #1fb07a; border-width: 3px" data-design-ignore></div>
+              <svg id="e-mark" viewBox="0 0 160 160" aria-hidden="true"><rect x="10" y="10" width="140" height="120" rx="42" fill="#1fb07a"/><path d="M40 108 L28 152 L86 124 Z" fill="#1fb07a"/><rect x="70" y="39" width="20" height="62" rx="10" fill="#fff"/><rect x="49" y="60" width="62" height="20" rx="10" fill="#fff"/></svg>
+            </div>
+            <div id="e-word" class="word">Kindred</div>
+          </div>
+          <div id="e-tag" class="tag">Care that comes to you.</div>
+          <div id="e-cta" class="cta">Get the app<b><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></b></div>
+        </div>
+      </div>
+      <div class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/bright-future.mp3" data-start="0" data-duration="33" data-media-start="3.72" data-track-index="10" data-volume="0.35" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":0.35,"v":1},{"t":0.5,"v":0.5},{"t":29.3,"v":0.5},{"t":29.55,"v":1},{"t":31.4,"v":1},{"t":33,"v":0}]}]}'></audio>
+    <audio id="vo" src="assets/voice/vo.wav" data-start="0.3" data-duration="29.96" data-track-index="11" data-volume="1"></audio>
+    <audio id="sfx-01-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.289" data-duration="0.49" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-02-pop" src="assets/sfx/pop.mp3" data-start="0.564" data-duration="0.72" data-track-index="21" data-volume="0.13"></audio>
+    <audio id="sfx-03-pop" src="assets/sfx/pop.mp3" data-start="0.984" data-duration="0.72" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-04-pop" src="assets/sfx/pop.mp3" data-start="1.404" data-duration="0.72" data-track-index="21" data-volume="0.13"></audio>
+    <audio id="sfx-05-pop" src="assets/sfx/pop.mp3" data-start="1.824" data-duration="0.72" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-06-pop" src="assets/sfx/pop.mp3" data-start="2.244" data-duration="0.72" data-track-index="21" data-volume="0.13"></audio>
+    <audio id="sfx-07-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="3.289" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-08-whoosh" src="assets/sfx/whoosh.mp3" data-start="3.784" data-duration="0.57" data-track-index="20" data-volume="0.28"></audio>
+    <audio id="sfx-09-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="3.877" data-duration="1.6" data-track-index="21" data-volume="0.2" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.52,"v":1},{"t":1.6,"v":0}]}]}'></audio>
+    <audio id="sfx-10-sparkle" src="assets/sfx/sparkle.mp3" data-start="3.925" data-duration="1.8" data-track-index="22" data-volume="0.24"></audio>
+    <audio id="sfx-11-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="4.789" data-duration="0.49" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-12-ping" src="assets/sfx/ping.mp3" data-start="5.128" data-duration="1.32" data-track-index="23" data-volume="0.18"></audio>
+    <audio id="sfx-13-click-soft" src="assets/sfx/click-soft.mp3" data-start="6.45" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-14-click-soft" src="assets/sfx/click-soft.mp3" data-start="6.58" data-duration="0.24" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-15-click-soft" src="assets/sfx/click-soft.mp3" data-start="6.71" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-16-whoosh" src="assets/sfx/whoosh.mp3" data-start="8.104" data-duration="0.57" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-17-pop" src="assets/sfx/pop.mp3" data-start="8.204" data-duration="0.72" data-track-index="21" data-volume="0.15"></audio>
+    <audio id="sfx-18-pop" src="assets/sfx/pop.mp3" data-start="8.364" data-duration="0.72" data-track-index="22" data-volume="0.14"></audio>
+    <audio id="sfx-19-pop" src="assets/sfx/pop.mp3" data-start="8.524" data-duration="0.72" data-track-index="23" data-volume="0.15"></audio>
+    <audio id="sfx-20-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="9.409" data-duration="0.49" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-21-pop" src="assets/sfx/pop.mp3" data-start="9.684" data-duration="0.72" data-track-index="21" data-volume="0.17"></audio>
+    <audio id="sfx-22-typing" src="assets/sfx/typing.mp3" data-start="9.683" data-duration="1.45" data-track-index="22" data-volume="0.15" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.37,"v":1},{"t":1.45,"v":0}]}]}'></audio>
+    <audio id="sfx-23-click" src="assets/sfx/click.mp3" data-start="11.572" data-duration="0.37" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-24-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="11.689" data-duration="0.49" data-track-index="21" data-volume="0.13"></audio>
+    <audio id="sfx-25-pop" src="assets/sfx/pop.mp3" data-start="11.934" data-duration="0.72" data-track-index="22" data-volume="0.13"></audio>
+    <audio id="sfx-26-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="12.589" data-duration="0.49" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-27-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="13.709" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-28-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="14.289" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-29-ping" src="assets/sfx/ping.mp3" data-start="14.498" data-duration="1.32" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-30-pop" src="assets/sfx/pop.mp3" data-start="14.884" data-duration="0.72" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-31-click-soft" src="assets/sfx/click-soft.mp3" data-start="15.95" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-32-pop" src="assets/sfx/pop.mp3" data-start="16.634" data-duration="0.72" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-33-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="17.709" data-duration="0.49" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-34-notification" src="assets/sfx/notification.mp3" data-start="18.214" data-duration="1.2" data-track-index="20" data-volume="0.2" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.12,"v":1},{"t":1.2,"v":0}]}]}'></audio>
+    <audio id="sfx-35-pop" src="assets/sfx/pop.mp3" data-start="19.434" data-duration="0.72" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-36-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="20.289" data-duration="0.49" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-37-pop" src="assets/sfx/pop.mp3" data-start="20.834" data-duration="0.72" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-38-click-soft" src="assets/sfx/click-soft.mp3" data-start="21.08" data-duration="0.24" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-39-pop" src="assets/sfx/pop.mp3" data-start="21.404" data-duration="0.72" data-track-index="21" data-volume="0.18"></audio>
+    <audio id="sfx-40-pop" src="assets/sfx/pop.mp3" data-start="22.024" data-duration="0.72" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-41-whoosh" src="assets/sfx/whoosh.mp3" data-start="23.664" data-duration="0.57" data-track-index="20" data-volume="0.28"></audio>
+    <audio id="sfx-42-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="24.489" data-duration="0.49" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-43-click" src="assets/sfx/click.mp3" data-start="24.902" data-duration="0.37" data-track-index="21" data-volume="0.32"></audio>
+    <audio id="sfx-44-click-soft" src="assets/sfx/click-soft.mp3" data-start="25.65" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-45-click-soft" src="assets/sfx/click-soft.mp3" data-start="25.95" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-46-click-soft" src="assets/sfx/click-soft.mp3" data-start="26.25" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-47-whoosh" src="assets/sfx/whoosh.mp3" data-start="27.274" data-duration="0.57" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-48-sparkle" src="assets/sfx/sparkle.mp3" data-start="27.575" data-duration="1.8" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-49-pop" src="assets/sfx/pop.mp3" data-start="29.334" data-duration="0.72" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-50-chime" src="assets/sfx/chime.mp3" data-start="29.184" data-duration="2.5" data-track-index="22" data-volume="0.3"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+      // Voice offset 0.3 s; every time below is a VIDEO time = measured voice onset + 0.3 (vo.words.json + RMS onsets).
+      const blur = (px) => `blur(${px}px)`;
+      const wordsAt = (sel, times, o) => {
+        o = Object.assign({ dur: 0.55, y: 26, b: 8, ease: "enter" }, o);
+        const sp = new SplitText(S.$(sel), { type: "words", wordsClass: "st-word", aria: "none" });
+        sp.words.forEach((w, i) => tl.fromTo(w, { y: o.y, opacity: 0, filter: blur(o.b) }, { y: 0, opacity: 1, filter: blur(0), duration: o.dur, ease: o.ease }, times[Math.min(i, times.length - 1)]));
+        return sp;
+      };
+      const card = (sel, t, o) => { // panels enter with size + position (never opacity alone); f = a filter kept identical in later tweens
+        o = Object.assign({ x: 0, y: 50, s: 0.95, dur: 0.8, ease: "springSoft", f: "" }, o);
+        const a = { opacity: 0, x: o.x, y: o.y, scale: o.s }, b = { opacity: 1, x: 0, y: 0, scale: 1, duration: o.dur, ease: o.ease };
+        if (o.f) { a.filter = o.f; b.filter = o.f; }
+        tl.fromTo(sel, a, b, t);
+      };
+
+      // ---- background: the light breathes slowly; two soft blobs drift
+      tl.fromTo("#bg-g2", { opacity: 0.55, scale: 0.92 }, { opacity: 1, scale: 1, duration: 8, ease: "glide" }, 0);
+      tl.to("#bg-g2", { opacity: 0.7, scale: 1.06, duration: 6, ease: "glide" }, 14);
+      tl.to("#bg-g2", { opacity: 1, scale: 1, duration: 3, ease: "glide" }, 27.2);
+      S.drift("#blob1", { ax: -18, ay: 22, period: 9 });
+      S.drift("#blob2", { ax: 16, ay: -14, period: 11, phase: 1.2 });
+
+      // ---- S1 0–4.15 · the problem
+      card("#cal", 0.12, { y: 60, s: 0.97, dur: 0.9, ease: "enter", f: "saturate(1)" });
+      wordsAt("#s1-head", [0.48, 0.84, 0.96, 1.24, 1.92, 2.14, 2.42]);
+      const tilt = [-2, 1.5, -1, 2, -1.5, 1, -2.5, 2, -1, 1.5, -2, 2.5, -1.5, 1, -2];
+      tilt.forEach((r, i) => tl.fromTo("#c" + (i + 1), { opacity: 0, y: -34, rotation: r * 3, scale: 0.92 }, { opacity: 1, y: 0, rotation: r, scale: 1, duration: 0.5, ease: "springSoft" }, 0.66 + i * S.f(4.2)));
+      S.draw("#strike", 3.27, { dur: 0.3, ease: "move" });
+      tl.to("#cal", { filter: "saturate(0.35)", duration: 0.3, ease: "enter" }, 3.3);
+      tl.to("#cal", { opacity: 0, y: 70, scale: 0.95, duration: 0.32, ease: "exit" }, 3.82);
+      tl.to("#s1-strike", { opacity: 0, y: 70, scale: 0.95, duration: 0.32, ease: "exit" }, 3.82);
+      tl.to("#s1-head", { opacity: 0, y: -40, duration: 0.3, ease: "exit" }, 3.8);
+
+      // ---- S2 3.75–8.35 · Kindred
+      tl.fromTo("#s2-mark", { scale: 0, rotation: -16, opacity: 0, transformOrigin: "50% 45%" }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "springPop" }, 3.88);
+      S.burst("#s2-burst", 3.93, { dur: 0.85, s0: 0.6, s1: 2.8, o0: 0.75 });
+      S.chars("#s2-word", 4.0, { stagger: S.f(1.4) });
+      // the lockup is centred in a full-width layer, so its centre is x 960: move it to x 520 (scale keeps the centre)
+      tl.to("#s2-lock", { x: 520 - 960, scale: 0.72, duration: 0.8, ease: "move" }, 4.72);
+      tl.fromTo("#phone", { y: 1010, rotation: 5 }, { y: 0, rotation: 0, duration: 1.05, ease: "springSoft" }, 4.76);
+      tl.fromTo("#ph-lbl, #ph-ring", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(4) }, 5.05);
+      tl.fromTo("#ph-status", { opacity: 0, y: 20, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "enter" }, 5.3);
+      tl.fromTo("#ph-bar, #ph-btn", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(5) }, 5.5);
+      const fill = S.$("#ph-fill");
+      S.everyFrame((t) => { const u = S.clamp((t - 5.55) / 2.3, 0, 1); fill.style.width = (18 + 50 * S.smooth(u)).toFixed(2) + "%"; });
+      ["#loc1", "#loc2", "#loc3"].forEach((l, i) => tl.fromTo(l, { opacity: 0, scale: 0.7, y: 24 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "springSoft" }, 6.42 + i * S.f(4)));
+      tl.to("#phone", { y: 90, opacity: 0, duration: 0.32, ease: "exit" }, 8.18);
+      tl.to("#loc1, #loc2, #loc3", { opacity: 0, scale: 0.9, duration: 0.25, ease: "exit", stagger: S.f(2) }, 8.2);
+      tl.to("#s2-lock", { opacity: 0, y: -30, duration: 0.3, ease: "exit" }, 8.16);
+
+      // ---- STEPS · overview on "Here's how it works." (8.16), then 1 · 2 · 3
+      // The big numeral IS tile 1's numeral: it starts scaled to 0.35 over the tile and flies to the left column.
+      const kick = S.$("#kick");
+      const kickDx = 960 - kick.offsetWidth / 2 - 150, kickDy = 322 - 178;
+      const numDx = (575 + 115) - (144 + 84), numDy = 490 - (222 + 165); // tile-1 numeral centre (690, 490) → numwrap centre (228, 387)
+      g.set("#kick", { x: kickDx, y: kickDy });
+      S.words("#kick", 8.2, { stagger: S.f(3), blur: 6, y: 18 });
+      ["#tile1", "#tile2", "#tile3"].forEach((tt, i) => tl.fromTo(tt, { opacity: 0, y: 50, scale: 0.88 }, { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: "springSoft" }, 8.3 + i * 0.16));
+      // the numeral rides in exactly like tile 1 (same offset and ease), then flies out on "One"
+      tl.fromTo("#numwrap", { opacity: 0, x: numDx, y: numDy + 50, scale: 0.5 * 0.88, transformOrigin: "50% 50%" }, { opacity: 1, x: numDx, y: numDy, scale: 0.5, duration: 0.65, ease: "springSoft" }, 8.3);
+      tl.to("#kick", { x: 0, y: 0, duration: 0.65, ease: "move" }, 9.32);
+      tl.to("#numwrap", { x: 0, y: 0, scale: 1, duration: 0.8, ease: "settle" }, 9.36);
+      tl.to("#tile1", { opacity: 0, scale: 0.86, duration: 0.3, ease: "exit" }, 9.36);
+      tl.to("#tile2, #tile3", { opacity: 0, x: 90, scale: 0.94, duration: 0.3, ease: "exit", stagger: S.f(2) }, 9.34);
+      tl.fromTo("#pager", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "enter" }, 9.8);
+      const pg = (n, t) => ["#pg1", "#pg2", "#pg3"].forEach((p, i) => tl.to(p, { width: i === n ? 44 : 14, backgroundColor: i === n ? "#1fb07a" : i < n ? "rgba(31,176,122,0.45)" : "rgba(15,46,37,0.16)", duration: 0.4, ease: "move" }, t));
+      pg(0, 9.6);
+
+      // step 1 · 9.42 "One, tell us what's going on in your own words."
+      S.lines("#ttl1", 9.55, { dur: 0.8 });
+      S.words("#sub1", 9.85, { stagger: S.f(2), blur: 6, y: 16 });
+      card("#chat", 9.5, { x: 90, y: 20, s: 0.95, dur: 0.85, ease: "enter" });
+      tl.fromTo("#bk1", { opacity: 0, y: 18, scale: 0.92, transformOrigin: "0% 100%" }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "springSoft" }, 9.78);
+      S.type("#cmp", 10.12, "Sore throat and a fever since Tuesday.", { cps: 27, caret: true, hold: 0 });
+      tl.fromTo("#send", { scale: 1 }, { scale: 0.86, duration: 0.09, ease: "exit", yoyo: true, repeat: 1 }, 11.6);
+      tl.to("#cmp", { opacity: 0, duration: 0.12, ease: "exit" }, 11.64);
+      tl.fromTo("#bme", { opacity: 0, y: 80, scale: 0.9, transformOrigin: "100% 100%" }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "springSoft" }, 11.68);
+      tl.fromTo("#bk2", { opacity: 0, y: 14, scale: 0.9, transformOrigin: "0% 100%" }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "springSoft" }, 12.02);
+      const dots = ["#d1", "#d2", "#d3"].map((d) => S.$(d));
+      S.everyFrame((t) => dots.forEach((d, i) => { const ph = Math.sin((t - 12.0) * 9 - i * 0.9); const on = t > 12.0 && t < 12.7; d.style.translate = `0px ${on ? (-6 * Math.max(0, ph)).toFixed(2) : 0}px`; d.style.opacity = on ? (0.45 + 0.4 * Math.max(0, ph)).toFixed(2) : 0.5; }));
+      tl.to("#chat", { opacity: 0, x: -70, scale: 0.97, duration: 0.32, ease: "exit" }, 12.5);
+      tl.to("#ttl1 .st-line", { yPercent: -110, opacity: 0, duration: 0.3, ease: "exit" }, 12.46);
+      tl.to("#sub1", { opacity: 0, y: -16, duration: 0.28, ease: "exit" }, 12.46);
+
+      // step 2 · 12.6 "Two, Kindred matches you with the right clinician, usually in under 10 minutes."
+      g.set("#n2, #n3", { yPercent: 100, opacity: 0 });
+      const roll = (from, to, t) => { tl.to(from, { yPercent: -100, opacity: 0, duration: 0.5, ease: "exit" }, t); tl.fromTo(to, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.75, ease: "settle", immediateRender: false }, t + 0.04); };
+      roll("#n1", "#n2", 12.6);
+      pg(1, 12.6);
+      S.lines("#ttl2", 12.68, { dur: 0.8 });
+      S.words("#sub2", 12.95, { stagger: S.f(2), blur: 6, y: 16 });
+      ["#dc1", "#dc2", "#dc3"].forEach((d, i) => card(d, 12.74 + i * 0.12, { y: 70, s: 0.92, dur: 0.85, f: "saturate(1)" }));
+      // shuffle 1 (13.72, "matches"): dc1 → slot 3 (behind), dc2 → slot 1, dc3 → slot 2
+      g.set("#dc1", { zIndex: 1 }); g.set("#dc2", { zIndex: 2 }); g.set("#dc3", { zIndex: 3 });
+      tl.to("#dc1", { x: 632, duration: 0.58, ease: "move" }, 13.72);
+      tl.to("#dc1", { scale: 0.9, duration: 0.29, ease: "move", yoyo: true, repeat: 1 }, 13.72);
+      tl.to("#dc2", { x: -316, duration: 0.58, ease: "move" }, 13.74);
+      tl.to("#dc2", { y: -40, rotation: -3, duration: 0.29, ease: "move", yoyo: true, repeat: 1 }, 13.74);
+      tl.to("#dc3", { x: -316, duration: 0.58, ease: "move" }, 13.76);
+      tl.to("#dc3", { y: -30, rotation: 3, duration: 0.29, ease: "move", yoyo: true, repeat: 1 }, 13.76);
+      // shuffle 2 (14.3): dc1 → slot 2 (in front), dc2 → slot 3, dc3 → slot 1
+      tl.set("#dc1", { zIndex: 4 }, 14.3);
+      tl.to("#dc1", { x: 316, duration: 0.55, ease: "move" }, 14.3);
+      tl.to("#dc1", { y: -44, rotation: 2, duration: 0.27, ease: "move", yoyo: true, repeat: 1 }, 14.3);
+      tl.to("#dc2", { x: 316, duration: 0.55, ease: "move" }, 14.32);
+      tl.to("#dc2", { scale: 0.92, duration: 0.27, ease: "move", yoyo: true, repeat: 1 }, 14.32);
+      tl.to("#dc3", { x: -632, duration: 0.55, ease: "move" }, 14.34);
+      tl.to("#dc3", { scale: 0.92, duration: 0.27, ease: "move", yoyo: true, repeat: 1 }, 14.34);
+      // the right clinician locks (14.8, "clinician")
+      tl.to("#dc2, #dc3", { opacity: 0.42, filter: "saturate(0.25)", duration: 0.5, ease: "enter" }, 14.84);
+      tl.fromTo("#ring2", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 14.8);
+      S.draw("#ring2p", 14.8, { dur: 0.5, ease: "settle" });
+      tl.to("#avl1", { opacity: 0, y: 8, duration: 0.2, ease: "exit" }, 14.92);
+      tl.fromTo("#badge", { opacity: 0, scale: 0.4, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "springPop" }, 14.98);
+      // usually in under 10 minutes (15.56 / "10" at 16.26)
+      card("#timer", 15.62, { y: 34, s: 0.94, dur: 0.6, ease: "enter" });
+      S.draw("#tring", 15.9, { dur: 0.9, ease: "settle", from: "0% 0%" });
+      tl.fromTo("#thand", { rotation: 0, svgOrigin: "50 50" }, { rotation: 300, svgOrigin: "50 50", duration: 0.9, ease: "settle" }, 15.9);
+      tl.to("#dc1, #dc2, #dc3", { opacity: 0, y: 40, duration: 0.3, ease: "exit", stagger: S.f(1) }, 17.56);
+      tl.to("#timer", { opacity: 0, y: 40, duration: 0.3, ease: "exit" }, 17.6);
+      tl.to("#ttl2 .st-line", { yPercent: -110, opacity: 0, duration: 0.3, ease: "exit" }, 17.56);
+      tl.to("#sub2", { opacity: 0, y: -16, duration: 0.28, ease: "exit" }, 17.56);
+
+      // step 3 · 17.72 "Three, talk by video, get your prescription sent to your pharmacy, and follow up any time in chat."
+      roll("#n2", "#n3", 17.72);
+      pg(2, 17.72);
+      S.lines("#ttl3", 17.8, { dur: 0.8 });
+      tl.fromTo("#l3 .row", { opacity: 0, x: -24 }, { opacity: 0.4, x: 0, duration: 0.5, ease: "enter", stagger: S.f(4) }, 17.98);
+      tl.to("#l3a", { opacity: 1, duration: 0.3, ease: "enter" }, 18.3);
+      tl.to("#l3b", { opacity: 1, duration: 0.3, ease: "enter" }, 19.74);
+      tl.to("#l3c", { opacity: 1, duration: 0.3, ease: "enter" }, 21.84);
+      card("#vid", 18.24, { y: 50, s: 0.92, dur: 0.85 });
+      const clock = S.$("#clock"), eqs = ["#eq1", "#eq2", "#eq3", "#eq4"].map((e) => S.$(e));
+      S.everyFrame((t) => {
+        const s = 42 + Math.max(0, Math.floor(t - 18.3)), txt = `00:${String(s).padStart(2, "0")}`;
+        if (clock.textContent !== txt) clock.textContent = txt;
+        eqs.forEach((e, i) => { const a = 0.5 + 0.5 * Math.sin(t * (7 + i * 2.3) + i * 1.7) * Math.sin(t * 3.1 + i); e.style.height = (8 + 16 * Math.abs(a)).toFixed(1) + "px"; });
+      });
+      tl.fromTo("#rx", { opacity: 0, x: -150, rotation: 0 }, { opacity: 1, x: 0, rotation: -4, duration: 0.5, ease: "enter" }, 19.52);
+      card("#map", 19.9, { y: -30, s: 0.94, dur: 0.6, ease: "enter" });
+      // rx centre at rest (1528, 597) → pin centre (1690, 296)
+      tl.to("#rx", { motionPath: { path: [{ x: 0, y: 0 }, { x: 64, y: -200 }, { x: 162, y: -301 }], curviness: 1.25 }, scale: 0.22, rotation: 10, duration: 0.67, ease: "move" }, 20.28);
+      tl.to("#rx", { opacity: 0, duration: 0.13, ease: "exit" }, 20.82);
+      tl.to("#pin", { scaleX: 1.16, scaleY: 0.84, transformOrigin: "50% 100%", duration: 0.1, ease: "exit", yoyo: true, repeat: 1 }, 20.95);
+      S.burst("#pin-burst", 20.97, { dur: 0.7, s0: 0.5, s1: 2.4, o0: 0.7 });
+      tl.fromTo("#pin-ok", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.45, ease: "houseSpring" }, 21.08);
+      tl.fromTo("#fu1", { opacity: 0, y: 30, scale: 0.92, transformOrigin: "0% 100%" }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "springSoft" }, 21.5);
+      tl.fromTo("#fu2", { opacity: 0, y: 30, scale: 0.92, transformOrigin: "100% 100%" }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "springSoft" }, 22.12);
+      tl.to("#vid, #map, #fu1, #fu2", { opacity: 0, y: 40, duration: 0.32, ease: "exit", stagger: S.f(1) }, 23.66);
+      tl.to("#ttl3 .st-line", { yPercent: -110, opacity: 0, duration: 0.3, ease: "exit" }, 23.66);
+      tl.to("#l3, #numwrap, #kick, #pager", { opacity: 0, x: -40, duration: 0.3, ease: "exit", stagger: S.f(1) }, 23.66);
+
+      // ---- PRIVACY 23.96 "Your records stay private" · 25.32 "and your care stays in one place."
+      wordsAt("#pv1", [23.96, 24.1, 24.6]);
+      wordsAt("#pv2", [25.32, 25.5, 25.66, 25.9]);
+      card("#rec", 23.84, { y: 80, s: 0.95, dur: 0.85 });
+      tl.fromTo("#rec .rrow", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(4) }, 24.06);
+      tl.fromTo("#shield", { opacity: 0, rotationX: -96, transformPerspective: 1200, transformOrigin: "50% 0%", y: -40 }, { opacity: 1, rotationX: 0, y: 0, duration: 0.55, ease: "settle" }, 24.42);
+      tl.to("#rec .rrow, #rec .rec-h", { filter: blur(3), opacity: 0.55, duration: 0.4, ease: "enter" }, 24.5);
+      tl.fromTo("#shackle", { y: -18 }, { y: 0, duration: 0.18, ease: "snap" }, 24.9);
+      const rec = { l: 1000, t: 196, w: 660 }; // dock the shield on the card's top-right corner
+      tl.to("#shield", { x: (rec.l + rec.w - 70) - (1186 + 144), y: (rec.t + 69) - (318 + 168), scale: 0.26, transformOrigin: "50% 50%", duration: 0.6, ease: "move" }, 25.28);
+      tl.to("#rec .rrow, #rec .rec-h", { filter: blur(0), opacity: 1, duration: 0.4, ease: "enter" }, 25.3);
+      ["#ok1", "#ok2", "#ok3", "#ok4"].forEach((o, i) => tl.fromTo(o, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.45, ease: "houseSpring" }, 25.62 + i * 0.22));
+      tl.to("#pv1, #pv2, #rec, #shield", { opacity: 0, y: -30, duration: 0.3, ease: "exit", stagger: S.f(1) }, 27.24);
+
+      // ---- END 27.58 "Kindred," · 28.40 "care that comes to you."
+      tl.fromTo("#endglow", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.4, ease: "settle" }, 27.4);
+      tl.fromTo("#e-mark", { scale: 0, rotation: -16, opacity: 0, transformOrigin: "50% 45%" }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "springPop" }, 27.56);
+      S.burst("#e-burst", 27.62, { dur: 0.85, s0: 0.6, s1: 2.8, o0: 0.75 });
+      S.chars("#e-word", 27.66, { stagger: S.f(1.4) });
+      S.words("#e-tag", 28.36, { stagger: S.f(3), blur: 8, y: 20 });
+      tl.fromTo("#e-cta", { opacity: 0, y: 26, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "springSoft" }, 29.4);
+      S.sweep("#e-cta", 30.1, { dur: 1.0 });
+
+      S.grain({ opacity: 0.05, blend: "soft-light" });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

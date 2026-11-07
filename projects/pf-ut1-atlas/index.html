@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>UT1 · 3D UI Tour — Atlas CRM (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Atlas: deep slate night, cool white ink, ONE teal accent that marks every win. */
+      --bg: #0b1220;
+      --bg-2: #121c30;
+      --bg-3: #172440;
+      --ink: #eaf0ff;
+      --ink-2: rgba(234, 240, 255, 0.62);
+      --ink-3: rgba(234, 240, 255, 0.42);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-2: rgba(255, 255, 255, 0.14);
+      --accent: #2dd4bf;
+      --accent-2: #5eead4;
+      --font-display: "Manrope", "Hind Siliguri", sans-serif;
+      --font-body: "Manrope", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+    .display { font-weight: 700; letter-spacing: -0.035em; text-wrap: balance; }
+    .row { display: block; }
+    .teal { color: var(--accent); }
+    .mono { font-family: var(--font-mono); }
+
+    /* persistent background: slate gradient, two soft light pools, parallax dots */
+    .bg-base { position: absolute; inset: 0; background: linear-gradient(180deg, #0b1220 0%, #0d1628 55%, #0f1a2e 100%); }
+    #bg .g1 { width: 1400px; height: 1000px; left: 260px; top: 420px; background: radial-gradient(closest-side, rgba(45, 212, 191, 0.22), rgba(45, 212, 191, 0)); }
+    #bg .g2 { width: 1200px; height: 1000px; left: -300px; top: -360px; background: radial-gradient(closest-side, rgba(96, 120, 255, 0.18), rgba(96, 120, 255, 0)); }
+    .dots-par { position: absolute; inset: -120px; background-image: radial-gradient(rgba(190, 210, 255, 0.16) 1.3px, transparent 1.45px); background-size: 34px 34px; -webkit-mask-image: radial-gradient(70% 65% at 50% 50%, #000 20%, transparent 100%); mask-image: radial-gradient(70% 65% at 50% 50%, #000 20%, transparent 100%); }
+
+    /* ---------- the 3D stage: four app screens + depth panels */
+    .pnl { position: absolute; left: 240px; top: 130px; width: 1440px; height: 820px; border-radius: 30px; background: linear-gradient(180deg, #15213a 0%, #121c30 38%, #101a2c 100%); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 2px 6px rgba(0, 0, 0, 0.35), 0 40px 120px -30px rgba(0, 0, 0, 0.75); overflow: hidden; backface-visibility: hidden; }
+    .pnl.ghost { background: linear-gradient(180deg, #131e34, #0f182a); }
+    .ph { height: 100px; display: flex; align-items: center; gap: 20px; padding: 0 44px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); background: rgba(255, 255, 255, 0.015); }
+    .ph .ico { width: 52px; height: 52px; flex: none; border-radius: 15px; display: grid; place-items: center; background: rgba(45, 212, 191, 0.12); border: 1px solid rgba(45, 212, 191, 0.3); color: var(--accent); font-size: 28px; }
+    .ph .ttl { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; }
+    .ph .sub { font-size: 26px; color: var(--ink-2); white-space: nowrap; }
+    .ph .sp { flex: 1; }
+    .ph .chip { font-size: 24px; color: var(--ink-2); padding: 8px 18px; }
+    .sk { display: block; height: 14px; border-radius: 7px; background: rgba(255, 255, 255, 0.07); }
+
+    /* panel A — pipeline board */
+    .board { position: absolute; left: 40px; right: 40px; top: 128px; bottom: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .col { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 18px; border-radius: 22px; background: rgba(255, 255, 255, 0.022); border: 1px solid rgba(255, 255, 255, 0.05); }
+    .col-h { display: flex; align-items: center; gap: 12px; padding: 2px 4px 4px; height: 40px; }
+    .col-h .nm { font-size: 27px; font-weight: 650; color: var(--ink-2); }
+    .col-h .n { font-family: var(--font-mono); font-size: 24px; color: var(--ink-2); padding: 2px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.06); }
+    .col-h .sum { margin-left: auto; font-family: var(--font-mono); font-size: 26px; font-weight: 600; color: var(--ink); }
+    .col.won .col-h .nm { color: var(--accent); }
+    .deal { position: relative; height: 116px; padding: 20px 22px; border-radius: 18px; background: #18243d; border: 1px solid rgba(255, 255, 255, 0.07); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 24px -12px rgba(0, 0, 0, 0.6); }
+    .deal .co { font-size: 28px; font-weight: 650; letter-spacing: -0.02em; white-space: nowrap; }
+    .deal .amt { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-family: var(--font-mono); font-size: 26px; color: var(--ink-2); }
+    .deal .amt i { width: 30px; height: 30px; border-radius: 50%; display: block; border: 2px solid #18243d; }
+    .add { height: 64px; flex: none; border-radius: 16px; border: 2px dashed rgba(255, 255, 255, 0.09); display: grid; place-items: center; color: rgba(234, 240, 255, 0.32); font-size: 28px; }
+    .lift { position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08); opacity: 0; pointer-events: none; }
+    .gring { position: absolute; inset: -2px; border-radius: 20px; box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.95), 0 0 46px rgba(45, 212, 191, 0.45); opacity: 0; pointer-events: none; }
+    .chk { position: absolute; right: -14px; top: -14px; width: 44px; height: 44px; overflow: visible; }
+
+    /* panel B — deal */
+    .deal-grid { position: absolute; left: 44px; right: 44px; top: 132px; bottom: 44px; display: grid; grid-template-columns: 600px 1fr; gap: 44px; }
+    .dcard { position: relative; padding: 36px 40px; border-radius: 26px; background: #16223a; border: 1px solid rgba(255, 255, 255, 0.07); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; }
+    .pill { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; padding: 6px 16px; border-radius: 999px; background: rgba(45, 212, 191, 0.14); border: 1px solid rgba(45, 212, 191, 0.45); color: var(--accent); font-size: 24px; font-weight: 700; }
+    .pill b { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+    .dname { font-size: 54px; font-weight: 700; letter-spacing: -0.035em; margin-top: 22px; }
+    .dplan { font-size: 28px; color: var(--ink-2); margin-top: 6px; }
+    .damt { font-family: var(--font-mono); font-size: 72px; font-weight: 600; letter-spacing: -0.03em; margin-top: 26px; }
+    .dmeta { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; column-gap: 52px; margin-top: 28px; }
+    .dmeta span { display: block; font-size: 24px; color: var(--ink-2); }
+    .dmeta b { display: block; font-size: 30px; font-weight: 650; margin-top: 4px; }
+    .contact { display: flex; align-items: center; gap: 22px; margin-top: auto; padding-top: 26px; border-top: 1px solid rgba(255, 255, 255, 0.07); }
+    .ini { width: 76px; height: 76px; flex: none; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(160deg, rgba(45, 212, 191, 0.3), rgba(45, 212, 191, 0.12)); border: 1px solid rgba(45, 212, 191, 0.45); font-size: 30px; font-weight: 700; color: #d9fbf5; }
+    .contact .role { font-size: 30px; font-weight: 600; }
+    .contact .org { font-size: 24px; color: var(--ink-2); margin-top: 2px; }
+    .act { position: relative; padding: 8px 6px; }
+    .act-h { font-size: 30px; font-weight: 650; color: var(--ink-2); height: 44px; }
+    .tline { position: absolute; left: 34px; top: 112px; width: 2px; height: 372px; background: linear-gradient(180deg, rgba(234, 240, 255, 0.18), rgba(45, 212, 191, 0.7)); }
+    .evs { position: relative; margin-top: 34px; display: flex; flex-direction: column; gap: 24px; }
+    .ev { position: relative; display: grid; grid-template-columns: 56px 1fr auto; gap: 24px; align-items: center; height: 100px; padding-right: 8px; }
+    .ev .dot { position: relative; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: #1a2742; border: 1px solid rgba(255, 255, 255, 0.12); color: var(--ink-2); font-size: 26px; }
+    .ev.last .dot { background: rgba(45, 212, 191, 0.16); border-color: rgba(45, 212, 191, 0.7); color: var(--accent); box-shadow: 0 0 30px rgba(45, 212, 191, 0.35); }
+    .ev .t { font-size: 31px; font-weight: 600; letter-spacing: -0.015em; }
+    .ev .d { font-family: var(--font-mono); font-size: 24px; color: var(--ink-2); }
+    .ev.last .d { color: var(--accent); }
+    .ev .txt { display: contents; }
+
+    /* panel C — forecast */
+    .fc-top { position: absolute; left: 44px; right: 44px; top: 128px; display: flex; align-items: flex-end; gap: 28px; }
+    .fc-num { font-family: var(--font-mono); font-size: 132px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9; }
+    .fc-lab { font-size: 34px; color: var(--ink-2); padding-bottom: 12px; }
+    .fc-chip { margin-left: auto; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 999px; background: rgba(45, 212, 191, 0.14); border: 1px solid rgba(45, 212, 191, 0.45); color: var(--accent); font-size: 28px; font-weight: 700; font-family: var(--font-mono); }
+    .fc-chart { position: absolute; left: 44px; right: 44px; top: 330px; height: 440px; }
+    .fc-chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .fc-tlabel { position: absolute; right: 0; top: 46px; padding: 6px 14px; border-radius: 10px; background: rgba(11, 18, 32, 0.85); border: 1px solid rgba(234, 240, 255, 0.18); font-family: var(--font-mono); font-size: 24px; color: var(--ink-2); }
+    .fc-leg { position: absolute; left: 0; top: 0; display: flex; gap: 30px; font-size: 24px; color: var(--ink-2); }
+    .fc-leg span { display: inline-flex; align-items: center; gap: 12px; }
+    .fc-leg i { width: 22px; height: 22px; border-radius: 6px; display: block; }
+    .fc-leg i.s { background: linear-gradient(180deg, #5eead4, #2dd4bf); }
+    .fc-leg i.p { background: rgba(45, 212, 191, 0.1); border: 2px dashed #2dd4bf; }
+    .fc-x { position: absolute; left: 0; right: 0; bottom: -6px; display: grid; grid-template-columns: repeat(3, 1fr); font-family: var(--font-mono); font-size: 24px; color: var(--ink-2); }
+    .fc-x span { text-align: center; }
+
+    /* panel D — inbox */
+    .ib { position: absolute; left: 0; right: 0; top: 100px; bottom: 0; display: grid; grid-template-columns: 430px 1fr; }
+    .ib-list { border-right: 1px solid rgba(255, 255, 255, 0.06); padding: 26px 22px; display: flex; flex-direction: column; gap: 12px; }
+    .th { display: flex; gap: 18px; align-items: center; padding: 18px 18px; border-radius: 18px; }
+    .th.on { background: rgba(45, 212, 191, 0.1); box-shadow: inset 0 0 0 1px rgba(45, 212, 191, 0.3); }
+    .th i { width: 46px; height: 46px; flex: none; border-radius: 50%; display: block; }
+    .th .w { min-width: 0; }
+    .th .nm { font-size: 28px; font-weight: 650; white-space: nowrap; }
+    .th .sb { font-size: 24px; color: var(--ink-2); white-space: nowrap; margin-top: 2px; }
+    .ib-main { position: relative; padding: 34px 48px; display: flex; flex-direction: column; gap: 22px; }
+    .ib-subj { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; }
+    .ib-meta { font-size: 24px; color: var(--ink-2); margin-top: -12px; }
+    .msg { display: flex; gap: 20px; align-items: flex-start; }
+    .msg .ini { width: 60px; height: 60px; font-size: 24px; }
+    .bub { padding: 20px 26px; border-radius: 22px 22px 22px 8px; background: #1a2742; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 30px; line-height: 1.32; max-width: 760px; }
+    .msg.me { justify-content: flex-end; }
+    .msg.me .bub { border-radius: 22px 22px 8px 22px; background: rgba(45, 212, 191, 0.12); border-color: rgba(45, 212, 191, 0.3); }
+    .ai { position: relative; margin-top: 6px; display: flex; align-items: center; gap: 22px; padding: 22px 24px 22px 26px; border-radius: 24px; background: linear-gradient(180deg, rgba(45, 212, 191, 0.16), rgba(45, 212, 191, 0.07)); border: 1px solid rgba(45, 212, 191, 0.5); box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.06), 0 24px 60px -20px rgba(45, 212, 191, 0.4); }
+    .ai .ico { width: 58px; height: 58px; flex: none; border-radius: 17px; display: grid; place-items: center; background: rgba(45, 212, 191, 0.18); color: var(--accent); font-size: 32px; }
+    .ai .k { font-size: 24px; font-weight: 700; color: var(--accent); }
+    .ai .v { font-size: 31px; font-weight: 600; margin-top: 2px; }
+    .ai .go { margin-left: auto; padding: 14px 24px; border-radius: 14px; background: var(--accent); color: #062520; font-size: 28px; font-weight: 700; white-space: nowrap; }
+    .composer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; height: 78px; padding: 0 16px 0 28px; border-radius: 20px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.08); font-size: 28px; color: var(--ink-2); }
+    .composer .send { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; background: rgba(45, 212, 191, 0.16); color: var(--accent); font-size: 26px; }
+    .fx { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
+
+    /* ---------- title + lockup */
+    .scrim { position: absolute; left: 50%; top: 50%; width: 1900px; height: 900px; margin: -450px 0 0 -950px; background: radial-gradient(closest-side, rgba(11, 18, 32, 0.88), rgba(11, 18, 32, 0.55) 55%, rgba(11, 18, 32, 0)); }
+    .t-head { position: relative; font-size: 124px; line-height: 1.04; text-align: center; }
+    .lk-col { position: relative; display: flex; flex-direction: column; align-items: center; gap: 38px; }
+    .lockup { display: flex; align-items: center; gap: 34px; }
+    .mark { width: 128px; height: 128px; flex: none; overflow: visible; }
+    .wordmark { font-size: 160px; font-weight: 700; letter-spacing: -0.05em; line-height: 1; padding-bottom: 12px; }
+    .lk-tag { font-size: 56px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-2); }
+    .cta-t { position: relative; background: var(--accent); color: #062520; font-weight: 700; font-size: 34px; padding: 24px 46px; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 16px 40px -12px rgba(45, 212, 191, 0.7); }
+    .cta-t .icon { font-size: 32px; stroke-width: 2.6; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(234, 240, 255, 0.62); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="25" data-fps="30">
+
+    <!-- persistent background -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="25" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div class="bg-base"></div>
+      <div id="bg-g1" class="glow g1" data-layout-allow-overflow></div>
+      <div id="bg-g2" class="glow g2" data-layout-allow-overflow></div>
+      <div id="dots" class="dots-par"></div>
+    </section>
+
+    <!-- the 3D stage: one camera flies Pipeline → Deal → Forecast → Inbox, then rests on the constellation -->
+    <section id="stage" class="scene clip" data-start="0" data-duration="25" data-track-index="1">
+      <div class="stage3d"><div class="cam" id="cam">
+        <!-- depth panels (skeleton only) -->
+        <div class="pnl ghost g-1" data-design-ignore data-layout-ignore><div class="ph"><span class="sk" style="width: 220px"></span></div></div>
+        <div class="pnl ghost g-2" data-design-ignore data-layout-ignore><div class="ph"><span class="sk" style="width: 300px"></span></div></div>
+        <div class="pnl ghost g-3" data-design-ignore data-layout-ignore><div class="ph"><span class="sk" style="width: 260px"></span></div></div>
+        <div class="pnl ghost g-4" data-design-ignore data-layout-ignore><div class="ph"><span class="sk" style="width: 200px"></span></div></div>
+        <div class="pnl ghost g-5" data-design-ignore data-layout-ignore><div class="ph"><span class="sk" style="width: 240px"></span></div></div>
+        <div class="pnl ghost g-6" data-design-ignore data-layout-ignore><div class="ph"><span class="sk" style="width: 280px"></span></div></div>
+
+        <!-- A · Pipeline -->
+        <div class="pnl" id="pA">
+          <div class="ph">
+            <div class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v14" /><path d="M12 3v8" /><path d="M19 3v18" /></svg></div>
+            <div class="ttl">Pipeline</div><div class="sub">Q4 · 10 open deals</div><div class="sp"></div>
+            <div class="chip">All owners</div><div class="chip">This quarter</div>
+          </div>
+          <div class="board">
+            <div class="col"><div class="col-h"><span class="nm">Lead</span><span class="n">3</span><span class="sum">$69.5K</span></div>
+              <div class="deal"><div class="co">Halden Bio</div><div class="amt">$22,000<i style="background: #f2a27c"></i></div></div>
+              <div class="deal"><div class="co">Marlow Freight</div><div class="amt">$35,000<i style="background: #7d9dff"></i></div></div>
+              <div class="deal"><div class="co">Pinecrest</div><div class="amt">$12,500<i style="background: #b48cf3"></i></div></div>
+              <div class="add" data-design-ignore data-layout-ignore><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="M12 5v14" /></svg></div>
+            </div>
+            <div class="col"><div class="col-h"><span class="nm">Qualified</span><span class="n">2</span><span class="sum">$85K</span></div>
+              <div class="deal"><div class="co">Tidewell</div><div class="amt">$54,000<i style="background: #5fc79c"></i></div></div>
+              <div class="deal"><div class="co">Ember &amp; Oak</div><div class="amt">$31,000<i style="background: #f2a27c"></i></div></div>
+              <div class="add" data-design-ignore data-layout-ignore><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="M12 5v14" /></svg></div>
+            </div>
+            <div class="col"><div class="col-h"><span class="nm">Proposal</span><span class="n" id="prop-n">3</span><span class="sum" id="prop-sum">$126K</span></div>
+              <div class="deal" id="mv"><div class="lift" id="mv-lift"></div><div class="gring" id="mv-glow"></div><div class="co">Corvid Systems</div><div class="amt">$48,000<i style="background: #2dd4bf"></i></div>
+                <svg class="chk" id="mv-chk" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#2dd4bf" /><path id="mv-chk-p" d="M13 22.5 L19.5 29 L31 16" fill="none" stroke="#062520" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+              <div class="deal prop-shift"><div class="co">Brightmoor</div><div class="amt">$62,000<i style="background: #7d9dff"></i></div></div>
+              <div class="deal prop-shift"><div class="co">Kestrel Labs</div><div class="amt">$16,000<i style="background: #5fc79c"></i></div></div>
+              <div class="add prop-shift" data-design-ignore data-layout-ignore><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="M12 5v14" /></svg></div>
+            </div>
+            <div class="col won"><div class="col-h"><span class="nm">Won</span><span class="n" id="won-n">2</span><span class="sum" id="won-sum">$210K</span></div>
+              <div class="deal won-shift"><div class="co">Larkspur Co</div><div class="amt">$120,000<i style="background: #b48cf3"></i></div></div>
+              <div class="deal won-shift"><div class="co">Quillon</div><div class="amt">$90,000<i style="background: #f2a27c"></i></div></div>
+              <div class="add won-shift" data-design-ignore data-layout-ignore><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="M12 5v14" /></svg></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- B · Deal -->
+        <div class="pnl" id="pB">
+          <div class="ph">
+            <div class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></div>
+            <div class="ttl">Deal</div><div class="sub">Pipeline / Corvid Systems</div>
+          </div>
+          <div class="deal-grid">
+            <div class="dcard">
+              <div class="pill" id="b-pill"><b></b>Won</div>
+              <div class="dname" id="b-name">Corvid Systems</div>
+              <div class="dplan" id="b-plan">Platform plan · Annual</div>
+              <div class="damt" id="b-amt">$48,000</div>
+              <div class="dmeta" id="b-meta"><div><span>Closed</span><b>Today</b></div><div><span>Owner</span><b>You</b></div><div><span>Seats</span><b>120</b></div></div>
+              <div class="contact" id="b-contact"><div class="ini">RM</div><div><div class="role">Head of Operations</div><div class="org">Primary contact</div></div></div>
+            </div>
+            <div class="act">
+              <div class="act-h">Activity</div>
+              <div class="tline" id="b-line" data-design-ignore data-layout-ignore></div>
+              <div class="evs">
+                <div class="ev" id="ev1"><div class="dot"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg></div><div class="t">Intro call held</div><div class="d">Oct 02</div></div>
+                <div class="ev" id="ev2"><div class="dot"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></div><div class="t">Proposal sent</div><div class="d">Oct 09</div></div>
+                <div class="ev" id="ev3"><div class="dot"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg></div><div class="t">Security review passed</div><div class="d">Oct 21</div></div>
+                <div class="ev last" id="ev4"><div class="dot"><div id="b-burst" class="burst" style="left: 28px; top: 28px; width: 90px; height: 90px; border-color: #2dd4bf" data-design-ignore></div><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 21h8" /><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /></svg></div><div class="t">Contract signed</div><div class="d">Today</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C · Forecast -->
+        <div class="pnl" id="pC">
+          <div class="ph">
+            <div class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21v-6" /><path d="M12 21V3" /><path d="M19 21V9" /></svg></div>
+            <div class="ttl">Forecast</div><div class="sub">Q4 2026 · weekly</div>
+          </div>
+          <div class="fc-top">
+            <div class="fc-num" id="c-num">$2.4M</div><div class="fc-lab" id="c-lab">forecast this quarter</div>
+            <div class="fc-chip" id="c-chip">+18% vs Q3</div>
+          </div>
+          <div class="fc-chart">
+            <svg viewBox="0 0 1352 440" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="barg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5eead4" /><stop offset="1" stop-color="#2dd4bf" stop-opacity="0.55" /></linearGradient></defs>
+              <g stroke="rgba(255,255,255,0.06)" stroke-width="2"><line x1="0" y1="120" x2="1352" y2="120" /><line x1="0" y1="240" x2="1352" y2="240" /><line x1="0" y1="360" x2="1352" y2="360" /></g>
+              <g id="bars"></g>
+              <line id="c-target" x1="0" y1="96" x2="1352" y2="96" stroke="#eaf0ff" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="12 12" />
+            </svg>
+            <div class="fc-tlabel" id="c-tlabel">Target $2.2M</div>
+            <div class="fc-leg" id="c-leg"><span><i class="s"></i>Committed</span><span><i class="p"></i>Projected</span></div>
+            <div class="fc-x"><span>Oct</span><span>Nov</span><span>Dec</span></div>
+          </div>
+        </div>
+
+        <!-- D · Inbox -->
+        <div class="pnl" id="pD">
+          <div class="ph">
+            <div class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.790 1.11z" /></svg></div>
+            <div class="ttl">Inbox</div><div class="sub">3 need a reply</div>
+          </div>
+          <div class="ib">
+            <div class="ib-list">
+              <div class="th on"><i style="background: #2dd4bf"></i><div class="w"><div class="nm">Corvid Systems</div><div class="sb">Re: Rollout timeline</div></div></div>
+              <div class="th"><i style="background: #7d9dff"></i><div class="w"><div class="nm">Tidewell</div><div class="sb">Pricing question</div></div></div>
+              <div class="th"><i style="background: #f2a27c"></i><div class="w"><div class="nm">Brightmoor</div><div class="sb">Next steps</div></div></div>
+            </div>
+            <div class="ib-main">
+              <div class="ib-subj">Re: Rollout timeline</div>
+              <div class="ib-meta">Corvid Systems · 3 messages</div>
+              <div class="msg" id="d-m1"><div class="ini">RM</div><div class="bub">Contract is signed. Can we start onboarding next week?</div></div>
+              <div class="msg me" id="d-m2"><div class="bub">Absolutely. I'll send times today.</div></div>
+              <div class="ai" id="d-ai">
+                <div class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /><path d="M20 2v4" /><path d="M22 4h-4" /><circle cx="4" cy="20" r="2" /></svg></div>
+                <div><div class="k">Suggested next step</div><div class="v">Book onboarding call · Tue 10:00</div></div>
+                <div class="go">Schedule</div>
+                <span class="fx" data-layout-ignore data-design-ignore></span>
+              </div>
+              <div class="composer"><span>Reply to Corvid Systems</span><i class="send"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></i></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- title 0–2.7 -->
+    <section id="s-title" class="scene clip" data-start="0" data-duration="2.7" data-track-index="2">
+      <div class="layer center">
+        <div id="t-scrim" class="scrim" data-design-ignore data-layout-ignore></div>
+        <h1 class="display t-head"><span id="t1" class="row">Your whole pipeline.</span><span id="t2" class="row teal">One place.</span></h1>
+      </div>
+    </section>
+
+    <!-- lockup 21.5–25 -->
+    <section id="s-lock" class="scene clip" data-start="21.5" data-duration="3.5" data-track-index="3">
+      <div class="layer center">
+        <div id="lk-scrim" class="scrim" data-design-ignore data-layout-ignore></div>
+        <div class="lk-col">
+          <div class="lockup">
+            <svg class="mark" viewBox="0 0 128 128" aria-hidden="true">
+              <circle id="lk-ring" cx="64" cy="64" r="54" fill="none" stroke="#eaf0ff" stroke-width="7" />
+              <ellipse id="lk-mer" cx="64" cy="64" rx="24" ry="54" fill="none" stroke="#2dd4bf" stroke-width="7" />
+              <path id="lk-eq" d="M10 64 H118" fill="none" stroke="#2dd4bf" stroke-width="7" stroke-linecap="round" />
+              <circle id="lk-dot" cx="102" cy="26" r="11" fill="#2dd4bf" />
+            </svg>
+            <div id="lk-word" class="wordmark">Atlas</div>
+          </div>
+          <div id="lk-tag" class="lk-tag">Sell with clarity.</div>
+          <div id="lk-cta" class="btn cta-t">Book a demo<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg><span class="fx" data-layout-ignore data-design-ignore></span></div>
+        </div>
+      </div>
+      <div id="concept" class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/bright-future.mp3" data-start="0" data-duration="25" data-media-start="0" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":23.5,"v":1},{"t":25,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.239" data-duration="0.49" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-02-pop" src="assets/sfx/pop.mp3" data-start="0.484" data-duration="0.72" data-track-index="21" data-volume="0.16"></audio>
+    <audio id="sfx-03-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.539" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-04-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.3" data-duration="0.24" data-track-index="20" data-volume="0.28"></audio>
+    <audio id="sfx-05-click-soft" src="assets/sfx/click-soft.mp3" data-start="5.3" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-06-ping" src="assets/sfx/ping.mp3" data-start="5.078" data-duration="1.32" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-07-typing" src="assets/sfx/typing.mp3" data-start="5.013" data-duration="0.9" data-track-index="22" data-volume="0.12" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.82,"v":1},{"t":0.9,"v":0}]}]}'></audio>
+    <audio id="sfx-08-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="6.989" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-09-typing" src="assets/sfx/typing.mp3" data-start="7.403" data-duration="1" data-track-index="21" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.92,"v":1},{"t":1,"v":0}]}]}'></audio>
+    <audio id="sfx-10-click-soft" src="assets/sfx/click-soft.mp3" data-start="8.3" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-11-click-soft" src="assets/sfx/click-soft.mp3" data-start="8.9" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-12-click-soft" src="assets/sfx/click-soft.mp3" data-start="9.5" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-13-pop" src="assets/sfx/pop.mp3" data-start="9.984" data-duration="0.72" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-14-sparkle" src="assets/sfx/sparkle.mp3" data-start="10.145" data-duration="1.8" data-track-index="21" data-volume="0.18"></audio>
+    <audio id="sfx-15-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="11.989" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-16-typing" src="assets/sfx/typing.mp3" data-start="12.283" data-duration="1.5" data-track-index="21" data-volume="0.18" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.42,"v":1},{"t":1.5,"v":0}]}]}'></audio>
+    <audio id="sfx-17-click-soft" src="assets/sfx/click-soft.mp3" data-start="13.75" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-18-pop" src="assets/sfx/pop.mp3" data-start="14.484" data-duration="0.72" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-19-click-soft" src="assets/sfx/click-soft.mp3" data-start="15.5" data-duration="0.24" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-20-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="16.989" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-21-click-soft" src="assets/sfx/click-soft.mp3" data-start="17.7" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-22-click-soft" src="assets/sfx/click-soft.mp3" data-start="18.2" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-23-pop" src="assets/sfx/pop.mp3" data-start="18.704" data-duration="0.72" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-24-sparkle" src="assets/sfx/sparkle.mp3" data-start="18.875" data-duration="1.8" data-track-index="21" data-volume="0.26"></audio>
+    <audio id="sfx-25-whoosh-cinematic" src="assets/sfx/whoosh-cinematic.mp3" data-start="19.85" data-duration="5.15" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-26-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="22.327" data-duration="2" data-track-index="21" data-volume="0.4" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.92,"v":1},{"t":2,"v":0}]}]}'></audio>
+    <audio id="sfx-27-sparkle" src="assets/sfx/sparkle.mp3" data-start="22.425" data-duration="1.8" data-track-index="22" data-volume="0.24"></audio>
+    <audio id="sfx-28-pop" src="assets/sfx/pop.mp3" data-start="23.244" data-duration="0.72" data-track-index="23" data-volume="0.26"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    // forecast bars: 12 weeks, the last three are the projection (outlined)
+    (function bars() {
+      const H = [70, 96, 88, 120, 142, 136, 170, 198, 214, 248, 276, 306];
+      const g = document.getElementById("bars"), w = 76, gap = (1352 - 12 * w) / 11;
+      g.innerHTML = H.map((h, i) => {
+        const x = (i * (w + gap)).toFixed(1), y = 400 - h;
+        return i < 9
+          ? `<rect class="bar" x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="url(#barg)" />`
+          : `<rect class="bar" x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="rgba(45,212,191,0.10)" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="8 7" />`;
+      }).join("");
+    })();
+
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+
+      // ---- the constellation (identity camera = the final rest view); panels face the centre
+      const rad = (d) => (d * Math.PI) / 180;
+      const PAN = [
+        { id: "#pA", c: [-1480, -660, -2600], ry: 16 },
+        { id: "#pB", c: [1480, -660, -3000], ry: -16 },
+        { id: "#pC", c: [1480, 700, -2600], ry: -16 },
+        { id: "#pD", c: [-1480, 700, -3000], ry: 16 },
+      ];
+      const DECOR = [[0, -1500, -4600, 0], [0, 1600, -4800, 0], [-3400, -80, -4400, 22], [3400, 80, -4200, -22], [-2900, -1700, -5400, 14], [2900, 1750, -5200, -14]];
+      PAN.forEach((p) => g.set(p.id, { x: p.c[0], y: p.c[1], z: p.c[2], rotationY: p.ry }));
+      DECOR.forEach(([x, y, z, ry], i) => g.set(".g-" + (i + 1), { x, y, z, rotationY: ry, opacity: 0.42, filter: "blur(5px)" }));
+      // camera that looks straight at panel p: rotate by −ry, then translate by −R(−ry)·c (lands it flat, z 0, scale 1)
+      const focus = (p) => {
+        const th = -p.ry, c = Math.cos(rad(th)), s = Math.sin(rad(th)), [cx, cy, cz] = p.c;
+        return { x: -(cx * c + cz * s), y: -cy, z: -(-cx * s + cz * c), ry: th };
+      };
+      const [fA, fB, fC, fD] = PAN.map(focus);
+      const START = { x: 0, y: 20, z: 160, rx: 11, ry: -15 }, DRIFT = { x: 0, y: 10, z: 380, rx: 8, ry: -10 };
+      S.camera("#cam", [[0, START], [2.5, DRIFT, "glide"], [3.65, fA, "settle"], [7.0, fA], [8.15, fB, "settle"], [12.0, fB], [13.15, fC, "settle"], [17.0, fC], [18.15, fD, "settle"], [21.0, fD], [22.45, {}, "settle"]], { perspective: 1800 });
+
+      // focus pull: the visited panel sharp, the rest blur(4px) + opacity .5 (and decorative for the audits while out of focus)
+      const TITLE = { opacity: 0.74, filter: "blur(2.5px)" }, DIM = { opacity: 0.5, filter: "blur(4px)" }, SHARP = { opacity: 1, filter: "blur(0px)" };
+      tl.fromTo("#pA", TITLE, Object.assign({ duration: 1.0, ease: "settle" }, SHARP), 2.6);
+      tl.fromTo("#pB, #pC, #pD", TITLE, Object.assign({ duration: 1.0, ease: "settle" }, DIM), 2.6);
+      tl.fromTo("#pA", SHARP, Object.assign({ duration: 1.0, ease: "settle", immediateRender: false }, DIM), 7.0);
+      [["#pB", 7.05, 12.0], ["#pC", 12.05, 17.0], ["#pD", 17.05, 21.0]].forEach(([id, a, b]) => {
+        tl.fromTo(id, DIM, Object.assign({ duration: 1.0, ease: "settle", immediateRender: false }, SHARP), a);
+        tl.fromTo(id, SHARP, Object.assign({ duration: 1.0, ease: "settle", immediateRender: false }, DIM), b);
+      });
+      const WIN = [["#pA", 3.3, 7.0], ["#pB", 7.8, 12.0], ["#pC", 12.8, 17.0], ["#pD", 17.8, 21.0]].map(([id, a, b]) => [S.$(id), a, b]);
+      S.everyFrame((now) => { for (const [el, a, b] of WIN) { const off = now < a || now > b; el.toggleAttribute("data-layout-ignore", off); el.toggleAttribute("data-design-ignore", off); } });
+
+      // parallax: the dot field slides a little against the camera
+      const cam = S.$("#cam"), dots = S.$("#dots");
+      S.everyFrame(() => { dots.style.backgroundPosition = `${(+g.getProperty(cam, "x") * 0.035).toFixed(1)}px ${(+g.getProperty(cam, "y") * 0.035).toFixed(1)}px`; });
+      tl.fromTo("#bg-g1", { opacity: 0.3, scale: 0.9 }, { opacity: 0.6, scale: 1, duration: 7, ease: "glide" }, 0);
+      tl.to("#bg-g1", { opacity: 0.85, scale: 1.12, duration: 1.4, ease: "settle" }, 21.9);
+      tl.fromTo("#bg-g2", { opacity: 0.35 }, { opacity: 0.6, duration: 9, ease: "glide" }, 0);
+
+      // ---- title 0–2.7
+      tl.fromTo("#t-scrim", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "enter" }, 0.05);
+      S.lines("#t1", 0.25, { dur: 0.95 });
+      S.lines("#t2", 0.5, { dur: 1.0 });
+      tl.to("#t1 .st-line, #t2 .st-line", { yPercent: -40, duration: 0.26, ease: "exit", stagger: S.f(2) }, 2.32);
+      tl.to("#t1 .st-line, #t2 .st-line", { opacity: 0, filter: "blur(6px)", duration: 0.2, ease: "exit", stagger: S.f(2) }, 2.32);
+      tl.to("#t-scrim", { opacity: 0, duration: 0.4, ease: "exit" }, 2.36);
+
+      // ---- A · Pipeline (focus 3.65–7.0): Corvid Systems moves Proposal → Won, teal glow, totals recount
+      const COLW = (1440 - 80 - 72) / 4, SLOT = 116 + 16;
+      tl.fromTo("#mv", { scale: 1, y: 0 }, { scale: 1.045, y: -8, duration: 0.3, ease: "enter" }, 4.3);
+      tl.fromTo("#mv-lift", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "enter" }, 4.3);
+      tl.fromTo("#mv", { x: 0 }, { x: COLW + 24, duration: 0.6, ease: "move" }, 4.62);
+      tl.fromTo(".won-shift", { y: 0 }, { y: SLOT, duration: 0.45, ease: "move", stagger: S.f(3) }, 4.72);
+      tl.fromTo(".prop-shift", { y: 0 }, { y: -SLOT, duration: 0.45, ease: "move", stagger: S.f(3) }, 4.9);
+      tl.to("#mv", { scale: 1, y: 0, duration: 0.55, ease: "springSoft" }, 5.3);
+      tl.to("#mv-lift", { opacity: 0, duration: 0.35, ease: "exit" }, 5.32);
+      tl.fromTo("#mv-glow", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "enter" }, 5.34);
+      tl.fromTo("#mv-chk", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.6, ease: "springPop" }, 5.4);
+      S.draw("#mv-chk-p", 5.5, { dur: 0.4, ease: "settle" });
+      S.count("#prop-n", 4.9, 3, 2, { dur: 0.3 });
+      S.count("#prop-sum", 4.95, 126, 78, { dur: 0.8, prefix: "$", suffix: "K" });
+      S.count("#won-n", 5.4, 2, 3, { dur: 0.3 });
+      S.count("#won-sum", 5.42, 210, 258, { dur: 0.9, prefix: "$", suffix: "K" });
+
+      // ---- B · Deal (focus 8.15–12.0): the deal, the contact (initials only), the activity ticks in
+      tl.fromTo("#b-pill, #b-name, #b-plan", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(4) }, 7.55);
+      tl.fromTo("#b-amt", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "enter" }, 7.8);
+      S.count("#b-amt", 7.82, 0, 48000, { dur: 1.0, prefix: "$" });
+      tl.fromTo("#b-meta > div", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter", stagger: S.f(4) }, 7.95);
+      tl.fromTo("#b-contact", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 8.12);
+      tl.fromTo("#b-line", { scaleY: 0, transformOrigin: "50% 0%" }, { scaleY: 1, duration: 1.9, ease: "glide" }, 8.2);
+      ["#ev1", "#ev2", "#ev3", "#ev4"].forEach((ev, i) => {
+        const t = 8.3 + i * 0.6;
+        tl.fromTo(ev + " .dot", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.5, ease: "houseSpring" }, t);
+        tl.fromTo([ev + " .t", ev + " .d"], { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.45, ease: "enter", stagger: S.f(3) }, t + 0.05);
+      });
+      S.burst("#b-burst", 10.17, { dur: 0.8, s0: 0.5, s1: 2.2, o0: 0.8 });
+
+      // ---- C · Forecast (focus 13.15–17.0): weekly bars grow, $2.4M counts up, the target line, +18%
+      tl.fromTo(".bar", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.7, ease: "settle", stagger: S.f(1.5) }, 12.62);
+      tl.fromTo("#c-num", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "enter" }, 12.66);
+      S.count("#c-num", 12.7, 0, 2.4, { dur: 1.6, decimals: 1, prefix: "$", suffix: "M" });
+      tl.fromTo("#c-lab", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.5, ease: "enter" }, 12.9);
+      S.draw("#c-target", 13.75, { dur: 0.7, ease: "settle" });
+      tl.fromTo("#c-tlabel", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter" }, 14.1);
+      tl.fromTo("#c-chip", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7, ease: "springPop" }, 14.6);
+      tl.fromTo("#c-leg > span", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter", stagger: S.f(5) }, 15.5);
+
+      // ---- D · Inbox (focus 18.15–21.0): the thread, then the AI next-step chip
+      tl.fromTo("#d-m1", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 17.7);
+      tl.fromTo("#d-m2", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 18.2);
+      tl.fromTo("#d-ai", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "springSoft" }, 18.8);
+      S.sweep("#d-ai .fx", 19.2, { dur: 1.0 });
+
+      // ---- lockup 21.5–25 (the music's build-down lands at 22.35)
+      tl.fromTo("#lk-scrim", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "glide" }, 21.55);
+      S.draw("#lk-ring", 22.1, { dur: 0.7, ease: "settle" });
+      S.draw("#lk-mer", 22.22, { dur: 0.6, ease: "settle" });
+      S.draw("#lk-eq", 22.32, { dur: 0.5, ease: "settle" });
+      tl.fromTo("#lk-dot", { opacity: 0, scale: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.55, ease: "houseSpring" }, 22.5);
+      S.chars("#lk-word", 22.3, { stagger: S.f(1.6) });
+      S.words("#lk-tag", 22.85, { stagger: S.f(3), blur: 6, y: 18 });
+      tl.fromTo("#lk-cta", { opacity: 0, scale: 0.8, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "springPop" }, 23.35);
+      S.sweep("#lk-cta .fx", 23.95, { dur: 0.9 });
+      tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 23.2);
+
+      S.grain({ opacity: 0.05 });
+      S.vignette({ strength: 0.5 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

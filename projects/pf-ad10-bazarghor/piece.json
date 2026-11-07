@@ -1,0 +1,43 @@
+{
+  "code": "AD10",
+  "name": "Ad Pack ×10 — sample ad (Bengali)",
+  "brand": "BazarGhor",
+  "project": "pf-ad10-bazarghor",
+  "aspect": "9x16",
+  "width": 1080,
+  "height": 1920,
+  "duration": 12.7,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "বাজারঘর / BazarGhor (fictional — concept work): a Dhaka grocery-delivery app",
+    "goal": "One ad from a local 'Facebook/Reels Ad Pack' (৳35–60k for 3 ads): show Bangladeshi brands a fast, clear Bengali vertical ad",
+    "audience": "Busy Dhaka families who order online",
+    "message": "No time for the bazaar? Order in the app — fresh vegetables, fish and groceries at your door in one hour; free delivery on the first order",
+    "cta": "অ্যাপ নামান (download the app)",
+    "tone": "Warm, quick, friendly; cream + one fresh green; big Baloo Da 2 words that ARE the captions",
+    "references": ["top Bangladeshi Facebook grocery ads", "Duolingo / Notion vertical ads"]
+  },
+  "sound": {
+    "music": { "track": "social-punch", "from": 0.75, "gain": 0.5, "fadeIn": 0.1, "fadeOut": 1.6, "duck": [[0.2, 9.5, 0.42]] },
+    "voice": { "file": "assets/voice/vo.wav", "at": 0.25, "gain": 1.0 },
+    "cues": [
+      { "t": 0.1, "sfx": "pop", "gain": 0.22 },
+      { "t": 1.97, "sfx": "pop", "gain": 0.26 },
+      { "t": 2.05, "sfx": "whoosh-short", "gain": 0.2 },
+      { "t": 3.72, "sfx": "whoosh-short", "gain": 0.16 },
+      { "t": 4.3, "sfx": "click-soft", "gain": 0.3 },
+      { "t": 4.85, "sfx": "click-soft", "gain": 0.3 },
+      { "t": 5.4, "sfx": "click-soft", "gain": 0.3 },
+      { "t": 6.22, "sfx": "whoosh-short", "gain": 0.16 },
+      { "t": 6.8, "sfx": "ping", "gain": 0.16 },
+      { "t": 7.92, "sfx": "whoosh-short", "gain": 0.16 },
+      { "t": 8.75, "sfx": "sparkle", "gain": 0.22 },
+      { "t": 9.75, "sfx": "whoosh", "gain": 0.22 },
+      { "t": 10.25, "sfx": "pop", "gain": 0.26 },
+      { "t": 10.4, "sfx": "chime", "gain": 0.2 }
+    ]
+  },
+  "reel": { "from": 3.7, "to": 7.9 },
+  "made": "2026-11-07"
+}

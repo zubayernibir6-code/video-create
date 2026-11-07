@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>DS1 · Data Story — Meridian Research (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Meridian Research: editorial paper. Ink + warm greys, ONE accent red for the story series. */
+      --bg: #f5f1e8;
+      --bg-2: #efe9dc;
+      --ink: #141414;
+      --ink-2: #3b3833;
+      --ink-3: #615b50;
+      --grid: #d9d2c3;
+      --accent: #d6402b;
+      --line: rgba(20, 20, 20, 0.12);
+      --line-2: rgba(20, 20, 20, 0.2);
+      --font-display: "Instrument Serif", "Hind Siliguri", serif;
+      --font-body: "Inter", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+    body { color: var(--ink); }
+    .tnum { font-variant-numeric: tabular-nums; }
+
+    /* paper: flat stock (so label knock-outs are invisible) + warm edge falloff on top */
+    .paper-edge { position: absolute; inset: 0; z-index: 88; pointer-events: none; background: radial-gradient(125% 95% at 45% 42%, rgba(255, 252, 244, 0) 58%, rgba(120, 96, 52, 0.1) 100%); }
+
+    /* title block (top state; starts 336 px lower as a title card) */
+    #title { position: absolute; left: 120px; top: 58px; width: 1680px; }
+    .tagrow { display: flex; align-items: center; gap: 18px; height: 30px; }
+    .tag { display: block; width: 64px; height: 10px; background: var(--accent); }
+    .kick { font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+    /* line-height 1.25: the masked line reveal clips to the line box, so it must hold the italic descenders */
+    .head { font-family: var(--font-display); font-weight: 400; font-size: 120px; line-height: 1.25; letter-spacing: -0.02em; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
+    .head em { font-style: italic; }
+    .stand { font-family: var(--font-body); font-size: 34px; line-height: 1.3; color: var(--ink-2); margin: 6px 0 0; max-width: 1560px; text-wrap: balance; }
+
+    /* chart */
+    #chart { position: absolute; inset: 0; }
+    #plot { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+    .unit { position: absolute; left: 120px; top: 336px; font-size: 28px; line-height: 1.2; color: var(--ink-2); }
+    .src { position: absolute; left: 120px; top: 986px; font-size: 28px; line-height: 1.2; color: var(--ink-3); }
+    .src b { font-weight: 600; color: var(--ink-2); }
+    .ylab { position: absolute; width: 90px; left: 106px; height: 34px; line-height: 34px; text-align: right; font-size: 28px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+    .xlab { position: absolute; width: 140px; top: 920px; text-align: center; font-size: 28px; line-height: 1.2; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+    .anno { position: absolute; padding: 4px 10px; background: var(--bg); font-size: 30px; line-height: 1.2; color: var(--ink); white-space: nowrap; }
+    .anno b { font-weight: 600; }
+    .anno span { color: var(--ink-3); }
+    .burst { border-width: 3px; }
+
+    /* comparison pair: ONE grid. Row 1 (years) sits above the 60 % gridline, row 2 (values) below it, so the
+       gridline reads as the table's header rule — nothing is knocked out. */
+    .cmp { position: absolute; right: 216px; top: 428px; display: grid; grid-template-columns: auto auto auto; grid-template-rows: 36px 112px; column-gap: 34px; row-gap: 18px; }
+    .cmp .k { font-size: 30px; line-height: 1.2; color: var(--ink-3); font-variant-numeric: tabular-nums; align-self: start; }
+    .cmp .v { font-size: 112px; line-height: 1; font-weight: 600; letter-spacing: -0.035em; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .cmp .v.red { color: var(--accent); min-width: 2.9ch; }
+    .cmp svg { width: 120px; height: 40px; overflow: visible; align-self: center; }
+
+    /* sign-off */
+    .endcol { display: flex; flex-direction: column; align-items: center; }
+    .lockup { display: flex; align-items: center; gap: 34px; }
+    .mark { width: 112px; height: 112px; overflow: visible; }
+    .wordmark { font-family: var(--font-display); font-size: 124px; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); padding-bottom: 6px; }
+    .wordmark em { font-style: italic; }
+    .end-rule { width: 260px; height: 4px; background: var(--accent); margin-top: 30px; }
+    .end-promise { font-size: 36px; line-height: 1.3; color: var(--ink-2); margin-top: 30px; }
+    .end-cta { display: inline-flex; align-items: center; gap: 14px; margin-top: 36px; padding: 18px 34px; border-radius: 999px; background: var(--ink); color: var(--bg); font-size: 30px; font-weight: 600; line-height: 1; box-shadow: 0 1px 2px rgba(20, 20, 20, 0.18), 0 14px 30px -12px rgba(20, 20, 20, 0.45); }
+    .end-cta svg { width: 30px; height: 30px; stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+    .end-note { font-size: 28px; line-height: 1.2; color: var(--ink-3); margin-top: 30px; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(20, 20, 20, 0.62); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="20" data-fps="30">
+
+    <!-- paper (whole piece) -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="20" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div class="paper-edge"></div>
+    </section>
+
+    <!-- S1 0–17.4: headline → chart → annotations → comparison -->
+    <section id="s1" class="scene clip" data-start="0" data-duration="17.4" data-track-index="1">
+      <div id="chart">
+        <svg id="plot" viewBox="0 0 1920 1080" data-layout-ignore>
+          <defs>
+            <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#d6402b" stop-opacity="0.13" />
+              <stop offset="1" stop-color="#d6402b" stop-opacity="0.02" />
+            </linearGradient>
+            <clipPath id="areaClip"><rect id="areaRect" x="216" y="380" width="0" height="540" /></clipPath>
+          </defs>
+          <g id="grid"></g>
+          <g id="ticks"></g>
+          <path id="area" fill="url(#wash)" clip-path="url(#areaClip)" />
+          <path id="bracket" fill="none" stroke="#141414" stroke-width="2.5" stroke-linejoin="round" />
+          <path id="leader" fill="none" stroke="#141414" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path id="wfh" fill="none" stroke="#d6402b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle id="m19" r="8" fill="#141414" stroke="#f5f1e8" stroke-width="4" />
+          <circle id="peak" r="10" fill="#d6402b" stroke="#f5f1e8" stroke-width="4" />
+          <circle id="pen" r="8" fill="#d6402b" stroke="#f5f1e8" stroke-width="3.5" />
+        </svg>
+        <div id="unit" class="unit">Share of paid workdays done from home, %</div>
+        <div id="src" class="src"><b>Source:</b> Meridian WFH Index (illustrative data)</div>
+        <div id="ylabs"></div>
+        <div id="xlabs"></div>
+        <div id="peak-burst" class="burst" style="border-color: #d6402b" data-design-ignore></div>
+        <div id="end-burst" class="burst" style="border-color: #d6402b" data-design-ignore></div>
+        <div id="m19-burst" class="burst" style="border-color: #141414" data-design-ignore></div>
+        <div id="a-peak" class="anno"><b>Peak: 61%</b> <span>(Apr 2020)</span></div>
+        <div id="a-plat" class="anno">Stable near 28% since 2023</div>
+        <div id="cmp" class="cmp">
+          <div class="k c19" style="grid-column: 1; grid-row: 1">2019</div>
+          <div class="v c19" id="v19" style="grid-column: 1; grid-row: 2">7%</div>
+          <svg style="grid-column: 2; grid-row: 2" viewBox="0 0 120 40" data-design-ignore><path id="arrow" d="M4 20 H112 M98 8 L114 20 L98 32" fill="none" stroke="#615b50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <div class="k c26" style="grid-column: 3; grid-row: 1">2026</div>
+          <div class="v red c26" id="v26" style="grid-column: 3; grid-row: 2">28%</div>
+        </div>
+      </div>
+      <div id="title">
+        <div class="tagrow"><i id="tag" class="tag" data-design-ignore></i><span id="kick" class="kick">Workplace · 2019–2026</span></div>
+        <h1 id="head" class="head">The office <em>never fully</em> came back.</h1>
+        <p id="stand" class="stand">Working from home spiked in 2020, then settled at four times its old level.</p>
+      </div>
+    </section>
+
+    <!-- S2 16.9–20: sign-off -->
+    <section id="s2" class="scene clip" data-start="16.9" data-duration="3.1" data-track-index="2">
+      <div class="layer center">
+        <div id="endcol" class="endcol">
+          <div class="lockup">
+            <svg class="mark" viewBox="0 0 112 112" data-design-ignore>
+              <circle id="mk-c" cx="56" cy="56" r="46" fill="none" stroke="#141414" stroke-width="4.5" />
+              <ellipse id="mk-e" cx="56" cy="56" rx="19" ry="46" fill="none" stroke="#d6402b" stroke-width="4.5" />
+              <path id="mk-q" d="M10 56 H102" fill="none" stroke="#141414" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <div id="wm" class="wordmark">Meridian <em>Research</em></div>
+          </div>
+          <div id="end-rule" class="end-rule" data-design-ignore></div>
+          <div id="end-promise" class="end-promise">Independent research on how we work.</div>
+          <div id="end-cta" class="end-cta">Read the full report<svg viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></div>
+          <div id="end-note" class="end-note">Illustrative data · concept work</div>
+        </div>
+      </div>
+      <div class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/elegant-premium.mp3" data-start="0" data-duration="20" data-media-start="2.85" data-track-index="10" data-volume="0.5" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":18.4,"v":1},{"t":20,"v":0}]}]}'></audio>
+    <audio id="sfx-01-click-soft" src="assets/sfx/click-soft.mp3" data-start="0.15" data-duration="0.24" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-02-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.389" data-duration="0.49" data-track-index="21" data-volume="0.12"></audio>
+    <audio id="sfx-03-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.589" data-duration="0.49" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-04-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.989" data-duration="0.49" data-track-index="21" data-volume="0.14"></audio>
+    <audio id="sfx-05-click-soft" src="assets/sfx/click-soft.mp3" data-start="3.88" data-duration="0.24" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-06-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.37" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-07-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="4.549" data-duration="0.49" data-track-index="21" data-volume="0.1"></audio>
+    <audio id="sfx-08-click-soft" src="assets/sfx/click-soft.mp3" data-start="5.93" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-09-click-soft" src="assets/sfx/click-soft.mp3" data-start="6.75" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-10-click-soft" src="assets/sfx/click-soft.mp3" data-start="7.39" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-11-click-soft" src="assets/sfx/click-soft.mp3" data-start="7.91" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-12-click-soft" src="assets/sfx/click-soft.mp3" data-start="8.36" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-13-click-soft" src="assets/sfx/click-soft.mp3" data-start="8.84" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-14-ping" src="assets/sfx/ping.mp3" data-start="9.678" data-duration="1.32" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-15-click-soft" src="assets/sfx/click-soft.mp3" data-start="10.3" data-duration="0.24" data-track-index="21" data-volume="0.12"></audio>
+    <audio id="sfx-16-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="10.939" data-duration="0.49" data-track-index="21" data-volume="0.14"></audio>
+    <audio id="sfx-17-click-soft" src="assets/sfx/click-soft.mp3" data-start="11.42" data-duration="0.24" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-18-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="13.209" data-duration="0.49" data-track-index="20" data-volume="0.14"></audio>
+    <audio id="sfx-19-typing" src="assets/sfx/typing.mp3" data-start="13.013" data-duration="1.15" data-track-index="21" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.07,"v":1},{"t":1.15,"v":0}]}]}'></audio>
+    <audio id="sfx-20-click-soft" src="assets/sfx/click-soft.mp3" data-start="14.63" data-duration="0.24" data-track-index="20" data-volume="0.14"></audio>
+    <audio id="sfx-21-typing" src="assets/sfx/typing.mp3" data-start="14.323" data-duration="0.65" data-track-index="21" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.57,"v":1},{"t":0.65,"v":0}]}]}'></audio>
+    <audio id="sfx-22-ping" src="assets/sfx/ping.mp3" data-start="15.108" data-duration="1.32" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-23-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="16.939" data-duration="0.49" data-track-index="20" data-volume="0.14"></audio>
+    <audio id="sfx-24-chime" src="assets/sfx/chime.mp3" data-start="16.804" data-duration="2.5" data-track-index="21" data-volume="0.25"></audio>
+    <audio id="sfx-25-pop" src="assets/sfx/pop.mp3" data-start="17.934" data-duration="0.72" data-track-index="20" data-volume="0.14"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+      // The house spring as a FUNCTION: the HyperFrames runtime re-registers the bare ease name "spring" as linear (m => m)
+      // after this page loads, so ease: "spring" renders linear. Passing the function bypasses the name lookup.
+      const SPRING = Studio.springFn(0.537, 13.04, 0.8);
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (s) => document.querySelector(s);
+      const svgEl = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+      // ---------------------------------------------------------------- data (FICTIONAL — illustrative only)
+      // Meridian WFH Index: share of paid workdays done from home, monthly, Jan 2019 … Sep 2026 (93 months).
+      // 2019 mean 7.0 %, peak 61 % in Apr 2020, 2023–2026 within 27.6–28.6 %, 2026 mean 28.0 %.
+      const DATA = [
+        6.8, 6.9, 7.0, 6.8, 7.1, 7.0, 7.2, 6.9, 7.0, 7.1, 7.0, 7.2,            // 2019
+        7.3, 7.8, 31.5, 61.0, 55.4, 47.9, 43.1, 41.2, 39.0, 38.1, 40.2, 42.6,  // 2020
+        43.8, 41.5, 38.7, 36.2, 34.6, 32.4, 30.9, 31.6, 30.2, 29.6, 30.4, 33.1, // 2021
+        33.9, 31.2, 29.8, 29.0, 28.4, 27.9, 28.3, 28.6, 29.1, 28.4, 28.7, 29.2, // 2022
+        28.6, 28.1, 27.8, 28.3, 27.9, 27.6, 28.0, 28.4, 28.2, 27.7, 28.1, 28.5, // 2023
+        28.3, 27.9, 28.1, 28.4, 27.8, 27.9, 28.2, 28.0, 28.3, 27.9, 28.2, 28.6, // 2024
+        28.2, 27.8, 28.0, 28.3, 28.1, 27.7, 28.0, 28.4, 28.1, 27.9, 28.2, 28.4, // 2025
+        28.1, 27.8, 28.2, 28.0, 27.9, 28.1, 28.3, 27.9, 28.0                    // 2026 (Jan–Sep)
+      ];
+      const LAST = DATA.length - 1;                       // 92 = Sep 2026
+      const PEAK_I = DATA.indexOf(Math.max(...DATA));      // 15 = Apr 2020
+
+      // ---------------------------------------------------------------- scales (real, linear)
+      const P = { l: 216, r: 1704, t: 404, b: 900 };     // plot box in px; y domain 0–70 %
+      const MONTHS = 96, MW = (P.r - P.l) / MONTHS, VMAX = 70;
+      const X = (m) => P.l + (m + 0.5) * MW;             // month index → x at the month's centre
+      const Y = (v) => P.b - (v / VMAX) * (P.b - P.t);
+      const valAt = (m) => { const i = Math.min(LAST - 1, Math.floor(m)), u = m - i; return DATA[i] + (DATA[i + 1] - DATA[i]) * u; };
+
+      // gridlines (0 is the ink baseline), y labels
+      const grid = $("#grid"), ticks = $("#ticks");
+      const gridLines = [0, 20, 40, 60].map((v) => svgEl("line", { x1: P.l, x2: P.r, y1: Y(v), y2: Y(v), stroke: v === 0 ? "#141414" : "#d9d2c3", "stroke-width": v === 0 ? 2.5 : 2 }, grid));
+      const ylabs = [0, 20, 40, 60].map((v) => { const d = document.createElement("div"); d.className = "ylab"; d.style.top = (Y(v) - 17).toFixed(1) + "px"; d.textContent = String(v); $("#ylabs").appendChild(d); return d; });
+      // year ticks at Jan 1 boundaries + year labels centred in each year
+      const yearTicks = [], xlabs = [];
+      for (let k = 0; k <= 8; k++) yearTicks.push(svgEl("line", { x1: P.l + 12 * k * MW, x2: P.l + 12 * k * MW, y1: P.b, y2: P.b + 12, stroke: "#141414", "stroke-width": 2 }, ticks));
+      for (let k = 0; k < 8; k++) { const d = document.createElement("div"); d.className = "xlab"; d.style.left = (P.l + (12 * k + 6) * MW - 70).toFixed(1) + "px"; d.textContent = String(2019 + k); $("#xlabs").appendChild(d); xlabs.push(d); }
+
+      // the series: polyline + area from the data
+      const pts = DATA.map((v, i) => [X(i), Y(v)]);
+      const lineD = "M" + pts.map((p) => p[0].toFixed(2) + " " + p[1].toFixed(2)).join(" L");
+      $("#wfh").setAttribute("d", lineD);
+      $("#area").setAttribute("d", lineD + ` L${X(LAST).toFixed(2)} ${P.b} L${X(0).toFixed(2)} ${P.b} Z`);
+      const cum = [0];
+      for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+      const TOTAL = cum[LAST];
+      const lenAt = (m) => { const i = Math.min(LAST - 1, Math.floor(m)), u = m - i; return cum[i] + (cum[i + 1] - cum[i]) * u; };
+
+      // markers + annotation geometry (all from the scales)
+      const pk = [X(PEAK_I), Y(DATA[PEAK_I])];
+      g.set("#peak", { attr: { cx: pk[0], cy: pk[1] } });
+      $("#leader").setAttribute("d", `M${pk[0] + 7} ${pk[1] - 8} L${pk[0] + 30} ${pk[1] - 36} L${pk[0] + 52} ${pk[1] - 36}`);
+      const aPeak = $("#a-peak"); aPeak.style.left = (pk[0] + 56).toFixed(1) + "px"; aPeak.style.top = (pk[1] - 36 - 22).toFixed(1) + "px";
+      const b0 = P.l + 48 * MW, b1 = X(LAST) + MW * 0.5, by = Y(34);   // bracket over Jan 2023 … Sep 2026
+      $("#bracket").setAttribute("d", `M${b0} ${by + 12} V${by} H${b1} V${by + 12}`);
+      const aPlat = $("#a-plat"); aPlat.style.top = (by - 52).toFixed(1) + "px";
+      aPlat.style.left = ((b0 + b1) / 2 - aPlat.offsetWidth / 2).toFixed(1) + "px";
+      const m19 = [X(6), Y(DATA[6])], end = [X(LAST), Y(DATA[LAST])];
+      g.set("#m19", { attr: { cx: m19[0], cy: m19[1] } });
+      const place = (sel, p) => { const e = $(sel); e.style.left = p[0] + "px"; e.style.top = p[1] + "px"; };
+      place("#peak-burst", pk); place("#end-burst", end); place("#m19-burst", m19);
+
+      // ---------------------------------------------------------------- the draw: a time remap (month index as a smooth
+      // monotone function of time) — quick through flat 2019, slow through the 2020 spike, steady decline, settling plateau.
+      const KT = [3.85, 4.40, 5.25, 6.40, 7.60, 8.70, 9.30], KM = [0, 12, 16.5, 30, 52, 80, LAST];
+      const remap = (function (xs, ys) {
+        const n = xs.length, d = [], m = new Array(n);
+        for (let i = 0; i < n - 1; i++) d.push((ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]));
+        for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
+        m[0] = 0; m[n - 1] = 0;                                   // start from rest, settle at the end
+        for (let i = 0; i < n - 1; i++) { const a = m[i] / d[i], b = m[i + 1] / d[i], s = a * a + b * b; if (s > 9) { const k = 3 / Math.sqrt(s); m[i] = k * a * d[i]; m[i + 1] = k * b * d[i]; } }
+        return (x) => {
+          if (x <= xs[0]) return ys[0];
+          if (x >= xs[n - 1]) return ys[n - 1];
+          let i = 0; while (x > xs[i + 1]) i++;
+          const h = xs[i + 1] - xs[i], t = (x - xs[i]) / h, t2 = t * t, t3 = t2 * t;
+          return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * h * m[i] + (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * h * m[i + 1];
+        };
+      })(KT, KM);
+      const timeOf = (mm) => { let lo = KT[0], hi = KT[KT.length - 1]; for (let it = 0; it < 40; it++) { const mid = (lo + hi) / 2; if (remap(mid) < mm) lo = mid; else hi = mid; } return (lo + hi) / 2; };
+      const wfh = $("#wfh"), pen = $("#pen"), areaRect = $("#areaRect");
+      S.everyFrame((now) => {
+        const on = now >= KT[0];
+        const mm = remap(now);
+        const len = lenAt(mm);
+        wfh.style.opacity = on ? 1 : 0;
+        wfh.style.strokeDasharray = `${len.toFixed(2)} ${(TOTAL + 40).toFixed(0)}`;
+        areaRect.setAttribute("width", on ? (X(mm) - P.l).toFixed(2) : 0);
+        pen.setAttribute("cx", X(mm).toFixed(2));
+        pen.setAttribute("cy", Y(valAt(mm)).toFixed(2));
+      });
+      tl.fromTo("#pen", { opacity: 0, scale: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.35, ease: "enter" }, KT[0] - 0.05);
+      window.__yearTimes = [];
+      for (let k = 0; k < 8; k++) {
+        const ty = k === 0 ? KT[0] : timeOf(12 * k - 0.5);   // the pen crosses Jan 1 of year k
+        window.__yearTimes.push(+ty.toFixed(3));
+        tl.fromTo(yearTicks[k], { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.25, ease: "enter" }, ty);
+        tl.fromTo(xlabs[k], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter" }, ty + 0.02);
+      }
+      tl.fromTo(yearTicks[8], { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.3, ease: "enter" }, 9.1);
+
+      // ---------------------------------------------------------------- 0–2.55 headline card
+      tl.fromTo("#tag", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.6, ease: "settle" }, 0.15);
+      tl.fromTo("#kick", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.5, ease: "enter" }, 0.3);
+      S.lines("#head", 0.35, { dur: 1.0 });
+      S.words("#stand", 1.0, { stagger: S.f(2), blur: 6, y: 18, dur: 0.6 });
+      // the block rises to the top as the chart arrives (a move between two resting places)
+      tl.fromTo("#title", { y: 336 }, { y: 0, duration: 0.75, ease: "move" }, 2.55);
+
+      // ---------------------------------------------------------------- 3.0–3.9 axes
+      gridLines.forEach((ln, i) => tl.fromTo(ln, { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.9, ease: "settle" }, 3.0 + i * S.f(3)));
+      ylabs.forEach((d, i) => tl.fromTo(d, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.45, ease: "enter" }, 3.05 + i * S.f(3)));
+      tl.fromTo("#unit", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 3.2);
+      tl.fromTo("#src", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 3.35);
+
+      // ---------------------------------------------------------------- 10–14 annotations (data first, then the label)
+      tl.fromTo("#peak", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.7, ease: SPRING }, 10.0);
+      S.burst("#peak-burst", 10.02, { dur: 0.85, s0: 0.25, s1: 1.35, o0: 0.75 });
+      tl.fromTo("#leader", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.4, ease: "settle" }, 10.15);
+      tl.fromTo("#a-peak", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.5, ease: "enter" }, 10.3);
+      tl.fromTo("#bracket", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.7, ease: "settle" }, 10.95);
+      tl.fromTo("#a-plat", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 11.42);   // strong beat 11.44
+      S.burst("#end-burst", 12.4, { dur: 1.1, s0: 0.2, s1: 1.1, o0: 0.45 });     // the latest value breathes once (beat 12.40)
+
+      // ---------------------------------------------------------------- 13.2–16.95 comparison pair: 2019 → arrow → 2026
+      tl.to("#a-plat", { opacity: 0, y: -10, duration: 0.3, ease: "exit" }, 13.1);   // the 28 % figure takes over its job
+      tl.to("#bracket", { opacity: 0, duration: 0.3, ease: "exit" }, 13.1);
+      tl.fromTo("#cmp .c19", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.6, ease: "enter", stagger: S.f(3) }, 13.22);
+      S.count("#v19", 13.45, 0, 7, { dur: 1.18, suffix: "%" });                     // lands on the 14.63 beat
+      tl.fromTo("#m19", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.55, ease: "springSoft" }, 14.6);
+      S.burst("#m19-burst", 14.63, { dur: 0.8, s0: 0.25, s1: 1.2, o0: 0.5 });
+      tl.fromTo("#arrow", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.45, ease: "settle" }, 14.62);
+      tl.fromTo("#cmp .c26", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.55, ease: "enter", stagger: S.f(3) }, 14.7);
+      S.count("#v26", 14.76, 7, 28, { dur: 0.67, suffix: "%" });                    // lands on the 15.43 beat
+      S.burst("#end-burst", 15.43, { dur: 0.9, s0: 0.25, s1: 1.4, o0: 0.8 });
+      tl.fromTo("#pen", { scale: 1 }, { scale: 1.35, duration: 0.18, ease: "enter", yoyo: true, repeat: 1, immediateRender: false }, 15.43);
+
+      // ---------------------------------------------------------------- 16.95–17.35 clear the page
+      tl.to("#title, #chart", { opacity: 0, y: -24, duration: 0.4, ease: "exit", stagger: S.f(2) }, 16.95);
+
+      // ---------------------------------------------------------------- 17.2–20 sign-off
+      tl.fromTo("#mk-c", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.75, ease: "settle" }, 17.22);
+      tl.fromTo("#mk-e", { drawSVG: "50% 50%" }, { drawSVG: "0% 100%", duration: 0.65, ease: "settle" }, 17.4);
+      tl.fromTo("#mk-q", { drawSVG: "50% 50%" }, { drawSVG: "0% 100%", duration: 0.5, ease: "settle" }, 17.5);
+      S.lines("#wm", 17.3, { dur: 0.95 });
+      tl.fromTo("#end-rule", { scaleX: 0, transformOrigin: "50% 50%" }, { scaleX: 1, duration: 0.6, ease: "settle" }, 17.6);
+      S.words("#end-promise", 17.72, { stagger: S.f(2), blur: 6, y: 16, dur: 0.55 });
+      tl.fromTo("#end-cta", { opacity: 0, y: 18, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "springSoft" }, 18.05);
+      tl.fromTo("#end-note", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter" }, 18.25);
+
+      S.grain({ opacity: 0.035, blend: "multiply" });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

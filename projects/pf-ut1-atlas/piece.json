@@ -1,0 +1,60 @@
+{
+  "code": "UT1",
+  "name": "3D UI Tour",
+  "brand": "Atlas CRM",
+  "project": "pf-ut1-atlas",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 25,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Atlas CRM (fictional — concept work): a sales CRM",
+    "goal": "A 25-second product-page and sales-deck film: one continuous camera flight through the four screens a sales team lives in",
+    "audience": "Sales leaders and account executives at B2B companies of 20–500 people",
+    "message": "Pipeline, deals, forecast and inbox in one place, so the next step is always clear",
+    "cta": "Book a demo",
+    "tone": "Calm, spatial and premium; deep slate night with one teal accent, floating windows in depth",
+    "references": [
+      "Apple macOS feature films",
+      "Framer site intros",
+      "Arc browser launch"
+    ]
+  },
+  "sound": {
+    "music": { "track": "bright-future", "from": 0, "gain": 0.55, "fadeIn": 0.3, "fadeOut": 1.5 },
+    "cues": [
+      { "t": 0.25, "sfx": "whoosh-short", "gain": 0.22 },
+      { "t": 0.6, "sfx": "pop", "gain": 0.16 },
+      { "t": 2.55, "sfx": "whoosh-short", "gain": 0.3 },
+      { "t": 4.3, "sfx": "click-soft", "gain": 0.28 },
+      { "t": 5.3, "sfx": "click-soft", "gain": 0.3 },
+      { "t": 5.4, "sfx": "ping", "gain": 0.22 },
+      { "t": 5.45, "sfx": "typing", "gain": 0.12, "len": 0.9 },
+      { "t": 7.0, "sfx": "whoosh-short", "gain": 0.3 },
+      { "t": 7.84, "sfx": "typing", "gain": 0.14, "len": 1.0 },
+      { "t": 8.3, "sfx": "click-soft", "gain": 0.26 },
+      { "t": 8.9, "sfx": "click-soft", "gain": 0.26 },
+      { "t": 9.5, "sfx": "click-soft", "gain": 0.26 },
+      { "t": 10.1, "sfx": "pop", "gain": 0.24 },
+      { "t": 10.17, "sfx": "sparkle", "gain": 0.18 },
+      { "t": 12.0, "sfx": "whoosh-short", "gain": 0.3 },
+      { "t": 12.72, "sfx": "typing", "gain": 0.18, "len": 1.5 },
+      { "t": 13.75, "sfx": "click-soft", "gain": 0.2 },
+      { "t": 14.6, "sfx": "pop", "gain": 0.24 },
+      { "t": 15.5, "sfx": "click-soft", "gain": 0.18 },
+      { "t": 17.0, "sfx": "whoosh-short", "gain": 0.3 },
+      { "t": 17.7, "sfx": "click-soft", "gain": 0.22 },
+      { "t": 18.2, "sfx": "click-soft", "gain": 0.22 },
+      { "t": 18.82, "sfx": "pop", "gain": 0.2 },
+      { "t": 18.9, "sfx": "sparkle", "gain": 0.26 },
+      { "t": 22.35, "sfx": "whoosh-cinematic", "gain": 0.3 },
+      { "t": 22.35, "sfx": "impact-bass-2", "gain": 0.4, "len": 2.0 },
+      { "t": 22.45, "sfx": "sparkle", "gain": 0.24 },
+      { "t": 23.36, "sfx": "pop", "gain": 0.26 }
+    ]
+  },
+  "reel": { "from": 2.4, "to": 6.4 },
+  "made": "2026-11-07"
+}

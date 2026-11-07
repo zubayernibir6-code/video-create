@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>GH1 · 3D Glass Hero Title — Prism (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Prism: a black stage, white type, and light split into its spectrum as the only accent. */
+      --bg: #030305;
+      --bg-2: #0b0c12;
+      --ink: #f4f5f7;
+      --ink-2: rgba(244, 245, 247, 0.78);
+      --ink-3: rgba(244, 245, 247, 0.5);
+      --accent: #9db8ff;
+      --spectrum: linear-gradient(90deg, #ff5f6d 0%, #ffb35c 18%, #f9f871 34%, #5ff0a8 52%, #5cc8ff 70%, #8f7bff 86%, #d77bff 100%);
+      --font-display: "Inter", "Hind Siliguri", sans-serif;
+      --font-body: "Inter", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+    #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+    /* end card: tagline + CTA sit under the glass, centred */
+    .endcol { position: absolute; left: 0; right: 0; top: 818px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+    .tag { margin: 0; font-family: var(--font-display); font-size: 50px; font-weight: 500; letter-spacing: -0.022em; line-height: 1.1; color: var(--ink); text-wrap: balance; }
+    .tag .soft { color: var(--ink-2); }
+    .rule { display: block; width: 520px; height: 2px; border-radius: 2px; background: var(--spectrum); opacity: 0.9; box-shadow: 0 0 18px rgba(157, 184, 255, 0.45); }
+    .cta { position: relative; display: inline-flex; align-items: center; gap: 14px; padding: 16px 30px; border-radius: 999px; font-family: var(--font-body); font-size: 28px; font-weight: 560; letter-spacing: -0.005em; color: var(--ink); background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.22); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset, 0 18px 48px -18px rgba(0, 0, 0, 0.8); overflow: hidden; }
+    .cta .icon { font-size: 28px; stroke-width: 2.4; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; color: rgba(244, 245, 247, 0.62); text-transform: uppercase; }
+  </style>
+  <script type="importmap">{ "imports": { "three": "./assets/js/three/three.module.min.js", "three/addons/": "./assets/js/three/addons/" } }</script>
+  <script>
+    // Declared-compute hold: the runtime waits for this promise, which the scene module resolves once the WebGL scene
+    // is built, the timeline is registered and frame 0 is drawn (registered synchronously, before the module runs).
+    window.__hf = window.__hf || {};
+    window.__hf.buildReady = window.__hf.buildReady || {};
+    window.__hf.buildReady["gh1-prism-scene"] = new Promise((resolve) => { window.__gh1Ready = resolve; });
+  </script>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="10" data-fps="30">
+
+    <!-- the whole 3D stage: headline plane + refracting glass prism, rendered per frame from the studio timeline -->
+    <section id="stage" class="scene clip" data-start="0" data-duration="10" data-track-index="0" data-design-ignore data-layout-ignore>
+      <canvas id="gl" width="1920" height="1080"></canvas>
+    </section>
+
+    <!-- end card 7.6–10: tagline, spectral rule, CTA -->
+    <section id="end" class="scene clip" data-start="7.6" data-duration="2.4" data-track-index="1">
+      <div class="endcol">
+        <h2 id="tag" class="tag">Design in every <span class="soft">dimension.</span></h2>
+        <i id="rule" class="rule" data-design-ignore></i>
+        <div id="cta" class="cta">Join the beta<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </div>
+      <div id="concept" class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/cinematic-reveal.mp3" data-start="0" data-duration="10" data-media-start="12.85" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":8.5,"v":1},{"t":10,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.189" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-02-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.989" data-duration="0.49" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-03-whoosh-cinematic" src="assets/sfx/whoosh-cinematic.mp3" data-start="0.7" data-duration="5.54" data-track-index="21" data-volume="0.4"></audio>
+    <audio id="sfx-04-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="3.177" data-duration="2" data-track-index="20" data-volume="0.3" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.92,"v":1},{"t":2,"v":0}]}]}'></audio>
+    <audio id="sfx-05-sparkle" src="assets/sfx/sparkle.mp3" data-start="3.275" data-duration="1.8" data-track-index="22" data-volume="0.16"></audio>
+    <audio id="sfx-06-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="3.989" data-duration="0.49" data-track-index="23" data-volume="0.14"></audio>
+    <audio id="sfx-07-sparkle" src="assets/sfx/sparkle.mp3" data-start="5.925" data-duration="1.8" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-08-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="7.739" data-duration="0.49" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-09-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="7.9" data-duration="1.9" data-track-index="21" data-volume="0.45" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.82,"v":1},{"t":1.9,"v":0}]}]}'></audio>
+    <audio id="sfx-10-pop" src="assets/sfx/pop.mp3" data-start="8.184" data-duration="0.72" data-track-index="22" data-volume="0.22"></audio>
+    <!-- studio:audio:end -->
+  </div>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
+
+    await document.fonts.load('900 400px "Inter"');
+    await document.fonts.ready;
+
+    const W = 1920, H = 1080;
+    const S = Studio.init({ id: "main" });
+    const tl = S.tl, g = gsap;
+    const clamp01 = (x) => Math.min(1, Math.max(0, x));
+    const ez = (name) => g.parseEase(name);
+    const SETTLE = ez("settle"), ENTER = ez("enter"), MOVE = ez("move"), GLIDE = ez("glide"), EXIT = ez("exit"), SINE = ez("sine.inOut");
+    // u(t) of a segment [t0, t0 + d] through an ease: the 3D scene reads only these, so every frame = f(t)
+    const seg = (t, t0, d, e) => e(clamp01((t - t0) / d));
+    const bump = (t, t0, rise, hold, fall) => clamp01((t - t0) / rise) * (1 - clamp01((t - t0 - rise - hold) / fall));
+
+    // ---------------------------------------------------------------- renderer
+    const canvas = document.getElementById("gl");
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(1);
+    renderer.setSize(W, H, false);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.NoToneMapping; // the glass passes the stage through at its true values
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x020203);
+    const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+    const CAM_REST = new THREE.Vector3(0, 0, 10);
+
+    // ---------------------------------------------------------------- studio light for the reflections (no HDR file)
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const studio = new THREE.Scene();
+    studio.background = new THREE.Color(0x000000);
+    const softbox = (w, h, x, y, z, level, tint) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(tint || 0xffffff).multiplyScalar(level), side: THREE.DoubleSide }));
+      m.position.set(x, y, z); m.lookAt(0, 0, 0); studio.add(m);
+    };
+    softbox(9, 2.4, 0, 7, 3, 2.6);               // key box overhead, slightly front
+    softbox(1.1, 10, -6.5, 0.5, 2.5, 5.0);       // tall strip left
+    softbox(1.1, 10, 6.5, 0.5, 1.0, 3.2);        // tall strip right
+    softbox(7, 0.8, 0, -1.5, -7, 2.2, 0xcfdcff); // cool rim strip low behind
+    softbox(0.5, 6, 3.2, 1, 7, 1.6);             // thin front kicker (edge glints toward the lens)
+    scene.environment = pmrem.fromScene(studio, 0.015).texture;
+
+    // ---------------------------------------------------------------- the stage: headline + light, one opaque plane
+    // Transmission refracts only what the opaque pass draws, so the headline, the light streak and the spectral band
+    // all live in this one shader plane behind the glass.
+    const STAGE_Z = -2;
+    const restDist = CAM_REST.z - STAGE_Z;
+    const fh = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * restDist; // frustum height at rest
+    const K = 1.22;                                                                  // overscan for the push-in
+    const PW = fh * (W / H) * K, PH = fh * K;
+    const CW = 3840, CH = Math.round(3840 * (PH / PW));
+    const px2c = CW / (W * K);                                                       // canvas px per screen px at rest
+    const HEAD = { x: 960, y: 436, size: 430 };                                      // screen px at rest
+
+    const textCanvas = document.createElement("canvas");
+    textCanvas.width = CW; textCanvas.height = CH;
+    const c2 = textCanvas.getContext("2d");
+    const fontPx = HEAD.size * px2c;
+    c2.font = `900 ${fontPx}px "Inter"`;
+    c2.letterSpacing = `${(-0.045 * fontPx).toFixed(1)}px`;
+    c2.textBaseline = "alphabetic";
+    c2.fillStyle = "#ffffff";
+    const word = "PRISM";
+    const m = c2.measureText(word);
+    const cx = CW / 2 + (HEAD.x - W / 2) * px2c, cy = CH / 2 + (HEAD.y - H / 2) * px2c;
+    const x0 = cx - (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+    const y0 = cy + (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+    c2.fillText(word, x0, y0);
+    // screen-space box of the headline at rest (for the layout notes + the glow centre)
+    const headBox = {
+      l: W / 2 + (x0 - m.actualBoundingBoxLeft - CW / 2) / px2c, r: W / 2 + (x0 + m.actualBoundingBoxRight - CW / 2) / px2c,
+      t: H / 2 + (y0 - m.actualBoundingBoxAscent - CH / 2) / px2c, b: H / 2 + (y0 + m.actualBoundingBoxDescent - CH / 2) / px2c,
+    };
+    window.__gh1 = { headBox };
+    const textTex = new THREE.CanvasTexture(textCanvas);
+    textTex.colorSpace = THREE.SRGBColorSpace;
+    textTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    textTex.generateMipmaps = true;
+    textTex.minFilter = THREE.LinearMipmapLinearFilter;
+
+    // uv of the headline centre line + its half height (for the aperture reveal)
+    const uvY0 = 1 - cy / CH;
+    const uvHalfText = ((headBox.b - headBox.t) / 2 + 26) * px2c / CH;
+
+    const stageU = {
+      tText: { value: textTex },
+      uAspect: { value: PW / PH },
+      uY0: { value: uvY0 },
+      uHalf: { value: 0 }, uSoft: { value: 0.006 },
+      uInk: { value: 0 },
+      uStreak: { value: 0 }, uStreakLen: { value: 0 }, uEdge: { value: 0 },
+      uBandX: { value: -0.3 }, uBandW: { value: 0.085 }, uBandAmt: { value: 0 },
+      uLift: { value: 0 }, uStageOn: { value: 0 }, uFloorOn: { value: 0 }, uGlowPos: { value: new THREE.Vector2(0.5, uvY0) },
+    };
+    const stage = new THREE.Mesh(
+      new THREE.PlaneGeometry(PW, PH),
+      new THREE.ShaderMaterial({
+        uniforms: stageU,
+        vertexShader: /* glsl */ `
+          varying vec2 vUv;
+          void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+        fragmentShader: /* glsl */ `
+          uniform sampler2D tText;
+          uniform float uAspect, uY0, uHalf, uSoft, uInk, uStreak, uStreakLen, uEdge, uBandX, uBandW, uBandAmt, uLift, uStageOn, uFloorOn;
+          uniform vec2 uGlowPos;
+          varying vec2 vUv;
+          // smooth visible-spectrum ramp, x in 0..1 = red → violet
+          vec3 spectrum(float x) {
+            x = clamp(x, 0.0, 1.0);
+            vec3 c = vec3(1.0 - smoothstep(0.18, 0.46, x) + smoothstep(0.82, 1.0, x) * 0.55,
+                          smoothstep(0.08, 0.34, x) * (1.0 - smoothstep(0.6, 0.82, x)),
+                          smoothstep(0.42, 0.7, x));
+            return c;
+          }
+          void main() {
+            vec2 uv = vUv;
+            vec2 p = vec2((uv.x - uGlowPos.x) * uAspect, uv.y - uGlowPos.y);
+            // stage: near black with a cool lift behind the headline (never flat black)
+            float r = length(p * vec2(0.62, 1.35));
+            vec3 col = vec3(0.0016, 0.0017, 0.0024) + vec3(0.0042, 0.0050, 0.0105) * (uStageOn + uLift) * smoothstep(0.95, 0.0, r);
+            float fl = smoothstep(0.5, 0.0, abs(uv.y - (uY0 - 0.235)) * 3.2) * smoothstep(0.62, 0.0, abs(uv.x - 0.5) * 1.15);
+            col += vec3(0.0065, 0.0068, 0.0085) * fl * uFloorOn;
+            // spectral band (the prism's dispersed light sweeping across the type)
+            float bx = (uv.x - uBandX) / uBandW;
+            float band = exp(-bx * bx * 1.6) * uBandAmt;
+            vec3 spec = spectrum(0.5 + bx * 0.36);
+            col += spec * band * 0.0075 * smoothstep(0.2, 0.0, abs(uv.y - uY0));
+            // headline, revealed through a horizontal aperture that opens from the streak
+            float a = texture2D(tText, uv).a;
+            float ap = 1.0 - smoothstep(uHalf - uSoft, uHalf + uSoft, abs(uv.y - uY0));
+            vec3 ink = vec3(0.9 * uInk);
+            ink = mix(ink, ink * (0.18 + 1.25 * spec), band);
+            col = mix(col, ink, a * ap);
+            // light streak + aperture edges (thin anamorphic lines with a soft halo)
+            float sx = 1.0 - smoothstep(uStreakLen * 0.35, uStreakLen, abs(uv.x - 0.5));
+            float dy = uv.y - uY0;
+            float core = exp(-pow(dy / 0.0011, 2.0)) + 0.22 * exp(-pow(dy / 0.008, 2.0)) + 0.05 * exp(-pow(dy / 0.04, 2.0));
+            vec3 lightCol = vec3(0.78, 0.86, 1.0);
+            col += lightCol * core * sx * uStreak;
+            float e1 = exp(-pow((dy - uHalf) / 0.0013, 2.0)) + exp(-pow((dy + uHalf) / 0.0013, 2.0));
+            col += lightCol * e1 * sx * uEdge * 0.9;
+            gl_FragColor = vec4(col, 1.0);
+            #include <colorspace_fragment>
+          }`,
+      }),
+    );
+    stage.position.z = STAGE_Z;
+    scene.add(stage);
+
+    // ---------------------------------------------------------------- the glass: a rounded triangular prism, twisted
+    function prismGeometry({ R, height, corner, twist, bevel }) {
+      const pts = [0, 1, 2].map((k) => { const a = -Math.PI / 2 + (k * 2 * Math.PI) / 3; /* vertex 0 faces the lens */ return new THREE.Vector2(Math.cos(a) * R, Math.sin(a) * R); });
+      const shape = new THREE.Shape();
+      for (let k = 0; k < 3; k++) {
+        const p0 = pts[(k + 2) % 3], p1 = pts[k], p2 = pts[(k + 1) % 3];
+        const a = p1.clone().lerp(p0, corner), b = p1.clone().lerp(p2, corner);
+        if (k === 0) shape.moveTo(a.x, a.y); else shape.lineTo(a.x, a.y);
+        shape.quadraticCurveTo(p1.x, p1.y, b.x, b.y);
+      }
+      shape.closePath();
+      const depth = height - 2 * bevel;
+      const geo = new THREE.ExtrudeGeometry(shape, { depth, steps: 40, curveSegments: 28, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 8 });
+      geo.translate(0, 0, -depth / 2);
+      geo.rotateX(-Math.PI / 2); // extrusion axis → +Y
+      const pos = geo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+        const a = twist * (y / height), c = Math.cos(a), s = Math.sin(a);
+        pos.setXYZ(i, x * c - z * s, y, x * s + z * c);
+      }
+      geo.deleteAttribute("normal");
+      return toCreasedNormals(geo, Math.PI / 4);
+    }
+    const PRISM_H = 2.12, PRISM_R = 1.12, TWIST = 0.86;
+    const glassGeo = prismGeometry({ R: PRISM_R, height: PRISM_H, corner: 0.2, twist: TWIST, bevel: 0.1 });
+    const glassMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, metalness: 0, roughness: 0.035,
+      transmission: 1, thickness: 1.15, ior: 1.45, dispersion: 2.2,
+      attenuationColor: new THREE.Color("#e3ecff"), attenuationDistance: 4,
+      specularIntensity: 1, envMapIntensity: 1.25,
+    });
+    const glass = new THREE.Mesh(glassGeo, glassMat);
+    const rig = new THREE.Group(); // position + tilt; the glass spins inside it about its own axis
+    rig.add(glass);
+    scene.add(rig);
+    const GLASS_REST = { x: 0, y: 0.37, z: 1.0 };
+
+    // a four-point glint that rides the prism's top edge on arrival
+    const glintCanvas = document.createElement("canvas");
+    glintCanvas.width = glintCanvas.height = 256;
+    {
+      const gc = glintCanvas.getContext("2d");
+      const rad = gc.createRadialGradient(128, 128, 0, 128, 128, 128);
+      rad.addColorStop(0, "rgba(255,255,255,1)"); rad.addColorStop(0.08, "rgba(220,232,255,0.85)"); rad.addColorStop(0.3, "rgba(160,190,255,0.18)"); rad.addColorStop(1, "rgba(120,160,255,0)");
+      gc.fillStyle = rad; gc.fillRect(0, 0, 256, 256);
+      gc.globalCompositeOperation = "lighter";
+      for (const [w, h] of [[256, 6], [6, 256]]) {
+        const lg = gc.createLinearGradient(128 - w / 2, 128 - h / 2, 128 + w / 2, 128 + h / 2);
+        lg.addColorStop(0, "rgba(255,255,255,0)"); lg.addColorStop(0.5, "rgba(255,255,255,0.95)"); lg.addColorStop(1, "rgba(255,255,255,0)");
+        gc.fillStyle = lg; gc.fillRect(128 - w / 2, 128 - h / 2, w, h);
+      }
+    }
+    const glintTex = new THREE.CanvasTexture(glintCanvas);
+    glintTex.colorSpace = THREE.SRGBColorSpace;
+    const glint = new THREE.Sprite(new THREE.SpriteMaterial({ map: glintTex, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, transparent: true, opacity: 0 }));
+    glint.renderOrder = 10;
+    scene.add(glint);
+    const topCorner = new THREE.Vector3();
+
+    // ---------------------------------------------------------------- the choreography (seconds on the piece)
+    const T = {
+      streak: 0.15,   // the light line ignites
+      open: 0.95,     // it opens into the headline
+      rise: 1.3,      // the glass enters from below …
+      arrive: 3.2,    // … and lands on the music's drop
+      turn: 4.0,      // the 120° turn
+      turnEnd: 8.3,
+      band: 4.5,      // the spectral band crosses the letters
+      bandEnd: 7.7,
+      camEnd: 9.0,
+    };
+    let lastT = -1;
+    function render(t) {
+      lastT = t;
+      // camera: a slow push that lands at rest
+      const cp = seg(t, 0, T.camEnd, GLIDE);
+      camera.position.set(0, 0.16 * (1 - cp), CAM_REST.z + 0.55 * (1 - cp));
+      camera.lookAt(0, 0.05 * (1 - cp), 0);
+
+      // stage light
+      const ign = seg(t, T.streak, 0.8, SETTLE);
+      const open = seg(t, T.open, 1.25, SETTLE);
+      stageU.uStreakLen.value = 0.03 + 0.62 * ign;
+      stageU.uStreak.value = (0.35 + 1.25 * ign) * (1 - seg(t, T.open + 0.02, 0.36, EXIT)) * (t < T.streak ? 0 : 1);
+      stageU.uHalf.value = uvHalfText * open;
+      stageU.uEdge.value = clamp01(open * 6) * (1 - seg(t, T.open + 0.25, 0.9, ENTER));
+      stageU.uInk.value = seg(t, T.open + 0.05, 0.9, ENTER);
+      const bandU = seg(t, T.band, T.bandEnd - T.band, SINE);
+      stageU.uBandX.value = 0.1 + 0.8 * bandU;
+      stageU.uBandAmt.value = Math.sin(Math.PI * bandU) * 0.95;
+      stageU.uLift.value = 1.4 * bump(t, T.arrive - 0.1, 0.12, 0.1, 1.2);
+      stageU.uStageOn.value = 0.12 + 0.88 * seg(t, T.streak, 1.6, SETTLE);
+      stageU.uFloorOn.value = seg(t, T.open + 0.2, 1.6, ENTER);
+
+      // glass: rise (lands on the drop), settle, then the 120° turn that ends exactly at rest
+      const rise = seg(t, T.rise, T.arrive - T.rise, MOVE);
+      const spinIn = seg(t, T.rise, T.arrive - T.rise + 0.5, SETTLE);
+      const turn = seg(t, T.turn, T.turnEnd - T.turn, GLIDE);
+      rig.position.set(GLASS_REST.x, GLASS_REST.y - 4.6 * (1 - rise), GLASS_REST.z);
+      rig.rotation.set(0.16 + 0.22 * (1 - rise), 0, -0.07 + 0.3 * (1 - rise));
+      glass.rotation.y = -1.25 * (1 - spinIn) + (2 * Math.PI / 3) * turn;
+      glass.visible = t >= T.rise - 0.02;
+
+      // arrival: a glint runs up the front edge of the prism and flares off its top corner
+      const run = seg(t, T.arrive - 0.12, 0.62, SETTLE);
+      const gl = bump(t, T.arrive - 0.12, 0.1, 0.32, 0.45);
+      const yy = (-0.42 + 0.9 * run) * PRISM_H, a = TWIST * (yy / PRISM_H), rr = PRISM_R * 0.84;
+      glass.updateMatrixWorld(true);
+      topCorner.set(-rr * Math.sin(a), yy, rr * Math.cos(a)).applyMatrix4(glass.matrixWorld);
+      glint.position.copy(topCorner);
+      glint.material.opacity = gl * 0.95;
+      glint.scale.setScalar((0.22 + 0.55 * gl) * (1 + 0.9 * run * gl));
+      glint.material.rotation = 0.35 + 0.5 * run;
+
+      renderer.render(scene, camera);
+    }
+
+    // ---------------------------------------------------------------- DOM: the end card on the same timeline
+    S.words("#tag", 7.75, { stagger: S.f(4), blur: 8, y: 26 });
+    tl.fromTo("#rule", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 0.9, duration: 0.9, ease: "settle" }, 8.05);
+    tl.fromTo("#cta", { opacity: 0, y: 16, scale: 0.94, filter: "blur(6px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "springSoft" }, 8.3);
+    S.sweep("#cta", 8.95, { dur: 0.9 });
+    tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 8.4);
+    tl.set({}, {}, 10); // the timeline spans the whole piece, so every seek reaches the scene
+
+    S.everyFrame(render);
+    // belt and braces: if a seek ever lands without the timeline's onUpdate, the hf-seek event still redraws
+    window.addEventListener("hf-seek", () => { const t = tl.time(); if (t !== lastT) render(t); });
+
+    S.grain({ opacity: 0.05 });
+    S.vignette({ strength: 0.5 });
+    window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    window.__gh1Ready();
+  </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+/* studio.css — base layer of the Motion Studio kit (tools/studio), v1, 2026-11-07.
+   Copied into every piece as assets/css/studio.css. A piece overrides the tokens in its own <style> :root block
+   (palette, fonts, radii) — never edit this file inside a project, so every piece stays one family.
+
+   Rules baked in (CLAUDE.md §0d + docs/business/research/R3-trends-craft.md):
+   - readable text ≥ 28 px at 1080p, kickers ≥ 24 px; tracking only on Latin mono/kickers, never on Bengali;
+   - every font family name quoted; Bengali-capable stacks end in a pack Bengali font;
+   - layered soft shadows (contact + ambient) for depth; one accent colour carries the hierarchy;
+   - NO CSS transform on anything GSAP animates (lint gsap_css_transform_conflict) — GSAP owns transforms. */
+
+:root {
+  --bg: #07080b;
+  --bg-2: #0e1016;
+  --bg-3: #151821;
+  --ink: #f4f5f7;
+  --ink-2: rgba(244, 245, 247, 0.68);
+  --ink-3: rgba(244, 245, 247, 0.4);
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --accent: #7c5cff;
+  --accent-2: #22d3ee;
+  --ok: #22c55e;
+  --warn: #f59e0b;
+  --bad: #ef4444;
+  --font-display: "Inter", "Hind Siliguri", system-ui, sans-serif;
+  --font-body: "Inter", "Hind Siliguri", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Hind Siliguri", ui-monospace, monospace;
+  --r-s: 10px;
+  --r-m: 18px;
+  --r-l: 28px;
+  --r-xl: 44px;
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 2px 4px rgba(0, 0, 0, 0.35), 0 24px 64px -16px rgba(0, 0, 0, 0.65);
+  --shadow-3: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 4px 8px rgba(0, 0, 0, 0.3), 0 48px 120px -24px rgba(0, 0, 0, 0.75);
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+}
+body {
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  font-kerning: normal;
+}
+#root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ---------- structure */
+.scene { position: absolute; inset: 0; overflow: hidden; }
+.layer { position: absolute; inset: 0; }
+.center { display: grid; place-items: center; }
+.stage3d { position: absolute; inset: 0; }           /* S.camera() gives its parent the perspective */
+.cam { position: absolute; inset: 0; transform-style: preserve-3d; }
+.plane { position: absolute; transform-style: preserve-3d; backface-visibility: hidden; }
+
+/* ---------- type */
+.display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.035em; line-height: 0.95; margin: 0; }
+.h1 { font-family: var(--font-display); font-weight: 650; letter-spacing: -0.028em; line-height: 1.02; font-size: 96px; margin: 0; }
+.h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; font-size: 64px; margin: 0; }
+.h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.012em; line-height: 1.15; font-size: 44px; margin: 0; }
+.body { font-size: 32px; line-height: 1.38; color: var(--ink-2); margin: 0; }
+.small { font-size: 28px; line-height: 1.35; color: var(--ink-2); }
+.kicker { font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }
+.mono { font-family: var(--font-mono); }
+.tnum { font-variant-numeric: tabular-nums; }
+.accent { color: var(--accent); }
+.grad-text { background: linear-gradient(180deg, var(--ink) 0%, rgba(244, 245, 247, 0.55) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.st-line, .st-word, .st-char { will-change: transform, opacity; }
+
+/* ---------- surfaces */
+.card { position: relative; background: var(--bg-2); border-radius: var(--r-m); box-shadow: var(--shadow-2); border: 1px solid var(--line); overflow: hidden; }
+.card.raised { box-shadow: var(--shadow-3); }
+.glass {
+  position: relative;
+  border-radius: var(--r-l);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 -1px 0 rgba(255, 255, 255, 0.06) inset, 0 30px 80px -20px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  overflow: hidden;
+}
+.chip { display: inline-flex; align-items: center; gap: 12px; padding: 10px 20px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line-2); font-size: 26px; line-height: 1.2; white-space: nowrap; }
+.chip .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 16px var(--accent); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 20px 38px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; font-size: 30px; line-height: 1; white-space: nowrap; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 12px 32px -8px var(--accent); }
+.hairline { position: absolute; background: var(--line); }
+.icon { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- backgrounds (decorative: design-lint ignores them) */
+.bg-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 80px 80px; -webkit-mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 100%); mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 100%); }
+.bg-dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(255, 255, 255, 0.13) 1.3px, transparent 1.4px); background-size: 28px 28px; -webkit-mask-image: radial-gradient(70% 60% at 50% 50%, #000 20%, transparent 100%); mask-image: radial-gradient(70% 60% at 50% 50%, #000 20%, transparent 100%); }
+.glow { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.55; pointer-events: none; }
+
+/* ---------- device frames (generic, unbranded) */
+.browser { position: relative; border-radius: 20px; background: var(--bg-2); border: 1px solid var(--line-2); box-shadow: var(--shadow-3); overflow: hidden; }
+.browser > .bar { height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 22px; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); }
+.browser > .bar > i { width: 14px; height: 14px; border-radius: 50%; background: rgba(255, 255, 255, 0.18); display: block; }
+.browser > .bar > .url { margin-left: 18px; flex: 1; max-width: 520px; height: 32px; border-radius: 9px; background: rgba(255, 255, 255, 0.06); font-family: var(--font-mono); font-size: 16px; color: var(--ink-3); display: flex; align-items: center; padding: 0 14px; }
+.browser > .view { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; overflow: hidden; }
+.phone { position: relative; width: 430px; height: 900px; border-radius: 68px; background: #0a0a0c; box-shadow: 0 0 0 2px #2b2c31, 0 0 0 10px #0d0d10, 0 0 0 11px #3a3b40, var(--shadow-3); }
+.phone > .screen { position: absolute; inset: 14px; border-radius: 56px; overflow: hidden; background: var(--bg-2); }
+.phone > .island { position: absolute; top: 28px; left: 50%; width: 128px; height: 38px; margin-left: -64px; border-radius: 20px; background: #000; z-index: 5; }
+
+/* ---------- runtime parts (made by studio.js) */
+.st-caret { display: inline-block; margin-left: 2px; color: var(--accent); font-weight: 400; }
+.st-cursor { position: absolute; left: 0; top: 0; pointer-events: none; will-change: transform, opacity; filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45)); }
+.st-click-ring { position: absolute; left: 0; top: 0; width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--accent); opacity: 0; pointer-events: none; }
+.st-grain, .st-vignette { position: absolute; inset: 0; pointer-events: none; }
+.sweep { position: absolute; top: -30%; bottom: -30%; left: 0; width: 38%; background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, 0.26) 50%, rgba(255, 255, 255, 0) 78%, transparent 100%); pointer-events: none; mix-blend-mode: overlay; opacity: 0; }
+.burst { position: absolute; left: 0; top: 0; width: 140px; height: 140px; border-radius: 50%; border: 2px solid var(--accent); pointer-events: none; opacity: 0; }
+.flash { position: absolute; inset: 0; background: #fff; pointer-events: none; opacity: 0; }

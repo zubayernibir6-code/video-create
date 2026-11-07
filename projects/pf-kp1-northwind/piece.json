@@ -1,0 +1,148 @@
+{
+  "code": "KP1",
+  "name": "Investor Metrics Reel",
+  "brand": "Northwind",
+  "project": "pf-kp1-northwind",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 15,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Northwind (fictional — concept work): a business-banking fintech",
+    "goal": "Announce the $60M Series B with the year's four proof points in 15 seconds — for X, LinkedIn and the press page",
+    "audience": "Investors and press; founders and finance leads at small and mid-size businesses",
+    "message": "Businesses are moving to Northwind: $60M Series B, 3.2× revenue growth, 48,000 businesses, 99.99% uptime (all figures fictional)",
+    "cta": "Read the announcement",
+    "tone": "Confident and exact: keynote stat slides on deep green-black, one mint accent, every number landing on a strong beat",
+    "references": [
+      "Apple keynote stat slides",
+      "Stripe annual letter graphics"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "studio-pulse",
+      "from": 6.8,
+      "gain": 0.55,
+      "fadeIn": 0.15,
+      "fadeOut": 1.5
+    },
+    "cues": [
+      {
+        "t": 0.15,
+        "sfx": "click-soft",
+        "gain": 0.2
+      },
+      {
+        "t": 0.27,
+        "sfx": "typing",
+        "gain": 0.14,
+        "len": 1.1
+      },
+      {
+        "t": 1.37,
+        "sfx": "impact-bass-1",
+        "gain": 0.35,
+        "len": 0.7
+      },
+      {
+        "t": 1.4,
+        "sfx": "sparkle",
+        "gain": 0.14
+      },
+      {
+        "t": 2.42,
+        "sfx": "whoosh-short",
+        "gain": 0.3
+      },
+      {
+        "t": 2.755,
+        "sfx": "typing",
+        "gain": 0.14,
+        "len": 1.05
+      },
+      {
+        "t": 3.815,
+        "sfx": "pop",
+        "gain": 0.3
+      },
+      {
+        "t": 4.86,
+        "sfx": "sparkle",
+        "gain": 0.14
+      },
+      {
+        "t": 5.908,
+        "sfx": "whoosh-short",
+        "gain": 0.3
+      },
+      {
+        "t": 6.2,
+        "sfx": "typing",
+        "gain": 0.14,
+        "len": 1.1
+      },
+      {
+        "t": 7.304,
+        "sfx": "impact-bass-1",
+        "gain": 0.35,
+        "len": 0.7
+      },
+      {
+        "t": 8,
+        "sfx": "sparkle",
+        "gain": 0.12
+      },
+      {
+        "t": 8.95,
+        "sfx": "whoosh-short",
+        "gain": 0.3
+      },
+      {
+        "t": 9.303,
+        "sfx": "typing",
+        "gain": 0.14,
+        "len": 1.14
+      },
+      {
+        "t": 10.44,
+        "sfx": "impact-bass-1",
+        "gain": 0.35,
+        "len": 0.7
+      },
+      {
+        "t": 10.45,
+        "sfx": "ping",
+        "gain": 0.16
+      },
+      {
+        "t": 11.84,
+        "sfx": "whoosh-short",
+        "gain": 0.3
+      },
+      {
+        "t": 12.15,
+        "sfx": "impact-bass-1",
+        "gain": 0.3,
+        "len": 0.9
+      },
+      {
+        "t": 12.4,
+        "sfx": "sparkle",
+        "gain": 0.14
+      },
+      {
+        "t": 12.86,
+        "sfx": "pop",
+        "gain": 0.22
+      }
+    ]
+  },
+  "reel": {
+    "from": 5.8,
+    "to": 9.8
+  },
+  "made": "2026-11-07"
+}

@@ -63,6 +63,23 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 - Long build-up SFX: land the PEAK on the hit (manifest `peak_s`: whoosh-cinematic 2.5 s, riser 3.0 s).
 - `hyperframes snapshot --describe` uses the paid Gemini key unless `--describe false` (check.mjs passes it).
 - Render speed here: PL1 (30 s, CSS 3D, 30 fps) took 312 s ≈ 10 s per second of video. One render at a time.
+- Custom agent types (`.claude/agents/*.md`) and named workflows are loaded when a session STARTS. In the session
+  that created or edited them: run the workflow by path, `Workflow({scriptPath: "D:\\Video Create\\.claude\\workflows\\studio-batch.js", args: …})`
+  — the name resolves to the old cached copy, and `agentType: 'studio-builder'` throws "not found" (the workflow now
+  falls back to a default subagent that reads the role file).
+- Several render queues may run at once (each waits for the render slot); queue.json is appended, never overwritten.
+- 3D (three.js) pieces: copy the pattern of `projects/pf-gh1-prism` / `pf-lg1-orbit` / `pf-ia1-vaultline` — a `<head>`
+  script registers `window.__hf.buildReady`, the scene module resolves it after frame 0 is drawn; the scene renders
+  inside `S.everyFrame(t => …)` (no requestAnimationFrame); an `hf-seek` listener redraws; `tl.set({}, {}, DUR)` pins
+  the length; registry blocks are ported into index.html and their CDN imports removed. `hyperframes check` may say
+  "did not become render-ready within 3000 ms" (shader compile on the UHD 620) and still pass. Measured: GH1 10 s in
+  918 s, LG1 6 s in 177 s.
+- **Never name the ease "spring"** (or hold / wiggle / custom): the HyperFrames runtime registers its own eases with
+  those names after load, so "spring" played LINEAR in every render of the first batch (found by builder A3; 14 pages
+  fixed and 11 pieces re-rendered). Use `houseSpring` (same k170/c14 curve), springSoft, springPop or pass
+  `Studio.springFn(…)`. check.mjs now stops on those names (proved on the old page).
+- Furniture labels ("Concept work · fictional brand") use class `concept` (or carry data-design-ignore): check.mjs
+  exempts them from the ≥ 24 px rule.
 
 ## 4. After every client job
 LESSONS.md row per feedback; new reusable code into tools/studio (with a header + proof); this skill updated;

@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>KP1 · Investor Metrics Reel — Northwind (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Northwind: deep green-black, mint accent, ink; cards one step up. ONE accent carries the hierarchy. */
+      --bg: #06110d;
+      --bg-2: #0c1d17;
+      --bg-3: #10261e;
+      --ink: #eafff6;
+      --ink-2: rgba(234, 255, 246, 0.74);
+      --ink-3: rgba(234, 255, 246, 0.56);
+      --line: rgba(62, 240, 165, 0.055);
+      --line-2: rgba(62, 240, 165, 0.16);
+      --accent: #3ef0a5;
+      --accent-2: #0f6b4c;
+      --font-display: "Geist", "Hind Siliguri", sans-serif;
+      --font-body: "Geist", "Hind Siliguri", sans-serif;
+      --font-mono: "Geist Mono", "Hind Siliguri", monospace;
+    }
+    .tnum { font-variant-numeric: tabular-nums; }
+
+    /* background */
+    #bg { background: var(--bg); }
+    #bg .g1 { width: 1300px; height: 1300px; left: 310px; top: -120px; background: radial-gradient(circle, rgba(62, 240, 165, 0.30), rgba(62, 240, 165, 0) 62%); }
+    #bg .g2 { width: 1400px; height: 1400px; left: -520px; top: 360px; background: radial-gradient(circle, rgba(16, 120, 86, 0.55), rgba(16, 120, 86, 0) 64%); }
+    #bg .bg-grid { opacity: 0.9; }
+
+    /* chrome: top bar + furniture */
+    .topbar { position: absolute; left: 96px; right: 96px; top: 54px; height: 48px; display: flex; align-items: center; justify-content: space-between; }
+    .tb-brand { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
+    .tb-brand svg { width: 40px; height: 40px; }
+    .tb-right { display: flex; align-items: center; gap: 22px; }
+    .tb-k { font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+    .dashes { display: flex; gap: 8px; }
+    .dashes i { display: block; width: 40px; height: 5px; border-radius: 3px; background: rgba(234, 255, 246, 0.16); }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(234, 255, 246, 0.62); }
+
+    /* the shared stat grid: every number sits on the same rows (kicker 346, number line 412 / baseline 583, label 646) */
+    .st { position: absolute; inset: 0; }
+    .kick { position: absolute; left: 160px; top: 346px; font-family: var(--font-mono); font-size: 26px; line-height: 1.2; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+    .num { position: absolute; left: 160px; top: 412px; font-size: 200px; line-height: 1; font-weight: 700; letter-spacing: -0.045em; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .num .u { color: var(--accent); }
+    .lab { position: absolute; left: 160px; top: 646px; font-size: 44px; line-height: 1.25; font-weight: 500; letter-spacing: -0.015em; color: var(--ink-2); white-space: nowrap; }
+    .mid { text-align: center; left: 0 !important; width: 1920px; }
+    .card { position: absolute; left: 1000px; top: 230px; width: 760px; height: 600px; border-radius: 32px; background: linear-gradient(180deg, #0f231c 0%, #0b1a15 100%); border: 1px solid rgba(62, 240, 165, 0.12); box-shadow: 0 1px 0 rgba(234, 255, 246, 0.06) inset, 0 2px 6px rgba(0, 0, 0, 0.35), 0 40px 90px -30px rgba(0, 0, 0, 0.8); overflow: hidden; }
+
+    /* S1 hero */
+    .chip-k { position: absolute; left: 0; width: 1920px; top: 334px; display: flex; justify-content: center; }
+    .chip-k .chip { font-family: var(--font-mono); font-size: 26px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); background: rgba(62, 240, 165, 0.08); border-color: rgba(62, 240, 165, 0.34); padding: 10px 22px; }
+    .chip-k .chip .dot { background: var(--accent); box-shadow: 0 0 14px var(--accent); }
+    .hero-glow { position: absolute; left: 560px; top: 212px; width: 800px; height: 600px; border-radius: 50%; background: radial-gradient(closest-side, rgba(62, 240, 165, 0.34), rgba(62, 240, 165, 0)); filter: blur(30px); }
+    .hero-rule { position: absolute; left: 700px; top: 624px; width: 520px; height: 3px; background: linear-gradient(90deg, rgba(62, 240, 165, 0), #3ef0a5 50%, rgba(62, 240, 165, 0)); box-shadow: 0 0 18px rgba(62, 240, 165, 0.8); }
+    .s1-lab { top: 646px; }  /* Geist content box is 1.3 em: number 382–642, so text rows sit outside it */
+
+    /* S2 chart */
+    .chart-svg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+    .ylab { position: absolute; width: 60px; left: 1018px; height: 30px; line-height: 30px; text-align: right; font-family: var(--font-mono); font-size: 24px; color: var(--ink-3); }
+    .xlab { position: absolute; top: 748px; font-family: var(--font-mono); font-size: 24px; line-height: 1.2; letter-spacing: 0.06em; color: var(--ink-3); white-space: nowrap; }
+    .burst { border-color: #3ef0a5; border-width: 3px; }
+
+    /* S3 dot grid */
+    #dots { position: absolute; left: 1044px; top: 270px; width: 672px; height: 448px; }
+    .legend { position: absolute; left: 1051px; top: 752px; display: flex; align-items: center; gap: 14px; font-family: var(--font-mono); font-size: 24px; color: var(--ink-3); }
+    .legend i { display: block; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(62, 240, 165, 0.8); }
+
+    /* S4 ring */
+    .ring-burst { width: 420px; height: 420px; border-width: 3px; border-color: #3ef0a5; }
+
+    /* S5 lockup */
+    .lock { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .lock-row { display: flex; align-items: center; gap: 40px; }
+    .mark-tile { width: 132px; height: 132px; border-radius: 36px; background: linear-gradient(140deg, #8affcd 0%, #3ef0a5 45%, #17b97a 100%); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 18px 50px -12px rgba(62, 240, 165, 0.55); display: grid; place-items: center; }
+    .mark-tile svg { width: 132px; height: 132px; }
+    .wordmark { font-size: 150px; font-weight: 650; letter-spacing: -0.05em; line-height: 1.08; padding-bottom: 8px; }
+    .tagline { font-size: 58px; font-weight: 500; letter-spacing: -0.025em; line-height: 1.2; color: var(--ink); margin-top: 30px; }
+    .cta { display: inline-flex; align-items: center; gap: 14px; margin-top: 40px; padding: 20px 36px; border-radius: 999px; background: var(--accent); color: #06110d; font-size: 30px; font-weight: 600; line-height: 1; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 16px 40px -12px rgba(62, 240, 165, 0.6); }
+    .cta svg { width: 30px; height: 30px; stroke: currentColor; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+    .ledby { font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.06em; color: var(--ink-3); margin-top: 34px; }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="15" data-fps="30">
+
+    <!-- background (whole piece) -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="15" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div id="g1" class="glow g1" data-layout-allow-overflow></div>
+      <div id="g2" class="glow g2" data-layout-allow-overflow></div>
+      <div class="bg-grid"></div>
+    </section>
+
+    <!-- chrome: brand bar (0–12.3) + furniture label (whole piece) -->
+    <section id="chrome" class="scene clip" data-start="0" data-duration="15" data-track-index="1">
+      <header id="topbar" class="topbar">
+        <div class="tb-brand"><svg viewBox="0 0 132 132" data-design-ignore><rect width="132" height="132" rx="36" fill="#3ef0a5" /><path d="M40 98 V36 L92 98 V36" fill="none" stroke="#06110d" stroke-width="15" stroke-linejoin="round" stroke-linecap="round" /></svg><span>Northwind</span></div>
+        <div class="tb-right"><span class="tb-k">2026 in numbers</span><div class="dashes" data-design-ignore><i id="d1"></i><i id="d2"></i><i id="d3"></i><i id="d4"></i></div></div>
+      </header>
+      <div class="concept" data-design-ignore>Concept work · fictional brand · figures illustrative</div>
+    </section>
+
+    <!-- S1 0–2.9: SERIES B $60M -->
+    <section id="s1" class="scene clip" data-start="0" data-duration="2.9" data-track-index="2">
+      <div id="s1-st" class="st">
+        <div id="s1-glow" class="hero-glow" data-design-ignore data-layout-ignore></div>
+        <div id="s1-chip" class="chip-k"><span class="chip"><span class="dot"></span>Series B</span></div>
+        <div id="n1" class="num mid">$60M</div>
+        <div id="s1-rule" class="hero-rule" data-design-ignore></div>
+        <div id="s1-lab" class="lab mid s1-lab">in new funding</div>
+      </div>
+    </section>
+
+    <!-- S2 2.42–6.4: 3.2× revenue growth -->
+    <section id="s2" class="scene clip" data-start="2.42" data-duration="3.98" data-track-index="3">
+      <div id="s2-st" class="st">
+        <div class="kick">02 — Revenue</div>
+        <div id="n2" class="num">1.0<span class="u">×</span></div>
+        <div class="lab">revenue growth, year over year</div>
+        <div id="s2-card" class="card"></div>
+        <svg class="chart-svg" viewBox="0 0 1920 1080" data-layout-ignore>
+          <defs>
+            <linearGradient id="mintWash" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ef0a5" stop-opacity="0.32" /><stop offset="1" stop-color="#3ef0a5" stop-opacity="0" /></linearGradient>
+            <clipPath id="revClip"><rect id="revRect" x="1094" y="260" width="0" height="480" /></clipPath>
+          </defs>
+          <g id="revGrid"></g>
+          <path id="revArea" fill="url(#mintWash)" clip-path="url(#revClip)" />
+          <path id="revLine" fill="none" stroke="#3ef0a5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+          <path id="revPulse" fill="none" stroke="#e6fff4" stroke-width="7" stroke-linecap="round" style="filter: drop-shadow(0 0 10px #3ef0a5)" />
+          <circle id="revEnd" r="11" fill="#3ef0a5" stroke="#0d1f18" stroke-width="5" />
+        </svg>
+        <div id="s2-ylabs"></div>
+        <div id="s2-xlabs"></div>
+        <div id="rev-burst" class="burst" data-design-ignore></div>
+      </div>
+    </section>
+
+    <!-- S3 5.908–9.45: 48,000 businesses -->
+    <section id="s3" class="scene clip" data-start="5.908" data-duration="3.542" data-track-index="4">
+      <div id="s3-st" class="st">
+        <div class="kick">03 — Customers</div>
+        <div id="n3" class="num">0</div>
+        <div class="lab">businesses bank with Northwind</div>
+        <div class="card"></div>
+        <canvas id="dots" width="1344" height="896" data-layout-ignore></canvas>
+        <div class="legend"><i data-design-ignore></i>1 dot = 125 businesses</div>
+      </div>
+    </section>
+
+    <!-- S4 8.95–12.35: 99.99% uptime -->
+    <section id="s4" class="scene clip" data-start="8.95" data-duration="3.4" data-track-index="5">
+      <div id="s4-st" class="st">
+        <div class="kick">04 — Reliability</div>
+        <div id="n4" class="num">0.00<span class="u">%</span></div>
+        <div class="lab">uptime, last 12 months</div>
+        <div class="card"></div>
+        <svg class="chart-svg" viewBox="0 0 1920 1080" data-layout-ignore>
+          <circle cx="1380" cy="530" r="186" fill="none" stroke="#143a2d" stroke-width="22" />
+          <circle id="ringGlow" cx="1380" cy="530" r="186" fill="none" stroke="#3ef0a5" stroke-width="22" stroke-linecap="round" transform="rotate(-90 1380 530)" style="filter: blur(12px)" opacity="0" />
+          <circle id="ring" cx="1380" cy="530" r="186" fill="none" stroke="#3ef0a5" stroke-width="22" stroke-linecap="round" transform="rotate(-90 1380 530)" />
+          <path id="shield" d="M1380 448 L1444 472 V528 C1444 570 1417 600 1380 614 C1343 600 1316 570 1316 528 V472 Z" fill="rgba(62,240,165,0.08)" stroke="#3ef0a5" stroke-width="8" stroke-linejoin="round" />
+          <path id="check" d="M1352 532 L1373 553 L1410 511" fill="none" stroke="#3ef0a5" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div id="ring-burst" class="burst ring-burst" style="left: 1380px; top: 530px" data-design-ignore></div>
+      </div>
+    </section>
+
+    <!-- S5 11.84–15: lockup -->
+    <section id="s5" class="scene clip" data-start="11.84" data-duration="3.16" data-track-index="6">
+      <div id="s5-st" class="st">
+        <div class="lock">
+          <div class="lock-row">
+            <div id="mark" class="mark-tile"><svg viewBox="0 0 132 132" data-design-ignore><path id="markN" d="M40 98 V36 L92 98 V36" fill="none" stroke="#06110d" stroke-width="15" stroke-linejoin="round" stroke-linecap="round" /></svg></div>
+            <div id="wm" class="wordmark">Northwind</div>
+          </div>
+          <div id="tag" class="tagline">Banking that keeps up.</div>
+          <div id="cta" class="cta">Read the announcement<svg viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></div>
+          <div id="ledby" class="ledby">Led by Arcadia Ventures (fictional)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/studio-pulse.mp3" data-start="0" data-duration="15" data-media-start="6.8" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.15,"v":1},{"t":13.5,"v":1},{"t":15,"v":0}]}]}'></audio>
+    <audio id="sfx-01-click-soft" src="assets/sfx/click-soft.mp3" data-start="0.15" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-02-typing" src="assets/sfx/typing.mp3" data-start="0" data-duration="1.1" data-media-start="0.167" data-track-index="21" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.02,"v":1},{"t":1.1,"v":0}]}]}'></audio>
+    <audio id="sfx-03-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="1.32" data-duration="0.7" data-track-index="20" data-volume="0.35" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.62,"v":1},{"t":0.7,"v":0}]}]}'></audio>
+    <audio id="sfx-04-sparkle" src="assets/sfx/sparkle.mp3" data-start="1.375" data-duration="1.8" data-track-index="21" data-volume="0.14"></audio>
+    <audio id="sfx-05-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.409" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-06-typing" src="assets/sfx/typing.mp3" data-start="2.318" data-duration="1.05" data-track-index="22" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.97,"v":1},{"t":1.05,"v":0}]}]}'></audio>
+    <audio id="sfx-07-pop" src="assets/sfx/pop.mp3" data-start="3.699" data-duration="0.72" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-08-sparkle" src="assets/sfx/sparkle.mp3" data-start="4.835" data-duration="1.8" data-track-index="20" data-volume="0.14"></audio>
+    <audio id="sfx-09-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="5.897" data-duration="0.49" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-10-typing" src="assets/sfx/typing.mp3" data-start="5.763" data-duration="1.1" data-track-index="22" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.02,"v":1},{"t":1.1,"v":0}]}]}'></audio>
+    <audio id="sfx-11-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="7.254" data-duration="0.7" data-track-index="20" data-volume="0.35" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.62,"v":1},{"t":0.7,"v":0}]}]}'></audio>
+    <audio id="sfx-12-sparkle" src="assets/sfx/sparkle.mp3" data-start="7.975" data-duration="1.8" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-13-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="8.939" data-duration="0.49" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-14-typing" src="assets/sfx/typing.mp3" data-start="8.866" data-duration="1.14" data-track-index="22" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.06,"v":1},{"t":1.14,"v":0}]}]}'></audio>
+    <audio id="sfx-15-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="10.39" data-duration="0.7" data-track-index="20" data-volume="0.35" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.62,"v":1},{"t":0.7,"v":0}]}]}'></audio>
+    <audio id="sfx-16-ping" src="assets/sfx/ping.mp3" data-start="10.128" data-duration="1.32" data-track-index="21" data-volume="0.16"></audio>
+    <audio id="sfx-17-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="11.829" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-18-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="12.1" data-duration="0.9" data-track-index="21" data-volume="0.3" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.82,"v":1},{"t":0.9,"v":0}]}]}'></audio>
+    <audio id="sfx-19-sparkle" src="assets/sfx/sparkle.mp3" data-start="12.375" data-duration="1.8" data-track-index="20" data-volume="0.14"></audio>
+    <audio id="sfx-20-pop" src="assets/sfx/pop.mp3" data-start="12.744" data-duration="0.72" data-track-index="22" data-volume="0.22"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+      // The house spring as a FUNCTION: the HyperFrames runtime re-registers the bare ease name "spring" as linear (m => m)
+      // after this page loads, so ease: "spring" renders linear. Passing the function bypasses the name lookup.
+      const SPRING = Studio.springFn(0.537, 13.04, 0.8);
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (s) => document.querySelector(s);
+      const svgEl = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      const commas = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      const setHTML = (el, html) => { if (el.__h !== html) { el.innerHTML = html; el.__h = html; } };
+
+      // ---------------------------------------------------------------- vertical shared-axis pushes (0.45 s, "move")
+      const PUSH = 0.45, DY = 150;
+      // Material shared-axis Y with fade-through: both planes travel together on "move"; the outgoing plane is gone in the
+      // first ~35 % (exit), the incoming fades in over the rest — the two scenes never read on top of each other.
+      const pushIn = (sel, t) => { tl.fromTo(sel, { y: DY }, { y: 0, duration: PUSH, ease: "move" }, t); tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "enter" }, t + 0.15); };
+      const pushOut = (sel, t) => { tl.to(sel, { y: -DY, duration: PUSH, ease: "move" }, t); tl.to(sel, { opacity: 0, duration: 0.17, ease: "exit" }, t); };
+      const T2 = 2.42, T3 = 5.908, T4 = 8.95, T5 = 11.84;         // pushes start on / just before strong beats
+
+      // ---------------------------------------------------------------- background + chrome
+      tl.fromTo("#g1", { opacity: 0.35, scale: 0.8 }, { opacity: 0.85, scale: 1, duration: 1.4, ease: "settle" }, 0);
+      tl.to("#g1", { x: -260, y: 60, opacity: 0.6, duration: 1.2, ease: "glide" }, T2);       // light follows the number column
+      tl.to("#g1", { x: -200, y: 20, opacity: 0.7, duration: 1.2, ease: "glide" }, T3);
+      tl.to("#g1", { x: -240, y: 80, opacity: 0.65, duration: 1.2, ease: "glide" }, T4);
+      tl.to("#g1", { x: 0, y: 0, opacity: 0.9, duration: 1.2, ease: "glide" }, T5);
+      tl.fromTo("#g2", { opacity: 0.3 }, { opacity: 0.7, duration: 6, ease: "glide" }, 0);
+      tl.fromTo("#topbar", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 0.1);
+      [["#d1", 0.2], ["#d2", T2 + 0.2], ["#d3", T3 + 0.2], ["#d4", T4 + 0.2]].forEach(([d, t]) =>
+        tl.fromTo(d, { backgroundColor: "rgba(234,255,246,0.16)" }, { backgroundColor: "#3ef0a5", duration: 0.3, ease: "enter" }, t));
+      tl.to("#topbar", { opacity: 0, y: -14, duration: 0.3, ease: "exit" }, T5);
+
+      // ---------------------------------------------------------------- S1 0–2.42 · SERIES B · $60M (lands on the 1.37 strong beat)
+      tl.fromTo("#s1-chip", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 0.15);
+      tl.fromTo("#s1-glow", { opacity: 0, scale: 0.6 }, { opacity: 0.55, scale: 0.9, duration: 1.1, ease: "settle" }, 0.2);
+      tl.to("#s1-glow", { opacity: 1, scale: 1.12, duration: 0.5, ease: "settle" }, 1.37);
+      tl.to("#s1-glow", { opacity: 0.7, scale: 1, duration: 0.9, ease: "glide" }, 1.87);
+      tl.fromTo("#n1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 0.22);
+      const n1 = $("#n1"), settle = g.parseEase("settle");
+      S.everyFrame((now) => {
+        const u = S.clamp((now - 0.27) / 1.1, 0, 1), v = u >= 1 ? 60 : Math.round(60 * settle(u));
+        setHTML(n1, `$${v}<span class="u">M</span>`);
+      });
+      tl.fromTo("#s1-rule", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.7, ease: "settle" }, 1.37);
+      S.words("#s1-lab", 0.6, { stagger: S.f(3), blur: 8, y: 20 });
+      pushOut("#s1-st", T2);
+
+      // ---------------------------------------------------------------- S2 2.42–6.35 · 3.2× (the number IS the curve's value at its draw front)
+      pushIn("#s2-st", T2);
+      const REV = [1.0, 1.09, 1.22, 1.3, 1.46, 1.59, 1.77, 1.95, 2.14, 2.36, 2.62, 2.9, 3.2];   // monthly revenue, Dec 2025 = 1 (fictional)
+      const C = { l: 1094, r: 1712, t: 290, b: 730, vmax: 3.5 };
+      const cx = (i) => C.l + (i / (REV.length - 1)) * (C.r - C.l);
+      const cy = (v) => C.b - (v / C.vmax) * (C.b - C.t);
+      // monotone cubic through the monthly points, sampled per 2 px → a smooth curve whose value at any x is known
+      const mono = (function (xs, ys) {
+        const n = xs.length, d = [], m = new Array(n);
+        for (let i = 0; i < n - 1; i++) d.push((ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]));
+        m[0] = d[0]; m[n - 1] = d[n - 2];
+        for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
+        for (let i = 0; i < n - 1; i++) { const a = m[i] / d[i], b = m[i + 1] / d[i], s = a * a + b * b; if (s > 9) { const k = 3 / Math.sqrt(s); m[i] = k * a * d[i]; m[i + 1] = k * b * d[i]; } }
+        return (x) => { let i = 0; while (i < n - 2 && x > xs[i + 1]) i++; const h = xs[i + 1] - xs[i], t = S.clamp((x - xs[i]) / h, 0, 1), t2 = t * t, t3 = t2 * t;
+          return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * h * m[i] + (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * h * m[i + 1]; };
+      })(REV.map((_, i) => cx(i)), REV);
+      const samp = [];
+      for (let x = C.l; x <= C.r + 0.01; x += 2) samp.push([x, cy(mono(x))]);
+      const revD = "M" + samp.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L");
+      $("#revLine").setAttribute("d", revD);
+      $("#revPulse").setAttribute("d", revD);
+      $("#revArea").setAttribute("d", revD + ` L${C.r} ${C.b} L${C.l} ${C.b} Z`);
+      const rcum = [0];
+      for (let i = 1; i < samp.length; i++) rcum.push(rcum[i - 1] + Math.hypot(samp[i][0] - samp[i - 1][0], samp[i][1] - samp[i - 1][1]));
+      const RL = rcum[rcum.length - 1];
+      const revGrid = $("#revGrid");
+      svgEl("line", { x1: C.l, x2: C.r, y1: C.b, y2: C.b, stroke: "rgba(234,255,246,0.38)", "stroke-width": 2 }, revGrid);
+      [1, 2, 3].forEach((v) => {
+        svgEl("line", { x1: C.l, x2: C.r, y1: cy(v), y2: cy(v), stroke: "rgba(234,255,246,0.1)", "stroke-width": 2 }, revGrid);
+        const d = document.createElement("div"); d.className = "ylab"; d.style.top = (cy(v) - 15).toFixed(1) + "px"; d.textContent = v + "×"; $("#s2-ylabs").appendChild(d);
+      });
+      [["Dec 2025", C.l, "left"], ["Jun 2026", (C.l + C.r) / 2, "center"], ["Dec 2026", C.r, "right"]].forEach(([txt, x, al]) => {
+        const d = document.createElement("div"); d.className = "xlab"; d.textContent = txt.toUpperCase();
+        $("#s2-xlabs").appendChild(d);
+        const w = d.offsetWidth; d.style.left = (al === "left" ? x : al === "right" ? x - w : x - w / 2).toFixed(1) + "px";
+      });
+      const endP = samp[samp.length - 1];
+      g.set("#revEnd", { attr: { cx: endP[0], cy: endP[1] } });
+      $("#rev-burst").style.left = endP[0] + "px"; $("#rev-burst").style.top = endP[1] + "px";
+      const p2 = { u: 0 };
+      tl.fromTo(p2, { u: 0 }, { u: 1, duration: 1.06, ease: "settle" }, 2.755);   // lands on the 3.815 strong beat
+      const revLine = $("#revLine"), revRect = $("#revRect"), revPulse = $("#revPulse"), n2 = $("#n2");
+      S.everyFrame((now) => {
+        const x = C.l + (C.r - C.l) * p2.u, k = Math.min(samp.length - 1, Math.round((x - C.l) / 2));
+        revLine.style.opacity = p2.u > 0.001 ? 1 : 0;
+        revLine.style.strokeDasharray = `${rcum[k].toFixed(1)} ${(RL + 40).toFixed(0)}`;
+        revRect.setAttribute("width", (x - C.l).toFixed(1));
+        setHTML(n2, `${mono(x).toFixed(1)}<span class="u">×</span>`);
+        const w = (now - 4.86) / 0.8;                                    // a light pulse runs the curve once (beat 4.86)
+        if (w < 0 || w > 1) revPulse.style.opacity = 0;
+        else { const e = g.parseEase("move")(w); revPulse.style.opacity = String(Math.min(1, w * 6, (1 - w) * 6)); revPulse.style.strokeDasharray = `110 ${(RL + 300).toFixed(0)}`; revPulse.style.strokeDashoffset = (110 - (RL + 110) * e).toFixed(1); }
+      });
+      tl.fromTo("#s2-ylabs .ylab, #s2-xlabs .xlab", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "enter", stagger: S.f(2) }, 2.7);
+      tl.fromTo("#revGrid line", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.6, ease: "settle", stagger: S.f(2) }, 2.62);
+      tl.fromTo("#revEnd", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.6, ease: SPRING }, 3.79);
+      S.burst("#rev-burst", 3.815, { dur: 0.8, s0: 0.3, s1: 1.5, o0: 0.8 });
+      pushOut("#s2-st", T3);
+
+      // ---------------------------------------------------------------- S3 5.908–9.4 · 48,000 (= lit dots × 125)
+      pushIn("#s3-st", T3);
+      const COLS = 24, ROWS = 16, PITCH = 28, PER = 125;
+      const cv = $("#dots"), ctx = cv.getContext("2d"); ctx.scale(2, 2);
+      const dots = [];
+      const maxD = Math.hypot(COLS - 1, ROWS - 1);
+      for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+        const d = Math.hypot(c, ROWS - 1 - r) / maxD;                       // the wave starts at the bottom-left corner
+        dots.push({ x: 14 + c * PITCH, y: 14 + r * PITCH, c, raw: d * 0.86 + S.rnd() * 0.14 });
+      }
+      const rawMax = Math.max(...dots.map((d) => d.raw));
+      const W0 = 6.2, W1 = 7.304;                                            // the last dot lights on the 7.30 strong beat
+      dots.forEach((d) => (d.t = W0 + (d.raw / rawMax) * (W1 - W0)));
+      const n3 = $("#n3");
+      S.everyFrame((now) => {
+        let lit = 0;
+        ctx.clearRect(0, 0, 672, 448);
+        const sh = (now - 8.0) / 0.7;                                         // one brightness pass at 8.0
+        for (const d of dots) {
+          const age = now - d.t;
+          let rad = 6, col = "#163a2c", glow = 0;
+          if (age >= 0) {
+            lit++;
+            const u = Math.min(1, age / 0.45);
+            rad = 6 + 2.2 * Math.sin(Math.PI * Math.min(1, age / 0.3)) * (1 - u * 0.3);
+            col = age < 0.18 ? "#d6ffee" : "#3ef0a5";
+            glow = age < 0.45 ? 14 * (1 - u) + 4 : 4;
+            if (sh >= 0 && sh <= 1) { const k = Math.max(0, 1 - Math.abs(d.c / (COLS - 1) - sh) / 0.09); if (k > 0) { col = k > 0.5 ? "#e8fff5" : "#8dffd0"; glow = 4 + 10 * k; rad += 1.2 * k; } }
+          }
+          ctx.shadowColor = glow ? "rgba(62,240,165,0.85)" : "transparent";
+          ctx.shadowBlur = glow;
+          ctx.fillStyle = col;
+          ctx.beginPath(); ctx.arc(d.x, d.y, rad, 0, Math.PI * 2); ctx.fill();
+        }
+        setHTML(n3, commas(lit * PER));
+      });
+      tl.fromTo("#s3-st .legend", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.45, ease: "enter" }, 6.5);
+      pushOut("#s3-st", T4);
+
+      // ---------------------------------------------------------------- S4 8.95–12.3 · 99.99% (= ring progress × 99.99)
+      pushIn("#s4-st", T4);
+      const p4 = { u: 0 };
+      tl.fromTo(p4, { u: 0 }, { u: 1, duration: 1.14, ease: "settle" }, 9.303);   // lands on the 10.44 strong beat
+      const ring = $("#ring"), ringGlow = $("#ringGlow"), n4 = $("#n4");
+      const RC = 2 * Math.PI * 186;
+      S.everyFrame(() => {
+        const u = p4.u, len = RC * u * 0.9999;
+        ring.style.opacity = u > 0.002 ? 1 : 0;
+        ring.style.strokeDasharray = `${len.toFixed(1)} ${(RC + 40).toFixed(0)}`;
+        ringGlow.style.strokeDasharray = ring.style.strokeDasharray;
+        setHTML(n4, `${(99.99 * u).toFixed(2)}<span class="u">%</span>`);
+      });
+      tl.fromTo("#ringGlow", { opacity: 0 }, { opacity: 0.55, duration: 0.6, ease: "enter" }, 9.4);
+      tl.to("#ringGlow", { opacity: 0.9, duration: 0.35, ease: "settle" }, 10.44);
+      tl.to("#ringGlow", { opacity: 0.5, duration: 0.9, ease: "glide" }, 10.8);
+      tl.fromTo("#shield", { drawSVG: "0%", fillOpacity: 0 }, { drawSVG: "100%", fillOpacity: 1, duration: 0.7, ease: "settle" }, 9.45);
+      tl.fromTo("#check", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.28, ease: "enter" }, 10.18);
+      tl.fromTo("#shield, #check", { scale: 1, transformOrigin: "50% 50%" }, { scale: 1.12, duration: 0.16, ease: "enter", yoyo: true, repeat: 1, immediateRender: false }, 10.44);
+      S.burst("#ring-burst", 10.45, { dur: 0.9, s0: 0.92, s1: 1.3, o0: 0.7 });
+      pushOut("#s4-st", T5);
+
+      // ---------------------------------------------------------------- S5 11.84–15 · lockup (holds ≥ 2 s)
+      pushIn("#s5-st", T5);
+      // the mark rides in with its plane (fade-through: the old scene is already gone), then the words build
+      tl.fromTo("#mark", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: "springPop" }, 11.98);
+      tl.fromTo("#markN", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.55, ease: "settle" }, 12.1);
+      S.chars("#wm", 12.08, { stagger: S.f(1.4), ease: SPRING });
+      S.words("#tag", 12.42, { stagger: S.f(3), blur: 8, y: 22 });
+      tl.fromTo("#cta", { opacity: 0, y: 18, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "springSoft" }, 12.86);   // strong beat 12.885
+      tl.fromTo("#ledby", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter" }, 13.15);
+
+      S.grain({ opacity: 0.05 });
+      S.vignette({ strength: 0.5 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

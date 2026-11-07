@@ -1,0 +1,350 @@
+[
+  {
+    "id": "w0",
+    "text": "When",
+    "start": 0.0,
+    "end": 0.44
+  },
+  {
+    "id": "w1",
+    "text": "you",
+    "start": 0.44,
+    "end": 0.66
+  },
+  {
+    "id": "w2",
+    "text": "send",
+    "start": 0.66,
+    "end": 0.94
+  },
+  {
+    "id": "w3",
+    "text": "a",
+    "start": 0.94,
+    "end": 1.08
+  },
+  {
+    "id": "w4",
+    "text": "message",
+    "start": 1.08,
+    "end": 1.44
+  },
+  {
+    "id": "w5",
+    "text": "across",
+    "start": 1.44,
+    "end": 1.8
+  },
+  {
+    "id": "w6",
+    "text": "the",
+    "start": 1.8,
+    "end": 2.1
+  },
+  {
+    "id": "w7",
+    "text": "world,",
+    "start": 2.1,
+    "end": 2.42
+  },
+  {
+    "id": "w8",
+    "text": "it",
+    "start": 2.88,
+    "end": 2.98
+  },
+  {
+    "id": "w9",
+    "text": "doesn't",
+    "start": 2.98,
+    "end": 3.28
+  },
+  {
+    "id": "w10",
+    "text": "go",
+    "start": 3.28,
+    "end": 3.52
+  },
+  {
+    "id": "w11",
+    "text": "to",
+    "start": 3.52,
+    "end": 3.66
+  },
+  {
+    "id": "w12",
+    "text": "space,",
+    "start": 3.66,
+    "end": 3.96
+  },
+  {
+    "id": "w13",
+    "text": "it",
+    "start": 4.68,
+    "end": 4.8
+  },
+  {
+    "id": "w14",
+    "text": "goes",
+    "start": 4.8,
+    "end": 5.12
+  },
+  {
+    "id": "w15",
+    "text": "under",
+    "start": 5.12,
+    "end": 5.76
+  },
+  {
+    "id": "w16",
+    "text": "the",
+    "start": 5.76,
+    "end": 5.94
+  },
+  {
+    "id": "w17",
+    "text": "sea.",
+    "start": 5.94,
+    "end": 6.24
+  },
+  {
+    "id": "w18",
+    "text": "Almost",
+    "start": 7.0,
+    "end": 7.36
+  },
+  {
+    "id": "w19",
+    "text": "all",
+    "start": 7.36,
+    "end": 7.8
+  },
+  {
+    "id": "w20",
+    "text": "the",
+    "start": 7.8,
+    "end": 7.96
+  },
+  {
+    "id": "w21",
+    "text": "data",
+    "start": 7.96,
+    "end": 8.26
+  },
+  {
+    "id": "w22",
+    "text": "between",
+    "start": 8.26,
+    "end": 8.64
+  },
+  {
+    "id": "w23",
+    "text": "continents",
+    "start": 8.64,
+    "end": 9.2
+  },
+  {
+    "id": "w24",
+    "text": "travels",
+    "start": 9.2,
+    "end": 9.92
+  },
+  {
+    "id": "w25",
+    "text": "through",
+    "start": 9.92,
+    "end": 10.24
+  },
+  {
+    "id": "w26",
+    "text": "cables",
+    "start": 10.24,
+    "end": 10.62
+  },
+  {
+    "id": "w27",
+    "text": "on",
+    "start": 10.62,
+    "end": 11.02
+  },
+  {
+    "id": "w28",
+    "text": "the",
+    "start": 11.02,
+    "end": 11.14
+  },
+  {
+    "id": "w29",
+    "text": "ocean",
+    "start": 11.14,
+    "end": 11.38
+  },
+  {
+    "id": "w30",
+    "text": "floor.",
+    "start": 11.38,
+    "end": 11.76
+  },
+  {
+    "id": "w31",
+    "text": "Some",
+    "start": 12.58,
+    "end": 12.86
+  },
+  {
+    "id": "w32",
+    "text": "are",
+    "start": 12.86,
+    "end": 13.24
+  },
+  {
+    "id": "w33",
+    "text": "no",
+    "start": 13.24,
+    "end": 13.46
+  },
+  {
+    "id": "w34",
+    "text": "thicker",
+    "start": 13.46,
+    "end": 13.78
+  },
+  {
+    "id": "w35",
+    "text": "than",
+    "start": 13.78,
+    "end": 14.1
+  },
+  {
+    "id": "w36",
+    "text": "a",
+    "start": 14.1,
+    "end": 14.22
+  },
+  {
+    "id": "w37",
+    "text": "garden",
+    "start": 14.22,
+    "end": 14.48
+  },
+  {
+    "id": "w38",
+    "text": "hose,",
+    "start": 14.48,
+    "end": 14.78
+  },
+  {
+    "id": "w39",
+    "text": "hundreds",
+    "start": 15.36,
+    "end": 15.72
+  },
+  {
+    "id": "w40",
+    "text": "of",
+    "start": 15.72,
+    "end": 15.98
+  },
+  {
+    "id": "w41",
+    "text": "them",
+    "start": 15.98,
+    "end": 16.16
+  },
+  {
+    "id": "w42",
+    "text": "stretching",
+    "start": 16.16,
+    "end": 16.66
+  },
+  {
+    "id": "w43",
+    "text": "more",
+    "start": 16.66,
+    "end": 17.1
+  },
+  {
+    "id": "w44",
+    "text": "than",
+    "start": 17.1,
+    "end": 17.32
+  },
+  {
+    "id": "w45",
+    "text": "a",
+    "start": 17.32,
+    "end": 17.42
+  },
+  {
+    "id": "w46",
+    "text": "million",
+    "start": 17.42,
+    "end": 17.84
+  },
+  {
+    "id": "w47",
+    "text": "kilometers.",
+    "start": 17.84,
+    "end": 18.38
+  },
+  {
+    "id": "w48",
+    "text": "The",
+    "start": 19.28,
+    "end": 19.38
+  },
+  {
+    "id": "w49",
+    "text": "internet",
+    "start": 19.38,
+    "end": 19.72
+  },
+  {
+    "id": "w50",
+    "text": "isn't",
+    "start": 19.72,
+    "end": 20.4
+  },
+  {
+    "id": "w51",
+    "text": "in",
+    "start": 20.4,
+    "end": 20.5
+  },
+  {
+    "id": "w52",
+    "text": "the",
+    "start": 20.5,
+    "end": 20.58
+  },
+  {
+    "id": "w53",
+    "text": "cloud,",
+    "start": 20.58,
+    "end": 20.92
+  },
+  {
+    "id": "w54",
+    "text": "it's",
+    "start": 21.52,
+    "end": 21.74
+  },
+  {
+    "id": "w55",
+    "text": "in",
+    "start": 21.74,
+    "end": 21.84
+  },
+  {
+    "id": "w56",
+    "text": "the",
+    "start": 21.84,
+    "end": 21.96
+  },
+  {
+    "id": "w57",
+    "text": "ocean.",
+    "start": 21.96,
+    "end": 22.24
+  }
+]

@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1080, height=1920" />
+  <title>SA1 · Vertical Social Ad — Pocket (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Pocket: deep purple-black, white ink, ONE money-green accent. */
+      --bg: #160b2e;
+      --bg-2: #211241;
+      --bg-3: #2c1957;
+      --ink: #ffffff;
+      --ink-2: rgba(255, 255, 255, 0.74);
+      --ink-3: rgba(255, 255, 255, 0.58);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-2: rgba(255, 255, 255, 0.14);
+      --accent: #00d47e;
+      --accent-2: #7c4dff;
+      --font-display: "Space Grotesk", "Hind Siliguri", sans-serif;
+      --font-body: "Inter", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+    .green { color: var(--accent); }
+
+    /* ---------- persistent background light */
+    #g1 { width: 1300px; height: 1300px; left: -520px; top: -420px; background: radial-gradient(circle, rgba(124, 77, 255, 0.55), rgba(124, 77, 255, 0) 64%); }
+    #g2 { width: 1200px; height: 1200px; left: 360px; top: 1080px; background: radial-gradient(circle, rgba(0, 212, 126, 0.32), rgba(0, 212, 126, 0) 62%); }
+    .glow { filter: none; opacity: 1; }
+
+    /* ---------- hook */
+    #hook-bg { position: absolute; inset: 0; background: radial-gradient(70% 45% at 50% 42%, #3d1046 0%, rgba(61, 16, 70, 0) 100%); }
+    .rw { position: absolute; left: 0; top: 0; filter: drop-shadow(0 20px 26px rgba(4, 0, 14, 0.55)); }
+    .rp { width: 170px; padding: 22px 18px 34px; background: linear-gradient(180deg, #fbf8f2, #e9e2d5); display: flex; flex-direction: column; gap: 10px; }
+    .rp i { display: block; border-radius: 3px; }
+    .rp .r-t { width: 62%; height: 14px; background: #3a3150; margin: 0 auto 4px; }
+    .rp .r-s { width: 38%; height: 8px; background: #b9b0c4; margin: 0 auto 8px; }
+    .rp .r-l { height: 9px; background: linear-gradient(90deg, #c7bfb1 0 60%, rgba(0, 0, 0, 0) 60% 76%, #c7bfb1 76% 100%); }
+    .rp .r-l.w2 { background: linear-gradient(90deg, #c7bfb1 0 44%, rgba(0, 0, 0, 0) 44% 76%, #c7bfb1 76% 100%); }
+    .rp .r-d { height: 0; border-top: 2px dashed #b3aa9b; border-radius: 0; margin: 4px 0; }
+    .rp .r-tot { height: 15px; background: linear-gradient(90deg, #3a3150 0 40%, rgba(0, 0, 0, 0) 40% 64%, #e0475b 64% 100%); }
+    .cn { position: absolute; left: 0; top: 0; width: 100px; height: 100px; }
+    .cn svg { width: 100%; height: 100%; display: block; }
+    #hook-type { position: absolute; left: 0; right: 0; top: 418px; display: flex; flex-direction: column; align-items: center; text-shadow: 0 8px 40px rgba(10, 2, 24, 0.75); }
+    .hl { font-family: var(--font-display); font-weight: 700; white-space: nowrap; text-align: center; }
+    .hl.a { font-size: 150px; line-height: 0.95; letter-spacing: -0.045em; }
+    .hl.b { font-size: 190px; line-height: 0.9; letter-spacing: -0.05em; }
+    .hl .w { display: inline-block; }
+
+    /* ---------- smash cut title → header */
+    .pk { position: absolute; left: 0; top: 0; font-family: var(--font-display); font-weight: 700; font-size: 150px; line-height: 1; letter-spacing: -0.045em; white-space: nowrap; }
+
+    /* ---------- phrase captions (the voice's words) */
+    .phr { position: absolute; left: 0; right: 0; top: 372px; height: 290px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .phr .s { font-family: var(--font-display); font-weight: 700; font-size: 56px; line-height: 1.08; letter-spacing: -0.03em; white-space: nowrap; }
+    .phr .k { font-family: var(--font-display); font-weight: 700; font-size: 100px; line-height: 1; letter-spacing: -0.045em; color: var(--accent); white-space: nowrap; }
+    .phr .w { display: inline-block; }
+
+    /* ---------- phone (the kit's .phone at 1.5×, built at size; bottom deliberately cropped by the frame) */
+    .pfloat { position: absolute; inset: 0; }
+    #phone-wrap { position: absolute; left: 218px; top: 690px; width: 644px; height: 1350px; }
+    #phone-wrap .phone { width: 644px; height: 1350px; border-radius: 101px; background: #07040f; box-shadow: 0 0 0 3px #3b2e58, 0 0 0 14px #0b0617, 0 0 0 15.5px #5d4b86, 0 60px 120px -30px rgba(0, 0, 0, 0.75), 0 0 140px rgba(124, 77, 255, 0.28); }
+    #phone-wrap .phone > .screen { inset: 21px; border-radius: 80px; background: #120a26; }
+    #phone-wrap .phone > .island { top: 42px; width: 184px; height: 54px; margin-left: -92px; border-radius: 27px; }
+    .sbar { position: absolute; left: 0; right: 0; top: 0; height: 98px; display: flex; align-items: center; justify-content: space-between; padding: 12px 52px 0 66px; z-index: 6; color: #ffffff; }
+    .sbar .tm { font: 600 26px/1 var(--font-body); }
+    .sbar .ic { display: flex; gap: 10px; }
+    .sbar .ic svg { width: 26px; height: 26px; stroke-width: 2.4; }
+    .scr { position: absolute; inset: 0; padding: 104px 32px 0; }
+    .trow { display: flex; justify-content: space-between; align-items: baseline; }
+    .apt { font-family: var(--font-display); font-weight: 700; font-size: 46px; line-height: 1; letter-spacing: -0.03em; margin: 0; }
+    .apm { font: 500 24px/1 var(--font-body); color: var(--ink-3); }
+    .catbar { display: flex; gap: 6px; height: 12px; margin-top: 22px; }
+    .catbar i { display: block; height: 100%; border-radius: 6px; transform-origin: 0 50%; }
+    .txl { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+    .tx { display: flex; align-items: center; gap: 18px; padding: 14px 18px 14px 14px; border-radius: 24px; background: var(--bg-2); border: 1px solid var(--line); }
+    .txi { position: relative; width: 58px; height: 58px; border-radius: 18px; background: rgba(255, 255, 255, 0.07); flex: none; }
+    .txi svg { position: absolute; left: 14px; top: 14px; width: 30px; height: 30px; stroke-width: 2.2; }
+    .txi .ic0 { color: rgba(255, 255, 255, 0.45); }
+    .txi .tint { position: absolute; inset: 0; border-radius: 18px; }
+    .txn { flex: 1; min-width: 0; }
+    .txn .nm { font: 600 28px/1.15 var(--font-body); color: var(--ink); white-space: nowrap; }
+    .txn .tm { font: 500 24px/1.2 var(--font-body); color: var(--ink-3); margin-top: 2px; white-space: nowrap; }
+    .txr { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .amt { font: 600 28px/1.15 var(--font-body); color: var(--ink); font-variant-numeric: tabular-nums; }
+    .cat { font: 600 24px/1 var(--font-body); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+    .c-food { color: #ffc46b; background: rgba(255, 181, 71, 0.16); }
+    .c-groc { color: #5eead4; background: rgba(45, 212, 191, 0.16); }
+    .c-trans { color: #93c5fd; background: rgba(96, 165, 250, 0.18); }
+    .c-fun { color: #f9a8d4; background: rgba(244, 114, 182, 0.18); }
+    .scrim { position: absolute; inset: 0; background: rgba(10, 5, 22, 0.72); }
+    .subcard { position: absolute; left: 22px; right: 22px; top: 172px; padding: 26px 26px 18px; border-radius: 34px; background: linear-gradient(180deg, #2a1854, #1f1242); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.1) inset; }
+    .sc-h { display: flex; gap: 16px; align-items: center; }
+    .sc-ic { width: 54px; height: 54px; border-radius: 16px; background: rgba(255, 196, 107, 0.16); color: #ffc46b; display: grid; place-items: center; flex: none; }
+    .sc-ic svg { width: 30px; height: 30px; stroke-width: 2.3; }
+    .sc-t { font: 700 32px/1.1 var(--font-body); letter-spacing: -0.015em; }
+    .sc-s { font: 500 24px/1.2 var(--font-body); color: var(--ink-3); margin-top: 3px; }
+    .sc-tot { position: relative; display: flex; align-items: baseline; gap: 6px; margin: 18px 0 10px 2px; }
+    .sc-amt { position: relative; display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 76px; line-height: 1; letter-spacing: -0.04em; color: var(--accent); font-variant-numeric: tabular-nums; transform-origin: 0% 60%; }
+    .sc-per { font: 600 32px/1 var(--font-body); color: var(--accent); }
+    .sc-tot .burst { left: 120px; top: 40px; width: 220px; height: 220px; border-color: var(--accent); border-width: 3px; }
+    .sr { display: flex; align-items: center; gap: 14px; padding: 16px 4px; border-top: 1px solid var(--line); }
+    .sr i { width: 12px; height: 12px; border-radius: 50%; background: #ffc46b; flex: none; }
+    .sr .n { flex: 1; font: 600 28px/1.15 var(--font-body); }
+    .sr .p { font: 600 28px/1.15 var(--font-body); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+    #scr-safe { display: flex; flex-direction: column; align-items: center; }
+    .sf-l { font: 600 30px/1.1 var(--font-body); color: var(--ink-2); margin-top: 18px; }
+    .ring { position: relative; width: 380px; height: 380px; margin-top: 26px; }
+    .ring svg { position: absolute; inset: 0; width: 380px; height: 380px; overflow: visible; }
+    .ring-c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .sf-n { position: relative; display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 132px; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+    .sf-s { font: 500 26px/1.2 var(--font-body); color: var(--ink-3); margin-top: 6px; }
+    .ring .burst { left: 190px; top: 190px; width: 380px; height: 380px; border-color: var(--accent); border-width: 3px; }
+    .sf-chips { display: flex; gap: 14px; margin-top: 30px; }
+    .sf-chips .ch { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; background: var(--bg-2); border: 1px solid var(--line-2); font: 600 24px/1 var(--font-body); white-space: nowrap; }
+    .sf-chips svg { width: 24px; height: 24px; }
+
+    /* ---------- end card */
+    .end-col { position: absolute; left: 0; right: 0; top: 420px; display: flex; flex-direction: column; align-items: center; }
+    .logo { position: relative; width: 230px; height: 230px; }
+    .logo svg { position: absolute; inset: 0; width: 230px; height: 230px; overflow: visible; }
+    .logo .burst { left: 115px; top: 140px; width: 260px; height: 260px; border-color: var(--accent); border-width: 3px; }
+    .logo svg.glint { inset: auto; left: 128px; top: 30px; width: 34px; height: 34px; }
+    .wordmark { font-family: var(--font-display); font-weight: 700; font-size: 156px; line-height: 1; letter-spacing: -0.055em; margin-top: 26px; padding-bottom: 12px; }
+    .cta { position: relative; display: inline-flex; align-items: center; justify-content: center; margin-top: 44px; padding: 30px 60px; border-radius: 999px; background: var(--accent); color: #160b2e; font: 700 44px/1 var(--font-body); letter-spacing: -0.01em; white-space: nowrap; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 20px 50px -12px rgba(0, 212, 126, 0.55); }
+    .shine { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
+    .cta-ring { position: absolute; left: 540px; top: 0; width: 470px; height: 104px; border-radius: 999px; border: 3px solid var(--accent); opacity: 0; pointer-events: none; }
+    .tag { font: 600 38px/1.2 var(--font-body); color: var(--ink-2); letter-spacing: -0.01em; margin-top: 46px; }
+    .concept { position: absolute; left: 0; right: 0; top: 1160px; text-align: center; font: 500 15px/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.64); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="15" data-fps="30">
+
+    <!-- persistent background light -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="15" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div id="g1" class="glow" data-layout-allow-overflow></div>
+      <div id="g2" class="glow" data-layout-allow-overflow></div>
+    </section>
+
+    <!-- HOOK 0–1.92: receipts fly, the question slams word by word, coins burst out of "money" -->
+    <section id="hook" class="scene clip" data-start="0" data-duration="1.92" data-track-index="1">
+      <div id="hook-bg" data-design-ignore data-layout-ignore></div>
+      <div id="rcpts" class="layer" data-design-ignore data-layout-ignore></div>
+      <div id="coins" class="layer" data-design-ignore data-layout-ignore></div>
+      <div id="hook-type">
+        <div class="hl a"><span class="w" id="hw1">Where</span> <span class="w" id="hw2">did</span></div>
+        <div class="hl a"><span class="w" id="hw3">all</span> <span class="w" id="hw4">your</span></div>
+        <div class="hl b"><span class="w green" id="hw5">money</span></div>
+        <div class="hl b"><span class="w" id="hw6">go?</span></div>
+      </div>
+    </section>
+
+    <!-- smash-cut flash -->
+    <section id="fx" class="scene clip" data-start="1.85" data-duration="0.4" data-track-index="9" data-design-ignore data-layout-ignore>
+      <div id="flash" class="flash" style="background: #c8ffe6"></div>
+    </section>
+
+    <!-- PHONE 1.92–8.8 -->
+    <section id="ph" class="scene clip" data-start="1.92" data-duration="6.88" data-track-index="2">
+      <div id="phone-float" class="pfloat">
+        <div id="phone-wrap">
+          <div class="phone">
+            <div class="island"></div>
+            <div class="screen" id="screen">
+              <div class="sbar" data-design-ignore>
+                <span class="tm">9:41</span>
+                <span class="ic">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M2 20h.01" /><path d="M7 20v-4" /><path d="M12 20v-8" /><path d="M17 20V8" /></svg>
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 20h.01" /><path d="M2 8.82a15 15 0 0 1 20 0" /><path d="M5 12.859a10 10 0 0 1 14 0" /><path d="M8.5 16.429a5 5 0 0 1 7 0" /></svg>
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10 10v4" /><path d="M14 10v4" /><path d="M22 14v-4" /><path d="M6 10v4" /><rect x="2" y="6" width="16" height="12" rx="2" /></svg>
+                </span>
+              </div>
+
+              <!-- states 0–2: the spending list, then the subscriptions card over it -->
+              <div id="st12" class="layer">
+                <div class="scr" id="scr-list">
+                  <div class="trow"><h3 class="apt">Spending</h3><span class="apm">This week</span></div>
+                  <div class="catbar" id="catbar"><i style="width: 28%; background: #ffb547"></i><i style="width: 34%; background: #2dd4bf"></i><i style="width: 14%; background: #60a5fa"></i><i style="width: 24%; background: #f472b6"></i></div>
+                  <div class="txl">
+                    <div class="tx"><div class="txi"><svg class="icon ic0" viewBox="0 0 24 24"><path d="M12 17V7" /><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8" /><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" /></svg><div class="tint" style="background: rgba(255,181,71,.18); color: #ffc46b"><svg class="icon" viewBox="0 0 24 24"><path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" /></svg></div></div><div class="txn"><div class="nm">Corner Café</div><div class="tm">Today · 8:12 AM</div></div><div class="txr"><div class="amt">−$4.80</div><div class="cat c-food">Food</div></div></div>
+                    <div class="tx"><div class="txi"><svg class="icon ic0" viewBox="0 0 24 24"><path d="M12 17V7" /><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8" /><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" /></svg><div class="tint" style="background: rgba(45,212,191,.18); color: #5eead4"><svg class="icon" viewBox="0 0 24 24"><path d="m15 11-1 9" /><path d="m19 11-4-7" /><path d="M2 11h20" /><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4" /><path d="M4.5 15.5h15" /><path d="m5 11 4-7" /><path d="m9 11 1 9" /></svg></div></div><div class="txn"><div class="nm">Market Hall</div><div class="tm">Today · 6:40 PM</div></div><div class="txr"><div class="amt">−$62.18</div><div class="cat c-groc">Groceries</div></div></div>
+                    <div class="tx"><div class="txi"><svg class="icon ic0" viewBox="0 0 24 24"><path d="M12 17V7" /><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8" /><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" /></svg><div class="tint" style="background: rgba(96,165,250,.2); color: #93c5fd"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" /><path d="m9 15-1-1" /><path d="m15 15 1-1" /><path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" /><path d="m8 19-2 3" /><path d="m16 19 2 3" /></svg></div></div><div class="txn"><div class="nm">Metro Pass</div><div class="tm">Yesterday</div></div><div class="txr"><div class="amt">−$2.90</div><div class="cat c-trans">Transport</div></div></div>
+                    <div class="tx"><div class="txi"><svg class="icon ic0" viewBox="0 0 24 24"><path d="M12 17V7" /><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8" /><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" /></svg><div class="tint" style="background: rgba(244,114,182,.2); color: #f9a8d4"><svg class="icon" viewBox="0 0 24 24"><path d="m12.296 3.464 3.02 3.956" /><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z" /><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="m6.18 5.276 3.1 3.899" /></svg></div></div><div class="txn"><div class="nm">Movie Night</div><div class="tm">Yesterday</div></div><div class="txr"><div class="amt">−$14.00</div><div class="cat c-fun">Fun</div></div></div>
+                  </div>
+                </div>
+                <div class="scrim" id="scrim" data-design-ignore data-layout-ignore></div>
+                <div class="subcard" id="subcard">
+                  <div class="sc-h"><div class="sc-ic"><svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg></div><div><div class="sc-t">Forgotten subscriptions</div><div class="sc-s">Not used in 60+ days</div></div></div>
+                  <div class="sc-tot"><div class="burst" id="sc-burst" data-design-ignore></div><span class="sc-amt" id="sc-amt">$47.97</span><span class="sc-per">/mo</span></div>
+                  <div class="sr"><i></i><span class="n">CloudBox Storage</span><span class="p">$9.99/mo</span></div>
+                  <div class="sr"><i></i><span class="n">FitLab Pro</span><span class="p">$14.99/mo</span></div>
+                  <div class="sr"><i></i><span class="n">StreamMax Plus</span><span class="p">$22.99/mo</span></div>
+                </div>
+              </div>
+
+              <!-- state 3: safe to spend -->
+              <div class="scr" id="scr-safe">
+                <div class="sf-l">Safe to spend today</div>
+                <div class="ring">
+                  <div class="burst" id="sf-burst" data-design-ignore></div>
+                  <svg viewBox="0 0 380 380">
+                    <circle cx="190" cy="190" r="168" stroke="rgba(255,255,255,0.09)" stroke-width="26" fill="none" />
+                    <circle id="ring-arc" cx="190" cy="190" r="168" stroke="#00d47e" stroke-width="26" fill="none" stroke-linecap="round" transform="rotate(-90 190 190)" />
+                  </svg>
+                  <div class="ring-c"><div class="sf-n" id="sf-n">$64</div><div class="sf-s">left for today</div></div>
+                </div>
+                <div class="sf-chips">
+                  <div class="ch" id="ch1"><svg viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 7.5" stroke="#00d47e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>Bills covered</div>
+                  <div class="ch" id="ch2"><svg viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 7.5" stroke="#00d47e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>Savings set aside</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- "Pocket knows." — slams big at the cut, then flies up into a one-line header -->
+    <section id="ttl" class="scene clip" data-start="1.92" data-duration="6.6" data-track-index="3">
+      <div id="pk1" class="pk green">Pocket</div>
+      <div id="pk2" class="pk">knows.</div>
+    </section>
+
+    <!-- phrase captions: the voice's own words, word by word -->
+    <section id="p3a" class="scene clip" data-start="3.05" data-duration="1.58" data-track-index="4">
+      <div class="phr"><div class="s"><span class="w">It</span> <span class="w">sorts</span> <span class="w">every</span></div><div class="k"><span class="w">purchase</span></div></div>
+    </section>
+    <section id="p3b" class="scene clip" data-start="4.5" data-duration="1.8" data-track-index="5">
+      <div class="phr"><div class="s"><span class="w">finds</span> <span class="w">the</span></div><div class="k"><span class="w">subscriptions</span></div><div class="s"><span class="w">you</span> <span class="w">forgot</span></div></div>
+    </section>
+    <section id="p4" class="scene clip" data-start="6.1" data-duration="2.35" data-track-index="4">
+      <div class="phr"><div class="s"><span class="w">and</span> <span class="w">shows</span> <span class="w">what's</span></div><div class="k"><span class="w">safe</span> <span class="w">to</span> <span class="w">spend</span></div><div class="s"><span class="w">today</span></div></div>
+    </section>
+
+    <!-- END CARD 8.3–15 -->
+    <section id="end" class="scene clip" data-start="8.3" data-duration="6.7" data-track-index="6">
+      <div id="ecoins" class="layer" data-design-ignore data-layout-ignore></div>
+      <div class="end-col">
+        <div class="logo" id="logo">
+          <div class="burst" id="logo-burst" data-design-ignore></div>
+          <svg viewBox="0 0 230 230">
+            <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#19e692" /><stop offset="1" stop-color="#00b86b" /></linearGradient></defs>
+            <g id="lcoin">
+              <circle cx="115" cy="78" r="40" fill="#0a7a4c" />
+              <circle cx="115" cy="75" r="37" fill="#eafff4" />
+              <circle cx="115" cy="75" r="26" fill="none" stroke="#00d47e" stroke-width="5" />
+              <path d="M122 64 C119 60 108 60 108 66 C108 72 122 71 122 77 C122 83 110 84 106 80 M115 56 V88" stroke="#0a7a4c" stroke-width="4.5" fill="none" stroke-linecap="round" />
+            </g>
+            <g id="lpocket">
+              <path d="M38 92 H192 V148 Q192 190 115 214 Q38 190 38 148 Z" fill="url(#pg)" />
+              <path d="M52 106 H178 V146 Q178 178 115 198 Q52 178 52 146 Z" fill="none" stroke="#0a7a4c" stroke-width="4" stroke-dasharray="10 8" stroke-linecap="round" />
+              <path d="M38 92 H192" stroke="#7dffc4" stroke-width="4" stroke-linecap="round" opacity="0.7" />
+            </g>
+          </svg>
+          <svg class="glint" id="glint" viewBox="0 0 54 54"><path d="M27 2 C29 18 36 25 52 27 C36 29 29 36 27 52 C25 36 18 29 2 27 C18 25 25 18 27 2 Z" fill="#ffffff" /></svg>
+        </div>
+        <div class="wordmark" id="wm">Pocket</div>
+        <div class="cta" id="cta"><span>Try Pocket free</span><i class="shine" id="cta-shine" data-design-ignore data-layout-ignore></i></div>
+        <div class="tag" id="tag">Now you know where it went.</div>
+      </div>
+      <div class="cta-ring" id="cta-ring" data-design-ignore data-layout-ignore></div>
+      <div class="concept" id="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/social-punch.mp3" data-start="0" data-duration="15" data-media-start="0.6" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.1,"v":1},{"t":0.1,"v":1},{"t":0.1,"v":0.45},{"t":9.6,"v":0.45},{"t":9.85,"v":1},{"t":13.5,"v":1},{"t":15,"v":0}]}]}'></audio>
+    <audio id="vo" src="assets/voice/vo.wav" data-start="0.15" data-duration="10.44" data-track-index="11" data-volume="1"></audio>
+    <audio id="sfx-01-whoosh" src="assets/sfx/whoosh.mp3" data-start="0.004" data-duration="0.57" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-02-coin-drop" src="assets/sfx/coin-drop.mp3" data-start="0.958" data-duration="1.53" data-track-index="20" data-volume="0.42"></audio>
+    <audio id="sfx-03-whoosh" src="assets/sfx/whoosh.mp3" data-start="1.844" data-duration="0.57" data-track-index="21" data-volume="0.45"></audio>
+    <audio id="sfx-04-pop" src="assets/sfx/pop.mp3" data-start="3.104" data-duration="0.72" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-05-pop" src="assets/sfx/pop.mp3" data-start="3.354" data-duration="0.72" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-06-pop" src="assets/sfx/pop.mp3" data-start="3.604" data-duration="0.72" data-track-index="22" data-volume="0.22"></audio>
+    <audio id="sfx-07-pop" src="assets/sfx/pop.mp3" data-start="3.854" data-duration="0.72" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-08-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="4.889" data-duration="0.49" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-09-cash-register" src="assets/sfx/cash-register.mp3" data-start="5.529" data-duration="1.45" data-track-index="20" data-volume="0.42"></audio>
+    <audio id="sfx-10-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="6.439" data-duration="0.49" data-track-index="21" data-volume="0.26"></audio>
+    <audio id="sfx-11-typing" src="assets/sfx/typing.mp3" data-start="6.163" data-duration="0.82" data-track-index="22" data-volume="0.13" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.74,"v":1},{"t":0.82,"v":0}]}]}'></audio>
+    <audio id="sfx-12-sparkle" src="assets/sfx/sparkle.mp3" data-start="7.435" data-duration="1.8" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-13-whoosh" src="assets/sfx/whoosh.mp3" data-start="8.224" data-duration="0.57" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-14-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="8.41" data-duration="1.1" data-track-index="22" data-volume="0.5" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.02,"v":1},{"t":1.1,"v":0}]}]}'></audio>
+    <audio id="sfx-15-coin-drop" src="assets/sfx/coin-drop.mp3" data-start="8.758" data-duration="1.53" data-track-index="23" data-volume="0.28"></audio>
+    <audio id="sfx-16-pop" src="assets/sfx/pop.mp3" data-start="9.504" data-duration="0.72" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-17-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="10.289" data-duration="0.49" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-18-sparkle" src="assets/sfx/sparkle.mp3" data-start="12.775" data-duration="1.8" data-track-index="20" data-volume="0.12"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+      const VO = 0.15, lead = 0.03;                  // voice offset in the film; words appear a hair before they are heard
+      const W = (t) => t + VO - lead;                // a word's time in vo.words.json → its on-screen hit
+
+      // ---------- measure before any tween (clips are hidden with visibility, so layout is real)
+      const pk1 = S.$("#pk1"), pk2 = S.$("#pk2");
+      const w1 = pk1.offsetWidth, w2 = pk2.offsetWidth, hgt = pk1.offsetHeight;
+      const PK_TOP = [344, 500];                     // the two big lines (150 px type, boxes 6 px apart)
+      pk1.style.left = `${540 - w1 / 2}px`; pk1.style.top = `${PK_TOP[0]}px`;
+      pk2.style.left = `${540 - w2 / 2}px`; pk2.style.top = `${PK_TOP[1]}px`;
+      const ctaEl = S.$("#cta"), endEl = S.$("#end");
+      const cr = ctaEl.getBoundingClientRect(), er = endEl.getBoundingClientRect(), ek = er.width / endEl.offsetWidth || 1;
+      const CTA = { x: (cr.left - er.left + cr.width / 2) / ek, y: (cr.top - er.top + cr.height / 2) / ek, w: cr.width / ek, h: cr.height / ek };
+
+      // ---------- shared art: coin and receipt
+      const COIN = `<svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="48" fill="#008f55"/><circle cx="50" cy="48" r="46" fill="#00d47e"/><circle cx="50" cy="48" r="34" fill="none" stroke="#7dffc4" stroke-opacity=".6" stroke-width="4"/><path d="M59 37 C56 32 42 31 42 39 C42 46 58 45 58 53 C58 61 43 61 40 56 M50 27 V67" stroke="#04583a" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`;
+      const zig = (() => { const p = ["0 0", "100% 0", "100% calc(100% - 10px)"]; for (let i = 19; i >= 0; i--) p.push(`${(i * 5).toFixed(0)}% ${i % 2 ? "100%" : "calc(100% - 10px)"}`); return `polygon(${p.join(",")})`; })();
+      const RECEIPT = `<div class="rp" style="clip-path:${zig}"><i class="r-t"></i><i class="r-s"></i><i class="r-l"></i><i class="r-l w2"></i><i class="r-l"></i><i class="r-l w2"></i><i class="r-d"></i><i class="r-tot"></i></div>`;
+
+      // ---------- HOOK receipts: drift from frame 0, kicked outward on the music's first slam (0.46), per frame
+      const RC = [
+        { x: 150, y: 300, s: 0.9, r: -18, dx: -0.55, dy: -0.85 }, { x: 935, y: 318, s: 0.82, r: 15, dx: 0.7, dy: -0.72 },
+        { x: 62, y: 820, s: 1.08, r: 10, dx: -1, dy: 0.12 }, { x: 1012, y: 870, s: 1.0, r: -13, dx: 1, dy: 0.18 },
+        { x: 250, y: 1340, s: 1.22, r: 20, dx: -0.5, dy: 0.86 }, { x: 850, y: 1370, s: 0.96, r: -22, dx: 0.56, dy: 0.83 },
+        { x: 560, y: 1260, s: 0.62, r: 6, dx: 0.05, dy: 1, blur: 3 }, { x: 540, y: 268, s: 0.5, r: -8, dx: 0.1, dy: -1, blur: 4 }
+      ];
+      const rLayer = S.$("#rcpts");
+      const recs = RC.map((c) => {
+        const el = document.createElement("div"); el.className = "rw"; el.innerHTML = RECEIPT;
+        if (c.blur) el.style.filter = `blur(${c.blur}px) drop-shadow(0 16px 22px rgba(4,0,14,.5))`;
+        rLayer.appendChild(el);
+        return { el, ...c, vx: (S.rnd() - 0.5) * 40 + c.dx * 34, vy: (S.rnd() - 0.5) * 30 + c.dy * 34, vr: (S.rnd() - 0.5) * 40, kick: 110 + S.rnd() * 110, spin: (S.rnd() < 0.5 ? -1 : 1) * (30 + S.rnd() * 40) };
+      });
+      S.everyFrame((now) => {
+        const k = now < 0.46 ? 0 : 1 - Math.exp(-(now - 0.46) / 0.3);
+        for (const c of recs) {
+          const x = c.x + c.vx * now + c.dx * c.kick * k, y = c.y + c.vy * now + c.dy * c.kick * k;
+          c.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%) rotate(${(c.r + c.vr * now + c.spin * k).toFixed(2)}deg) scale(${(c.s * (1 + 0.1 * now)).toFixed(4)})`;
+        }
+      });
+
+      // ---------- HOOK coins: 10 burst out from behind "money" on its beat (0.97), flip as they fly at the camera
+      const cLayer = S.$("#coins"), C0 = { x: 540, y: 800 }, T0 = 0.97;
+      const coins = [];
+      for (let i = 0; i < 10; i++) {
+        const el = document.createElement("div"); el.className = "cn"; el.innerHTML = COIN; el.style.opacity = 0; cLayer.appendChild(el);
+        const a = ((i / 10) * 360 + (S.rnd() - 0.5) * 22) * Math.PI / 180;
+        coins.push({ el, dx: Math.cos(a), dy: Math.sin(a) * 1.25, r0: 150 + S.rnd() * 70, sp: 880 + S.rnd() * 620, w: 9 + S.rnd() * 9, ph: S.rnd() * 6, s0: 0.3 + S.rnd() * 0.2, s1: 1.15 + S.rnd() * 0.6 });
+      }
+      // coins are born on a ring just outside the word (never a green clump on the green word), then fly at the camera
+      S.everyFrame((now) => {
+        const tau = now - T0;
+        for (const c of coins) {
+          if (tau < 0 || tau > 0.95) { c.el.style.opacity = 0; continue; }
+          const d = c.r0 + c.sp * 0.42 * (1 - Math.exp(-tau / 0.42));
+          const x = C0.x + c.dx * d - 50, y = C0.y + c.dy * d + 260 * tau * tau - 50;
+          const sc = c.s0 + (c.s1 - c.s0) * (1 - Math.exp(-tau / 0.2)); // they rush at the camera: big within 0.2 s, no specks
+          const flip = Math.max(0.12, Math.abs(Math.cos(c.ph + c.w * tau)));
+          c.el.style.opacity = (S.clamp((tau - 0.02) / 0.1, 0, 1) * (1 - S.smooth(S.clamp((tau - 0.55) / 0.4, 0, 1)))).toFixed(3);
+          c.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${(c.ph * 40 + 120 * tau).toFixed(1)}deg) scale(${(sc * flip).toFixed(3)}, ${sc.toFixed(3)})`;
+        }
+      });
+
+      // ---------- background light
+      tl.fromTo("#g1", { opacity: 0.6 }, { opacity: 1, duration: 2, ease: "glide" }, 0);
+      tl.fromTo("#g2", { opacity: 0.25, scale: 0.8 }, { opacity: 0.85, scale: 1, duration: 1.2, ease: "settle" }, 1.92);
+      tl.to("#g2", { x: -220, y: -320, duration: 4, ease: "glide" }, 3.0);
+      tl.to("#g1", { x: 260, y: 240, duration: 5, ease: "glide" }, 3.0);
+      tl.to("#g2", { x: -360, y: -620, scale: 1.25, opacity: 1, duration: 1.2, ease: "settle" }, 8.4);
+      S.drift("#g1", { ax: 30, ay: 22, period: 8 });
+      S.drift("#g2", { ax: -26, ay: 18, period: 9.5, phase: 1.1 });
+
+      // ---------- HOOK 0–1.92 · the question slams in word by word, on the voice
+      const slam = (sel, t, big) => tl.fromTo(sel, { opacity: 0, scale: big ? 1.45 : 1.3, y: big ? 10 : 18 }, { opacity: 1, scale: 1, y: 0, duration: big ? 0.6 : 0.32, ease: big ? "springPop" : "settle" }, t);
+      slam("#hw1", W(0.0)); slam("#hw2", W(0.46)); slam("#hw3", W(0.58)); slam("#hw4", W(0.74)); slam("#hw5", W(0.84), true); slam("#hw6", W(1.06));
+      tl.fromTo("#hook-type", { scale: 0.95 }, { scale: 1, duration: 1.8, ease: "glide" }, 0.05);
+
+      // ---------- SMASH CUT 1.92 · green flash, "Pocket knows." slams, the phone shoots up from the bottom
+      S.flash("#flash", 1.92, { dur: 0.16, peak: 0.5 });
+      // FLIP: the words sit big (150 px) in two centred lines; their header place is one line at 0.4× at y 300.
+      // Transforms are pure offsets from that big layout (origin = centre), so the move is one tween per word.
+      const HS = 0.4, gap = 0.27 * 150, total = (w1 + gap + w2) * HS, hx = 540 - total / 2, hcy = 300 + (hgt * HS) / 2;
+      const hc1 = hx + (w1 * HS) / 2, hc2 = hx + (w1 + gap) * HS + (w2 * HS) / 2;
+      slam("#pk1", W(1.82), false); slam("#pk2", W(2.14), false);
+      // shrink + slide sideways first, rise a beat later: the words are apart before they share a row (no collision)
+      tl.to(pk1, { x: hc1 - 540, scale: HS, duration: 0.34, ease: "settle" }, 3.02);
+      tl.to(pk2, { x: hc2 - 540, scale: HS, duration: 0.34, ease: "settle" }, 3.02);
+      tl.to(pk1, { y: hcy - (PK_TOP[0] + hgt / 2), duration: 0.44, ease: "move" }, 3.12);
+      tl.to(pk2, { y: hcy - (PK_TOP[1] + hgt / 2), duration: 0.44, ease: "move" }, 3.12);
+      tl.fromTo(pk2, { color: "#ffffff" }, { color: "rgba(255,255,255,0.86)", duration: 0.5, ease: "move" }, 3.05);
+      tl.to("#pk1, #pk2", { opacity: 0, y: "-=24", duration: 0.2, ease: "exit" }, 8.26);
+      tl.fromTo("#phone-wrap", { y: 1380, rotation: -6 }, { y: 0, rotation: 0, duration: 0.9, ease: "springSoft" }, 1.98);
+      tl.fromTo(".tx", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(3) }, 2.25);
+      S.drift("#phone-float", { ax: 0, ay: 6, period: 4.6, t0: 2.9, t1: 8.3 });
+
+      // ---------- STATE 1 3.05–4.52 · "It sorts every purchase": category chips pop onto each purchase
+      const words = (sec, times, keys) => S.$$(`${sec} .w`).forEach((w, i) => {
+        const key = keys.includes(i);
+        // blur and opacity never overshoot (a spring would push blur below 0 = an invalid filter); only the key word's scale springs
+        tl.fromTo(w, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.24, ease: "enter" }, W(times[i]));
+        tl.fromTo(w, { y: key ? 0 : 26, scale: key ? 1.3 : 1 }, { y: 0, scale: 1, duration: key ? 0.45 : 0.3, ease: key ? "houseSpring" : "enter" }, W(times[i]));
+      });
+      const out = (sec, t) => tl.to(`${sec} .phr`, { opacity: 0, y: -22, duration: 0.12, ease: "exit" }, t);
+      words("#p3a", [3.02, 3.14, 3.38, 3.74], [3]);
+      out("#p3a", 4.48);
+      const CHIP_T = [3.22, 3.47, 3.72, 3.97];
+      S.$$(".tx").forEach((row, i) => {
+        tl.fromTo(row.querySelector(".cat"), { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "enter" }, CHIP_T[i]);
+        tl.fromTo(row.querySelector(".cat"), { scale: 0.85 }, { scale: 1, duration: 0.5, ease: "houseSpring" }, CHIP_T[i]);
+        tl.fromTo(row.querySelector(".tint"), { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "enter" }, CHIP_T[i]);
+        tl.to(row.querySelector(".ic0"), { opacity: 0, duration: 0.2, ease: "exit" }, CHIP_T[i]);
+      });
+      tl.fromTo("#catbar i", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "settle", stagger: S.f(2.5) }, 4.0);
+
+      // ---------- STATE 2 4.52–6.2 · "finds the subscriptions you forgot": the card rises, $47.97/mo lands
+      words("#p3b", [4.44, 4.66, 4.84, 5.22, 5.52], [2]);
+      out("#p3b", 6.08);                                  // visible 4.56–6.08 = 1.52 s (5 words)
+      tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "enter" }, 4.9);
+      tl.to("#scr-list .txl, #catbar", { opacity: 0, duration: 0.22, ease: "exit" }, 4.9); // the sheet replaces the list, no text under text
+      tl.fromTo("#subcard", { y: 760, opacity: 0 }, { y: 0, opacity: 1, duration: 0.62, ease: "springSoft" }, 4.9); // held 4.9–6.45
+      tl.fromTo("#subcard .sr", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.4, ease: "enter", stagger: S.f(2) }, 4.98);
+      S.count("#sc-amt", 5.0, 0, 47.97, { dur: 0.67, decimals: 2, prefix: "$", ease: "move" });
+      tl.fromTo("#sc-amt", { scale: 1 }, { scale: 1.16, duration: 0.12, ease: "exit", yoyo: true, repeat: 1 }, 5.67);
+      S.burst("#sc-burst", 5.68, { dur: 0.6, s0: 0.3, s1: 1.4, o0: 0.8 });
+
+      // ---------- STATE 3 6.2–8.3 · "and shows what's safe to spend today": push, the ring draws, $64 lands on the bar
+      words("#p4", [6.04, 6.16, 6.4, 6.84, 7.02, 7.24, 7.52], [3, 4, 5]); // 6.16–8.26 = 2.1 s for 7 words
+      out("#p4", 8.26);
+      tl.fromTo("#st12", { x: 0 }, { x: -110, duration: 0.34, ease: "exit", immediateRender: false }, 6.45);
+      tl.to("#st12", { opacity: 0, duration: 0.13, ease: "exit" }, 6.45);
+      tl.fromTo("#scr-safe", { x: 140 }, { x: 0, duration: 0.46, ease: "settle" }, 6.45);
+      tl.fromTo("#scr-safe", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "enter" }, 6.55);
+      tl.fromTo("#ring-arc", { drawSVG: "0% 0%" }, { drawSVG: "0% 71%", duration: 0.85, ease: "settle" }, 6.6);
+      S.count("#sf-n", 6.6, 0, 64, { dur: 0.82, prefix: "$", ease: "settle" });
+      tl.fromTo("#sf-n", { scale: 1 }, { scale: 1.12, duration: 0.12, ease: "exit", yoyo: true, repeat: 1 }, 7.45);
+      S.burst("#sf-burst", 7.46, { dur: 0.7, s0: 0.9, s1: 1.35, o0: 0.7 });
+      tl.fromTo("#ch1, #ch2", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter", stagger: S.f(5) }, 7.0);
+
+      // ---------- END CARD 8.3–15 · the phone drops, the pocket pops, a coin falls in, "Try Pocket free"
+      tl.to("#phone-wrap", { y: 1500, duration: 0.45, ease: "exit" }, 8.3);
+      tl.fromTo("#logo", { scale: 0.3, opacity: 0, transformOrigin: "50% 70%" }, { scale: 1, opacity: 1, duration: 0.75, ease: "springPop" }, 8.46);
+      tl.fromTo("#lcoin", { y: -230, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.in" }, 8.47);
+      tl.fromTo("#lpocket", { scaleY: 1, transformOrigin: "50% 100%" }, { scaleY: 0.93, duration: 0.08, ease: "exit", yoyo: true, repeat: 1 }, 8.77);
+      S.burst("#logo-burst", 8.5, { dur: 0.8, s0: 0.5, s1: 2.0, o0: 0.6 });
+      S.chars("#wm", 8.56, { stagger: S.f(1.6) });
+      tl.fromTo("#cta", { opacity: 0, scale: 0.7, y: 26 }, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "springSoft" }, W(8.48));
+      // one pulse, after the line is spoken
+      Object.assign(S.$("#cta-ring").style, { left: `${CTA.x}px`, top: `${CTA.y}px`, width: `${CTA.w}px`, height: `${CTA.h}px` });
+      tl.fromTo("#cta", { scale: 1 }, { scale: 1.07, duration: 0.22, ease: "settle", yoyo: true, repeat: 1, immediateRender: false }, 9.62);
+      S.burst("#cta-ring", 9.66, { dur: 0.75, s0: 1, s1: 1.32, o0: 0.85 });
+      S.words("#tag", 10.3, { stagger: S.f(3), y: 20, blur: 6 });
+      tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 9.0);
+      S.sweep("#cta-shine", 11.9, { dur: 1.0 }); // the band lives in a text-free overlay, so it never counts as clipped text
+      tl.fromTo("#glint", { scale: 0, rotation: -30, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, rotation: 20, opacity: 1, duration: 0.3, ease: "enter" }, 12.8);
+      tl.to("#glint", { scale: 0, rotation: 60, opacity: 0, duration: 0.35, ease: "exit" }, 13.1);
+
+      // floating coins behind the end card (slow, seeded, blurred by depth)
+      const eLayer = S.$("#ecoins");
+      const EC = [{ x: 130, y: 1400, s: 0.9, b: 2 }, { x: 960, y: 1300, s: 0.7, b: 3 }, { x: 70, y: 640, s: 0.55, b: 4 }, { x: 1010, y: 520, s: 0.85, b: 2 }, { x: 860, y: 1650, s: 1.1, b: 1.5 }, { x: 240, y: 1750, s: 0.65, b: 3.5 }];
+      const ecs = EC.map((c) => { const el = document.createElement("div"); el.className = "cn"; el.innerHTML = COIN; el.style.filter = `blur(${c.b}px)`; el.style.opacity = 0; eLayer.appendChild(el); return { el, ...c, v: 26 + S.rnd() * 30, w: 0.6 + S.rnd() * 0.9, ph: S.rnd() * 6 }; });
+      S.everyFrame((now) => {
+        const u = now - 8.4;
+        for (const c of ecs) {
+          if (u < 0) { c.el.style.opacity = 0; continue; }
+          c.el.style.opacity = (0.55 * S.smooth(Math.min(1, u / 1.2))).toFixed(3);
+          const flip = Math.max(0.2, Math.abs(Math.cos(c.ph + c.w * u)));
+          c.el.style.transform = `translate(${(c.x - 50 + 14 * Math.sin(u * 0.8 + c.ph)).toFixed(1)}px, ${(c.y - 50 - c.v * u).toFixed(1)}px) scale(${(c.s * flip).toFixed(3)}, ${c.s.toFixed(3)})`;
+        }
+      });
+
+      S.grain({ opacity: 0.06 });
+      S.vignette({ strength: 0.5 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

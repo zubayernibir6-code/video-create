@@ -95,7 +95,7 @@ cues.forEach((c, i) => {
   let start = c.at != null ? +c.at : c.t - lead;
   let skip = from;
   if (start < 0) { skip += -start; start = 0; } // a build that would start before 0 s plays only its tail
-  const len = Math.min(+(c.len || meta.duration - skip), DUR - start);
+  const len = Math.min(+(c.len || meta.duration - skip), meta.duration - skip, DUR - start); // never past the file's end (clip_media_fit)
   if (len <= 0.02) return;
   let lane = lanes.findIndex((end) => end <= start + 1e-6);
   if (lane < 0) { lanes.push(0); lane = lanes.length - 1; }

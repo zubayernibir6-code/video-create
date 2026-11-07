@@ -1,0 +1,488 @@
+[
+  {
+    "id": "w0",
+    "text": "Booking",
+    "start": 0.0,
+    "end": 0.56
+  },
+  {
+    "id": "w1",
+    "text": "a",
+    "start": 0.56,
+    "end": 0.68
+  },
+  {
+    "id": "w2",
+    "text": "doctor",
+    "start": 0.68,
+    "end": 0.96
+  },
+  {
+    "id": "w3",
+    "text": "shouldn't",
+    "start": 0.96,
+    "end": 1.64
+  },
+  {
+    "id": "w4",
+    "text": "take",
+    "start": 1.64,
+    "end": 1.88
+  },
+  {
+    "id": "w5",
+    "text": "a",
+    "start": 1.88,
+    "end": 2.16
+  },
+  {
+    "id": "w6",
+    "text": "week",
+    "start": 2.16,
+    "end": 2.26
+  },
+  {
+    "id": "w7",
+    "text": "of",
+    "start": 2.26,
+    "end": 2.46
+  },
+  {
+    "id": "w8",
+    "text": "phone",
+    "start": 2.46,
+    "end": 2.62
+  },
+  {
+    "id": "w9",
+    "text": "calls.",
+    "start": 2.62,
+    "end": 2.9
+  },
+  {
+    "id": "w10",
+    "text": "With",
+    "start": 3.44,
+    "end": 3.7
+  },
+  {
+    "id": "w11",
+    "text": "Kindred,",
+    "start": 3.7,
+    "end": 4.08
+  },
+  {
+    "id": "w12",
+    "text": "you",
+    "start": 4.4,
+    "end": 4.58
+  },
+  {
+    "id": "w13",
+    "text": "see",
+    "start": 4.58,
+    "end": 4.7
+  },
+  {
+    "id": "w14",
+    "text": "a",
+    "start": 4.7,
+    "end": 4.8
+  },
+  {
+    "id": "w15",
+    "text": "real",
+    "start": 4.8,
+    "end": 4.94
+  },
+  {
+    "id": "w16",
+    "text": "doctor",
+    "start": 4.94,
+    "end": 5.24
+  },
+  {
+    "id": "w17",
+    "text": "in",
+    "start": 5.24,
+    "end": 5.42
+  },
+  {
+    "id": "w18",
+    "text": "minutes,",
+    "start": 5.42,
+    "end": 5.72
+  },
+  {
+    "id": "w19",
+    "text": "from",
+    "start": 6.04,
+    "end": 6.28
+  },
+  {
+    "id": "w20",
+    "text": "wherever",
+    "start": 6.28,
+    "end": 6.7
+  },
+  {
+    "id": "w21",
+    "text": "you",
+    "start": 6.7,
+    "end": 6.94
+  },
+  {
+    "id": "w22",
+    "text": "are.",
+    "start": 6.94,
+    "end": 7.14
+  },
+  {
+    "id": "w23",
+    "text": "One,",
+    "start": 9.1,
+    "end": 9.36
+  },
+  {
+    "id": "w24",
+    "text": "tell",
+    "start": 9.84,
+    "end": 9.96
+  },
+  {
+    "id": "w25",
+    "text": "us",
+    "start": 9.96,
+    "end": 10.1
+  },
+  {
+    "id": "w26",
+    "text": "what's",
+    "start": 10.1,
+    "end": 10.32
+  },
+  {
+    "id": "w27",
+    "text": "going",
+    "start": 10.32,
+    "end": 10.46
+  },
+  {
+    "id": "w28",
+    "text": "on",
+    "start": 10.46,
+    "end": 10.7
+  },
+  {
+    "id": "w29",
+    "text": "in",
+    "start": 10.7,
+    "end": 10.98
+  },
+  {
+    "id": "w30",
+    "text": "your",
+    "start": 10.98,
+    "end": 11.08
+  },
+  {
+    "id": "w31",
+    "text": "own",
+    "start": 11.08,
+    "end": 11.22
+  },
+  {
+    "id": "w32",
+    "text": "words.",
+    "start": 11.22,
+    "end": 11.44
+  },
+  {
+    "id": "w33",
+    "text": "Two,",
+    "start": 12.08,
+    "end": 12.56
+  },
+  {
+    "id": "w34",
+    "text": "Kindred",
+    "start": 13.2,
+    "end": 13.38
+  },
+  {
+    "id": "w35",
+    "text": "matches",
+    "start": 13.38,
+    "end": 13.66
+  },
+  {
+    "id": "w36",
+    "text": "you",
+    "start": 13.66,
+    "end": 13.94
+  },
+  {
+    "id": "w37",
+    "text": "with",
+    "start": 13.94,
+    "end": 14.08
+  },
+  {
+    "id": "w38",
+    "text": "the",
+    "start": 14.08,
+    "end": 14.22
+  },
+  {
+    "id": "w39",
+    "text": "right",
+    "start": 14.22,
+    "end": 14.4
+  },
+  {
+    "id": "w40",
+    "text": "clinician,",
+    "start": 14.4,
+    "end": 14.84
+  },
+  {
+    "id": "w41",
+    "text": "usually",
+    "start": 15.16,
+    "end": 15.52
+  },
+  {
+    "id": "w42",
+    "text": "in",
+    "start": 15.52,
+    "end": 15.74
+  },
+  {
+    "id": "w43",
+    "text": "under",
+    "start": 15.74,
+    "end": 15.96
+  },
+  {
+    "id": "w44",
+    "text": "10",
+    "start": 15.96,
+    "end": 16.22
+  },
+  {
+    "id": "w45",
+    "text": "minutes.",
+    "start": 16.22,
+    "end": 16.46
+  },
+  {
+    "id": "w46",
+    "text": "Three,",
+    "start": 17.32,
+    "end": 17.6
+  },
+  {
+    "id": "w47",
+    "text": "talk",
+    "start": 18.02,
+    "end": 18.12
+  },
+  {
+    "id": "w48",
+    "text": "by",
+    "start": 18.12,
+    "end": 18.3
+  },
+  {
+    "id": "w49",
+    "text": "video,",
+    "start": 18.3,
+    "end": 18.66
+  },
+  {
+    "id": "w50",
+    "text": "get",
+    "start": 19.24,
+    "end": 19.32
+  },
+  {
+    "id": "w51",
+    "text": "your",
+    "start": 19.32,
+    "end": 19.44
+  },
+  {
+    "id": "w52",
+    "text": "prescription",
+    "start": 19.44,
+    "end": 19.82
+  },
+  {
+    "id": "w53",
+    "text": "sent",
+    "start": 19.82,
+    "end": 20.18
+  },
+  {
+    "id": "w54",
+    "text": "to",
+    "start": 20.18,
+    "end": 20.32
+  },
+  {
+    "id": "w55",
+    "text": "your",
+    "start": 20.32,
+    "end": 20.4
+  },
+  {
+    "id": "w56",
+    "text": "pharmacy,",
+    "start": 20.4,
+    "end": 20.74
+  },
+  {
+    "id": "w57",
+    "text": "and",
+    "start": 21.12,
+    "end": 21.28
+  },
+  {
+    "id": "w58",
+    "text": "follow",
+    "start": 21.28,
+    "end": 21.72
+  },
+  {
+    "id": "w59",
+    "text": "up",
+    "start": 21.72,
+    "end": 21.94
+  },
+  {
+    "id": "w60",
+    "text": "any",
+    "start": 21.94,
+    "end": 22.16
+  },
+  {
+    "id": "w61",
+    "text": "time",
+    "start": 22.16,
+    "end": 22.4
+  },
+  {
+    "id": "w62",
+    "text": "in",
+    "start": 22.4,
+    "end": 22.52
+  },
+  {
+    "id": "w63",
+    "text": "chat.",
+    "start": 22.52,
+    "end": 22.72
+  },
+  {
+    "id": "w64",
+    "text": "Your",
+    "start": 23.6,
+    "end": 23.78
+  },
+  {
+    "id": "w65",
+    "text": "records",
+    "start": 23.78,
+    "end": 24.04
+  },
+  {
+    "id": "w66",
+    "text": "stay",
+    "start": 24.04,
+    "end": 24.3
+  },
+  {
+    "id": "w67",
+    "text": "private",
+    "start": 24.3,
+    "end": 24.76
+  },
+  {
+    "id": "w68",
+    "text": "and",
+    "start": 24.76,
+    "end": 25.12
+  },
+  {
+    "id": "w69",
+    "text": "your",
+    "start": 25.12,
+    "end": 25.22
+  },
+  {
+    "id": "w70",
+    "text": "care",
+    "start": 25.22,
+    "end": 25.42
+  },
+  {
+    "id": "w71",
+    "text": "stays",
+    "start": 25.42,
+    "end": 25.72
+  },
+  {
+    "id": "w72",
+    "text": "in",
+    "start": 25.72,
+    "end": 25.94
+  },
+  {
+    "id": "w73",
+    "text": "one",
+    "start": 25.94,
+    "end": 26.12
+  },
+  {
+    "id": "w74",
+    "text": "place.",
+    "start": 26.12,
+    "end": 26.4
+  },
+  {
+    "id": "w75",
+    "text": "Kindred,",
+    "start": 27.1,
+    "end": 27.58
+  },
+  {
+    "id": "w76",
+    "text": "care",
+    "start": 28.02,
+    "end": 28.22
+  },
+  {
+    "id": "w77",
+    "text": "that",
+    "start": 28.22,
+    "end": 28.34
+  },
+  {
+    "id": "w78",
+    "text": "comes",
+    "start": 28.34,
+    "end": 28.52
+  },
+  {
+    "id": "w79",
+    "text": "to",
+    "start": 28.52,
+    "end": 28.7
+  },
+  {
+    "id": "w80",
+    "text": "you.",
+    "start": 28.7,
+    "end": 28.84
+  }
+]

@@ -44,7 +44,10 @@
     const end = x(D);
     return (p) => (p <= 0 ? 0 : p >= 1 ? 1 : x(p * D) + (1 - end) * p);
   }
-  g.registerEase("spring", springFn(0.537, 13.04, 0.8)); // house spring k170 c14: 13.5 % overshoot, settled ≈ 0.57 s
+  g.registerEase("spring", springFn(0.537, 13.04, 0.8));
+  // The HyperFrames runtime re-registers the bare name "spring" as LINEAR after load (its spring(x) syntax), so every
+  // studio tween uses "houseSpring" — same curve, a name the runtime never touches (found by builder A3, 2026-11-07).
+  g.registerEase("houseSpring", springFn(0.537, 13.04, 0.8)); // house spring k170 c14: 13.5 % overshoot, settled ≈ 0.57 s
   g.registerEase("springSoft", springFn(0.82, 12, 0.8)); // Material 3 "settled" (ζ 0.8–0.9): cards, panels, glass
   g.registerEase("springPop", springFn(0.45, 16, 0.7)); // playful, ~20 % overshoot — ONE element per scene at most
 
@@ -113,7 +116,7 @@
       return sp;
     };
     S.chars = (sel, t, o) => {
-      o = Object.assign({ dur: 0.6, stagger: S.f(1.2), ease: "spring", y: 0.9 }, o);
+      o = Object.assign({ dur: 0.6, stagger: S.f(1.2), ease: "houseSpring", y: 0.9 }, o);
       const sp = split(sel, "words,chars", "chars");
       tl.fromTo(sp.chars, { yPercent: o.y * 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: o.dur, ease: o.ease, stagger: o.stagger }, t);
       return sp;

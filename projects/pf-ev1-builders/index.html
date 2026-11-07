@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1080, height=1080" />
+  <title>EV1 · Event Promo — Builders Summit 2027 (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Builders Summit: poster black, off-white ink, ONE orange accent. Swiss 12-col grid, 48 px margins. */
+      --bg: #0a0a0a;
+      --bg-2: #121212;
+      --bg-3: #1a1a1a;
+      --ink: #f2efe8;
+      --ink-2: rgba(242, 239, 232, 0.74);
+      --ink-3: rgba(242, 239, 232, 0.5);
+      --line: rgba(242, 239, 232, 0.1);
+      --line-2: rgba(242, 239, 232, 0.22);
+      --accent: #ff4d00;
+      --font-display: "Anton", "Hind Siliguri", sans-serif;
+      --font-body: "Inter", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+
+    /* ---------- the grid (13 column rules at 48 + 82·i) + a faint orange corner light */
+    .vr { position: absolute; top: 48px; width: 1px; height: 984px; background: rgba(242, 239, 232, 0.07); transform-origin: 50% 0%; }
+    .hr { position: absolute; left: 48px; width: 984px; height: 1px; background: var(--line-2); transform-origin: 0% 50%; }
+    #glow { width: 900px; height: 900px; left: 560px; top: 560px; background: radial-gradient(circle, rgba(255, 77, 0, 0.22), rgba(255, 77, 0, 0) 62%); filter: none; opacity: 1; }
+
+    /* ---------- type */
+    .gl { position: absolute; left: 66px; font-family: var(--font-display); font-weight: 400; text-transform: uppercase; color: var(--ink); white-space: nowrap; transform-origin: 0% 50%; }
+    .g1 { font-size: 296px; line-height: 272px; height: 272px; letter-spacing: -0.005em; }
+    .stack { position: absolute; display: flex; flex-direction: column; align-items: flex-start; }
+    .stack .gl { position: relative; left: auto; }
+    .det { position: absolute; font: 600 24px/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; }
+    .band { position: absolute; left: 48px; top: 680px; width: 984px; height: 288px; background: var(--accent); transform-origin: 0% 50%; overflow: hidden; }
+
+    .g2 { font-size: 196px; line-height: 196px; height: 196px; }
+    .lab { position: absolute; right: 66px; font: 600 26px/1 var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; text-align: right; }
+
+    .g3 { font-size: 150px; line-height: 150px; height: 150px; }
+    .more { position: absolute; right: 66px; top: 150px; font: 600 30px/1 var(--font-body); color: var(--ink); padding: 14px 22px; border: 2px solid var(--line-2); border-radius: 999px; white-space: nowrap; }
+    .cards { position: absolute; left: 48px; top: 262px; width: 984px; display: grid; grid-template-columns: repeat(3, 312px); grid-auto-rows: 360px; gap: 24px; }
+    .card { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--bg-2); border: 1px solid rgba(242, 239, 232, 0.14); border-radius: 4px; }
+    .card .mono { width: 132px; height: 132px; border-radius: 50%; border: 2px solid var(--ink); display: grid; place-items: center; font-family: var(--font-display); font-size: 58px; line-height: 1; color: var(--ink); }
+    .card .nm { font: 600 32px/1.15 var(--font-body); letter-spacing: -0.01em; color: var(--ink); margin-top: 30px; white-space: nowrap; }
+    .card .rl { font: 500 28px/1.2 var(--font-body); color: var(--ink-2); margin-top: 6px; white-space: nowrap; }
+    .card.key { background: var(--accent); border-color: var(--accent); }
+    .card.key .mono { border-color: #0a0a0a; color: #0a0a0a; }
+    .card.key .nm, .card.key .rl { color: #0a0a0a; }
+    .card .tagk { position: absolute; left: 18px; top: 16px; font: 700 24px/1 var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: #0a0a0a; }
+    .shine { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
+
+    .top4 { position: absolute; left: 66px; right: 66px; top: 66px; display: flex; justify-content: space-between; align-items: baseline; font: 700 28px/1 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+    .top4 .r { font-weight: 600; color: var(--ink-2); letter-spacing: 0.06em; }
+    .cd { position: relative; font-family: var(--font-display); font-size: 380px; line-height: 380px; height: 380px; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; transform-origin: 0% 50%; }
+    .dtg { position: relative; margin: 4px 0 0 6px; font-family: var(--font-display); font-size: 128px; line-height: 128px; height: 128px; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+    .regrow { position: absolute; left: 66px; top: 750px; display: flex; align-items: center; gap: 34px; }
+    .reg { position: relative; display: inline-flex; align-items: center; gap: 18px; padding: 28px 44px 28px 48px; border-radius: 999px; background: var(--accent); color: #0a0a0a; font: 700 44px/1 var(--font-body); letter-spacing: -0.01em; white-space: nowrap; box-shadow: 0 18px 50px -16px rgba(255, 77, 0, 0.6); }
+    .reg svg { width: 40px; height: 40px; }
+    .url { position: relative; font: 500 34px/1.2 var(--font-body); color: var(--ink); letter-spacing: -0.005em; white-space: nowrap; }
+    .url .st-caret { color: var(--accent); }
+    .cal { position: absolute; left: 664px; top: 150px; width: 350px; }
+    .cal-h { font: 700 24px/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); padding-left: 12px; }
+    .cal-g { position: relative; display: grid; grid-template-columns: repeat(7, 50px); grid-auto-rows: 42px; margin-top: 16px; align-items: center; justify-items: center; }
+    .cal-g b { font: 600 24px/1 var(--font-body); color: rgba(242, 239, 232, 0.6); }
+    .cal-g i { position: relative; z-index: 1; font: 500 26px/1 var(--font-body); font-style: normal; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+    .cal-g i.on { font-weight: 700; }
+    .cal-hl { position: absolute; left: 197px; top: 128px; width: 106px; height: 40px; border-radius: 20px; background: var(--accent); transform-origin: 0% 50%; }
+    .concept { position: absolute; right: 66px; bottom: 52px; font: 500 15px/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242, 239, 232, 0.64); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1080" data-duration="12" data-fps="30">
+
+    <!-- persistent: the Swiss grid + a faint orange corner light -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="12" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div id="glow" class="glow" data-layout-allow-overflow></div>
+      <div id="grid"></div>
+    </section>
+
+    <!-- B1 0–2.6: BUILD / WHAT'S / NEXT. -->
+    <section id="b1" class="scene clip" data-start="0" data-duration="2.6" data-track-index="1">
+      <div class="band" id="band" data-design-ignore></div>
+      <div class="stack" style="left: 66px; top: 128px">
+        <div class="gl g1" id="l1">BUILD</div>
+        <div class="gl g1" id="l2">WHAT’S</div>
+        <div class="gl g1" id="l3" style="margin-top: 18px">NEXT.</div>
+      </div>
+      <div class="hr" id="b1r" style="top: 108px" data-design-ignore></div>
+      <div class="det" id="d1" style="left: 66px; top: 70px" data-layout-allow-overlap>Builders Summit</div>
+      <div class="det" id="d2" style="right: 66px; top: 70px">2027</div>
+      <div class="det" id="d3" style="left: 66px; top: 990px" data-layout-allow-overlap>Product &amp; AI conference</div>
+    </section>
+
+    <!-- B2 2.2–4.95: the date and the city on a split grid -->
+    <section id="b2" class="scene clip" data-start="2.2" data-duration="2.7" data-track-index="2">
+      <div class="hr" id="r0" style="top: 96px" data-design-ignore></div>
+      <div class="hr" id="r1" style="top: 400px" data-design-ignore></div>
+      <div class="hr" id="r2" style="top: 704px" data-design-ignore></div>
+      <div class="hr" id="r3" style="top: 1008px" data-design-ignore></div>
+      <div class="gl g2" id="t1" style="top: 151px">MAY 14–15</div>
+      <div class="gl g2" id="t2" style="top: 455px; color: var(--accent)">2027</div>
+      <div class="gl g2" id="t3" style="top: 759px">LISBON</div>
+      <div class="lab" id="la1" style="top: 310px">Two days</div>
+      <div class="lab" id="la2" style="top: 614px">Save the date</div>
+      <div class="lab" id="la3" style="top: 918px">Portugal</div>
+    </section>
+
+    <!-- B3 4.6–8.45: 40 speakers, six monogram cards flip in -->
+    <section id="b3" class="scene clip" data-start="4.6" data-duration="3.85" data-track-index="3">
+      <div class="gl g3" id="sp" style="top: 70px"><span style="color: var(--accent)">40</span> SPEAKERS</div>
+      <div class="more" id="more">+34 more</div>
+      <div class="hr" id="spr" style="top: 238px" data-design-ignore></div>
+      <div class="cards" id="cards">
+        <div class="card key"><span class="tagk">Keynote</span><div class="mono">RO</div><div class="nm">R. Okafor</div><div class="rl">Head of Design</div><i class="shine" data-design-ignore data-layout-ignore></i></div>
+        <div class="card"><div class="mono">ML</div><div class="nm">M. Lindqvist</div><div class="rl">VP Engineering</div><i class="shine" data-design-ignore data-layout-ignore></i></div>
+        <div class="card"><div class="mono">AT</div><div class="nm">A. Tanaka</div><div class="rl">Founder &amp; CEO</div><i class="shine" data-design-ignore data-layout-ignore></i></div>
+        <div class="card"><div class="mono">SH</div><div class="nm">S. Haddad</div><div class="rl">Product Lead</div><i class="shine" data-design-ignore data-layout-ignore></i></div>
+        <div class="card"><div class="mono">JM</div><div class="nm">J. Moreau</div><div class="rl">CTO</div><i class="shine" data-design-ignore data-layout-ignore></i></div>
+        <div class="card"><div class="mono">PN</div><div class="nm">P. Nair</div><div class="rl">Research Lead</div><i class="shine" data-design-ignore data-layout-ignore></i></div>
+      </div>
+    </section>
+
+    <!-- B4 8.1–12: countdown + register -->
+    <section id="b4" class="scene clip" data-start="8.1" data-duration="3.9" data-track-index="4">
+      <div class="top4" id="top4"><span>Builders Summit 2027</span><span class="r">May 14–15 · Lisbon</span></div>
+      <div class="hr" id="b4r1" style="top: 118px" data-design-ignore></div>
+      <div class="stack" style="left: 60px; top: 136px"><div class="cd" id="cd">186</div><div class="dtg" id="dtg">Days to go</div></div>
+      <div class="cal" id="cal">
+        <div class="cal-h" id="cal-h">May 2027</div>
+        <div class="cal-g" id="cal-g"><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b><i></i><i></i><i></i><i></i><i></i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i><i class="on" id="cal-d14">14</i><i class="on" id="cal-d15">15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i>21</i><i>22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i><i>28</i><i>29</i><i>30</i><i>31</i><i></i><i></i><i></i><i></i><i></i><i></i><div class="cal-hl" id="cal-hl" data-design-ignore data-layout-ignore></div></div>
+      </div>
+      <div class="hr" id="b4r2" style="top: 690px" data-design-ignore></div>
+      <div class="regrow">
+      <div class="reg" id="reg"><span>Register now</span><svg viewBox="0 0 40 40"><path d="M8 20 H31 M21 10 L31 20 L21 30" stroke="#0a0a0a" stroke-width="4.2" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg><i class="shine" id="reg-shine" data-design-ignore data-layout-ignore></i></div>
+      <div class="url" id="url"></div>
+      </div>
+      <div class="concept" id="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/studio-pulse.mp3" data-start="0" data-duration="12" data-media-start="7.32" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.05,"v":1},{"t":10.5,"v":1},{"t":12,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.019" data-duration="0.49" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-02-whoosh" src="assets/sfx/whoosh.mp3" data-start="0.184" data-duration="0.57" data-track-index="21" data-volume="0.32"></audio>
+    <audio id="sfx-03-whoosh" src="assets/sfx/whoosh.mp3" data-start="0.434" data-duration="0.57" data-track-index="22" data-volume="0.32"></audio>
+    <audio id="sfx-04-whoosh" src="assets/sfx/whoosh.mp3" data-start="0.674" data-duration="0.57" data-track-index="20" data-volume="0.32"></audio>
+    <audio id="sfx-05-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="0.7" data-duration="0.6" data-track-index="23" data-volume="0.3" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.52,"v":1},{"t":0.6,"v":0}]}]}'></audio>
+    <audio id="sfx-06-click-soft" src="assets/sfx/click-soft.mp3" data-start="0.92" data-duration="0.24" data-track-index="21" data-volume="0.16"></audio>
+    <audio id="sfx-07-whoosh" src="assets/sfx/whoosh.mp3" data-start="2.174" data-duration="0.57" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-08-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.309" data-duration="0.49" data-track-index="21" data-volume="0.15"></audio>
+    <audio id="sfx-09-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.469" data-duration="0.49" data-track-index="22" data-volume="0.15"></audio>
+    <audio id="sfx-10-click-soft" src="assets/sfx/click-soft.mp3" data-start="2.75" data-duration="0.24" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-11-click-soft" src="assets/sfx/click-soft.mp3" data-start="3" data-duration="0.24" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-12-whoosh" src="assets/sfx/whoosh.mp3" data-start="4.584" data-duration="0.57" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-13-click-soft" src="assets/sfx/click-soft.mp3" data-start="5" data-duration="0.24" data-track-index="21" data-volume="0.26"></audio>
+    <audio id="sfx-14-click-soft" src="assets/sfx/click-soft.mp3" data-start="5.1" data-duration="0.24" data-track-index="22" data-volume="0.26"></audio>
+    <audio id="sfx-15-click-soft" src="assets/sfx/click-soft.mp3" data-start="5.2" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-16-click-soft" src="assets/sfx/click-soft.mp3" data-start="5.3" data-duration="0.24" data-track-index="21" data-volume="0.26"></audio>
+    <audio id="sfx-17-click-soft" src="assets/sfx/click-soft.mp3" data-start="5.4" data-duration="0.24" data-track-index="22" data-volume="0.26"></audio>
+    <audio id="sfx-18-click-soft" src="assets/sfx/click-soft.mp3" data-start="5.5" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-19-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="6.239" data-duration="0.49" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-20-pop" src="assets/sfx/pop.mp3" data-start="6.384" data-duration="0.72" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-21-whoosh" src="assets/sfx/whoosh.mp3" data-start="8.004" data-duration="0.57" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-22-typing" src="assets/sfx/typing.mp3" data-start="8.063" data-duration="0.9" data-track-index="21" data-volume="0.16" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.82,"v":1},{"t":0.9,"v":0}]}]}'></audio>
+    <audio id="sfx-23-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="9.089" data-duration="0.49" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-24-click-soft" src="assets/sfx/click-soft.mp3" data-start="9.55" data-duration="0.24" data-track-index="21" data-volume="0.18"></audio>
+    <audio id="sfx-25-pop" src="assets/sfx/pop.mp3" data-start="9.634" data-duration="0.72" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-26-typing" src="assets/sfx/typing.mp3" data-start="9.863" data-duration="0.8" data-track-index="21" data-volume="0.12" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.72,"v":1},{"t":0.8,"v":0}]}]}'></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl;
+
+      // ---------- the grid: 13 column rules (12 cols of 82 px inside 48 px margins), drawn top-down on the first hit
+      const grid = S.$("#grid");
+      for (let i = 0; i <= 12; i++) { const v = document.createElement("i"); v.className = "vr"; v.style.left = `${48 + 82 * i}px`; grid.appendChild(v); }
+      tl.fromTo("#grid .vr", { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease: "settle", stagger: S.f(0.6) }, 0.0);
+      tl.fromTo("#glow", { opacity: 0.3, scale: 0.8 }, { opacity: 1, scale: 1, duration: 2.5, ease: "glide" }, 0);
+      S.drift("#glow", { ax: -30, ay: -24, period: 7 });
+
+      // wipes (Swiss: type blocks are revealed by a moving edge, never faded)
+      const wipeIn = (sel, t, o = {}) => {
+        tl.fromTo(sel, { clipPath: "inset(-12% 100% -12% 0%)", x: o.x ?? -24 }, { clipPath: "inset(-12% 0% -12% 0%)", x: 0, duration: o.d ?? 0.45, ease: "settle", stagger: o.st ?? 0 }, t);
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "enter", stagger: o.st ?? 0 }, t);
+      };
+      const wipeOut = (sel, t, o = {}) => tl.to(sel, { clipPath: "inset(-12% 0% -12% 100%)", x: 30, duration: o.d ?? 0.28, ease: "exit", stagger: o.st ?? 0 }, t);
+      const rule = (sel, t, d = 0.5) => tl.fromTo(sel, { scaleX: 0 }, { scaleX: 1, duration: d, ease: "settle" }, t);
+      const unrule = (sel, t) => tl.to(sel, { scaleX: 0, transformOrigin: "100% 50%", duration: 0.28, ease: "exit" }, t);
+
+      // ---------- B1 0–2.3 · three slams on the music's fill (0.26 / 0.51 / 0.75): 1.08 → hold 2 frames → snap to 1
+      const slam = (sel, t) => {
+        tl.fromTo(sel, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1.08, duration: 0.02, ease: "enter" }, t);
+        tl.to(sel, { scale: 1, duration: 0.2, ease: "snap" }, t + S.f(2));
+      };
+      gsap.set("#l1, #l2, #l3", { clipPath: "inset(-12% 0% -12% 0%)" }); // a start value so the wipe-out can tween (never from none)
+      slam("#l1", 0.26); slam("#l2", 0.51); slam("#l3", 0.75);
+      tl.fromTo("#band", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "settle" }, 0.8);
+      tl.fromTo("#l3", { color: "#f2efe8" }, { color: "#0a0a0a", duration: 0.14, ease: "move" }, 1.08);
+      rule("#b1r", 0.9, 0.6);
+      wipeIn("#d1, #d2, #d3", 0.9, { st: 0, x: -12 });         // held 0.9–2.4 = 1.5 s
+      S.sweep("#band", 1.75, { dur: 0.9 });
+      wipeOut("#l1, #l2, #l3", 2.25, { st: S.f(2) });
+      tl.to("#band", { scaleX: 0, transformOrigin: "100% 50%", duration: 0.3, ease: "exit" }, 2.3);
+      tl.to("#d1, #d2, #d3", { opacity: 0, duration: 0.18, ease: "exit" }, 2.4);
+      unrule("#b1r", 2.4);
+
+      // ---------- B2 2.3–4.75 · date / year / city: rules draw, the giant lines wipe in on the kicks
+      rule("#r0", 2.3); rule("#r1", 2.36); rule("#r2", 2.42); rule("#r3", 2.48);
+      wipeIn("#t1", 2.5); wipeIn("#t2", 2.75); wipeIn("#t3", 3.0);
+      wipeIn("#la1, #la2, #la3", 3.08, { st: 0, x: 12 });      // labels held 3.08–4.62 ≥ 1.5 s, LISBON 3.0–4.62
+      wipeOut("#t1, #t2, #t3", 4.62, { d: 0.2 });
+      tl.to("#la1, #la2, #la3", { opacity: 0, duration: 0.16, ease: "exit" }, 4.62);
+      unrule("#r0, #r1, #r2, #r3", 4.62);
+
+      // ---------- B3 4.75–8.25 · 40 SPEAKERS, six monogram cards flip in, a sweep, +34 more
+      wipeIn("#sp", 4.8, { d: 0.5 });
+      rule("#spr", 4.88, 0.6);
+      tl.fromTo("#cards .card", { rotationY: -96, opacity: 0, transformPerspective: 1400, transformOrigin: "0% 50%" }, { rotationY: 0, opacity: 1, duration: 0.55, ease: "settle", stagger: 0.1 }, 5.0);
+      S.$$("#cards .shine").forEach((s, i) => S.sweep(s, 6.25 + i * 0.06, { dur: 0.8 }));
+      wipeIn("#more", 6.5, { x: 14 });                          // held 6.5–8.05
+      tl.to("#cards .card", { rotationY: 90, opacity: 0, duration: 0.3, ease: "exit", stagger: 0.04 }, 8.05);
+      wipeOut("#sp, #more", 8.05);
+      unrule("#spr", 8.05);
+
+      // ---------- B4 8.25–12 · countdown rolls to 186, DAYS TO GO, Register now pops, the address types
+      wipeIn("#top4", 8.3, { x: -12 });
+      rule("#b4r1", 8.3, 0.6);
+      tl.fromTo("#cd", { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1.08, duration: 0.02, ease: "enter" }, 8.5);
+      tl.to("#cd", { scale: 1, duration: 0.22, ease: "snap" }, 8.5 + S.f(2));
+      S.count("#cd", 8.5, 199, 186, { dur: 0.9, ease: "settle", sep: "" }); // ticks down within 1xx: the width never jumps
+      wipeIn("#dtg", 8.75);
+      wipeIn("#cal-h", 9.05, { x: -12 });
+      tl.fromTo("#cal-g > b, #cal-g > i", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: "enter", stagger: 0.011 }, 9.08);
+      tl.fromTo("#cal-hl", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "settle" }, 9.55);
+      tl.fromTo("#cal-d14, #cal-d15", { color: "rgba(242,239,232,0.74)" }, { color: "#0a0a0a", duration: 0.12, ease: "move" }, 9.62);
+      rule("#b4r2", 9.4, 0.6);
+      tl.fromTo("#reg", { opacity: 0, scale: 0.6, transformOrigin: "0% 50%" }, { opacity: 1, scale: 1, duration: 0.7, ease: "springPop" }, 9.75);
+      S.type("#url", 10.3, "builderssummit.example", { cps: 28, hold: 0.8 }); // caret shows 0.6 s early = just as the pill lands
+      S.sweep("#reg-shine", 11.0, { dur: 0.9 });
+      tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 10.4);
+
+      S.grain({ opacity: 0.055 });
+      S.vignette({ strength: 0.32 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

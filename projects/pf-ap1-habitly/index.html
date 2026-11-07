@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1080, height=1920" />
+  <title>AP1 · App Store Preview — Habitly (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Habitly: warm cream stage, ONE coral accent; green only for success. */
+      --bg: #fff8ef;
+      --bg-2: #ffffff;
+      --bg-3: #fff1e6;
+      --ink: #2a1b14;
+      --ink-2: #6f5e55;
+      --ink-3: rgba(42, 27, 20, 0.42);
+      --line: rgba(42, 27, 20, 0.08);
+      --line-2: rgba(42, 27, 20, 0.14);
+      --accent: #ff6b4a;
+      --accent-2: #ffb38a;
+      --coral-text: #d9441f;   /* coral that passes contrast as large text on cream */
+      --coral-deep: #e4482a;   /* button fill: white label passes as large text */
+      --ok: #22c55e;
+      --ok-text: #15803d;
+      --font-display: "Space Grotesk", "Hind Siliguri", sans-serif;
+      --font-body: "Inter", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+
+    /* ---------- background: cream + soft blurred coral / peach / butter light */
+    .blob { position: absolute; border-radius: 50%; pointer-events: none; }
+    #blob1 { width: 980px; height: 980px; left: 380px; top: -330px; background: radial-gradient(circle, rgba(255, 107, 74, 0.42) 0%, rgba(255, 107, 74, 0) 66%); }
+    #blob2 { width: 1150px; height: 1150px; left: -520px; top: 620px; background: radial-gradient(circle, rgba(255, 179, 138, 0.55) 0%, rgba(255, 179, 138, 0) 66%); }
+    #blob3 { width: 1000px; height: 1000px; left: 420px; top: 1240px; background: radial-gradient(circle, rgba(255, 209, 128, 0.5) 0%, rgba(255, 209, 128, 0) 66%); }
+    .bg-dots-warm { position: absolute; inset: 0; background-image: radial-gradient(rgba(42, 27, 20, 0.07) 1.4px, transparent 1.6px); background-size: 30px 30px; -webkit-mask-image: radial-gradient(60% 40% at 50% 22%, #000 10%, transparent 100%); mask-image: radial-gradient(60% 40% at 50% 22%, #000 10%, transparent 100%); }
+
+    /* ---------- captions: above the phone, inside the 9:16 text-safe union (y 300–480) */
+    .cap-zone { position: absolute; left: 0; right: 0; top: 300px; height: 180px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+    .cap { font-family: var(--font-display); font-weight: 700; font-size: 84px; line-height: 1.04; letter-spacing: -0.035em; text-align: center; color: var(--ink); margin: 0; max-width: 700px; text-wrap: balance; }
+    .cap .row { display: block; }
+    .cap .hl { color: var(--coral-text); }
+
+    /* ---------- phone: the kit's .phone at 1.45× (624×1304), built at size so every text size is honest */
+    .pfloat { position: absolute; inset: 0; }
+    #phone-wrap { position: absolute; left: 228px; top: 552px; width: 624px; height: 1304px; }
+    #phone-wrap .phone { width: 624px; height: 1304px; border-radius: 98px; background: #0b0b0d; box-shadow: 0 0 0 3px #2b2c31, 0 0 0 14px #121215, 0 0 0 15.5px #3c3d42, 0 70px 120px -40px rgba(120, 48, 18, 0.5), 0 24px 48px -20px rgba(120, 48, 18, 0.35); }
+    #phone-wrap .phone > .screen { inset: 20px; border-radius: 80px; background: #fbf7f2; }
+    #phone-wrap .phone > .island { top: 40px; width: 176px; height: 52px; margin-left: -88px; border-radius: 26px; }
+
+    .sbar { position: absolute; left: 0; right: 0; top: 0; height: 96px; display: flex; align-items: center; justify-content: space-between; padding: 12px 50px 0 64px; z-index: 6; color: var(--ink); }
+    .sbar .tm { font: 600 26px/1 var(--font-body); letter-spacing: -0.01em; }
+    .sbar .ic { display: flex; gap: 10px; align-items: center; }
+    .sbar .ic svg { width: 26px; height: 26px; stroke-width: 2.4; }
+
+    .scr { position: absolute; inset: 0; padding: 100px 30px 0; }
+    .hdr { display: flex; justify-content: space-between; align-items: flex-start; }
+    .ttl { font-family: var(--font-display); font-weight: 700; font-size: 56px; line-height: 1; letter-spacing: -0.03em; margin: 0; color: var(--ink); }
+    .sub { display: flex; align-items: center; gap: 10px; font: 500 26px/1.15 var(--font-body); color: var(--ink-2); margin-top: 8px; }
+    .sub .spark { width: 28px; height: 28px; color: var(--accent); stroke-width: 2.4; }
+    .plus { position: relative; width: 72px; height: 72px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; color: #fff; box-shadow: 0 12px 24px -10px rgba(255, 107, 74, 0.8); flex: none; }
+    .plus svg { width: 36px; height: 36px; stroke-width: 2.8; }
+    .pbar { height: 10px; border-radius: 5px; background: rgba(42, 27, 20, 0.08); margin-top: 18px; overflow: hidden; }
+    .pbar i { display: block; width: 100%; height: 100%; border-radius: 5px; background: var(--accent); transform-origin: 0 50%; }
+
+    .list { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; }
+    .hrow { position: relative; display: flex; align-items: center; gap: 18px; padding: 14px 18px 14px 14px; border-radius: 26px; background: #ffffff; box-shadow: 0 1px 2px rgba(90, 45, 20, 0.06), 0 12px 26px -16px rgba(90, 45, 20, 0.28); }
+    .tile { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; flex: none; }
+    .tile svg { width: 32px; height: 32px; stroke-width: 2.2; }
+    .t-read { background: #ffe6dc; color: #e4482a; }
+    .t-water { background: #e7f0fa; color: #3f7fc4; }
+    .t-walk { background: #fff0d6; color: #c77d12; }
+    .t-calm { background: #efeafb; color: #7259c4; }
+    .t-stretch { background: #e9f6ef; color: #2f8a57; }
+    .t-pen { background: #f6ece2; color: #8a5a36; }
+    .nm { font: 600 30px/1.15 var(--font-body); letter-spacing: -0.012em; color: var(--ink); }
+    .mt { font: 500 24px/1.2 var(--font-body); color: var(--ink-2); margin-top: 3px; }
+    .chk { position: relative; margin-left: auto; width: 58px; height: 58px; flex: none; border-radius: 50%; border: 3.5px solid rgba(255, 107, 74, 0.8); }
+    .chk .fill { position: absolute; inset: -3.5px; border-radius: 50%; background: var(--accent); }
+    .chk svg { position: absolute; inset: -3.5px; width: 58px; height: 58px; overflow: visible; }
+    .chk .burst { width: 64px; height: 64px; left: 25.5px; top: 25.5px; border-color: var(--ok); border-width: 3px; }
+    .hrow .hi { position: absolute; inset: 0; border-radius: 26px; background: linear-gradient(90deg, rgba(255, 179, 138, 0.55), rgba(255, 179, 138, 0.15)); }
+
+    .kick { font: 600 24px/1 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin: 28px 0 14px 8px; }
+    .xbtn { width: 64px; height: 64px; border-radius: 50%; background: rgba(42, 27, 20, 0.06); display: grid; place-items: center; color: var(--ink-2); flex: none; }
+    .xbtn svg { width: 30px; height: 30px; stroke-width: 2.4; }
+    .opts { display: flex; flex-direction: column; gap: 12px; }
+    .opt { position: relative; display: flex; align-items: center; gap: 18px; padding: 12px 16px 12px 12px; border-radius: 26px; background: #ffffff; border: 3px solid rgba(42, 27, 20, 0); box-shadow: 0 1px 2px rgba(90, 45, 20, 0.06), 0 12px 26px -16px rgba(90, 45, 20, 0.28); }
+    .opt .badge { position: relative; margin-left: auto; width: 46px; height: 46px; border-radius: 50%; background: var(--coral-deep); flex: none; }
+    .opt .badge svg { position: absolute; inset: 0; width: 46px; height: 46px; }
+
+    .wheel { position: relative; height: 180px; border-radius: 26px; background: #ffffff; box-shadow: 0 1px 2px rgba(90, 45, 20, 0.06), 0 12px 26px -16px rgba(90, 45, 20, 0.28); overflow: hidden; display: flex; justify-content: center; gap: 22px; }
+    .wheel .band { position: absolute; left: 18px; right: 18px; top: 62px; height: 56px; border-radius: 16px; background: rgba(255, 107, 74, 0.12); }
+    .wheel .colm { position: relative; width: 96px; height: 180px; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 34%, #000 66%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0%, #000 34%, #000 66%, transparent 100%); }
+    .wheel .colm > div { position: absolute; left: 0; right: 0; top: 0; }
+    .wheel .colm span { display: block; height: 56px; font: 600 36px/56px var(--font-body); text-align: center; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .wheel .colon { font: 600 36px/180px var(--font-body); color: var(--ink); width: 12px; text-align: center; }
+    .save { position: relative; margin-top: 26px; height: 92px; border-radius: 46px; background: var(--coral-deep); color: #ffffff; font: 650 34px/92px var(--font-body); text-align: center; box-shadow: 0 16px 30px -14px rgba(228, 72, 42, 0.75); }
+
+    .scr.mid { display: flex; flex-direction: column; align-items: center; }
+    .scr.mid .kick { margin: 2px 0 0; }
+    .flame { position: relative; width: 210px; height: 236px; margin-top: 22px; }
+    .flame .fglow { position: absolute; left: 50%; top: 56%; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 140, 80, 0.55) 0%, rgba(255, 107, 74, 0.18) 38%, rgba(255, 107, 74, 0) 66%); }
+    .flame .fin { position: absolute; inset: 0; transform-origin: 50% 96%; }
+    .flame svg { width: 210px; height: 236px; overflow: visible; }
+    .flame .burst { left: 105px; top: 150px; width: 160px; height: 160px; border-color: var(--accent); border-width: 3px; }
+    .big { font-family: var(--font-display); font-weight: 700; font-size: 184px; line-height: 0.98; letter-spacing: -0.05em; color: var(--ink); font-variant-numeric: tabular-nums; margin-top: 6px; position: relative; padding: 0 18px; }
+    .biglbl { font: 600 40px/1.1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); margin-top: 2px; }
+    .cal { display: grid; grid-template-columns: repeat(7, 56px); column-gap: 14px; row-gap: 14px; margin-top: 46px; justify-items: center; }
+    .cal b { font: 600 24px/1 var(--font-body); color: var(--ink-2); padding-bottom: 6px; }
+    .cal i { position: relative; display: block; width: 50px; height: 50px; border-radius: 50%; border: 3px solid rgba(42, 27, 20, 0.12); }
+    .cal i u { position: absolute; inset: -3px; border-radius: 50%; background: var(--accent); }
+    .cal i.today u { background: var(--ok); }
+    .cal i svg { position: absolute; inset: -3px; width: 50px; height: 50px; overflow: visible; }
+    .cal .burst { left: 22px; top: 22px; width: 60px; height: 60px; border-color: var(--ok); border-width: 3px; }
+
+    .icard { position: relative; margin-top: 32px; padding: 30px 30px 26px; border-radius: 32px; background: #ffffff; box-shadow: 0 1px 2px rgba(90, 45, 20, 0.06), 0 24px 50px -24px rgba(90, 45, 20, 0.35); }
+    .ihead { display: flex; gap: 20px; align-items: flex-start; }
+    .ih { font-family: var(--font-display); font-weight: 700; font-size: 42px; line-height: 1.08; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; }
+    .ih .n { display: inline-block; min-width: 1.3em; text-align: center; color: var(--coral-text); font-variant-numeric: tabular-nums; }
+    .bars { display: grid; grid-template-columns: repeat(7, 1fr); column-gap: 14px; height: 250px; margin-top: 30px; align-items: end; }
+    .bars .bc { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 12px; }
+    .bars .bc i { display: block; width: 100%; border-radius: 12px 12px 6px 6px; background: #ffd2bf; transform-origin: 50% 100%; }
+    .bars .bc.top i { background: linear-gradient(180deg, #ff8f66, #ff6b4a); }
+    .bars .bc b { font: 600 24px/1 var(--font-body); color: var(--ink-2); }
+    .best { display: inline-flex; align-items: center; gap: 12px; margin: 24px 0 0 4px; padding: 12px 22px; border-radius: 999px; background: #ffffff; box-shadow: 0 10px 24px -14px rgba(90, 45, 20, 0.35); font: 600 26px/1.2 var(--font-body); color: var(--ink); }
+    .best .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    #snum { display: block; }
+
+    /* week strip card (Today screens) */
+    .wk { margin-top: 22px; padding: 20px 24px 22px; border-radius: 26px; background: #ffffff; box-shadow: 0 1px 2px rgba(90, 45, 20, 0.06), 0 12px 26px -16px rgba(90, 45, 20, 0.28); }
+    .wk-h { display: flex; justify-content: space-between; align-items: baseline; }
+    .wk-t { font: 600 28px/1.15 var(--font-body); color: var(--ink); letter-spacing: -0.01em; }
+    .wk-s { font: 500 24px/1.2 var(--font-body); color: var(--ink-2); }
+    .wk-d { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 10px; margin-top: 16px; justify-items: center; }
+    .wk-d b { font: 600 24px/1 var(--font-body); color: var(--ink-2); }
+    .wk-d i { position: relative; display: block; width: 40px; height: 40px; border-radius: 50%; border: 3px solid rgba(42, 27, 20, 0.12); }
+    .wk-d i.on { border-color: var(--accent); background: var(--accent); }
+    .wk-d i.now { border-color: rgba(255, 107, 74, 0.85); }
+    .wk-d i u { position: absolute; inset: -3px; border-radius: 50%; background: var(--ok); }
+    .wk-d i svg { position: absolute; inset: -3px; width: 40px; height: 40px; overflow: visible; }
+
+    /* milestone card (Streak screen) */
+    .mile { align-self: stretch; display: flex; align-items: center; gap: 20px; margin-top: 40px; padding: 20px 24px; border-radius: 26px; background: #ffffff; box-shadow: 0 1px 2px rgba(90, 45, 20, 0.06), 0 12px 26px -16px rgba(90, 45, 20, 0.28); }
+    .mile .tile svg { width: 34px; height: 34px; }
+    .mi-c { flex: 1; }
+    .mi-t { font: 600 28px/1.15 var(--font-body); color: var(--ink); letter-spacing: -0.01em; }
+    .mi-bar { height: 10px; border-radius: 5px; background: rgba(42, 27, 20, 0.08); margin: 12px 0 10px; overflow: hidden; }
+    .mi-bar i { display: block; width: 100%; height: 100%; border-radius: 5px; background: var(--accent); transform-origin: 0 50%; }
+    .mi-s { font: 500 24px/1.2 var(--font-body); color: var(--ink-2); }
+
+    /* two stat tiles (This week) — one grid, values share a baseline */
+    .stats { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; margin-top: 26px; }
+    .st { padding: 20px 24px 22px; border-radius: 26px; background: #ffffff; box-shadow: 0 1px 2px rgba(90, 45, 20, 0.06), 0 12px 26px -16px rgba(90, 45, 20, 0.28); }
+    .st-l { font: 600 24px/1.2 var(--font-body); color: var(--ink-2); }
+    .st-v { font-family: var(--font-display); font-weight: 700; font-size: 54px; line-height: 1; letter-spacing: -0.03em; color: var(--ink); margin-top: 10px; }
+    .st-v small { font: 600 28px/1 var(--font-body); color: var(--ink-2); letter-spacing: 0; margin-left: 9px; }
+
+    .tabbar { position: absolute; left: 0; right: 0; bottom: 0; height: 118px; display: flex; justify-content: space-around; align-items: flex-start; padding: 22px 40px 0; background: rgba(255, 255, 255, 0.92); border-top: 1px solid rgba(42, 27, 20, 0.06); z-index: 5; }
+    .tabbar svg { width: 38px; height: 38px; stroke-width: 2.2; color: rgba(42, 27, 20, 0.36); }
+    .tabbar .home-ind { position: absolute; left: 50%; bottom: 10px; width: 160px; height: 6px; margin-left: -80px; border-radius: 3px; background: rgba(42, 27, 20, 0.85); }
+
+    .touch { position: absolute; left: 0; top: 0; width: 86px; height: 86px; border-radius: 50%; background: rgba(42, 27, 20, 0.16); border: 2.5px solid rgba(255, 255, 255, 0.85); box-shadow: 0 6px 18px rgba(42, 27, 20, 0.22); opacity: 0; z-index: 8; pointer-events: none; }
+    .ripple { position: absolute; left: 0; top: 0; width: 86px; height: 86px; border-radius: 50%; border: 3px solid rgba(255, 107, 74, 0.9); opacity: 0; z-index: 8; pointer-events: none; }
+    .conf { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
+    .bit { position: absolute; left: 0; top: 0; opacity: 0; }
+
+    /* ---------- end card */
+    .end-col { position: absolute; left: 0; right: 0; top: 500px; display: flex; flex-direction: column; align-items: center; }
+    .appicon { position: relative; width: 232px; height: 232px; border-radius: 60px; background: linear-gradient(150deg, #ff9468 0%, #ff6b4a 52%, #ec5030 100%); box-shadow: 0 2px 0 rgba(255, 255, 255, 0.45) inset, 0 -3px 0 rgba(150, 40, 10, 0.12) inset, 0 40px 70px -24px rgba(236, 80, 48, 0.6), 0 12px 24px -12px rgba(120, 40, 10, 0.35); }
+    .appicon svg { position: absolute; inset: 0; width: 232px; height: 232px; overflow: visible; }
+    .appicon .burst { left: 116px; top: 116px; width: 240px; height: 240px; border-color: var(--accent); border-width: 3px; }
+    .wordmark { font-family: var(--font-display); font-weight: 700; font-size: 132px; line-height: 1; letter-spacing: -0.05em; color: var(--ink); margin-top: 56px; padding-bottom: 10px; }
+    .getbtn { position: relative; display: inline-flex; align-items: center; gap: 16px; margin-top: 40px; padding: 24px 44px; border-radius: 999px; background: var(--ink); color: #fff8ef; font: 600 36px/1 var(--font-body); letter-spacing: -0.01em; box-shadow: 0 18px 36px -16px rgba(42, 27, 20, 0.6); }
+    .shine { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
+    .concept { position: absolute; left: 0; right: 0; top: 1232px; text-align: center; font: 500 15px/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(42, 27, 20, 0.7); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="20" data-fps="30">
+
+    <!-- persistent background: cream + drifting coral / peach / butter light -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="20" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div id="blob1" class="blob" data-layout-allow-overflow></div>
+      <div id="blob2" class="blob" data-layout-allow-overflow></div>
+      <div id="blob3" class="blob" data-layout-allow-overflow></div>
+      <div class="bg-dots-warm"></div>
+    </section>
+
+    <!-- the phone (0–17.95) -->
+    <section id="ph" class="scene clip" data-start="0" data-duration="17.95" data-track-index="1">
+      <div id="phone-float" class="pfloat">
+        <div id="phone-wrap">
+          <div class="phone">
+            <div class="island"></div>
+            <div class="screen" id="screen">
+              <div class="sbar" data-design-ignore>
+                <span class="tm">9:41</span>
+                <span class="ic">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M2 20h.01" /><path d="M7 20v-4" /><path d="M12 20v-8" /><path d="M17 20V8" /></svg>
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 20h.01" /><path d="M2 8.82a15 15 0 0 1 20 0" /><path d="M5 12.859a10 10 0 0 1 14 0" /><path d="M8.5 16.429a5 5 0 0 1 7 0" /></svg>
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10 10v4" /><path d="M14 10v4" /><path d="M22 14v-4" /><path d="M6 10v4" /><rect x="2" y="6" width="16" height="12" rx="2" /></svg>
+                </span>
+              </div>
+
+              <!-- Today (3 habits) -->
+              <div class="scr" id="scr-home">
+                <div class="hdr">
+                  <div><h3 class="ttl">Today</h3><div class="sub">3 habits today</div></div>
+                  <div class="plus" id="plus"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="M12 5v14" /></svg></div>
+                </div>
+                <div class="pbar"><i style="opacity: 0"></i></div>
+                <div class="list" id="list1">
+                  <div class="hrow"><div class="tile t-water"><svg class="icon" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" /></svg></div><div><div class="nm">Drink water</div><div class="mt">Daily · 8 glasses</div></div><div class="chk"></div></div>
+                  <div class="hrow"><div class="tile t-walk"><svg class="icon" viewBox="0 0 24 24"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z" /><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z" /><path d="M16 17h4" /><path d="M4 13h4" /></svg></div><div><div class="nm">Morning walk</div><div class="mt">Mornings · 20 min</div></div><div class="chk"></div></div>
+                  <div class="hrow"><div class="tile t-calm"><svg class="icon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg></div><div><div class="nm">Meditate</div><div class="mt">Evenings · 5 min</div></div><div class="chk"></div></div>
+                </div>
+                <div class="wk" id="wk1">
+                  <div class="wk-h"><span class="wk-t">This week</span><span class="wk-s">4 of 7 days</span></div>
+                  <div class="wk-d"><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i></div>
+                </div>
+              </div>
+
+              <!-- New habit -->
+              <div class="scr" id="scr-new">
+                <div class="hdr">
+                  <div><h3 class="ttl">New habit</h3><div class="sub">Pick one to start</div></div>
+                  <div class="xbtn"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></div>
+                </div>
+                <div class="kick">Suggested</div>
+                <div class="opts">
+                  <div class="opt" id="opt1"><div class="tile t-read"><svg class="icon" viewBox="0 0 24 24"><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></svg></div><div class="nm">Read 10 pages</div><div class="badge" id="badge"><svg viewBox="0 0 46 46"><path id="badge-tick" d="M14 23.5 L20.5 30 L32.5 17" stroke="#ffffff" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+                  <div class="opt"><div class="tile t-stretch"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" /><path d="m9 20 3-6 3 6" /><path d="m6 8 6 2 6-2" /><path d="M12 10v4" /></svg></div><div class="nm">Stretch 5 min</div></div>
+                  <div class="opt"><div class="tile t-pen"><svg class="icon" viewBox="0 0 24 24"><path d="M13 21h8" /><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /></svg></div><div class="nm">Journal</div></div>
+                </div>
+                <div class="kick">Remind me at</div>
+                <div class="wheel" data-layout-allow-overflow>
+                  <div class="band"></div>
+                  <div class="colm"><div id="wh-h"><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span></div></div>
+                  <div class="colon">:</div>
+                  <div class="colm"><div id="wh-m"><span>45</span><span>00</span><span>15</span><span>30</span><span>45</span></div></div>
+                  <div class="colm"><div id="wh-p"><span>AM</span><span>PM</span></div></div>
+                </div>
+                <div class="save" id="save">Save habit</div>
+              </div>
+
+              <!-- Today (4 habits, the new one on top) -->
+              <div class="scr" id="scr-home2">
+                <div class="hdr">
+                  <div><h3 class="ttl">Today</h3><div class="sub"><span id="done-txt">0 of 4 done</span><svg id="spark" class="icon spark" viewBox="0 0 24 24"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /></svg></div></div>
+                  <div class="plus"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="M12 5v14" /></svg></div>
+                </div>
+                <div class="pbar"><i id="pfill"></i></div>
+                <div class="list" id="list2">
+                  <div class="hrow" id="newrow"><div class="hi" id="newhi"></div><div class="tile t-read" style="position: relative"><svg class="icon" viewBox="0 0 24 24"><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></svg></div><div style="position: relative"><div class="nm">Read 10 pages</div><div class="mt">Every night · 9:00 PM</div></div><div class="chk"><i class="fill"></i><div class="burst"></div><svg viewBox="0 0 58 58"><path class="tick" d="M17 30 L25.5 38.5 L41.5 21.5" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+                  <div class="hrow"><div class="tile t-water"><svg class="icon" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" /></svg></div><div><div class="nm">Drink water</div><div class="mt">Daily · 8 glasses</div></div><div class="chk"><i class="fill"></i><div class="burst"></div><svg viewBox="0 0 58 58"><path class="tick" d="M17 30 L25.5 38.5 L41.5 21.5" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+                  <div class="hrow"><div class="tile t-walk"><svg class="icon" viewBox="0 0 24 24"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z" /><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z" /><path d="M16 17h4" /><path d="M4 13h4" /></svg></div><div><div class="nm">Morning walk</div><div class="mt">Mornings · 20 min</div></div><div class="chk"><i class="fill"></i><div class="burst"></div><svg viewBox="0 0 58 58"><path class="tick" d="M17 30 L25.5 38.5 L41.5 21.5" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+                  <div class="hrow"><div class="tile t-calm"><svg class="icon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></svg></div><div><div class="nm">Meditate</div><div class="mt">Evenings · 5 min</div></div><div class="chk"><i class="fill"></i><div class="burst"></div><svg viewBox="0 0 58 58"><path class="tick" d="M17 30 L25.5 38.5 L41.5 21.5" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+                </div>
+                <div class="wk" id="wk2">
+                  <div class="wk-h"><span class="wk-t">This week</span><span class="wk-s" id="wk2s">4 of 7 days</span></div>
+                  <div class="wk-d"><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="now" id="wk-today"><u id="wk-fill"></u><svg viewBox="0 0 40 40"><path id="wk-tick" d="M12 20.5 L17.5 26 L28.5 14.5" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></i><i></i><i></i></div>
+                </div>
+              </div>
+
+              <!-- Streak -->
+              <div class="scr mid" id="scr-streak">
+                <div class="kick">Current streak</div>
+                <div class="flame" id="flame">
+                  <div class="fglow" id="fglow" data-design-ignore data-layout-ignore></div>
+                  <div class="burst" id="flame-burst" data-design-ignore></div>
+                  <div class="fin" id="flame-in">
+                    <svg viewBox="0 0 210 236">
+                      <defs>
+                        <linearGradient id="fo" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffa24a" /><stop offset="0.55" stop-color="#ff6b4a" /><stop offset="1" stop-color="#f2502f" /></linearGradient>
+                        <linearGradient id="fi" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff4d6" /><stop offset="1" stop-color="#ffc85a" /></linearGradient>
+                      </defs>
+                      <path d="M105 6 C118 48 178 82 182 152 C186 206 150 232 105 232 C60 232 24 204 28 150 C31 108 54 86 66 62 C74 92 86 106 98 108 C90 76 92 38 105 6 Z" fill="url(#fo)" />
+                      <path d="M105 112 C114 138 144 156 144 188 C144 214 126 226 105 226 C84 226 68 212 68 188 C68 166 82 154 90 140 C94 154 100 160 105 160 C100 144 100 128 105 112 Z" fill="url(#fi)" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="big" id="snum-wrap"><span id="snum">12</span><i class="shine" id="snum-shine" data-design-ignore data-layout-ignore></i></div>
+                <div class="biglbl" id="slbl">day streak</div>
+                <div class="cal" id="cal">
+                  <b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
+                  <i><u></u></i><i><u></u></i><i><u></u></i><i><u></u></i><i><u></u></i><i><u></u></i><i><u></u></i>
+                  <i><u></u></i><i><u></u></i><i><u></u></i><i><u></u></i><i class="today"><u></u><div class="burst" id="today-burst"></div><svg viewBox="0 0 50 50"><path id="today-tick" d="M15 25.5 L22 32.5 L35.5 18.5" stroke="#ffffff" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></i><i class="future"></i><i class="future"></i>
+                </div>
+                <div class="mile" id="mile">
+                  <div class="tile t-read"><svg class="icon" viewBox="0 0 24 24"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2" /><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2" /><path d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3" /><path d="M4 22h16" /><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" /><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3" /></svg></div>
+                  <div class="mi-c"><div class="mi-t">Next badge: 2 weeks</div><div class="mi-bar"><i id="mi-fill"></i></div><div class="mi-s">2 days to go</div></div>
+                </div>
+              </div>
+
+              <!-- This week (insight) -->
+              <div class="scr" id="scr-ins">
+                <div class="hdr"><div><h3 class="ttl">This week</h3><div class="sub">Reading · last 7 days</div></div></div>
+                <div class="icard" id="icard">
+                  <div class="ihead"><div class="tile t-read"><svg class="icon" viewBox="0 0 24 24"><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></svg></div><div class="ih">You read <span class="n" id="pages">70</span> pages this week</div></div>
+                  <div class="bars" id="bars">
+                    <div class="bc"><i style="height: 71%"></i><b>M</b></div>
+                    <div class="bc"><i style="height: 57%"></i><b>T</b></div>
+                    <div class="bc"><i style="height: 86%"></i><b>W</b></div>
+                    <div class="bc"><i style="height: 71%"></i><b>T</b></div>
+                    <div class="bc"><i style="height: 43%"></i><b>F</b></div>
+                    <div class="bc top"><i style="height: 100%"></i><b>S</b></div>
+                    <div class="bc"><i style="height: 71%"></i><b>S</b></div>
+                  </div>
+                </div>
+                <div class="best" id="best"><span class="dot"></span>Best day: Sat · 14 pages</div>
+                <div class="stats" id="stats">
+                  <div class="st"><div class="st-l">Check-ins</div><div class="st-v">26<small>/ 28</small></div></div>
+                  <div class="st"><div class="st-l">Mindful</div><div class="st-v">35<small>min</small></div></div>
+                </div>
+              </div>
+
+              <div class="tabbar" data-design-ignore>
+                <svg class="icon" id="tab-home" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+                <svg class="icon" id="tab-flame" viewBox="0 0 24 24"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" /></svg>
+                <svg class="icon" id="tab-stats" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M18 17V9" /><path d="M13 17V5" /><path d="M8 17v-3" /></svg>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
+                <i class="home-ind"></i>
+              </div>
+              <div class="conf" id="conf" data-layout-ignore data-design-ignore></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- captions (one per beat; alternating tracks so the hand-offs may overlap) -->
+    <section id="cap1" class="scene clip" data-start="0" data-duration="2.75" data-track-index="2">
+      <div class="cap-zone"><h2 class="cap"><span id="c1a" class="row">Small habits.</span><span id="c1b" class="row hl">Big change.</span></h2></div>
+    </section>
+    <section id="cap2" class="scene clip" data-start="2.55" data-duration="4.45" data-track-index="3">
+      <div class="cap-zone"><h2 class="cap"><span id="c2a" class="row">Build a habit</span><span id="c2b" class="row hl">in seconds.</span></h2></div>
+    </section>
+    <section id="cap3" class="scene clip" data-start="6.9" data-duration="3.95" data-track-index="2">
+      <div class="cap-zone"><h2 class="cap"><span id="c3a" class="row">One tap to</span><span id="c3b" class="row hl">check it off.</span></h2></div>
+    </section>
+    <section id="cap4" class="scene clip" data-start="10.7" data-duration="4.3" data-track-index="3">
+      <div class="cap-zone"><h2 class="cap"><span id="c4a" class="row">Watch your</span><span id="c4b" class="row hl">streak grow.</span></h2></div>
+    </section>
+    <section id="cap5" class="scene clip" data-start="14.85" data-duration="2.75" data-track-index="2">
+      <div class="cap-zone"><h2 class="cap"><span id="c5a" class="row">See how far</span><span id="c5b" class="row hl">you've come.</span></h2></div>
+    </section>
+
+    <!-- end card (17.4–20) -->
+    <section id="end" class="scene clip" data-start="17.4" data-duration="2.6" data-track-index="4">
+      <div class="end-col">
+        <div class="appicon" id="appicon">
+          <div class="burst" id="icon-burst" data-design-ignore></div>
+          <svg viewBox="0 0 232 232">
+            <circle id="icon-ring" cx="116" cy="116" r="64" stroke="#ffffff" stroke-width="16" fill="none" stroke-linecap="round" transform="rotate(-60 116 116)" />
+            <path id="icon-tick" d="M86 118 L106 138 L148 94" stroke="#ffffff" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="wordmark" id="wm">Habitly</div>
+        <div class="getbtn" id="getbtn"><span>Free on iOS &amp; Android</span><i class="shine" id="getbtn-shine" data-design-ignore data-layout-ignore></i></div>
+      </div>
+      <div class="concept" id="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/bright-future.mp3" data-start="0" data-duration="20" data-media-start="11.4" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":18.5,"v":1},{"t":20,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh" src="assets/sfx/whoosh.mp3" data-start="0.224" data-duration="0.57" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-02-click-soft" src="assets/sfx/click-soft.mp3" data-start="2.81" data-duration="0.24" data-track-index="20" data-volume="0.32"></audio>
+    <audio id="sfx-03-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.989" data-duration="0.49" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-04-click-soft" src="assets/sfx/click-soft.mp3" data-start="3.87" data-duration="0.24" data-track-index="20" data-volume="0.32"></audio>
+    <audio id="sfx-05-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.41" data-duration="0.24" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-06-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.61" data-duration="0.24" data-track-index="21" data-volume="0.12"></audio>
+    <audio id="sfx-07-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.7" data-duration="0.24" data-track-index="20" data-volume="0.1"></audio>
+    <audio id="sfx-08-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.88" data-duration="0.24" data-track-index="21" data-volume="0.1"></audio>
+    <audio id="sfx-09-click-soft" src="assets/sfx/click-soft.mp3" data-start="6.32" data-duration="0.24" data-track-index="20" data-volume="0.32"></audio>
+    <audio id="sfx-10-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="6.459" data-duration="0.49" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-11-pop" src="assets/sfx/pop.mp3" data-start="7.284" data-duration="0.72" data-track-index="20" data-volume="0.28"></audio>
+    <audio id="sfx-12-pop" src="assets/sfx/pop.mp3" data-start="7.984" data-duration="0.72" data-track-index="21" data-volume="0.28"></audio>
+    <audio id="sfx-13-pop" src="assets/sfx/pop.mp3" data-start="8.684" data-duration="0.72" data-track-index="20" data-volume="0.28"></audio>
+    <audio id="sfx-14-pop" src="assets/sfx/pop.mp3" data-start="9.384" data-duration="0.72" data-track-index="21" data-volume="0.28"></audio>
+    <audio id="sfx-15-sparkle" src="assets/sfx/sparkle.mp3" data-start="9.495" data-duration="1.8" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-16-pop" src="assets/sfx/pop.mp3" data-start="9.764" data-duration="0.72" data-track-index="22" data-volume="0.16"></audio>
+    <audio id="sfx-17-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="10.559" data-duration="0.49" data-track-index="21" data-volume="0.22"></audio>
+    <audio id="sfx-18-sparkle" src="assets/sfx/sparkle.mp3" data-start="11.015" data-duration="1.8" data-track-index="22" data-volume="0.16"></audio>
+    <audio id="sfx-19-typing" src="assets/sfx/typing.mp3" data-start="10.683" data-duration="1.15" data-track-index="23" data-volume="0.16" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.07,"v":1},{"t":1.15,"v":0}]}]}'></audio>
+    <audio id="sfx-20-pop" src="assets/sfx/pop.mp3" data-start="12.834" data-duration="0.72" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-21-click-soft" src="assets/sfx/click-soft.mp3" data-start="13.14" data-duration="0.24" data-track-index="21" data-volume="0.18"></audio>
+    <audio id="sfx-22-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="14.959" data-duration="0.49" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-23-pop" src="assets/sfx/pop.mp3" data-start="15.034" data-duration="0.72" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-24-typing" src="assets/sfx/typing.mp3" data-start="14.863" data-duration="1" data-track-index="22" data-volume="0.14" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.92,"v":1},{"t":1,"v":0}]}]}'></audio>
+    <audio id="sfx-25-click-soft" src="assets/sfx/click-soft.mp3" data-start="15.8" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-26-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="17.429" data-duration="0.49" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-27-chime" src="assets/sfx/chime.mp3" data-start="17.234" data-duration="2.5" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-28-pop" src="assets/sfx/pop.mp3" data-start="18.134" data-duration="0.72" data-track-index="20" data-volume="0.16"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+      const screen = S.$("#screen");
+
+      // ---- measure tap targets in SCREEN coordinates before any tween touches a transform
+      const sRect = screen.getBoundingClientRect();
+      const k = sRect.width / screen.offsetWidth || 1;
+      const at = (el) => { const r = S.$(el).getBoundingClientRect(); return { x: (r.left + r.width / 2 - sRect.left) / k, y: (r.top + r.height / 2 - sRect.top) / k }; };
+      const P = { plus: at("#plus"), opt: at("#opt1"), save: at("#save"), chk: S.$$("#scr-home2 .chk").map(at) };
+      const CHECKS = [7.4, 8.1, 8.8, 9.5];
+      const DONE = 9.78; // "All done today"
+
+      // ---- helpers
+      // Material shared-axis X push: the outgoing screen fades in the first third, the incoming one after it,
+      // both slide the whole time — so two screens' text never reads on top of each other.
+      const push = (out, inn, t, dir = 1) => {
+        tl.fromTo(out, { x: 0 }, { x: -90 * dir, duration: 0.34, ease: "exit", immediateRender: false }, t);
+        tl.to(out, { opacity: 0, duration: 0.13, ease: "exit" }, t);
+        tl.fromTo(inn, { x: 120 * dir }, { x: 0, duration: 0.46, ease: "settle" }, t);
+        tl.fromTo(inn, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "enter" }, t + 0.1);
+      };
+      // caption in: masked line rise. Out: the lines rise out while their opacity is gone in the first 60 %
+      // (otherwise the last descender lingers at the mask edge as a stray dot).
+      const capIn = (a, b, t) => { S.lines(a, t, { dur: 0.82 }); S.lines(b, t + 0.14, { dur: 0.86 }); };
+      const capOut = (a, b, t) => {
+        const ls = `${a} .st-line, ${b} .st-line`;
+        tl.to(ls, { yPercent: -105, duration: 0.3, ease: "exit", stagger: S.f(2) }, t);
+        tl.to(ls, { opacity: 0, duration: 0.17, ease: "exit", stagger: S.f(2) }, t);
+      };
+
+      // ---- touch: a soft finger circle (not a mouse arrow) + a coral ripple, per frame (seek-safe)
+      const taps = [{ t: 2.81, ...P.plus }, { t: 3.87, ...P.opt }, { t: 6.32, ...P.save }, ...CHECKS.map((t, i) => ({ t, ...P.chk[i] }))];
+      const dot = document.createElement("div"), rip = document.createElement("div");
+      dot.className = "touch"; rip.className = "ripple";
+      [dot, rip].forEach((e) => { e.setAttribute("data-layout-ignore", ""); e.setAttribute("data-design-ignore", ""); screen.appendChild(e); });
+      S.everyFrame((now) => {
+        let op = 0, sc = 1, x = 0, y = 0, ro = 0, rs = 0.5, rx = 0, ry = 0;
+        for (const p of taps) {
+          const a = now - (p.t - 0.3), b = p.t + 0.34 - now;
+          if (a >= 0 && b >= 0) {
+            op = Math.min(1, a / 0.16, b / 0.18);
+            sc = 1 + 0.28 * S.smooth(S.clamp((p.t - now) / 0.3, 0, 1));
+            const pu = (now - p.t) / 0.22;
+            if (pu >= 0 && pu <= 1) sc *= 1 - 0.18 * Math.sin(pu * Math.PI);
+            x = p.x; y = p.y;
+          }
+          const u = (now - p.t) / 0.5;
+          if (u >= 0 && u <= 1) { const e = 1 - Math.pow(1 - u, 3); ro = 0.75 * (1 - e); rs = 0.5 + 1.5 * e; rx = p.x; ry = p.y; }
+        }
+        dot.style.opacity = op.toFixed(3);
+        dot.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%) scale(${sc.toFixed(3)})`;
+        rip.style.opacity = ro.toFixed(3);
+        rip.style.transform = `translate(${rx.toFixed(1)}px, ${ry.toFixed(1)}px) translate(-50%, -50%) scale(${rs.toFixed(3)})`;
+      });
+
+      // ---- confetti: 8 seeded bits per check (warm brand colours only), ballistic, per frame
+      const conf = S.$("#conf");
+      const COLORS = ["#ff6b4a", "#ffb38a", "#ffd166", "#ff8f66", "#ffc2ad", "#f5a524", "#ff7a59", "#ffe08a"];
+      function confetti(o, t0, seed) {
+        const bits = [];
+        for (let j = 0; j < 8; j++) {
+          const el = document.createElement("i"); el.className = "bit";
+          const ang = ((-160 + S.rnd() * 140) * Math.PI) / 180, sp = 560 + S.rnd() * 420;
+          const round = S.rnd() < 0.3, w = 13 + S.rnd() * 7, h = round ? w : 20 + S.rnd() * 10;
+          Object.assign(el.style, { width: w.toFixed(1) + "px", height: h.toFixed(1) + "px", borderRadius: round ? "50%" : "3px", background: COLORS[(j + seed) % COLORS.length], boxShadow: "0 2px 4px rgba(120, 50, 20, 0.18)" });
+          conf.appendChild(el);
+          bits.push({ el, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, r0: S.rnd() * 360, spin: (S.rnd() - 0.5) * 1100 });
+        }
+        const D = 1.0, G = 2300;
+        S.everyFrame((now) => {
+          const tau = now - t0;
+          for (const b of bits) {
+            if (tau < 0 || tau > D) { b.el.style.opacity = 0; continue; }
+            const x = o.x + b.vx * tau, y = o.y + b.vy * tau + 0.5 * G * tau * tau;
+            b.el.style.opacity = (Math.min(1, tau / 0.05) * (1 - S.smooth(S.clamp((tau - 0.55) / 0.45, 0, 1)))).toFixed(3);
+            b.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%) rotate(${(b.r0 + b.spin * tau).toFixed(1)}deg)`;
+          }
+        });
+      }
+
+      // ---- background light: breathes, and shifts with each beat of the story
+      tl.fromTo("#blob1", { opacity: 0.55, scale: 0.86 }, { opacity: 1, scale: 1, duration: 2.2, ease: "settle" }, 0);
+      tl.fromTo("#blob2", { opacity: 0.4 }, { opacity: 0.9, duration: 3, ease: "glide" }, 0);
+      tl.fromTo("#blob3", { opacity: 0.3 }, { opacity: 0.8, duration: 4, ease: "glide" }, 0.5);
+      tl.to("#blob1", { x: -160, y: 120, duration: 3.2, ease: "glide" }, 2.6);
+      tl.to("#blob2", { x: 140, y: -80, duration: 3.6, ease: "glide" }, 6.8);
+      tl.to("#blob1", { x: -40, y: 260, scale: 1.18, duration: 1.1, ease: "settle" }, 10.95);
+      tl.to("#blob3", { x: -300, y: -260, duration: 3.5, ease: "glide" }, 14.9);
+      tl.to("#blob1", { x: -260, y: 380, scale: 1.05, duration: 1.6, ease: "move" }, 17.35);
+      S.drift("#blob2", { ax: 26, ay: 18, period: 9 });
+      S.drift("#blob3", { ax: -20, ay: 14, period: 11, phase: 1.3 });
+      S.drift("#phone-float", { ax: 0, ay: 7, period: 5.2, t0: 1.5, t1: 17.4 });
+
+      // ---- S1 0–2.6 · hook: caption + the phone rises and settles (lands at rest)
+      capIn("#c1a", "#c1b", 0.15);
+      capOut("#c1a", "#c1b", 2.36);
+      tl.fromTo("#phone-wrap", { y: 1180, rotationX: 24, scale: 0.9, transformPerspective: 2200, transformOrigin: "50% 0%" }, { y: 0, rotationX: 0, scale: 1, duration: 1.3, ease: "springSoft" }, 0.22);
+      tl.fromTo("#phone-wrap", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "enter" }, 0.22);
+      tl.fromTo("#list1 .hrow, #wk1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, ease: "enter", stagger: S.f(5) }, 0.85);
+
+      // ---- S2 2.6–7.0 · create: tap +, push to New habit, pick, the wheel turns, Save, push back
+      capIn("#c2a", "#c2b", 2.62);
+      capOut("#c2a", "#c2b", 6.62);
+      tl.fromTo("#plus", { scale: 1 }, { scale: 0.86, duration: 0.1, ease: "exit", yoyo: true, repeat: 1 }, 2.79);
+      push("#scr-home", "#scr-new", 2.98);
+      tl.fromTo("#scr-new .opt", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(4) }, 3.12);
+      tl.fromTo("#opt1", { scale: 1 }, { scale: 0.97, duration: 0.1, ease: "exit", yoyo: true, repeat: 1 }, 3.86);
+      tl.fromTo("#opt1", { borderColor: "rgba(255,107,74,0)", backgroundColor: "#ffffff" }, { borderColor: "rgba(255,107,74,1)", backgroundColor: "#fff3ee", duration: 0.28, ease: "enter" }, 3.9);
+      tl.fromTo("#badge", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "springPop" }, 3.94);
+      S.draw("#badge-tick", 4.02, { dur: 0.32 });
+      // wheel: hours 7 → 9 (up), minutes 30 → 00 (down); band is 62 px from the top, rows are 56 px
+      const row = (i) => 62 - i * 56;
+      tl.fromTo("#wh-h", { y: row(2) }, { y: row(4), duration: 0.9, ease: "move" }, 4.3);
+      tl.fromTo("#wh-m", { y: row(3) }, { y: row(1), duration: 0.8, ease: "move" }, 4.6);
+      g.set("#wh-p", { y: row(1) });
+      tl.fromTo("#save", { scale: 1 }, { scale: 0.96, duration: 0.1, ease: "exit", yoyo: true, repeat: 1 }, 6.3);
+      push("#scr-new", "#scr-home2", 6.45, -1);
+      tl.fromTo("#newhi", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "enter" }, 6.7);
+      tl.to("#newhi", { opacity: 0, duration: 0.6, ease: "glide" }, 7.05);
+
+      // ---- S3 7.0–11.0 · one tap per habit: coral → green, tick draws, ring burst, confetti; the bar fills
+      capIn("#c3a", "#c3b", 7.0);
+      capOut("#c3a", "#c3b", 10.48);
+      tl.fromTo("#pfill", { scaleX: 0, backgroundColor: "#ff6b4a" }, { scaleX: 0.25, duration: 0.45, ease: "settle" }, CHECKS[0] + 0.2);
+      S.$$("#scr-home2 .hrow").forEach((r, i) => {
+        const t = CHECKS[i], c = r.querySelector(".chk");
+        tl.fromTo(c, { scale: 1 }, { scale: 0.86, duration: 0.09, ease: "exit", yoyo: true, repeat: 1 }, t - 0.02);
+        tl.fromTo(r.querySelector(".fill"), { scale: 0, backgroundColor: "#ff6b4a" }, { scale: 1, duration: 0.18, ease: "enter" }, t);
+        tl.to(r.querySelector(".fill"), { backgroundColor: "#22c55e", duration: 0.3, ease: "move" }, t + 0.14);
+        tl.fromTo(c, { borderColor: "rgba(255,107,74,0.8)" }, { borderColor: "rgba(34,197,94,1)", duration: 0.3, ease: "move" }, t + 0.14);
+        tl.fromTo(r.querySelector(".tick"), { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.32, ease: "settle" }, t + 0.16);
+        tl.fromTo(r, { backgroundColor: "#ffffff" }, { backgroundColor: "#f0faf3", duration: 0.45, ease: "move" }, t + 0.18);
+        S.burst(r.querySelector(".burst"), t + 0.08, { dur: 0.62, s0: 0.6, s1: 2.1, o0: 0.85 });
+        confetti(P.chk[i], t + 0.06, i * 3);
+        if (i > 0) tl.to("#pfill", { scaleX: 0.25 * (i + 1), duration: 0.45, ease: "settle" }, t + 0.2);
+      });
+      const doneTxt = S.$("#done-txt"), wkTxt = S.$("#wk2s");
+      S.everyFrame((now) => {
+        const n = CHECKS.filter((t) => now >= t + 0.2).length;
+        const s = now >= DONE ? "All done today" : `${n} of 4 done`;
+        if (doneTxt.textContent !== s) doneTxt.textContent = s;
+        const w = now >= DONE + 0.1 ? "5 of 7 days" : "4 of 7 days";
+        if (wkTxt.textContent !== w) wkTxt.textContent = w;
+      });
+      tl.fromTo("#done-txt", { color: "#6f5e55" }, { color: "#15803d", duration: 0.3, ease: "enter" }, DONE);
+      tl.fromTo("#spark", { scale: 0, opacity: 0, rotation: -40 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.6, ease: "springPop" }, DONE);
+      tl.to("#pfill", { backgroundColor: "#22c55e", duration: 0.35, ease: "move" }, DONE - 0.03);
+      // today's day in the week strip turns green with a tick (sets up the streak)
+      tl.fromTo("#wk-fill", { scale: 0 }, { scale: 1, duration: 0.5, ease: "houseSpring" }, DONE + 0.08);
+      S.draw("#wk-tick", DONE + 0.2, { dur: 0.3 });
+
+      // ---- S4 10.55–15 · the streak lands on the music's drop (11.0): flame, 0 → 12, the calendar fills in a wave
+      push("#scr-home2", "#scr-streak", 10.55);
+      capIn("#c4a", "#c4b", 10.92);
+      capOut("#c4a", "#c4b", 14.62);
+      tl.fromTo("#flame", { scale: 0.2, opacity: 0, transformOrigin: "50% 92%" }, { scale: 1, opacity: 1, duration: 0.75, ease: "springPop" }, 11.0);
+      tl.fromTo("#fglow", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.9, ease: "settle" }, 11.0);
+      S.burst("#flame-burst", 11.04, { dur: 0.8, s0: 0.5, s1: 2.6, o0: 0.7 });
+      const flameIn = S.$("#flame-in"), fglow = S.$("#fglow");
+      S.everyFrame((now) => {
+        const w = S.clamp((now - 11.2) / 0.6, 0, 1);
+        const sy = 1 + w * (0.035 * Math.sin(now * 2 * Math.PI * 2.7) + 0.018 * Math.sin(now * 2 * Math.PI * 4.9 + 1.1));
+        const sk = w * 2.4 * Math.sin(now * 2 * Math.PI * 1.9 + 0.4);
+        flameIn.style.transform = `scale(${(2 - sy).toFixed(4)}, ${sy.toFixed(4)}) skewX(${sk.toFixed(2)}deg)`;
+        fglow.style.filter = `brightness(${(1 + w * 0.12 * Math.sin(now * 2 * Math.PI * 1.3)).toFixed(3)})`;
+      });
+      S.count("#snum", 11.12, 0, 12, { dur: 1.15, ease: "settle" });
+      tl.fromTo("#snum-wrap", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 11.08);
+      tl.fromTo("#slbl", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 11.32);
+      tl.fromTo("#cal b", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "enter", stagger: S.f(2) }, 11.9);
+      tl.fromTo("#cal i", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "enter", stagger: S.f(1) }, 11.95);
+      S.$$("#cal i u").forEach((u, i) => {
+        const r = Math.floor(i / 7), c = i % 7;
+        tl.fromTo(u, { scale: 0 }, { scale: 1, duration: 0.5, ease: "houseSpring" }, 12.35 + (r + c) * 0.07);
+      });
+      S.draw("#today-tick", 12.98, { dur: 0.3 });
+      S.burst("#today-burst", 12.95, { dur: 0.65, s0: 0.6, s1: 2.2, o0: 0.85 });
+      tl.fromTo("#mile", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "springSoft" }, 13.12); // held 13.12–14.95 (6 words)
+      tl.fromTo("#mi-fill", { scaleX: 0 }, { scaleX: 12 / 14, duration: 0.9, ease: "settle" }, 13.32);
+      S.sweep("#snum-shine", 14.0, { dur: 1.0 }); // sweep a text-free overlay (a band inside a text host counts as clipped text)
+      tl.fromTo("#tab-home", { color: "#ff6b4a" }, { color: "rgba(42,27,20,0.36)", duration: 0.3, ease: "move" }, 10.6);
+      tl.fromTo("#tab-flame", { color: "rgba(42,27,20,0.36)" }, { color: "#ff6b4a", duration: 0.3, ease: "move" }, 10.6);
+
+      // ---- S5 14.95–17.4 · the weekly insight: card rises, 0 → 70, seven bars, the best day, two stats
+      push("#scr-streak", "#scr-ins", 14.95);
+      tl.to("#tab-flame", { color: "rgba(42,27,20,0.36)", duration: 0.3, ease: "move" }, 15.0);
+      tl.fromTo("#tab-stats", { color: "rgba(42,27,20,0.36)" }, { color: "#ff6b4a", duration: 0.3, ease: "move" }, 15.0);
+      capIn("#c5a", "#c5b", 15.08);
+      capOut("#c5a", "#c5b", 17.2);
+      tl.fromTo("#icard", { opacity: 0, y: 70 }, { opacity: 1, y: 0, duration: 0.8, ease: "springSoft" }, 15.12);
+      S.count("#pages", 15.3, 0, 70, { dur: 1.0, ease: "settle" });
+      S.$$("#bars i").forEach((b, i) => tl.fromTo(b, { scaleY: 0 }, { scaleY: 1, duration: 0.65, ease: i === 5 ? "houseSpring" : "settle" }, 15.36 + i * S.f(3)));
+      tl.fromTo("#best", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter" }, 15.78);          // held ≥ 1.5 s before the phone exits
+      tl.fromTo("#stats .st", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: "enter", stagger: S.f(2) }, 15.82);
+
+      // ---- S6 17.4–20 · end card: the phone drops away, the icon pops, the ring draws into a tick, the name rises
+      tl.to("#phone-wrap", { y: 1500, duration: 0.5, ease: "exit" }, 17.4);
+      tl.fromTo("#appicon", { scale: 0.35, opacity: 0, y: 40 }, { scale: 1, opacity: 1, y: 0, duration: 0.8, ease: "springPop" }, 17.6);
+      S.burst("#icon-burst", 17.7, { dur: 0.8, s0: 0.6, s1: 1.9, o0: 0.6 });
+      tl.fromTo("#icon-ring", { drawSVG: "0% 0%" }, { drawSVG: "0% 80%", duration: 0.6, ease: "settle" }, 17.72);
+      S.draw("#icon-tick", 18.0, { dur: 0.34, ease: "settle" });
+      S.chars("#wm", 17.86, { stagger: S.f(1.5) });
+      tl.fromTo("#getbtn", { opacity: 0, y: 26, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "enter" }, 18.25);
+      S.sweep("#getbtn-shine", 18.95, { dur: 0.9 });
+      tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 18.45);
+
+      S.grain({ opacity: 0.035, blend: "multiply" });
+      S.vignette({ strength: 0.1 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

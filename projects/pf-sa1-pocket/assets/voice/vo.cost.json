@@ -1,0 +1,8 @@
+{
+ "model": "gemini-3.8-flash-tts",
+ "voice": "Puck",
+ "blocks": 1,
+ "new_audio_s": 9.6,
+ "usd_estimate": 0.0022,
+ "at": "2026-11-07T15:55:30.305Z"
+}

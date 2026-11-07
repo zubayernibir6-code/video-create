@@ -1,0 +1,56 @@
+{
+  "code": "IH1",
+  "name": "Integrations Hub",
+  "brand": "Nimbus",
+  "project": "pf-ih1-nimbus",
+  "aspect": "1x1",
+  "width": 1080,
+  "height": 1080,
+  "duration": 12,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Nimbus (fictional — concept work): a workflow-automation platform that connects a team's apps and moves data between them",
+    "goal": "Social-feed and marketplace-page loop announcing the integrations directory: make 'it connects to everything we use' land in 12 s",
+    "audience": "Ops, RevOps and product teams at 10–500 person companies choosing an automation tool",
+    "message": "Nimbus sits at the centre of your stack: 200+ integrations, data flowing on its own",
+    "cta": "Connect everything.",
+    "tone": "Confident, luminous, rhythmic: a glowing hub, calm orbits, packets landing on the beat; one cyan accent on deep indigo",
+    "references": [
+      "Zapier and Make integration visuals",
+      "Stripe ecosystem graphics"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "studio-pulse",
+      "from": 2.09,
+      "gain": 0.55,
+      "fadeIn": 0.2,
+      "fadeOut": 1.4
+    },
+    "cues": [
+      { "t": 0.2, "sfx": "whoosh", "gain": 0.18 },
+      { "t": 1.97, "sfx": "click-soft", "gain": 0.22 },
+      { "t": 2.49, "sfx": "click-soft", "gain": 0.22 },
+      { "t": 2.97, "sfx": "click-soft", "gain": 0.22 },
+      { "t": 3.47, "sfx": "click-soft", "gain": 0.22 },
+      { "t": 3.97, "sfx": "whoosh-short", "gain": 0.14 },
+      { "t": 4.3, "sfx": "whoosh-short", "gain": 0.12 },
+      { "t": 4.63, "sfx": "whoosh-short", "gain": 0.12 },
+      { "t": 6.4975, "sfx": "ping", "gain": 0.15 },
+      { "t": 6.995, "sfx": "ping", "gain": 0.15 },
+      { "t": 7.4925, "sfx": "ping", "gain": 0.15 },
+      { "t": 7.99, "sfx": "ping", "gain": 0.15 },
+      { "t": 8.4875, "sfx": "ping", "gain": 0.15 },
+      { "t": 8.985, "sfx": "ping", "gain": 0.15 },
+      { "t": 9.02, "sfx": "typing", "gain": 0.16, "len": 0.85 },
+      { "t": 9.98, "sfx": "impact-bass-2", "gain": 0.35, "len": 2.0 }
+    ]
+  },
+  "reel": {
+    "from": 5.4,
+    "to": 9.8
+  },
+  "made": "2026-11-07"
+}

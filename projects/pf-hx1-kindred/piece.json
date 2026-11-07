@@ -1,0 +1,305 @@
+{
+  "code": "HX1",
+  "name": "How-It-Works Explainer",
+  "brand": "Kindred Health",
+  "project": "pf-hx1-kindred",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 33,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Kindred Health (fictional — concept work): video doctor visits, booked and held in an app",
+    "goal": "Landing-page and onboarding explainer: in about 30 s a first-time visitor understands the three steps of a Kindred visit and taps 'Get the app'",
+    "audience": "Busy adults and parents in the US/UK who put off seeing a doctor because booking means days of phone calls",
+    "message": "Tell us what's going on, get matched with the right clinician in under 10 minutes, get care by video — private and in one place",
+    "cta": "Get the app",
+    "tone": "Friendly clinical: calm, warm, precise; soft mint stage, white panels, one green accent, flat shapes, no faces",
+    "references": [
+      "Kurzgesagt clarity",
+      "Headspace / Stripe explainers"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "bright-future",
+      "from": 3.72,
+      "gain": 0.35,
+      "fadeIn": 0.3,
+      "fadeOut": 1.6,
+      "duck": [
+        [
+          0.5,
+          29.3,
+          0.5
+        ]
+      ]
+    },
+    "voice": {
+      "file": "assets/voice/vo.wav",
+      "at": 0.3,
+      "gain": 1
+    },
+    "cues": [
+      {
+        "t": 0.3,
+        "sfx": "whoosh-short",
+        "gain": 0.2
+      },
+      {
+        "t": 0.68,
+        "sfx": "pop",
+        "gain": 0.13
+      },
+      {
+        "t": 1.1,
+        "sfx": "pop",
+        "gain": 0.12
+      },
+      {
+        "t": 1.52,
+        "sfx": "pop",
+        "gain": 0.13
+      },
+      {
+        "t": 1.94,
+        "sfx": "pop",
+        "gain": 0.12
+      },
+      {
+        "t": 2.36,
+        "sfx": "pop",
+        "gain": 0.13
+      },
+      {
+        "t": 3.3,
+        "sfx": "whoosh-short",
+        "gain": 0.3
+      },
+      {
+        "t": 3.86,
+        "sfx": "whoosh",
+        "gain": 0.28
+      },
+      {
+        "t": 3.9,
+        "sfx": "impact-bass-2",
+        "gain": 0.2,
+        "len": 1.6
+      },
+      {
+        "t": 3.95,
+        "sfx": "sparkle",
+        "gain": 0.24
+      },
+      {
+        "t": 4.8,
+        "sfx": "whoosh-short",
+        "gain": 0.18
+      },
+      {
+        "t": 5.45,
+        "sfx": "ping",
+        "gain": 0.18
+      },
+      {
+        "t": 6.45,
+        "sfx": "click-soft",
+        "gain": 0.22
+      },
+      {
+        "t": 6.58,
+        "sfx": "click-soft",
+        "gain": 0.2
+      },
+      {
+        "t": 6.71,
+        "sfx": "click-soft",
+        "gain": 0.22
+      },
+      {
+        "t": 8.18,
+        "sfx": "whoosh",
+        "gain": 0.24
+      },
+      {
+        "t": 8.32,
+        "sfx": "pop",
+        "gain": 0.15
+      },
+      {
+        "t": 8.48,
+        "sfx": "pop",
+        "gain": 0.14
+      },
+      {
+        "t": 8.64,
+        "sfx": "pop",
+        "gain": 0.15
+      },
+      {
+        "t": 9.42,
+        "sfx": "whoosh-short",
+        "gain": 0.24
+      },
+      {
+        "t": 9.8,
+        "sfx": "pop",
+        "gain": 0.17
+      },
+      {
+        "t": 10.12,
+        "sfx": "typing",
+        "gain": 0.15,
+        "len": 1.45
+      },
+      {
+        "t": 11.62,
+        "sfx": "click",
+        "gain": 0.3
+      },
+      {
+        "t": 11.7,
+        "sfx": "whoosh-short",
+        "gain": 0.13
+      },
+      {
+        "t": 12.05,
+        "sfx": "pop",
+        "gain": 0.13
+      },
+      {
+        "t": 12.6,
+        "sfx": "whoosh-short",
+        "gain": 0.24
+      },
+      {
+        "t": 13.72,
+        "sfx": "whoosh-short",
+        "gain": 0.16
+      },
+      {
+        "t": 14.3,
+        "sfx": "whoosh-short",
+        "gain": 0.16
+      },
+      {
+        "t": 14.82,
+        "sfx": "ping",
+        "gain": 0.22
+      },
+      {
+        "t": 15,
+        "sfx": "pop",
+        "gain": 0.18
+      },
+      {
+        "t": 15.95,
+        "sfx": "click-soft",
+        "gain": 0.22
+      },
+      {
+        "t": 16.75,
+        "sfx": "pop",
+        "gain": 0.15
+      },
+      {
+        "t": 17.72,
+        "sfx": "whoosh-short",
+        "gain": 0.24
+      },
+      {
+        "t": 18.3,
+        "sfx": "notification",
+        "gain": 0.2,
+        "len": 1.2
+      },
+      {
+        "t": 19.55,
+        "sfx": "pop",
+        "gain": 0.2
+      },
+      {
+        "t": 20.3,
+        "sfx": "whoosh-short",
+        "gain": 0.2
+      },
+      {
+        "t": 20.95,
+        "sfx": "pop",
+        "gain": 0.24
+      },
+      {
+        "t": 21.08,
+        "sfx": "click-soft",
+        "gain": 0.2
+      },
+      {
+        "t": 21.52,
+        "sfx": "pop",
+        "gain": 0.18
+      },
+      {
+        "t": 22.14,
+        "sfx": "pop",
+        "gain": 0.16
+      },
+      {
+        "t": 23.74,
+        "sfx": "whoosh",
+        "gain": 0.28
+      },
+      {
+        "t": 24.5,
+        "sfx": "whoosh-short",
+        "gain": 0.18
+      },
+      {
+        "t": 24.95,
+        "sfx": "click",
+        "gain": 0.32
+      },
+      {
+        "t": 25.65,
+        "sfx": "click-soft",
+        "gain": 0.2
+      },
+      {
+        "t": 25.95,
+        "sfx": "click-soft",
+        "gain": 0.2
+      },
+      {
+        "t": 26.25,
+        "sfx": "click-soft",
+        "gain": 0.2
+      },
+      {
+        "t": 27.35,
+        "sfx": "whoosh",
+        "gain": 0.3
+      },
+      {
+        "t": 27.6,
+        "sfx": "sparkle",
+        "gain": 0.3
+      },
+      {
+        "t": 29.45,
+        "sfx": "pop",
+        "gain": 0.26
+      },
+      {
+        "t": 29.6,
+        "sfx": "chime",
+        "gain": 0.3
+      }
+    ]
+  },
+  "reel": {
+    "from": 12.5,
+    "to": 16.9
+  },
+  "made": "2026-11-07"
+}

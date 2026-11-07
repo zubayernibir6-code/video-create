@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>KT1 · Kinetic Type Manifesto — Driftwood (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Driftwood: colour-block kinetic type. Cobalt carries the hierarchy; cream and ink are the paper and the press. */
+      --bg: #111111;
+      --bg-2: #181818;
+      --ink: #f3eadb;
+      --accent: #2340ff;
+      --cobalt: #2340ff;
+      --cream: #f3eadb;
+      --coal: #111111;
+      --font-display: "Anton", "Hind Siliguri", sans-serif;
+      --font-body: "Inter", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+    /* colour fields: flat by concept, with a whisper of light so they read as printed paper, not RGB */
+    .f-cobalt { background: radial-gradient(120% 95% at 42% 38%, #2b47ff 0%, #2340ff 46%, #1d36de 100%); }
+    .f-cream { background: radial-gradient(120% 95% at 45% 40%, #f7f0e4 0%, #f3eadb 50%, #ebe0cd 100%); }
+    .f-coal { background: radial-gradient(120% 95% at 45% 40%, #1b1b1b 0%, #121212 55%, #0b0b0b 100%); }
+    .t-cream { color: var(--cream); }
+    .t-coal { color: var(--coal); }
+    .t-cobalt { color: var(--cobalt); }
+
+    /* Anton set tight: line-height .92 keeps O/S overshoots inside SplitText masks (caps are .859 em) */
+    .ant { font-family: var(--font-display); font-weight: 400; line-height: 0.92; letter-spacing: -0.004em; margin: 0; white-space: nowrap; }
+    .row { display: block; }
+
+    /* A — WORK slam */
+    #a-word { font-size: 560px; }
+
+    /* B — WORK IS / LOUD. */
+    .b-wrap { position: absolute; left: 92px; top: 64px; }
+    #b-top { font-size: 250px; }
+    #b-loud { font-size: 820px; margin-top: 18px; } /* 47 px of air above the caps: the 21 px vertical shake never touches WORK IS */
+
+    /* C — NOTIFICATIONS. + badges */
+    .c-word { position: relative; font-size: 320px; }
+    .badge { position: absolute; top: -0.14em; width: 0.31em; height: 0.31em; margin-left: -0.06em; border-radius: 50%; background: var(--cobalt); color: var(--cream); font-family: var(--font-body); font-weight: 650; font-size: 1em; display: grid; place-items: center; box-shadow: 0 0 0 0.03em #111111, 0 18px 40px -10px rgba(35, 64, 255, 0.7); }
+    .badge span { font-size: 34px; letter-spacing: -0.01em; line-height: 1; }
+
+    /* D — NOTIFICATIONS. / MEETINGS. split + calendar pills */
+    .d-wrap { position: absolute; left: 92px; top: 272px; }
+    #d-top { font-size: 200px; }
+    .d-meet { position: relative; font-size: 330px; margin-top: 34px; }
+    .d-half { display: block; }
+    .d-half.lo { position: absolute; left: 0; top: 0; }
+    .pills { position: absolute; right: 100px; top: 548px; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+    .pill { display: flex; align-items: center; gap: 18px; padding: 16px 30px 16px 20px; border-radius: 16px; background: var(--cream); color: var(--coal); font-family: var(--font-body); font-weight: 500; font-size: 36px; line-height: 1; white-space: nowrap; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 16px 34px -14px rgba(0, 0, 0, 0.55); }
+    .pill b { font-weight: 650; font-variant-numeric: tabular-nums; min-width: 98px; }
+    .pill i { width: 6px; align-self: stretch; border-radius: 3px; background: var(--cobalt); }
+
+    /* E — the stack */
+    .e-wrap { position: absolute; left: 92px; top: 150px; }
+    .e-small { font-size: 200px; }
+    #e-noise { font-size: 390px; margin-top: 26px; }
+
+    /* F — NOISE wall */
+    .wall { position: absolute; left: 0; top: -6px; right: 0; }
+    .wall-row { font-size: 236px; line-height: 0.925; }
+
+    /* G — calm */
+    .g-col { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+    .g-line { font-size: 230px; text-align: center; }
+    .g-rule { width: 520px; height: 3px; border-radius: 2px; background: var(--cobalt); margin-top: 22px; transform-origin: 50% 50%; }
+
+    /* H — MAKE WORK / FEEL LIGHTER. */
+    .h-wrap { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; }
+    .h-block { position: relative; }
+    .h-line { font-size: 300px; }
+    .h-mask { overflow: hidden; padding-bottom: 0.02em; }
+    #h-light .st-char { display: inline-block; }
+    .h-wave { position: absolute; left: 0; top: 100%; width: 1500px; height: 40px; margin-top: 18px; overflow: visible; }
+    .tide { position: absolute; left: -40px; right: -40px; top: 0; height: 1500px; }
+    .tide svg { position: absolute; left: 0; top: 0; width: 100%; height: 1500px; }
+
+    /* I — end card */
+    .i-col { display: flex; flex-direction: column; align-items: center; }
+    .wm { font-size: 280px; line-height: 0.98; letter-spacing: -0.01em; padding: 0 0.04em; }
+    .wm .dot { color: var(--cobalt); }
+    .i-wave { width: 1150px; height: 46px; margin-top: 18px; overflow: visible; }
+    .i-tag { margin-top: 34px; font-family: var(--font-body); font-weight: 500; font-size: 46px; letter-spacing: -0.012em; color: #1a1a1a; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(17, 17, 17, 0.66); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="20" data-fps="30">
+
+    <!-- A 0–1.2 · WORK slams on the first strong beat (0.2) -->
+    <section id="a" class="scene clip f-cobalt" data-start="0" data-duration="1.2" data-track-index="1">
+      <div id="a-shake" class="layer center">
+        <h1 id="a-word" class="ant t-cream">WORK</h1>
+      </div>
+    </section>
+
+    <!-- B 1.2–3.2 · hard cut: WORK IS / LOUD. (shakes, then calms) -->
+    <section id="b" class="scene clip f-cream" data-start="1.2" data-duration="2" data-track-index="2">
+      <div class="b-wrap">
+        <div id="b-top" class="ant t-coal row" data-layout-allow-overlap>WORK IS</div>
+        <div id="b-loud" class="ant t-cobalt row" data-layout-allow-overlap>LOUD.</div>
+      </div>
+    </section>
+
+    <!-- C 3.2–4.2 · hard cut: NOTIFICATIONS. char cascade + badges -->
+    <section id="c" class="scene clip f-coal" data-start="3.2" data-duration="1" data-track-index="3">
+      <div class="layer center">
+        <div class="c-word ant t-cream">
+          <div id="c-text">NOTIFICATIONS.</div>
+          <div id="badge1" class="badge" data-layout-allow-overlap style="left: 0.42em"><span>3</span></div>
+          <div id="badge2" class="badge" data-layout-allow-overlap style="left: 2.66em"><span>12</span></div>
+          <div id="badge3" class="badge" data-layout-allow-overlap style="left: 5.19em"><span>99+</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- D 4.2–5.2 · hard cut: NOTIFICATIONS. / MEETINGS. split from centre + calendar pills -->
+    <section id="d" class="scene clip f-cobalt" data-start="4.2" data-duration="1" data-track-index="4">
+      <div class="d-wrap">
+        <div id="d-top" class="ant t-cream row" data-layout-allow-overlap>NOTIFICATIONS.</div>
+        <div class="d-meet ant t-cream">
+          <div id="d-hi" class="d-half hi" data-layout-allow-overlap>MEETINGS.</div>
+          <div id="d-lo" class="d-half lo" data-layout-allow-overlap aria-hidden="true">MEETINGS.</div>
+        </div>
+      </div>
+      <div class="pills">
+        <div id="pill1" class="pill"><i></i><b>9:00</b>Standup</div>
+        <div id="pill2" class="pill"><i></i><b>9:30</b>Sync</div>
+        <div id="pill3" class="pill"><i></i><b>10:00</b>Review</div>
+      </div>
+    </section>
+
+    <!-- E 5.2–6.2 · hard cut: the stack; NOISE. slides in with a snap -->
+    <section id="e" class="scene clip f-cream" data-start="5.2" data-duration="1" data-track-index="5">
+      <div id="e-shake" class="e-wrap">
+        <div class="ant t-coal row e-small" data-layout-allow-overlap>NOTIFICATIONS.</div>
+        <div class="ant t-coal row e-small" data-layout-allow-overlap>MEETINGS.</div>
+        <div id="e-noise" class="ant t-cobalt row" data-layout-allow-overlap>NOISE.</div>
+      </div>
+    </section>
+
+    <!-- F 6.2–8.2 · hard cut: the NOISE wall; stutters on the fill (6.95, 7.35); dissolves into calm from 7.7 -->
+    <section id="f" class="scene clip" data-start="6.2" data-duration="2" data-track-index="6">
+      <div id="f-bg" class="layer f-cobalt" data-design-ignore data-layout-ignore></div>
+      <div id="f-wall" class="wall" data-layout-allow-overflow>
+        <div class="wall-row ant" data-layout-allow-overlap>NOISE. NOISE. NOISE. NOISE. NOISE. NOISE. NOISE.</div>
+        <div class="wall-row ant" data-layout-allow-overlap>NOISE. NOISE. NOISE. NOISE. NOISE. NOISE. NOISE.</div>
+        <div class="wall-row ant" data-layout-allow-overlap>NOISE. NOISE. NOISE. NOISE. NOISE. NOISE. NOISE.</div>
+        <div class="wall-row ant" data-layout-allow-overlap>NOISE. NOISE. NOISE. NOISE. NOISE. NOISE. NOISE.</div>
+        <div class="wall-row ant" data-layout-allow-overlap>NOISE. NOISE. NOISE. NOISE. NOISE. NOISE. NOISE.</div>
+      </div>
+    </section>
+
+    <!-- G 7.6–12.2 · the calm: soft dissolve in, slow breathing type, music ducked -->
+    <section id="g" class="scene clip" data-start="7.6" data-duration="4.6" data-track-index="7">
+      <div id="g-bg" class="layer f-cream" data-design-ignore data-layout-ignore></div>
+      <div class="layer center">
+        <div class="g-col">
+          <div id="g-what" class="ant t-coal g-line" data-layout-allow-overlap>WHAT IF</div>
+          <div id="g-wasnt" class="ant t-coal g-line" data-layout-allow-overlap>IT WASN’T?</div>
+          <div id="g-rule" class="g-rule" data-design-ignore></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- H 12.2–16.2 · hard cut back to energy: MAKE WORK / FEEL LIGHTER.; a cream tide wipes up into the end card -->
+    <section id="h" class="scene clip f-cobalt" data-start="12.2" data-duration="4" data-track-index="8">
+      <div class="h-wrap">
+        <div id="h-block" class="h-block">
+          <div class="h-mask"><div id="h-make" class="ant t-cream h-line" data-layout-allow-overlap>MAKE WORK</div></div>
+          <div class="ant t-cream h-line" data-layout-allow-overlap><span id="h-feel">FEEL</span> <span id="h-light">LIGHTER.</span></div>
+          <svg class="h-wave" viewBox="0 0 1500 40" data-design-ignore data-layout-ignore>
+            <defs><clipPath id="h-wave-clip"><rect id="h-wave-rect" x="0" y="-20" width="0" height="80" /></clipPath></defs>
+            <path id="h-wave-path" d="M0 20 L1500 20" stroke="#f3eadb" stroke-width="5" fill="none" stroke-linecap="round" clip-path="url(#h-wave-clip)" />
+          </svg>
+        </div>
+      </div>
+      <div id="h-tide" class="tide" data-design-ignore data-layout-ignore>
+        <svg viewBox="0 0 2000 1500" preserveAspectRatio="none"><path id="h-tide-path" d="M0 60 L2000 60 L2000 1500 L0 1500 Z" fill="#f3eadb" /></svg>
+      </div>
+    </section>
+
+    <!-- I 16.2–20 · end card: Driftwood. settles like wood on still water -->
+    <section id="i" class="scene clip f-cream" data-start="16.2" data-duration="3.8" data-track-index="9">
+      <div class="layer center">
+        <div id="i-col" class="i-col">
+          <div id="i-wm" class="ant t-coal wm">Driftwood<span class="dot">.</span></div>
+          <svg class="i-wave" viewBox="0 0 1150 46" data-design-ignore data-layout-ignore>
+            <defs><clipPath id="i-wave-clip"><rect id="i-wave-rect" x="0" y="-20" width="0" height="90" /></clipPath></defs>
+            <path id="i-wave-path" d="M0 23 L1150 23" stroke="#2340ff" stroke-width="4" fill="none" stroke-linecap="round" clip-path="url(#i-wave-clip)" />
+          </svg>
+          <div id="i-tag" class="i-tag">Make work feel lighter.</div>
+        </div>
+      </div>
+      <div class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/social-punch.mp3" data-start="0" data-duration="20" data-media-start="25.35" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.12,"v":1},{"t":7.55,"v":1},{"t":7.7,"v":0.4},{"t":11.95,"v":0.4},{"t":12.2,"v":1},{"t":18.4,"v":1},{"t":20,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.189" data-duration="0.49" data-track-index="20" data-volume="0.36"></audio>
+    <audio id="sfx-02-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="0.15" data-duration="0.75" data-track-index="21" data-volume="0.46" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.67,"v":1},{"t":0.75,"v":0}]}]}'></audio>
+    <audio id="sfx-03-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="1.189" data-duration="0.49" data-track-index="20" data-volume="0.34"></audio>
+    <audio id="sfx-04-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="1.15" data-duration="0.75" data-track-index="21" data-volume="0.42" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.67,"v":1},{"t":0.75,"v":0}]}]}'></audio>
+    <audio id="sfx-05-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="3.189" data-duration="0.49" data-track-index="20" data-volume="0.32"></audio>
+    <audio id="sfx-06-pop" src="assets/sfx/pop.mp3" data-start="3.334" data-duration="0.72" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-07-pop" src="assets/sfx/pop.mp3" data-start="3.584" data-duration="0.72" data-track-index="22" data-volume="0.22"></audio>
+    <audio id="sfx-08-pop" src="assets/sfx/pop.mp3" data-start="3.834" data-duration="0.72" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-09-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="4.189" data-duration="0.49" data-track-index="21" data-volume="0.34"></audio>
+    <audio id="sfx-10-click" src="assets/sfx/click.mp3" data-start="4.402" data-duration="0.37" data-track-index="22" data-volume="0.26"></audio>
+    <audio id="sfx-11-click" src="assets/sfx/click.mp3" data-start="4.652" data-duration="0.37" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-12-click" src="assets/sfx/click.mp3" data-start="4.902" data-duration="0.37" data-track-index="21" data-volume="0.28"></audio>
+    <audio id="sfx-13-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="5.189" data-duration="0.49" data-track-index="20" data-volume="0.36"></audio>
+    <audio id="sfx-14-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="5.15" data-duration="0.85" data-track-index="22" data-volume="0.5" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.77,"v":1},{"t":0.85,"v":0}]}]}'></audio>
+    <audio id="sfx-15-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="6.189" data-duration="0.49" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-16-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="6.939" data-duration="0.49" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-17-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="7.339" data-duration="0.49" data-track-index="21" data-volume="0.24"></audio>
+    <audio id="sfx-18-whoosh" src="assets/sfx/whoosh.mp3" data-start="7.644" data-duration="0.57" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-19-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="12.189" data-duration="0.49" data-track-index="20" data-volume="0.34"></audio>
+    <audio id="sfx-20-whoosh" src="assets/sfx/whoosh.mp3" data-start="13.124" data-duration="0.57" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-21-whoosh" src="assets/sfx/whoosh.mp3" data-start="15.624" data-duration="0.57" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-22-sparkle" src="assets/sfx/sparkle.mp3" data-start="16.175" data-duration="1.8" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-23-click-soft" src="assets/sfx/click-soft.mp3" data-start="17" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap, FPS = S.FPS;
+
+      // deterministic per-frame noise in [-1, 1]
+      const noise = (n) => Studio.mulberry32((n * 2654435761) >>> 0)() * 2 - 1;
+      // Shake: hits [[t, amplitude px, decay s]] → per-frame jitter on the CSS translate/rotate properties (GSAP keeps
+      // transform). Zero outside every hit window, so a backward seek never leaves an offset behind.
+      function shake(sel, hits, seed, rotPerPx) {
+        const el = S.$(sel), rk = rotPerPx == null ? 0.05 : rotPerPx;
+        S.everyFrame((now) => {
+          let a = 0;
+          for (const [t, amp, dur] of hits) { const u = (now - t) / dur; if (u >= 0 && u <= 1) a = Math.max(a, amp * (1 - u) * (1 - u)); }
+          if (a < 0.2) { el.style.translate = "0px 0px"; el.style.rotate = "0deg"; return; }
+          const fr = Math.round(now * FPS);
+          el.style.translate = `${(noise(fr * 3 + seed) * a).toFixed(1)}px ${(noise(fr * 7 + seed * 13) * a * 0.7).toFixed(1)}px`;
+          el.style.rotate = `${(noise(fr * 11 + seed * 5) * a * rk).toFixed(2)}deg`;
+        });
+      }
+      // A slow sine wave drawn per frame (seek-safe): the "drift" motif under LIGHTER. and the wordmark
+      function wave(sel, w, mid, amp, len, speed, t0, closeTo) {
+        const p = S.$(sel);
+        S.everyFrame((now) => {
+          const ph = (now - t0) * speed;
+          let d = "";
+          for (let x = 0; x <= w; x += 10) d += (x ? " L" : "M") + x + " " + (mid + amp * Math.sin((x / len) * Math.PI * 2 - ph)).toFixed(2);
+          if (closeTo) d += ` L${w} ${closeTo} L0 ${closeTo} Z`;
+          p.setAttribute("d", d);
+        });
+      }
+      // text width from the font itself (a clip that is not on screen yet has no layout to measure)
+      const measure = (txt, font) => { const c = document.createElement("canvas").getContext("2d"); c.font = font; return c.measureText(txt).width; };
+
+      // ---- A 0–1.2 · WORK: scale-down slam lands on the beat at 0.2, impact compression, a small punch on 0.7
+      tl.fromTo("#a-word", { scale: 2.7, filter: "blur(22px)", opacity: 0.55 }, { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.2, ease: "power4.in" }, 0);
+      tl.fromTo("#a-word", { scale: 0.955 }, { scale: 1, duration: 0.45, ease: "houseSpring", immediateRender: false }, 0.2);
+      tl.fromTo("#a-word", { scale: 1.035 }, { scale: 1, duration: 0.3, ease: "settle", immediateRender: false }, 0.7);
+      shake("#a-shake", [[0.2, 16, 0.26], [0.7, 5, 0.16]], 3);
+
+      // ---- B 1.2–3.2 · LOUD. arrives with the cut, shakes on every strong beat, a little less each time, then calms
+      shake("#b-loud", [[1.2, 30, 0.42], [1.7, 18, 0.36], [2.2, 9, 0.3], [2.7, 3, 0.2]], 17, 0.06);
+      shake("#b-top", [[1.2, 8, 0.3], [1.7, 4, 0.24]], 29, 0.03);
+      tl.fromTo("#b-loud", { scaleY: 1.045, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.35, ease: "houseSpring", immediateRender: false }, 1.2);
+
+      // ---- C 3.2–4.2 · NOTIFICATIONS. rains in letter by letter; badges pop on the 8ths (3.45, 3.7, 3.95)
+      S.chars("#c-text", 3.2, { y: -1.15, dur: 0.34, stagger: S.f(0.8), ease: "houseSpring" }).chars.forEach((c) => c.setAttribute("data-layout-allow-overlap", "")); // badges sit on the letters by design
+      ["#badge1", "#badge2", "#badge3"].forEach((b, i) => {
+        tl.fromTo(b, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.42, ease: i === 2 ? "springPop" : "houseSpring" }, 3.45 + i * 0.25);
+      });
+
+      // ---- D 4.2–5.2 · MEETINGS. sliced in two, halves arrive from opposite sides and lock on the beat
+      g.set("#d-hi", { clipPath: "inset(0% 0% 49.4% 0%)" }); // halves overlap ~2 px: no antialiased seam
+      g.set("#d-lo", { clipPath: "inset(50% 0% 0% 0%)" });
+      tl.fromTo("#d-hi", { x: -520 }, { x: 0, duration: 0.24, ease: "snap" }, 4.2);
+      tl.fromTo("#d-lo", { x: 520 }, { x: 0, duration: 0.24, ease: "snap" }, 4.2);
+      tl.fromTo("#d-top", { x: 0 }, { x: -18, duration: 0.8, ease: "glide" }, 4.2);
+      ["#pill1", "#pill2", "#pill3"].forEach((p, i) => {
+        tl.fromTo(p, { opacity: 0, x: 120, rotation: [8, -7, 6][i] }, { opacity: 1, x: 0, rotation: [-2.5, 1.8, -1.2][i], duration: 0.34, ease: "houseSpring" }, 4.45 + i * 0.25);
+      });
+
+      // ---- E 5.2–6.2 · NOISE. slides in with a snap; on the bar line (5.7) the whole stack starts to rattle
+      tl.fromTo("#e-noise", { x: 1100, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.26, ease: "snap" }, 5.2);
+      shake("#e-shake", [[5.46, 7, 0.2], [5.7, 14, 0.3], [5.95, 18, 0.25]], 41, 0.04);
+
+      // ---- F 6.2–8.2 · the wall: rows run in opposite directions (continuous, per frame); two stutters on the fill
+      const rows = S.$$("#f .wall-row");
+      const rowW = measure("NOISE. ", '236px "Anton"'); // one "NOISE. " unit
+      const jumps = [[6.95, 1], [7.35, 2]];
+      const fieldAt = (now) => (now < 6.95 ? "cobalt" : now < 7.35 ? "coal" : "cream");
+      S.everyFrame((now) => {
+        const t = Math.max(0, now - 6.2);
+        const field = fieldAt(now);
+        const k = jumps.filter(([jt]) => now >= jt).length;
+        // past 7.7 the wall decelerates (the noise runs out of breath)
+        const slow = now < 7.7 ? t : 1.5 + (1 - Math.exp(-(now - 7.7) * 3)) / 3;
+        rows.forEach((r, i) => {
+          const dir = i % 2 ? 1 : -1;
+          const x0 = i % 2 ? -rowW * 3.2 : -rowW * (0.6 + 0.37 * i);
+          const x = x0 + dir * 470 * slow + (k * rowW * 0.5) * (i % 2 ? -1 : 1);
+          r.style.transform = `translate(${x.toFixed(1)}px, 0px)`;
+          r.style.color = field === "cream" ? "#111111" : "#f3eadb";
+        });
+        S.$("#f-bg").className = "layer f-" + field;
+      });
+      shake("#f-wall", [[6.2, 10, 0.22], [6.95, 22, 0.3], [7.35, 26, 0.34]], 53, 0.03);
+      tl.to("#f-wall", { opacity: 0, filter: "blur(26px)", scale: 0.94, duration: 0.5, ease: "exit" }, 7.72);
+
+      // ---- G 7.6–12.2 · calm: soft dissolves, slow breath (tracking + scale), a thin line drawn like an exhale
+      tl.fromTo("#g-bg", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "glide" }, 7.7);
+      tl.fromTo("#g-what", { opacity: 0, filter: "blur(18px)", letterSpacing: "0.09em" }, { opacity: 1, filter: "blur(0px)", letterSpacing: "0.012em", duration: 1.1, ease: "settle" }, 8.2);
+      tl.fromTo("#g-wasnt", { opacity: 0, filter: "blur(18px)", letterSpacing: "0.09em" }, { opacity: 1, filter: "blur(0px)", letterSpacing: "0.012em", duration: 1.1, ease: "settle" }, 9.7);
+      tl.fromTo("#g-what", { scale: 1 }, { scale: 1.035, duration: 3.4, ease: "glide", immediateRender: false }, 8.3);
+      tl.fromTo("#g-wasnt", { scale: 1 }, { scale: 1.03, duration: 2.0, ease: "glide", immediateRender: false }, 9.8);
+      tl.fromTo("#g-rule", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 2.6, ease: "glide" }, 8.6);
+      tl.to("#g-what, #g-wasnt, #g-rule", { opacity: 0, filter: "blur(10px)", duration: 0.4, ease: "exit", stagger: S.f(3) }, 11.72);
+
+      // ---- H 12.2–16.2 · MAKE WORK masks up on the beat; LIGHTER. floats letter by letter and keeps bobbing
+      tl.fromTo("#h-make", { yPercent: 104 }, { yPercent: 0, duration: 0.42, ease: "settle" }, 12.2);
+      tl.fromTo("#h-feel", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.4, ease: "enter" }, 13.2);
+      const light = new SplitText("#h-light", { type: "chars", charsClass: "st-char", aria: "none" });
+      tl.fromTo(light.chars, { y: 120, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "springSoft", stagger: S.f(2.4) }, 13.28);
+      S.everyFrame((now) => { // buoyancy: each letter bobs on its own phase once it has landed
+        const a = 7 * S.smooth(S.clamp((now - 14.1) / 0.6, 0, 1));
+        light.chars.forEach((c, i) => { c.style.translate = `0px ${(-a * Math.sin(now * 2.6 + i * 0.85)).toFixed(2)}px`; });
+      });
+      tl.fromTo("#h-block", { y: 0 }, { y: -34, duration: 1.0, ease: "springSoft", immediateRender: false }, 14.2);
+      wave("#h-wave-path", 1500, 20, 6, 250, 2.2, 14.6);
+      tl.fromTo("#h-wave-rect", { attr: { width: 0 } }, { attr: { width: 1500 }, duration: 0.9, ease: "settle" }, 14.7);
+      // the tide: a cream field with a wave on its crest rises over the cobalt (15.7 → 16.2, lands on the beat)
+      wave("#h-tide-path", 2000, 60, 26, 520, 3.0, 15.6, 1500);
+      tl.fromTo("#h-tide", { y: 1140 }, { y: -160, duration: 0.5, ease: "move" }, 15.7);
+
+      // ---- I 16.2–20 · Driftwood. — letters drift in and settle; wave line; tagline; everything breathes
+      const wm = new SplitText("#i-wm", { type: "chars", charsClass: "st-char", aria: "none" });
+      wm.chars.forEach((c, i) => {
+        tl.fromTo(c, { opacity: 0, x: 70 + i * 16, y: i % 2 ? 22 : -16 }, { opacity: 1, x: 0, y: 0, duration: 1.05, ease: "springSoft" }, 16.2 + i * S.f(1.6));
+      });
+      wave("#i-wave-path", 1150, 23, 7, 230, 1.6, 16.6);
+      tl.fromTo("#i-wave-rect", { attr: { width: 0 } }, { attr: { width: 1150 }, duration: 1.1, ease: "settle" }, 16.7);
+      tl.fromTo("#i-tag", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "enter" }, 17.0);
+      S.drift("#i-col", { ay: 5, period: 5.5, t0: 17.4, t1: 20 });
+
+      S.grain({ opacity: 0.05 });
+      S.vignette({ strength: 0.15 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:03,660
+When you send a message across the world, it doesn't go to
+
+2
+00:00:03,660 --> 00:00:03,960
+space,
+
+3
+00:00:04,680 --> 00:00:06,240
+it goes under the sea.
+
+4
+00:00:07,000 --> 00:00:10,240
+Almost all the data between continents travels through
+
+5
+00:00:10,240 --> 00:00:11,760
+cables on the ocean floor.
+
+6
+00:00:12,580 --> 00:00:16,160
+Some are no thicker than a garden hose, hundreds of them
+
+7
+00:00:16,160 --> 00:00:18,380
+stretching more than a million kilometers.
+
+8
+00:00:19,280 --> 00:00:22,240
+The internet isn't in the cloud, it's in the ocean.

@@ -1,0 +1,168 @@
+{
+  "code": "DS1",
+  "name": "Data Story",
+  "brand": "Meridian Research",
+  "project": "pf-ds1-meridian",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 20,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Meridian Research (fictional — concept work): an independent research firm that publishes data on how people work",
+    "goal": "A 20-second data story for LinkedIn and the report's landing page that makes one finding unmissable: working from home spiked in 2020, then settled at four times its old level",
+    "audience": "HR and workplace-strategy leaders, commercial real-estate analysts, business journalists",
+    "message": "The office never fully came back — the (illustrative) WFH share settled near 28 %, four times 2019's 7 %",
+    "cta": "Read the full report",
+    "tone": "FT / Economist calm: editorial paper, ink, one red accent; precise, unhurried, every number labelled illustrative",
+    "references": [
+      "Bloomberg Originals graphics",
+      "Financial Times data videos",
+      "The Economist charts"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "elegant-premium",
+      "from": 2.85,
+      "gain": 0.5,
+      "fadeIn": 0.3,
+      "fadeOut": 1.6
+    },
+    "cues": [
+      {
+        "t": 0.15,
+        "sfx": "click-soft",
+        "gain": 0.12
+      },
+      {
+        "t": 0.4,
+        "sfx": "whoosh-short",
+        "gain": 0.12
+      },
+      {
+        "t": 2.6,
+        "sfx": "whoosh-short",
+        "gain": 0.12
+      },
+      {
+        "t": 3,
+        "sfx": "whoosh-short",
+        "gain": 0.14
+      },
+      {
+        "t": 3.88,
+        "sfx": "click-soft",
+        "gain": 0.12
+      },
+      {
+        "t": 4.37,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 4.56,
+        "sfx": "whoosh-short",
+        "gain": 0.1
+      },
+      {
+        "t": 5.93,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 6.75,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 7.39,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 7.91,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 8.36,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 8.84,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 10,
+        "sfx": "ping",
+        "gain": 0.18
+      },
+      {
+        "t": 10.3,
+        "sfx": "click-soft",
+        "gain": 0.12
+      },
+      {
+        "t": 10.95,
+        "sfx": "whoosh-short",
+        "gain": 0.14
+      },
+      {
+        "t": 11.42,
+        "sfx": "click-soft",
+        "gain": 0.12
+      },
+      {
+        "t": 13.22,
+        "sfx": "whoosh-short",
+        "gain": 0.14
+      },
+      {
+        "t": 13.45,
+        "sfx": "typing",
+        "gain": 0.14,
+        "len": 1.15
+      },
+      {
+        "t": 14.63,
+        "sfx": "click-soft",
+        "gain": 0.14
+      },
+      {
+        "t": 14.76,
+        "sfx": "typing",
+        "gain": 0.14,
+        "len": 0.65
+      },
+      {
+        "t": 15.43,
+        "sfx": "ping",
+        "gain": 0.16
+      },
+      {
+        "t": 16.95,
+        "sfx": "whoosh-short",
+        "gain": 0.14
+      },
+      {
+        "t": 17.22,
+        "sfx": "chime",
+        "gain": 0.25
+      },
+      {
+        "t": 18.05,
+        "sfx": "pop",
+        "gain": 0.14
+      }
+    ]
+  },
+  "reel": {
+    "from": 3.7,
+    "to": 8.2
+  },
+  "made": "2026-11-07"
+}

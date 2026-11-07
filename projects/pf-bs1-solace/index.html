@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>BS1 · Brand System in Motion — Solace (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Solace: a living brand book. Sand paper, umber ink, ONE warm accent (terracotta); sage only as a quiet second voice. */
+      --bg: #efe6da;
+      --bg-2: #f5eee4;
+      --ink: #2b211b;
+      --ink-2: rgba(43, 33, 27, 0.72);
+      --ink-3: rgba(43, 33, 27, 0.62);
+      --terra-ink: #a84a26; /* terracotta for TEXT: 4.9:1 on lit sand (#c8643b stays for shapes) */
+      --accent: #c8643b;
+      --accent-2: #8aa58c;
+      --sand: #efe6da;
+      --paper: #f6f0e7;
+      --terra: #c8643b;
+      --sage: #8aa58c;
+      --umber: #2b211b;
+      --line: rgba(43, 33, 27, 0.12);
+      --font-display: "Instrument Serif", "Hind Siliguri", serif;
+      --font-body: "Manrope", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+      --paper-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset, 0 1px 2px rgba(43, 33, 27, 0.06), 0 10px 24px -12px rgba(43, 33, 27, 0.16), 0 34px 70px -30px rgba(43, 33, 27, 0.26);
+    }
+    body { color: var(--umber); }
+    #root { background: var(--sand); }
+
+    /* the paper: sand with a faint 12-column construction grid and a soft window light */
+    .paper-bg { background-color: var(--sand); background-image: radial-gradient(110% 80% at 22% 12%, rgba(255, 252, 246, 0.75) 0%, rgba(255, 252, 246, 0) 55%), repeating-linear-gradient(90deg, rgba(43, 33, 27, 0.045) 0 1px, transparent 1px 144px); background-position: 0 0, 96px 0; }
+    .sheet { position: absolute; inset: 0; box-shadow: -60px 0 90px -40px rgba(43, 33, 27, 0.42); }
+    .pad { position: absolute; left: 96px; right: 96px; top: 150px; bottom: 96px; }
+
+    .kick { font-family: var(--font-body); font-weight: 600; font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2); line-height: 1.2; white-space: nowrap; }
+    .serif { font-family: var(--font-display); font-weight: 400; }
+    .mask { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 0.06em 0.04em; margin: 0 -0.06em -0.04em; }
+    .mask > * { display: inline-block; }
+
+    /* header — the running head of the guidelines */
+    .hdr { position: absolute; left: 96px; right: 96px; top: 54px; display: flex; justify-content: space-between; align-items: center; }
+    .hdr-r { position: relative; width: 420px; height: 30px; overflow: hidden; }
+    .sec { position: absolute; right: 0; top: 0; }
+    .sec b { color: var(--terra-ink); font-weight: 700; margin-right: 14px; }
+    .hdr-rule { position: absolute; left: 96px; right: 96px; top: 104px; height: 1px; background: rgba(43, 33, 27, 0.18); transform-origin: 0 50%; }
+
+    /* page 1 — logo construction */
+    .page-in { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .lockup { display: flex; align-items: center; gap: 64px; }
+    .mark-wrap { position: relative; width: 320px; height: 320px; flex: none; }
+    .mark-svg { position: absolute; inset: 0; width: 320px; height: 320px; overflow: visible; }
+    .lbl { position: absolute; font-family: var(--font-display); font-style: italic; font-size: 30px; line-height: 1; color: rgba(43, 33, 27, 0.66); white-space: nowrap; }
+    .wordmark { font-family: var(--font-display); font-size: 240px; line-height: 1.02; letter-spacing: -0.02em; color: var(--umber); }
+
+    /* page 2 — colour */
+    .p2 { display: flex; flex-direction: column; justify-content: center; gap: 46px; }
+    .p2-head { display: flex; align-items: baseline; justify-content: space-between; }
+    .title { font-family: var(--font-display); font-weight: 400; font-size: 96px; line-height: 1; letter-spacing: -0.015em; margin: 0; color: var(--umber); }
+    .title em { color: var(--terra-ink); }
+    .note { font-family: var(--font-body); font-weight: 500; font-size: 28px; color: var(--ink-2); }
+    .note b { font-weight: 700; color: var(--umber); letter-spacing: 0.03em; }
+    .swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .sw { position: relative; background: var(--paper); border-radius: 24px; overflow: hidden; box-shadow: var(--paper-shadow); }
+    .swc { position: relative; height: 392px; overflow: hidden; }
+    .swc .fill { position: absolute; inset: 0; display: block; transform-origin: 50% 100%; }
+    .meta { display: grid; grid-template-columns: 1fr auto; padding: 24px 32px 28px; row-gap: 4px; align-items: baseline; }
+    .nm { font-family: var(--font-display); font-size: 58px; line-height: 1.05; color: var(--umber); }
+    .hex { font-family: var(--font-body); font-weight: 600; font-size: 30px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; color: var(--umber); }
+    .role { grid-column: 1 / span 2; font-family: var(--font-body); font-weight: 500; font-size: 26px; color: var(--ink-2); }
+
+    /* page 3 — type */
+    .p3 { display: flex; align-items: center; justify-content: center; gap: 110px; }
+    .aa { font-family: var(--font-display); font-size: 600px; line-height: 0.9; letter-spacing: -0.03em; white-space: nowrap; padding-left: 10px; }
+    .aa .a2 { font-style: italic; color: var(--terra-ink); }
+    .p3-col { display: flex; flex-direction: column; gap: 34px; }
+    .pangram { font-family: var(--font-display); font-size: 80px; line-height: 1.04; letter-spacing: -0.01em; margin: 0; color: var(--umber); }
+    .pangram .rowm { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+    .pangram .rowm > span { display: inline-block; }
+    .scale { display: grid; grid-auto-flow: column; grid-template-rows: auto auto; justify-content: start; column-gap: 54px; row-gap: 12px; padding-top: 26px; border-top: 1px solid var(--line); }
+    .st { display: contents; }
+    .st .g { grid-row: 1; align-self: last baseline; font-family: var(--font-display); line-height: 1; color: var(--umber); }
+    .st .px { grid-row: 2; font-family: var(--font-body); font-weight: 600; font-size: 24px; letter-spacing: 0.08em; color: var(--ink-3); }
+    .sec2 { font-family: var(--font-body); font-weight: 500; font-size: 30px; color: var(--ink-2); }
+    .sec2 b { font-weight: 700; color: var(--umber); }
+
+    /* page 4 — pattern */
+    .ppanel { position: absolute; left: 96px; right: 96px; top: 150px; bottom: 96px; border-radius: 30px; overflow: hidden; background: #f3eadf; box-shadow: var(--paper-shadow); }
+    .pat-rot { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+    .tile { position: absolute; width: 112px; height: 112px; margin: -56px 0 0 -56px; }
+    .tile svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .pcard { position: absolute; left: 128px; bottom: 128px; padding: 26px 34px 28px; border-radius: 22px; background: var(--paper); box-shadow: var(--paper-shadow); }
+    .pc-t { font-family: var(--font-display); font-size: 50px; line-height: 1.05; color: var(--umber); }
+    .pc-s { font-family: var(--font-body); font-weight: 500; font-size: 26px; color: var(--ink-2); margin-top: 6px; }
+
+    /* page 5 — applications bento */
+    .bento { position: absolute; left: 96px; right: 96px; top: 150px; bottom: 96px; display: grid; grid-template-columns: 520px 1fr 540px; grid-template-rows: 1fr 1fr; gap: 24px; }
+    .btile { position: relative; border-radius: 28px; overflow: hidden; box-shadow: var(--paper-shadow); display: flex; align-items: center; justify-content: center; }
+    .btile .tl { position: absolute; left: 30px; bottom: 26px; }
+    .b-phone { grid-row: 1 / span 2; background: linear-gradient(180deg, #ebe3d6, #e1d7c8); }
+    .b-icon { background: linear-gradient(180deg, #f8f2ea, #f1e9de); }
+    .b-mask { background: linear-gradient(180deg, #f3e3d8, #ecd6c8); }
+    .b-tote { grid-column: 3; grid-row: 1 / span 2; background: linear-gradient(180deg, #dfe5d9, #d2dbcc); }
+    .phone2 { position: relative; width: 352px; height: 690px; border-radius: 58px; background: #241b16; box-shadow: 0 0 0 2px #3b2f28, 0 30px 60px -20px rgba(43, 33, 27, 0.55); margin-top: -40px; }
+    .scr { position: absolute; inset: 10px; border-radius: 48px; overflow: hidden; background: linear-gradient(180deg, #43322a 0%, #2a201a 60%, #1c1511 100%); }
+    .scr .wall { position: absolute; right: -90px; bottom: -70px; width: 360px; height: 360px; color: var(--terra); opacity: 0.22; }
+    .scr .day { position: absolute; left: 0; right: 0; top: 66px; text-align: center; font-family: var(--font-body); font-weight: 600; font-size: 24px; color: rgba(239, 230, 218, 0.78); }
+    .scr .time { position: absolute; left: 0; right: 0; top: 122px; text-align: center; font-family: var(--font-display); font-size: 124px; line-height: 1; color: var(--sand); letter-spacing: -0.01em; }
+    .notif { position: absolute; left: 14px; right: 14px; top: 398px; padding: 18px 20px; border-radius: 24px; background: rgba(239, 230, 218, 0.15); border: 1px solid rgba(239, 230, 218, 0.18); }
+    .notif .nh { display: flex; align-items: center; gap: 12px; font-family: var(--font-body); font-weight: 700; font-size: 24px; color: var(--sand); }
+    .notif .ni { width: 38px; height: 38px; border-radius: 10px; background: var(--terra); color: var(--sand); padding: 6px; }
+    .notif .nt { margin-top: 8px; font-family: var(--font-body); font-weight: 500; font-size: 26px; line-height: 1.25; color: rgba(239, 230, 218, 0.92); }
+    .icons { display: flex; align-items: flex-end; gap: 38px; margin-top: -30px; }
+    .appi { position: relative; display: grid; place-items: center; background: linear-gradient(160deg, #d6774f 0%, #c8643b 55%, #b3532c 100%); color: var(--sand); overflow: hidden; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 18px 34px -14px rgba(120, 50, 20, 0.55); }
+    .appi svg { width: 62%; height: 62%; overflow: visible; }
+    .appi.big { width: 200px; height: 200px; border-radius: 46px; }
+    .appi.mid { width: 120px; height: 120px; border-radius: 28px; }
+    .appi.sm { width: 72px; height: 72px; border-radius: 17px; }
+    .maskv { position: relative; width: 440px; height: 196px; margin-top: -34px; }
+    .maskv svg { position: absolute; inset: 0; width: 440px; height: 196px; overflow: visible; }
+    .maskv .mw { position: absolute; left: 0; right: 0; top: 64px; text-align: center; font-family: var(--font-display); font-size: 58px; line-height: 1; color: var(--sand); }
+    .totev { position: relative; width: 380px; height: 560px; margin-top: -40px; }
+    .totev svg { position: absolute; inset: 0; width: 380px; height: 560px; overflow: visible; }
+    .totev .tm { position: absolute; left: 125px; top: 250px; width: 130px; height: 130px; color: var(--terra); }
+    .totev .tt { position: absolute; left: 0; right: 0; top: 402px; text-align: center; font-family: var(--font-display); font-style: italic; font-size: 44px; line-height: 1; color: var(--umber); }
+
+    /* page 6 — lockup */
+    .end-col { display: flex; flex-direction: column; align-items: center; }
+    .tagline { display: flex; align-items: center; gap: 24px; margin-top: 30px; font-family: var(--font-display); font-style: italic; font-size: 68px; line-height: 1.1; color: var(--umber); }
+    .tagline .dash { display: block; width: 72px; height: 2px; background: var(--terra); transform-origin: 0 50%; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(43, 33, 27, 0.76); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="18" data-fps="30">
+    <!-- the mark, defined once: crescent (circle A r150 minus circle B r132, centres 66 apart) + the resting dot -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" data-layout-ignore data-design-ignore>
+      <defs>
+        <symbol id="mark" viewBox="0 0 400 400"><path d="M198.83 50 A150 150 0 1 0 326.26 280.98 A132 132 0 1 1 198.83 50 Z" fill="currentColor" /><circle cx="194" cy="204" r="30" fill="currentColor" /></symbol>
+      </defs>
+    </svg>
+
+    <!-- paper + construction grid, all film long -->
+    <section id="bg" class="scene clip paper-bg" data-start="0" data-duration="18" data-track-index="0" data-design-ignore data-layout-ignore></section>
+
+    <!-- P1 0–4.8 · logo construction -->
+    <section id="p1" class="scene clip" data-start="0" data-duration="4.8" data-track-index="1">
+      <div id="p1-in" class="page-in">
+        <div class="lockup">
+          <div id="p1-mark" class="mark-wrap">
+            <svg class="mark-svg" viewBox="0 0 400 400" data-design-ignore data-layout-ignore>
+              <g fill="none" stroke="#2b211b" stroke-opacity="0.4" stroke-width="1.1" stroke-linecap="round">
+                <line id="g-h" class="gd" x1="-10" y1="200" x2="410" y2="200" />
+                <line id="g-v" class="gd" x1="200" y1="-10" x2="200" y2="410" />
+                <rect id="g-sq" class="gd" x="50" y="50" width="300" height="300" />
+                <circle id="g-a" class="gd" cx="200" cy="200" r="150" transform="rotate(-90 200 200)" />
+                <circle id="g-b" class="gd" cx="258" cy="168" r="132" transform="rotate(150 258 168)" />
+                <line id="g-ra" class="gd" x1="200" y1="200" x2="93.93" y2="306.07" />
+                <line id="g-ab" class="gd" x1="200" y1="200" x2="373.58" y2="104.23" />
+                <circle id="g-d" class="gd" cx="194" cy="204" r="30" />
+              </g>
+              <g id="g-pts" fill="#2b211b" fill-opacity="0.55"><circle class="pt" cx="200" cy="200" r="4.5" /><circle class="pt" cx="258" cy="168" r="4.5" /></g>
+              <path id="cres-fill" d="M198.83 50 A150 150 0 1 0 326.26 280.98 A132 132 0 1 1 198.83 50 Z" fill="#c8643b" />
+              <path id="cres-line" d="M198.83 50 A150 150 0 1 0 326.26 280.98 A132 132 0 1 1 198.83 50 Z" fill="none" stroke="#c8643b" stroke-width="2.2" stroke-linejoin="round" />
+              <circle id="dot" cx="194" cy="204" r="30" fill="#c8643b" />
+            </svg>
+            <div id="lbl-r" class="lbl" style="left: 72px; top: 196px">r</div>
+            <div id="lbl-r2" class="lbl" style="left: 236px; top: 66px">0.88 r</div>
+          </div>
+          <div class="mask"><div id="p1-word" class="wordmark">Solace</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P2 3.84–7.84 · colour: the new page slides over the old one -->
+    <section id="p2" class="scene clip" data-start="3.84" data-duration="4" data-track-index="2">
+      <div id="p2-sheet" class="sheet paper-bg">
+        <div id="p2-in" class="pad p2">
+          <div class="p2-head">
+            <h2 id="p2-title" class="title">Warm, low, <em>unhurried.</em></h2>
+            <div id="p2-note" class="note">On Sand · <b>#EFE6DA</b></div>
+          </div>
+          <div class="swatches">
+            <div id="sw1" class="sw"><div class="swc"><i class="fill" style="background: #c8643b"></i></div><div class="meta"><span class="nm">Terracotta</span><span class="hex">#C8643B</span><span class="role">Primary · warmth</span></div></div>
+            <div id="sw2" class="sw"><div class="swc"><i class="fill" style="background: #8aa58c"></i></div><div class="meta"><span class="nm">Sage</span><span class="hex">#8AA58C</span><span class="role">Secondary · calm</span></div></div>
+            <div id="sw3" class="sw"><div class="swc"><i class="fill" style="background: #2b211b"></i></div><div class="meta"><span class="nm">Umber</span><span class="hex">#2B211B</span><span class="role">Ink · type and lines</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P3 6.84–10.14 · type specimen -->
+    <section id="p3" class="scene clip" data-start="6.84" data-duration="3.3" data-track-index="3">
+      <div id="p3-sheet" class="sheet paper-bg">
+        <div id="p3-in" class="pad p3">
+          <div class="aa"><span class="mask"><span id="aa-1">A</span></span><span class="mask"><span id="aa-2" class="a2">a</span></span></div>
+          <div class="p3-col">
+            <div id="p3-kick" class="kick">Display — Instrument Serif</div>
+            <p class="pangram"><span class="rowm"><span id="pg-1">Sphinx of black quartz,</span></span><span class="rowm"><span id="pg-2">judge my vow.</span></span></p>
+            <div id="p3-scale" class="scale">
+              <div class="st"><span class="g" style="font-size: 96px">Aa</span><span class="px">96</span></div>
+              <div class="st"><span class="g" style="font-size: 64px">Aa</span><span class="px">64</span></div>
+              <div class="st"><span class="g" style="font-size: 40px">Aa</span><span class="px">40</span></div>
+              <div class="st"><span class="g" style="font-size: 28px">Aa</span><span class="px">28</span></div>
+            </div>
+            <div id="p3-sec" class="sec2"><b>Manrope</b> for labels and interface</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P4 9.4–13.6 · pattern: the mark tiles outward and the field turns slowly, each moon on its own phase -->
+    <section id="p4" class="scene clip" data-start="9.4" data-duration="4.2" data-track-index="4">
+      <div id="ppanel" class="ppanel">
+        <div id="pat-rot" class="pat-rot" data-design-ignore data-layout-ignore></div>
+        <div id="pcard" class="pcard"><div class="pc-t">Crescent repeat</div><div class="pc-s">Rotate in 30° steps</div></div>
+      </div>
+    </section>
+
+    <!-- P5 12.7–16.4 · applications bento, on the beat drop (12.84) -->
+    <section id="p5" class="scene clip" data-start="12.7" data-duration="3.7" data-track-index="5">
+      <div class="bento">
+        <div id="t1" class="btile b-phone">
+          <div class="phone2">
+            <div class="scr">
+              <svg class="wall" viewBox="0 0 400 400" data-design-ignore data-layout-ignore><use href="#mark" /></svg>
+              <div class="day">Sunday</div>
+              <div class="time">22:30</div>
+              <div id="notif" class="notif">
+                <div class="nh"><svg class="ni" viewBox="0 0 400 400" data-design-ignore><use href="#mark" /></svg>Solace</div>
+                <div class="nt">Time to wind down.</div>
+              </div>
+            </div>
+          </div>
+          <div class="kick tl">Lock screen</div>
+        </div>
+        <div id="t2" class="btile b-icon">
+          <div class="icons">
+            <div id="icon-big" class="appi big"><svg viewBox="0 0 400 400" data-design-ignore><use href="#mark" /></svg></div>
+            <div class="appi mid"><svg viewBox="0 0 400 400" data-design-ignore><use href="#mark" /></svg></div>
+            <div class="appi sm"><svg viewBox="0 0 400 400" data-design-ignore><use href="#mark" /></svg></div>
+          </div>
+          <div class="kick tl">App icon</div>
+        </div>
+        <div id="t3" class="btile b-mask">
+          <div id="maskv" class="maskv">
+            <svg viewBox="0 0 440 196" data-design-ignore data-layout-ignore>
+              <defs><linearGradient id="mk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d2e25" /><stop offset="1" stop-color="#241b16" /></linearGradient></defs>
+              <path d="M40 92 L4 84 M400 92 L436 84" stroke="#2b211b" stroke-opacity="0.65" stroke-width="7" stroke-linecap="round" fill="none" />
+              <path d="M40 98 C40 42 100 22 160 28 C190 31 205 46 220 46 C235 46 250 31 280 28 C340 22 400 42 400 98 C400 152 340 174 280 168 C250 165 238 142 220 142 C202 142 190 165 160 168 C100 174 40 152 40 98 Z" fill="url(#mk)" />
+              <path d="M70 70 C110 46 170 44 205 62" stroke="rgba(239,230,218,0.18)" stroke-width="5" stroke-linecap="round" fill="none" />
+            </svg>
+            <div class="mw">Solace</div>
+          </div>
+          <div class="kick tl">Sleep mask</div>
+        </div>
+        <div id="t4" class="btile b-tote">
+          <div id="totev" class="totev">
+            <svg viewBox="0 0 380 560" data-design-ignore data-layout-ignore>
+              <path d="M118 176 C118 70 262 70 262 176" stroke="#2b211b" stroke-width="12" stroke-linecap="round" fill="none" />
+              <path d="M44 178 L336 178 L352 548 L28 548 Z" fill="rgba(43,33,27,0.16)" transform="translate(10 14)" style="filter: blur(10px)" />
+              <path d="M44 170 L336 170 L352 540 L28 540 Z" fill="#f1e7d6" />
+              <path d="M44 170 L336 170 L338 196 L42 196 Z" fill="#e2d5bf" />
+              <path d="M64 522 L316 522" stroke="rgba(43,33,27,0.08)" stroke-width="2" />
+            </svg>
+            <svg class="tm" viewBox="0 0 400 400" data-design-ignore data-layout-ignore><use href="#mark" /></svg>
+            <div class="tt">rest, designed.</div>
+          </div>
+          <div class="kick tl">Tote</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P6 15.9–18 · lockup -->
+    <section id="p6" class="scene clip" data-start="15.9" data-duration="2.1" data-track-index="6">
+      <div class="page-in">
+        <div id="p6-col" class="end-col">
+          <div class="lockup">
+            <div id="p6-mark" class="mark-wrap"><svg class="mark-svg" viewBox="0 0 400 400" style="color: #c8643b" data-design-ignore data-layout-ignore><use href="#mark" /></svg></div>
+            <div class="mask"><div id="p6-word" class="wordmark">Solace</div></div>
+          </div>
+          <div class="tagline"><i id="p6-dash" class="dash"></i><span class="mask"><span id="p6-tag">rest, designed.</span></span></div>
+        </div>
+      </div>
+      <div id="p6-concept" class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- running head, on top of every page -->
+    <section id="hdr" class="scene clip" data-start="0" data-duration="16.3" data-track-index="7">
+      <div class="hdr">
+        <div id="hdr-l" class="kick">Solace — Brand Guidelines</div>
+        <div class="hdr-r" data-layout-allow-overflow>
+          <div id="sec1" class="kick sec" data-layout-allow-overlap><b>01</b>Logo</div>
+          <div id="sec2" class="kick sec" data-layout-allow-overlap><b>02</b>Colour</div>
+          <div id="sec3" class="kick sec" data-layout-allow-overlap><b>03</b>Typography</div>
+          <div id="sec4" class="kick sec" data-layout-allow-overlap><b>04</b>Pattern</div>
+          <div id="sec5" class="kick sec" data-layout-allow-overlap><b>05</b>Applications</div>
+        </div>
+      </div>
+      <div id="hdr-rule" class="hdr-rule" data-design-ignore></div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/elegant-premium.mp3" data-start="0" data-duration="18" data-media-start="0" data-track-index="10" data-volume="0.6" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.4,"v":1},{"t":16.4,"v":1},{"t":18,"v":0}]}]}'></audio>
+    <audio id="sfx-01-sparkle" src="assets/sfx/sparkle.mp3" data-start="2.815" data-duration="1.8" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-02-page-turn" src="assets/sfx/page-turn.mp3" data-start="3.828" data-duration="0.7" data-track-index="21" data-volume="0.18"></audio>
+    <audio id="sfx-03-page-turn" src="assets/sfx/page-turn.mp3" data-start="6.828" data-duration="0.7" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-04-page-turn" src="assets/sfx/page-turn.mp3" data-start="9.428" data-duration="0.7" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-05-page-turn" src="assets/sfx/page-turn.mp3" data-start="12.828" data-duration="0.7" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-06-chime" src="assets/sfx/chime.mp3" data-start="15.644" data-duration="2.356" data-track-index="20" data-volume="0.3"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+
+      // ---- running head: the rule draws, labels swap on every page turn (mask out up, mask in from below)
+      tl.fromTo("#hdr-l", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.9, ease: "settle" }, 0.1);
+      tl.fromTo("#hdr-rule", { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: "settle" }, 0.15);
+      const secs = ["#sec1", "#sec2", "#sec3", "#sec4", "#sec5"], turns = [0.3, 3.84, 6.84, 9.44, 12.84];
+      secs.forEach((s, i) => {
+        tl.fromTo(s, { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.8, ease: "settle" }, turns[i] + (i ? 0.12 : 0));
+        if (i < secs.length - 1) tl.to(s, { yPercent: -110, opacity: 0, duration: 0.4, ease: "exit" }, turns[i + 1]);
+      });
+      tl.to("#hdr-l, #sec5, #hdr-rule", { opacity: 0, duration: 0.4, ease: "exit" }, 15.5);
+
+      // ---- P1 · construction: axes from the centre out, square, circle A, circle B, radii, centre points, labels
+      S.draw("#g-h, #g-v", 0.2, { from: "50% 50%", dur: 1.0, ease: "settle" });
+      S.draw("#g-sq", 0.35, { dur: 1.1, ease: "settle" });
+      S.draw("#g-a", 0.5, { dur: 1.15, ease: "settle" });
+      S.draw("#g-b", 0.78, { dur: 1.05, ease: "settle" });
+      S.draw("#g-ra, #g-ab", 1.0, { dur: 0.7, ease: "settle", stagger: S.f(4) });
+      S.draw("#g-d", 1.2, { dur: 0.6, ease: "settle" });
+      tl.fromTo("#g-pts .pt", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "settle", stagger: S.f(4) }, 0.95);
+      tl.fromTo("#lbl-r, #lbl-r2", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "enter", stagger: S.f(5) }, 1.15);
+      // the crescent: terracotta outline on the piano note (1.44), the fill follows, then the resting dot
+      S.draw("#cres-line", 1.44, { dur: 0.8, ease: "settle" });
+      tl.fromTo("#cres-fill", { opacity: 0 }, { opacity: 1, duration: 0.75, ease: "glide" }, 1.78);
+      tl.fromTo("#dot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.8, ease: "springSoft" }, 2.08);
+      // guides fade; the mark settles from the construction scale into the lockup (lands at scale 1)
+      tl.to("#p1 .gd, #g-pts, #lbl-r, #lbl-r2", { opacity: 0, duration: 0.6, ease: "exit" }, 2.36);
+      tl.fromTo("#p1-mark", { x: 287, scale: 1.6 }, { x: 0, scale: 1, duration: 1.15, ease: "settle" }, 2.45);
+      tl.fromTo("#p1-word", { yPercent: 102 }, { yPercent: 0, duration: 1.1, ease: "settle" }, 2.84);
+
+      // ---- P2 · page turn (3.84): the new sheet slides over, the old page sinks back and dims
+      tl.fromTo("#p2-sheet", { x: 1980 }, { x: 0, duration: 0.95, ease: "settle" }, 3.84);
+      tl.to("#p1-in", { x: -200, opacity: 0, duration: 0.95, ease: "move" }, 3.84);
+      S.words("#p2-title", 3.98, { y: 34, blur: 6, dur: 0.8, ease: "settle", stagger: S.f(3) });
+      tl.fromTo("#sw1, #sw2, #sw3", { y: 170, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: "settle", stagger: S.f(6) }, 4.32);
+      tl.fromTo("#p2 .fill", { scaleY: 0 }, { scaleY: 1, duration: 1.0, ease: "settle", stagger: S.f(6) }, 4.62);
+      tl.fromTo("#p2 .meta > span", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: "enter", stagger: S.f(2) }, 5.05);
+      tl.fromTo("#p2-note", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.7, ease: "enter" }, 5.6);
+
+      // ---- P3 · page turn (6.84): huge Aa, pangram, the scale ladder, the second face
+      tl.fromTo("#p3-sheet", { x: 1980 }, { x: 0, duration: 0.95, ease: "settle" }, 6.84);
+      tl.to("#p2-in", { x: -200, opacity: 0, duration: 0.95, ease: "move" }, 6.84);
+      tl.fromTo("#aa-1", { yPercent: 100 }, { yPercent: 0, duration: 1.1, ease: "settle" }, 7.18);
+      tl.fromTo("#aa-2", { yPercent: 100 }, { yPercent: 0, duration: 1.1, ease: "settle" }, 7.32);
+      tl.fromTo("#p3-kick", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.7, ease: "enter" }, 7.3);
+      tl.fromTo("#pg-1, #pg-2", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: "settle", stagger: S.f(5) }, 7.42);
+      ["g", "px"].forEach((k, j) => tl.fromTo("#p3-scale ." + k, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.8, ease: "settle", stagger: S.f(4) }, 7.84 + j * S.f(3)));
+      tl.fromTo("#p3-scale", { borderTopColor: "rgba(43,33,27,0)" }, { borderTopColor: "rgba(43,33,27,0.12)", duration: 0.8, ease: "glide" }, 7.84);
+      tl.fromTo("#p3-sec", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.65, ease: "enter" }, 8.28);
+      tl.to("#p3-in", { opacity: 0, y: -24, duration: 0.32, ease: "exit" }, 9.28); // clear the sheet before the pattern panel arrives
+
+      // ---- P4 · pattern: built once (deterministic), revealed outward from the centre, turned per frame
+      const rot = S.$("#pat-rot"), tiles = [];
+      const SP = 196, N = 6; // 13 × 13 tiles cover the panel at any angle
+      for (let r = -N; r <= N; r++) for (let c = -N; c <= N; c++) {
+        const t = document.createElement("div");
+        t.className = "tile";
+        t.style.left = c * SP + (r % 2 ? SP / 2 : 0) + "px";
+        t.style.top = r * SP * 0.88 + "px";
+        t.style.color = (c + r * 2) % 3 === 0 ? "#8aa58c" : "#c8643b";
+        t.innerHTML = '<svg viewBox="0 0 400 400"><use href="#mark"/></svg>';
+        rot.appendChild(t);
+        tiles.push({ el: t, c, r, d: Math.hypot(c * SP, r * SP * 0.88) });
+      }
+      const maxD = Math.max(...tiles.map((t) => t.d));
+      tl.fromTo("#ppanel", { opacity: 0, scale: 0.985 }, { opacity: 1, scale: 1, duration: 0.9, ease: "settle" }, 9.56);
+      tiles.forEach((t) => {
+        const at = 9.62 + (t.d / maxD) * 0.6;
+        tl.fromTo(t.el, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "settle" }, at);
+      });
+      S.everyFrame((now) => {
+        const u = Math.max(0, now - 9.44);
+        rot.style.rotate = (-7 + 3.4 * u).toFixed(3) + "deg";              // the whole field turns, slowly
+        for (const t of tiles) t.el.style.rotate = ((t.c + t.r) * 30 + 22 * u).toFixed(2) + "deg"; // phases in 30° steps
+      });
+      tl.fromTo("#pcard", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.85, ease: "settle" }, 10.5);
+      tl.to("#pcard", { opacity: 0, y: 16, duration: 0.34, ease: "exit" }, 12.44);
+      tl.to("#ppanel", { opacity: 0, scale: 0.975, duration: 0.55, ease: "exit" }, 12.84);
+
+      // ---- P5 · applications on the drop (12.84)
+      tl.fromTo("#t1, #t2, #t3, #t4", { y: 1000 }, { y: 0, duration: 1.15, ease: "settle", stagger: S.f(4) }, 12.84);
+      tl.fromTo("#p5 .tl", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "enter", stagger: S.f(3) }, 13.35);
+      tl.fromTo("#notif", { opacity: 0, y: -34, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "settle" }, 13.55);
+      S.sweep("#icon-big", 13.75, { dur: 1.2 });
+      S.everyFrame((now) => { // the tote sways from its handles, the mask breathes — both ease in, never snap
+        const k = S.smooth(S.clamp((now - 13.3) / 0.8, 0, 1));
+        S.$("#totev").style.rotate = (1.7 * k * Math.sin((now - 13.3) * 1.9)).toFixed(3) + "deg";
+        S.$("#maskv").style.scale = (1 + 0.014 * k * Math.sin((now - 13.3) * 2.2)).toFixed(4);
+      });
+      g.set("#totev", { transformOrigin: "50% 12%" });
+      tl.to("#t1, #t2, #t3, #t4", { y: -30, opacity: 0, duration: 0.38, ease: "exit", stagger: S.f(2) }, 15.5);
+
+      // ---- P6 · lockup (chime on 16.06), tagline, furniture
+      tl.fromTo("#p6-mark", { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.95, ease: "settle" }, 15.98);
+      tl.fromTo("#p6-word", { yPercent: 102 }, { yPercent: 0, duration: 1.0, ease: "settle" }, 16.06);
+      tl.fromTo("#p6-dash", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "settle" }, 16.42);
+      tl.fromTo("#p6-tag", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: "settle" }, 16.5);
+      tl.fromTo("#p6-concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 16.3);
+      S.drift("#p6-col", { ay: 4, period: 5, t0: 16.9, t1: 18 });
+
+      S.grain({ opacity: 0.05, blend: "multiply" });
+      S.vignette({ strength: 0.14 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

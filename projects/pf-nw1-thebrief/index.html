@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>NW1 · Editorial Explainer — The Brief (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    @font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; src: url("assets/fonts/InstrumentSerif-Italic.ttf") format("truetype"); font-display: block; }
+    :root {
+      /* The Brief: Vox-style paper collage. Warm paper, ink, ONE red marker accent; yellow only as highlighter. */
+      --bg: #efe8da;
+      --bg-2: #f8f4ec;
+      --ink: #1a1a1a;
+      --ink-2: rgba(26, 26, 26, 0.74);
+      --ink-3: rgba(26, 26, 26, 0.5);
+      --hl: #ffe14d;
+      --red: #e63b2e;
+      --accent: #e63b2e;
+      --accent-2: #ffe14d;
+      --font-display: "Playfair Display", "Hind Siliguri", serif;
+      --font-body: "Inter", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+      --paper-sh: 0 1px 1px rgba(60, 40, 10, 0.14), 0 6px 14px -6px rgba(60, 40, 10, 0.28), 0 24px 46px -22px rgba(60, 40, 10, 0.36);
+    }
+    body { color: var(--ink); }
+    #root { background: var(--bg); }
+
+    /* ---------- paper (decorative) */
+    .paper { position: absolute; inset: 0; background: radial-gradient(130% 100% at 50% 40%, #f4eee3 0%, #efe8da 55%, #e5dbc6 100%); }
+    .warmvig { position: absolute; inset: 0; background: radial-gradient(125% 95% at 50% 45%, transparent 60%, rgba(90, 60, 20, 0.16) 100%); pointer-events: none; }
+    #fib { position: absolute; inset: 0; width: 1920px; height: 1080px; mix-blend-mode: multiply; pointer-events: none; z-index: 85; }
+    .page { position: absolute; inset: 0; background: radial-gradient(130% 100% at 50% 40%, #f4eee3 0%, #efe8da 55%, #e5dbc6 100%); box-shadow: -40px 0 60px -24px rgba(60, 40, 10, 0.4); }
+
+    /* ---------- cut paper */
+    .card { position: absolute; background: var(--bg-2); border-radius: 4px; box-shadow: var(--paper-sh); border: none; overflow: visible; }
+    .tape { position: absolute; width: 150px; height: 40px; background: rgba(236, 222, 186, 0.78); box-shadow: 0 1px 2px rgba(60, 40, 10, 0.18); clip-path: polygon(2% 10%, 8% 0, 16% 12%, 26% 2%, 38% 10%, 50% 0, 62% 9%, 74% 1%, 86% 10%, 96% 2%, 100% 50%, 97% 92%, 88% 100%, 76% 90%, 64% 100%, 52% 91%, 40% 100%, 28% 90%, 16% 100%, 6% 90%, 0 50%); }
+    .kick { font-family: var(--font-body); font-size: 24px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; }
+    .hd { margin: 0; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; line-height: 1.22; color: var(--ink); }
+    .hlw { position: relative; display: inline-block; }
+    .hl { position: absolute; left: -12px; right: -12px; top: 40%; bottom: 4%; background: var(--hl); border-radius: 8px 14px 10px 6px; mix-blend-mode: multiply; transform-origin: 0% 50%; }
+    .hlt { position: relative; }
+
+    /* ---------- S1/S2 column (sky → sea → seabed) */
+    #col { position: absolute; left: 0; top: 0; width: 1920px; height: 2160px; }
+    .q { left: 110px; top: 116px; padding: 26px 44px 34px; width: 760px; }
+    .q .hd { font-size: 84px; line-height: 1.26; margin-top: 14px; text-wrap: balance; }
+    .sat { position: absolute; left: 1330px; top: 150px; width: 340px; height: 230px; filter: drop-shadow(0 10px 14px rgba(60, 40, 10, 0.3)); }
+    .bub { position: absolute; left: -240px; top: -62px; width: 480px; padding: 26px 34px; border-radius: 34px; background: #fbf8f1; box-shadow: var(--paper-sh); font-family: var(--font-body); font-size: 32px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+    .bub::after { content: ""; position: absolute; left: 46px; bottom: -22px; border-left: 0 solid transparent; border-right: 34px solid transparent; border-top: 26px solid #fbf8f1; }
+    .bub small { display: block; font-family: var(--font-body); font-size: 24px; font-weight: 600; color: var(--ink-3); margin-bottom: 6px; letter-spacing: 0.02em; }
+    .dot { position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%; background: #fff6d6; box-shadow: 0 0 0 4px rgba(230, 59, 46, 0.35), 0 0 26px 8px rgba(255, 225, 77, 0.85); opacity: 0; }
+    #bw { position: absolute; left: 0; top: 0; }
+
+    /* ---------- page 2: map */
+    .aa { left: 104px; top: 80px; padding: 10px 44px 26px; }
+    .aa .hd { font-size: 120px; line-height: 1.36; }
+    .aa .sub { margin: 2px 0 0; font-family: var(--font-body); font-size: 38px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-2); }
+    .mapc { left: 168px; top: 392px; width: 1584px; height: 604px; padding: 22px; }
+    .mapc svg { display: block; width: 1540px; height: 560px; }
+    .tag { position: absolute; left: 600px; top: 588px; padding: 10px 20px; background: #fbf8f1; box-shadow: var(--paper-sh); font-family: var(--font-body); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .cut { left: 430px; top: 236px; width: 1060px; height: 640px; }
+    .cut svg { position: absolute; left: 0; top: 0; width: 1060px; height: 640px; overflow: visible; }
+    .clab { position: absolute; top: 470px; width: 420px; text-align: center; font-family: var(--font-body); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; }
+    .cnote { position: absolute; left: 0; right: 0; top: 40px; text-align: center; font-family: var(--font-display); font-size: 46px; font-weight: 700; letter-spacing: -0.02em; }
+    .mil { position: absolute; left: 116px; top: 96px; }
+    .milt { font-family: "Instrument Serif", "Playfair Display", serif; font-style: italic; font-size: 170px; line-height: 1.12; color: var(--red); white-space: nowrap; letter-spacing: -0.01em; padding: 0 18px; }
+
+    /* ---------- page 3: payoff + masthead */
+    .l1 { position: absolute; left: 0; right: 0; top: 136px; margin: 0; text-align: center; font-family: var(--font-display); font-size: 84px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.34; color: var(--ink-2); }
+    .l2 { position: absolute; left: 0; right: 0; top: 256px; margin: 0; text-align: center; font-family: var(--font-display); font-size: 120px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.34; }
+    .cloud { position: absolute; left: 1556px; top: 70px; width: 250px; height: 150px; filter: drop-shadow(0 8px 12px rgba(60, 40, 10, 0.28)); }
+    .mast { position: absolute; left: 0; right: 0; top: 496px; display: flex; flex-direction: column; align-items: center; }
+    .rule { width: 760px; height: 6px; border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); }
+    .mast .kick { margin-top: 16px; }
+    .mname { font-family: var(--font-display); font-size: 104px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.34; margin: 0; }
+    .cta { margin-top: 26px; display: inline-flex; align-items: center; gap: 14px; padding: 16px 34px; border-radius: 999px; background: var(--ink); color: #f8f4ec; font-family: var(--font-body); font-size: 32px; font-weight: 700; letter-spacing: -0.01em; box-shadow: 0 2px 4px rgba(60, 40, 10, 0.2), 0 18px 36px -16px rgba(60, 40, 10, 0.55); overflow: hidden; position: relative; }
+    .cta svg { width: 30px; height: 30px; }
+    .concept { position: absolute; right: 44px; bottom: 30px; padding: 6px 10px; background: rgba(248, 244, 236, 0.94); font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; color: rgba(26, 26, 26, 0.8); text-transform: uppercase; }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="27" data-fps="30">
+
+    <!-- paper ground for the whole film -->
+    <section id="bg" class="scene clip" data-start="0" data-duration="27" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div class="paper"></div>
+    </section>
+
+    <!-- S1+S2 0–7.7 · one tall paper cross-section: the message heads for space, gets crossed out, falls and dives to the seabed -->
+    <section id="s12" class="scene clip" data-start="0" data-duration="7.7" data-track-index="1">
+      <div id="col">
+        <svg id="sea" width="1920" height="2160" viewBox="0 0 1920 2160" style="position: absolute; left: 0; top: 0" data-design-ignore data-layout-ignore>
+          <g id="bands"></g>
+          <g id="kelp" fill="none" stroke="#5f7d4e" stroke-width="9" stroke-linecap="round"></g>
+          <path id="seacable" d="M-30 2034 C 300 2012 620 2050 960 2030 S 1620 2010 1960 2036" fill="none" stroke="#1a1a1a" stroke-width="9" stroke-linecap="round"/>
+          <path id="seapulse" d="M-30 2034 C 300 2012 620 2050 960 2030 S 1620 2010 1960 2036" fill="none" stroke="#e63b2e" stroke-width="9" stroke-linecap="round"/>
+          <g id="ruler" stroke="rgba(26,26,26,0.32)" stroke-width="2"></g>
+        </svg>
+        <div id="parts1" class="layer" style="height: 2160px" data-design-ignore data-layout-ignore></div>
+        <div id="sky" class="layer" style="height: 1080px">
+          <div id="q" class="card q">
+            <i class="tape" style="left: 300px; top: -20px; transform: rotate(-3deg)"></i>
+            <div class="kick">The Brief · Explained</div>
+            <h1 id="qh" class="hd">Where does your message go?</h1>
+          </div>
+          <div id="satw" style="position: absolute; left: 0; top: 0">
+            <svg id="sat" class="sat" viewBox="0 0 340 230" aria-hidden="true">
+              <g transform="translate(170 115) rotate(-14)">
+                <rect x="-150" y="-26" width="104" height="52" rx="3" fill="#3f5f86"/><path d="M-124 -26 V26 M-98 -26 V26 M-72 -26 V26 M-150 0 H-46" stroke="#8fa9c6" stroke-width="2"/>
+                <rect x="46" y="-26" width="104" height="52" rx="3" fill="#3f5f86"/><path d="M72 -26 V26 M98 -26 V26 M124 -26 V26 M46 0 H150" stroke="#8fa9c6" stroke-width="2"/>
+                <rect x="-46" y="-4" width="92" height="8" fill="#9a8f7a"/>
+                <rect x="-30" y="-40" width="60" height="80" rx="6" fill="#d9c79d"/><rect x="-30" y="-8" width="60" height="10" fill="#b8a473"/>
+                <path d="M-18 -40 Q0 -78 18 -40 Z" fill="#efe8da" stroke="#9a8f7a" stroke-width="2"/><path d="M0 -58 V-84" stroke="#9a8f7a" stroke-width="3"/><circle cx="0" cy="-86" r="5" fill="#e63b2e"/>
+              </g>
+            </svg>
+          </div>
+          <svg id="s1svg" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0" data-design-ignore data-layout-ignore>
+            <defs><mask id="arcMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><path id="arcm" d="M880 640 C 1000 420 1200 290 1372 312" fill="none" stroke="#fff" stroke-width="14"/></mask></defs>
+            <path id="arc" d="M880 640 C 1000 420 1200 290 1372 312" fill="none" stroke="#e63b2e" stroke-width="5" stroke-dasharray="14 12" stroke-linecap="round" mask="url(#arcMask)"/>
+            <path id="x1" d="M1408 176 C 1460 236 1526 306 1588 360" fill="none" stroke="#e63b2e" stroke-width="14" stroke-linecap="round"/>
+            <path id="x2" d="M1596 184 C 1540 238 1470 300 1404 362" fill="none" stroke="#e63b2e" stroke-width="14" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div id="parts2" class="layer" style="height: 2160px" data-design-ignore data-layout-ignore></div>
+        <div id="bw"><div id="bub" class="bub"><small>To: Mum</small>Landed. Call you tonight?</div><i id="dot" class="dot"></i></div>
+      </div>
+    </section>
+
+    <!-- PAGE 2 7.1–19.9 · the paper map: almost all · the cable · garden hose · hundreds · 1,000,000+ km -->
+    <section id="p2" class="scene clip" data-start="7.1" data-duration="12.8" data-track-index="2">
+      <div id="page2" class="page">
+        <div id="mapc" class="card mapc">
+          <i class="tape" style="left: -40px; top: 6px; transform: rotate(-38deg)"></i>
+          <i class="tape" style="right: -40px; top: 6px; transform: rotate(36deg)"></i>
+          <svg id="map" viewBox="0 0 1540 560" aria-hidden="true">
+                        <rect width="1540" height="560" fill="#c3d3d0"/>
+            <g id="grat" fill="none" stroke="rgba(30,60,70,0.16)" stroke-width="1.2" stroke-dasharray="3 7"></g>
+            <g id="landsh" fill="rgba(60,40,10,0.24)" transform="translate(0 2.4)"></g>
+            <g id="land" fill="#f5efe1" stroke="rgba(80,62,34,0.5)" stroke-width="1.1" stroke-linejoin="round"></g>
+            <g id="lakes" fill="#c3d3d0" stroke="rgba(80,62,34,0.35)" stroke-width="0.8"></g>
+            <g id="cables" fill="none" stroke="#1a1a1a" stroke-width="2.1" stroke-linecap="round" opacity="0.82"></g>
+            <g id="ends" fill="#1a1a1a"></g>
+            <path id="mc" fill="none" stroke="#1a1a1a" stroke-width="4.6" stroke-linecap="round"/>
+            <path id="mcp" fill="none" stroke="#e63b2e" stroke-width="6" stroke-linecap="round"/>
+            <circle id="mcA" r="7" fill="#e63b2e" stroke="#f8f4ec" stroke-width="2.5"/>
+            <circle id="mcB" r="7" fill="#e63b2e" stroke="#f8f4ec" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div id="aa" class="card aa">
+          <i class="tape" style="left: -34px; top: -6px; transform: rotate(-30deg)"></i>
+          <h2 class="hd"><span class="hlw"><i id="hl1" class="hl"></i><span class="hlt">Almost all</span></span></h2>
+          <p id="aasub" class="sub">of the data between continents</p>
+        </div>
+        <div id="tagw" style="position: absolute; left: 0; top: 0">
+          <div id="tag" class="tag">On the ocean floor</div>
+          <svg id="tagar" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0" data-design-ignore data-layout-ignore><path id="tagarp" d="M760 586 C 770 566 776 552 784 540 M772 552 L784 540 L790 556" fill="none" stroke="#e63b2e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div id="cut" class="card cut">
+          <i class="tape" style="left: 455px; top: -22px; transform: rotate(2deg)"></i>
+          <div class="cnote">Some are no thicker than a garden hose</div>
+          <svg viewBox="0 0 1060 640" aria-hidden="true">
+            <defs><mask id="eqMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1060" height="640"><path id="eqm1" d="M120 160 H 950" stroke="#fff" stroke-width="12"/><path id="eqm2" d="M120 460 H 950" stroke="#fff" stroke-width="12"/></mask></defs>
+            <g id="ringsC" transform="translate(290 310)"></g>
+            <path id="coil" d="M912 360 C 1000 410 1036 500 990 566 C 950 620 880 610 884 552" fill="none" stroke="#4f9a5a" stroke-width="44" stroke-linecap="round"/>
+            <g id="hose" transform="translate(770 310)"><circle r="150" fill="#4f9a5a"/><circle r="150" fill="none" stroke="#3c7a46" stroke-width="5"/><circle r="104" fill="#2b5532"/><path d="M-118 -60 A132 132 0 0 1 -40 -126" fill="none" stroke="#86c18f" stroke-width="10" stroke-linecap="round"/></g>
+            <g mask="url(#eqMask)" stroke="#e63b2e" stroke-width="4" stroke-dasharray="12 10"><path d="M120 160 H 950"/><path d="M120 460 H 950"/></g>
+            <path id="eq1" d="M508 292 H 552" stroke="#e63b2e" stroke-width="9" stroke-linecap="round"/>
+            <path id="eq2" d="M508 326 H 552" stroke="#e63b2e" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+          <div id="labC" class="clab" style="left: 80px">Undersea cable</div>
+          <div id="labH" class="clab" style="left: 560px">Garden hose</div>
+        </div>
+        <div id="mil" class="mil">
+          <div id="milt" class="milt">1,000,000+ km</div>
+          <svg width="1100" height="260" viewBox="0 0 1100 260" style="position: absolute; left: 0; top: 150px; overflow: visible" data-design-ignore data-layout-ignore>
+            <path id="milu" d="M30 40 C 220 22 480 34 760 20 C 860 15 940 22 1000 30" fill="none" stroke="#e63b2e" stroke-width="9" stroke-linecap="round"/>
+            <path id="mila" d="M560 52 C 540 120 556 196 606 262 M578 256 L608 266 L610 234" fill="none" stroke="#e63b2e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3 19.3–27 · the payoff and the masthead -->
+    <section id="p3" class="scene clip" data-start="19.3" data-duration="7.7" data-track-index="3">
+      <div id="page3" class="page">
+        <svg id="waves3" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0" data-design-ignore data-layout-ignore></svg>
+        <h2 id="l1" class="l1">The internet isn’t in the cloud.</h2>
+        <svg id="cloud" class="cloud" style="left: 1604px; top: 40px" viewBox="0 0 250 150" aria-hidden="true">
+          <path d="M52 128 C 18 128 8 96 30 80 C 22 50 54 32 78 46 C 90 16 140 10 156 40 C 180 26 218 40 214 72 C 242 80 240 128 204 128 Z" fill="#fbf8f1" stroke="rgba(80,62,34,0.35)" stroke-width="2"/>
+          <path id="cx1" d="M44 34 C 96 74 154 108 214 140" fill="none" stroke="#e63b2e" stroke-width="13" stroke-linecap="round"/>
+          <path id="cx2" d="M210 26 C 160 70 98 108 40 140" fill="none" stroke="#e63b2e" stroke-width="13" stroke-linecap="round"/>
+        </svg>
+        <h2 id="l2" class="l2">It’s in the <span class="hlw"><i id="hl2" class="hl"></i><span class="hlt">ocean.</span></span></h2>
+        <div class="mast">
+          <div id="rule1" class="rule"></div>
+          <div id="mkick" class="kick">The world, explained</div>
+          <div id="mname" class="mname">The Brief</div>
+          <div id="rule2" class="rule" style="border-top-width: 1px; border-bottom-width: 3px"></div>
+          <div id="cta" class="cta">Subscribe free<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+        </div>
+        <div class="concept" data-design-ignore>Concept work · fictional brand</div>
+      </div>
+    </section>
+
+    <svg id="fib" viewBox="0 0 1920 1080" data-design-ignore data-layout-ignore></svg>
+    <div class="warmvig" style="z-index: 86" data-design-ignore data-layout-ignore></div>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/data-glitch.mp3" data-start="0" data-duration="27" data-media-start="0" data-track-index="10" data-volume="0.3" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":0.35,"v":1},{"t":0.5,"v":0.5},{"t":22.8,"v":0.5},{"t":23.05,"v":1},{"t":25.5,"v":1},{"t":27,"v":0}]}]}'></audio>
+    <audio id="vo" src="assets/voice/vo.wav" data-start="0.3" data-duration="23.64" data-track-index="11" data-volume="1"></audio>
+    <audio id="sfx-01-page-turn" src="assets/sfx/page-turn.mp3" data-start="0.288" data-duration="0.7" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-02-pop" src="assets/sfx/pop.mp3" data-start="0.584" data-duration="0.72" data-track-index="21" data-volume="0.16"></audio>
+    <audio id="sfx-03-page-turn" src="assets/sfx/page-turn.mp3" data-start="0.938" data-duration="0.7" data-track-index="22" data-volume="0.16"></audio>
+    <audio id="sfx-04-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="1.269" data-duration="0.49" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-05-click-soft" src="assets/sfx/click-soft.mp3" data-start="3.3" data-duration="0.24" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-06-click-soft" src="assets/sfx/click-soft.mp3" data-start="3.5" data-duration="0.24" data-track-index="21" data-volume="0.24"></audio>
+    <audio id="sfx-07-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="3.839" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-08-whoosh" src="assets/sfx/whoosh.mp3" data-start="4.784" data-duration="0.57" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-09-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="5.589" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-10-pop" src="assets/sfx/pop.mp3" data-start="6.334" data-duration="0.72" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-11-page-turn" src="assets/sfx/page-turn.mp3" data-start="7.168" data-duration="0.7" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-12-click-soft" src="assets/sfx/click-soft.mp3" data-start="7.62" data-duration="0.24" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-13-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="10.289" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-14-pop" src="assets/sfx/pop.mp3" data-start="11.004" data-duration="0.72" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-15-click-soft" src="assets/sfx/click-soft.mp3" data-start="11.25" data-duration="0.24" data-track-index="21" data-volume="0.18"></audio>
+    <audio id="sfx-16-page-turn" src="assets/sfx/page-turn.mp3" data-start="12.868" data-duration="0.7" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-17-pop" src="assets/sfx/pop.mp3" data-start="12.884" data-duration="0.72" data-track-index="21" data-volume="0.15"></audio>
+    <audio id="sfx-18-pop" src="assets/sfx/pop.mp3" data-start="13.634" data-duration="0.72" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-19-click-soft" src="assets/sfx/click-soft.mp3" data-start="14.58" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-20-click-soft" src="assets/sfx/click-soft.mp3" data-start="14.82" data-duration="0.24" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-21-page-turn" src="assets/sfx/page-turn.mp3" data-start="15.438" data-duration="0.7" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-22-whoosh" src="assets/sfx/whoosh.mp3" data-start="15.604" data-duration="0.57" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-23-click-soft" src="assets/sfx/click-soft.mp3" data-start="17.72" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-24-click-soft" src="assets/sfx/click-soft.mp3" data-start="18.36" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-25-page-turn" src="assets/sfx/page-turn.mp3" data-start="19.368" data-duration="0.7" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-26-pop" src="assets/sfx/pop.mp3" data-start="20.824" data-duration="0.72" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-27-click-soft" src="assets/sfx/click-soft.mp3" data-start="21.08" data-duration="0.24" data-track-index="21" data-volume="0.24"></audio>
+    <audio id="sfx-28-click-soft" src="assets/sfx/click-soft.mp3" data-start="21.24" data-duration="0.24" data-track-index="22" data-volume="0.22"></audio>
+    <audio id="sfx-29-click-soft" src="assets/sfx/click-soft.mp3" data-start="22.3" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-30-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="22.339" data-duration="0.49" data-track-index="21" data-volume="0.14"></audio>
+    <audio id="sfx-31-page-turn" src="assets/sfx/page-turn.mp3" data-start="23.368" data-duration="0.7" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-32-pop" src="assets/sfx/pop.mp3" data-start="23.884" data-duration="0.72" data-track-index="21" data-volume="0.2"></audio>
+    <audio id="sfx-33-sparkle" src="assets/sfx/sparkle.mp3" data-start="24.075" data-duration="1.8" data-track-index="20" data-volume="0.24"></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap, NS = "http://www.w3.org/2000/svg";
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+      const wordsAt = (sel, times, o) => {
+        o = Object.assign({ dur: 0.55, y: 30, b: 8, ease: "enter" }, o);
+        const sp = new SplitText(S.$(sel), { type: "words", wordsClass: "st-word", aria: "none" });
+        sp.words.forEach((w, i) => tl.fromTo(w, { y: o.y, opacity: 0, filter: `blur(${o.b}px)` }, { y: 0, opacity: 1, filter: "blur(0px)", duration: o.dur, ease: o.ease }, times[Math.min(i, times.length - 1)]));
+        return sp;
+      };
+      const paperIn = (sel, t, o) => { // cut paper lands with a tiny overshoot and settles at a slight angle
+        o = Object.assign({ y: -36, r0: -7, r1: -2, s: 0.95, dur: 0.7 }, o);
+        tl.fromTo(sel, { opacity: 0, y: o.y, rotation: o.r0, scale: o.s }, { opacity: 1, y: 0, rotation: o.r1, scale: 1, duration: o.dur, ease: "springSoft" }, t);
+      };
+      // Voice offset 0.3 s: every time below = measured voice onset + 0.3 (vo.words.json + RMS onsets).
+
+      // ---------------------------------------------------------------- paper fibres (seeded, static)
+      const fib = S.$("#fib");
+      for (let i = 0; i < 110; i++) {
+        const x = S.rnd() * 1920, y = S.rnd() * 1080, a = S.rnd() * Math.PI, L = 20 + S.rnd() * 60;
+        const dx = Math.cos(a) * L, dy = Math.sin(a) * L, bx = (S.rnd() - 0.5) * 24, by = (S.rnd() - 0.5) * 24;
+        mk("path", { d: `M${x.toFixed(1)} ${y.toFixed(1)} q ${(dx / 2 + bx).toFixed(1)} ${(dy / 2 + by).toFixed(1)} ${dx.toFixed(1)} ${dy.toFixed(1)}`, fill: "none", stroke: "rgba(110,85,50,0.10)", "stroke-width": (0.6 + S.rnd() * 0.9).toFixed(2) }, fib);
+      }
+
+      // ---------------------------------------------------------------- S1+S2 · the cross-section column
+      const wave = (y0, amp, k, ph, bottom) => { let d = `M-20 ${bottom} L-20 ${y0}`; for (let x = -20; x <= 1940; x += 40) d += ` L${x} ${(y0 + Math.sin(x * k + ph) * amp + Math.sin(x * k * 2.7 + ph * 1.7) * amp * 0.35).toFixed(1)}`; return d + ` L1940 ${bottom} Z`; };
+      const bands = S.$("#bands");
+      [[880, 14, 0.011, 0.3, "#a9c3c3"], [1180, 18, 0.007, 1.4, "#8eabb0"], [1500, 20, 0.006, 2.2, "#738f99"], [1800, 22, 0.005, 0.9, "#5b7884"]].forEach(([y, a, k, p, c]) => mk("path", { d: wave(y, a, k, p, 2160), fill: c }, bands));
+      mk("path", { d: wave(892, 10, 0.016, 2.0, 905).replace(/ L1940 905 Z$/, "").replace(/^M-20 905 L-20/, "M-20"), fill: "none", stroke: "#e9f1ee", "stroke-width": 5, opacity: 0.7 }, bands);
+      let sb = "M-20 2160 L-20 1990"; for (let x = -20; x <= 1940; x += 30) sb += ` L${x} ${(1990 + Math.sin(x * 0.013) * 9 + (S.rnd() - 0.5) * 12).toFixed(1)}`; mk("path", { d: sb + " L1940 2160 Z", fill: "#cdb991" }, bands);
+      [[260, 2050, 34, 16], [700, 2072, 48, 20], [1240, 2060, 40, 18], [1660, 2078, 56, 22]].forEach(([x, y, rx, ry]) => mk("ellipse", { cx: x, cy: y, rx, ry, fill: "#b39f74" }, bands));
+      [[420, 2010], [1120, 2008], [1500, 2016], [1780, 2012]].forEach(([x, y], i) => mk("path", { d: `M${x} ${y} C ${x - 18} ${y - 50} ${x + 22} ${y - 90} ${x + 4} ${y - 140 - i * 12}` }, S.$("#kelp")));
+      for (let y = 940; y <= 2100; y += 46) mk("path", { d: `M70 ${y} H ${y % 230 === 0 ? 104 : 90}` }, S.$("#ruler"));
+      const parts = (host, n, sz, col) => { for (let i = 0; i < n; i++) { const e = document.createElement("i"); const s = sz * (0.5 + S.rnd()); e.style.cssText = `position:absolute;left:${(S.rnd() * 1920).toFixed(0)}px;top:${(1000 + S.rnd() * 1050).toFixed(0)}px;width:${s.toFixed(1)}px;height:${s.toFixed(1)}px;border-radius:50%;background:${col}`; host.appendChild(e); } };
+      parts(S.$("#parts1"), 26, 7, "rgba(233,241,238,0.35)");
+      parts(S.$("#parts2"), 16, 12, "rgba(233,241,238,0.45)");
+
+      // 0.25 hook card · 0.62 "When you send a message" · 1.25 launch toward space · 3.3 "it doesn't" → red X · 3.8 fall
+      paperIn("#q", 0.22, { y: -40, r0: -7, r1: -2 });
+      S.lines("#qh", 0.42, { dur: 0.85 });
+      tl.fromTo("#bub", { opacity: 0, scale: 0.6, y: 40, rotation: -9 }, { opacity: 1, scale: 1, y: 0, rotation: -3, duration: 0.6, ease: "springSoft" }, 0.62);
+      tl.fromTo("#sat", { opacity: 0, y: -50, rotation: 14, scale: 0.9 }, { opacity: 1, y: 0, rotation: 5, scale: 1, duration: 0.8, ease: "springSoft" }, 0.92);
+      S.drift("#satw", { ax: 6, ay: 9, period: 5.5, t0: 0, t1: 7.7 });
+      tl.fromTo("#arcm", { drawSVG: "0% 0%" }, { drawSVG: "0% 72%", duration: 1.5, ease: "move" }, 1.25);
+      tl.to("#bub", { scale: 0.8, duration: 1.5, ease: "move" }, 1.25);
+      S.draw("#x1", 3.28, { dur: 0.24, ease: "move" });
+      S.draw("#x2", 3.46, { dur: 0.24, ease: "move" });
+      tl.to("#bub", { rotation: 6, duration: 0.08, ease: "exit", yoyo: true, repeat: 3 }, 3.3);
+      tl.to("#arc", { opacity: 0.35, duration: 0.4, ease: "enter" }, 3.75);
+      tl.to("#bub", { scale: 0.35, opacity: 0, duration: 0.45, ease: "exit" }, 4.18);
+      tl.fromTo("#dot", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "enter" }, 4.3);
+      // the bubble's path (per frame on a wrapper's `translate`, GSAP keeps the inner transforms)
+      const arc = S.$("#arc"), arcL = arc.getTotalLength(), mv = g.parseEase("move");
+      const P = (u) => arc.getPointAtLength(arcL * u), stop = P(0.72), start = P(0), seaPt = { x: 1060, y: 905 }, cablePt = { x: 1060, y: 2028 };
+      const bw = S.$("#bw");
+      S.everyFrame((t) => {
+        let x, y;
+        if (t < 1.25) ({ x, y } = start);
+        else if (t < 2.75) ({ x, y } = P(0.72 * mv((t - 1.25) / 1.5)));
+        else if (t < 3.8) { x = stop.x; y = stop.y + Math.sin((t - 2.75) * 5) * 3; }
+        else if (t < 4.75) { const u = (t - 3.8) / 0.95, e = u * u, c = { x: stop.x + 40, y: stop.y - 70 }; x = (1 - e) * (1 - e) * stop.x + 2 * (1 - e) * e * c.x + e * e * seaPt.x; y = (1 - e) * (1 - e) * stop.y + 2 * (1 - e) * e * c.y + e * e * seaPt.y; }
+        else if (t < 6.4) { const u = mv(Math.min(1, (t - 4.75) / 1.65)); x = seaPt.x; y = seaPt.y + (cablePt.y - seaPt.y) * u; }
+        else ({ x, y } = cablePt);
+        bw.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+      });
+      tl.to("#dot", { opacity: 0, scale: 0.4, duration: 0.2, ease: "exit" }, 6.42);
+      // 4.85 dive: the camera follows the dot down through the paper layers (near layers faster)
+      tl.fromTo("#col", { y: 0 }, { y: -1080, duration: 1.6, ease: "move" }, 4.85);
+      tl.fromTo("#sky", { y: 0 }, { y: -320, duration: 1.6, ease: "move" }, 4.85);
+      tl.fromTo("#parts2", { y: 0 }, { y: -260, duration: 1.6, ease: "move" }, 4.85);
+      tl.fromTo("#parts1", { y: 0 }, { y: 140, duration: 1.6, ease: "move" }, 4.85);
+      // 6.45 on the seabed: the signal runs along the cable (the music's slam is at 6.6)
+      g.set("#seapulse", { drawSVG: "0% 0%" });
+      tl.fromTo("#seapulse", { drawSVG: "55% 57%" }, { drawSVG: "92% 100%", duration: 0.85, ease: "move", immediateRender: false }, 6.45);
+
+      // ---------------------------------------------------------------- PAGE 2 · the paper map
+      const MW = 1540, MH = 560, LON0 = -170, LAT0 = 74, LATR = 131;
+      const px = (lon) => ((lon - LON0) / 360) * MW, py = (lat) => ((LAT0 - lat) / LATR) * MH;
+      const poly = (a) => { let d = ""; for (let i = 0; i < a.length; i += 2) d += (i ? "L" : "M") + px(a[i]).toFixed(1) + " " + py(a[i + 1]).toFixed(1); return d + "Z"; };
+      const spline = (pts) => {
+        const Q = pts.map(([lo, la]) => [px(lo), py(la)]);
+        let d = `M${Q[0][0].toFixed(1)} ${Q[0][1].toFixed(1)}`;
+        for (let i = 0; i < Q.length - 1; i++) {
+          const p0 = Q[i - 1] || Q[i], p1 = Q[i], p2 = Q[i + 1], p3 = Q[i + 2] || p2;
+          d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+        }
+        return d;
+      };
+      // simplified hand-cut coastlines, [lon, lat, …] (equirectangular, lon −170…190, lat 74…−57)
+      const LAND = {
+        na: [-166,68.8,-156.5,71.3,-143,70.1,-135,69.4,-128,70.2,-120,69.3,-110,68.2,-102,67.8,-95,68.5,-89,68.9,-85,66.5,-88,64.5,-92,62,-94.5,59.5,-93,58.8,-88.5,56.8,-84,55.3,-82.3,53.5,-79.8,51.4,-78.8,54.5,-77.5,58.5,-78,61.5,-74.5,62.3,-71,61.2,-69.5,59.2,-66,58.8,-64.5,60.3,-61.8,56.8,-59,55.3,-57.3,53.8,-55.8,52.2,-57.5,51.4,-63,50.2,-66.5,49.2,-64.5,48.5,-64.2,47,-61,46,-60,45.8,-61.5,45.2,-63.5,44.6,-65.8,43.5,-66.2,44.8,-67.5,44.5,-70.2,43.6,-70,41.8,-71.5,41.3,-73.7,40.6,-74.1,39.5,-75,38.8,-75.6,37.5,-76.2,36.9,-75.5,35.3,-76.7,34.6,-78.5,33.8,-79.9,32.7,-81.4,30.8,-80.6,28.5,-80,26.5,-80.4,25.2,-81.2,25.2,-81.8,26.4,-82.6,27.8,-82.8,29.3,-84.3,30,-86.5,30.4,-88.5,30.3,-89.4,29.2,-90.6,29.1,-92.5,29.6,-94.5,29.5,-96.5,28.3,-97.4,27,-97.4,25.3,-97.7,22.3,-97.3,20.9,-96.2,19.1,-94.6,18.2,-92.5,18.6,-91.3,18.8,-90.5,20.4,-90.3,21.2,-88.2,21.6,-86.8,21.4,-87.5,19.6,-87.8,18.2,-88.4,16.4,-88.3,15.8,-86.5,15.9,-84.8,15.9,-83.4,15.2,-83.3,13,-83.6,11.2,-82.5,9.8,-81,8.8,-79.6,9.6,-78.2,9.3,-77.4,8.6,-78.4,8.3,-80,7.5,-81.2,7.8,-82.9,8.2,-84.8,9.9,-85.8,10.8,-87.6,12.9,-89.5,13.5,-91.5,14,-93.5,15.8,-95,16.2,-96.5,15.7,-98.5,16.3,-101,17.5,-103.5,18.3,-105.5,20,-105.3,21.5,-105.8,22.8,-107.5,24.6,-109.4,26.5,-110.5,27.9,-112.2,29.3,-113.5,31,-114.8,31.8,-114.4,30.2,-113.2,28.6,-112,26.8,-110.6,24.4,-109.5,23.2,-110,22.9,-111.8,24.5,-112.2,26,-114,27.7,-115,29.7,-116.6,31.7,-117.2,32.6,-118.4,34,-120.6,34.5,-121.9,36.6,-122.5,37.7,-123.7,39,-124.3,40.4,-124.1,42.8,-123.9,46.2,-124.7,48.4,-125.9,50,-127.9,51.2,-130,54,-132,55.5,-134.5,57.8,-137.5,58.9,-140.5,59.8,-144.5,60,-147.5,60.8,-149.5,59.8,-151.8,59.2,-154,57.6,-156.5,56.5,-159.5,55.5,-162.5,54.8,-164.7,54.4,-162,55.8,-158,58,-160.5,58.8,-162.5,59.8,-165,60.9,-165.5,62.5,-164.3,63.5,-161,64.4,-166,64.6,-168,65.6,-164.5,66.5],
+        greenland: [-72,78.2,-66,76.6,-58.5,75.8,-56,73.8,-55,71,-53.5,69.5,-51.5,67.5,-50.5,64.5,-48.8,62,-44.9,60,-43,60.3,-41.5,62.5,-40,65,-36.5,65.8,-32,68.3,-26,69.8,-22.5,71.5,-21.8,73.5,-18.5,75.5,-18.5,78,-20,81,-40,83,-60,82,-70,80],
+        baffin: [-91,72.8,-84,73.6,-77,72.6,-71,70.8,-67,69.2,-63.5,67,-63,65.3,-65.2,63.4,-68.5,62.8,-72,63.6,-76.5,64.3,-73.5,66.5,-73,68.2,-78,69.7,-85,69.8,-90,70.5],
+        victoria: [-118.5,71.4,-112,72.8,-104.5,72.8,-101.7,70.6,-105.5,69.2,-113,68.6,-117.5,69.4],
+        banks: [-125.8,71.9,-124.5,74.2,-119,74.3,-116,73,-119.2,71.6,-123.5,71],
+        newfoundland: [-59.4,47.6,-57.5,50.7,-55.6,51.6,-53.5,49.5,-52.7,47.6,-53.8,46.7,-56,47.2,-58.5,47.4],
+        cuba: [-84.9,21.9,-83.3,22.9,-81.5,23.2,-79.6,22.8,-77.3,21.7,-75.7,20.7,-74.2,20.2,-75.6,19.9,-77.7,19.9,-78.5,21.4,-80.7,21.7,-82.3,22.2,-84.4,21.6],
+        hispaniola: [-74.4,19.9,-72.8,19.9,-71,19.9,-69.4,19.3,-68.4,18.6,-70,18.2,-71.4,17.6,-73,18.2,-74.4,18.4],
+        sa: [-77.4,8.6,-75.5,10.5,-73,11.3,-71.4,12.4,-70,11.6,-68.2,10.6,-66,10.6,-64,10.6,-62.2,10.7,-61,10.2,-60.4,8.6,-58.5,7,-57,6,-55,5.9,-53,5.6,-51.6,4.2,-50.6,2,-50,0.5,-49,-0.6,-48.4,-1.3,-46.5,-1,-44.6,-2.5,-42,-2.8,-39.5,-3,-37.2,-4.8,-35.3,-5.4,-34.9,-7.5,-35.3,-9.5,-37.2,-11.5,-38.6,-13.4,-39.1,-16,-39.3,-18,-40.3,-20.3,-41.2,-22,-43.2,-23,-45.5,-23.8,-47.8,-25.2,-48.6,-26.8,-48.7,-28.6,-50.2,-30.8,-51.9,-32.5,-53.4,-33.8,-54.9,-34.9,-56.2,-34.9,-57.9,-34.4,-58.3,-34.8,-57.3,-35.8,-56.8,-36.5,-57.6,-38.2,-59.8,-38.8,-62.2,-38.9,-62.3,-40.6,-64.9,-40.8,-65.1,-42,-63.8,-42.8,-64.6,-43.4,-65.2,-44.6,-66.8,-45.2,-67.6,-46.5,-66,-47.8,-67.8,-49.7,-68.9,-51.5,-68.4,-52.4,-66.8,-54.6,-65.3,-54.9,-67,-55.2,-68.2,-55.6,-69.6,-55.4,-71.5,-54.6,-72.5,-53.5,-73.8,-52.6,-74.8,-51.2,-75.4,-49.2,-75.6,-47,-74.6,-45.6,-73.9,-43.5,-73.5,-41.5,-73.7,-39.5,-73.5,-37.5,-72.6,-35.8,-71.6,-33,-71.4,-30.5,-71.5,-28.5,-70.6,-25.5,-70.4,-23,-70.2,-20.5,-70.3,-18.4,-71.4,-17.6,-72.8,-16.8,-75.2,-15.3,-76.2,-13.9,-77.2,-12.1,-78.2,-10,-79.4,-7.8,-81,-6,-81.3,-4.5,-80.3,-3.4,-80.8,-2,-80.3,-0.5,-80.1,0.8,-78.9,1.4,-78.6,2.5,-77.6,3.8,-77.4,5.5,-77.4,6.6,-77.9,7.2],
+        eurasia: [-8.9,37,-8.8,38.5,-9.5,38.8,-8.9,40.2,-8.8,41.6,-9.3,43,-8,43.7,-5.8,43.6,-3.5,43.5,-1.6,43.4,-1.2,44.7,-1.2,46.2,-2.2,47.2,-4.6,47.9,-4.8,48.5,-3,48.8,-1.6,48.7,-1.4,49.7,0.2,49.5,1.6,50.3,1.8,51,3.2,51.4,4.2,52,4.8,53,6.5,53.5,8.6,53.9,8.6,55.4,8.1,56.6,10.6,57.7,10.5,56.9,10.2,56,10.6,55,11,54.3,12.4,54.4,14.2,53.9,16.5,54.5,18.6,54.7,19.9,54.8,21.2,55.4,21,56.8,21.6,57.4,24.3,57,24.4,58.3,23.5,59,24.8,59.4,28,59.5,29.8,60,28.6,60.6,26.5,60.4,24.5,60,22.9,59.9,21.4,60.6,21.4,61.9,21.4,63.4,23.5,64.6,25.3,65.2,24.5,65.8,22.2,65.7,21.2,64.8,19,63.6,17.6,62.4,17.3,61,18.8,60.1,18.2,59.4,16.6,58,16.4,56.4,14.4,55.6,12.9,55.4,12.5,56.3,11.7,57.7,11.2,59,10.6,59.9,9.6,59,8.2,58.1,5.6,58.9,5,60.4,5.1,61.9,6.8,62.8,8.5,63.4,10.4,64.3,12.4,65.8,14,67.3,15.6,68.5,18.5,69.8,21.5,70.4,25.8,71.1,28.8,70.9,31.1,70.3,33.1,69.4,36.5,69.1,39.8,68.1,41.2,67,39,66.1,36,66.4,33.5,66.8,34.5,65.5,34.8,64.5,36,63.9,38,64.6,40.5,64.6,41.3,65.8,43,66.4,44.2,66,44,68,43.5,68.6,46,67.6,48,67.7,53.5,68.3,54.6,68.9,59,68.4,61,69.7,67,68.8,68.4,68.2,66.8,70.5,68.5,72.5,72,73.3,75,72.6,80,73.5,87,74.5,95,75.5,100,77.5,110,76.5,113.5,73.5,120,73,128,72.8,130,71,140,72.5,150,71.5,160,69.6,165,69.8,170,69.9,176,69.5,180,68.9,187,67,190.5,66,187.5,64.7,185,64.6,183,65.5,179,64.7,177.5,62.5,174,61.8,170.5,60,165,59.8,163.5,58.7,162,57.6,162.5,56,160,54,158.5,52.9,156.7,51,156,52.8,155.6,55,156.8,57.3,158.5,58,160,60.5,157,61.5,154,59.4,151.5,59.2,148,59.3,143.5,59.4,141,58.6,138.5,56.4,137.5,54.5,140.5,53.4,141.4,52,140.5,48.5,138.5,46.6,136,44,133,42.8,131.9,43.1,130.6,42.5,129.7,41,128.3,39.5,129.3,37.4,129.4,36,129.1,35.1,127.5,34.6,126.3,34.5,126.5,35.8,126.6,37,126.1,37.7,125.2,38,125,39.5,124.3,39.9,121.6,40.9,120,40.2,118.5,39.1,117.7,38.4,118.9,37.4,120.7,37.8,122.5,37.4,121,36.6,120,35.8,119.2,34.7,120.8,32.6,121.9,31.7,121.9,30.8,122,29.9,121.4,28.4,120.4,27,119.6,25.7,118.6,24.6,117.4,23.6,116.4,22.9,114.2,22.3,113.2,22,111.6,21.5,110.4,21.2,110,20.3,109.7,21.5,108.5,21.6,107.4,21,106.6,20.2,105.8,19.1,106.3,17.8,107.4,16.6,108.4,15.7,109.2,13.6,109.3,11.8,108.4,11,107.2,10.4,106.6,9.7,105.4,8.8,104.8,8.6,104.9,10,104.4,10.4,103.4,10.6,102.6,11.9,101.9,12.6,100.9,13.3,100.5,13.5,100,13.2,99.9,12.3,99.3,10.4,99.4,9.2,100.2,8.4,100.4,7.2,101.4,6.8,102.2,6.2,103.1,5.3,103.4,4.1,103.4,2.6,104.2,1.6,103.5,1.3,102.6,1.9,101.3,2.8,100.6,4.3,100.3,5.6,100.1,6.5,99,7.6,98.3,8.2,98.6,9.8,98.5,11.8,98.4,13.5,97.8,15,97.6,16.5,96.9,16.9,95.4,15.8,94.4,16,94.4,17.8,94,19,93.2,20,92.3,20.8,91.9,22.2,91,22.6,90.3,21.9,89.1,21.8,88.1,21.6,86.9,21,86.5,20,85.1,19.4,84,18.3,82.3,16.6,81.2,15.8,80.1,15.2,80.3,13.4,79.8,11.3,79.3,10.3,78.9,9.2,78.2,8.9,77.5,8.1,76.5,8.9,76.2,10,75.6,11.6,74.8,12.9,74.1,14.8,73.4,16.4,72.9,18.9,72.8,20.5,72.6,21.5,72.2,22.2,70.8,20.8,69.5,21.5,69.2,22.4,70.2,22.9,68.6,23.3,67.4,23.9,67,24.8,66,25.4,64.5,25.2,61.6,25.2,58.8,25.6,57.3,25.9,56.9,27,56.3,27.2,54.8,26.5,53.5,26.9,51.4,27.9,50.6,29,50,30.1,48.6,30,48,29.4,48.5,28.4,49.6,27.1,50.2,26,50.8,24.8,51.2,26.1,51.6,25.3,51.6,24.3,52.6,24.2,54,24.1,55.4,25.3,56.1,26.2,56.4,24.9,57.2,23.9,58.6,23.6,59.8,22.5,59.3,21.4,58.3,20.4,57.7,19,56.6,18.2,55.3,17.6,53.2,16.6,52,15.7,49.5,14.7,47.5,13.6,45.1,12.9,43.5,12.7,42.9,14.6,42.6,16.4,41.8,17.8,40.6,19.6,39.6,20.9,39.1,21.6,38.5,23.4,37.4,24.8,36.5,26,35.5,27.6,34.8,28.4,34.9,29.5,34.4,28.4,34.2,27.8,33.6,28.4,32.6,29.9,32.3,31.3,34.2,31.3,34.9,32.6,35.4,33.6,35.9,35.1,35.9,36.5,36.2,36.9,35,36.7,33.7,36.2,32.4,36.1,30.6,36.6,29.2,36.4,27.6,36.9,27.2,37.8,26.5,38.4,26.8,39.4,26.2,39.9,26.7,40.4,26,40.8,25,40.9,24,40.8,23.3,40.2,22.9,40.6,22.6,40.2,22.9,39.2,23.4,38.6,24,38.1,23.2,37.7,23,36.5,22.4,36.5,21.7,36.8,21.6,37.6,21.1,37.9,21.6,38.4,20.8,38.9,20.2,39.6,19.4,40.4,19.5,41.4,18.6,42.4,17.6,42.9,16.4,43.5,15.4,44.3,14.6,45.2,13.7,45.6,13,45.7,12.3,45.3,12.4,44.2,13.5,43.6,14.2,42.5,15.1,42,16.1,41.9,16.2,41.4,17.2,41,18.5,40.2,18.1,39.9,17.2,40.4,16.6,39.8,17.1,39,16.6,38.4,16.1,37.9,15.6,38,15.8,38.8,16.1,39.6,15.6,40.1,14.9,40.3,14.3,40.8,13.8,41.2,12.8,41.4,12.2,41.8,11.2,42.4,10.5,42.9,10.2,43.9,9.2,44.3,8.4,44,7.5,43.8,6.6,43.2,5.2,43.3,4.2,43.5,3.2,43.1,3.2,42.3,3.1,41.8,2.2,41.3,1,41,0.4,40.3,-0.3,39.4,0.2,38.7,-0.6,38.1,-0.9,37.6,-1.6,37.2,-2.1,36.7,-3.4,36.7,-4.4,36.7,-5.3,36.2,-5.6,36,-6.2,36.4,-6.4,36.8,-7.4,37.2],
+        africa: [32.3,31.3,31,31.6,29.9,31.2,27.2,31.4,25.2,31.6,23.9,32.1,21.5,32.9,20.1,32.1,19,30.3,16.5,31.2,15.2,32.3,13.2,32.9,11.1,33.2,10.2,34,11,35.6,10.3,36.8,11.1,37,9.8,37.3,8.6,36.9,6,37,3,36.8,-0.6,35.7,-2,35.1,-5.3,35.9,-5.8,35.8,-6.2,35,-6.8,34,-7.6,33.6,-9.2,32.4,-9.8,30.4,-11,28.8,-13,27.4,-15,24.5,-16.1,22,-17,21,-16.1,19.5,-16.5,16,-17.5,14.7,-16.8,13.3,-16.7,12.2,-15.5,11.2,-13.7,9.6,-13.2,8.5,-11,6.7,-9,5,-7.5,4.4,-4,5.2,-1.5,5,1.2,6.1,2.4,6.4,3.4,6.4,5.5,4.2,6,4.3,7,4.4,8.5,4.5,9.4,3.9,9.8,2.5,9.4,0.4,8.9,-1,10.5,-3,11.9,-4.8,12.3,-6,13.2,-8.8,13.6,-12.4,12.2,-15.2,11.8,-17.3,13,-20,14.5,-22.9,15.2,-26.6,16.5,-28.6,17.9,-31.8,18.4,-33.9,18.5,-34.4,20,-34.8,22,-34.1,25.6,-34,28,-32.6,31,-29.8,32.6,-26.5,32.9,-25.9,35.5,-24,35.4,-22.1,34.8,-19.8,37,-17.4,40.5,-15,40.5,-11,39.3,-8,39.3,-6.8,39.7,-4.1,41.2,-2.3,42.5,-0.5,45.3,2,47.8,5,49.6,8.5,51.3,11,51.2,11.8,48.5,11.2,45,10.4,43.4,11.6,42.7,12.8,41,14.5,39.5,15.6,38.5,18,37.2,19.6,36.8,22,35.5,23.9,34.4,26,33.8,27.2,32.6,29.9],
+        madagascar: [49.3,-12,50.2,-15.3,49.8,-17.2,48.7,-20.4,47.6,-24,47,-25.1,45.2,-25.5,44,-24.4,43.3,-21.7,44.3,-19.7,44,-17.8,44.5,-16.2,46.3,-15.6,48,-13.6],
+        britain: [-5.7,50.1,-4.2,50.4,-3.4,50.6,-1.1,50.8,1.4,51.2,1.7,52.6,0.2,53.5,-0.1,54.5,-1.6,55.6,-2.1,57.1,-3.1,58.6,-5,58.6,-5.6,57.5,-5.7,56.4,-5,55.8,-4.9,54.9,-3.4,54.9,-3,53.9,-3,53.3,-4.6,53.3,-4.2,52.7,-5.1,51.8,-3.2,51.5,-4.2,51.2,-5,50.6],
+        ireland: [-6,52.2,-6.2,53.4,-5.9,54.6,-6.9,55.2,-8.3,55.2,-8.6,54.4,-10,54.2,-9.9,53.4,-9.4,52.6,-10.4,52,-9.6,51.5,-8.4,51.6,-6.4,52.2],
+        iceland: [-22,64,-24,65.5,-22.5,66.4,-18,66.2,-14.5,66.2,-13.6,65.2,-14.8,64.3,-18.6,63.4],
+        sicily: [12.4,37.8,13.4,38.2,15.6,38.3,15.1,36.7,12.5,37.6], sardinia: [8.4,40.9,9.8,41,9.6,39.1,8.4,39,8.2,40], corsica: [8.6,42.2,9.4,43,9.6,42.1,9.2,41.4],
+        crete: [23.5,35.6,26.3,35.3,24,34.9], cyprus: [32.3,35.1,34.6,35.7,34,34.6,32.4,34.7], zealand: [11,55.3,12.6,56,12.4,55.3,11.2,55.2],
+        honshu: [131,34.4,132.2,35.4,134,35.6,135.9,35.9,136.8,37.3,138.5,37.4,139.9,39.9,140,41.2,141.5,41.4,141.9,40,141.6,38.4,141,37.1,140.8,35.7,139.8,35,138.8,34.6,137,34.6,136.8,34.3,135.8,33.5,135.2,34.3,134,34.6,132.4,34.2],
+        hokkaido: [140,41.5,141.2,41.8,143.2,42,145.6,43.3,144.5,44,141.7,45.4,141.4,43.5,139.9,42.6], kyushu: [129.8,33.3,130.9,33.9,132,33,131.3,31.3,130.2,31.2,129.9,32.6],
+        taiwan: [121,25.2,122,25,121.6,23.5,120.8,21.9,120.1,23], srilanka: [79.9,9.7,81.2,8.5,81.8,7,80.6,5.9,79.8,6.8], hainan: [108.6,19.2,110.5,20.1,111,19.6,109.5,18.2,108.6,18.6],
+        luzon: [120.6,18.5,122.2,18.4,122,16.9,121.6,15.8,122,14,124,13,123.2,12.9,121.8,13.9,120.6,14.4,120,16], mindanao: [122,7,123.5,8.6,125.5,9.6,126.6,7,125.4,5.6,124,6.5], visayas: [122.3,11.6,124.3,12.4,125.3,11.1,123.9,9.9,122.5,9.9],
+        sakhalin: [142,54.2,143.2,52.9,143.6,50,144.4,49,143,47,142,46,141.9,48,142.1,51.5],
+        sumatra: [95.3,5.6,97.5,5.2,100,2.4,103.8,-1,106,-3,105.8,-5.8,104.5,-5.9,102.3,-4,100.4,-0.9,98.7,1.7], java: [105.2,-6.8,106.8,-6.1,108.5,-6.7,110.9,-6.4,112.6,-6.9,114.6,-7.8,114.4,-8.7,111,-8.2,108,-7.8,105.4,-6.9],
+        borneo: [109,1.5,109.6,-0.5,110.2,-2.9,114.5,-3.9,116,-3.5,116.5,-1.5,117.8,0.8,118.9,4.9,117.6,6.9,116,6,114,4.5,111.2,2.6,109.6,2],
+        sulawesi: [119.4,-5.5,120.4,-5.6,120.9,-3,121.4,-4.7,123.2,-4.5,122,-2,121.5,-1,123.2,-0.9,125.2,1.6,124,0.9,121,1.3,120,0.6,119.7,-1.5,119,-3.5],
+        newguinea: [131,-1,134,-0.9,137,-1.5,141,-2.6,145.7,-4.8,147.5,-6,150.3,-10.5,147,-10.2,144,-7.7,141.5,-9.1,138.5,-8.3,137.6,-5.2,135,-4.4,132.5,-4], timor: [124,-10,127.2,-8.4,125.6,-9.2],
+        australia: [114.1,-21.8,116.7,-20.6,121,-19.5,122.2,-17.9,123.6,-16.3,125,-14.5,127.2,-13.9,128.7,-14.9,129.6,-14.9,130.8,-12.4,132.6,-11.5,136,-12,136.8,-12.3,135.9,-13.3,135.5,-14.8,137.8,-16.2,140,-17.6,141.5,-15.5,141.6,-12.6,142.5,-10.7,143.5,-12.6,144.5,-14.3,145.4,-16,145.8,-16.9,146.3,-19,148.8,-20.4,150.6,-22.5,153.1,-25,153.6,-28.6,152.9,-31.4,151.2,-33.9,150.2,-36.4,149.9,-37.6,147.5,-38,146.3,-39.1,144.9,-37.9,143.5,-38.8,140.6,-38,139.6,-37,138.6,-35.5,137.8,-35.6,137.4,-34,136,-35,135.5,-34.6,134.2,-32.8,131.5,-31.5,128.9,-31.7,126,-32.3,123.5,-33.9,120,-33.9,117.9,-35.1,115,-34.3,115.7,-32,114.9,-29.5,113.7,-26.6,113.4,-24.5],
+        tasmania: [144.6,-40.7,148.3,-40.9,148,-43.2,146.8,-43.6,145.2,-42.2], nzn: [172.7,-34.4,174.8,-36.9,175.9,-37.4,178.5,-37.7,177,-39.2,176.8,-39.9,175.3,-41.6,174.6,-41.3,174.6,-39.8,173.8,-39.2,174.6,-38,173.1,-35.2], nzs: [172.7,-40.5,174.3,-41.7,173.3,-43,172.7,-43.8,171.2,-44.5,170.7,-45.9,169,-46.6,166.5,-46,166.8,-45.2,168.3,-44,170.8,-42.8,171.6,-41.4],
+      };
+      const LAKES = {
+        black: [27.6,42.5,28,43.8,28.7,44.4,29.7,45.3,30.7,46.5,32,46.5,32.5,45.5,33.5,44.6,34.5,44.4,36.4,45.2,38,47.1,38.5,45.6,37.3,44.9,38,44.4,39.7,43.5,41.6,41.6,40,41,37,41.1,35.2,42,33.4,42,31.2,41.1,29.1,41.2,28,41.6],
+        caspian: [49,46.6,53,46.8,53.2,45.3,51.3,44.6,52.8,42.3,53,40,53.9,39,53.8,37.4,51,36.7,49,37.6,48.9,38.4,49.4,40.2,48.5,41.8,47.5,43,47.3,44.6,48,45.8],
+        superior: [-92,46.7,-84.6,46.5,-86,48.6,-89.5,48], michigan: [-87.8,41.7,-86.3,42.2,-85.9,45.8,-87.5,45.3], huron: [-84,43.2,-82.4,43,-81.7,45.3,-84.5,45.9,-83.6,44.2],
+      };
+      const landG = S.$("#land"), lakeG = S.$("#lakes"), gratG = S.$("#grat");
+      for (let lon = -150; lon <= 180; lon += 30) mk("path", { d: `M${px(lon).toFixed(1)} 0 V${MH}` }, gratG);
+      for (let lat = 60; lat >= -50; lat -= 30) mk("path", { d: `M0 ${py(lat).toFixed(1)} H${MW}` }, gratG);
+      const landSh = S.$("#landsh");
+      Object.values(LAND).forEach((a) => { const d = poly(a); mk("path", { d }, landSh); mk("path", { d }, landG); });
+      Object.values(LAKES).forEach((a) => mk("path", { d: poly(a) }, lakeG));
+      // the first cable (New York → Cornwall), drawn on "travels through cables" (10.3)
+      const MAIN = [[-72.9, 40.7], [-62, 42.6], [-45, 46.6], [-28, 49.6], [-14, 50.9], [-4.6, 50.8]];
+      S.$("#mc").setAttribute("d", spline(MAIN)); S.$("#mcp").setAttribute("d", spline(MAIN));
+      ["#mcA", "#mcB"].forEach((s, i) => { const p = MAIN[i ? MAIN.length - 1 : 0]; S.$(s).setAttribute("cx", px(p[0]).toFixed(1)); S.$(s).setAttribute("cy", py(p[1]).toFixed(1)); });
+      // "hundreds of them": ~50 routes through ocean waypoints (illustrative, not a survey); edge routes continue across the date line
+      const ROUTES = [
+        [[-76,36.8],[-55,38.8],[-32,41.6],[-14,43.6],[-3,43.4]], [[-74,39.8],[-52,42.5],[-30,46.6],[-12,48.2],[-4.5,48.4]], [[-63.6,44.6],[-45,49],[-25,52],[-9.8,51.9]],
+        [[-80.1,26.7],[-62,30.5],[-38,34.5],[-20,37.6],[-9.4,38.7]], [[-38.5,-3.7],[-30,6],[-22,22],[-14,33],[-9.2,38.6]], [[-38.5,-3.7],[-48,6],[-60,18],[-70,29],[-76,36.8]],
+        [[-43.2,-22.9],[-37.5,-15],[-34,-7],[-38.5,-3.7]], [[-38.5,-3.7],[-27,6],[-17.5,14.7]], [[18.4,-33.9],[11,-22],[4,-8],[-4,1],[-16,10],[-19.5,22],[-14,32],[-9.4,38.5]],
+        [[3.4,6.4],[-1,2.5],[-17,11],[-20,24],[-13.5,35],[-9.4,38.5]], [[-56.5,-34.9],[-49,-31.5],[-45,-25.5],[-43.2,-22.9]], [[9.9,2.9],[-6,-1],[-24,-3],[-38.5,-3.7]],
+        [[13.2,-8.8],[-5,-10],[-22,-8],[-38.5,-3.7]], [[-118.4,33.9],[-138,27],[-158,21.3]], [[-158,21.3],[-178,18],[-200,15]], [[200,14],[175,13.8],[144.8,13.4]],
+        [[-123.9,45.5],[-150,46.5],[-200,45]], [[200,44],[170,43],[150,41.5],[141.6,40.5]], [[-118.4,33.9],[-150,32.5],[-200,30]], [[200,32],[165,33],[140.2,34.6]],
+        [[144.8,13.4],[141,24],[140,34.4]], [[144.8,13.4],[132,14],[121.7,15.5]], [[151.3,-33.8],[170,-26],[200,-14]], [[151.3,-33.8],[156,-18],[152,2],[144.8,13.4]],
+        [[115.8,-32],[110,-22],[106,-11],[105.9,-6.3],[106.6,-4.5],[106.5,-1.5],[104.6,0.9],[103.9,1.2]], [[103.9,1.3],[107,6],[111.5,12],[114.5,19.5],[114.2,22.2]],
+        [[114.2,22.2],[120,21.5],[126,26.5],[133,31],[139.8,34.6]], [[103.8,1.3],[97,6.2],[87,5.4],[80,5.2],[73.5,10],[72,15],[72.8,18.9]], [[72.8,18.9],[63,21.5],[56.4,25.1]],
+        [[72.8,18.9],[60,14.5],[49,12.6],[43.2,11.7]], [[43.2,11.7],[42,14.5],[38.6,20],[34.6,27.4],[32.6,29.8]], [[32.3,31.3],[27,33.6],[19,34.6],[11.6,37.4],[8,40.6],[5.4,43.3]],
+        [[5.4,43.3],[4.6,40],[3,36.8]], [[103.8,1.3],[105.4,-2.5],[106.8,-6]], [[39.7,-4.1],[45,-0.5],[51.5,7],[52.5,11.5],[48,12.3],[43.6,11.6]],
+        [[18.5,-34.3],[30,-36],[40,-28],[42.5,-15],[40.5,-8],[39.7,-4.1]], [[39.7,-4.1],[52,4],[59,15],[61,21.5],[56.6,24.8]], [[80.3,13.1],[88,9.5],[96,6.4],[99,4.5],[103.6,1.4]],
+        [[-9.2,38.7],[-6.4,36],[-2,36.4],[2.5,38.6],[5.3,43.1]], [[-71.6,-33],[-73.3,-25],[-76,-17.8],[-77.1,-12]], [[-77.1,-12],[-81.5,-5],[-80.3,3],[-79.5,8.9]],
+        [[-79.9,9.4],[-78,15],[-75.8,18.8],[-74.3,20.4],[-76.2,24],[-80,26.3]], [[-80,26.5],[-78.2,30.5],[-75.3,35.2],[-75.9,36.8]], [[1.6,52.6],[4.5,54],[8,55.7]],
+        [[-5.6,50],[-8,47],[-9.6,43.2]], [[121.7,25.1],[126,28],[132,31]], [[129.1,35.1],[127,33.5],[122,31]], [[-158,21.3],[-150,10],[-160,-14],[-200,-18]],
+        [[114.2,22.2],[117,17],[119.5,12],[121.6,14.4]], [[-17.5,14.7],[-24,25],[-26,38],[-12,46],[-4.6,48.2]],
+      ];
+      const cabG = S.$("#cables"), endG = S.$("#ends"), inMap = (p) => p[0] > -170 && p[0] < 190;
+      const cab = ROUTES.map((r) => mk("path", { d: spline(r) }, cabG));
+      const ends = ROUTES.map((r) => [r[0], r[r.length - 1]].map((p) => (inMap(p) ? mk("circle", { cx: px(p[0]).toFixed(1), cy: py(p[1]).toFixed(1), r: 3.4 }, endG) : null)));
+
+      // 7.12 page turn → the map · 7.46 "Almost all" (highlighter) · 8.35 "the data between continents"
+      tl.fromTo("#page2", { x: 1990 }, { x: 0, duration: 0.5, ease: "move" }, 7.12);
+      tl.fromTo("#mapc", { rotation: -3.2, y: 22 }, { rotation: -1, y: 0, duration: 0.8, ease: "springSoft" }, 7.4);
+      paperIn("#aa", 7.4, { y: -44, r0: -6, r1: -2 });
+      tl.fromTo("#hl1", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "move" }, 7.6);
+      S.words("#aasub", 8.35, { stagger: S.f(3), blur: 6, y: 16 });
+      // 10.3 "cables": the first cable draws across the Atlantic, a red signal rides it; 11.2 "on the ocean floor" tag
+      g.set("#mc, #mcp", { drawSVG: "0%" });
+      tl.fromTo("#mcA", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.4, ease: "houseSpring" }, 10.28);
+      S.draw("#mc", 10.32, { dur: 0.8, ease: "move" });
+      tl.fromTo("#mcp", { drawSVG: "0% 0%" }, { drawSVG: "0% 14%", duration: 0.2, ease: "enter" }, 10.4);
+      tl.to("#mcp", { drawSVG: "86% 100%", duration: 0.72, ease: "move" }, 10.6);
+      tl.to("#mcp", { opacity: 0, duration: 0.3, ease: "exit" }, 11.32);
+      tl.fromTo("#mcB", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.45, ease: "houseSpring" }, 11.1);
+      paperIn("#tag", 11.2, { y: 16, r0: 7, r1: 2, dur: 0.5 });
+      S.draw("#tagarp", 11.36, { dur: 0.3, ease: "move" });
+
+      // 12.88 "Some are no thicker than a garden hose" — the cut-away card
+      const rc = S.$("#ringsC");
+      const RINGS = [[150, "#1f1f1f"], [108, "#c27a3e"], [92, "#ece3cf"], [64, "#b7bfc4"], [46, "#f6e9a8"]];
+      const ringEls = [];
+      RINGS.forEach(([r, c], i) => { ringEls.push(mk("circle", { r, fill: c }, rc)); if (i === 0) { const wires = mk("g", {}, rc); for (let k = 0; k < 22; k++) { const a = (k / 22) * Math.PI * 2; mk("circle", { cx: (121 * Math.cos(a)).toFixed(1), cy: (121 * Math.sin(a)).toFixed(1), r: 10, fill: "#a9a9a9", stroke: "#4a4a4a", "stroke-width": 1.2 }, wires); } ringEls.push(wires); } });
+      const fib8 = mk("g", {}, rc); ["#e63b2e", "#3b6fd6", "#2f9e5b", "#ffe14d", "#e88a2e", "#8a55c9", "#e63b2e", "#3b6fd6"].forEach((c, k) => { const a = (k / 8) * Math.PI * 2; mk("circle", { cx: (24 * Math.cos(a)).toFixed(1), cy: (24 * Math.sin(a)).toFixed(1), r: 7.5, fill: c, stroke: "rgba(0,0,0,0.25)", "stroke-width": 1 }, fib8); }); mk("circle", { r: 7.5, fill: "#ffffff", stroke: "rgba(0,0,0,0.25)", "stroke-width": 1 }, fib8); ringEls.push(fib8);
+      tl.to("#aa", { opacity: 0, y: -30, rotation: -4, duration: 0.3, ease: "exit" }, 12.72);
+      paperIn("#cut", 12.86, { y: 60, r0: 6, r1: 2, s: 0.94, dur: 0.75 });
+      ringEls.forEach((el, i) => tl.fromTo(el, { scale: 0.6, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.45, ease: "springSoft" }, 13.0 + i * S.f(3)));
+      tl.fromTo("#labC", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "enter" }, 13.2);
+      g.set("#coil", { drawSVG: "0%" });
+      tl.fromTo("#hose", { scale: 0.6, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "springSoft" }, 13.75);
+      S.draw("#coil", 13.82, { dur: 0.6, ease: "move" });
+      tl.fromTo("#labH", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "enter" }, 13.95);
+      tl.fromTo("#eqm1, #eqm2", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.4, ease: "move", stagger: S.f(4) }, 14.56);
+      S.draw("#eq1", 14.8, { dur: 0.16, ease: "move" }); S.draw("#eq2", 14.9, { dur: 0.16, ease: "move" });
+      tl.to("#cut", { opacity: 0, y: -40, rotation: -1, duration: 0.3, ease: "exit" }, 15.42);
+      tl.to("#tagw", { opacity: 0, duration: 0.25, ease: "exit" }, 15.42);
+
+      // 15.68 "hundreds of them" — the map fills with cables · 17.66 "million kilometers" — the red annotation writes itself
+      g.set(cab, { drawSVG: "0%" });
+      cab.forEach((c, i) => { const t = 15.68 + i * 0.026; S.draw(c, t, { dur: 0.85, ease: "move" }); ends[i].forEach((e, k) => e && tl.fromTo(e, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "enter" }, t + (k ? 0.75 : 0))); });
+      tl.fromTo("#milt", { clipPath: "inset(0% 100% 0% 0%)", rotation: -3 }, { clipPath: "inset(0% 0% 0% 0%)", rotation: -3, duration: 0.7, ease: "move" }, 17.66);
+      S.draw("#milu", 18.36, { dur: 0.32, ease: "move" });
+      S.draw("#mila", 18.52, { dur: 0.36, ease: "move" });
+
+      // ---------------------------------------------------------------- PAGE 3 · 19.62 "The internet isn't in the cloud." · 21.9 "It's in the ocean."
+      tl.fromTo("#page3", { x: 1990 }, { x: 0, duration: 0.45, ease: "move" }, 19.36);
+      wordsAt("#l1", [19.62, 19.74, 20.42, 20.62, 20.74, 20.94]);
+      tl.fromTo("#cloud", { opacity: 0, scale: 0.6, rotation: -10 }, { opacity: 1, scale: 1, rotation: 4, duration: 0.55, ease: "springSoft" }, 20.94);
+      S.draw("#cx1", 21.06, { dur: 0.2, ease: "move" }); S.draw("#cx2", 21.22, { dur: 0.2, ease: "move" });
+      wordsAt("#l2", [21.9, 22.02, 22.12, 22.26], { y: 40 });
+      tl.fromTo("#hl2", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "move" }, 22.3);
+      const w3 = S.$("#waves3");
+      const wv = [[930, 16, 0.006, 0.4, "#a9c3c3"], [976, 18, 0.008, 1.6, "#8eabb0"], [1020, 14, 0.01, 2.5, "#6f8d97"]].map(([y, a, k, p, c]) => mk("path", { d: wave(y, a, k, p, 1100), fill: c }, w3));
+      wv.forEach((w, i) => tl.fromTo(w, { y: 200 }, { y: 0, duration: 0.85, ease: "springSoft" }, 22.24 + i * S.f(4)));
+      tl.fromTo("#rule1, #rule2", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "settle", stagger: S.f(4) }, 23.36);
+      S.words("#mkick", 23.48, { stagger: S.f(3), blur: 6, y: 12 });
+      S.lines("#mname", 23.52, { dur: 0.8 });
+      tl.fromTo("#cta", { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "springSoft" }, 23.98);
+      S.sweep("#cta", 24.7, { dur: 0.9 });
+
+      S.grain({ opacity: 0.05, blend: "multiply" });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

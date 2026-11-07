@@ -1,0 +1,18 @@
+{
+ "$schema": "https://hyperframes.heygen.com/schema/hyperframes.json",
+ "paths": {
+  "blocks": "compositions",
+  "components": "compositions/components",
+  "assets": "assets"
+ },
+ "media": {
+  "autoProxy": true
+ },
+ "registryItems": [
+  {
+   "name": "extruded-logo",
+   "type": "hyperframes:block",
+   "target": "compositions/extruded-logo.html"
+  }
+ ]
+}

@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>IA1 · 3D Architecture Stack — Vaultline (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Vaultline: black-blue night, glass layers, ONE cyan (#7dd3fc) carries every highlight. */
+      --bg: #04070d;
+      --bg-2: #0a1220;
+      --ink: #eef6ff;
+      --ink-2: rgba(238, 246, 255, 0.74);
+      --ink-3: rgba(238, 246, 255, 0.56);
+      --accent: #7dd3fc;
+      --font-display: "Space Grotesk", "Hind Siliguri", sans-serif;
+      --font-body: "Space Grotesk", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+    #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+    /* intro: kicker + title above the assembled block */
+    .intro { position: absolute; left: 0; right: 0; top: 92px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+    .kicker { font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+    .title { margin: 0; font-family: var(--font-display); font-size: 84px; font-weight: 600; letter-spacing: -0.035em; line-height: 1; color: var(--ink); text-wrap: balance; }
+
+    /* labels: one column right of the stack, each on a leader line from its plate's corner */
+    #leaders { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    #leaders line { stroke: rgba(125, 211, 252, 0.55); stroke-width: 2; }
+    #leaders circle { fill: #7dd3fc; }
+    .lab { position: absolute; left: 0; top: 0; }
+    .lab-row { display: grid; grid-template-columns: 40px 236px auto; column-gap: 14px; align-items: baseline; white-space: nowrap; }
+    .idx { font-family: var(--font-mono); font-size: 24px; color: var(--ink-3); }
+    .name { font-family: var(--font-display); font-size: 36px; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); line-height: 1.1; }
+    .desc { margin: 8px 0 0 54px; font-family: var(--font-mono); font-size: 24px; color: var(--ink-3); white-space: nowrap; }
+    .ver { position: relative; align-self: center; justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 10px; border-radius: 999px; font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; color: #bfe9ff; background: rgba(125, 211, 252, 0.12); border: 1px solid rgba(125, 211, 252, 0.5); box-shadow: 0 0 22px rgba(125, 211, 252, 0.25); }
+    .ver svg { width: 24px; height: 24px; stroke: #7dd3fc; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* lockup under the collapsed block */
+    .lock { position: absolute; left: 0; right: 0; top: 556px; display: flex; flex-direction: column; align-items: center; }
+    .word { margin: 0; font-family: var(--font-display); font-size: 120px; font-weight: 600; letter-spacing: -0.045em; line-height: 1.05; color: var(--ink); }
+    .tag { margin: 14px 0 0; font-family: var(--font-display); font-size: 42px; font-weight: 500; letter-spacing: -0.012em; color: var(--ink-2); }
+    .cta { margin-top: 34px; display: inline-flex; align-items: center; gap: 12px; padding: 14px 28px; border-radius: 999px; font-family: var(--font-display); font-size: 28px; font-weight: 600; color: #04121c; background: #7dd3fc; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 14px 40px -10px rgba(125, 211, 252, 0.6); overflow: hidden; position: relative; }
+    .cta .icon { font-size: 28px; stroke-width: 2.6; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; color: rgba(238, 246, 255, 0.62); text-transform: uppercase; }
+  </style>
+  <script type="importmap">{ "imports": { "three": "./assets/js/three/three.module.min.js", "three/addons/": "./assets/js/three/addons/" } }</script>
+  <script>
+    // Declared-compute hold: resolved by the scene module once the WebGL scene is built and frame 0 is drawn.
+    window.__hf = window.__hf || {};
+    window.__hf.buildReady = window.__hf.buildReady || {};
+    window.__hf.buildReady["ia1-vaultline-scene"] = new Promise((resolve) => { window.__ia1Ready = resolve; });
+  </script>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="16" data-fps="30">
+
+    <!-- the 3D stack, rendered per frame from the studio timeline -->
+    <section id="stage" class="scene clip" data-start="0" data-duration="16" data-track-index="0" data-design-ignore data-layout-ignore>
+      <canvas id="gl" width="1920" height="1080"></canvas>
+    </section>
+
+    <!-- labels on leader lines (positions come from the projected 3D corners, every frame) -->
+    <section id="ov" class="scene clip" data-start="2.9" data-duration="8.6" data-track-index="1">
+      <svg id="leaders" viewBox="0 0 1920 1080" data-design-ignore data-layout-ignore></svg>
+      <div id="labels"></div>
+    </section>
+
+    <!-- 0–3.1: kicker + title -->
+    <section id="intro" class="scene clip" data-start="0" data-duration="3.1" data-track-index="2">
+      <div class="intro">
+        <div id="kick" class="kicker">Vaultline · zero-trust platform</div>
+        <h1 id="title" class="title">Security in every layer.</h1>
+      </div>
+    </section>
+
+    <!-- 13.3–16: lockup -->
+    <section id="end" class="scene clip" data-start="13.3" data-duration="2.7" data-track-index="3">
+      <div class="lock">
+        <h2 id="word" class="word">Vaultline</h2>
+        <p id="tag" class="tag">Zero trust, zero drama.</p>
+        <div id="cta" class="cta">Book a demo<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </div>
+      <div id="concept" class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/cinematic-reveal.mp3" data-start="0" data-duration="16" data-media-start="2.45" data-track-index="10" data-volume="0.5" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.3,"v":1},{"t":14.6,"v":1},{"t":16,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="0.209" data-duration="0.49" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-02-click-soft" src="assets/sfx/click-soft.mp3" data-start="0.5" data-duration="0.24" data-track-index="21" data-volume="0.16"></audio>
+    <audio id="sfx-03-click-soft" src="assets/sfx/click-soft.mp3" data-start="0.9" data-duration="0.24" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-04-click-soft" src="assets/sfx/click-soft.mp3" data-start="1.2" data-duration="0.24" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-05-whoosh-cinematic" src="assets/sfx/whoosh-cinematic.mp3" data-start="0.15" data-duration="5.54" data-track-index="22" data-volume="0.42"></audio>
+    <audio id="sfx-06-click-soft" src="assets/sfx/click-soft.mp3" data-start="3.4" data-duration="0.24" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-07-click-soft" src="assets/sfx/click-soft.mp3" data-start="3.7" data-duration="0.24" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-08-click-soft" src="assets/sfx/click-soft.mp3" data-start="4" data-duration="0.24" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-09-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.3" data-duration="0.24" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-10-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.6" data-duration="0.24" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-11-click-soft" src="assets/sfx/click-soft.mp3" data-start="4.9" data-duration="0.24" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-12-pop" src="assets/sfx/pop.mp3" data-start="6.384" data-duration="0.72" data-track-index="20" data-volume="0.26"></audio>
+    <audio id="sfx-13-click-soft" src="assets/sfx/click-soft.mp3" data-start="6.9" data-duration="0.24" data-track-index="21" data-volume="0.3"></audio>
+    <audio id="sfx-14-click-soft" src="assets/sfx/click-soft.mp3" data-start="7.42" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-15-click-soft" src="assets/sfx/click-soft.mp3" data-start="7.94" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-16-click-soft" src="assets/sfx/click-soft.mp3" data-start="8.46" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-17-click-soft" src="assets/sfx/click-soft.mp3" data-start="8.98" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-18-click-soft" src="assets/sfx/click-soft.mp3" data-start="9.5" data-duration="0.24" data-track-index="20" data-volume="0.3"></audio>
+    <audio id="sfx-19-ping" src="assets/sfx/ping.mp3" data-start="9.178" data-duration="1.32" data-track-index="21" data-volume="0.16"></audio>
+    <audio id="sfx-20-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="10.989" data-duration="0.49" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-21-whoosh" src="assets/sfx/whoosh.mp3" data-start="11.224" data-duration="0.57" data-track-index="21" data-volume="0.28"></audio>
+    <audio id="sfx-22-click-soft" src="assets/sfx/click-soft.mp3" data-start="12.45" data-duration="0.24" data-track-index="20" data-volume="0.24"></audio>
+    <audio id="sfx-23-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="13.55" data-duration="2.12" data-track-index="20" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":2.04,"v":1},{"t":2.12,"v":0}]}]}'></audio>
+    <audio id="sfx-24-sparkle" src="assets/sfx/sparkle.mp3" data-start="13.595" data-duration="1.8" data-track-index="21" data-volume="0.24"></audio>
+    <audio id="sfx-25-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="13.839" data-duration="0.49" data-track-index="22" data-volume="0.14"></audio>
+    <audio id="sfx-26-pop" src="assets/sfx/pop.mp3" data-start="14.034" data-duration="0.72" data-track-index="23" data-volume="0.2"></audio>
+    <!-- studio:audio:end -->
+  </div>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+    await document.fonts.ready;
+
+    const W = 1920, H = 1080;
+    const S = Studio.init({ id: "main" });
+    const tl = S.tl, g = gsap;
+    const clamp01 = (x) => Math.min(1, Math.max(0, x));
+    const lerp = (a, b, u) => a + (b - a) * u;
+    const ez = (n) => g.parseEase(n);
+    const SETTLE = ez("settle"), ENTER = ez("enter"), MOVE = ez("move"), GLIDE = ez("glide"), EXIT = ez("exit"), SPRING_SOFT = ez("springSoft"), SPOP = ez("springPop");
+    const seg = (t, t0, d, e) => e(clamp01((t - t0) / d));
+    const bump = (t, t0, rise, hold, fall) => clamp01((t - t0) / rise) * (1 - clamp01((t - t0 - rise - hold) / fall));
+    const CYAN = new THREE.Color("#7dd3fc");
+
+    // ---------------------------------------------------------------- the layers (top → bottom)
+    const LAYERS = [
+      { name: "Edge", desc: "WAF · DDoS · TLS 1.3" },
+      { name: "Identity", desc: "SSO · MFA · passkeys" },
+      { name: "API", desc: "mTLS · rate limits" },
+      { name: "Compute", desc: "isolated workloads" },
+      { name: "Data", desc: "row-level policies" },
+      { name: "Encryption", desc: "AES-256 · keys in HSM" },
+    ];
+    const N = LAYERS.length;
+
+    // ---------------------------------------------------------------- timing (seconds on the piece)
+    const T = {
+      land: 0.2,                       // plates settle into one block (bottom first)
+      split: 2.65,                     // the stack explodes apart
+      label: (i) => 3.3 + i * 0.3,     // labels slide in, top first
+      cube: 6.4,                       // the data cube appears above the stack
+      check: (i) => 6.9 + i * 0.52,    // the cube reaches layer i: flash + VERIFIED
+      out: 11.0,                       // labels leave, bottom first (each is gone before its plate moves)
+      collapse: 11.25,                 // plates close back into one block, bottom first
+      camRest: 13.4,                   // orbit lands, camera at rest
+      lock: 13.6,                      // lockup on the music's drop
+    };
+
+    // ---------------------------------------------------------------- renderer, camera, environment
+    const canvas = document.getElementById("gl");
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(1);
+    renderer.setSize(W, H, false);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color("#04070d");
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environmentIntensity = 0.55;
+    scene.add(new THREE.HemisphereLight(0xcfe9ff, 0x04070d, 0.5));
+    const sun = new THREE.DirectionalLight(0xffffff, 0.8); sun.position.set(-4, 9, 5); scene.add(sun);
+
+    const camera = new THREE.PerspectiveCamera(22, W / H, 0.1, 200);
+    const D2R = Math.PI / 180;
+    // camera rig: orbit around a target, plus a sideways shift of the target (moves the stack across the frame)
+    const rig = (az, el, dist, lat, ty) => {
+      const a = az * D2R, e = el * D2R;
+      const target = new THREE.Vector3(Math.cos(a) * lat, ty, -Math.sin(a) * lat); // the camera's right axis at azimuth a
+      camera.position.set(target.x + dist * Math.cos(e) * Math.sin(a), target.y + dist * Math.sin(e), target.z + dist * Math.cos(e) * Math.cos(a));
+      camera.lookAt(target);
+    };
+    // keys: [t, az, el, dist, lat, ty, ease-into-this-key]
+    const CAM = [
+      [0, 33, 26, 22.4, 0, 0.5],
+      [T.split, 36.5, 26, 21.3, 0, 0.42, GLIDE],              // slow push on the assembled block
+      [T.split + 1.25, 39, 25, 26.9, 2.55, 0.02, SETTLE],    // pull back + slide left as it explodes
+      [T.collapse, 42, 25, 26.6, 2.55, 0.02, GLIDE],         // a slow drift while the layers are read
+      [T.camRest, 66, 27, 31, 0, -2.2, MOVE],                // ≈ 24° orbit, eases in while the plates close; rest pose
+    ];
+    function camAt(t) {
+      let k = CAM[0];
+      if (t <= CAM[0][0]) return rig(k[1], k[2], k[3], k[4], k[5]);
+      for (let i = 1; i < CAM.length; i++) {
+        const a = CAM[i - 1], b = CAM[i];
+        if (t <= b[0]) { const u = b[6](clamp01((t - a[0]) / (b[0] - a[0]))); return rig(lerp(a[1], b[1], u), lerp(a[2], b[2], u), lerp(a[3], b[3], u), lerp(a[4], b[4], u), lerp(a[5], b[5], u)); }
+      }
+      k = CAM[CAM.length - 1]; return rig(k[1], k[2], k[3], k[4], k[5]);
+    }
+
+    // ---------------------------------------------------------------- blueprint floor (spatial reference for the orbit)
+    const floorU = { uOn: { value: 0 }, uColor: { value: CYAN.clone() } };
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(90, 90), new THREE.ShaderMaterial({
+      uniforms: floorU, transparent: true, depthWrite: false, toneMapped: false,
+      vertexShader: /* glsl */ `varying vec2 vP; void main() { vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+      fragmentShader: /* glsl */ `
+        uniform float uOn; uniform vec3 uColor; varying vec2 vP;
+        float grid(vec2 p, float step, float w) { vec2 q = abs(fract(p / step - 0.5) - 0.5) * step; vec2 fw = fwidth(p) * w; vec2 l = 1.0 - smoothstep(vec2(0.0), fw, q); return max(l.x, l.y); }
+        void main() {
+          float r = length(vP);
+          float fade = exp(-r * r / 220.0);
+          float g1 = grid(vP, 1.0, 1.2) * 0.4 + grid(vP, 5.0, 1.4) * 0.38;
+          gl_FragColor = vec4(uColor * g1 * fade * 0.16 * uOn, g1 * fade * 0.5 * uOn);
+          #include <colorspace_fragment>
+        }`,
+    }));
+    floor.rotation.x = -Math.PI / 2;
+    floor.renderOrder = -10;
+    scene.add(floor);
+
+    // ---------------------------------------------------------------- plates
+    const P = 3.4, TH = 0.13, PITCH_A = 0.2, PITCH_E = 1.3, DECAL = P * 1.32;
+    const stack = new THREE.Group();
+    scene.add(stack);
+    const roundRect = (x, l, t, w, h, r) => { x.beginPath(); x.moveTo(l + r, t); x.arcTo(l + w, t, l + w, t + h, r); x.arcTo(l + w, t + h, l, t + h, r); x.arcTo(l, t + h, l, t, r); x.arcTo(l, t, l + w, t, r); x.closePath(); };
+    function decalTexture(i) {
+      const SZ = 1024, c = document.createElement("canvas"); c.width = c.height = SZ;
+      const x = c.getContext("2d"), k = SZ / DECAL, half = (P / 2) * k, cx = SZ / 2, cy = SZ / 2, R = half * 0.62;
+      x.lineCap = "round"; x.lineJoin = "round";
+      // the glowing rim of the plate
+      x.strokeStyle = "rgba(150,222,255,1)"; x.lineWidth = 5; x.shadowColor = "rgba(125,211,252,1)"; x.shadowBlur = 44;
+      roundRect(x, cx - half, cy - half, 2 * half, 2 * half, 14); x.stroke(); x.stroke(); x.shadowBlur = 16; x.stroke();
+      x.shadowBlur = 0;
+      x.strokeStyle = "rgba(125,211,252,0.28)"; x.lineWidth = 2; roundRect(x, cx - half + 34, cy - half + 34, 2 * half - 68, 2 * half - 68, 8); x.stroke();
+      // a motif per layer, so the plates read as different systems
+      x.strokeStyle = "rgba(125,211,252,0.62)"; x.fillStyle = "rgba(125,211,252,0.55)"; x.lineWidth = 4; x.shadowColor = "rgba(125,211,252,0.6)"; x.shadowBlur = 10;
+      if (i === 0) { // edge: a globe on a network of corner nodes
+        x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.stroke();
+        for (const s of [0.35, 0.72]) { x.beginPath(); x.ellipse(cx, cy, R * s, R, 0, 0, Math.PI * 2); x.stroke(); }
+        for (const s of [-0.5, 0, 0.5]) { const yy = cy + s * R, ww = Math.sqrt(1 - s * s) * R; x.beginPath(); x.moveTo(cx - ww, yy); x.lineTo(cx + ww, yy); x.stroke(); }
+        for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const nx = cx + sx * half * 0.8, ny = cy + sy * half * 0.8; x.beginPath(); x.moveTo(nx, ny); x.lineTo(cx + sx * R * 0.7, cy + sy * R * 0.7); x.stroke(); x.beginPath(); x.arc(nx, ny, 12, 0, Math.PI * 2); x.fill(); }
+      } else if (i === 1) { // identity: fingerprint arcs
+        for (let r = 1; r <= 7; r++) { const rr = R * (0.16 + r * 0.12); x.beginPath(); x.arc(cx, cy + R * 0.12, rr, Math.PI * (1.05 + r * 0.03), Math.PI * (1.95 - r * 0.02) + (r % 2 ? 0.9 : 0.4)); x.stroke(); }
+      } else if (i === 2) { // api: brackets around endpoint rows
+        const bw = R * 1.05, bh = R * 0.95;
+        for (const s of [-1, 1]) { x.beginPath(); x.moveTo(cx + s * bw, cy - bh); x.quadraticCurveTo(cx + s * (bw + 40), cy - bh, cx + s * (bw + 40), cy - bh * 0.5); x.lineTo(cx + s * (bw + 40), cy - 40); x.lineTo(cx + s * (bw + 80), cy); x.lineTo(cx + s * (bw + 40), cy + 40); x.lineTo(cx + s * (bw + 40), cy + bh * 0.5); x.quadraticCurveTo(cx + s * (bw + 40), cy + bh, cx + s * bw, cy + bh); x.stroke(); }
+        for (let r = 0; r < 4; r++) { const yy = cy - bh * 0.62 + r * bh * 0.42, len = [0.9, 0.62, 0.8, 0.5][r] * bw * 1.5; x.beginPath(); x.arc(cx - bw * 0.72, yy, 9, 0, Math.PI * 2); x.fill(); x.beginPath(); x.moveTo(cx - bw * 0.72 + 32, yy); x.lineTo(cx - bw * 0.72 + 32 + len, yy); x.stroke(); }
+      } else if (i === 3) { // compute: a grid of cores, a few lit
+        const n = 4, gap = R * 0.5, s = R * 0.36;
+        for (let a = 0; a < n; a++) for (let b = 0; b < n; b++) { const px = cx + (a - 1.5) * gap - s / 2, py = cy + (b - 1.5) * gap - s / 2; roundRect(x, px, py, s, s, 8); if ((a * 3 + b * 5) % 7 === 1) { x.globalAlpha = 0.5; x.fill(); x.globalAlpha = 1; } x.stroke(); }
+      } else if (i === 4) { // data: a table of rows and columns
+        const tw = R * 1.7, th = R * 1.5;
+        roundRect(x, cx - tw / 2, cy - th / 2, tw, th, 12); x.stroke();
+        for (let r = 1; r < 6; r++) { const yy = cy - th / 2 + (r * th) / 6; x.globalAlpha = r === 1 ? 1 : 0.55; x.beginPath(); x.moveTo(cx - tw / 2, yy); x.lineTo(cx + tw / 2, yy); x.stroke(); }
+        x.globalAlpha = 0.55; for (const f of [0.32, 0.62]) { x.beginPath(); x.moveTo(cx - tw / 2 + f * tw, cy - th / 2); x.lineTo(cx - tw / 2 + f * tw, cy + th / 2); x.stroke(); } x.globalAlpha = 1;
+      } else { // encryption: a lock on a hex field
+        x.globalAlpha = 0.3; const hs = 44;
+        for (let r = -6; r <= 6; r++) for (let q = -6; q <= 6; q++) { const hx = cx + q * hs * 1.5, hy = cy + (r + (q % 2 ? 0.5 : 0)) * hs * 1.732; if (Math.hypot(hx - cx, hy - cy) > R * 1.25) continue; x.beginPath(); for (let k6 = 0; k6 < 6; k6++) { const a = (Math.PI / 3) * k6; x.lineTo(hx + Math.cos(a) * hs * 0.82, hy + Math.sin(a) * hs * 0.82); } x.closePath(); x.stroke(); }
+        x.globalAlpha = 1; x.lineWidth = 6;
+        const lw = R * 0.9, lh = R * 0.72;
+        x.beginPath(); x.arc(cx, cy - lh * 0.15, lw * 0.32, Math.PI, 0); x.lineTo(cx + lw * 0.32, cy + 2); x.moveTo(cx - lw * 0.32, cy + 2); x.lineTo(cx - lw * 0.32, cy - lh * 0.15); x.stroke();
+        x.fillStyle = "rgba(10,30,44,0.9)"; roundRect(x, cx - lw / 2, cy, lw, lh, 18); x.fill(); x.stroke();
+        x.fillStyle = "rgba(125,211,252,0.85)"; x.beginPath(); x.arc(cx, cy + lh * 0.42, 16, 0, Math.PI * 2); x.fill(); x.fillRect(cx - 6, cy + lh * 0.42, 12, lh * 0.32);
+      }
+      const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = renderer.capabilities.getMaxAnisotropy(); return tex;
+    }
+    // side walls: a cyan gradient band, bright at the top edge
+    const sideTex = (() => { const c = document.createElement("canvas"); c.width = 8; c.height = 64; const x = c.getContext("2d"); const gr = x.createLinearGradient(0, 0, 0, 64); gr.addColorStop(0, "rgba(160,226,255,1)"); gr.addColorStop(0.35, "rgba(70,150,200,0.55)"); gr.addColorStop(1, "rgba(20,60,90,0.35)"); x.fillStyle = gr; x.fillRect(0, 0, 8, 64); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+    const ringTex = (() => { const c = document.createElement("canvas"); c.width = c.height = 512; const x = c.getContext("2d"); x.strokeStyle = "rgba(170,230,255,1)"; x.lineWidth = 10; x.shadowColor = "rgba(125,211,252,1)"; x.shadowBlur = 30; x.beginPath(); x.arc(256, 256, 200, 0, Math.PI * 2); x.stroke(); x.stroke(); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+
+    const plates = LAYERS.map((L, i) => {
+      const grp = new THREE.Group();
+      const order = (N - 1 - i) * 10; // the lower (farther) plate draws first
+      const top = new THREE.MeshPhysicalMaterial({ color: "#0d2436", transparent: true, opacity: 0.5, roughness: 0.16, metalness: 0, clearcoat: 0.6, clearcoatRoughness: 0.12, depthWrite: false });
+      const side = new THREE.MeshBasicMaterial({ map: sideTex, transparent: true, opacity: 0.75, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false });
+      const bottom = new THREE.MeshBasicMaterial({ color: "#06121c", transparent: true, opacity: 0.4, depthWrite: false });
+      const body = new THREE.Mesh(new THREE.BoxGeometry(P, TH, P), [side, side, top, bottom, side, side]);
+      body.renderOrder = order;
+      const decalMat = new THREE.MeshBasicMaterial({ map: decalTexture(i), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, opacity: 0.7 });
+      const decal = new THREE.Mesh(new THREE.PlaneGeometry(DECAL, DECAL), decalMat);
+      decal.rotation.x = -Math.PI / 2; decal.position.y = TH / 2 + 0.004; decal.renderOrder = order + 1;
+      const edgeMat = new THREE.LineBasicMaterial({ color: CYAN.clone(), transparent: true, opacity: 0.85, depthWrite: false, toneMapped: false });
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(P, TH, P)), edgeMat);
+      edges.renderOrder = order + 2;
+      const ringMat = new THREE.MeshBasicMaterial({ map: ringTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, opacity: 0 });
+      const ring = new THREE.Mesh(new THREE.PlaneGeometry(P * 1.3, P * 1.3), ringMat);
+      ring.rotation.x = -Math.PI / 2; ring.position.y = TH / 2 + 0.008; ring.renderOrder = order + 3;
+      grp.add(body, decal, edges, ring);
+      stack.add(grp);
+      return { grp, top, side, decalMat, edgeMat, ring, ringMat };
+    });
+
+    // ---------------------------------------------------------------- the data cube
+    const cube = new THREE.Group();
+    const cubeCore = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.34, 0.34), new THREE.MeshBasicMaterial({ color: new THREE.Color(1.0, 1.0, 1.0), toneMapped: false }));
+    const cubeEdges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(0.4, 0.4, 0.4)), new THREE.LineBasicMaterial({ color: CYAN.clone(), toneMapped: false }));
+    cube.add(cubeCore, cubeEdges);
+    const glowTex = (() => { const c = document.createElement("canvas"); c.width = c.height = 256; const x = c.getContext("2d"); const r = x.createRadialGradient(128, 128, 0, 128, 128, 128); r.addColorStop(0, "rgba(220,245,255,1)"); r.addColorStop(0.18, "rgba(125,211,252,0.6)"); r.addColorStop(0.5, "rgba(80,170,230,0.14)"); r.addColorStop(1, "rgba(60,140,210,0)"); x.fillStyle = r; x.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+    const cubeGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, toneMapped: false }));
+    cubeGlow.scale.setScalar(2.2);
+    stack.add(cube, cubeGlow);
+
+    // ---------------------------------------------------------------- labels (DOM) + leaders (SVG)
+    const SVGNS = "http://www.w3.org/2000/svg";
+    const leaders = document.getElementById("leaders"), labelsEl = document.getElementById("labels");
+    const checkSvg = '<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+    const labs = LAYERS.map((L, i) => {
+      const el = document.createElement("div");
+      el.className = "lab"; el.id = `lab${i}`;
+      el.innerHTML = `<div class="lab-row"><span class="idx">0${i + 1}</span><span class="name">${L.name}</span><span class="ver" id="ver${i}">${checkSvg}Verified</span></div><div class="desc">${L.desc}</div>`;
+      labelsEl.appendChild(el);
+      const line = document.createElementNS(SVGNS, "line"), dot = document.createElementNS(SVGNS, "circle");
+      dot.setAttribute("r", "5");
+      leaders.appendChild(line); leaders.appendChild(dot);
+      return { el, ver: el.querySelector(".ver"), line, dot };
+    });
+    const COL_X = 1092;
+    const v3 = new THREE.Vector3();
+    const toScreen = (v) => { v3.copy(v).project(camera); return [(v3.x * 0.5 + 0.5) * W, (-v3.y * 0.5 + 0.5) * H]; };
+    const corners = [[1, 1], [1, -1], [-1, 1], [-1, -1]].map(([sx, sz]) => new THREE.Vector3((sx * P) / 2, TH / 2, (sz * P) / 2));
+    const cw = new THREE.Vector3();
+
+    // ---------------------------------------------------------------- per-frame scene
+    const plateY = (i, open) => { const k = N - 1 - i - (N - 1) / 2; return k * PITCH_A + k * (PITCH_E - PITCH_A) * open; };
+    const openAt = (t, i) => {
+      const o = seg(t, T.split + i * S.f(4), 1.05, SETTLE);                  // top plate leaves first
+      const c = seg(t, T.collapse + (N - 1 - i) * S.f(4), 1.0, SETTLE);      // bottom plate closes first
+      return o * (1 - c);
+    };
+    let lastT = -1;
+    function render(t) {
+      lastT = t;
+      camAt(t);
+      camera.updateMatrixWorld(true);
+      floorU.uOn.value = seg(t, 0.4, 2.0, ENTER) * (1 - 0.85 * seg(t, T.collapse + 0.6, 2.0, GLIDE));
+      floor.position.y = -(N / 2) * PITCH_E - 1.15;
+
+      const cubeOn = seg(t, T.cube, 0.45, ENTER) * (1 - seg(t, T.check(N - 1) + 0.6, 0.4, EXIT));
+      // cube path: above the stack → each plate in turn (a short dwell inside each) → out the bottom
+      const levels = LAYERS.map((_, i) => plateY(i, 1));
+      let cy = levels[0] + 1.25;
+      if (t >= T.check(0) - 0.55) {
+        cy = lerp(levels[0] + 1.25, levels[0], seg(t, T.check(0) - 0.55, 0.55, MOVE));
+        for (let i = 0; i < N - 1; i++) if (t >= T.check(i) + 0.14) cy = lerp(levels[i], levels[i + 1], seg(t, T.check(i) + 0.14, T.check(i + 1) - T.check(i) - 0.14, MOVE));
+        if (t >= T.check(N - 1) + 0.14) cy = lerp(levels[N - 1], levels[N - 1] - 1.3, seg(t, T.check(N - 1) + 0.14, 0.8, ENTER));
+      }
+      cube.position.set(0, cy, 0); cubeGlow.position.copy(cube.position);
+      cube.rotation.set(0.5, t * 1.1, 0.25);
+      const pop = SPOP(clamp01((t - T.cube) / 0.6));
+      cube.scale.setScalar(Math.max(0.0001, pop * (1 - 0.6 * seg(t, T.check(N - 1) + 0.6, 0.4, EXIT))));
+      cube.visible = cubeOn > 0.001;
+      cubeGlow.material.opacity = 0.9 * cubeOn;
+
+      let below = N - 1; // the plate just under the cube decides where its glow sorts
+      for (let i = 0; i < N; i++) if (cy > plateY(i, 1) + TH) { below = i; break; }
+      cubeGlow.renderOrder = (N - 1 - below) * 10 + 5;
+
+      plates.forEach((p, i) => {
+        const land = seg(t, T.land + (N - 1 - i) * S.f(4), 0.9, SETTLE);
+        const open = openAt(t, i);
+        const breathe = 0.035 * Math.sin((t - 3.6) * 1.7 + i * 0.95) * clamp01((t - 3.6) / 0.8) * (1 - clamp01((t - T.collapse + 0.2) / 0.5));
+        p.grp.position.y = plateY(i, open) + 1.5 * (1 - land) + breathe;
+        const fade = seg(t, T.land + (N - 1 - i) * S.f(4), 0.45, ENTER);
+        // check flash, the "verified" afterglow, and the lockup pulse on the drop
+        const fl = bump(t, T.check(i) - 0.03, 0.06, 0.08, 0.55);
+        const after = clamp01((t - T.check(i)) / 0.3) * (1 - seg(t, T.collapse, 0.6, ENTER));
+        const lockPulse = bump(t, T.lock - 0.04 + (N - 1 - i) * S.f(1.5), 0.08, 0.05, 0.9);
+        const landFlash = bump(t, T.land + (N - 1 - i) * S.f(4) + 0.18, 0.06, 0.04, 0.4) * 0.6;
+        const glow = 0.62 + 1.6 * fl + 0.22 * after + 0.9 * lockPulse + landFlash;
+        p.decalMat.opacity = fade * Math.min(1, glow);
+        p.decalMat.color.setScalar(Math.max(1, glow));
+        p.side.opacity = fade * Math.min(1, 0.6 + 0.6 * fl + 0.4 * lockPulse);
+        p.edgeMat.opacity = fade * Math.min(1, 0.7 + fl + lockPulse);
+        p.edgeMat.color.copy(CYAN).lerp(new THREE.Color(1, 1, 1), Math.min(1, 0.8 * fl + 0.6 * lockPulse));
+        p.top.opacity = fade * 0.5;
+        // the scan ring that runs out across the plate when the cube passes
+        const ru = clamp01((t - T.check(i)) / 0.7);
+        p.ring.scale.setScalar(0.2 + 1.0 * SETTLE(ru));
+        p.ringMat.opacity = ru > 0 && ru < 1 ? 0.95 * (1 - ru) : 0;
+      });
+
+      // labels + leaders: anchored on each plate's right-most top corner, one clean column
+      const outAt = (i) => seg(t, T.out + (N - 1 - i) * S.f(1.5), 0.25, EXIT);
+      labs.forEach((L, i) => {
+        const grp = plates[i].grp; grp.updateMatrixWorld(true);
+        let ax = -1e9, ay = 0;
+        for (const c of corners) { cw.copy(c).applyMatrix4(grp.matrixWorld); const [sx, sy] = toScreen(cw); if (sx > ax) { ax = sx; ay = sy; } }
+        const rv = seg(t, T.label(i), 0.55, ENTER), lead = seg(t, T.label(i) - 0.18, 0.5, SETTLE), out = outAt(i);
+        const vis = rv * (1 - out);
+        L.el.style.opacity = vis.toFixed(3);
+        L.el.style.filter = vis < 0.999 ? `blur(${((1 - rv) * 6 + out * 4).toFixed(2)}px)` : "none";
+        L.el.style.transform = `translate(${Math.round(COL_X + (1 - rv) * -22 + out * 14)}px, ${Math.round(ay - 26)}px)`;
+        const x2 = ax + (COL_X - 22 - ax) * lead * (1 - out);
+        L.line.setAttribute("x1", ax.toFixed(1)); L.line.setAttribute("y1", ay.toFixed(1));
+        L.line.setAttribute("x2", x2.toFixed(1)); L.line.setAttribute("y2", ay.toFixed(1));
+        L.line.style.opacity = lead > 0 ? String(1 - out) : "0";
+        L.dot.setAttribute("cx", ax.toFixed(1)); L.dot.setAttribute("cy", ay.toFixed(1));
+        L.dot.style.opacity = (lead * (1 - out)).toFixed(3);
+        const vu = clamp01((t - T.check(i) - 0.02) / 0.5);
+        L.ver.style.opacity = (clamp01(vu * 5) * (1 - out)).toFixed(3);
+        L.ver.style.transform = `scale(${(0.7 + 0.3 * SPOP(vu)).toFixed(3)})`;
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    // ---------------------------------------------------------------- DOM text on the same timeline
+    tl.fromTo("#kick", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: "enter" }, 0.15);
+    S.words("#title", 0.25, { stagger: S.f(3), dur: 0.6, blur: 10, y: 34 });
+    tl.to("#kick, #title", { opacity: 0, y: -40, filter: "blur(6px)", duration: 0.34, ease: "exit", stagger: S.f(2) }, T.split - 0.3);
+    S.chars("#word", T.lock - 0.15, { stagger: S.f(1.2) });                // first letters land on the drop
+    S.words("#tag", T.lock + 0.2, { stagger: S.f(2), dur: 0.55, blur: 8, y: 20 });
+    tl.fromTo("#cta", { opacity: 0, y: 18, scale: 0.92, filter: "blur(6px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "springSoft" }, T.lock + 0.5);
+    S.sweep("#cta", T.lock + 1.2, { dur: 0.9 });
+    tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, T.lock + 0.5);
+    tl.set({}, {}, 16); // the timeline spans the whole piece
+
+    S.everyFrame(render);
+    window.addEventListener("hf-seek", () => { const t = tl.time(); if (t !== lastT) render(t); });
+    S.grain({ opacity: 0.05 });
+    S.vignette({ strength: 0.5 });
+    window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    window.__ia1Ready();
+  </script>
+</body>
+</html>

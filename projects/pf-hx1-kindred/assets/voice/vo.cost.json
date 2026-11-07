@@ -1,0 +1,8 @@
+{
+ "model": "gemini-3.8-flash-tts",
+ "voice": "Achird",
+ "blocks": 1,
+ "new_audio_s": 29.2,
+ "usd_estimate": 0.0067,
+ "at": "2026-11-07T15:55:20.127Z"
+}

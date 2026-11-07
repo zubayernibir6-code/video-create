@@ -42,7 +42,7 @@ const DUR = +opt("dur", entry.defaultDuration || 20);
 const FPS = +opt("fps", 30);
 const brand = opt("brand", "Brand");
 const title = opt("title", entry.name || "Untitled piece");
-const music = opt("music", entry.music || "studio-pulse");
+const music = opt("music", entry.music !== undefined ? entry.music : "studio-pulse"); // "" = no music (e.g. LG1)
 const three = flag("three") || !!entry.three;
 
 // font families → files (all SIL OFL, assets/fonts/LICENSES)
@@ -108,6 +108,8 @@ const html = `<!doctype html>
       --font-body: ${fam(body, "sans-serif")};
       --font-mono: ${fam(mono, "monospace")};
     }
+    /* ---- fonts, inline: HyperFrames' static font check does not read the linked fonts.css ---- */
+${css.split("\n").filter((l) => l.startsWith("@font-face")).map((l) => "    " + l.replace(/url\("/, 'url("assets/fonts/')).join("\n")}
     /* ---- piece styles ---- */
   </style>${importMap}
   <script src="assets/js/gsap/gsap.min.js"></script>
@@ -149,14 +151,21 @@ const piece = {
   code, name: title, brand, project: name, aspect, width: W, height: H, duration: DUR, fps: FPS,
   concept: true,
   brief: { client: brand + " (fictional — concept work)", goal: "", audience: "", message: "", cta: "", tone: "", references: entry.references || [] },
-  sound: { music: { track: music, from: 0, gain: 0.55, fadeIn: 0.3, fadeOut: 1.5 }, cues: [] },
+  sound: { music: music ? { track: music, from: 0, gain: 0.55, fadeIn: 0.3, fadeOut: 1.5 } : { track: "" }, cues: [] },
   reel: { from: 0, to: Math.min(DUR, 4) },
   made: new Date().toISOString().slice(0, 10),
 };
 writeFileSync(path.join(dir, "piece.json"), JSON.stringify(piece, null, 2) + "\n");
 
 let plan = readFileSync(path.join(WS, "tools", "plan", "TEMPLATE.md"), "utf8");
-plan = plan.replace(/^# .*$/m, `# ${code || "PIECE"} · ${title} — ${brand} (concept)`);
+plan = plan.replace(/^# .*$/m, () => `# ${code || "PIECE"} · ${title} — ${brand} (concept)`);
+// the template's header lines (9:16 / 30 s / Facebook Reels) are replaced by this piece's own values
+const platform = aspect === "9x16" ? "Reels, Shorts, TikTok" : aspect === "16x9" ? "ওয়েবসাইট, LinkedIn, X, YouTube" : "Instagram আর LinkedIn ফিড";
+const header = {
+  "ফরম্যাট": aspect.replace("x", ":"), "দৈর্ঘ্য": `${DUR} সেকেন্ড`, "প্ল্যাটফর্ম": platform, "ধরন": `${entry.name || title} (${code || "—"})`,
+  "ভয়েস": entry.voice ? entry.voice : "নেই", "মিউজিক": music ? `${music} (Lyria, VideoWork/studio-music)` : "নেই", "আউটপুট": aspect.replace("x", ":"),
+};
+for (const [k, v] of Object.entries(header)) plan = plan.replace(new RegExp(`^${k}:.*$`, "m"), () => `${k}: ${v}`); // function form: no $-patterns
 writeFileSync(path.join(dir, "PLAN.md"), plan);
 
 console.log(`✓ projects/${name}  ${code} ${W}×${H} ${DUR}s @${FPS}  fonts ${families.join(", ")}  music ${music}${three ? "  three.js" : ""}

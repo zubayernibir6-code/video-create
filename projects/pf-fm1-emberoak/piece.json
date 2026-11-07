@@ -1,0 +1,51 @@
+{
+  "code": "FM1",
+  "name": "Footage + Motion Promo",
+  "brand": "Ember & Oak",
+  "project": "pf-fm1-emberoak",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 22,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Ember & Oak (fictional — concept work): a small-batch coffee roaster selling a bean subscription",
+    "goal": "Show we can cut REAL footage into a premium spot: graded shots on the beat, editorial type, a lower third, a tracked-style callout, an offer card and a brand end card",
+    "audience": "Coffee lovers who buy online; the café/DTC owner who would commission this",
+    "message": "Roasted on Tuesday, in your cup by Friday — fresh beans by subscription",
+    "cta": "Subscribe",
+    "tone": "Warm, slow, crafted; cream serif type on graded footage; one ember accent",
+    "references": ["premium café and DTC brand spots", "Apple 'Shot on iPhone' type over footage"]
+  },
+  "footage": {
+    "source": "Pixabay (Pixabay Content License, commercial use allowed) — see assets/footage/CREDITS.md; pre-cut and graded with ffmpeg (eq + colorbalance), 1920x1080 30 fps",
+    "shots": [
+      { "id": "s1", "file": "coffee-beans-roasting-pixabay-45358.mp4", "in": 3.0 },
+      { "id": "s2", "file": "coffee-beans-roasting-pixabay-15484.mp4", "in": 2.5 },
+      { "id": "s3", "file": "espresso-machine-pixabay-51326.mp4", "in": 0.8 },
+      { "id": "s4", "file": "pouring-coffee-slow-motion-pixabay-307249.mp4", "in": 0.3 },
+      { "id": "s5", "file": "coffee-steam-cup-pixabay-3595.mp4", "in": 12.0 },
+      { "id": "s6", "file": "coffee-steam-cup-pixabay-4947.mp4", "in": 3.0 },
+      { "id": "s7", "file": "coffee-beans-roasting-pixabay-45358.mp4", "in": 9.0 }
+    ]
+  },
+  "sound": {
+    "music": { "track": "elegant-premium", "from": 9.85, "gain": 0.6, "fadeIn": 0.3, "fadeOut": 2.2 },
+    "cues": [
+      { "t": 0.15, "sfx": "whoosh-short", "gain": 0.14 },
+      { "t": 3.0, "sfx": "whoosh", "gain": 0.18 },
+      { "t": 6.45, "sfx": "click-soft", "gain": 0.24 },
+      { "t": 7.3, "sfx": "ping", "gain": 0.14 },
+      { "t": 9.6, "sfx": "whoosh-short", "gain": 0.14 },
+      { "t": 12.8, "sfx": "whoosh-short", "gain": 0.14 },
+      { "t": 13.95, "sfx": "pop", "gain": 0.2 },
+      { "t": 16.0, "sfx": "whoosh-short", "gain": 0.18 },
+      { "t": 16.85, "sfx": "pop", "gain": 0.24 },
+      { "t": 19.3, "sfx": "sparkle", "gain": 0.22 },
+      { "t": 19.45, "sfx": "chime", "gain": 0.2 }
+    ]
+  },
+  "reel": { "from": 9.43, "to": 12.6 },
+  "made": "2026-11-07"
+}

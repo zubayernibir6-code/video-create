@@ -1,0 +1,182 @@
+{
+  "code": "AP1",
+  "name": "App Store Preview",
+  "brand": "Habitly",
+  "project": "pf-ap1-habitly",
+  "aspect": "9x16",
+  "width": 1080,
+  "height": 1920,
+  "duration": 20,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Habitly (fictional — concept work): a friendly habit tracker for iOS and Android",
+    "goal": "The store preview video for the App Store / Google Play listing (and a Reels/TikTok install ad): show the whole loop in 20 s so a browser taps Get",
+    "audience": "People who want to build small daily routines (reading, water, walking, mindfulness) and have tried and dropped habit apps before",
+    "message": "Building a habit takes seconds, checking it off feels good, and the streak and weekly insight keep you going",
+    "cta": "Free on iOS & Android",
+    "tone": "Bright, warm and friendly; cream stage, one coral accent, green only for success; springy, satisfying taps",
+    "references": [
+      "Apple App Store featured app previews",
+      "Duolingo and Headspace store videos"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "bright-future",
+      "from": 11.4,
+      "gain": 0.55,
+      "fadeIn": 0.3,
+      "fadeOut": 1.5
+    },
+    "cues": [
+      {
+        "t": 0.3,
+        "sfx": "whoosh",
+        "gain": 0.3
+      },
+      {
+        "t": 2.81,
+        "sfx": "click-soft",
+        "gain": 0.32
+      },
+      {
+        "t": 3,
+        "sfx": "whoosh-short",
+        "gain": 0.22
+      },
+      {
+        "t": 3.87,
+        "sfx": "click-soft",
+        "gain": 0.32
+      },
+      {
+        "t": 4.41,
+        "sfx": "click-soft",
+        "gain": 0.12
+      },
+      {
+        "t": 4.61,
+        "sfx": "click-soft",
+        "gain": 0.12
+      },
+      {
+        "t": 4.7,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 4.88,
+        "sfx": "click-soft",
+        "gain": 0.1
+      },
+      {
+        "t": 6.32,
+        "sfx": "click-soft",
+        "gain": 0.32
+      },
+      {
+        "t": 6.47,
+        "sfx": "whoosh-short",
+        "gain": 0.22
+      },
+      {
+        "t": 7.4,
+        "sfx": "pop",
+        "gain": 0.28
+      },
+      {
+        "t": 8.1,
+        "sfx": "pop",
+        "gain": 0.28
+      },
+      {
+        "t": 8.8,
+        "sfx": "pop",
+        "gain": 0.28
+      },
+      {
+        "t": 9.5,
+        "sfx": "pop",
+        "gain": 0.28
+      },
+      {
+        "t": 9.52,
+        "sfx": "sparkle",
+        "gain": 0.18
+      },
+      {
+        "t": 9.88,
+        "sfx": "pop",
+        "gain": 0.16
+      },
+      {
+        "t": 10.57,
+        "sfx": "whoosh-short",
+        "gain": 0.22
+      },
+      {
+        "t": 11.04,
+        "sfx": "sparkle",
+        "gain": 0.16
+      },
+      {
+        "t": 11.12,
+        "sfx": "typing",
+        "gain": 0.16,
+        "len": 1.15
+      },
+      {
+        "t": 12.95,
+        "sfx": "pop",
+        "gain": 0.2
+      },
+      {
+        "t": 13.14,
+        "sfx": "click-soft",
+        "gain": 0.18
+      },
+      {
+        "t": 14.97,
+        "sfx": "whoosh-short",
+        "gain": 0.22
+      },
+      {
+        "t": 15.15,
+        "sfx": "pop",
+        "gain": 0.2
+      },
+      {
+        "t": 15.3,
+        "sfx": "typing",
+        "gain": 0.14,
+        "len": 1
+      },
+      {
+        "t": 15.8,
+        "sfx": "click-soft",
+        "gain": 0.22
+      },
+      {
+        "t": 17.44,
+        "sfx": "whoosh-short",
+        "gain": 0.22
+      },
+      {
+        "t": 17.65,
+        "sfx": "chime",
+        "gain": 0.3
+      },
+      {
+        "t": 18.25,
+        "sfx": "pop",
+        "gain": 0.16
+      }
+    ]
+  },
+  "reel": {
+    "from": 8.6,
+    "to": 12.6
+  },
+  "made": "2026-11-07"
+}

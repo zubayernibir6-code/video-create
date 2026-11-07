@@ -1,0 +1,51 @@
+{
+  "code": "LG1",
+  "name": "3D Logo Sting",
+  "brand": "Orbit",
+  "project": "pf-lg1-orbit",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 6,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Orbit (fictional — concept work): a space-tech company that puts small satellites into orbit",
+    "goal": "A 6-second ident for video intros and outros, launch streams and ads: the brand in chrome, on one sub-bass hit",
+    "audience": "Viewers of the brand's launch streams, investors and engineers watching its videos",
+    "message": "Orbit — precise, engineered, in orbit",
+    "cta": "None — an ident (the wordmark is the message)",
+    "tone": "Deep space quiet, polished chrome, one blue rim light; confident and exact",
+    "references": [
+      "Netflix / HBO idents",
+      "tech brand idents"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "",
+      "from": 0,
+      "gain": 0.55,
+      "fadeIn": 0.3,
+      "fadeOut": 1.5
+    },
+    "cues": [
+      { "t": 0.15, "sfx": "sparkle", "gain": 0.16 },
+      { "t": 0.85, "sfx": "whoosh-cinematic", "gain": 0.36 },
+      { "t": 0.851, "sfx": "click-soft", "gain": 0.3 },
+      { "t": 0.984, "sfx": "click-soft", "gain": 0.28 },
+      { "t": 1.118, "sfx": "click-soft", "gain": 0.28 },
+      { "t": 1.251, "sfx": "click-soft", "gain": 0.28 },
+      { "t": 1.384, "sfx": "click-soft", "gain": 0.3 },
+      { "t": 2.6, "sfx": "whoosh-short", "gain": 0.2 },
+      { "t": 3.1, "sfx": "whoosh", "gain": 0.18 },
+      { "t": 3.95, "sfx": "impact-bass-1", "gain": 0.6 },
+      { "t": 3.95, "sfx": "sparkle", "gain": 0.3 }
+    ]
+  },
+  "reel": {
+    "from": 0.5,
+    "to": 4.6
+  },
+  "made": "2026-11-07"
+}

@@ -1,0 +1,18 @@
+{
+ "$schema": "https://hyperframes.heygen.com/schema/hyperframes.json",
+ "paths": {
+  "blocks": "compositions",
+  "components": "compositions/components",
+  "assets": "assets"
+ },
+ "media": {
+  "autoProxy": true
+ },
+ "registryItems": [
+  {
+   "name": "glass-hero",
+   "type": "hyperframes:block",
+   "target": "compositions/glass-hero.html"
+  }
+ ]
+}

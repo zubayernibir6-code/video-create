@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>LG1 · 3D Logo Sting — Orbit (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Orbit: deep space black, brushed chrome, one blue (#4f7cff) for the rim light and the orbit. */
+      --bg: #020306;
+      --bg-2: #090c14;
+      --ink: #f2f5fb;
+      --accent: #4f7cff;
+      --font-display: "Geist", "Hind Siliguri", sans-serif;
+      --font-body: "Geist", "Hind Siliguri", sans-serif;
+      --font-mono: "JetBrains Mono", "Hind Siliguri", monospace;
+    }
+    #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .concept { position: absolute; right: 48px; bottom: 34px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; color: rgba(242, 245, 251, 0.62); text-transform: uppercase; }
+  </style>
+  <script type="importmap">{ "imports": { "three": "./assets/js/three/three.module.min.js", "three/addons/": "./assets/js/three/addons/" } }</script>
+  <script>
+    // Declared-compute hold: resolved by the scene module once the WebGL scene is built and frame 0 is drawn.
+    window.__hf = window.__hf || {};
+    window.__hf.buildReady = window.__hf.buildReady || {};
+    window.__hf.buildReady["lg1-orbit-scene"] = new Promise((resolve) => { window.__lg1Ready = resolve; });
+  </script>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="6" data-fps="30">
+
+    <!-- the 3D sting: starfield, planet limb, chrome letters, orbit ring — rendered per frame from the studio timeline -->
+    <section id="stage" class="scene clip" data-start="0" data-duration="6" data-track-index="0" data-design-ignore data-layout-ignore>
+      <canvas id="gl" width="1920" height="1080"></canvas>
+    </section>
+
+    <section id="end" class="scene clip" data-start="4" data-duration="2" data-track-index="1">
+      <div id="concept" class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="sfx-01-sparkle" src="assets/sfx/sparkle.mp3" data-start="0.125" data-duration="1.8" data-track-index="20" data-volume="0.16"></audio>
+    <audio id="sfx-02-whoosh-cinematic" src="assets/sfx/whoosh-cinematic.mp3" data-start="0" data-duration="3.89" data-media-start="1.65" data-track-index="21" data-volume="0.36"></audio>
+    <audio id="sfx-03-click-soft" src="assets/sfx/click-soft.mp3" data-start="0.851" data-duration="0.24" data-track-index="22" data-volume="0.3"></audio>
+    <audio id="sfx-04-click-soft" src="assets/sfx/click-soft.mp3" data-start="0.984" data-duration="0.24" data-track-index="23" data-volume="0.28"></audio>
+    <audio id="sfx-05-click-soft" src="assets/sfx/click-soft.mp3" data-start="1.118" data-duration="0.24" data-track-index="22" data-volume="0.28"></audio>
+    <audio id="sfx-06-click-soft" src="assets/sfx/click-soft.mp3" data-start="1.251" data-duration="0.24" data-track-index="23" data-volume="0.28"></audio>
+    <audio id="sfx-07-click-soft" src="assets/sfx/click-soft.mp3" data-start="1.384" data-duration="0.24" data-track-index="22" data-volume="0.3"></audio>
+    <audio id="sfx-08-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="2.589" data-duration="0.49" data-track-index="20" data-volume="0.2"></audio>
+    <audio id="sfx-09-whoosh" src="assets/sfx/whoosh.mp3" data-start="3.024" data-duration="0.57" data-track-index="22" data-volume="0.18"></audio>
+    <audio id="sfx-10-impact-bass-1" src="assets/sfx/impact-bass-1.mp3" data-start="3.9" data-duration="2.1" data-track-index="20" data-volume="0.6"></audio>
+    <audio id="sfx-11-sparkle" src="assets/sfx/sparkle.mp3" data-start="3.925" data-duration="1.8" data-track-index="21" data-volume="0.3"></audio>
+    <!-- studio:audio:end -->
+  </div>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { FontLoader } from "three/addons/loaders/FontLoader.js";
+    import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+    import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
+
+    await document.fonts.ready;
+    const font = await new FontLoader().loadAsync("assets/fonts/Geist-Bold.typeface.json");
+
+    const W = 1920, H = 1080;
+    const S = Studio.init({ id: "main" });
+    const tl = S.tl, g = gsap;
+    const clamp01 = (x) => Math.min(1, Math.max(0, x));
+    const ez = (n) => g.parseEase(n);
+    const SETTLE = ez("settle"), ENTER = ez("enter"), MOVE = ez("move"), GLIDE = ez("glide"), EXIT = ez("exit"), SPRING = ez("houseSpring"), SPOP = ez("springPop");
+    const seg = (t, t0, d, e) => e(clamp01((t - t0) / d));
+    const bump = (t, t0, rise, hold, fall) => clamp01((t - t0) / rise) * (1 - clamp01((t - t0 - rise - hold) / fall));
+    const BLUE = new THREE.Color("#4f7cff");
+
+    // ---------------------------------------------------------------- renderer + camera
+    const canvas = document.getElementById("gl");
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(1);
+    renderer.setSize(W, H, false);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x010204);
+    const camera = new THREE.PerspectiveCamera(26, W / H, 0.1, 400);
+    const CAM_REST = new THREE.Vector3(0, 0.62, 11.6), LOOK = new THREE.Vector3(0, 0.2, 0);
+
+    // ---------------------------------------------------------------- chrome studio (no HDR file): strips on black + blue rims
+    const studio = new THREE.Scene();
+    studio.background = new THREE.Color(0x020203);
+    const panel = (w, h, x, y, z, color, power, look) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(power), side: THREE.DoubleSide }));
+      m.position.set(x, y, z); m.lookAt(look || new THREE.Vector3(0, 0, 0)); studio.add(m); return m;
+    };
+    panel(11, 2.0, 0, 7, 1.5, 0xffffff, 2.6);          // overhead key strip
+    panel(1.1, 7, -7.5, 1, 2, 0xffffff, 2.0);          // left strip
+    panel(1.1, 7, 7.5, 1, -0.5, 0xdfe7ff, 1.4);        // right strip
+    panel(10, 1.2, 0, 3.2, -7.5, 0x4f7cff, 3.2);       // blue rim, high behind
+    panel(9, 1.0, 0, -1.2, -7, 0x4f7cff, 2.2);         // blue rim, low behind
+    // in front of the word (what its faces mirror): soft gradient with vertical bars that sweep as the env turns
+    const bars = document.createElement("canvas"); bars.width = 1024; bars.height = 256;
+    { const b = bars.getContext("2d"); const sky = b.createLinearGradient(0, 0, 0, 138); sky.addColorStop(0, "#5d626d"); sky.addColorStop(1, "#c3c8d2");
+      b.fillStyle = sky; b.fillRect(0, 0, 1024, 138); const gr = b.createLinearGradient(0, 141, 0, 256); gr.addColorStop(0, "#14161b"); gr.addColorStop(1, "#040405");
+      b.fillStyle = gr; b.fillRect(0, 141, 1024, 115); b.fillStyle = "#ffffff"; b.fillRect(0, 137, 1024, 4);
+      b.globalAlpha = 0.9; for (const [x, w] of [[140, 54], [420, 130], [760, 30], [880, 12]]) b.fillRect(x, 0, w, 138); b.globalAlpha = 0.25; for (const [x, w] of [[140, 54], [420, 130], [760, 30], [880, 12]]) b.fillRect(x, 141, w, 115); }
+    const barsTex = new THREE.CanvasTexture(bars);
+    const mirror = new THREE.Mesh(new THREE.PlaneGeometry(24, 8), new THREE.MeshBasicMaterial({ map: barsTex, color: new THREE.Color(1.5, 1.5, 1.58), side: THREE.DoubleSide }));
+    mirror.position.set(0, 1, 9); mirror.lookAt(0, 1, 0); studio.add(mirror);
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(studio, 0.012).texture;
+
+    // ---------------------------------------------------------------- space: seeded stars + a planet limb far below
+    const rnd = S.mulberry32(4071977);
+    const NS = 1400, sp = new Float32Array(NS * 3), sSize = new Float32Array(NS), sB = new Float32Array(NS), sPh = new Float32Array(NS), sCol = new Float32Array(NS * 3);
+    for (let i = 0; i < NS; i++) {
+      const az = (rnd() - 0.5) * 2.4, el = (rnd() - 0.42) * 1.25, r = 150 + rnd() * 60;
+      sp[i * 3] = Math.sin(az) * r; sp[i * 3 + 1] = Math.sin(el) * r; sp[i * 3 + 2] = -Math.cos(az) * Math.cos(el) * r;
+      const big = rnd();
+      sSize[i] = big > 0.985 ? 3.2 : big > 0.9 ? 2.2 : 1.35 + rnd() * 0.6;
+      sB[i] = 0.18 + Math.pow(rnd(), 2.2) * 0.82;
+      sPh[i] = rnd() * 6.283;
+      const warm = rnd();
+      sCol.set(warm > 0.82 ? [1, 0.9, 0.78] : warm < 0.3 ? [0.75, 0.85, 1] : [1, 1, 1], i * 3);
+    }
+    const starGeo = new THREE.BufferGeometry();
+    starGeo.setAttribute("position", new THREE.BufferAttribute(sp, 3));
+    starGeo.setAttribute("aSize", new THREE.BufferAttribute(sSize, 1));
+    starGeo.setAttribute("aB", new THREE.BufferAttribute(sB, 1));
+    starGeo.setAttribute("aPh", new THREE.BufferAttribute(sPh, 1));
+    starGeo.setAttribute("aCol", new THREE.BufferAttribute(sCol, 3));
+    const starU = { uTime: { value: 0 }, uOn: { value: 0 } };
+    const stars = new THREE.Points(starGeo, new THREE.ShaderMaterial({
+      uniforms: starU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false,
+      vertexShader: /* glsl */ `
+        attribute float aSize, aB, aPh; attribute vec3 aCol;
+        uniform float uTime, uOn;
+        varying float vB; varying vec3 vCol;
+        void main() {
+          vB = aB * uOn * (0.72 + 0.28 * sin(uTime * (1.3 + aPh * 0.35) + aPh * 7.0));
+          vCol = aCol;
+          gl_PointSize = aSize;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }`,
+      fragmentShader: /* glsl */ `
+        varying float vB; varying vec3 vCol;
+        void main() {
+          float d = length(gl_PointCoord - 0.5);
+          float a = smoothstep(0.5, 0.0, d);
+          gl_FragColor = vec4(vCol * vB * a * 0.55, 1.0);
+          #include <colorspace_fragment>
+        }`,
+    }));
+    scene.add(stars);
+
+    const PLANET_R = 60, PLANET_C = new THREE.Vector3(0, -69.6, -30);
+    const planetU = { uRim: { value: BLUE.clone() }, uOn: { value: 0 } };
+    const planet = new THREE.Mesh(new THREE.SphereGeometry(PLANET_R, 160, 80), new THREE.ShaderMaterial({
+      uniforms: planetU, toneMapped: false,
+      vertexShader: /* glsl */ `
+        varying vec3 vN; varying vec3 vV;
+        void main() { vec4 wp = modelMatrix * vec4(position, 1.0); vN = normalize(mat3(modelMatrix) * normal); vV = normalize(cameraPosition - wp.xyz); gl_Position = projectionMatrix * viewMatrix * wp; }`,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uRim; uniform float uOn;
+        varying vec3 vN; varying vec3 vV;
+        void main() {
+          float f = 1.0 - max(dot(vN, vV), 0.0);
+          vec3 night = vec3(0.004, 0.006, 0.014);
+          vec3 col = night + uRim * (pow(f, 8.0) * 0.55 + pow(f, 26.0) * 1.5) * uOn;
+          gl_FragColor = vec4(col, 1.0);
+          #include <colorspace_fragment>
+        }`,
+    }));
+    planet.position.copy(PLANET_C);
+    scene.add(planet);
+    const halo = new THREE.Mesh(new THREE.SphereGeometry(PLANET_R * 1.035, 160, 80), new THREE.ShaderMaterial({
+      uniforms: planetU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.BackSide, toneMapped: false,
+      vertexShader: /* glsl */ `
+        varying vec3 vN; varying vec3 vV;
+        void main() { vec4 wp = modelMatrix * vec4(position, 1.0); vN = normalize(mat3(modelMatrix) * normal); vV = normalize(cameraPosition - wp.xyz); gl_Position = projectionMatrix * viewMatrix * wp; }`,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uRim; uniform float uOn;
+        varying vec3 vN; varying vec3 vV;
+        void main() {
+          float d = max(dot(-vN, vV), 0.0);            // 0 at the outer edge of the shell, rising toward the limb
+          float a = pow(smoothstep(0.0, 0.32, d), 2.2) * (1.0 - smoothstep(0.32, 0.34, d));
+          gl_FragColor = vec4(uRim * a * 0.2 * uOn, 1.0);
+          #include <colorspace_fragment>
+        }`,
+    }));
+    halo.position.copy(PLANET_C);
+    scene.add(halo);
+
+    // ---------------------------------------------------------------- the word: beveled chrome letters, one pivot each
+    // creased normals smooth the bevel, but they also tilt the cap's rim vertices and the long cap triangles then
+    // smear that tilt across the face ('crumpled foil'). Caps are exactly flat: give their triangles the face normal.
+    function flatCaps(geo) {
+      const p = geo.attributes.position, n = geo.attributes.normal, a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), fn = new THREE.Vector3();
+      for (let i = 0; i < p.count; i += 3) {
+        a.fromBufferAttribute(p, i); b.fromBufferAttribute(p, i + 1); c.fromBufferAttribute(p, i + 2);
+        fn.subVectors(c, b).cross(a.clone().sub(b)).normalize();
+        if (Math.abs(fn.z) > 0.9995) for (let k = 0; k < 3; k++) n.setXYZ(i + k, 0, 0, Math.sign(fn.z));
+      }
+      n.needsUpdate = true; return geo;
+    }
+    const metal = new THREE.MeshPhysicalMaterial({ color: 0xdfe3ea, metalness: 1, roughness: 0.11, clearcoat: 0.25, clearcoatRoughness: 0.1, envMapIntensity: 1.25 });
+    const SIZE = 1.22, TRACK = 0.24, DEPTH = 0.34;
+    const unit = SIZE / font.data.resolution;
+    const word = new THREE.Group();
+    scene.add(word);
+    const letters = [];
+    let cursor = 0, capTop = 0;
+    for (const ch of "ORBIT") {
+      const adv = font.data.glyphs[ch].ha * unit;
+      let geo = new TextGeometry(ch, { font, size: SIZE, depth: DEPTH, curveSegments: 14, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.046, bevelSegments: 8 });
+      geo.computeBoundingBox();
+      const b = geo.boundingBox;
+      capTop = Math.max(capTop, b.max.y);
+      geo.translate(-(b.min.x + b.max.x) / 2, 0, -DEPTH / 2);
+      geo.deleteAttribute("normal");
+      geo = flatCaps(toCreasedNormals(geo, THREE.MathUtils.degToRad(40)));
+      const pivot = new THREE.Group();
+      pivot.position.x = cursor + adv / 2;
+      pivot.add(new THREE.Mesh(geo, metal));
+      word.add(pivot);
+      letters.push(pivot);
+      cursor += adv + TRACK;
+    }
+    const WORD_W = cursor - TRACK;
+    for (const p of letters) p.position.x -= WORD_W / 2;
+    const CAP = capTop;                            // measured (this typeface JSON is not 1000-unit em: caps ≈ 1.04 × size)
+    const WORD_C = new THREE.Vector3(0, CAP / 2, 0);
+
+    // ---------------------------------------------------------------- the orbit: a thin ring drawn by a comet head
+    const RING_R = WORD_W / 2 + 0.85;
+    class Circle extends THREE.Curve { getPoint(u, out = new THREE.Vector3()) { const a = 2 * Math.PI * u; return out.set(Math.cos(a) * RING_R, 0, Math.sin(a) * RING_R); } }
+    const ringU = { uHead: { value: 0 }, uTrail: { value: 1 }, uFlash: { value: 0 }, uAlpha: { value: 1 }, uColor: { value: new THREE.Color("#a9c1ff") }, uNear: { value: 8 }, uFar: { value: 15 }, uStart: { value: 0 } };
+    const ringShader = (alphaMul) => new THREE.ShaderMaterial({
+      uniforms: Object.assign({}, ringU, { uMul: { value: alphaMul } }), toneMapped: false,
+      transparent: alphaMul < 1, depthWrite: alphaMul >= 1, blending: alphaMul < 1 ? THREE.AdditiveBlending : THREE.NormalBlending,
+      vertexShader: /* glsl */ `
+        varying float vU; varying float vDepth; varying float vFacing;
+        void main() { vU = uv.x; vec4 mv = modelViewMatrix * vec4(position, 1.0); vDepth = -mv.z; vFacing = abs(dot(normalize(normalMatrix * normal), normalize(-mv.xyz))); gl_Position = projectionMatrix * mv; }`,
+      fragmentShader: /* glsl */ `
+        uniform float uHead, uTrail, uFlash, uMul, uNear, uFar, uStart;
+        uniform vec3 uColor;
+        varying float vU; varying float vDepth; varying float vFacing;
+        void main() {
+          float u = fract(vU - uStart);                 // 0 at the satellite's start point
+          if (u > uHead) discard;
+          float trail = exp(-(uHead - u) / 0.07) * uTrail;
+          float back = smoothstep(uNear, uFar, vDepth);  // the far side of the orbit sits dimmer (depth)
+          vec3 c = uColor * (0.5 + 1.9 * trail + 1.2 * uFlash) * mix(1.0, 0.42, back);
+          float soft = uMul < 1.0 ? pow(vFacing, 2.6) : mix(0.55, 1.0, vFacing);
+          gl_FragColor = vec4(c * uMul * soft, 1.0);
+          #include <colorspace_fragment>
+        }`,
+    });
+    const ringGeo = new THREE.TubeGeometry(new Circle(), 720, 0.0105, 10, true);
+    const ringGlowGeo = new THREE.TubeGeometry(new Circle(), 720, 0.06, 12, true);
+    const ringMat = ringShader(1), ringGlowMat = ringShader(0.34);
+    const ring = new THREE.Group();
+    ring.add(new THREE.Mesh(ringGeo, ringMat), new THREE.Mesh(ringGlowGeo, ringGlowMat));
+    ring.position.set(0, WORD_C.y + 0.25, 0); // perspective drops the near arc: lift the ring so it frames the word
+    scene.add(ring);
+    const setRing = (k, v) => { ringMat.uniforms[k].value = v; ringGlowMat.uniforms[k].value = v; };
+    // the satellite starts at the upper right of the orbit (the far side, right of the T)
+    const START_U = 0.955;
+    setRing("uStart", START_U);
+
+    // satellite / glint sprite + the light it carries across the bevels
+    const gc = document.createElement("canvas"); gc.width = gc.height = 256;
+    { const x = gc.getContext("2d"); const r = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+      r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(0.07, "rgba(214,226,255,0.9)"); r.addColorStop(0.28, "rgba(110,150,255,0.22)"); r.addColorStop(1, "rgba(79,124,255,0)");
+      x.fillStyle = r; x.fillRect(0, 0, 256, 256); x.globalCompositeOperation = "lighter";
+      for (const [w, h] of [[256, 5], [5, 256]]) { const l = x.createLinearGradient(128 - w / 2, 128 - h / 2, 128 + w / 2, 128 + h / 2); l.addColorStop(0, "rgba(255,255,255,0)"); l.addColorStop(0.5, "rgba(255,255,255,0.95)"); l.addColorStop(1, "rgba(255,255,255,0)"); x.fillStyle = l; x.fillRect(128 - w / 2, 128 - h / 2, w, h); } }
+    const glintTex = new THREE.CanvasTexture(gc); glintTex.colorSpace = THREE.SRGBColorSpace;
+    const sat = new THREE.Sprite(new THREE.SpriteMaterial({ map: glintTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, toneMapped: false, opacity: 0 }));
+    sat.renderOrder = 5;
+    scene.add(sat);
+    const satLight = new THREE.PointLight(0xc3d3ff, 0, 0, 2);
+    scene.add(satLight);
+    const rim = new THREE.DirectionalLight(BLUE, 0); rim.position.set(0, 3, -6); scene.add(rim);
+    const key = new THREE.DirectionalLight(0xffffff, 0); key.position.set(-5, 4, 6); scene.add(key);
+
+    const ringPoint = (u, out) => { ring.updateMatrixWorld(true); const a = 2 * Math.PI * (u + START_U); return out.set(Math.cos(a) * RING_R, 0, Math.sin(a) * RING_R).applyMatrix4(ring.matrixWorld); };
+    const satPos = new THREE.Vector3();
+
+    // ---------------------------------------------------------------- choreography
+    const T = { glint: 0.15, flip: 0.62, flipDur: 0.95, orbit: 2.6, lock: 3.95, camEnd: 4.0 };
+    const flipStart = (i) => T.flip + i * S.f(4);
+    let lastT = -1;
+    function render(t) {
+      lastT = t;
+      // camera: a slow arc in that lands at rest on the lock
+      const c = seg(t, 0, T.camEnd, SETTLE);
+      camera.position.set(0.95 * (1 - c), CAM_REST.y - 0.32 * (1 - c), CAM_REST.z + 1.25 * (1 - c));
+      camera.lookAt(LOOK);
+
+      // space comes up from black
+      starU.uTime.value = t; starU.uOn.value = 0.35 + 0.65 * seg(t, 0.1, 2.2, ENTER);
+      planetU.uOn.value = 0.25 + 0.75 * seg(t, 0.5, 2.8, ENTER) + 0.35 * bump(t, T.lock - 0.05, 0.15, 0.2, 1.4);
+
+      // letters flip up from lying back, one by one on the house spring (4-frame stagger)
+      letters.forEach((p, i) => {
+        const s0 = flipStart(i);
+        const u = SPRING(clamp01((t - s0) / T.flipDur));
+        p.rotation.x = (1 - u) * (-Math.PI / 2);
+        p.position.y = (1 - clamp01(u)) * -0.12;
+        p.visible = t >= s0;
+      });
+      // the word swings back to face the lens while the light runs across the bevels
+      const sw = seg(t, T.flip, T.lock - T.flip + 0.05, GLIDE);
+      word.rotation.y = -0.2 * (1 - sw);
+      word.rotation.x = 0.05 * (1 - sw);
+      scene.environmentRotation.y = -0.55 + 0.95 * seg(t, 1.2, 3.2, GLIDE);
+      key.intensity = 0.6 + 0.6 * seg(t, T.flip, 1.4, ENTER);
+      rim.intensity = 1.2 + 1.6 * seg(t, 0.8, 2.4, ENTER) + 2.5 * bump(t, T.lock - 0.05, 0.12, 0.15, 1.0);
+
+      // orbit ring: tilt settles, the head draws it from the satellite's start point and locks
+      const tilt = seg(t, T.orbit - 0.3, T.lock - T.orbit + 0.6, SETTLE);
+      ring.rotation.set(0.36 - 0.06 * (1 - tilt), 0, -0.03 - 0.05 * (1 - tilt));
+      const head = seg(t, T.orbit, T.lock - T.orbit, MOVE);
+      setRing("uHead", t < T.orbit ? -1 : head);
+      setRing("uTrail", 1 - 0.7 * seg(t, T.lock, 0.8, ENTER));
+      setRing("uFlash", bump(t, T.lock - 0.04, 0.08, 0.06, 0.7));
+
+      // satellite: a glint in the dark → rests as a point → becomes the comet head → locks with a flare
+      const appear = seg(t, T.glint, 0.4, SETTLE);
+      const flare0 = bump(t, T.glint, 0.14, 0.12, 0.5);
+      const flare1 = bump(t, T.lock - 0.04, 0.08, 0.1, 0.6);
+      ringPoint(t < T.orbit ? 0 : head, satPos);
+      sat.position.copy(satPos);
+      const pulse = t > T.lock + 0.8 ? 0.06 * Math.sin((t - T.lock) * 3.2) : 0;
+      sat.material.opacity = (t < T.glint ? 0 : Math.min(1, 0.85 * appear + flare0)) + pulse;
+      sat.scale.setScalar(0.22 + 0.9 * flare0 + 1.1 * flare1 + 0.05 * Math.sin(Math.PI * head) + pulse);
+      sat.material.rotation = 0.25 + 0.6 * head;
+      satLight.position.copy(satPos);
+      satLight.intensity = 26 * seg(t, T.orbit - 0.2, 0.4, ENTER) * (1 - 0.65 * seg(t, T.lock + 0.2, 0.8, ENTER)) + 30 * flare1;
+
+      renderer.render(scene, camera);
+    }
+
+    // ---------------------------------------------------------------- DOM on the same timeline
+    tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "enter" }, 4.3);
+    tl.set({}, {}, 6); // timeline spans the whole sting, so every seek reaches the scene
+
+    S.everyFrame(render);
+    window.addEventListener("hf-seek", () => { const t = tl.time(); if (t !== lastT) render(t); });
+    S.grain({ opacity: 0.045 });
+    S.vignette({ strength: 0.5 });
+    window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    window.__lg1Ready();
+  </script>
+</body>
+</html>

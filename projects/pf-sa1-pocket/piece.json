@@ -1,0 +1,144 @@
+{
+  "code": "SA1",
+  "name": "Vertical Social Ad",
+  "brand": "Pocket",
+  "project": "pf-sa1-pocket",
+  "aspect": "9x16",
+  "width": 1080,
+  "height": 1920,
+  "duration": 15,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Pocket (fictional — concept work): a budgeting app that sorts spending, finds forgotten subscriptions and shows a safe-to-spend number",
+    "goal": "A 15 s voiced performance ad for Reels / TikTok / Shorts that stops the scroll in the first second and drives free trials",
+    "audience": "Young earners (22–35) who feel their money disappears and have no time for spreadsheets",
+    "message": "Pocket knows where your money goes: it sorts every purchase, finds the subscriptions you forgot, and shows what's safe to spend today",
+    "cta": "Try Pocket free",
+    "tone": "Bold, punchy and witty; deep purple stage, one money-green accent; kinetic captions locked to the voice and the beat",
+    "references": [
+      "Top-performing Meta ad creatives",
+      "Duolingo / Notion TikTok ads"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "social-punch",
+      "from": 0.6,
+      "gain": 0.55,
+      "fadeIn": 0.1,
+      "fadeOut": 1.5,
+      "duck": [
+        [
+          0.1,
+          9.6,
+          0.45
+        ]
+      ]
+    },
+    "voice": {
+      "file": "assets/voice/vo.wav",
+      "at": 0.15,
+      "gain": 1
+    },
+    "cues": [
+      {
+        "t": 0.08,
+        "sfx": "whoosh",
+        "gain": 0.3
+      },
+      {
+        "t": 0.97,
+        "sfx": "coin-drop",
+        "gain": 0.42
+      },
+      {
+        "t": 1.92,
+        "sfx": "whoosh",
+        "gain": 0.45
+      },
+      {
+        "t": 3.22,
+        "sfx": "pop",
+        "gain": 0.22
+      },
+      {
+        "t": 3.47,
+        "sfx": "pop",
+        "gain": 0.22
+      },
+      {
+        "t": 3.72,
+        "sfx": "pop",
+        "gain": 0.22
+      },
+      {
+        "t": 3.97,
+        "sfx": "pop",
+        "gain": 0.22
+      },
+      {
+        "t": 4.9,
+        "sfx": "whoosh-short",
+        "gain": 0.26
+      },
+      {
+        "t": 5.67,
+        "sfx": "cash-register",
+        "gain": 0.42
+      },
+      {
+        "t": 6.45,
+        "sfx": "whoosh-short",
+        "gain": 0.26
+      },
+      {
+        "t": 6.6,
+        "sfx": "typing",
+        "gain": 0.13,
+        "len": 0.82
+      },
+      {
+        "t": 7.46,
+        "sfx": "sparkle",
+        "gain": 0.2
+      },
+      {
+        "t": 8.3,
+        "sfx": "whoosh",
+        "gain": 0.3
+      },
+      {
+        "t": 8.46,
+        "sfx": "impact-bass-1",
+        "gain": 0.5,
+        "len": 1.1
+      },
+      {
+        "t": 8.77,
+        "sfx": "coin-drop",
+        "gain": 0.28
+      },
+      {
+        "t": 9.62,
+        "sfx": "pop",
+        "gain": 0.26
+      },
+      {
+        "t": 10.3,
+        "sfx": "whoosh-short",
+        "gain": 0.12
+      },
+      {
+        "t": 12.8,
+        "sfx": "sparkle",
+        "gain": 0.12
+      }
+    ]
+  },
+  "reel": {
+    "from": 0,
+    "to": 3.6
+  },
+  "made": "2026-11-07"
+}

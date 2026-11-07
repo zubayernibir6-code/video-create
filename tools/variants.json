@@ -377,34 +377,34 @@
       "id": "FD1",
       "bn": "নতুন ফিচারের ঘোষণা",
       "en": "Feature Drop",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "One new feature in 15 seconds: a hook line, the cursor walks to the feature, a smooth punch-in on the UI moment, the result, a CTA.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/FD1_Relay.mp4 (portfolio sample, concept work for the fictional brand Relay; project projects/pf-fd1-relay; finish.mjs QC in renders/pf-fd1-relay/)"
     },
     {
       "id": "UT1",
       "bn": "থ্রিডি অ্যাপ-ভ্রমণ",
       "en": "3D UI Tour",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "The app's screens as glass-edged panels in 3D space; the camera dollies from panel to panel (dashboard → pipeline → report) with parallax and depth of field.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/UT1_AtlasCRM.mp4 (portfolio sample, concept work for the fictional brand Atlas CRM; project projects/pf-ut1-atlas; finish.mjs QC in renders/pf-ut1-atlas/)"
     },
     {
       "id": "AP1",
       "bn": "অ্যাপ স্টোরের প্রিভিউ",
       "en": "App Store Preview",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "A vertical phone-first preview: taps, swipes and screen changes inside a phone, short benefit captions, made to the App Store / Play Store preview limits (15–30 s).",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/AP1_Habitly.mp4 (portfolio sample, concept work for the fictional brand Habitly; project projects/pf-ap1-habitly; finish.mjs QC in renders/pf-ap1-habitly/)"
     },
     {
       "id": "CL1",
@@ -432,12 +432,12 @@
       "id": "AI1",
       "bn": "এআই এজেন্টের ডেমো",
       "en": "AI Agent Demo",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "An AI agent at work: a prompt is typed, a labelled agent cursor clicks through a clean UI, status chips tick from 'working' to 'done', the result lands. The 2026 launch format for AI products.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/AI1_Operator.mp4 (portfolio sample, concept work for the fictional brand Operator; project projects/pf-ai1-operator; finish.mjs QC in renders/pf-ai1-operator/)"
     },
     {
       "id": "HX1",
@@ -465,23 +465,23 @@
       "id": "IA1",
       "bn": "থ্রিডি স্তর-ভাগ ডায়াগ্রাম",
       "en": "3D Architecture Stack",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "Real 3D: the system's layers (edge, API, compute, data, encryption) float apart in an isometric stack with labels, data runs through them, they lock back together.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/IA1_Vaultline.mp4 (portfolio sample, concept work for the fictional brand Vaultline; project projects/pf-ia1-vaultline; finish.mjs QC in renders/pf-ia1-vaultline/)"
     },
     {
       "id": "DS1",
       "bn": "ডেটার গল্প",
       "en": "Data Story",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "Bloomberg / FT-style: a line chart draws itself, the key point is annotated, numbers count up, a comparison resolves — calm editorial type, one accent colour.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/DS1_MeridianResearch.mp4 (portfolio sample, concept work for the fictional brand Meridian Research; project projects/pf-ds1-meridian; finish.mjs QC in renders/pf-ds1-meridian/)"
     },
     {
       "id": "KP1",
@@ -520,23 +520,23 @@
       "id": "LG1",
       "bn": "থ্রিডি লোগো স্টিং",
       "en": "3D Logo Sting",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "A 5–7 s logo reveal in real 3D: beveled letters flip up, light runs across the bevels, one sub-bass hit and a sparkle on the lock.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/LG1_Orbit.mp4 (portfolio sample, concept work for the fictional brand Orbit; project projects/pf-lg1-orbit; finish.mjs QC in renders/pf-lg1-orbit/)"
     },
     {
       "id": "KT1",
       "bn": "নাচন্ত লেখার ম্যানিফেস্টো",
       "en": "Kinetic Type Manifesto",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "A brand belief told in big moving type cut to the beat: words slam, split, swap and morph; colour blocks wipe; it ends on the brand line.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/KT1_Driftwood.mp4 (portfolio sample, concept work for the fictional brand Driftwood; project projects/pf-kt1-driftwood; finish.mjs QC in renders/pf-kt1-driftwood/)"
     },
     {
       "id": "BS1",
@@ -575,12 +575,12 @@
       "id": "GH1",
       "bn": "থ্রিডি কাচের হিরো টাইটেল",
       "en": "3D Glass Hero Title",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "Real 3D glass: a refracting glass form turns in front of a giant headline so the type bends through it, then the tagline lands — the most premium 8–10 seconds a brand can open with.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/GH1_Prism.mp4 (portfolio sample, concept work for the fictional brand Prism; project projects/pf-gh1-prism; finish.mjs QC in renders/pf-gh1-prism/)"
     },
     {
       "id": "CD1",

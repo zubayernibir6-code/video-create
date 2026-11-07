@@ -1,0 +1,6 @@
+/* fonts.css — written by tools/studio/new-piece.mjs. All SIL OFL 1.1 (assets/fonts/LICENSES). */
+@font-face { font-family: "Geist"; font-style: normal; font-weight: 100 900; src: url("Geist-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 100 900; src: url("GeistMono-Variable.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 400; src: url("HindSiliguri-Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 600; src: url("HindSiliguri-SemiBold.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Hind Siliguri"; font-style: normal; font-weight: 700; src: url("HindSiliguri-Bold.ttf") format("truetype"); font-display: block; }

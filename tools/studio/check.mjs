@@ -45,6 +45,13 @@ if (/Date\.now\s*\(|new Date\s*\(|performance\.now\s*\(/.test(scripts)) errors.p
 if (!/window\.__timelines\s*\[\s*["']main["']\s*\]\s*=/.test(scripts)) errors.push('the timeline is not registered in the page: end with  window.__timelines["main"] = S.done().tl;');
 if (/\bS\.init\b|Studio\.init/.test(scripts) && !/S\.done\s*\(/.test(scripts)) errors.push("Studio.init() without S.done() — the guards never run");
 if (/\btl\.from\s*\(/.test(scripts)) warns.push("tl.from() found — use tl.fromTo() (from() renders its start state early under seeking)");
+// The HyperFrames runtime registers its own eases named spring / hold / wiggle / custom after load — a studio tween
+// that names one of them silently plays the RUNTIME's version ("spring" became linear in every render, 2026-11-07).
+for (const name of ["spring", "hold", "wiggle", "custom"]) {
+  const re = new RegExp(`(["'])${name}\\1`);
+  const code = scripts.split("\n").filter((l) => !/^\s*\/\//.test(l)).join("\n");
+  if (re.test(code)) errors.push(`ease name "${name}" is taken by the HyperFrames runtime (it plays the runtime's curve, "spring" = linear) — use "houseSpring" / springSoft / springPop or pass a function`);
+}
 if (/<(h1|h2|h3|p|span|div)[^>]*>[^<]*<br\s*\/?>/i.test(noComments)) warns.push("<br> inside text — let it wrap with max-width (§ determinism layout rules)");
 const root = html.match(/<div[^>]*data-composition-id="main"[^>]*>/);
 if (!root) errors.push('no root <div data-composition-id="main">');
@@ -55,8 +62,22 @@ else if (piece) {
   const vp = html.match(/name="viewport"\s+content="width=(\d+),\s*height=(\d+)"/);
   if (vp && (+vp[1] !== piece.width || +vp[2] !== piece.height)) warns.push(`viewport meta ${vp[1]}×${vp[2]} ≠ ${piece.width}×${piece.height}`);
 }
-const styles = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n") + "\n" + [...html.matchAll(/style="([^"]*)"/g)].map((m) => m[1]).join(";\n");
-for (const m of styles.matchAll(/font-size\s*:\s*(\d+(?:\.\d+)?)px/g)) if (+m[1] < 24 && +m[1] > 0) { warns.push(`font-size ${m[1]}px in the styles — readable text ≥ 28 px, labels ≥ 24 px (≤ 15 px only for page furniture with data-design-ignore)`); break; }
+// font sizes: every CSS rule and inline style; page furniture is exempt — a rule whose selector names .concept /
+// .furniture / [data-design-ignore], or an element that carries data-design-ignore (the "Concept work" label).
+const styleText = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
+let small = null;
+for (const r of styleText.replace(/\/\*[\s\S]*?\*\//g, "").matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+  if (/concept|furniture|data-design-ignore/i.test(r[1])) continue;
+  const m = r[2].match(/font-size\s*:\s*(\d+(?:\.\d+)?)px/);
+  if (m && +m[1] > 0 && +m[1] < 24) { small = `${m[1]}px in "${r[1].trim().slice(0, 60)}"`; break; }
+}
+if (!small) for (const t of noComments.matchAll(/<[a-z][^>]*\sstyle="([^"]*)"[^>]*>/gi)) {
+  if (/data-design-ignore/.test(t[0])) continue;
+  const m = t[1].match(/font-size\s*:\s*(\d+(?:\.\d+)?)px/);
+  if (m && +m[1] > 0 && +m[1] < 24) { small = `${m[1]}px inline on ${t[0].slice(0, 60)}`; break; }
+}
+if (small) warns.push(`font-size ${small} — readable text ≥ 28 px, labels ≥ 24 px (≤ 15 px only for furniture: class "concept"/"furniture" or data-design-ignore)`);
+const styles = styleText + "\n" + [...html.matchAll(/style="([^"]*)"/g)].map((m) => m[1]).join(";\n");
 for (const m of styles.matchAll(/font-family\s*:\s*([^;}{]+)/g)) {
   for (const part of m[1].split(",").map((s) => s.trim())) {
     if (!part || /^["']/.test(part) || /^var\(/.test(part)) continue;
@@ -110,4 +131,4 @@ if (!args.includes("--no-snap")) {
 
 const fail = errors.length > 0 || hfFail;
 console.log(fail ? `✗ studio check FAILED (${errors.length} static error(s)${hfFail ? ", hyperframes check/snapshot failed" : ""})` : `✓ studio check passed${warns.length ? ` with ${warns.length} warning(s)` : ""}`);
-process.exit(fail ? 1 : 0);
+process.exitCode = fail ? 1 : 0; // not process.exit(): on Windows a piped stdout could lose the last warning lines (AI1/FD1 report)

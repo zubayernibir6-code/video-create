@@ -402,7 +402,7 @@
       S.draw("#ans-line", 13.22, { dur: 1.15, ease: "settle" });
       tl.fromTo("#ans-area", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "enter" }, 13.7);
       tl.fromTo("#ans-mark", { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.45, ease: "settle" }, 14.15);
-      tl.fromTo("#ans-dot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "spring" }, 14.18);
+      tl.fromTo("#ans-dot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "houseSpring" }, 14.18);
       tl.fromTo("#ans-label", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "enter" }, 14.25);
       tl.fromTo("#ins", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.55, ease: "enter" }, 14.62);
       tl.fromTo("#src1, #src2", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter", stagger: S.f(5) }, 14.95);
@@ -416,7 +416,7 @@
       S.type("#b1-q", 17.05, "Which accounts might churn next month?", { cps: 30, caret: true, hold: 0.6 });
       tl.fromTo("#b1-p1, #b1-p2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "enter", stagger: S.f(5) }, 18.42);
       tl.to("#focus", { x: 560, duration: 0.55, ease: "move" }, 18.85);
-      ["#bb1", "#bb2", "#bb3", "#bb4", "#bb5"].forEach((b, i) => tl.fromTo(b, { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.7, ease: i === 3 ? "spring" : "settle" }, 19.0 + i * S.f(3)));
+      ["#bb1", "#bb2", "#bb3", "#bb4", "#bb5"].forEach((b, i) => tl.fromTo(b, { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.7, ease: i === 3 ? "houseSpring" : "settle" }, 19.0 + i * S.f(3)));
       tl.fromTo("#c1, #c2", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "enter", stagger: S.f(5) }, 19.85);
       tl.to("#focus", { x: 1120, duration: 0.55, ease: "move" }, 20.35);
       tl.fromTo("#b3-n", { opacity: 0, y: -80, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.75, ease: "springSoft" }, 20.5);

@@ -54,7 +54,8 @@ const beats = JSON.parse(readFileSync(MUSIC + ".beats.json", "utf8"));
 const bigDrop = (beats.drops.find((d) => d.t > 5 && d.jump >= 10) || beats.drops[0] || { t: 9.4 }).t;
 const TITLE = 3.0;
 const from = Math.max(0, bigDrop - TITLE); // the drop lands on the first cut
-const strong = beats.strong.map((t) => +(t - from).toFixed(3)).filter((t) => t > TITLE + 1);
+// cut on the real kick drum when beats.mjs found it (the detector's "strong" beats can sit off the downbeat)
+const strong = (beats.kicks && beats.kicks.length ? beats.kicks : beats.strong).map((t) => +(t - from).toFixed(3)).filter((t) => t > TITLE + 1);
 const all = beats.beats.map((t) => +(t - from).toFixed(3)).filter((t) => t > TITLE + 1);
 const AVG = 2.3, OUTRO = 4.5;
 const cuts = [TITLE];

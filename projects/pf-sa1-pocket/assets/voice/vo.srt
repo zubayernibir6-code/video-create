@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:01,320
+Where did all your money go?
+
+2
+00:00:01,820 --> 00:00:02,580
+Pocket knows.
+
+3
+00:00:03,020 --> 00:00:05,820
+It sorts every purchase, finds the subscriptions you forgot,
+
+4
+00:00:06,140 --> 00:00:08,000
+and shows what's safe to spend today.
+
+5
+00:00:08,460 --> 00:00:09,200
+Try Pocket Free!

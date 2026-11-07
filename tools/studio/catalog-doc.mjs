@@ -41,3 +41,23 @@ for (const fam of cat.families) {
 md += `---\nকোডগুলো \`VARIANTS.md\` আর \`tools/variants.json\`-এও আছে। নতুন ধাঁচ মানে নতুন কোড + প্রমাণ-ভিডিও (CLAUDE.md §0g)।\n`;
 writeFileSync(path.join(WS, "docs", "business", "CATALOG.md"), md);
 console.log(`✓ docs/business/CATALOG.md — ${cat.services.length} services in ${cat.families.length} families`);
+
+// ---- the English one-pager a client gets with a proposal (same data, client wording, USD only)
+const money = (n) => `$${Number(n).toLocaleString("en-US")}`;
+let en = `# Services & starting prices — Talha Zubayer, Motion Design
+
+Every project: fixed price · a plan with a shot table for your approval before production · all aspect ratios and
+captions included · 2 revision rounds · full rights on final payment. Pick a CODE and send the brief
+(CLIENT-BRIEF.md). Prices are starting points for a standard scope; we quote a fixed number within 24 hours.
+
+`;
+for (const fam of cat.families) {
+  const list = cat.services.filter((s) => s.family === fam.id && s.price);
+  if (!list.length) continue;
+  en += `## ${fam.name}\n\n| Code | Service | What you get | Best for | From | Turnaround |\n| --- | --- | --- | --- | --- | --- |\n`;
+  for (const s of list) en += `| **${s.code}** | ${s.name} | ${s.what} | ${s.bestFor || ""} | ${money(s.price.starter)} | ${s.turnaround || "on request"} |\n`;
+  en += "\n";
+}
+en += `---\nSamples: the portfolio page (one concept video per code, all fictional brands). Payment: invoice via Payoneer (card or bank transfer) or Upwork/Contra escrow; 30–50 % to start.\n`;
+writeFileSync(path.join(WS, "docs", "business", "client-kit", "SERVICES-en.md"), en);
+console.log("✓ docs/business/client-kit/SERVICES-en.md (client one-pager)");

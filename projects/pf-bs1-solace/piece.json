@@ -1,0 +1,46 @@
+{
+  "code": "BS1",
+  "name": "Brand System in Motion",
+  "brand": "Solace",
+  "project": "pf-bs1-solace",
+  "aspect": "16x9",
+  "width": 1920,
+  "height": 1080,
+  "duration": 18,
+  "fps": 30,
+  "concept": true,
+  "brief": {
+    "client": "Solace (fictional — concept work): a wellness and sleep brand — app, sleep accessories and wind-down rituals",
+    "goal": "Rebrand reveal for the agency's case study and the client's launch deck: show the whole identity system as one living brand book in 18 s",
+    "audience": "Brand and marketing leads choosing an agency; Solace's own team and partners adopting the new identity",
+    "message": "A calm, considered identity — one crescent mark that scales from an app icon to a tote",
+    "cta": "Solace — rest, designed.",
+    "tone": "Quiet, precise, editorial: generous whitespace, slow confident easing, paper-like layers, one warm accent",
+    "references": [
+      "Pentagram and Collins case-study films",
+      "Behance brand reels"
+    ]
+  },
+  "sound": {
+    "music": {
+      "track": "elegant-premium",
+      "from": 0,
+      "gain": 0.6,
+      "fadeIn": 0.4,
+      "fadeOut": 1.6
+    },
+    "cues": [
+      { "t": 2.84, "sfx": "sparkle", "gain": 0.15 },
+      { "t": 3.84, "sfx": "page-turn", "gain": 0.18 },
+      { "t": 6.84, "sfx": "page-turn", "gain": 0.18 },
+      { "t": 9.44, "sfx": "page-turn", "gain": 0.16 },
+      { "t": 12.84, "sfx": "page-turn", "gain": 0.18 },
+      { "t": 16.06, "sfx": "chime", "gain": 0.3 }
+    ]
+  },
+  "reel": {
+    "from": 0.2,
+    "to": 4.4
+  },
+  "made": "2026-11-07"
+}

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1080, height=1080" />
+  <title>IH1 · Integrations Hub — Nimbus (concept)</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/css/studio.css" />
+  <style>
+    :root {
+      /* Nimbus: deep indigo night, white ink, ONE accent — cyan — for everything that connects. */
+      --bg: #0c0a24;
+      --bg-2: #14113d;
+      --ink: #ffffff;
+      --ink-2: rgba(255, 255, 255, 0.72);
+      --accent: #38e1ff;
+      --cyan: #38e1ff;
+      --font-display: "Geist", "Hind Siliguri", sans-serif;
+      --font-body: "Geist", "Hind Siliguri", sans-serif;
+      --font-mono: "Geist Mono", "Hind Siliguri", monospace;
+    }
+    #root { background: var(--bg); }
+
+    /* background: indigo night with a soft radial light at the hub and a faint dot field */
+    .sky { position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 52%, #241b6b 0%, #15114a 38%, #0c0a24 75%); }
+    .dots2 { position: absolute; inset: 0; background-image: radial-gradient(rgba(170, 160, 255, 0.16) 1.3px, transparent 1.5px); background-size: 30px 30px; -webkit-mask-image: radial-gradient(48% 48% at 50% 52%, #000 25%, transparent 100%); mask-image: radial-gradient(48% 48% at 50% 52%, #000 25%, transparent 100%); }
+
+    .title { position: absolute; left: 0; right: 0; top: 92px; margin: 0; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 66px; line-height: 1.05; letter-spacing: -0.035em; color: var(--ink); }
+    .title em { font-style: normal; color: var(--cyan); }
+
+    /* the network */
+    .core-glow { position: absolute; left: 260px; top: 280px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(closest-side, rgba(56, 225, 255, 0.55), rgba(56, 225, 255, 0.12) 45%, rgba(56, 225, 255, 0) 100%); filter: blur(18px); }
+    .netsvg { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; }
+    .app { position: absolute; left: 0; top: 0; width: 92px; height: 92px; margin: -46px 0 0 -46px; border-radius: 24px; display: grid; place-items: center; color: #f1f3ff; font-size: 42px; border: 1px solid rgba(255, 255, 255, 0.16); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.22) inset, 0 18px 40px -14px rgba(0, 0, 0, 0.7); }
+    .app .icon { stroke-width: 1.9; }
+    .t-blue { background: linear-gradient(160deg, #4258c9, #2b3593); }
+    .t-rose { background: linear-gradient(160deg, #a2457a, #6b2d58); }
+    .t-teal { background: linear-gradient(160deg, #2b8f7e, #1c5f58); }
+    .t-violet { background: linear-gradient(160deg, #6a4fd0, #45329a); }
+    .t-amber { background: linear-gradient(160deg, #b0812c, #74531f); }
+    .t-slate { background: linear-gradient(160deg, #5b6585, #3b4260); }
+    .t-sky { background: linear-gradient(160deg, #3b86c9, #275b8f); }
+    .t-coral { background: linear-gradient(160deg, #b8624a, #7c3f31); }
+    .hub { position: absolute; left: 448px; top: 468px; width: 184px; height: 184px; border-radius: 50%; display: grid; place-items: center; color: var(--cyan); background: radial-gradient(circle at 50% 38%, #2a2470 0%, #17134a 58%, #100d34 100%); border: 1.5px solid rgba(56, 225, 255, 0.5); box-shadow: 0 0 70px rgba(56, 225, 255, 0.35), inset 0 0 34px rgba(56, 225, 255, 0.16); }
+    .nmark { width: 96px; height: 96px; overflow: visible; }
+
+    /* end card */
+    .scrim { position: absolute; left: 90px; top: 150px; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(closest-side, rgba(12, 10, 36, 0.92) 0%, rgba(12, 10, 36, 0.78) 55%, rgba(12, 10, 36, 0) 100%); }
+    .end-col { position: absolute; left: 0; right: 0; top: 410px; display: flex; flex-direction: column; align-items: center; }
+    .count { font-family: var(--font-display); font-weight: 700; font-size: 170px; line-height: 1; letter-spacing: -0.045em; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .count .plus { color: var(--cyan); }
+    .lab { margin-top: 10px; font-family: var(--font-display); font-weight: 500; font-size: 50px; letter-spacing: -0.02em; color: var(--cyan); }
+    .wm { position: absolute; left: 0; right: 0; top: 780px; display: flex; align-items: center; justify-content: center; gap: 20px; font-family: var(--font-display); font-weight: 600; font-size: 64px; letter-spacing: -0.035em; color: var(--ink); }
+    .wm .nmark { width: 66px; height: 66px; color: var(--cyan); }
+    .concept { position: absolute; right: 40px; bottom: 30px; font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.66); }
+  </style>
+  <script src="assets/js/gsap/gsap.min.js"></script>
+  <script src="assets/js/gsap/CustomEase.min.js"></script>
+  <script src="assets/js/gsap/SplitText.min.js"></script>
+  <script src="assets/js/gsap/DrawSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MorphSVGPlugin.min.js"></script>
+  <script src="assets/js/gsap/MotionPathPlugin.min.js"></script>
+  <script src="assets/js/studio.js"></script>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1080" data-duration="12" data-fps="30">
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" data-layout-ignore data-design-ignore>
+      <defs>
+        <!-- the Nimbus mark: a hub dot inside a ring broken by three connected nodes -->
+        <symbol id="nmark" viewBox="0 0 120 120"><circle cx="60" cy="60" r="16" fill="currentColor" /><path d="M74.98 22.91 A40 40 0 0 1 99.61 65.57 M84.63 91.52 A40 40 0 0 1 35.37 91.52 M20.39 65.57 A40 40 0 0 1 45.02 22.91" stroke="currentColor" stroke-width="9" fill="none" stroke-linecap="round" /><circle cx="60" cy="20" r="9.5" fill="currentColor" /><circle cx="94.64" cy="80" r="9.5" fill="currentColor" /><circle cx="25.36" cy="80" r="9.5" fill="currentColor" /></symbol>
+      </defs>
+    </svg>
+
+    <section id="bg" class="scene clip" data-start="0" data-duration="12" data-track-index="0" data-design-ignore data-layout-ignore>
+      <div id="sky" class="sky"></div>
+      <div class="dots2"></div>
+    </section>
+
+    <!-- the hub, two orbits, beams and packets (dims behind the end card from 9.0) -->
+    <section id="net" class="scene clip" data-start="0" data-duration="12" data-track-index="1">
+      <div id="net-in" class="layer" data-layout-allow-overflow>
+        <div id="core-glow" class="core-glow" data-design-ignore data-layout-ignore></div>
+        <svg class="netsvg" viewBox="0 0 1080 1080" data-design-ignore data-layout-ignore>
+          <circle id="ring-in" cx="540" cy="560" r="200" fill="none" stroke="rgba(56,225,255,0.2)" stroke-width="1.5" transform="rotate(-90 540 560)" />
+          <circle id="ring-out" cx="540" cy="560" r="330" fill="none" stroke="rgba(56,225,255,0.15)" stroke-width="1.5" transform="rotate(90 540 560)" />
+          <g id="beams" stroke="rgba(56,225,255,0.5)" stroke-width="2" stroke-linecap="round"></g>
+          <defs><filter id="pglow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs>
+          <g id="pkts" filter="url(#pglow)"></g>
+          <circle id="hub-burst" cx="540" cy="560" r="100" fill="none" stroke="#38e1ff" stroke-width="2.5" opacity="0" />
+          <circle id="hub-ring" cx="540" cy="560" r="113" fill="none" stroke="#38e1ff" stroke-width="2.5" stroke-linecap="round" transform="rotate(-90 540 560)" />
+          <circle id="hub-dash" cx="540" cy="560" r="128" fill="none" stroke="rgba(56,225,255,0.35)" stroke-width="1.5" stroke-dasharray="3 9" />
+        </svg>
+        <div id="app0" class="app t-blue"><svg class="icon" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg></div>
+        <div id="app1" class="app t-teal"><svg class="icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg></div>
+        <div id="app2" class="app t-rose"><svg class="icon" viewBox="0 0 24 24"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /></svg></div>
+        <div id="app3" class="app t-violet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></svg></div>
+        <div id="app4" class="app t-amber"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /><path d="M6 14h2" /></svg></div>
+        <div id="app5" class="app t-slate"><svg class="icon" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></div>
+        <div id="app6" class="app t-sky"><svg class="icon" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg></div>
+        <div id="app7" class="app t-coral"><svg class="icon" viewBox="0 0 24 24"><path d="M15 6a9 9 0 0 0-9 9V3" /><circle cx="18" cy="6" r="3" /><circle cx="6" cy="18" r="3" /></svg></div>
+        <div id="hub" class="hub"><svg id="hub-mark" class="nmark" viewBox="0 0 120 120" data-design-ignore><use href="#nmark" /></svg></div>
+      </div>
+    </section>
+
+    <!-- headline, all film long -->
+    <section id="ttl" class="scene clip" data-start="0" data-duration="12" data-track-index="2">
+      <h1 id="title" class="title">Connect <em>everything.</em></h1>
+    </section>
+
+    <!-- 8.9–12 · the count, the name -->
+    <section id="end" class="scene clip" data-start="8.9" data-duration="3.1" data-track-index="3">
+      <div id="scrim" class="scrim" data-design-ignore data-layout-ignore></div>
+      <div class="end-col">
+        <div id="count" class="count"><span id="cnt">0</span><span id="plus" class="plus">+</span></div>
+        <div id="lab" class="lab">integrations</div>
+      </div>
+      <div id="wm" class="wm"><svg class="nmark" viewBox="0 0 120 120" data-design-ignore><use href="#nmark" /></svg><span>Nimbus</span></div>
+      <div id="concept" class="concept" data-design-ignore>Concept work · fictional brand</div>
+    </section>
+
+    <!-- studio:audio:start -->
+    <audio id="bgm" src="assets/music/studio-pulse.mp3" data-start="0" data-duration="12" data-media-start="2.09" data-track-index="10" data-volume="0.55" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.2,"v":1},{"t":10.6,"v":1},{"t":12,"v":0}]}]}'></audio>
+    <audio id="sfx-01-whoosh" src="assets/sfx/whoosh.mp3" data-start="0.124" data-duration="0.57" data-track-index="20" data-volume="0.18"></audio>
+    <audio id="sfx-02-click-soft" src="assets/sfx/click-soft.mp3" data-start="1.97" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-03-click-soft" src="assets/sfx/click-soft.mp3" data-start="2.49" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-04-click-soft" src="assets/sfx/click-soft.mp3" data-start="2.97" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-05-click-soft" src="assets/sfx/click-soft.mp3" data-start="3.47" data-duration="0.24" data-track-index="20" data-volume="0.22"></audio>
+    <audio id="sfx-06-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="3.959" data-duration="0.49" data-track-index="20" data-volume="0.14"></audio>
+    <audio id="sfx-07-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="4.289" data-duration="0.49" data-track-index="21" data-volume="0.12"></audio>
+    <audio id="sfx-08-whoosh-short" src="assets/sfx/whoosh-short.mp3" data-start="4.619" data-duration="0.49" data-track-index="20" data-volume="0.12"></audio>
+    <audio id="sfx-09-ping" src="assets/sfx/ping.mp3" data-start="6.176" data-duration="1.32" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-10-ping" src="assets/sfx/ping.mp3" data-start="6.673" data-duration="1.32" data-track-index="21" data-volume="0.15"></audio>
+    <audio id="sfx-11-ping" src="assets/sfx/ping.mp3" data-start="7.171" data-duration="1.32" data-track-index="22" data-volume="0.15"></audio>
+    <audio id="sfx-12-ping" src="assets/sfx/ping.mp3" data-start="7.668" data-duration="1.32" data-track-index="20" data-volume="0.15"></audio>
+    <audio id="sfx-13-ping" src="assets/sfx/ping.mp3" data-start="8.166" data-duration="1.32" data-track-index="21" data-volume="0.15"></audio>
+    <audio id="sfx-14-ping" src="assets/sfx/ping.mp3" data-start="8.663" data-duration="1.32" data-track-index="22" data-volume="0.15"></audio>
+    <audio id="sfx-15-typing" src="assets/sfx/typing.mp3" data-start="8.583" data-duration="0.85" data-track-index="23" data-volume="0.16" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":0.77,"v":1},{"t":0.85,"v":0}]}]}'></audio>
+    <audio id="sfx-16-impact-bass-2" src="assets/sfx/impact-bass-2.mp3" data-start="9.957" data-duration="2" data-track-index="20" data-volume="0.35" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":1},{"t":1.92,"v":1},{"t":2,"v":0}]}]}'></audio>
+    <!-- studio:audio:end -->
+  </div>
+  <script>
+    document.fonts.ready.then(() => {
+      const S = Studio.init({ id: "main" });
+      const tl = S.tl, g = gsap;
+      const CX = 540, CY = 560, HUB_R = 98;
+      const KICK = (k) => 6.0 + 0.4975 * k; // studio-pulse kicks after the drop (measured: 8.09 s + 0.4975 s · k, music from 2.09)
+
+      // ---- 0–2 · the hub ignites: glow, the hub disc, its ring draws on the first kick (0.47), orbits trace in
+      tl.fromTo("#core-glow", { opacity: 0, scale: 0.4 }, { opacity: 0.7, scale: 1, duration: 1.1, ease: "settle" }, 0.12);
+      tl.fromTo("#hub", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.9, ease: "springSoft" }, 0.18);
+      tl.fromTo("#hub-mark", { opacity: 0, scale: 0.7, rotation: -40, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, rotation: 0, duration: 1.0, ease: "settle" }, 0.32);
+      S.draw("#hub-ring", 0.47, { dur: 0.95, ease: "settle" });
+      tl.fromTo("#hub-dash", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "enter" }, 0.9);
+      S.draw("#ring-in", 0.95, { dur: 1.1, ease: "settle" });
+      S.draw("#ring-out", 1.2, { dur: 1.2, ease: "settle" });
+      S.words("#title", 0.25, { y: 30, blur: 10, dur: 0.6, ease: "settle", stagger: S.f(3) });
+      const dash = S.$("#hub-dash");
+      dash.style.transformBox = "view-box"; dash.style.transformOrigin = "540px 560px";
+      S.everyFrame((now) => { dash.style.rotate = (now * 9).toFixed(2) + "deg"; });
+
+      // ---- 2–6 · eight apps fly in pairs to two counter-rotating orbits (angle = base + ω·t, icons stay upright)
+      const deg = Math.PI / 180;
+      const apps = [
+        { id: "#app0", R: 200, a0: -90, w: 0.11, at: 1.85 }, { id: "#app1", R: 200, a0: 90, w: 0.11, at: 1.85 },
+        { id: "#app2", R: 330, a0: -45, w: -0.075, at: 2.37 }, { id: "#app3", R: 330, a0: 135, w: -0.075, at: 2.37 },
+        { id: "#app4", R: 200, a0: 0, w: 0.11, at: 2.85 }, { id: "#app5", R: 200, a0: 180, w: 0.11, at: 2.85 },
+        { id: "#app6", R: 330, a0: 45, w: -0.075, at: 3.35 }, { id: "#app7", R: 330, a0: 225, w: -0.075, at: 3.35 },
+      ].map((a) => Object.assign(a, { el: S.$(a.id) }));
+      const eSettle = g.parseEase("settle"), eMove = g.parseEase("move"), eGlide = g.parseEase("glide");
+      const posOf = (a, now) => {
+        const u = S.clamp((now - a.at) / 0.8, 0, 1), r = a.R + (880 - a.R) * (1 - eSettle(u));
+        const th = a.a0 * deg + a.w * now;
+        return [CX + r * Math.cos(th), CY + r * Math.sin(th), u];
+      };
+      S.everyFrame((now) => {
+        for (const a of apps) {
+          const [x, y, u] = posOf(a, now);
+          a.el.style.opacity = S.clamp((now - a.at) / 0.18, 0, 1).toFixed(3);
+          a.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${(0.7 + 0.3 * eSettle(u)).toFixed(3)})`;
+        }
+      });
+
+      // beams: each app → hub edge, drawn out from the app (per frame, because the apps keep moving)
+      const NS = "http://www.w3.org/2000/svg", beams = S.$("#beams");
+      const order = [0, 1, 2, 3, 4, 5, 6, 7];
+      apps.forEach((a, i) => { a.line = document.createElementNS(NS, "line"); a.bt = 3.97 + order[i] * 0.11; beams.appendChild(a.line); });
+      const edge = (x, y) => { const dx = x - CX, dy = y - CY, d = Math.hypot(dx, dy) || 1; return [CX + (dx / d) * HUB_R, CY + (dy / d) * HUB_R, d]; };
+      S.everyFrame((now) => {
+        for (const a of apps) {
+          const [x, y] = posOf(a, now), [ex, ey] = edge(x, y);
+          const p = eSettle(S.clamp((now - a.bt) / 0.5, 0, 1));
+          const k = 46 / Math.hypot(ex - x, ey - y); // start at the icon's edge, not its centre
+          const x1 = x + (ex - x) * k, y1 = y + (ey - y) * k;
+          a.line.setAttribute("x1", x1.toFixed(1)); a.line.setAttribute("y1", y1.toFixed(1));
+          a.line.setAttribute("x2", (x1 + (ex - x1) * p).toFixed(1)); a.line.setAttribute("y2", (y1 + (ey - y1) * p).toFixed(1));
+          a.line.setAttribute("opacity", p > 0 ? "1" : "0");
+        }
+      });
+      // the riser before the drop: the core light gathers
+      tl.to("#core-glow", { opacity: 1, scale: 1.18, duration: 0.75, ease: "glide" }, 5.25);
+      tl.to("#core-glow", { opacity: 0.78, scale: 1, duration: 0.8, ease: "settle" }, 6.0);
+
+      // ---- 6–12 · packets ride the beams and land on every kick; the hub pulses on each arrival
+      const pk = S.$("#pkts"), runs = [], arrivals = [];
+      for (let k = 0; k < 11; k++) {
+        const t0 = KICK(k), t1 = KICK(k + 1);
+        runs.push({ a: apps[(2 * k) % 8], t0, t1, dir: 1 }, { a: apps[(2 * k + 5) % 8], t0, t1, dir: 1 });
+        if (k % 2 === 1) runs.push({ a: apps[(2 * k + 3) % 8], t0, t1, dir: -1 }); // and data flowing back out
+        arrivals.push(t1);
+      }
+      runs.forEach((r) => {
+        r.tail = document.createElementNS(NS, "circle"); r.head = document.createElementNS(NS, "circle");
+        r.tail.setAttribute("fill", "rgba(56,225,255,0.35)"); r.head.setAttribute("fill", r.dir > 0 ? "#bff5ff" : "#38e1ff");
+        pk.appendChild(r.tail); pk.appendChild(r.head);
+      });
+      S.everyFrame((now) => {
+        for (const r of runs) {
+          const u = (now - r.t0) / (r.t1 - r.t0);
+          if (u < 0 || u > 1) { r.head.setAttribute("opacity", "0"); r.tail.setAttribute("opacity", "0"); continue; }
+          const [x, y] = posOf(r.a, now), [ex, ey] = edge(x, y);
+          const k = 46 / Math.hypot(ex - x, ey - y), x1 = x + (ex - x) * k, y1 = y + (ey - y) * k;
+          const f = (v) => (r.dir > 0 ? eGlide(v) : 1 - eGlide(v));
+          const ph = f(S.clamp(u, 0, 1)), pt = f(S.clamp(u - 0.035, 0, 1)); // tail hugs the head: one comet, not two dots
+          r.head.setAttribute("cx", (x1 + (ex - x1) * ph).toFixed(1)); r.head.setAttribute("cy", (y1 + (ey - y1) * ph).toFixed(1));
+          r.tail.setAttribute("cx", (x1 + (ex - x1) * pt).toFixed(1)); r.tail.setAttribute("cy", (y1 + (ey - y1) * pt).toFixed(1));
+          const fade = Math.min(1, u * 8, (1 - u) * 10);
+          r.head.setAttribute("r", r.dir > 0 ? "8.5" : "6.5"); r.tail.setAttribute("r", r.dir > 0 ? "13" : "10");
+          r.head.setAttribute("opacity", fade.toFixed(2)); r.tail.setAttribute("opacity", (fade * 0.8).toFixed(2));
+        }
+        // hub pulse + burst ring on each arrival (seek-safe: only the latest arrival within its window counts)
+        let bump = 0, ring = -1;
+        for (const A of arrivals) { const d = now - A; if (d >= 0 && d < 0.55) { bump = Math.max(bump, Math.exp(-d / 0.11)); ring = d / 0.55; } }
+        S.$("#hub").style.scale = (1 + 0.075 * bump).toFixed(4);
+        const hb = S.$("#hub-burst");
+        if (ring >= 0) { hb.setAttribute("r", (100 + 80 * eSettle(ring)).toFixed(1)); hb.setAttribute("opacity", (0.7 * (1 - ring)).toFixed(3)); }
+        else hb.setAttribute("opacity", "0");
+      });
+
+      // ---- 9–12 · the network steps back; the count rises out of the hub; the name lands on the kick (≈ 9.98)
+      tl.to("#net-in", { opacity: 0.26, filter: "blur(1.5px)", duration: 0.6, ease: "glide" }, 8.98);
+      tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "glide" }, 8.98);
+      tl.fromTo("#count", { opacity: 0, scale: 0.72, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "settle" }, 8.99);
+      S.count("#cnt", 9.02, 0, 200, { dur: 0.85, ease: "move" });
+      tl.fromTo("#plus", { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.3, ease: "enter" }, 9.84);
+      tl.fromTo("#lab", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "enter" }, 9.15);
+      tl.fromTo("#wm", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.7, ease: "settle" }, 9.98);
+      tl.fromTo("#concept", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "enter" }, 10.35);
+
+      S.grain({ opacity: 0.055 });
+      S.vignette({ strength: 0.5 });
+      window.__timelines["main"] = S.done().tl; // keep it LAST (lint wants the registration in the page)
+    });
+  </script>
+</body>
+</html>

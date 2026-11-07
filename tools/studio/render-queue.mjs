@@ -25,7 +25,12 @@ if (!projects.length) { console.log("Usage: node tools/studio/render-queue.mjs <
 const OUT = path.join(WS, "renders", "portfolio");
 mkdirSync(OUT, { recursive: true });
 const logFile = path.join(OUT, "queue.json");
-const log = existsSync(logFile) ? JSON.parse(readFileSync(logFile, "utf8")) : [];
+const append = (entry) => { // several queues can run at once (they wait for the render slot): re-read, then append
+  let cur = [];
+  try { cur = existsSync(logFile) ? JSON.parse(readFileSync(logFile, "utf8")) : []; } catch {}
+  cur.push(entry);
+  writeFileSync(logFile, JSON.stringify(cur, null, 1));
+};
 const quality = opt("quality", "high");
 const mtime = (f) => (existsSync(f) ? statSync(f).mtimeMs : 0);
 
@@ -42,9 +47,15 @@ for (const p of projects) {
   if (existsSync(path.join(dir, "piece.json"))) {
     const s = spawnSync(process.execPath, [path.join(import.meta.dirname, "sound.mjs"), dir], { encoding: "utf8" });
     process.stdout.write(s.stdout || ""); process.stderr.write(s.stderr || "");
-    if (s.status !== 0) { log.push({ project: p, ok: false, step: "sound", when: new Date().toISOString() }); writeFileSync(logFile, JSON.stringify(log, null, 1)); continue; }
+    if (s.status !== 0) { append({ project: p, ok: false, step: "sound", when: new Date().toISOString() }); continue; }
   }
-  const r = spawnSync(process.execPath, [path.join(import.meta.dirname, "slot.mjs"), "render", "1", "--", process.execPath, path.join(WS, "tools", "finish.mjs"), dir, `--quality=${quality}`, "--release"], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+  // The renderer's temp files and its free-space check follow TEMP/TMP. C: on this laptop can drop under 1 GB while
+  // several agents work (IA1 failed "Low disk space" at 0.5 GB free, 2026-11-07), so renders use a temp folder on the
+  // workspace drive instead.
+  const tmp = path.join(WS, ".cache", "tmp");
+  mkdirSync(tmp, { recursive: true });
+  const env = { ...process.env, TEMP: tmp, TMP: tmp, TMPDIR: tmp };
+  const r = spawnSync(process.execPath, [path.join(import.meta.dirname, "slot.mjs"), "render", "1", "--", process.execPath, path.join(WS, "tools", "finish.mjs"), dir, `--quality=${quality}`, "--release"], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024, env });
   const out = (r.stdout || "") + (r.stderr || "");
   const m = out.match(/✓ DONE[^\n]*\n\s*(.+renders[\\/][^\r\n]+)/);
   const folder = m ? m[1].trim() : null;
@@ -62,7 +73,6 @@ for (const p of projects) {
     entry.tail = out.slice(-1500);
     console.error(`✗ ${p} failed after ${entry.seconds} s\n${out.slice(-1200)}`);
   }
-  log.push(entry);
-  writeFileSync(logFile, JSON.stringify(log, null, 1));
+  append(entry);
 }
 console.log("queue done");
