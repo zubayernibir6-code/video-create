@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=1920, height=1080" />
-  <title>AI1 · AI Agent Demo — Operator (concept)</title>
+  <title>AI1 · AI Agent Demo — Deftly (concept)</title>
   <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <link rel="stylesheet" href="assets/css/studio.css" />
   <style>
     @font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 100 900; src: url("assets/fonts/GeistMono-Variable.ttf") format("truetype"); font-display: block; }
     :root {
-      /* Operator: a warm paper desk, white app windows, ink near-black, ONE electric violet (the agent). */
+      /* Deftly: a warm paper desk, white app windows, ink near-black, ONE electric violet (the agent). */
       --bg: #f3f1ec;
       --bg-2: #ffffff;
       --bg-3: #faf8f4;
@@ -188,13 +188,13 @@
           <div class="mbody" id="mbody"><span class="ml" id="ml1"></span><span class="ml" id="ml2"></span></div>
           <div class="mfoot">
             <div class="send" id="send">Send<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></svg><span class="fx" data-layout-ignore data-design-ignore></span></div>
-            <div class="by"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /></svg>Drafted by Operator</div>
+            <div class="by"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /></svg>Drafted by Deftly</div>
           </div>
         </div>
 
         <!-- status rail -->
         <div class="rail" id="rail">
-          <div class="r-h"><span class="live" id="live"></span><span class="nm">Operator</span><span class="st" id="r-st">Working</span></div>
+          <div class="r-h"><span class="live" id="live"></span><span class="nm">Deftly</span><span class="st" id="r-st">Working</span></div>
           <div class="r-div"></div>
           <div class="step" id="st1"><svg class="ind" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="#e6e0f7" stroke-width="3" /><circle class="spin" cx="22" cy="22" r="18" fill="none" stroke="#6d4aff" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="34 200" /><circle class="disc" cx="22" cy="22" r="20" fill="#6d4aff" /><path class="tick" d="M13.5 22.5 L19.5 28.5 L30.5 16.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="lbl">Reading calendar</span><span class="tm">1.2s</span></div>
           <div class="step" id="st2"><svg class="ind" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="#e6e0f7" stroke-width="3" /><circle class="spin" cx="22" cy="22" r="18" fill="none" stroke="#6d4aff" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="34 200" /><circle class="disc" cx="22" cy="22" r="20" fill="#6d4aff" /><path class="tick" d="M13.5 22.5 L19.5 28.5 L30.5 16.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="lbl">Moving event</span><span class="tm">2.6s</span></div>
@@ -212,7 +212,7 @@
         <!-- the prompt bar (big in the middle, then it becomes the task header at the top) -->
         <div class="pbar" id="pbar">
           <div class="spk"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /><path d="M20 2v4" /><path d="M22 4h-4" /><circle cx="4" cy="20" r="2" /></svg></div>
-          <div class="field"><div class="ph" id="p-ph">Ask Operator to do anything…</div><div class="typed" id="p-typed"></div></div>
+          <div class="field"><div class="ph" id="p-ph">Ask Deftly to do anything…</div><div class="typed" id="p-typed"></div></div>
           <div class="kbd" id="kbd"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4v7a4 4 0 0 1-4 4H4" /><path d="m9 10-5 5 5 5" /></svg></div>
         </div>
       </div>
@@ -245,7 +245,7 @@
               <path id="mk-arrow" d="M47 32 L47 94 L62.5 78.8 L73 102.5 L83.7 98 L73.5 74.9 L95 74.9 Z" fill="#ffffff" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" />
               <path id="mk-spark" d="M100 22 L103.2 30.8 L112 34 L103.2 37.2 L100 46 L96.8 37.2 L88 34 L96.8 30.8 Z" fill="#ffffff" />
             </svg></div>
-            <div id="lk-word" class="wordmark">Operator</div>
+            <div id="lk-word" class="wordmark">Deftly</div>
           </div>
           <div id="lk-tag" class="lk-tag">Work that does itself.</div>
           <div id="lk-cta" class="btn cta-v">Join the waitlist<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg><span class="fx" data-layout-ignore data-design-ignore></span></div>
@@ -368,7 +368,7 @@
       const c2 = S.cursor({ color: "#6d4aff", ring: "#6d4aff", id: "agent-end", path: [P(16.0, 1500, 880), P(16.44, mkX + 47, mkY + 32)], clicks: [], visible: [15.96, 16.64] });
       // name pill
       const pill = document.createElement("div");
-      pill.className = "agent-pill"; pill.innerHTML = "<b></b>Operator";
+      pill.className = "agent-pill"; pill.innerHTML = "<b></b>Deftly";
       pill.setAttribute("data-layout-ignore", ""); pill.setAttribute("data-design-ignore", "");
       root.appendChild(pill);
       const lag = S.f(2);

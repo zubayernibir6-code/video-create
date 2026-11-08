@@ -42,7 +42,7 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 | `slot.mjs` | machine-wide limit on heavy jobs (chrome 2, render 1) for parallel agents |
 | `render-queue.mjs` | serial renders via finish.mjs --release → renders/portfolio, queue.json |
 | `icon.mjs` | Lucide icons as inline SVG (`--find word`) |
-| `showreel.mjs` | the studio showreel from rendered pieces, cut on strong beats, each clip labelled with its code |
+| `showreel.mjs` | the studio showreel from rendered pieces, cut on the kick drum, each clip labelled with its code; clips are CUT to their windows (23 full masters = 506 MB made the page check fail with ERR_CONNECTION_RESET); piece.json `reel.label` = top-left / top-right moves a label off the piece's own text (DS1); `--avg`/`--outro` keep it ≤ 60 s (no preflight needed); a whole-reel "Concept work · all brands fictional" label |
 | `portfolio-page.mjs` | static portfolio site (web copies + posters) in renders/portfolio/site |
 | `catalog-doc.mjs` | docs/business/CATALOG.md from catalog.json |
 
@@ -84,9 +84,20 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
   real domain (use `<name>.example`) or an install command naming a package (`curl -fsSL <brand>.example/install | sh`,
   or a made-up name listed in piece.json `honesty.checked` after `npm view` 404s); client pieces only warn. It warns
   when piece.json has no `nameCheck`: search "<brand> <industry>" BEFORE building — CD1 "Kernel" typed
-  `kernel deploy`, the real CLI of Kernel (onkernel.com), and was renamed "Kerf" (folder pf-cd1-kerf). Known
-  same-kind overlaps in the first batch, left for Talha to decide: AI1 Operator (OpenAI Operator), CL1 Forge
-  (Laravel Forge), HX1 Kindred Health (Kindred Healthcare; its voice-over says the name), MP1 Cargoline (CargoLine).
+  `kernel deploy`, the real CLI of Kernel (onkernel.com), and was renamed "Kerf" (folder pf-cd1-kerf). On Talha's OK
+  the other same-kind overlaps were renamed too: AI1 Operator → **Deftly**, CL1 Forge → **Ingot** (its preview URL is
+  now `checkout-a41c.ingot.example`), HX1 Kindred Health → **Hither**, MP1 Cargoline → **Portolan**. Plain compounds
+  kept matching real firms of the same kind (Tendwell ~ Tend, Nearwell ~ Northwell, Tellwell ~ TeleWell,
+  Tidelane ~ TideLine Shipping, Bluewake ~ Blue Wave Freight, Quayline = a shipping TMS): coin a less common word
+  and search it before building. Old renders sit in `renders/portfolio/_old-names/`.
+- **Changing a word inside a finished voice-over** (a client renames the product — HX1, 2026-11-08): re-make only the
+  sentences that say it (`tools/clone/gemini.mjs say` with a blank line between them → one block each, same voice
+  and style tag), find the original sentence edges with `silencedetect=noise=-38dB:d=0.18`, mute the old spans
+  inside the silences (`volume=0:enable='between(t,a,b)+…'`), `adelay` each new line to the old onset, `atempo` ≤ 1.07
+  so it ends ≥ 0.3 s before the next sentence, match each span's loudness (ebur128 on the old span; the raw Gemini
+  lines were 3–4.5 dB quieter) and cap peaks (`alimiter=limit=0.84`: +gain clipped at 0.0 dBFS), `amix normalize=0`.
+  Then re-transcribe (`transcribe.mjs --lang=en`; it still drops "Here's how it works." — check against script.txt),
+  update PLAN.md's measured line starts and nudge the beats that follow those words (HX1: one tagline time).
 - `check.mjs --static` runs only the static rules (no Chrome, under a second) — use it while editing.
 - 3D render time varies a lot: GH1 (10 s, three.js glass) took 918 s on 2026-11-07 while six agents shared the
   laptop, and 109 s on 2026-11-08 with only the render queue running (hyperframes reported `browserGpuMode →

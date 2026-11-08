@@ -1,4 +1,4 @@
-# HX1 · How-It-Works Explainer — Kindred Health (concept)
+# HX1 · How-It-Works Explainer — Hither (concept)
 
 ফরম্যাট: 16:9
 দৈর্ঘ্য: 33 সেকেন্ড
@@ -11,7 +11,7 @@
 
 ## লক্ষ্য
 
-প্রথমবার আসা দর্শক ৩০ সেকেন্ডে বুঝবেন Kindred-এ ডাক্তার দেখানোর তিনটা ধাপ (বলুন → মিলিয়ে দিই → ভিডিওতে চিকিৎসা), তথ্য গোপন আর এক জায়গায় থাকে — তারপর "Get the app" চাপবেন।
+প্রথমবার আসা দর্শক ৩০ সেকেন্ডে বুঝবেন Hither-এ ডাক্তার দেখানোর তিনটা ধাপ (বলুন → মিলিয়ে দিই → ভিডিওতে চিকিৎসা), তথ্য গোপন আর এক জায়গায় থাকে — তারপর "Get the app" চাপবেন।
 
 ## হুক (প্রথম ২ সেকেন্ড)
 
@@ -22,13 +22,13 @@
 ভয়েস আগেই রেকর্ড করা; বন্ধনীতে লাইনের মাপা শুরু (ভিডিওর সময় = ভয়েসের সময় + ০.৩ সে.)। ASR "Here’s how it works." লাইনটা বাদ দিয়েছিল; আলাদা ASR আর শব্দের শক্তি মেপে ০:০৮.২-এ পাওয়া গেছে।
 
 1. (0:00.6) Booking a doctor shouldn’t take a week of phone calls.
-2. (0:03.9) With Kindred, you see a real doctor in minutes, from wherever you are.
+2. (0:03.8) With Hither, you see a real doctor in minutes, from wherever you are.
 3. (0:08.2) Here’s how it works.
 4. (0:09.4) One. Tell us what’s going on, in your own words.
-5. (0:12.6) Two. Kindred matches you with the right clinician, usually in under ten minutes.
+5. (0:12.5) Two. Hither matches you with the right clinician, usually in under ten minutes.
 6. (0:17.7) Three. Talk by video, get your prescription sent to your pharmacy, and follow up any time in chat.
 7. (0:24.0) Your records stay private, and your care stays in one place.
-8. (0:27.6) Kindred. Care that comes to you.
+8. (0:27.4) Hither. Care that comes to you.
 
 ## শট টেবিল
 
@@ -36,7 +36,7 @@
 | --- | --- | --- | --- |
 | 0–2 | মিন্ট পটভূমিতে সাদা ক্যালেন্ডার কার্ড উঠে আসে; শিরোনাম শব্দে শব্দে ভয়েসের সাথে; কল-চিপ জমতে শুরু করে | Booking a doctor shouldn’t take a week. · This week · No appointment yet | `whoosh-short`, `pop` ×৩, ভয়েস 1 |
 | 2–3.8 | পাঁচ দিনের কলামে ১৫টা কল-চিপ জমে সপ্তাহ ভরে যায়; "calls" শেষে কালো মোটা দাগে ক্যালেন্ডার কাটা, রং ফিকে | On hold · Busy · Call back · Voicemail · No slots · Try again | `pop` ×২, `whoosh-short` |
-| 3.8–5.5 | ক্যালেন্ডার নেমে যায়; সবুজ চ্যাট-বাবল লোগো (সাদা প্লাস) লাফিয়ে বসে, আলোর রিং ছড়ায়, "Kindred" অক্ষর উঠে আসে; লোগো বাঁয়ে সরে, ডানে ফোন উঠে আসে | Kindred | `whoosh`, `impact-bass-2`, `sparkle`, `whoosh-short`, ভয়েস 2 |
+| 3.8–5.5 | ক্যালেন্ডার নেমে যায়; সবুজ চ্যাট-বাবল লোগো (সাদা প্লাস) লাফিয়ে বসে, আলোর রিং ছড়ায়, "Hither" অক্ষর উঠে আসে; লোগো বাঁয়ে সরে, ডানে ফোন উঠে আসে | Hither | `whoosh`, `impact-bass-2`, `sparkle`, `whoosh-short`, ভয়েস 2 |
 | 5.5–8.2 | ফোনে বিমূর্ত ডাক্তার (মুখ নেই), "Doctor in 8 min", প্রগ্রেস বার ভরে; "wherever"-এ ডানে তিনটা চিপ | YOUR VISIT · Doctor in 8 min · Join visit · At home · At work · On the go | `ping`, `click-soft` ×৩ |
 | 8.2–9.4 | "HOW IT WORKS" আর আইকনসহ ১-২-৩ তিনটা সাদা টাইল | HOW IT WORKS | `whoosh`, `pop` ×৩, ভয়েস 3 |
 | 9.4–11.6 | টাইল ১-এর সংখ্যাটা বড় হয়ে বাঁ কলামে উড়ে যায় (অধ্যায়ের নোঙর); "Tell us"; ডানে চ্যাট উইন্ডো, কম্পোজারে লক্ষণ টাইপ হয় | Tell us · what’s going on, in your own words. · New visit · Care team online · Hi! What’s going on today? · Sore throat and a fever since Tuesday. | `whoosh-short`, `pop`, `typing`, ভয়েস 4 |
@@ -48,7 +48,7 @@
 | 21.4–23.7 | ফলো-আপ চ্যাট: ডাক্তারের প্রশ্ন, রোগীর উত্তর | How are you feeling today? · Much better, thanks! | `pop` ×২ |
 | 23.7–25.3 | রেকর্ড কার্ড উঠে আসে; সবুজ ঢাল উপর থেকে ভাঁজ খুলে কার্ড ঢেকে দেয়, তালা বন্ধ হয় | Private by design. · Your records · Updated today · Visit notes · Prescriptions · Messages · Video visits | `whoosh`, `whoosh-short`, `click`, ভয়েস 7 |
 | 25.3–27.4 | ঢাল ছোট হয়ে কার্ডের মাথায় ব্যাজ হয়ে বসে; চার সারিতে একে একে সবুজ টিক | All in one place. | `click-soft` ×৩ |
-| 27.4–29.4 | শেষ পর্দা: লোগো লাফিয়ে বসে, "Kindred", তারপর ট্যাগলাইন | Kindred · Care that comes to you. | `whoosh`, `sparkle`, ভয়েস 8 |
+| 27.4–29.4 | শেষ পর্দা: লোগো লাফিয়ে বসে, "Hither", তারপর ট্যাগলাইন | Hither · Care that comes to you. | `whoosh`, `sparkle`, ভয়েস 8 |
 | 29.4–31 | "Get the app" বোতাম আসে, আলোর রেখা বয়ে যায় | Get the app · Concept work · fictional brand | `pop`, `chime` |
 | 31–33 | দম: শেষ পর্দা স্থির, সবুজ আভা শ্বাস নেয়, মিউজিক মিলিয়ে যায় | — | মিউজিক |
 

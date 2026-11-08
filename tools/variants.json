@@ -415,7 +415,7 @@
       "builds": "\"What's new in v3.0\" — 4–6 updates in quick cuts: version stamp, icon + one line + a tiny UI snippet per update, a closing lockup.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "renders/portfolio/CL1_Forge.mp4 (portfolio sample, concept work for the fictional brand Forge; project projects/pf-cl1-forge; finish.mjs QC in renders/pf-cl1-forge/)"
+      "proof": "renders/portfolio/CL1_Ingot.mp4 (portfolio sample, concept work for the fictional brand Ingot; project projects/pf-cl1-ingot; finish.mjs QC in renders/pf-cl1-ingot/)"
     },
     {
       "id": "IH1",
@@ -437,7 +437,7 @@
       "builds": "An AI agent at work: a prompt is typed, a labelled agent cursor clicks through a clean UI, status chips tick from 'working' to 'done', the result lands. The 2026 launch format for AI products.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "renders/portfolio/AI1_Operator.mp4 (portfolio sample, concept work for the fictional brand Operator; project projects/pf-ai1-operator; finish.mjs QC in renders/pf-ai1-operator/)"
+      "proof": "renders/portfolio/AI1_Deftly.mp4 (portfolio sample, concept work for the fictional brand Deftly; project projects/pf-ai1-deftly; finish.mjs QC in renders/pf-ai1-deftly/)"
     },
     {
       "id": "HX1",
@@ -448,7 +448,7 @@
       "builds": "A voiced 45–90 s explainer: the problem, the turn, three simple steps with friendly flat illustration and icons, proof, CTA. Script, voice-over and music included.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "renders/portfolio/HX1_KindredHealth.mp4 (portfolio sample, concept work for the fictional brand Kindred Health; project projects/pf-hx1-kindred; finish.mjs QC in renders/pf-hx1-kindred/)"
+      "proof": "renders/portfolio/HX1_Hither.mp4 (portfolio sample, concept work for the fictional brand Hither; project projects/pf-hx1-hither; finish.mjs QC in renders/pf-hx1-hither/)"
     },
     {
       "id": "WF1",
@@ -503,18 +503,18 @@
       "builds": "A world map: hubs light up, routes draw as arcs, a counter runs, the camera pushes into a region — for reach, logistics and expansion stories.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "renders/portfolio/MP1_Cargoline.mp4 (portfolio sample, concept work for the fictional brand Cargoline; project projects/pf-mp1-cargoline; finish.mjs QC in renders/pf-mp1-cargoline/)"
+      "proof": "renders/portfolio/MP1_Portolan.mp4 (portfolio sample, concept work for the fictional brand Portolan; project projects/pf-mp1-portolan; finish.mjs QC in renders/pf-mp1-portolan/)"
     },
     {
       "id": "NW1",
       "bn": "সংবাদ-ধাঁচের ব্যাখ্যা",
       "en": "Editorial Explainer",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed; a voice-over (AI or the client's)",
       "builds": "Vox-style: paper textures, headline cards, highlighter strokes over key lines, a document zoom, a hand-drawn arrow, a voiced narration on a real topic.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs)",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/NW1_TheBrief.mp4 (portfolio sample, concept work for the fictional brand The Brief; project projects/pf-nw1-thebrief; finish.mjs QC in renders/pf-nw1-thebrief/)"
     },
     {
       "id": "LG1",
@@ -586,12 +586,12 @@
       "id": "CD1",
       "bn": "ডেভেলপার টুলের লঞ্চ",
       "en": "Dev-Tool Launch (3D code)",
-      "status": "planned",
+      "status": "beta",
       "needs": "a brief (docs/business/client-kit/CLIENT-BRIEF.md): brand colours/fonts/logo, the message, screenshots or data as needed",
       "builds": "Syntax-highlighted code on a lit 3D slab rotating into a readable rest, a terminal run, the result — for developer products.",
       "engine": "tools/studio (new-piece.mjs → studio.js page → sound.mjs → check.mjs → render-queue.mjs) + three.js",
       "skill": "motion-studio",
-      "proof": "not rendered yet"
+      "proof": "renders/portfolio/CD1_Kerf.mp4 (portfolio sample, concept work for the fictional brand Kerf; project projects/pf-cd1-kerf; finish.mjs QC in renders/pf-cd1-kerf/)"
     },
     {
       "id": "LT1",

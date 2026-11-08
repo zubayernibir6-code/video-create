@@ -1,6 +1,6 @@
 # Pack info
 
-Made: 2026-11-07 from commit 59a7af2 2026-11-08 (uncommitted edits in the folder are included).
+Made: 2026-11-08 from commit ae8539f 2026-11-08 (uncommitted edits in the folder are included).
 Upload every file below, or only ALL-IN-ONE.md where the tool takes few files.
 
 | file | KB |
@@ -11,7 +11,7 @@ Upload every file below, or only ALL-IN-ONE.md where the tool takes few files.
 | PLAN-TEMPLATE.md | 3.7 |
 | PROMPT-PACK-tools-reel.md | 10.9 |
 | STYLE.md | 15.8 |
-| VARIANTS.md | 33.4 |
+| VARIANTS.md | 33.5 |
 | business-CLIENT-BRIEF.md | 2.5 |
 | business-PLAYBOOK.md | 33.4 |
 | explainer.example.json | 51.4 |
@@ -21,7 +21,7 @@ Upload every file below, or only ALL-IN-ONE.md where the tool takes few files.
 | reel.series.example.json | 10.4 |
 | sfx-list.md | 3.8 |
 | skill-explainer.md | 7.8 |
-| skill-motion-studio.md | 9.9 |
+| skill-motion-studio.md | 11.5 |
 | skill-post-copy.md | 7.5 |
 | skill-privacy-blur.md | 5.9 |
 | skill-tools-reel.md | 20.4 |

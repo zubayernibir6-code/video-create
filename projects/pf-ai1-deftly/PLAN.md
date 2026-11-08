@@ -1,4 +1,4 @@
-# AI1 · AI Agent Demo — Operator "Work that does itself." (concept)
+# AI1 · AI Agent Demo — Deftly "Work that does itself." (concept)
 
 ফরম্যাট: 16:9
 দৈর্ঘ্য: 20 সেকেন্ড
@@ -11,7 +11,7 @@
 
 ## লক্ষ্য
 
-একজন টিম লিড বুঝবেন: Operator-কে এক লাইনে কাজ বললে সে নিজেই ক্যালেন্ডার আর মেইল খুলে কাজটা করে, প্রতিটা ধাপ দেখায়; ওয়েটলিস্টে নাম দিতে চাইবেন।
+একজন টিম লিড বুঝবেন: Deftly-কে এক লাইনে কাজ বললে সে নিজেই ক্যালেন্ডার আর মেইল খুলে কাজটা করে, প্রতিটা ধাপ দেখায়; ওয়েটলিস্টে নাম দিতে চাইবেন।
 
 ## হুক (প্রথম ২ সেকেন্ড)
 
@@ -27,13 +27,13 @@
 | --- | --- | --- | --- |
 | 0–2 | উষ্ণ ডেস্কের উপর বড় দুই লাইন মাস্ক থেকে ওঠে | You type one sentence. | `whoosh-short`, `pop` |
 | 2–4.4 | প্রম্পট বার স্প্রিং আর হালকা হেলান দিয়ে আসে; বাক্য টাইপ হয়; Enter কি চাপা পড়ে, বার বেগুনি হয় | Move my Thursday sync to Friday and tell the team | `whoosh-short`, `typing`, `click` |
-| 4.4–6.8 | বার উপরে উঠে টাস্ক হেডার হয়; ক্যালেন্ডার জানালা আর ডানে স্ট্যাটাস রেল আসে; বেগুনি এজেন্ট কার্সর "Operator" পিল নিয়ে উড়ে এসে সপ্তাহটা পড়ে; প্রথম ধাপ স্পিনার থেকে টিক | Calendar · Operator · Working · Reading calendar · 1.2s | `whoosh-short`, `whoosh`, `pop` |
+| 4.4–6.8 | বার উপরে উঠে টাস্ক হেডার হয়; ক্যালেন্ডার জানালা আর ডানে স্ট্যাটাস রেল আসে; বেগুনি এজেন্ট কার্সর "Deftly" পিল নিয়ে উড়ে এসে সপ্তাহটা পড়ে; প্রথম ধাপ স্পিনার থেকে টিক | Calendar · Deftly · Working · Reading calendar · 1.2s | `whoosh-short`, `whoosh`, `pop` |
 | 6.8–8.0 | কার্সর "Team sync" ধরে বৃহস্পতি থেকে শুক্রবারে টেনে নেয় (ইভেন্ট কার্সরের সাথেই চলে), শুক্রে স্প্রিং দিয়ে বসে; দ্বিতীয় ধাপ টিক | Team sync · 10:00 · Moving event · 2.6s | `click`, `whoosh-short`, `click-soft`, `pop` |
 | 8.0–10.5 | মেইল জানালা সামনে আসে, ক্যালেন্ডার পেছনে ঝাপসা; এজেন্ট বডিতে ক্লিক করে, ড্রাফট নিজে টাইপ হয়; তৃতীয় ধাপ টিক | New message · Team · 6 people · Sync moves to Friday · Hi team, our sync moves to Friday 10:00. Same link, same agenda. | `whoosh-short`, `click`, `typing`, `pop` |
 | 10.5–12.4 | কার্সর Send চাপে, মেইল উড়ে যায়; শেষ ধাপ "Sent" টিক, রেলে "Done"; ক্যালেন্ডার আবার সামনে, Team sync এখন শুক্রবারে (মিউজিকের দম) | Sent · 1.1s · Done | `click`, `notification`, `pop` |
 | 12.4–14.4 | slam-এর উপর কাজের জায়গা পেছনে সরে ঝাপসা; ফলাফল কার্ড উঠে আসে, ৯ গুনে ওঠে, তিনটা প্রমাণের সারি টিক দিয়ে আসে | Task complete · Done in 9 seconds · Team sync moved · Fri 10:00 · Team emailed · 6 people · Calendar conflicts · None | `impact-bass-1`, `sparkle`, `typing`, `click-soft` ×৩ |
 | 14.4–16.4 | কার্ডের নিচে ছোট লাইন আসে; দম, তারপর কার্ড মিলিয়ে যায় আর এজেন্ট কার্সর মাঝখানের দিকে উড়ে যায় | 1 sentence typed · 4 steps done · 2 apps | `click-soft`, `whoosh-short` |
-| 16.4–17.6 | কার্সরের ডগা লোগোর তীরের ডগায় নামে, বেগুনি স্কুইর্কেল আর সাদা তীর সেখান থেকেই বড় হয়; "Operator" অক্ষরে অক্ষরে, ট্যাগলাইন | Operator · Work that does itself. | `impact-bass-2`, `sparkle` |
+| 16.4–17.6 | কার্সরের ডগা লোগোর তীরের ডগায় নামে, বেগুনি স্কুইর্কেল আর সাদা তীর সেখান থেকেই বড় হয়; "Deftly" অক্ষরে অক্ষরে, ট্যাগলাইন | Deftly · Work that does itself. | `impact-bass-2`, `sparkle` |
 | 17.6–20 | বেগুনি CTA স্প্রিং দিয়ে আসে, আলোর সুইপ; কোণে ছোট লেবেল | Join the waitlist · Concept work · fictional brand | `pop` |
 
 ## যা লাগবে

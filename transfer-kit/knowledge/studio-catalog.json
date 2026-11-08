@@ -258,8 +258,8 @@
         "GitHub Universe feature reels"
       ],
       "sample": {
-        "project": "pf-cl1-forge",
-        "brand": "Forge",
+        "project": "pf-cl1-ingot",
+        "brand": "Ingot",
         "status": "planned"
       }
     },
@@ -343,8 +343,8 @@
         "Cursor and Devin style agent clips"
       ],
       "sample": {
-        "project": "pf-ai1-operator",
-        "brand": "Operator",
+        "project": "pf-ai1-deftly",
+        "brand": "Deftly",
         "status": "planned"
       }
     },
@@ -388,8 +388,8 @@
         "Headspace / Stripe explainers"
       ],
       "sample": {
-        "project": "pf-hx1-kindred",
-        "brand": "Kindred Health",
+        "project": "pf-hx1-hither",
+        "brand": "Hither",
         "status": "planned"
       }
     },
@@ -598,8 +598,8 @@
         "Apple-style flight maps"
       ],
       "sample": {
-        "project": "pf-mp1-cargoline",
-        "brand": "Cargoline",
+        "project": "pf-mp1-portolan",
+        "brand": "Portolan",
         "status": "planned"
       }
     },

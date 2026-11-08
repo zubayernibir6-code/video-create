@@ -1,8 +1,8 @@
 {
   "code": "HX1",
   "name": "How-It-Works Explainer",
-  "brand": "Kindred Health",
-  "project": "pf-hx1-kindred",
+  "brand": "Hither",
+  "project": "pf-hx1-hither",
   "aspect": "16x9",
   "width": 1920,
   "height": 1080,
@@ -10,8 +10,8 @@
   "fps": 30,
   "concept": true,
   "brief": {
-    "client": "Kindred Health (fictional — concept work): video doctor visits, booked and held in an app",
-    "goal": "Landing-page and onboarding explainer: in about 30 s a first-time visitor understands the three steps of a Kindred visit and taps 'Get the app'",
+    "client": "Hither (fictional — concept work): video doctor visits, booked and held in an app",
+    "goal": "Landing-page and onboarding explainer: in about 30 s a first-time visitor understands the three steps of a Hither visit and taps 'Get the app'",
     "audience": "Busy adults and parents in the US/UK who put off seeing a doctor because booking means days of phone calls",
     "message": "Tell us what's going on, get matched with the right clinician in under 10 minutes, get care by video — private and in one place",
     "cta": "Get the app",
@@ -301,5 +301,6 @@
     "from": 12.5,
     "to": 16.9
   },
-  "made": "2026-11-07"
+  "made": "2026-11-07",
+  "nameCheck": "2026-11-08 web search \"Hither health app telehealth clinic\": no health company named Hither. Renamed from Kindred Health: Kindred Healthcare was a Fortune 500 US care company. Rejected on the way: Tendwell (Tend, a NZ telehealth app), Nearwell (Northwell Health), Tellwell (TeleWell app)."
 }

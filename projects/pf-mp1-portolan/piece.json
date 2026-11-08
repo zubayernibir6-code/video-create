@@ -1,8 +1,8 @@
 {
   "code": "MP1",
   "name": "Map Story",
-  "brand": "Cargoline",
-  "project": "pf-mp1-cargoline",
+  "brand": "Portolan",
+  "project": "pf-mp1-portolan",
   "aspect": "16x9",
   "width": 1920,
   "height": 1080,
@@ -10,7 +10,7 @@
   "fps": 30,
   "concept": true,
   "brief": {
-    "client": "Cargoline (fictional — concept work): a global container-freight network",
+    "client": "Portolan (fictional — concept work): a global container-freight network",
     "goal": "A 16-second brand opener for the website hero, sales decks and LinkedIn that makes the network's reach feel tangible and live",
     "audience": "Importers, exporters and supply-chain managers at mid-size and large manufacturers and retailers",
     "message": "One network, 120 ports, freight you can see moving — right now 18,400 containers on the Asia–Europe lane alone (fictional figures)",
@@ -159,5 +159,6 @@
     "from": 8.6,
     "to": 12.6
   },
-  "made": "2026-11-07"
+  "made": "2026-11-07",
+  "nameCheck": "2026-11-08 web search \"Portolan logistics freight shipping\": no logistics company named Portolan (a portolan is an old sea chart). Renamed from Cargoline: CargoLine is one of Germany's largest general-cargo networks. Rejected on the way: Tidelane (TideLine Shipping), Bluewake (Blue Wave Freight / Blue Water Shipping), Quayline (a shipping TMS)."
 }

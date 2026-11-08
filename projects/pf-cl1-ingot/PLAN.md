@@ -1,4 +1,4 @@
-# CL1 · Changelog / Release Reel — Forge (concept)
+# CL1 · Changelog / Release Reel — Ingot (concept)
 
 ফরম্যাট: 16:9
 দৈর্ঘ্য: 18 সেকেন্ড
@@ -11,15 +11,15 @@
 
 ## লক্ষ্য
 
-ডেভেলপাররা ১৮ সেকেন্ডে Forge 3.0-এর পাঁচটা নতুন জিনিস চিনবেন, প্রতিটার ছোট্ট জীবন্ত UI দেখে বুঝবেন কী বদলাল, আর শেষে টার্মিনালের এক কমান্ডে আপগ্রেড দেখবেন।
+ডেভেলপাররা ১৮ সেকেন্ডে Ingot 3.0-এর পাঁচটা নতুন জিনিস চিনবেন, প্রতিটার ছোট্ট জীবন্ত UI দেখে বুঝবেন কী বদলাল, আর শেষে টার্মিনালের এক কমান্ডে আপগ্রেড দেখবেন।
 
 ## হুক (প্রথম ২ সেকেন্ড)
 
-প্রথম ফ্রেম থেকেই কালো পর্দায় বিশাল "3.0"-এর জায়গায় এলোমেলো অক্ষর ঘুরছে; মিউজিকের তিন আঘাতে (0.45, 0.78, 1.0) একে একে 3, ., 0 বসে যায়, তারপর মিউজিকের নীরবতায় "What's new in Forge" ওঠে। 2.23-এ প্রথম স্ল্যামে প্রথম কার্ড ঢোকে।
+প্রথম ফ্রেম থেকেই কালো পর্দায় বিশাল "3.0"-এর জায়গায় এলোমেলো অক্ষর ঘুরছে; মিউজিকের তিন আঘাতে (0.45, 0.78, 1.0) একে একে 3, ., 0 বসে যায়, তারপর মিউজিকের নীরবতায় "What's new in Ingot" ওঠে। 2.23-এ প্রথম স্ল্যামে প্রথম কার্ড ঢোকে।
 
 ## স্ক্রিপ্ট
 
-ভয়েস নেই। পর্দার লেখা: forge@3.0.0 · 3.0 · What's new in Forge · পাঁচটা কার্ড (শিরোনাম + এক লাইন) · Five updates. One command. · forge upgrade · Upgraded to Forge 3.0.
+ভয়েস নেই। পর্দার লেখা: ingot@3.0.0 · 3.0 · What's new in Ingot · পাঁচটা কার্ড (শিরোনাম + এক লাইন) · Five updates. One command. · ingot upgrade · Upgraded to Ingot 3.0.
 
 ## শট টেবিল
 
@@ -27,21 +27,21 @@ data-glitch-এর প্রতিটা বার শুরু হয় এক
 
 | সময় | পর্দায় কী | ক্যাপশন / লেখা | শব্দ |
 | --- | --- | --- | --- |
-| 0–2.23 | বিশাল 3.0-এর জায়গায় এলোমেলো অক্ষর আর হালকা গ্লিচ; তিন আঘাতে অক্ষর বসে; উপরে লাইম রঙের ভার্সন ট্যাগ, নিচে শিরোনাম ওঠে | forge@3.0.0 · 3.0 · What's new in Forge | `glitch-3` |
-| 2.23–4.43 | স্ল্যামে কার্ড ১ ডান থেকে ঢোকে; ভেতরে ডিপ্লয় প্যানেল: স্ট্যাটাস Building থেকে Ready, বিন্দু লাইম হয়, URL টাইপ হয়; উপরে হেডার আর 01 / 05 | Instant preview deploys · Every push gets its own live URL. · checkout-a41c.preview.forge · Ready | `whoosh-short`, `ping` |
+| 0–2.23 | বিশাল 3.0-এর জায়গায় এলোমেলো অক্ষর আর হালকা গ্লিচ; তিন আঘাতে অক্ষর বসে; উপরে লাইম রঙের ভার্সন ট্যাগ, নিচে শিরোনাম ওঠে | ingot@3.0.0 · 3.0 · What's new in Ingot | `glitch-3` |
+| 2.23–4.43 | স্ল্যামে কার্ড ১ ডান থেকে ঢোকে; ভেতরে ডিপ্লয় প্যানেল: স্ট্যাটাস Building থেকে Ready, বিন্দু লাইম হয়, URL টাইপ হয়; উপরে হেডার আর 01 / 05 | Instant preview deploys · Every push gets its own live URL. · checkout-a41c.ingot.example · Ready | `whoosh-short`, `ping` |
 | 4.43–6.6 | কার্ড ২: ঘুরন্ত গ্লোবের রেখা, অঞ্চলের বিন্দুগুলো একে একে লাইম হয়ে জ্বলে, সংখ্যা 0 থেকে 40+ গোনে | Edge functions in 40+ regions · Run code close to every user. · 40+ regions | `whoosh-short`, `click-soft` ×4 |
 | 6.6–8.8 | কার্ড ৩: ব্রাঞ্চের গাছ আঁকা হয়: main লাইন, তারপর দুটো শাখা, প্রতিটার শেষে ডেটাবেসের আইকন আর নাম | Branch databases · Every branch gets its own database. · main · preview/auth · preview/billing | `whoosh-short`, `click-soft` ×3 |
 | 8.8–10.97 | কার্ড ৪: কোডের diff, পুরোনো লাইন কাটা, নতুন লাইন লাইম; AI-এর পরামর্শের চিপ লাফিয়ে আসে, Apply চাপা হয় | AI code review · Catch bugs before you merge. · Use findUnique — id is indexed · Apply | `whoosh-short`, `pop`, `click` |
-| 10.97–13.13 | কার্ড ৫: আগের আর নতুন বিল্ডের দুটো বার বাড়ে, নতুনটা অর্ধেক, সময় গুনে থামে | 2× faster builds · Same code. Half the wait. · Forge 2.x 1m 36s · Forge 3.0 48s | `whoosh-short`, `typing` |
-| 13.13–15.33 | কার্ড বাঁয়ে বেরিয়ে যায়; পাঁচটা ছোট কার্ডের গ্রিড নামে, নিচে টার্মিনাল ওঠে, forge upgrade টাইপ হয় | Five updates. One command. · forge upgrade | `whoosh-short`, `key-press` ×7 |
-| 15.33–18 | স্ল্যামে টার্মিনালে লাইম টিক (আঁকা) আর সফলতার লাইন; ছোট কার্ডগুলোর আইকন একে একে লাইম; কোণে ছোট লেবেল; কার্সর জ্বলে-নেভে | Upgraded to Forge 3.0 · Concept work · fictional brand | `success` |
+| 10.97–13.13 | কার্ড ৫: আগের আর নতুন বিল্ডের দুটো বার বাড়ে, নতুনটা অর্ধেক, সময় গুনে থামে | 2× faster builds · Same code. Half the wait. · Ingot 2.x 1m 36s · Ingot 3.0 48s | `whoosh-short`, `typing` |
+| 13.13–15.33 | কার্ড বাঁয়ে বেরিয়ে যায়; পাঁচটা ছোট কার্ডের গ্রিড নামে, নিচে টার্মিনাল ওঠে, ingot upgrade টাইপ হয় | Five updates. One command. · ingot upgrade | `whoosh-short`, `key-press` ×7 |
+| 15.33–18 | স্ল্যামে টার্মিনালে লাইম টিক (আঁকা) আর সফলতার লাইন; ছোট কার্ডগুলোর আইকন একে একে লাইম; কোণে ছোট লেবেল; কার্সর জ্বলে-নেভে | Upgraded to Ingot 3.0 · Concept work · fictional brand | `success` |
 
 ## যা লাগবে
 
 - মিউজিক: data-glitch (Lyria, আমাদের নিজের)। তার স্ল্যামগুলোতেই কার্ড বদল।
 - শব্দ: `glitch-3` (নিচু) স্ক্র্যাম্বলে, প্রতি কার্ডে `whoosh-short`, টাইপিংয়ে `key-press`, শেষে `success`; ছোট ঘটনায় হালকা `click-soft`, `ping`, `pop`, `click`।
 - ফন্ট: Space Grotesk 600 আর JetBrains Mono, দুটোই প্রজেক্টে আছে, SIL OFL।
-- আইকন: Lucide (ISC লাইসেন্স)। কোনো আসল কোম্পানির লোগো বা আসল ওয়েবসাইট নেই; URL-টা বানানো (.forge কোনো আসল ডোমেইন নয়)।
+- আইকন: Lucide (ISC লাইসেন্স)। কোনো আসল কোম্পানির লোগো বা আসল ওয়েবসাইট নেই; URL-টা বানানো (.example কোনো আসল ডোমেইন নয়)।
 
 ## STYLE.md আর LESSONS.md থেকে যা মানছি
 

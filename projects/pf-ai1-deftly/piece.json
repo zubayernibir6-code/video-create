@@ -1,8 +1,8 @@
 {
   "code": "AI1",
   "name": "AI Agent Demo",
-  "brand": "Operator",
-  "project": "pf-ai1-operator",
+  "brand": "Deftly",
+  "project": "pf-ai1-deftly",
   "aspect": "16x9",
   "width": 1920,
   "height": 1080,
@@ -10,10 +10,10 @@
   "fps": 30,
   "concept": true,
   "brief": {
-    "client": "Operator (fictional — concept work): an AI agent that does tasks in your apps",
+    "client": "Deftly (fictional — concept work): an AI agent that does tasks in your apps",
     "goal": "A 20-second launch clip for X and the waitlist page: one typed sentence, then the agent visibly does a two-app task by itself",
     "audience": "Team leads and operators who live in their calendar and inbox",
-    "message": "Type one sentence; Operator does the clicks across your apps and shows you every step",
+    "message": "Type one sentence; Deftly does the clicks across your apps and shows you every step",
     "cta": "Join the waitlist",
     "tone": "Warm, calm and precise; a paper-white desk with one electric violet for everything the agent touches",
     "references": [
@@ -203,5 +203,6 @@
     "from": 5.4,
     "to": 9.4
   },
-  "made": "2026-11-07"
+  "made": "2026-11-07",
+  "nameCheck": "2026-11-08 web search \"Deftly AI agent app automation\": no product named Deftly (only small 'Deft' developer projects on GitHub / pkg.go.dev). Renamed from Operator: OpenAI's Operator is a famous AI agent of the same kind."
 }

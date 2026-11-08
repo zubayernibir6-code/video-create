@@ -1,6 +1,6 @@
 # Video Create knowledge pack (all files in one)
 
-Made 2026-11-07 from commit 59a7af2 2026-11-08. Each file starts at a "<<<<< FILE: name >>>>>" line. Read 00-STUDIO-RULES.md first.
+Made 2026-11-08 from commit ae8539f 2026-11-08. Each file starts at a "<<<<< FILE: name >>>>>" line. Read 00-STUDIO-RULES.md first.
 
 <<<<< FILE: 00-STUDIO-RULES.md >>>>>
 
@@ -947,23 +947,23 @@ claude.ai, ChatGPT, Facebook-এর মতো সাইট নিয়মে �
 | FD1 | নতুন ফিচারের ঘোষণা | One new feature in 15 seconds: a hook line, the cursor walks to the feature, a smooth punch-in on the UI moment, the result, a CTA. | SaaS teams that ship every week and post updates on X / LinkedIn; changelog emails. | বেটা (নমুনা: `renders/portfolio/FD1_Relay.mp4`) |
 | UT1 | থ্রিডি অ্যাপ-ভ্রমণ | The app's screens as glass-edged panels in 3D space; the camera dollies from panel to panel (dashboard → pipeline → report) with parallax and depth of field. | Product pages, sales decks, investor demos — when the product has 3–5 key screens. | বেটা (নমুনা: `renders/portfolio/UT1_AtlasCRM.mp4`) |
 | AP1 | অ্যাপ স্টোরের প্রিভিউ | A vertical phone-first preview: taps, swipes and screen changes inside a phone, short benefit captions, made to the App Store / Play Store preview limits (15–30 s). | Mobile app makers — App Store and Google Play listings, Reels and TikTok ads. | বেটা (নমুনা: `renders/portfolio/AP1_Habitly.mp4`) |
-| CL1 | রিলিজ নোটের ভিডিও | "What's new in v3.0" — 4–6 updates in quick cuts: version stamp, icon + one line + a tiny UI snippet per update, a closing lockup. | Dev tools and SaaS with monthly releases; community and newsletter posts. | বেটা (নমুনা: `renders/portfolio/CL1_Forge.mp4`) |
+| CL1 | রিলিজ নোটের ভিডিও | "What's new in v3.0" — 4–6 updates in quick cuts: version stamp, icon + one line + a tiny UI snippet per update, a closing lockup. | Dev tools and SaaS with monthly releases; community and newsletter posts. | বেটা (নমুনা: `renders/portfolio/CL1_Ingot.mp4`) |
 | IH1 | ইন্টিগ্রেশন দেখানো | The product as a glowing hub; app icons orbit in, beams connect them, data packets travel, a count of integrations lands. | Automation, API and platform companies announcing integrations or a marketplace. | বেটা (নমুনা: `renders/portfolio/IH1_Nimbus.mp4`) |
-| AI1 | এআই এজেন্টের ডেমো | An AI agent at work: a prompt is typed, a labelled agent cursor clicks through a clean UI, status chips tick from 'working' to 'done', the result lands. The 2026 launch format for AI products. | AI startups showing an agent or copilot doing a real task; launch posts on X. | বেটা (নমুনা: `renders/portfolio/AI1_Operator.mp4`) |
-| HX1 | কীভাবে কাজ করে — ব্যাখ্যা | A voiced 45–90 s explainer: the problem, the turn, three simple steps with friendly flat illustration and icons, proof, CTA. Script, voice-over and music included. | Landing pages, onboarding, sales calls — health, fintech, B2B services that need clarity. | বেটা (নমুনা: `renders/portfolio/HX1_KindredHealth.mp4`) |
+| AI1 | এআই এজেন্টের ডেমো | An AI agent at work: a prompt is typed, a labelled agent cursor clicks through a clean UI, status chips tick from 'working' to 'done', the result lands. The 2026 launch format for AI products. | AI startups showing an agent or copilot doing a real task; launch posts on X. | বেটা (নমুনা: `renders/portfolio/AI1_Deftly.mp4`) |
+| HX1 | কীভাবে কাজ করে — ব্যাখ্যা | A voiced 45–90 s explainer: the problem, the turn, three simple steps with friendly flat illustration and icons, proof, CTA. Script, voice-over and music included. | Landing pages, onboarding, sales calls — health, fintech, B2B services that need clarity. | পরিকল্পনা |
 | WF1 | কাজের ধাপের ডায়াগ্রাম | A process as a living diagram: nodes draw in, packets travel the paths, a branch splits on a condition, failures retry, success lights up the end. | Automation, fintech ops, logistics and B2B tools whose value is the workflow. | বেটা (নমুনা: `renders/portfolio/WF1_Ledgerly.mp4`) |
 | IA1 | থ্রিডি স্তর-ভাগ ডায়াগ্রাম | Real 3D: the system's layers (edge, API, compute, data, encryption) float apart in an isometric stack with labels, data runs through them, they lock back together. | Infrastructure, security and developer platforms explaining 'how it is built'. | বেটা (নমুনা: `renders/portfolio/IA1_Vaultline.mp4`) |
 | DS1 | ডেটার গল্প | Bloomberg / FT-style: a line chart draws itself, the key point is annotated, numbers count up, a comparison resolves — calm editorial type, one accent colour. | Research firms, fintech, reports, investor letters, LinkedIn thought leadership. | বেটা (নমুনা: `renders/portfolio/DS1_MeridianResearch.mp4`) |
 | KP1 | বিনিয়োগকারীর জন্য মেট্রিক্স | A funding or milestone announcement: big KPI count-ups (ARR, growth, customers, countries), a growth curve, a donut, a lockup — confident and exact. | Startups announcing a round or a milestone; annual reviews; investor updates. | বেটা (নমুনা: `renders/portfolio/KP1_Northwind.mp4`) |
-| MP1 | ম্যাপের গল্প | A world map: hubs light up, routes draw as arcs, a counter runs, the camera pushes into a region — for reach, logistics and expansion stories. | Logistics, travel, global SaaS expansion, NGOs showing reach. | বেটা (নমুনা: `renders/portfolio/MP1_Cargoline.mp4`) |
-| NW1 | সংবাদ-ধাঁচের ব্যাখ্যা | Vox-style: paper textures, headline cards, highlighter strokes over key lines, a document zoom, a hand-drawn arrow, a voiced narration on a real topic. | Media brands, newsletters, YouTube explainer channels, think tanks. | পরিকল্পনা |
+| MP1 | ম্যাপের গল্প | A world map: hubs light up, routes draw as arcs, a counter runs, the camera pushes into a region — for reach, logistics and expansion stories. | Logistics, travel, global SaaS expansion, NGOs showing reach. | বেটা (নমুনা: `renders/portfolio/MP1_Portolan.mp4`) |
+| NW1 | সংবাদ-ধাঁচের ব্যাখ্যা | Vox-style: paper textures, headline cards, highlighter strokes over key lines, a document zoom, a hand-drawn arrow, a voiced narration on a real topic. | Media brands, newsletters, YouTube explainer channels, think tanks. | বেটা (নমুনা: `renders/portfolio/NW1_TheBrief.mp4`) |
 | LG1 | থ্রিডি লোগো স্টিং | A 5–7 s logo reveal in real 3D: beveled letters flip up, light runs across the bevels, one sub-bass hit and a sparkle on the lock. | Every brand: video intros/outros, YouTube channels, event openers, ads. | বেটা (নমুনা: `renders/portfolio/LG1_Orbit.mp4`) |
 | KT1 | নাচন্ত লেখার ম্যানিফেস্টো | A brand belief told in big moving type cut to the beat: words slam, split, swap and morph; colour blocks wipe; it ends on the brand line. | Brand campaigns, hiring videos, event openers, social posts with no footage. | বেটা (নমুনা: `renders/portfolio/KT1_Driftwood.mp4`) |
 | BS1 | ব্র্যান্ড-গাইডলাইনের অ্যানিমেশন | The identity animated: logo construction, palette swatches, type specimen, pattern and real applications (cards, app icon, signage) — a living brand book. | Branding agencies presenting work; companies launching a rebrand. | বেটা (নমুনা: `renders/portfolio/BS1_Solace.mp4`) |
 | SA1 | খাড়া সোশ্যাল বিজ্ঞাপন | A 15 s vertical ad built for the feed: the hook in the first second, three benefit beats, a big CTA, voice-over and captions inside the platform safe zones. | Performance marketers and DTC / app brands running Meta, TikTok and YouTube Shorts ads. | বেটা (নমুনা: `renders/portfolio/SA1_Pocket.mp4`) |
 | EV1 | ইভেন্ট বা ওয়েবিনারের প্রোমো | Date, venue or link, speakers as clean monogram cards (no faces needed), the agenda in three beats, a countdown and a register button. | Conferences, webinars, launches, community meetups, workshops. | বেটা (নমুনা: `renders/portfolio/EV1_BuildersSummit.mp4`) |
 | GH1 | থ্রিডি কাচের হিরো টাইটেল | Real 3D glass: a refracting glass form turns in front of a giant headline so the type bends through it, then the tagline lands — the most premium 8–10 seconds a brand can open with. | Landing-page heroes, keynote openers, premium product teasers. | বেটা (নমুনা: `renders/portfolio/GH1_Prism.mp4`) |
-| CD1 | ডেভেলপার টুলের লঞ্চ | Syntax-highlighted code on a lit 3D slab rotating into a readable rest, a terminal run, the result — for developer products. | Dev tools, APIs, SDKs, open-source launches. | পরিকল্পনা |
+| CD1 | ডেভেলপার টুলের লঞ্চ | Syntax-highlighted code on a lit 3D slab rotating into a readable rest, a terminal run, the result — for developer products. | Dev tools, APIs, SDKs, open-source launches. | বেটা (নমুনা: `renders/portfolio/CD1_Kerf.mp4`) |
 | LT1 | লোয়ার-থার্ড ও টাইটেল প্যাক | A matched set of name bars, section titles, callouts and end cards on a transparent background, in the client's brand, ready to drop on any edit. | YouTubers, podcasts, corporate video teams, event streams. | পরিকল্পনা |
 <!-- studio:end -->
 
@@ -3361,7 +3361,7 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
 | `slot.mjs` | machine-wide limit on heavy jobs (chrome 2, render 1) for parallel agents |
 | `render-queue.mjs` | serial renders via finish.mjs --release → renders/portfolio, queue.json |
 | `icon.mjs` | Lucide icons as inline SVG (`--find word`) |
-| `showreel.mjs` | the studio showreel from rendered pieces, cut on strong beats, each clip labelled with its code |
+| `showreel.mjs` | the studio showreel from rendered pieces, cut on the kick drum, each clip labelled with its code; clips are CUT to their windows (23 full masters = 506 MB made the page check fail with ERR_CONNECTION_RESET); piece.json `reel.label` = top-left / top-right moves a label off the piece's own text (DS1); `--avg`/`--outro` keep it ≤ 60 s (no preflight needed); a whole-reel "Concept work · all brands fictional" label |
 | `portfolio-page.mjs` | static portfolio site (web copies + posters) in renders/portfolio/site |
 | `catalog-doc.mjs` | docs/business/CATALOG.md from catalog.json |
 
@@ -3403,9 +3403,20 @@ Service list: `tools/studio/catalog.json` → `docs/business/CATALOG.md` (`node 
   real domain (use `<name>.example`) or an install command naming a package (`curl -fsSL <brand>.example/install | sh`,
   or a made-up name listed in piece.json `honesty.checked` after `npm view` 404s); client pieces only warn. It warns
   when piece.json has no `nameCheck`: search "<brand> <industry>" BEFORE building — CD1 "Kernel" typed
-  `kernel deploy`, the real CLI of Kernel (onkernel.com), and was renamed "Kerf" (folder pf-cd1-kerf). Known
-  same-kind overlaps in the first batch, left for Talha to decide: AI1 Operator (OpenAI Operator), CL1 Forge
-  (Laravel Forge), HX1 Kindred Health (Kindred Healthcare; its voice-over says the name), MP1 Cargoline (CargoLine).
+  `kernel deploy`, the real CLI of Kernel (onkernel.com), and was renamed "Kerf" (folder pf-cd1-kerf). On Talha's OK
+  the other same-kind overlaps were renamed too: AI1 Operator → **Deftly**, CL1 Forge → **Ingot** (its preview URL is
+  now `checkout-a41c.ingot.example`), HX1 Kindred Health → **Hither**, MP1 Cargoline → **Portolan**. Plain compounds
+  kept matching real firms of the same kind (Tendwell ~ Tend, Nearwell ~ Northwell, Tellwell ~ TeleWell,
+  Tidelane ~ TideLine Shipping, Bluewake ~ Blue Wave Freight, Quayline = a shipping TMS): coin a less common word
+  and search it before building. Old renders sit in `renders/portfolio/_old-names/`.
+- **Changing a word inside a finished voice-over** (a client renames the product — HX1, 2026-11-08): re-make only the
+  sentences that say it (`tools/clone/gemini.mjs say` with a blank line between them → one block each, same voice
+  and style tag), find the original sentence edges with `silencedetect=noise=-38dB:d=0.18`, mute the old spans
+  inside the silences (`volume=0:enable='between(t,a,b)+…'`), `adelay` each new line to the old onset, `atempo` ≤ 1.07
+  so it ends ≥ 0.3 s before the next sentence, match each span's loudness (ebur128 on the old span; the raw Gemini
+  lines were 3–4.5 dB quieter) and cap peaks (`alimiter=limit=0.84`: +gain clipped at 0.0 dBFS), `amix normalize=0`.
+  Then re-transcribe (`transcribe.mjs --lang=en`; it still drops "Here's how it works." — check against script.txt),
+  update PLAN.md's measured line starts and nudge the beats that follow those words (HX1: one tagline time).
 - `check.mjs --static` runs only the static rules (no Chrome, under a second) — use it while editing.
 - 3D render time varies a lot: GH1 (10 s, three.js glass) took 918 s on 2026-11-07 while six agents shared the
   laptop, and 109 s on 2026-11-08 with only the render queue running (hyperframes reported `browserGpuMode →
@@ -4283,8 +4294,8 @@ studio-pulse; summary reveal (≈5 s) on a strong beat; click on the button, pop
         "GitHub Universe feature reels"
       ],
       "sample": {
-        "project": "pf-cl1-forge",
-        "brand": "Forge",
+        "project": "pf-cl1-ingot",
+        "brand": "Ingot",
         "status": "planned"
       }
     },
@@ -4368,8 +4379,8 @@ studio-pulse; summary reveal (≈5 s) on a strong beat; click on the button, pop
         "Cursor and Devin style agent clips"
       ],
       "sample": {
-        "project": "pf-ai1-operator",
-        "brand": "Operator",
+        "project": "pf-ai1-deftly",
+        "brand": "Deftly",
         "status": "planned"
       }
     },
@@ -4413,8 +4424,8 @@ studio-pulse; summary reveal (≈5 s) on a strong beat; click on the button, pop
         "Headspace / Stripe explainers"
       ],
       "sample": {
-        "project": "pf-hx1-kindred",
-        "brand": "Kindred Health",
+        "project": "pf-hx1-hither",
+        "brand": "Hither",
         "status": "planned"
       }
     },
@@ -4623,8 +4634,8 @@ studio-pulse; summary reveal (≈5 s) on a strong beat; click on the button, pop
         "Apple-style flight maps"
       ],
       "sample": {
-        "project": "pf-mp1-cargoline",
-        "brand": "Cargoline",
+        "project": "pf-mp1-portolan",
+        "brand": "Portolan",
         "status": "planned"
       }
     },

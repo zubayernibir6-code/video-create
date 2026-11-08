@@ -1,0 +1,51 @@
+1
+00:00:00,000 --> 00:00:02,940
+Booking a doctor shouldn't take a week of phone calls.
+
+2
+00:00:03,420 --> 00:00:07,000
+With Hither, you see a real doctor in minutes, from wherever
+
+3
+00:00:07,000 --> 00:00:07,460
+you are.
+
+4
+00:00:09,100 --> 00:00:09,340
+1.
+
+5
+00:00:09,800 --> 00:00:11,460
+Tell us what's going on in your own words.
+
+6
+00:00:12,100 --> 00:00:12,460
+2.
+
+7
+00:00:13,020 --> 00:00:15,860
+Hither matches you with the right clinician, usually in
+
+8
+00:00:15,860 --> 00:00:16,540
+under 10 minutes.
+
+9
+00:00:17,180 --> 00:00:17,600
+3.
+
+10
+00:00:18,020 --> 00:00:20,720
+Talk by video, get your prescription sense to your pharmacy,
+
+11
+00:00:21,180 --> 00:00:22,720
+and follow up anytime in chat.
+
+12
+00:00:23,580 --> 00:00:26,400
+Your records stay private and your care stays in one place.
+
+13
+00:00:26,400 --> 00:00:29,220
+Hither, care that comes to you.
