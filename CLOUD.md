@@ -59,10 +59,19 @@ By hand, if ever needed: `bash tools/cloud/setup.sh --check` (report) · `bash t
    `git status`/`commit`/`push` never carry them (undo: `git update-index --no-skip-worktree <file>`).
 3. **Machine:** 2 CPUs, ~8 GB RAM, ~30 GB free disk, no GPU (Chrome draws with SwiftShader). HyperFrames picks its
    low-memory profile (screenshot capture) because RAM < 8 GB, the same capture mode as the PC.
+   **Measured limits (2026-11-09, reel-4784-captions):** 8,022 MB installed, ~7.4 GB available. The Bengali ASR decoder
+   holds ~3 GB at beam 5, so run ONE at a time (`tools/transcribe-fast.py`: 3, then 2 at once were killed with exit −9
+   and no traceback); the HDR→SDR tone map is single-threaded (161 s for 61 s of 1080×1920 60 fps). Everything heavy is
+   CPU- or RAM-bound on those same two CPUs, so **extra agents do not make a job faster**: they share the CPUs and the
+   memory, and an agent that blocks holds up the whole turn. Run steps in parallel only when they use different
+   resources (ASR beside the SDR conversion), never as more workers on the same resource.
 4. **Not here (yet):** his cloned voice (`C:/Users/Zubayer Nibir/VideoWork/voice-clone`: voices.json + reference clips,
    outside `D:\Video Create`; copy it with his OK if he wants voice-clone in the cloud), the RVC/IndicF5 venvs, a
    microphone (`voice.mjs record`), the media of old projects (copy a project's files only when a job needs them),
-   Kokoro English voice files (`hyperframes tts` downloads them on first use).
+   Kokoro English voice files (`hyperframes tts` downloads them on first use), and the two example files that
+   `tools/transfer-pack.mjs` copies from git-ignored `build/` folders (`projects/claude-skills-tutorial/build/explainer.json`,
+   `voice-script.txt`): in a clone from GitHub it stops with "missing source file(s)" before it writes anything (checked
+   2026-11-09), so refresh the transfer pack on the laptop after `git pull`, not here.
 5. **Network:** npm, PyPI, GitHub (+ release downloads), Hugging Face, Google AI (Gemini/Lyria), Cloudflare, Openverse
    answered on 2026-11-04. `cdn-lfs.huggingface.co` is blocked, but model downloads still work (they use xet).
 
@@ -109,6 +118,9 @@ By hand, if ever needed: `bash tools/cloud/setup.sh --check` (report) · `bash t
 | 5 s 1080x1920 Bengali title, `-q draft` | **7.0 s** |
 | hyperframes check + design-lint (46.6 s reel) | 31 s |
 | Bengali ASR, 6.4 s clip (incl. model load) | 69 s |
+| Bengali ASR, 61 s clip in 3 chunks, one decoder at a time (2026-11-09) | ~6 min (the model loads once per chunk) |
+| HDR (HLG) → SDR tone map + CRF 12 encode, 61 s of 1080×1920 60 fps (`tools/caption-reel/sdr30.sh`, single-threaded) | 161 s |
+| ass captions burned + −14 LUFS + release encode, 61 s 1080×1920 (`tools/caption-reel/render-release.sh`) | 68–99 s (3 runs) |
 | Rough budget | ~3 s of render per 1 s of light motion graphics at 1080p; footage-heavy and 4K60 pages are slower |
 
 ## 6. Running all the time (honest limits)

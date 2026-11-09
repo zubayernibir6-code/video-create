@@ -52,6 +52,10 @@ def load_words(path: str):
         t = str(w.get("text", w.get("word", ""))).strip()
         for ch in "{}\\":
             t = t.replace(ch, "")
+        # A Bengali danda right after a Latin letter or digit looks like a lowercase "l" ("Flow।" reads "Flowl";
+        # reel-4784-captions 2026-11-09, on his comment keyword): drop it. The pause is still shown by the page break.
+        if len(t) > 1 and t.endswith("।") and t[-2].isascii() and t[-2].isalnum():
+            t = t[:-1]
         if t and w.get("start") is not None and w.get("end") is not None:
             words.append({"text": t, "start": float(w["start"]), "end": float(w["end"])})
     return sorted(words, key=lambda w: w["start"])

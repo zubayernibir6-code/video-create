@@ -27,7 +27,7 @@
    | concept / app with no recording, "X কী, কেন" | EXP1 | explainer | tools/explainer/build.mjs |
    | his talking head + B-roll | AB1–AB5 | abroll | tools/abroll/build.mjs |
    | long talking-head episode + Reels | EP1 | episode-edit | tools/episode/run.mjs |
-   | cut / caption his own footage | EDIT1 | zero-cost-video-editor | recipes (FFmpeg) |
+   | cut / caption his own footage; ONE phone clip + "highlighted subtitles" only | EDIT1 | zero-cost-video-editor | recipes (FFmpeg); captions-only fast path: tools/caption-reel/* |
    | Reels from a FINISHED video | UREEL1 | reel-cutdown / release-kit | tools/cutdown/* |
    | a client / catalog CODE (PL1 FD1 UT1 AP1 CL1 IH1 AI1 HX1 WF1 IA1 DS1 KP1 MP1 NW1 LG1 KT1 BS1 SA1 EV1 GH1 …), "motion graphics", portfolio, showreel | catalog code | motion-studio | tools/studio/new-piece.mjs → check.mjs → render-queue.mjs (2+ pieces: workflow studio-batch) |
    | after every main video, unasked | — | release-kit, post-copy | tools/release/* |
@@ -313,6 +313,7 @@ codes fit. A new style is not done until it has a line in both files with its pr
 | `tools/voice.mjs` | record / clean a voice (AI denoise) → −16 LUFS WAV |
 | `tools/bn-tts.mjs` | offline Bengali TTS (Piper; credit line required) |
 | `tools/burn-subs.mjs`, `srt-to-words.mjs`, `srt.mjs` | Bengali-safe burned subtitles (never `subtitles=`) |
+| `tools/caption-reel/*`, `tools/transcribe-fast.py` | ONE phone clip → highlighted-caption Reel, captions only (cloud bash; skill zero-cost-video-editor "Fast path", reference `projects/reel-4784-captions`): `sdr30.sh` (HDR→SDR, 30 fps) · `capcheck.py` (caption vs face gate) · `strips.py` (one crop per caption page, to READ) · `render-release.sh` (burn + −14 LUFS + release encode); `transcribe-fast.py` = chunked Bengali ASR, ONE decoder at a time (2–3 at once die of memory). No agents for a one-clip job (CLOUD.md §3.3) |
 | `tools/music-pick.mjs`, `tools/music-drops.mjs`, `tools/lyria.mjs`, `tools/music-extend.mjs` | pick/trim a mood track; find bass drops to land on a moment; a new song from a prompt (Lyria, $0.08, his key); make a song longer than the video (crossfaded copy, free) |
 | `tools/stock-fetch.mjs` | licensed stock photos (Openverse keyless; Pexels/Pixabay need keys) |
 | `tools/sfx-leads.mjs` | writes each SFX's silent lead-in (`lead_s`) into assets/sfx/manifest.json |

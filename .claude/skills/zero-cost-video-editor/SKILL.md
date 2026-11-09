@@ -177,6 +177,51 @@ His feedback comes as times ("০:১২-তে জুমটা বেশি"). 
 `D:/Video Create/LESSONS.md`: `| তারিখ | ভিডিও | আপনি যা বলেছিলেন | পরের বার থেকে নিয়ম |`. When a lesson repeats,
 propose a STYLE.md edit and apply it only when he agrees.
 
+## Fast path: ONE phone clip -> highlighted-caption Reel, captions only (made 2026-11-09, reel-4784-captions)
+
+Use when he brings one selfie / talking clip and asks only for "highlighted subtitles" (no cut, hook, zoom, music).
+Reference project `projects/reel-4784-captions` (PLAN.md; `src/` has the corrected words, the delivered captions, the
+face series and the loudness: keep a project's sources there, because `.gitignore` skips `projects/*/build/`). 61 s clip, cloud
+machine (2 CPUs, ~7 GB). Machine time in the order below (estimate, the first run was much longer because of agents and
+out-of-memory restarts): ASR ~6 min with the HDR conversion beside it, render 1.5 min, checks ~3 min.
+**Do not spawn agents for it:** every step is CPU- or RAM-bound on the same two CPUs, and the agents of the first run
+only waited on each other (12-20 min each, and they blocked the turn).
+
+1. Probe the clip; write PLAN.md (his "start" is the plan approval, but still run plan-check). `tools/route.mjs`.
+2. Start BOTH slow jobs at once, detached (`setsid nohup … &`), then work on the plan while they run:
+   - `ffmpeg -i clip -vn -ac 1 -ar 16000 -c:a pcm_s16le work/audio16k.wav`, then
+     `python3 -I tools/transcribe-fast.py work/audio16k.wav --out=work/asr/reel --chunks 3 --parallel 1 --threads 2 --resume`
+     (about 6 min for 61 s; ONE decoder at a time: each holds ~3 GB, 3 or 2 at once were OOM-killed with exit -9 and no
+     traceback). It writes words.json with a `prob` per word.
+   - `bash tools/caption-reel/sdr30.sh clip work/sdr30.mp4` (HDR iPhone -> SDR 30 fps, 161 s for 61 s; stops if the
+     display shape is not 9:16).
+3. Fix the words (keep every timing): English product names in Latin letters (STYLE §1, "Google Flow-তে"; the model
+   writes them in Bengali), the last word's end (the model stretches it to the clip end: set it to where the energy
+   ends), then list the doubtful words (low `prob`, odd grammar) for him. Merged words take the first start and the
+   last end. A word that is not sure is still shown, but is asked about in the SAME message as the video.
+4. Caption height from the FACE: the lowest chin / whisker-tip y over the whole clip (faces agent or
+   `tools/hook-ad/faces.py`, which needs `assets/models/face-yunet-2023mar.onnx`, not in git); centre = lowest tip + ~60 px
+   (this clip: tip 1290 -> centre y 1350, which is inside Meta's bottom 35 % that starts at 1248: say so to him).
+   A clip filmed further away leaves room higher (hook-ad uses 1190).
+5. `python3 -I .claude/skills/zero-cost-video-editor/scripts/make_captions.py work/words.json -o work/cap.ass --preset bold-pop --font "Hind Siliguri" --size 100 --words-per-page 3 --width 1080 --height 1920 --center-y <y> --max-gap 0.4`
+   (size 100 with the preset's outline 6 and no shadow is what shipped and read fine on a busy checked shirt; 84 was
+   tried first and looked small there; outline 7 + shadow 3, a Style-line edit, looked a little punchier in the test
+   frames. A translucent BOX style drew a darker double box behind the enlarged active word: don't use a box with
+   scale_active above 100). It drops a danda that follows a Latin letter ("Flow।" read "Flowl"). Copy the style numbers
+   into PLAN.md from the file (`grep '^Style:' work/cap.ass`), not from memory: on 2026-11-09 PLAN.md said outline 7 /
+   shadow 3 while the shipped file had 6 / 0.
+6. **Gate before rendering:** `python3 -I tools/caption-reel/capcheck.py work/cap.ass <face series json>` must say PASS
+   (no wrapped page, 65 px side zone, no event touching the face; ~10 s). Its fail cases were shown on a size-140 and a
+   too-high copy of the captions.
+7. `bash tools/caption-reel/render-release.sh work/sdr30.mp4 clip work/cap.ass renders/<name>/<date>/<name>.mp4`
+   (burn + −14 LUFS + the house release encode, no edit list; 68-99 s). Then `node tools/qc.mjs … --w=1080 --h=1920 --fps=30
+   --dur=<s>` and `node tools/release/spec-check.mjs … --for=universal-reel` (no WARN) and READ the captions:
+   `python3 -I tools/caption-reel/strips.py <render> work/cap.ass work/strips` (one crop per caption page, 4 images for
+   47 pages) plus the one-sheet `contact-sheet.mjs`. Look at the frames of the SMALLEST face gaps at full size.
+8. Deliver with SendUserFile + ONE Bengali message: what it is, what was checked, the safe-zone trade-off, the spelling
+   list with times, the offer of hook / zoom / music. Then post-copy, unasked (`RELEASE-COPY.md`, copy-check).
+A spelling fix = edit words.json, rerun steps 5, 6, 7 (about 2-3 minutes; the SDR picture and the loudness are cached).
+
 ## Variants
 
 A variant is the same plan with different settings; never re-plan from scratch.

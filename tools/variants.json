@@ -172,10 +172,10 @@
       "en": "Clean Cut",
       "status": "ready",
       "needs": "his own footage of any kind (talking, screen with live voice)",
-      "builds": "silences cut, Bengali captions burned in, music + SFX, Reels/Shorts/YouTube formats",
-      "engine": "zero-cost-video-editor recipes (FFmpeg)",
+      "builds": "silences cut, Bengali captions burned in, music + SFX, Reels/Shorts/YouTube formats; captions-only fast path for ONE phone clip: word-by-word highlight, caption height from the face, release encode",
+      "engine": "zero-cost-video-editor recipes (FFmpeg); tools/caption-reel/* for the captions-only fast path",
       "skill": "zero-cost-video-editor",
-      "proof": "13.8 s test chain (2026-10-25)"
+      "proof": "13.8 s test chain (2026-10-25); reel-4784-captions (2026-11-09): 61 s clip, qc + spec-check PASS, -14 LUFS"
     },
     {
       "id": "AB1",
